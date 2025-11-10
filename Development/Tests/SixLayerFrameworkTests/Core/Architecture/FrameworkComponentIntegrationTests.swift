@@ -31,7 +31,6 @@ open class FrameworkComponentIntegrationTests {
         }
         
         #expect(testView != nil, "platformPresentContent_L1 should work in view hierarchy")
-        print("✅ platformPresentContent_L1 can be created and used")
     }
     
     @Test func testPlatformPresentBasicValueL1CanBeCreated() {
@@ -47,7 +46,6 @@ open class FrameworkComponentIntegrationTests {
         }
         
         #expect(testView != nil, "platformPresentBasicValue_L1 should work in view hierarchy")
-        print("✅ platformPresentBasicValue_L1 can be created and used")
     }
     
     @Test func testPlatformPresentBasicArrayL1CanBeCreated() {
@@ -63,7 +61,6 @@ open class FrameworkComponentIntegrationTests {
         }
         
         #expect(testView != nil, "platformPresentBasicArray_L1 should work in view hierarchy")
-        print("✅ platformPresentBasicArray_L1 can be created and used")
     }
     
     // MARK: - TDD Red Phase: Components That SHOULD FAIL (Missing .automaticAccessibility())
@@ -122,7 +119,6 @@ open class FrameworkComponentIntegrationTests {
         }
         
         #expect(testView != nil, "Multiple framework components should work together")
-        print("✅ Framework components work together in real view hierarchy")
     }
 }
 

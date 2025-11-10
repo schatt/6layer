@@ -61,9 +61,9 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should display current step content
-            if let allTexts = try? inspected.findAll(Text.self) {
+            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
                 let foundStep1 = allTexts.contains { text in
-                    (try? text.string())?.contains("Step 1") ?? false
+                    (try? text.sixLayerString())?.contains("Step 1") ?? false
                 }
                 #expect(foundStep1, "Should display current step content")
             }
@@ -164,16 +164,16 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should find navigation buttons
-            let buttons = inspected.tryFindAll(Button<Text>.self)
+            let buttons = inspected.sixLayerTryFindAll(Button<Text>.self)
             if buttons.count > 0 {
                 let hasNextButton = buttons.contains { button in
-                    (try? button.accessibilityIdentifier())?.contains("Next") ?? false
+                    (try? button.sixLayerAccessibilityIdentifier())?.contains("Next") ?? false
                 }
                 let hasFinishButton = buttons.contains { button in
-                    (try? button.accessibilityIdentifier())?.contains("Finish") ?? false
+                    (try? button.sixLayerAccessibilityIdentifier())?.contains("Finish") ?? false
                 }
                 let hasPreviousButton = buttons.contains { button in
-                    (try? button.accessibilityIdentifier())?.contains("Previous") ?? false
+                    (try? button.sixLayerAccessibilityIdentifier())?.contains("Previous") ?? false
                 }
 
                 // At least one navigation control should exist
@@ -227,7 +227,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
         // Should show step information
         if let inspected = view.tryInspect() {
             // Should display step information
-            let hasStepInfo = inspected.count > 0
+            let hasStepInfo = inspected.sixLayerCount > 0
             #expect(hasStepInfo, "Should display step information")
         } else {
             Issue.record("FormWizardView step information not found")

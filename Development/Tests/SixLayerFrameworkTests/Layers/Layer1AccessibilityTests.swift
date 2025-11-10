@@ -400,7 +400,6 @@ open class Layer1AccessibilityTests {
         // EXPECTED BEHAVIOR: Should have accessibility identifiers
         #expect(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers")
         
-        print("✅ platformPresentMediaData_L1 generates accessibility identifiers")
     }
     
     /// Test platformPresentMediaData_L1 with EnhancedPresentationHints variant
@@ -544,7 +543,6 @@ open class Layer1AccessibilityTests {
         // EXPECTED BEHAVIOR: Should have accessibility identifiers
         #expect(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers")
         
-        print("✅ platformPresentSettings_L1 generates accessibility identifiers")
     }
     
     /// Test platformPresentSettings_L1 with custom view variant

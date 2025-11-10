@@ -36,8 +36,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
             if let inspected = view.tryInspect() {
                 do {
                     // Should have proper UI structure for recognition features
-                    let vStack = try inspected.vStack()
-                    #expect(vStack.count >= 1, "Should have recognition interface elements")
+                    let vStack = try inspected.sixLayerVStack()
+                    #expect(vStack.sixLayerCount >= 1, "Should have recognition interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -75,8 +75,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for privacy controls
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have privacy interface elements")
+                    let vStack = try inspected.sixLayerVStack()
+                    #expect(vStack.sixLayerCount >= 1, "Should have privacy interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -113,8 +113,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for performance metrics
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have performance monitoring elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have performance monitoring elements")
 
             // Should have accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -151,8 +151,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for profiling features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have profiling interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have profiling interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -189,8 +189,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for safety features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have safety interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have safety interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -227,8 +227,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for routing features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have routing interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have routing interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -265,8 +265,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for orchestration features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have orchestration interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have orchestration interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -303,8 +303,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for optimization features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have optimization interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have optimization interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -341,8 +341,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for organization features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have organization interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have organization interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = await MainActor.run {
@@ -381,8 +381,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for notification features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have notification interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have notification interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = await MainActor.run {
@@ -421,8 +421,8 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have proper UI structure for interpretation features
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 1, "Should have interpretation interface elements")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 1, "Should have interpretation interface elements")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = await MainActor.run {

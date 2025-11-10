@@ -126,6 +126,32 @@ public extension PlatformImage {
     // size property is now defined in PlatformTypes.swift
 }
 
+// MARK: - Platform-Specific Image Extensions for Conversion
+
+#if os(iOS)
+public extension UIImage {
+    /// Conversion from PlatformImage to UIImage (iOS only)
+    /// This enables the currency exchange model: PlatformImage → UIImage at system boundary
+    /// When leaving the framework (system boundary), convert PlatformImage → UIImage
+    /// Note: Since PlatformImage wraps UIImage, we can't add a true convenience initializer,
+    /// but this static method provides similar functionality
+    static func from(_ platformImage: PlatformImage) -> UIImage {
+        return platformImage.uiImage
+    }
+}
+#elseif os(macOS)
+public extension NSImage {
+    /// Conversion from PlatformImage to NSImage (macOS only)
+    /// This enables the currency exchange model: PlatformImage → NSImage at system boundary
+    /// When leaving the framework (system boundary), convert PlatformImage → NSImage
+    /// Note: Since PlatformImage wraps NSImage, we can't add a true convenience initializer,
+    /// but this static method provides similar functionality
+    static func from(_ platformImage: PlatformImage) -> NSImage {
+        return platformImage.nsImage
+    }
+}
+#endif
+
 // MARK: - SwiftUI Image Extension
 
 public extension Image {

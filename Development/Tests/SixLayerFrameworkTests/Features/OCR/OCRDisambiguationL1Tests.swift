@@ -30,7 +30,7 @@ import Testing
 /// Tests for Layer 1 OCR disambiguation functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR disambiguation functionality
 @MainActor
-@Suite("O C R Disambiguation L")
+@Suite("OCR Disambiguation L")
 open class OCRDisambiguationL1Tests: BaseTestClass {// MARK: - Real Layer 1 OCR Disambiguation Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test Layer 1 OCR disambiguation functionality:

@@ -147,7 +147,6 @@ struct ComprehensiveCapabilityTestRunner {
             runTestType(testType, config: config)
         }
         
-        print("✅ Completed comprehensive capability test: \(config.name)")
         print("")
     }
     
@@ -168,7 +167,6 @@ struct ComprehensiveCapabilityTestRunner {
             runBehaviorValidationTests(config)
         }
         
-        print("   ✅ Completed \(testType) tests")
     }
     
     // MARK: - Capability Detection Tests
@@ -431,7 +429,6 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run behavior validation test for a specific capability
     private func runBehaviorValidationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
-        print("     ✅ Testing \(capability) behavior validation...")
         
         // Test with capability enabled
         setMockCapabilityState(capability, enabled: true)

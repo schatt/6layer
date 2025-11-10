@@ -40,8 +40,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let text = try? inspectedView.text(),
-               let accessibilityID = try? text.accessibilityIdentifier() {
+               let text = try? inspectedView.sixLayerText(),
+               let accessibilityID = try? text.sixLayerAccessibilityIdentifier() {
                 #expect(accessibilityID.isEmpty, "Global disable without local enable should result in no accessibility identifier, got: '\(accessibilityID)'")
             } else {
                 // If inspection fails, treat as no identifier applied
@@ -82,7 +82,6 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // Should have an ID when global config is enabled
             #expect(hasAccessibilityID, "Automatic accessibility functions should generate ID when global config is enabled")
             
-            print("✅ Automatic accessibility functions correctly generate ID when global config is enabled")
         }
     }
     
@@ -111,18 +110,16 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let button = try? inspectedView.button(),
-               let accessibilityID = try? button.accessibilityIdentifier() {
+               let button = try? inspectedView.sixLayerButton(),
+               let accessibilityID = try? button.sixLayerAccessibilityIdentifier() {
                 // Should be empty when local disable is applied
                 // NOTE: Environment variable override is not working as expected
                 // The modifier still generates an ID despite the environment variable being set to false
                 #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
             } else {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
-                print("✅ Accessibility functions correctly respect local disable modifier")
             }
             #else
-            print("✅ Accessibility functions correctly respect local disable modifier (ViewInspector not available)")
             #endif
         }
     }
@@ -155,7 +152,6 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // Should have an ID when local enable is applied (even with global disabled)
             #expect(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied")
             
-            print("✅ Accessibility functions correctly respect local enable modifier")
         }
     }
     
@@ -192,7 +188,6 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
                 
             } catch {
-                print("✅ Local disable correctly overrides global enable")
             }
             #else
             Issue.record("ViewInspector not available on this platform (likely macOS)")
@@ -228,7 +223,6 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // Should have an ID - local enable should override global disable
             #expect(hasAccessibilityID, "Local enable should override global disable")
             
-            print("✅ Local enable correctly overrides global disable")
         }
     }
     
@@ -265,7 +259,6 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 #expect(!accessibilityID.isEmpty, "Environment variable override is not working - modifier still generates ID")
                 
             } catch {
-                print("✅ Environment variable correctly overrides global config")
             }
             #else
             Issue.record("ViewInspector not available on this platform (likely macOS)")

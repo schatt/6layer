@@ -64,6 +64,7 @@ public struct ResponsiveCardsView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.large)
         #endif
+        .automaticAccessibilityIdentifiers(named: "ResponsiveCardsView")
     }
     
     // MARK: - Responsive Card Grid Implementation

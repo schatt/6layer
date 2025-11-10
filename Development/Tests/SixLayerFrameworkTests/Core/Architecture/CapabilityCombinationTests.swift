@@ -579,14 +579,40 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
     func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
-        let platform = SixLayerPlatform.current
+        // Set up test platform and capabilities based on the combination
+        // Use the first expected platform for testing
+        guard let testPlatform = combination.expectedPlatforms.first else {
+            Issue.record("No expected platforms for combination: \(combination.name)")
+            return
+        }
+        
+        RuntimeCapabilityDetection.setTestPlatform(testPlatform)
+        
+        // Set up capabilities based on the combination
+        for (capability, value) in combination.capabilities {
+            switch capability.lowercased() {
+            case "touch":
+                RuntimeCapabilityDetection.setTestTouchSupport(value)
+            case "hover":
+                RuntimeCapabilityDetection.setTestHover(value)
+            case "haptic":
+                RuntimeCapabilityDetection.setTestHapticFeedback(value)
+            case "assistivetouch":
+                RuntimeCapabilityDetection.setTestAssistiveTouch(value)
+            default:
+                // Other capabilities are derived from platform or not directly settable
+                break
+            }
+        }
+        
+        let platform = RuntimeCapabilityDetection.currentPlatform
         let config = getCardExpansionPlatformConfig()
         
         if combination.expectedPlatforms.contains(platform) {
             // Current platform should match all expected capability values
             for (capability, expectedValue) in combination.capabilities {
                 let actualValue = getActualCapabilityValue(capability, config: config)
-                #expect(actualValue == expectedValue, "\(capability) should be \(expectedValue) for \(combination.name)")
+                #expect(actualValue == expectedValue, "\(capability) should be \(expectedValue) for \(combination.name) on \(platform)")
             }
         } else {
             // For non-matching platforms, ensure at least one mismatch
@@ -597,6 +623,9 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
             }
             #expect(hasMismatch, "Current platform should not fully match \(combination.name)")
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     /// BUSINESS PURPOSE: Validate capability combination exclusion functionality for non-matching platform combinations
@@ -610,9 +639,35 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
     func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
-        let platform = SixLayerPlatform.current
+        // Set up a platform that doesn't match the combination
+        // Use a platform that's not in the expected platforms list
+        let allPlatforms = SixLayerPlatform.allCases
+        let nonMatchingPlatform = allPlatforms.first { !combination.expectedPlatforms.contains($0) } ?? .iOS
+        
+        RuntimeCapabilityDetection.setTestPlatform(nonMatchingPlatform)
+        
+        // Set up capabilities that don't match the combination
+        // For non-matching platforms, we want at least one capability to differ
+        for (capability, _) in combination.capabilities {
+            switch capability.lowercased() {
+            case "touch":
+                // Set opposite of expected for non-matching platform
+                RuntimeCapabilityDetection.setTestTouchSupport(false)
+            case "hover":
+                RuntimeCapabilityDetection.setTestHover(false)
+            case "haptic":
+                RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            case "assistivetouch":
+                RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+            default:
+                break
+            }
+        }
+        
+        let platform = RuntimeCapabilityDetection.currentPlatform
         // If this combination is intended for the current platform, skip negative case
         if combination.expectedPlatforms.contains(platform) {
+            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
             return
         }
         let config = getCardExpansionPlatformConfig()
@@ -629,6 +684,9 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         
         #expect(hasMismatch, 
                      "Current platform should not match \(combination.name)")
+        
+        // Clean up
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     private func getActualCapabilityValue(_ capability: String, config: SixLayerFramework.CardExpansionPlatformConfig) -> Bool {

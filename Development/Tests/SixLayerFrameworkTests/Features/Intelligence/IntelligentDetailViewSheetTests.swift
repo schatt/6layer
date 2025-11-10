@@ -61,10 +61,10 @@ struct IntelligentDetailViewSheetTests {
         if let inspector = sheetContent.tryInspect() {
             // Try to find VStack (standard layout structure)
             // This proves the view has actual content structure, not blank
-            if let _ = inspector.tryFind(ViewType.VStack.self) {
+            if let _ = inspector.sixLayerTryFind(ViewType.VStack.self) {
                 // If we found a VStack, the view has structure and content
                 #expect(true, "platformDetailView should have view structure (proves it's not blank)")
-            } else if let _ = inspector.tryFind(ViewType.HStack.self) {
+            } else if let _ = inspector.sixLayerTryFind(ViewType.HStack.self) {
                 // Try finding any structural view
                 #expect(true, "platformDetailView should have view structure (proves it's not blank)")
             } else {
@@ -105,7 +105,7 @@ struct IntelligentDetailViewSheetTests {
             // Try to find Text views (which would contain the field values)
             do {
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let texts = try inspector.findAll(ViewType.Text.self)
+                let texts = try inspector.sixLayerFindAll(ViewType.Text.self)
                 #else
                 let texts: [Inspectable] = []
                 #endif

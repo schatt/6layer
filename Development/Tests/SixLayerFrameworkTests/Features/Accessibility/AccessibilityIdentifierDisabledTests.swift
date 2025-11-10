@@ -31,16 +31,14 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let _ = try? inspectedView.button() {
+               let _ = try? inspectedView.sixLayerButton() {
                 // When automatic IDs are disabled, the view should not have an accessibility identifier modifier
                 // This means we can't inspect for accessibility identifiers
                 // Just verify the view is inspectable
-                print("✅ View is inspectable when automatic IDs disabled (no accessibility modifier applied)")
             } else {
                 Issue.record("Failed to inspect view")
             }
             #else
-            print("✅ View is inspectable when automatic IDs disabled (ViewInspector not available)")
             #endif
         }
     }
@@ -62,7 +60,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let buttonID = try? inspectedView.accessibilityIdentifier() {
+               let buttonID = try? inspectedView.sixLayerAccessibilityIdentifier() {
                 // Manual ID should work regardless of automatic setting
                 #expect(buttonID == "manual-test-button", "Manual accessibility identifier should work when automatic is disabled")
                 
@@ -87,12 +85,10 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
             let _ = try view.inspect()
-            print("✅ Breadcrumb modifiers work when automatic IDs disabled")
         } catch {
             Issue.record("Breadcrumb modifiers should not crash when automatic IDs disabled")
         }
         #else
-        print("✅ Breadcrumb modifiers work when automatic IDs disabled (ViewInspector not available)")
         #endif
     }
 }

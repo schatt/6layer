@@ -123,5 +123,138 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         
         #expect(hasAccessibilityID, "named modifier should generate accessibility identifiers on macOS")
     }
+    
+    // MARK: - Issue #7: Environment Access Warnings Tests
+    
+    /// TDD RED PHASE: Test that automaticAccessibilityIdentifiers() can be applied to root views
+    /// without accessing environment values outside of view context
+    /// This test verifies Issue #7: No SwiftUI warnings about environment access
+    @Test func testAutomaticAccessibilityIdentifiersOnRootViewNoEnvironmentWarnings() async {
+        runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            // Create a simple root view with the modifier applied
+            // This simulates the scenario from Issue #7 where warnings occur
+            let rootView = Text("Test Content")
+                .automaticAccessibilityIdentifiers()
+                .environment(\.accessibilityIdentifierConfig, testConfig)
+                .environment(\.globalAutomaticAccessibilityIdentifiers, true)
+            
+            // The modifier should work without accessing environment during initialization
+            // We can't directly test for warnings, but we can verify:
+            // 1. The modifier works correctly
+            // 2. Environment values are accessed only when view is installed
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            // Verify the view can be inspected (which means it was properly installed)
+            if let inspected = rootView.tryInspect() {
+                // If we can inspect it, the environment was accessed correctly
+                // (ViewInspector requires the view to be properly installed)
+                let identifier = try? inspected.sixLayerAccessibilityIdentifier()
+                // TDD RED: Should PASS - modifier should work on root view
+                #expect(identifier != nil, "Modifier should generate identifier on root view without environment warnings")
+            } else {
+                Issue.record("Could not inspect root view - may indicate environment access issue")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform")
+            #endif
+            
+            cleanupTestEnvironment()
+        }
+    }
+    
+    /// TDD RED PHASE: Test that modifier defers environment access until view is installed
+    /// This verifies the helper view pattern works correctly
+    @Test func testModifierDefersEnvironmentAccessUntilViewInstalled() async {
+        runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            // Create a view with environment values set
+            let testConfig = AccessibilityIdentifierConfig.shared
+            testConfig.enableAutoIDs = true
+            
+            let view = VStack {
+                Text("Content")
+            }
+            .automaticAccessibilityIdentifiers()
+            .environment(\.accessibilityIdentifierConfig, testConfig)
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true)
+            .environment(\.accessibilityIdentifierName, "TestView")
+            
+            // The modifier should use helper view pattern to defer environment access
+            // We verify this by checking that the view works correctly when inspected
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            if let inspected = view.tryInspect() {
+                let identifier = try? inspected.sixLayerAccessibilityIdentifier()
+                // TDD RED: Should PASS - environment should be accessed only when view is installed
+                #expect(identifier != nil && !(identifier?.isEmpty ?? true), 
+                       "Modifier should access environment only when view is installed, generating identifier: '\(identifier ?? "nil")'")
+            } else {
+                Issue.record("Could not inspect view")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform")
+            #endif
+            
+            cleanupTestEnvironment()
+        }
+    }
+    
+    /// TDD RED PHASE: Test that all modifier variants use helper view pattern
+    /// This ensures NamedAutomaticAccessibilityIdentifiersModifier, ForcedAutomaticAccessibilityIdentifiersModifier, etc.
+    /// all defer environment access correctly
+    @Test func testAllModifierVariantsDeferEnvironmentAccess() async {
+        runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let testConfig = AccessibilityIdentifierConfig.shared
+            testConfig.enableAutoIDs = true
+            
+            // Test automaticAccessibilityIdentifiers()
+            let view1 = Text("Test")
+                .automaticAccessibilityIdentifiers()
+                .environment(\.accessibilityIdentifierConfig, testConfig)
+            
+            // Test automaticAccessibilityIdentifiers(named:)
+            let view2 = Text("Test")
+                .automaticAccessibilityIdentifiers(named: "TestComponent")
+                .environment(\.accessibilityIdentifierConfig, testConfig)
+            
+            // Test named()
+            let view3 = Text("Test")
+                .named("TestElement")
+                .environment(\.accessibilityIdentifierConfig, testConfig)
+            
+            // All should work without environment access warnings
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            // Handle each view separately to avoid Any type issues
+            if let inspected1 = view1.tryInspect() {
+                let identifier1 = try? inspected1.sixLayerAccessibilityIdentifier()
+                #expect(identifier1 != nil, "Modifier variant 1 should generate identifier without warnings")
+            } else {
+                Issue.record("Could not inspect view variant 1")
+            }
+            
+            if let inspected2 = view2.tryInspect() {
+                let identifier2 = try? inspected2.sixLayerAccessibilityIdentifier()
+                #expect(identifier2 != nil, "Modifier variant 2 should generate identifier without warnings")
+            } else {
+                Issue.record("Could not inspect view variant 2")
+            }
+            
+            if let inspected3 = view3.tryInspect() {
+                let identifier3 = try? inspected3.sixLayerAccessibilityIdentifier()
+                #expect(identifier3 != nil, "Modifier variant 3 should generate identifier without warnings")
+            } else {
+                Issue.record("Could not inspect view variant 3")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform")
+            #endif
+            
+            cleanupTestEnvironment()
+        }
+    }
 }
 

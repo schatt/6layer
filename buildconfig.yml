@@ -34,7 +34,7 @@ platforms:
       - build/ios/*.ipa
     # scheme: Required. The Xcode scheme to build for this platform.
   - name: iOS_tests
-    build_command: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=iOS Simulator,name=iPhone 17 Pro Max"
+    build_command: xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=iOS Simulator,name=iPhone 17 Pro Max" -parallel-testing-enabled YES -maximum-concurrent-test-simulator-destinations 2
     artifact_dir: build/ios
     artifact_patterns:
       - build/ios/*.ipa
@@ -76,7 +76,13 @@ build_groups:
     targets:
       - macOS
       - macOS_tests
+  mac_test:
+    targets:
+      - macOS_tests
   iOS:
     targets:
       - iOS_build
+      - iOS_tests
+  iOS_test:
+    targets:
       - iOS_tests

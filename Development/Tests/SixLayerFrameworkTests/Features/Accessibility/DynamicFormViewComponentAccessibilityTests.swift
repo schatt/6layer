@@ -194,15 +194,15 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and TextField
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and TextField")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and TextField")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Full Name", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Full Name", "Label should show field label")
 
                 // Second element should be a TextField
-                let _ = try vStack.textField(1)
+                let _ = try vStack.sixLayerTextField(1)
             // Note: ViewInspector doesn't provide direct access to TextField placeholder text
             // We verify the TextField exists and has proper binding instead
 
@@ -257,15 +257,15 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and TextField
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and TextField")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and TextField")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Age", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Age", "Label should show field label")
 
                 // Second element should be a TextField with numeric keyboard
-                let textField = try vStack.textField(1)
+                let textField = try vStack.sixLayerTextField(1)
                 // Note: ViewInspector doesn't provide direct access to TextField placeholder text
                 // We verify the TextField exists and check keyboard type instead
 
@@ -326,12 +326,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and TextEditor
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and TextEditor")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and TextEditor")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Description", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Description", "Label should show field label")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -385,12 +385,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and Picker
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and Picker")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and Picker")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Country", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Country", "Label should show field label")
 
             // Should have accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -444,12 +444,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and selection controls
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and selection controls")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and selection controls")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Interests", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Interests", "Label should show field label")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -503,12 +503,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and radio controls
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and radio controls")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and radio controls")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Gender", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Gender", "Label should show field label")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -561,12 +561,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and Toggle
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and Toggle")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and Toggle")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Subscribe to Newsletter", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Subscribe to Newsletter", "Label should show field label")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -619,12 +619,12 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             do {
                 // Should have a VStack containing label and Toggle
-                let vStack = try inspected.vStack()
-                #expect(vStack.count >= 2, "Should have label and Toggle")
+                let vStack = try inspected.sixLayerVStack()
+                #expect(vStack.sixLayerCount >= 2, "Should have label and Toggle")
 
                 // First element should be the label Text
-                let labelText = try vStack.text(0)
-                #expect(try labelText.string() == "Enable Feature", "Label should show field label")
+                let labelText = try vStack.sixLayerText(0)
+                #expect(try labelText.sixLayerString() == "Enable Feature", "Label should show field label")
 
                 // Should have accessibility identifier
                 let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(

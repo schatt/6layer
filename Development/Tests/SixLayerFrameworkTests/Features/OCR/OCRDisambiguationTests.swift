@@ -75,8 +75,8 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
-            if let textElement = try? inspected.text(),
-               let text = try? textElement.string() {
+            if let textElement = try? inspected.sixLayerText(),
+               let text = try? textElement.sixLayerString() {
                 #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
             } else {
                 Issue.record("OCRDisambiguationView inspection failed - disambiguation interface not implemented")
@@ -130,8 +130,8 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
-            if let textElement = try? inspected.text(),
-               let text = try? textElement.string() {
+            if let textElement = try? inspected.sixLayerText(),
+               let text = try? textElement.sixLayerString() {
                 #expect(text == "OCR Disambiguation View (Stub)", "Should be stub text until implemented")
             } else {
                 Issue.record("OCRDisambiguationView confidence display not implemented")
@@ -148,7 +148,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
 }
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
 @MainActor
-@Suite("O C R Disambiguation")
+@Suite("OCR Disambiguation")
 open class OCRDisambiguationTests: BaseTestClass {// MARK: - Real OCR Disambiguation Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test OCR disambiguation functionality:

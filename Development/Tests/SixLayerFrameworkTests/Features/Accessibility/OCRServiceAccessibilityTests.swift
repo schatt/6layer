@@ -5,7 +5,7 @@ import SwiftUI
 /// BUSINESS PURPOSE: Accessibility tests for OCRService integration
 /// Tests that views using OCRService generate proper accessibility identifiers
 /// OCRService itself is a service class and doesn't generate views, but views that use it should
-@Suite("O C R Service Accessibility")
+@Suite("OCR Service Accessibility")
 open class OCRServiceAccessibilityTests: BaseTestClass {
         
     // MARK: - OCRService Integration Tests

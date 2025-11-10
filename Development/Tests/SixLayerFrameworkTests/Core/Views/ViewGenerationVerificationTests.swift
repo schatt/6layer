@@ -58,17 +58,17 @@ struct ViewGenerationVerificationTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view should be wrapped in AnyView
-            let anyView = try inspected.anyView()
+            let anyView = try inspected.sixLayerAnyView()
             // Detail view creation succeeded (non-optional result)
 
             // The view should contain text elements with our data
-            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain the title from our test data
             let hasTitleContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Item 1")
                 } catch {
                     return false
@@ -79,7 +79,7 @@ struct ViewGenerationVerificationTests {
             // Should contain the subtitle from our test data
             let hasSubtitleContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Subtitle 1")
                 } catch {
                     return false
@@ -134,13 +134,13 @@ struct ViewGenerationVerificationTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let compactInspectionResult = withInspectedView(compactView) { compactInspected in
             // Compact view should contain our test data
-            let compactText = compactInspected.tryFindAll(ViewType.Text.self)
+            let compactText = compactInspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!compactText.isEmpty, "Compact view should contain text elements")
 
             // Should contain the title
             let compactHasTitle = compactText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Item 1")
                 } catch {
                     return false
@@ -151,13 +151,13 @@ struct ViewGenerationVerificationTests {
 
         let detailedInspectionResult = withInspectedView(detailedView) { detailedInspected in
             // Detailed view should contain our test data
-            let detailedText = detailedInspected.tryFindAll(ViewType.Text.self)
+            let detailedText = detailedInspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!detailedText.isEmpty, "Detailed view should contain text elements")
 
             // Should contain the title
             let detailedHasTitle = detailedText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Item 1")
                 } catch {
                     return false
@@ -205,7 +205,7 @@ struct ViewGenerationVerificationTests {
             // Should contain custom field content
             let hasCustomContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Custom:") && textContent.contains("=")
                 } catch {
                     return false
@@ -246,7 +246,7 @@ struct ViewGenerationVerificationTests {
             // Should contain the title (which is not nil)
             let hasTitleContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Item 2")
                 } catch {
                     return false
@@ -257,7 +257,7 @@ struct ViewGenerationVerificationTests {
             // Should contain the description (which is not nil)
             let hasDescriptionContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Description 2")
                 } catch {
                     return false

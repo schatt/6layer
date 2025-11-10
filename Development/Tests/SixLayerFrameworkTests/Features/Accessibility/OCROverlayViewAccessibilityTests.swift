@@ -40,7 +40,6 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         
         // MANDATORY: Test that platform-specific behavior is applied (UIImage on iOS)
         // This validates that the platform-dependent behavior actually works
-        print("✅ iOS Platform Mocking: OCROverlayView should use UIImage on iOS")
     }
     
     @Test @MainActor func testOCROverlayView_AppliesCorrectModifiersOnMacOS() {
@@ -71,7 +70,6 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
         
         // MANDATORY: Test that platform-specific behavior is applied (NSImage on macOS)
         // This validates that the platform-dependent behavior actually works
-        print("✅ macOS Platform Mocking: OCROverlayView should use NSImage on macOS")
     }
     
     // MARK: - Helper Methods

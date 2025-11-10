@@ -79,16 +79,18 @@ open class Layer4PlatformImageArchitectureTests {
         
         let coordinator = CameraView.Coordinator(parent)
         
-        // When: Simulate delegate method call with PlatformImage
-        // This tests that the delegate method works with PlatformImage
+        // When: Simulate delegate method call with UIImage (system boundary input)
+        // UIImagePickerController returns UIImage, which the coordinator converts to PlatformImage
+        // We create a PlatformImage for testing, then use implicit conversion to UIImage
+        let testPlatformImage = createTestPlatformImage()
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: createTestPlatformImage()
+            .originalImage: testPlatformImage.uiImage  // Use .uiImage property (PlatformImage → UIImage conversion)
         ]
         
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
-        // Then: Delegate should work with PlatformImage
-        #expect(capturedImage != nil, "Delegate should work with PlatformImage")
+        // Then: Delegate should convert UIImage to PlatformImage and call callback
+        #expect(capturedImage != nil, "Delegate should convert UIImage to PlatformImage and call callback")
         #expect(capturedImage!.size.width > 0, "PlatformImage should have valid properties")
         
         #elseif os(macOS)

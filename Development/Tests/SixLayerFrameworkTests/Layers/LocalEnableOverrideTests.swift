@@ -34,15 +34,14 @@ open class LocalEnableOverrideTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
                 let inspectedView = try view.inspectView()
-                let button = try inspectedView.button()
-                let accessibilityID = try button.accessibilityIdentifier()
+                let button = try inspectedView.sixLayerButton()
+                let accessibilityID = try button.sixLayerAccessibilityIdentifier()
                 
                 // Should have an ID - local enable should override global disable
                 #expect(!accessibilityID.isEmpty, "Local enable should override global disable")
                 #expect(accessibilityID.contains("TestApp"), "ID should contain namespace")
                 #expect(accessibilityID.contains("SixLayer"), "ID should contain framework prefix")
                 
-                print("✅ SUCCESS: Local enable overrode global disable")
                 print("   Generated ID: '\(accessibilityID)'")
                 
             } catch {
@@ -84,14 +83,13 @@ open class LocalEnableOverrideTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let button = try? inspectedView.button(),
-               let accessibilityID = try? button.accessibilityIdentifier() {
+               let button = try? inspectedView.sixLayerButton(),
+               let accessibilityID = try? button.sixLayerAccessibilityIdentifier() {
                 // .named() should always work regardless of global settings
                 // This is the correct behavior - explicit naming should not be affected by global config
                 #expect(!accessibilityID.isEmpty, ".named() should always generate identifier regardless of global settings")
                 #expect(accessibilityID.contains("DisabledButton"), "Should contain the explicit name")
                 
-                print("✅ SUCCESS: .named() works regardless of global settings")
                 print("   Generated ID: '\(accessibilityID)'")
             } else {
                 Issue.record("Failed to inspect view with explicit naming")
@@ -128,20 +126,18 @@ open class LocalEnableOverrideTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
                 let inspectedView = try view.inspectView()
-                let button = try inspectedView.button()
-                let accessibilityID = try button.accessibilityIdentifier()
+                let button = try inspectedView.sixLayerButton()
+                let accessibilityID = try button.sixLayerAccessibilityIdentifier()
                 
                 // .named() should always work regardless of global settings
                 // This is the correct behavior - explicit naming should not be affected by global config
                 #expect(!accessibilityID.isEmpty, ".named() should always work regardless of global config")
                 #expect(accessibilityID.contains("FrameworkButton"), "Should contain the explicit name")
                 
-                print("✅ SUCCESS: Framework component respected global config")
                 print("   No ID generated (as expected)")
                 
             } catch {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
-                print("✅ SUCCESS: Framework component respected global config (no modifier applied)")
             }
             #else
             Issue.record("ViewInspector not available on this platform (likely macOS)")

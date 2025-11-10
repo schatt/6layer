@@ -77,17 +77,16 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
-            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
 
             // Should contain text from our sample items
-            let textContents = viewText.compactMap { try? $0.string() }
+            let textContents = viewText.compactMap { try? $0.sixLayerString() }
             #expect(textContents.contains(where: { $0.contains("Item 1") }),
                    "Should contain text from first sample item")
             #expect(textContents.contains(where: { $0.contains("Item 2") }),
                    "Should contain text from second sample item")
 
-            print("✅ Collection view with callbacks contains expected content")
         }
         #else
         let inspectionResult: Bool? = nil
@@ -112,17 +111,16 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
-            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
 
             // Should contain text from our sample items
-            let textContents = viewText.compactMap { try? $0.string() }
+            let textContents = viewText.compactMap { try? $0.sixLayerString() }
             #expect(textContents.contains(where: { $0.contains("Item 1") }),
                    "Should contain text from first sample item")
             #expect(textContents.contains(where: { $0.contains("Item 2") }),
                    "Should contain text from second sample item")
 
-            print("✅ Collection view without callbacks contains expected content")
         }
         #else
         let inspectionResult: Bool? = nil
@@ -231,18 +229,18 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspector in
             // Find the ListCardComponent instances
-            let listCardComponents = try inspector.findAll(ListCardComponent<TestItem>.self)
+            let listCardComponents = try inspector.sixLayerFindAll(ListCardComponent<TestItem>.self)
 
             // Then: Verify the view structure
             #expect(listCardComponents.count == sampleItems.count, "Should have cards for each item")
 
             // Get the first card - it's now a VStack, find the HStack child (where onTapGesture is applied)
             if let firstCard = listCardComponents.first {
-                let vStack = try firstCard.vStack()
+                let vStack = try firstCard.sixLayerVStack()
                 // VStack contains: HStack at index 0 (the card content), Optional HStack at index 1 (action buttons)
                 // Find the first HStack which has the onTapGesture
-                let hStack = try vStack.hStack(0)
-                try hStack.callOnTapGesture()
+                let hStack = try vStack.sixLayerHStack(0)
+                try hStack.sixLayerCallOnTapGesture()
 
                 // Verify callback was ACTUALLY invoked
                 #expect(callbackInvoked, "Callback should be invoked when card is tapped")

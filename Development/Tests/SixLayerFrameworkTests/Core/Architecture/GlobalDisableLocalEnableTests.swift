@@ -103,7 +103,6 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             #expect(!id.isEmpty, ".named() should always work regardless of global config")
             #expect(id.contains("FrameworkButton"), "Should contain the explicit name")
             
-            print("🟢 TDD Green Phase: Generated ID='\(id)' - .named() always works")
         }
     }
     
@@ -132,7 +131,6 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             #expect(!id.isEmpty, ".named() should always work regardless of global config")
             #expect(id.contains("PlainButton"), "Should contain the explicit name")
             
-            print("🟢 TDD Green Phase: Generated ID='\(id)' - .named() always works")
         }
     }
     
@@ -148,23 +146,23 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         // Try to find a button in the hierarchy
-        if let button = inspectedView.tryFind(Button<Text>.self),
-           let id = try? button.accessibilityIdentifier() {
+        if let button = inspectedView.sixLayerTryFind(Button<Text>.self),
+           let id = try? button.sixLayerAccessibilityIdentifier() {
             print("🔍 Found button, trying to get accessibility identifier")
             return id
         }
 
         // Try to find any view with accessibility identifier by looking deeper
-        if let anyView = inspectedView.tryFind(ViewType.AnyView.self) {
+        if let anyView = inspectedView.sixLayerTryFind(ViewType.AnyView.self) {
             print("🔍 Found AnyView, trying to inspect its contents")
             // Try to find a button inside the AnyView
-            if let innerButton = anyView.tryFind(Button<Text>.self),
-               let id = try? innerButton.accessibilityIdentifier() {
+            if let innerButton = anyView.sixLayerTryFind(Button<Text>.self),
+               let id = try? innerButton.sixLayerAccessibilityIdentifier() {
                 print("🔍 Found button inside AnyView")
                 return id
             }
             // Try to get accessibility identifier from the AnyView itself
-            if let id = try? anyView.accessibilityIdentifier() {
+            if let id = try? anyView.sixLayerAccessibilityIdentifier() {
                 return id
             }
             print("🔍 AnyView inspection error")
@@ -172,7 +170,7 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
 
         // Try the root view
         print("🔍 Trying root view accessibility identifier")
-        if let id = try? inspectedView.accessibilityIdentifier() {
+        if let id = try? inspectedView.sixLayerAccessibilityIdentifier() {
             return id
         }
         #endif

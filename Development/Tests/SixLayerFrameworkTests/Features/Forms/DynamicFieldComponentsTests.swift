@@ -50,23 +50,23 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
             // Find all text elements and check if they contain the options
-            if let allTexts = try? inspected.findAll(Text.self) {
+            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
                 let foundOption1 = allTexts.contains { text in
-                    (try? text.string())?.contains("Option 1") ?? false
+                    (try? text.sixLayerString())?.contains("Option 1") ?? false
                 }
                 let foundOption2 = allTexts.contains { text in
-                    (try? text.string())?.contains("Option 2") ?? false
+                    (try? text.sixLayerString())?.contains("Option 2") ?? false
                 }
                 let foundOption3 = allTexts.contains { text in
-                    (try? text.string())?.contains("Option 3") ?? false
+                    (try? text.sixLayerString())?.contains("Option 3") ?? false
                 }
                 #expect(foundOption1 || foundOption2 || foundOption3, "Should display options from field")
             }
             
             // Additional check: should NOT show stub text (supplementary verification)
-            if let allTexts = try? inspected.findAll(Text.self) {
+            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
                 let hasStubText = allTexts.contains { text in
-                    (try? text.string())?.contains("Multi-select - TDD Red Phase Stub") ?? false
+                    (try? text.sixLayerString())?.contains("Multi-select - TDD Red Phase Stub") ?? false
                 }
                 if hasStubText {
                     Issue.record("DynamicMultiSelectField still shows stub text - needs implementation")
@@ -123,15 +123,15 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render all radio options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            if let allTexts = try? inspected.findAll(Text.self) {
+            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
                 let foundChoiceA = allTexts.contains { text in
-                    (try? text.string())?.contains("Choice A") ?? false
+                    (try? text.sixLayerString())?.contains("Choice A") ?? false
                 }
                 let foundChoiceB = allTexts.contains { text in
-                    (try? text.string())?.contains("Choice B") ?? false
+                    (try? text.sixLayerString())?.contains("Choice B") ?? false
                 }
                 let foundChoiceC = allTexts.contains { text in
-                    (try? text.string())?.contains("Choice C") ?? false
+                    (try? text.sixLayerString())?.contains("Choice C") ?? false
                 }
                 #expect(foundChoiceA || foundChoiceB || foundChoiceC, "Should display radio options")
             }
@@ -185,15 +185,15 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render checkbox options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            if let allTexts = try? inspected.findAll(Text.self) {
+            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
                 let foundCheck1 = allTexts.contains { text in
-                    (try? text.string())?.contains("Check 1") ?? false
+                    (try? text.sixLayerString())?.contains("Check 1") ?? false
                 }
                 let foundCheck2 = allTexts.contains { text in
-                    (try? text.string())?.contains("Check 2") ?? false
+                    (try? text.sixLayerString())?.contains("Check 2") ?? false
                 }
                 let foundCheck3 = allTexts.contains { text in
-                    (try? text.string())?.contains("Check 3") ?? false
+                    (try? text.sixLayerString())?.contains("Check 3") ?? false
                 }
                 #expect(foundCheck1 || foundCheck2 || foundCheck3, "Should display checkbox options")
             }
@@ -242,7 +242,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have text input capability - check if we can find text fields
-            if let textFields = try? inspected.findAll(TextField<Text>.self) {
+            if let textFields = try? inspected.sixLayerFindAll(TextField<Text>.self) {
                 #expect(!textFields.isEmpty, "Should provide text input interface")
             }
         } else {
@@ -484,7 +484,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render autocomplete interface
         if let inspected = view.tryInspect() {
             // Should have text input with suggestions
-            let hasAutocomplete = inspected.count > 0
+            let hasAutocomplete = inspected.sixLayerCount > 0
             #expect(hasAutocomplete, "Should provide autocomplete interface")
         } else {
             Issue.record("DynamicAutocompleteField interface not found")
@@ -530,15 +530,15 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render enum options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            if let allTexts = try? inspected.findAll(Text.self) {
+            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
                 let foundValue1 = allTexts.contains { text in
-                    (try? text.string())?.contains("Value1") ?? false
+                    (try? text.sixLayerString())?.contains("Value1") ?? false
                 }
                 let foundValue2 = allTexts.contains { text in
-                    (try? text.string())?.contains("Value2") ?? false
+                    (try? text.sixLayerString())?.contains("Value2") ?? false
                 }
                 let foundValue3 = allTexts.contains { text in
-                    (try? text.string())?.contains("Value3") ?? false
+                    (try? text.sixLayerString())?.contains("Value3") ?? false
                 }
                 #expect(foundValue1 || foundValue2 || foundValue3, "Should display enum options")
             }
@@ -586,7 +586,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render custom component or error
         if let inspected = view.tryInspect() {
             // Should have some UI (either custom component or error message)
-            let hasInterface = inspected.count > 0
+            let hasInterface = inspected.sixLayerCount > 0
             #expect(hasInterface, "Should render custom component or error message")
         } else {
             Issue.record("DynamicCustomField interface not found")
@@ -631,7 +631,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render color picker interface
         if let inspected = view.tryInspect() {
             // Should have color selection capability
-            let hasColorPicker = inspected.count > 0
+            let hasColorPicker = inspected.sixLayerCount > 0
             #expect(hasColorPicker, "Should provide color picker interface")
         } else {
             Issue.record("DynamicColorField interface not found")
@@ -676,7 +676,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render multi-line text editor
         if let inspected = view.tryInspect() {
             // Should have text input capability
-            let hasTextArea = inspected.count > 0
+            let hasTextArea = inspected.sixLayerCount > 0
             #expect(hasTextArea, "Should provide multi-line text editor")
         } else {
             Issue.record("DynamicTextAreaField interface not found")

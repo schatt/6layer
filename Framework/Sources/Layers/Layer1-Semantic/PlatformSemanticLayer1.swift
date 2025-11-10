@@ -1525,6 +1525,12 @@ public struct CollectionEmptyStateView: View {
     }
     
     private var emptyStateMessage: String {
+        // Check for custom message in customPreferences first (takes precedence)
+        if let customMessage = hints.customPreferences["customMessage"], !customMessage.isEmpty {
+            return customMessage
+        }
+        
+        // Fall back to default context/complexity-based messages
         let contextMessage = contextSpecificMessage
         let complexityMessage = complexitySpecificMessage
         

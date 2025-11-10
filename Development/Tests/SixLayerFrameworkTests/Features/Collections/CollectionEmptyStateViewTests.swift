@@ -1,6 +1,10 @@
 import Testing
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+import ViewInspector
+#endif
 /// Tests for CollectionEmptyStateView component
 /// 
 /// BUSINESS PURPOSE: Ensure CollectionEmptyStateView generates proper accessibility identifiers
@@ -98,6 +102,163 @@ open class CollectionEmptyStateViewTests {
             #expect(manualPassed, "CollectionEmptyStateView should work in manual mode")
             #expect(semanticPassed, "CollectionEmptyStateView should work in semantic mode")
             #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
+        }
+    }
+    
+    // MARK: - Empty State Bug Fix Tests (TDD Red Phase)
+    
+    /// TDD RED PHASE: Test that custom message from customPreferences is displayed
+    /// This test SHOULD FAIL until custom message support is implemented
+    @Test
+    func testEmptyStateDisplaysCustomMessage() async {
+        await MainActor.run {
+            setupTestEnvironment()
+            
+            let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."
+            let hints = PresentationHints(
+                dataType: .collection,
+                context: .browse,
+                customPreferences: [
+                    "customMessage": customMessage
+                ]
+            )
+            
+            let view = CollectionEmptyStateView(
+                hints: hints,
+                onCreateItem: nil,
+                customCreateView: nil
+            )
+            
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            if let inspected = view.tryInspect() {
+                // Find the message text in the VStack
+                if let vStack = inspected.sixLayerTryFind(ViewType.VStack.self) {
+                    // The message should be in a Text view within the VStack
+                    let texts = try? vStack.sixLayerFindAll(ViewType.Text.self)
+                    let messageText = texts?.first { text in
+                        let string = try? text.sixLayerString()
+                        return string?.contains("vehicles") ?? false || string?.contains("vehicle") ?? false
+                    }
+                    
+                    if let messageText = messageText {
+                        let actualMessage = try? messageText.sixLayerString()
+                        // TDD RED: Should FAIL - custom message should be displayed
+                        #expect(actualMessage?.contains(customMessage) ?? false,
+                               "Empty state should display custom message from customPreferences. Expected: '\(customMessage)', Got: '\(actualMessage ?? "nil")'")
+                    } else {
+                        Issue.record("Could not find message text in empty state view")
+                    }
+                }
+            } else {
+                Issue.record("Failed to inspect CollectionEmptyStateView")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
+            
+            cleanupTestEnvironment()
+        }
+    }
+    
+    /// TDD RED PHASE: Test that onCreateItem callback displays a button
+    /// This test SHOULD FAIL if button is not displayed when onCreateItem is provided
+    @Test
+    func testEmptyStateDisplaysCreateButtonWhenOnCreateItemProvided() async {
+        await MainActor.run {
+            setupTestEnvironment()
+            
+            var createItemCalled = false
+            let onCreateItem: () -> Void = {
+                createItemCalled = true
+            }
+            
+            let hints = PresentationHints(
+                dataType: .collection,
+                context: .browse
+            )
+            
+            let view = CollectionEmptyStateView(
+                hints: hints,
+                onCreateItem: onCreateItem,
+                customCreateView: nil
+            )
+            
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            if let inspected = view.tryInspect() {
+                // Find the button in the view
+                let button = inspected.sixLayerTryFind(ViewType.Button.self)
+                
+                // TDD RED: Should FAIL - button should exist when onCreateItem is provided
+                #expect(button != nil,
+                       "Empty state should display create button when onCreateItem is provided")
+                
+                // Try to tap the button to verify it calls the callback
+                if let button = button {
+                    try? button.sixLayerTap()
+                    #expect(createItemCalled, "Button tap should call onCreateItem callback")
+                }
+            } else {
+                Issue.record("Failed to inspect CollectionEmptyStateView")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
+            
+            cleanupTestEnvironment()
+        }
+    }
+    
+    /// TDD RED PHASE: Test that custom message takes precedence over default context message
+    @Test
+    func testCustomMessageTakesPrecedenceOverDefaultMessage() async {
+        await MainActor.run {
+            setupTestEnvironment()
+            
+            let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."
+            let hints = PresentationHints(
+                dataType: .collection,
+                context: .navigation, // This would normally show "No navigation items available."
+                customPreferences: [
+                    "customMessage": customMessage
+                ]
+            )
+            
+            let view = CollectionEmptyStateView(
+                hints: hints,
+                onCreateItem: nil,
+                customCreateView: nil
+            )
+            
+            // Using wrapper - when ViewInspector works on macOS, no changes needed here
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            if let inspected = view.tryInspect() {
+                if let vStack = inspected.sixLayerTryFind(ViewType.VStack.self) {
+                    let texts = try? vStack.sixLayerFindAll(ViewType.Text.self)
+                    let messageText = texts?.first { text in
+                        let string = try? text.sixLayerString()
+                        return string?.count ?? 0 > 10 // Find the longer message text
+                    }
+                    
+                    if let messageText = messageText {
+                        let actualMessage = try? messageText.sixLayerString()
+                        // TDD RED: Should FAIL - custom message should override default
+                        #expect(actualMessage?.contains(customMessage) ?? false,
+                               "Custom message should override default context message. Expected: '\(customMessage)', Got: '\(actualMessage ?? "nil")'")
+                        // Should NOT contain the default navigation message
+                        #expect(!(actualMessage?.contains("No navigation items available") ?? false),
+                               "Custom message should not show default navigation message")
+                    }
+                }
+            } else {
+                Issue.record("Failed to inspect CollectionEmptyStateView")
+            }
+            #else
+            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            #endif
+            
+            cleanupTestEnvironment()
         }
     }
     

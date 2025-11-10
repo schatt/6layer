@@ -60,7 +60,6 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         // MANDATORY: Test iOS-specific behavior in simulator
         testIOSSimulatorBehavior(collectionView)
         
-        print("✅ iOS Platform Testing: Framework should return iOS-optimized view structure")
     }
     
     @Test func testExpandableCardCollectionView_AppliesCorrectModifiersOnMacOS() {
@@ -106,7 +105,6 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         // MANDATORY: Test macOS-specific behavior in simulator
         testMacOSSimulatorBehavior(collectionView)
         
-        print("✅ macOS Platform Testing: Framework should return macOS-optimized view structure")
     }
     
     // MARK: - Simulator Testing Methods

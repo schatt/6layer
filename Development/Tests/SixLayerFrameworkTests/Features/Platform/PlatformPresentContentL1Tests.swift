@@ -77,11 +77,11 @@ open class PlatformPresentContentL1Tests {
             // The view should be wrapped in AnyView
             guard let inspected = view.tryInspect() else { return }
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let anyView = try inspected.anyView()
+            let anyView = try inspected.sixLayerAnyView()
             // anyView is non-optional InspectableView (throws on failure), so it exists if we reach here
             
             // The view should contain text elements with our string content
-            let viewText = try inspected.findAll(ViewType.Text.self)
+            let viewText = try inspected.sixLayerFindAll(ViewType.Text.self)
             #else
             let anyView: Inspectable = DummyInspectable()
             let viewText: [Inspectable] = []
@@ -94,7 +94,7 @@ open class PlatformPresentContentL1Tests {
             // This is a framework bug that should be fixed
             let hasStringContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     print("DEBUG: Found text content: '\(textContent)'")
                     return textContent.contains("Hello, World!")
                 } catch {
@@ -112,7 +112,7 @@ open class PlatformPresentContentL1Tests {
             // This test documents the current behavior until the framework bug is fixed
             let hasValueLabel = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Value")
                 } catch {
                     return false
@@ -153,11 +153,11 @@ open class PlatformPresentContentL1Tests {
             // The view should be wrapped in AnyView
             guard let inspected = view.tryInspect() else { return }
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let anyView = try inspected.anyView()
+            let anyView = try inspected.sixLayerAnyView()
             #expect(anyView != nil, "Number content should be wrapped in AnyView")
             
             // The view should contain text elements with our number content
-            let viewText = try inspected.findAll(ViewType.Text.self)
+            let viewText = try inspected.sixLayerFindAll(ViewType.Text.self)
             #else
             let anyView: Inspectable = DummyInspectable()
             let viewText: [Inspectable] = []
@@ -167,7 +167,7 @@ open class PlatformPresentContentL1Tests {
             // Should contain our actual number content
             let hasNumberContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("42")
                 } catch {
                     return false

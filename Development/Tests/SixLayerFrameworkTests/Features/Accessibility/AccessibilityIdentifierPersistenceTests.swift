@@ -110,7 +110,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             let id = generateIDForView(view)
             
             // Wait a bit to ensure timestamp would change
-            Thread.sleep(forTimeInterval: 0.1)
+            // Reduced from 0.1s to 0.01s for faster test execution
+            Thread.sleep(forTimeInterval: 0.01)
             
             let view2 = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
@@ -210,7 +211,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             let id1 = generateIDForView(view1)
             
             // Same structure, different time
-            Thread.sleep(forTimeInterval: 0.1)
+            // Reduced from 0.1s to 0.01s for faster test execution
+            Thread.sleep(forTimeInterval: 0.01)
             
             let view2 = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
@@ -255,7 +257,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             config.clearDebugLog()
             
             // Wait to ensure any timing-based differences would show
-            Thread.sleep(forTimeInterval: 0.1)
+            // Reduced from 0.1s to 0.01s for faster test execution
+            Thread.sleep(forTimeInterval: 0.01)
             
             // Generate ID for second identical view
             let view2 = createIdenticalView()
@@ -264,7 +267,6 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             // This assertion SHOULD PASS with our fix
             #expect(id1 == id2, "Truly identical views should generate identical IDs")
             
-            print("🟢 TDD Green Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
             
             // Cleanup
             cleanupTestEnvironment()
@@ -307,7 +309,6 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             // This assertion SHOULD PASS with our fix
             #expect(id1 == id2, "IDs should persist across config resets")
             
-            print("🟢 TDD Green Phase: ID1='\(id1)', ID2='\(id2)' - Should be equal")
             
             // Cleanup
             cleanupTestEnvironment()
@@ -320,8 +321,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
-           let button = try? inspectedView.button(),
-           let id = try? button.accessibilityIdentifier() {
+           let button = try? inspectedView.sixLayerButton(),
+           let id = try? button.sixLayerAccessibilityIdentifier() {
             return id
         } else {
             Issue.record("Failed to generate ID for view")

@@ -428,10 +428,6 @@ open class CapabilityAwareFunctionTests {
             #expect(validateCapabilityStateConsistency(capabilities), 
                          "Capability state should be internally consistent on \(platform)")
             
-            // Print capability state for debugging
-            for (capability, isSupported) in capabilities {
-                print("🔍 \(platform): \(capability) = \(isSupported ? "✅" : "❌")")
-            }
         }
         
         // Clean up

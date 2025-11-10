@@ -195,7 +195,6 @@ public func testComponentCreation<T>(
         return false
     }
     
-    print("✅ COMPONENT TEST: \(componentName) created successfully")
     return true
 }
 
@@ -237,7 +236,6 @@ public func testComponentAccessibilityManual<T: View>(
         return false
     }
     
-    print("✅ ACCESSIBILITY MANUAL TEST: \(componentName) passed accessibility manual test")
     return true
 }
 
@@ -279,7 +277,6 @@ public func testComponentAccessibilitySemantic<T: View>(
         return false
     }
     
-    print("✅ ACCESSIBILITY SEMANTIC TEST: \(componentName) passed accessibility semantic test")
     return true
 }
 
@@ -322,7 +319,6 @@ public func testComponentAccessibilityDisabled<T: View>(
         return false
     }
     
-    print("✅ ACCESSIBILITY DISABLED TEST: \(componentName) passed accessibility disabled test")
     return true
 }
 
@@ -355,7 +351,6 @@ public func testComponentAccessibility<T: View>(
         return false
     }
     
-    print("✅ ACCESSIBILITY TEST: \(componentName) passed accessibility test")
     return true
 }
 

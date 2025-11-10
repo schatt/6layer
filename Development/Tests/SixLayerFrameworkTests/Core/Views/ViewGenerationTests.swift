@@ -67,17 +67,17 @@ open class ViewGenerationTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView, so we need to inspect it differently
-            let anyView = try inspected.anyView()
+            let anyView = try inspected.sixLayerAnyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
 
             // Try to find text elements within the AnyView
-            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain field names from our test data
             let hasTitleField = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Title") || textContent.contains("title")
                 } catch {
                     return false
@@ -116,17 +116,17 @@ open class ViewGenerationTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
-            let anyView = try inspected.anyView()
+            let anyView = try inspected.sixLayerAnyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
 
             // The view should contain text elements with our custom format
-            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain custom field content in the format "fieldName: value"
             let hasCustomFieldContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains(": ") && textContent.contains("Item 1")
                 } catch {
                     return false
@@ -166,17 +166,17 @@ open class ViewGenerationTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
-            let anyView = try inspected.anyView()
+            let anyView = try inspected.sixLayerAnyView()
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
 
             // The view should contain text elements
-            let viewText = inspected.tryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain field content from our test data
             let hasFieldContent = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Item 1") || textContent.contains("Subtitle 1")
                 } catch {
                     return false

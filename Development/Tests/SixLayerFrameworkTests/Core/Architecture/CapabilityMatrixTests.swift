@@ -251,7 +251,6 @@ open class CapabilityMatrixTests {
             capabilityTest.testBehavior()
             
             // Test 3: Log the capability status for verification
-            print("✅ \(capabilityTest.name) on \(platform): \(isSupported ? "SUPPORTED" : "NOT SUPPORTED")")
         }
         
         // Also test on platforms where it should NOT be supported
@@ -271,7 +270,6 @@ open class CapabilityMatrixTests {
                          "\(capabilityTest.name) detection should be correct for \(platform) (should NOT be supported)")
             
             // Log the capability status for verification
-            print("✅ \(capabilityTest.name) on \(platform): \(isSupported ? "SUPPORTED" : "NOT SUPPORTED")")
         }
     }
 }

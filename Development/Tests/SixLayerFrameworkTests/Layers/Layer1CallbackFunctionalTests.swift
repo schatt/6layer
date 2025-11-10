@@ -93,20 +93,20 @@ open class Layer1CallbackFunctionalTests {
         // Use ViewInspector to simulate tap
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         let inspectionResult = withInspectedView(view) { inspector in
-            let listViews = try inspector.findAll(ListCollectionView<TestItem>.self)
+            let listViews = try inspector.sixLayerFindAll(ListCollectionView<TestItem>.self)
 
             if let firstList = listViews.first {
                 #expect(listViews.count > 0, "Should have list view")
 
                 // Try to find and tap a card
-                let listCards = try firstList.findAll(ListCardComponent<TestItem>.self)
+                let listCards = try firstList.sixLayerFindAll(ListCardComponent<TestItem>.self)
                 if let firstCard = listCards.first {
                     // ListCardComponent is now a VStack, find the HStack child
-                    let vStack = try firstCard.vStack()
+                    let vStack = try firstCard.sixLayerVStack()
                     // Get the first HStack from the VStack
-                    let hStacks = try vStack.findAll(HStack<Text>.self)
+                    let hStacks = try vStack.sixLayerFindAll(HStack<Text>.self)
                     if let hStack = hStacks.first {
-                        try hStack.callOnTapGesture()
+                        try hStack.sixLayerCallOnTapGesture()
                     }
 
                     // Verify callback was invoked

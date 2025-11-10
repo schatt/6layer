@@ -31,15 +31,14 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let button = try? inspectedView.button(),
-               let accessibilityID = try? button.accessibilityIdentifier() {
+               let button = try? inspectedView.sixLayerButton(),
+               let accessibilityID = try? button.sixLayerAccessibilityIdentifier() {
                 print("🔍 Generated ID: '\(accessibilityID)'")
                 
                 if accessibilityID.isEmpty {
                     print("❌ FAILED: No ID generated - environment variable not working")
                     Issue.record("Environment variable not working - no ID generated")
                 } else {
-                    print("✅ SUCCESS: Environment variable working - ID generated")
                 }
             } else {
                 print("❌ FAILED: Could not inspect view")
@@ -72,15 +71,14 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let button = try? inspectedView.button(),
-               let accessibilityID = try? button.accessibilityIdentifier() {
+               let button = try? inspectedView.sixLayerButton(),
+               let accessibilityID = try? button.sixLayerAccessibilityIdentifier() {
                 print("🔍 Generated ID: '\(accessibilityID)'")
                 
                 if accessibilityID.isEmpty {
                     print("❌ FAILED: No ID generated - direct environment variable not working")
                     Issue.record("Direct environment variable not working - no ID generated")
                 } else {
-                    print("✅ SUCCESS: Direct environment variable working - ID generated")
                 }
             } else {
                 print("❌ FAILED: Could not inspect view")

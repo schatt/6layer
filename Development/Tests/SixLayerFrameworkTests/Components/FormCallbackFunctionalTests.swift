@@ -43,7 +43,7 @@ open class FormCallbackFunctionalTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
-            let buttons = try inspector.findAll(ViewType.Button.self)
+            let buttons = try inspector.sixLayerFindAll(ViewType.Button.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -51,12 +51,12 @@ open class FormCallbackFunctionalTests {
             // Find the Cancel button by inspecting its label text
             for button in buttons {
                 do {
-                    let labelView = try button.labelView()
-                    let labelText = try labelView.text().string()
+                    let labelView = try button.sixLayerLabelView()
+                    let labelText = try labelView.sixLayerText().sixLayerString()
 
                     if labelText == "Cancel" {
                         // Tap the button to invoke its action
-                        try button.tap()
+                        try button.sixLayerTap()
 
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Cancel callback should be invoked when Cancel button is tapped")
@@ -111,7 +111,7 @@ open class FormCallbackFunctionalTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button (not Button<Text>)
-            let buttons = try inspector.findAll(ViewType.Button.self)
+            let buttons = try inspector.sixLayerFindAll(ViewType.Button.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -119,13 +119,13 @@ open class FormCallbackFunctionalTests {
             // Find the Update button by inspecting its label text
             for button in buttons {
                 do {
-                    let labelView = try button.labelView()
-                    let labelText = try labelView.text().string()
+                    let labelView = try button.sixLayerLabelView()
+                    let labelText = try labelView.sixLayerText().sixLayerString()
 
                     // Button text could be "Update" or "Create" depending on whether initialData exists
                     if labelText == "Update" || labelText == "Create" {
                         // Tap the button to invoke its action
-                        try button.tap()
+                        try button.sixLayerTap()
 
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Update callback should be invoked when Update button is tapped")
@@ -182,7 +182,7 @@ open class FormCallbackFunctionalTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(formView) { inspector in
             // Find all buttons in the view using ViewType.Button
-            let buttons = try inspector.findAll(ViewType.Button.self)
+            let buttons = try inspector.sixLayerFindAll(ViewType.Button.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -190,12 +190,12 @@ open class FormCallbackFunctionalTests {
             // Find the Submit button by inspecting its label text
             for button in buttons {
                 do {
-                    let labelView = try button.labelView()
-                    let labelText = try labelView.text().string()
+                    let labelView = try button.sixLayerLabelView()
+                    let labelText = try labelView.sixLayerText().sixLayerString()
 
                     if labelText == "Submit" {
                         // Tap the button to invoke its action
-                        try button.tap()
+                        try button.sixLayerTap()
 
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Submit callback should be invoked when Submit button is tapped")

@@ -6,7 +6,7 @@ import SwiftUI
 /// Ensures OCR layout decision Layer 2 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
 @MainActor
-@Suite("Platform O C R Layout Decision Layer Accessibility")
+@Suite("Platform OCR Layout Decision Layer Accessibility")
 open class PlatformOCRLayoutDecisionLayer2AccessibilityTests: BaseTestClass {    // MARK: - OCR Layout Decision Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRLayout_L2 generates proper accessibility identifiers

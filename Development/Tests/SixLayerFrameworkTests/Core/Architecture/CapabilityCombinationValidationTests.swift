@@ -44,16 +44,6 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     @Test func testCurrentPlatformCombination() {
         let platform = SixLayerPlatform.current
         
-        print("🔍 Current Platform: \(platform)")
-        print("🔍 Capabilities:")
-        print("  - Touch: \(RuntimeCapabilityDetection.supportsTouch ? "✅" : "❌")")
-        print("  - Hover: \(RuntimeCapabilityDetection.supportsHover ? "✅" : "❌")")
-        print("  - Haptic: \(RuntimeCapabilityDetection.supportsHapticFeedback ? "✅" : "❌")")
-        print("  - AssistiveTouch: \(RuntimeCapabilityDetection.supportsAssistiveTouch ? "✅" : "❌")")
-        print("  - VoiceOver: \(RuntimeCapabilityDetection.supportsVoiceOver ? "✅" : "❌")")
-        print("  - SwitchControl: \(RuntimeCapabilityDetection.supportsSwitchControl ? "✅" : "❌")")
-        print("  - Vision: \(RuntimeCapabilityDetection.supportsVision ? "✅" : "❌")")
-        print("  - OCR: \(RuntimeCapabilityDetection.supportsOCR ? "✅" : "❌")")
         
         // Test that the current platform combination is valid
         #expect(validateCurrentPlatformCombination(platform), 
@@ -193,7 +183,6 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
             // iPad can have both touch and hover
             // This is a special case that we allow
             if RuntimeCapabilityDetection.supportsTouch && RuntimeCapabilityDetection.supportsHover {
-                print("✅ iPad supports both touch and hover (special case)")
             }
         } else {
             // Other platforms should have mutual exclusivity
@@ -283,6 +272,5 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         testCapabilityInteractions()
         testEdgeCases()
         
-        print("✅ All capability combinations validated successfully!")
     }
 }

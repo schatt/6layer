@@ -71,8 +71,8 @@ open class DynamicFormViewTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         let inspectionResult = withInspectedView(view) { inspected in
             // Should have a VStack as root
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 3, "Should have title, sections, and submit button")
+            let vStack = try inspected.sixLayerVStack()
+            #expect(vStack.sixLayerCount >= 3, "Should have title, sections, and submit button")
 
             // Should have accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -115,12 +115,12 @@ open class DynamicFormViewTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         let inspectionResult = withInspectedView(view) { inspected in
             // Should have a VStack with leading alignment
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 3, "Should have section title and field views")
+            let vStack = try inspected.sixLayerVStack()
+            #expect(vStack.sixLayerCount >= 3, "Should have section title and field views")
 
             // First element should be the section title
-            let titleText = try vStack.text(0)
-            #expect(try titleText.string() == "Contact Information", "Should show section title")
+            let titleText = try vStack.sixLayerText(0)
+            #expect(try titleText.sixLayerString() == "Contact Information", "Should show section title")
 
             // Should have accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -162,12 +162,12 @@ open class DynamicFormViewTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         let inspectionResult = withInspectedView(view) { inspected in
             // Should have a VStack with leading alignment
-            let vStack = try inspected.vStack()
-            #expect(vStack.count >= 2, "Should have field label and field control")
+            let vStack = try inspected.sixLayerVStack()
+            #expect(vStack.sixLayerCount >= 2, "Should have field label and field control")
 
             // First element should be the field label
-            let labelText = try vStack.text(0)
-            #expect(try labelText.string() == "Username", "Should show field label")
+            let labelText = try vStack.sixLayerText(0)
+            #expect(try labelText.sixLayerString() == "Username", "Should show field label")
 
             // Should have accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -218,8 +218,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have a VStack
-            if let vStack = try? inspected.vStack() {
-                #expect(vStack.count >= 2, "Should have content and navigation")
+            if let vStack = try? inspected.sixLayerVStack() {
+                #expect(vStack.sixLayerCount >= 2, "Should have content and navigation")
             }
 
             // Should have accessibility identifier
@@ -404,9 +404,9 @@ open class DynamicFormViewTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = ocrFieldView.tryInspect() {
             // Look for OCR button by finding the HStack that contains both TextField and Button
-            if let hStack = inspected.tryFind(ViewType.HStack.self) {
+            if let hStack = inspected.sixLayerTryFind(ViewType.HStack.self) {
                 // The HStack should have 2 children: TextField and Button
-                #expect(hStack.count == 2, "OCR field HStack should contain TextField and OCR button")
+                #expect(hStack.sixLayerCount == 2, "OCR field HStack should contain TextField and OCR button")
             }
         } else {
             Issue.record("OCR button not implemented yet")
@@ -419,7 +419,7 @@ open class DynamicFormViewTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = regularFieldView.tryInspect() {
             // Regular field should not have HStack (just VStack with label and TextField)
-            let hStack = inspected.tryFind(ViewType.HStack.self)
+            let hStack = inspected.sixLayerTryFind(ViewType.HStack.self)
             #expect(hStack == nil, "Regular field should not have HStack (no OCR button)")
         }
         #else
@@ -660,9 +660,9 @@ open class DynamicFormViewTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = viewWithOCR.tryInspect() {
             // Should find the batch OCR button by finding buttons and checking their accessibility identifiers
-            let buttons = inspected.tryFindAll(Button<Text>.self)
+            let buttons = inspected.sixLayerTryFindAll(Button<Text>.self)
             let hasOCRButton = buttons.contains { button in
-                (try? button.accessibilityIdentifier())?.contains("Scan Document") ?? false
+                (try? button.sixLayerAccessibilityIdentifier())?.contains("Scan Document") ?? false
             }
             // Batch OCR button check - implementation pending
         } else {
@@ -671,9 +671,9 @@ open class DynamicFormViewTests: BaseTestClass {
 
         // Non-OCR form should not show batch OCR button
         if let inspected = viewWithoutOCR.tryInspect() {
-            let buttons = inspected.tryFindAll(Button<Text>.self)
+            let buttons = inspected.sixLayerTryFindAll(Button<Text>.self)
             let hasOCRButton = buttons.contains { button in
-                (try? button.accessibilityIdentifier())?.contains("Scan Document") ?? false
+                (try? button.sixLayerAccessibilityIdentifier())?.contains("Scan Document") ?? false
             }
             #expect(!hasOCRButton, "Form without OCR fields should not show batch OCR button")
         }

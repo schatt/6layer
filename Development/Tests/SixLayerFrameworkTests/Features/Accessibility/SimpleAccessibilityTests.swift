@@ -41,7 +41,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = testView.tryInspect(),
-           let accessibilityID = try? inspectedView.accessibilityIdentifier() {
+           let accessibilityID = try? inspectedView.sixLayerAccessibilityIdentifier() {
             print("🔍 Found accessibility ID: '\(accessibilityID)'")
             #expect(accessibilityID != "", "Framework component should have accessibility identifier")
         } else {

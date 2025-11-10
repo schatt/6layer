@@ -16,6 +16,84 @@
 import SwiftUI
 import Foundation
 
+// MARK: - Environment Keys
+
+/// KNOWN LIMITATION: SwiftUI may emit warnings about "Accessing Environment outside of being installed on a View"
+/// when using ViewInspector for testing. These warnings occur because ViewInspector creates a temporary view hierarchy
+/// during inspection that isn't a "real" SwiftUI view installation. The warnings are harmless and do not affect functionality.
+/// Environment values are correctly accessed within View `body` methods, which is the proper SwiftUI pattern.
+/// 
+/// This is a known limitation of ViewInspector and cannot be fully eliminated without breaking functionality.
+/// The warnings only appear during test execution and do not affect production code.
+
+/// Environment key for enabling automatic accessibility identifiers locally (when global is off)
+/// Defaults to false - only enables when explicitly set via environment
+/// config.enableAutoIDs is the global setting; this env var allows local opt-in when global is off
+public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
+    public static let defaultValue: Bool = false
+}
+
+/// Environment key for setting the accessibility identifier prefix
+public struct AccessibilityIdentifierPrefixKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
+/// Environment key for accessibility identifier name hint
+public struct AccessibilityIdentifierNameKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
+/// Environment key for accessibility identifier element type hint
+public struct AccessibilityIdentifierElementTypeKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
+/// Environment key for passing label text to identifier generation
+/// Components with String labels can set this to include label text in identifiers
+public struct AccessibilityIdentifierLabelKey: EnvironmentKey {
+    public static let defaultValue: String? = nil
+}
+
+/// Environment key for injecting AccessibilityIdentifierConfig (for testing)
+/// Allows tests to provide isolated config instances instead of using singleton
+public struct AccessibilityIdentifierConfigKey: EnvironmentKey {
+    public static let defaultValue: AccessibilityIdentifierConfig? = nil
+}
+
+// MARK: - Environment Extensions
+
+extension EnvironmentValues {
+    public var globalAutomaticAccessibilityIdentifiers: Bool {
+        get { self[GlobalAutomaticAccessibilityIdentifiersKey.self] }
+        set { self[GlobalAutomaticAccessibilityIdentifiersKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierPrefix: String? {
+        get { self[AccessibilityIdentifierPrefixKey.self] }
+        set { self[AccessibilityIdentifierPrefixKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierName: String? {
+        get { self[AccessibilityIdentifierNameKey.self] }
+        set { self[AccessibilityIdentifierNameKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierElementType: String? {
+        get { self[AccessibilityIdentifierElementTypeKey.self] }
+        set { self[AccessibilityIdentifierElementTypeKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierLabel: String? {
+        get { self[AccessibilityIdentifierLabelKey.self] }
+        set { self[AccessibilityIdentifierLabelKey.self] = newValue }
+    }
+    
+    public var accessibilityIdentifierConfig: AccessibilityIdentifierConfig? {
+        get { self[AccessibilityIdentifierConfigKey.self] }
+        set { self[AccessibilityIdentifierConfigKey.self] = newValue }
+    }
+}
+
 // MARK: - Label Text Sanitization
 
 /// Sanitize label text for use in accessibility identifiers
@@ -74,21 +152,21 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         
         // Access environment values here - this view is only created when body is called
         // and the view is installed, so environment is guaranteed to be available
-        @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
-        @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
-        @Environment(\.accessibilityIdentifierLabel) private var accessibilityIdentifierLabel
-        @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
-        @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
-        
+    @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
+    @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
+    @Environment(\.accessibilityIdentifierLabel) private var accessibilityIdentifierLabel
+    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
+    @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+
         var body: some View {
-            // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
-            // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
-            // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
-            let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
-            // config.enableAutoIDs IS the global setting - it's the single source of truth
-            // The environment variable allows local opt-in when global is off (defaults to false)
-            // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
-            let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+        // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+        // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
+        // config.enableAutoIDs IS the global setting - it's the single source of truth
+        // The environment variable allows local opt-in when global is off (defaults to false)
+        // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
+        let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
         // Always check debug logging and print immediately (helps verify modifier is being called)
         if config.enableDebugLogging {
@@ -99,12 +177,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         }
         
         if shouldApply {
-            let identifier = generateIdentifier(
-                config: config,
-                accessibilityIdentifierName: accessibilityIdentifierName,
-                accessibilityIdentifierElementType: accessibilityIdentifierElementType,
-                accessibilityIdentifierLabel: accessibilityIdentifierLabel
-            )
+                let identifier = generateIdentifier(
+                    config: config,
+                    accessibilityIdentifierName: accessibilityIdentifierName,
+                    accessibilityIdentifierElementType: accessibilityIdentifierElementType,
+                    accessibilityIdentifierLabel: accessibilityIdentifierLabel
+                )
             if config.enableDebugLogging {
                 let debugMsg = "🔍 MODIFIER DEBUG: Applying identifier '\(identifier)' to view"
                 print(debugMsg)
@@ -123,12 +201,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     }
     
     @MainActor
-    private func generateIdentifier(
-        config: AccessibilityIdentifierConfig,
-        accessibilityIdentifierName: String?,
-        accessibilityIdentifierElementType: String?,
-        accessibilityIdentifierLabel: String?
-    ) -> String {
+        private func generateIdentifier(
+            config: AccessibilityIdentifierConfig,
+            accessibilityIdentifierName: String?,
+            accessibilityIdentifierElementType: String?,
+            accessibilityIdentifierLabel: String?
+        ) -> String {
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
@@ -222,11 +300,25 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 /// This is used by the .automaticAccessibilityIdentifiers(named:) helper
 public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     let componentName: String
-    @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
-    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
+    // NOTE: Environment properties moved to helper view to avoid SwiftUI warnings
     @ObservedObject private var configObserver = ConfigObserver.shared
     
     public func body(content: Content) -> some View {
+        // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
+        NamedEnvironmentAccessor(content: content, componentName: componentName)
+    }
+    
+    // Helper view that defers environment access until view is installed
+    private struct NamedEnvironmentAccessor: View {
+        let content: Content
+        let componentName: String
+        
+        // Access environment values here - this view is only created when body is called
+        // and the view is installed, so environment is guaranteed to be available
+        @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+        @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
+        
+        var body: some View {
         // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
         // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
         // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
@@ -243,7 +335,7 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         }
         
         if shouldApply {
-            let identifier = generateIdentifier()
+                let identifier = Self.generateIdentifier(config: config, componentName: componentName)
             if config.enableDebugLogging {
                 let debugMsg = "🔍 NAMED MODIFIER DEBUG: Applying identifier '\(identifier)' to view '\(componentName)'"
                 print(debugMsg)
@@ -264,9 +356,7 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
     }
     
     @MainActor
-    private func generateIdentifier() -> String {
-        // Use task-local test config (for per-test isolation), then injected config, then shared (for production)
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
+        private static func generateIdentifier(config: AccessibilityIdentifierConfig, componentName: String) -> String {
         
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
@@ -303,6 +393,7 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         }
         
         return identifierComponents.joined(separator: ".")
+        }
     }
 }
 
@@ -311,25 +402,39 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
 /// Modifier that allows components to be named for more specific accessibility identifiers
 public struct NamedModifier: ViewModifier {
     let name: String
+    // NOTE: Environment properties moved to helper view to avoid SwiftUI warnings
+    
+    public func body(content: Content) -> some View {
+        // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
+        NamedModifierEnvironmentAccessor(content: content, name: name)
+    }
+    
+    // Helper view that defers environment access until view is installed
+    private struct NamedModifierEnvironmentAccessor: View {
+        let content: Content
+        let name: String
+        
+        // Access environment values here - this view is only created when body is called
+        // and the view is installed, so environment is guaranteed to be available
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalEnabled
     @Environment(\.accessibilityIdentifierPrefix) private var prefix
     @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
     
-    public func body(content: Content) -> some View {
+        var body: some View {
         // Compute once
-        let newId = generateNamedAccessibilityIdentifier()
+            let newId = Self.generateNamedAccessibilityIdentifier(
+                config: AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared,
+                name: name
+            )
         // Apply identifier directly to content and again at outermost level to ensure override
         let inner = content
             .environment(\.accessibilityIdentifierName, name)
             .accessibilityIdentifier(newId)
-        ZStack { inner }
+            return ZStack { inner }
             .accessibilityIdentifier(newId)
     }
-    
-    private func generateNamedAccessibilityIdentifier() -> String {
-        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
+        private static func generateNamedAccessibilityIdentifier(config: AccessibilityIdentifierConfig, name: String) -> String {
         // .named() should ALWAYS apply when explicitly called, regardless of global settings
         // This is an explicit modifier call - user intent is clear
         
@@ -374,6 +479,7 @@ public struct NamedModifier: ViewModifier {
         }
         
         return identifier
+        }
     }
 }
 
@@ -383,22 +489,36 @@ public struct NamedModifier: ViewModifier {
 /// GREEN PHASE: Produces truly minimal identifiers - just the exact name provided
 public struct ExactNamedModifier: ViewModifier {
     let name: String
-    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalEnabled
-    @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+    // NOTE: Environment properties moved to helper view to avoid SwiftUI warnings
     
     public func body(content: Content) -> some View {
-        // Compute once
-        let exactId = generateExactNamedAccessibilityIdentifier()
-        // Apply exact identifier directly to content and again at outermost level to ensure override
-        let inner = content.accessibilityIdentifier(exactId)
-        ZStack { inner }
-            .accessibilityIdentifier(exactId)
+        // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
+        ExactNamedModifierEnvironmentAccessor(content: content, name: name)
     }
     
-    private func generateExactNamedAccessibilityIdentifier() -> String {
-        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
+    // Helper view that defers environment access until view is installed
+    private struct ExactNamedModifierEnvironmentAccessor: View {
+        let content: Content
+        let name: String
         
+        // Access environment values here - this view is only created when body is called
+        // and the view is installed, so environment is guaranteed to be available
+        @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalEnabled
+        @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+        
+        var body: some View {
+        // Compute once
+            let exactId = Self.generateExactNamedAccessibilityIdentifier(
+                config: AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared,
+                name: name
+            )
+        // Apply exact identifier directly to content and again at outermost level to ensure override
+        let inner = content.accessibilityIdentifier(exactId)
+            return ZStack { inner }
+            .accessibilityIdentifier(exactId)
+    }
+        
+        private static func generateExactNamedAccessibilityIdentifier(config: AccessibilityIdentifierConfig, name: String) -> String {
         // .exactNamed() should ALWAYS apply when explicitly called, regardless of global settings
         // This is an explicit modifier call - user intent is clear
         // No guard needed - always apply when modifier is explicitly used
@@ -413,75 +533,6 @@ public struct ExactNamedModifier: ViewModifier {
         
         return exactIdentifier
     }
-}
-
-// MARK: - Environment Keys
-
-/// Environment key for enabling automatic accessibility identifiers locally (when global is off)
-/// Defaults to false - only enables when explicitly set via environment
-/// config.enableAutoIDs is the global setting; this env var allows local opt-in when global is off
-public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
-    public static let defaultValue: Bool = false
-}
-
-/// Environment key for setting the accessibility identifier prefix
-public struct AccessibilityIdentifierPrefixKey: EnvironmentKey {
-    public static let defaultValue: String? = nil
-}
-
-/// Environment key for accessibility identifier name hint
-public struct AccessibilityIdentifierNameKey: EnvironmentKey {
-    public static let defaultValue: String? = nil
-}
-
-/// Environment key for accessibility identifier element type hint
-public struct AccessibilityIdentifierElementTypeKey: EnvironmentKey {
-    public static let defaultValue: String? = nil
-}
-
-/// Environment key for passing label text to identifier generation
-/// Components with String labels can set this to include label text in identifiers
-public struct AccessibilityIdentifierLabelKey: EnvironmentKey {
-    public static let defaultValue: String? = nil
-}
-
-/// Environment key for injecting AccessibilityIdentifierConfig (for testing)
-/// Allows tests to provide isolated config instances instead of using singleton
-public struct AccessibilityIdentifierConfigKey: EnvironmentKey {
-    public static let defaultValue: AccessibilityIdentifierConfig? = nil
-}
-
-// MARK: - Environment Extensions
-
-extension EnvironmentValues {
-    public var globalAutomaticAccessibilityIdentifiers: Bool {
-        get { self[GlobalAutomaticAccessibilityIdentifiersKey.self] }
-        set { self[GlobalAutomaticAccessibilityIdentifiersKey.self] = newValue }
-    }
-    
-    public var accessibilityIdentifierPrefix: String? {
-        get { self[AccessibilityIdentifierPrefixKey.self] }
-        set { self[AccessibilityIdentifierPrefixKey.self] = newValue }
-    }
-    
-    public var accessibilityIdentifierName: String? {
-        get { self[AccessibilityIdentifierNameKey.self] }
-        set { self[AccessibilityIdentifierNameKey.self] = newValue }
-    }
-    
-    public var accessibilityIdentifierElementType: String? {
-        get { self[AccessibilityIdentifierElementTypeKey.self] }
-        set { self[AccessibilityIdentifierElementTypeKey.self] = newValue }
-    }
-    
-    public var accessibilityIdentifierLabel: String? {
-        get { self[AccessibilityIdentifierLabelKey.self] }
-        set { self[AccessibilityIdentifierLabelKey.self] = newValue }
-    }
-    
-    public var accessibilityIdentifierConfig: AccessibilityIdentifierConfig? {
-        get { self[AccessibilityIdentifierConfigKey.self] }
-        set { self[AccessibilityIdentifierConfigKey.self] = newValue }
     }
 }
 
@@ -490,11 +541,24 @@ extension EnvironmentValues {
 /// Modifier that forces automatic accessibility identifiers regardless of global settings
 /// Used for local override scenarios
 public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
+    // NOTE: Environment properties moved to helper view to avoid SwiftUI warnings
+    
+    public func body(content: Content) -> some View {
+        // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
+        ForcedEnvironmentAccessor(content: content)
+    }
+    
+    // Helper view that defers environment access until view is installed
+    private struct ForcedEnvironmentAccessor: View {
+        let content: Content
+        
+        // Access environment values here - this view is only created when body is called
+        // and the view is installed, so environment is guaranteed to be available
     @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
     @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
     @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
 
-    public func body(content: Content) -> some View {
+        var body: some View {
         // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
         // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
         // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
@@ -506,7 +570,11 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
             print("🔍 FORCED MODIFIER DEBUG: accessibilityIdentifierElementType = '\(accessibilityIdentifierElementType ?? "nil")'")
         }
         
-        let identifier = generateIdentifier()
+            let identifier = Self.generateIdentifier(
+                config: config,
+                accessibilityIdentifierName: accessibilityIdentifierName,
+                accessibilityIdentifierElementType: accessibilityIdentifierElementType
+            )
         if config.enableDebugLogging {
             print("🔍 FORCED MODIFIER DEBUG: Applying identifier '\(identifier)' to view")
         }
@@ -514,9 +582,12 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         return AnyView(content.accessibilityIdentifier(identifier))
     }
     
-    private func generateIdentifier() -> String {
+        private static func generateIdentifier(
+            config: AccessibilityIdentifierConfig,
+            accessibilityIdentifierName: String?,
+            accessibilityIdentifierElementType: String?
+        ) -> String {
         // Use injected config from environment (for testing), fall back to shared (for production)
-        let config = injectedConfig ?? AccessibilityIdentifierConfig.shared
         
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
@@ -555,6 +626,7 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         }
         
         return identifierComponents.joined(separator: ".")
+        }
     }
 }
 

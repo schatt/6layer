@@ -40,13 +40,13 @@ open class NavigationLayer4Tests {
         do {
             // The navigation link should contain text elements
             guard let inspected = link.tryInspect() else { return }
-            let viewText = try inspected.findAll(ViewType.Text.self)
+            let viewText = try inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Navigation link should contain text elements")
             
             // Should contain the label text
             let hasLabelText = viewText.contains { text in
                 do {
-                    let textContent = try text.string()
+                    let textContent = try text.sixLayerString()
                     return textContent.contains("Label")
                 } catch {
                     return false
@@ -65,7 +65,7 @@ open class NavigationLayer4Tests {
         #if os(iOS)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         // iOS: Should contain NavigationLink structure
-        if let inspected = link.tryInspect(), let _ = try? inspected.find(ViewType.NavigationLink.self) {
+        if let inspected = link.tryInspect(), let _ = try? inspected.sixLayerFind(ViewType.NavigationLink.self) {
             // NavigationLink found - this is correct for iOS
         } else {
             Issue.record("iOS navigation link should contain NavigationLink structure")
@@ -256,7 +256,7 @@ open class NavigationLayer4Tests {
         do {
             // Try to find NavigationStack first (iOS 16+)
             if let inspected = container.tryInspect() {
-                let _ = try? inspected.find(ViewType.NavigationStack.self)
+                let _ = try? inspected.sixLayerFind(ViewType.NavigationStack.self)
             }
             // NavigationStack found - this is correct for iOS 16+
         } catch {
@@ -378,7 +378,7 @@ open class NavigationLayer4Tests {
         #if os(iOS)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         // iOS: Should contain NavigationView structure
-        if let inspected = navigation.tryInspect(), let _ = try? inspected.find(ViewType.NavigationView.self) {
+        if let inspected = navigation.tryInspect(), let _ = try? inspected.sixLayerFind(ViewType.NavigationView.self) {
             // NavigationView found - this is correct for iOS
         } else {
             Issue.record("iOS platform navigation should contain NavigationView structure")

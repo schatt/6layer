@@ -23,13 +23,12 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
-           let buttonID = try? inspectedView.accessibilityIdentifier() {
+           let buttonID = try? inspectedView.sixLayerAccessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are currently 400+ chars
             #expect(buttonID.count < 80, "Accessibility ID should be reasonable length")
             #expect(buttonID.contains("SixLayer"), "Should contain namespace")
             #expect(buttonID.contains("AddFuelButton"), "Should contain view name")
             
-            print("✅ Generated ID: '\(buttonID)' (\(buttonID.count) chars)")
         } else {
             Issue.record("Failed to inspect view")
         }
@@ -59,13 +58,12 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
-           let vStackID = try? inspectedView.accessibilityIdentifier() {
+           let vStackID = try? inspectedView.sixLayerAccessibilityIdentifier() {
             // This test SHOULD FAIL initially - contains duplicates like "container-container"
             #expect(!vStackID.contains("container-container"), "Should not contain duplicated hierarchy")
             #expect(!vStackID.contains("outercontainer-outercontainer"), "Should not contain duplicated hierarchy")
             #expect(vStackID.count < 80, "Should be reasonable length even with multiple .named() calls")
             
-            print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
         } else {
             Issue.record("Failed to inspect view")
         }
@@ -97,13 +95,12 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
-           let vStackID = try? inspectedView.accessibilityIdentifier() {
+           let vStackID = try? inspectedView.sixLayerAccessibilityIdentifier() {
             // This test SHOULD FAIL initially - IDs are not semantic
             #expect(vStackID.contains("UserProfile"), "Should contain screen context")
             #expect(vStackID.contains("ProfileView") || vStackID.contains("UserProfile"), "Should contain view name")
             #expect(vStackID.count < 80, "Should be concise and semantic")
             
-            print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
         } else {
             Issue.record("Failed to inspect view")
         }
@@ -144,14 +141,13 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspectedView = view.tryInspect(),
-           let vStackID = try? inspectedView.accessibilityIdentifier() {
+           let vStackID = try? inspectedView.sixLayerAccessibilityIdentifier() {
             // This test SHOULD FAIL initially - complex hierarchies create massive IDs
             #expect(vStackID.count < 100, "Should handle complex hierarchies gracefully")
             #expect(vStackID.contains("ComplexView"), "Should contain screen context")
             #expect(vStackID.contains("ComplexContainer") || vStackID.contains("ComplexView"), "Should contain container name")
             #expect(!vStackID.contains("item0-item1-item2"), "Should not contain all nested item names")
             
-            print("✅ Generated ID: '\(vStackID)' (\(vStackID.count) chars)")
         } else {
             Issue.record("Failed to inspect view")
         }
@@ -181,16 +177,14 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         do {
             if let submitInspected = submitButton.tryInspect(),
                let cancelInspected = cancelButton.tryInspect() {
-                let submitID = try? submitInspected.accessibilityIdentifier()
-                let cancelID = try? cancelInspected.accessibilityIdentifier()
+                let submitID = try? submitInspected.sixLayerAccessibilityIdentifier()
+                let cancelID = try? cancelInspected.sixLayerAccessibilityIdentifier()
                 
                 // TDD RED: These should FAIL - labels not currently included
                 #expect((submitID?.contains("Submit") ?? false), "Submit button identifier should include 'Submit' label")
                 #expect((cancelID?.contains("Cancel") ?? false), "Cancel button identifier should include 'Cancel' label")
                 #expect(submitID != cancelID, "Buttons with different labels should have different identifiers")
             
-                print("✅ Submit ID: '\(submitID ?? "nil")'")
-                print("✅ Cancel ID: '\(cancelID ?? "nil")'")
             }
         } catch {
             Issue.record("Failed to inspect views")
@@ -214,7 +208,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
             if let inspected = button.tryInspect() {
-                let buttonID = try? inspected.accessibilityIdentifier()
+                let buttonID = try? inspected.sixLayerAccessibilityIdentifier()
                 
                 // TDD RED: Should FAIL - labels not sanitized
                 // Should contain sanitized version: "add-new-item" or similar
@@ -223,7 +217,6 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
                 #expect(!(buttonID?.contains("Add New Item") ?? false), 
                        "Identifier should not contain raw label with spaces")
             
-                print("✅ Sanitized ID: '\(buttonID ?? "nil")'")
             }
         } catch {
             Issue.record("Failed to inspect view")

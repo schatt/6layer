@@ -345,7 +345,6 @@ open class ComprehensiveCapabilityMatrixTests {
         #expect(viewDefinition.supportsHover == config.platformCapabilities.contains(.hover), "Hover support should match capability")
         #expect(viewDefinition.supportsAssistiveTouch == config.platformCapabilities.contains(.assistiveTouch), "AssistiveTouch support should match platform capability")
         
-        print("✅ \(config.description) - PASSED")
     }
     
     // MARK: - Helper Methods

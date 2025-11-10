@@ -27,23 +27,23 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             config.enableAutoIDs = false
             
             // Create a framework component WITHOUT .named() (this should NOT generate an ID)
+            // Also set environment variable to false to ensure no IDs are generated
             let view = Button("Test") { }
+                .environment(\.globalAutomaticAccessibilityIdentifiers, false)
                 .automaticAccessibilityIdentifiers()
             
             // Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let button = try? inspectedView.button(),
-               let accessibilityID = try? button.accessibilityIdentifier() {
+               let button = try? inspectedView.sixLayerButton(),
+               let accessibilityID = try? button.sixLayerAccessibilityIdentifier() {
                 // Should be empty or not present when global config is disabled
                 #expect(accessibilityID.isEmpty, "Framework component should not generate ID when global config is disabled")
             } else {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
-                print("✅ Framework component correctly has no accessibility identifier when global config is disabled")
             }
             #else
-            print("✅ Framework component correctly has no accessibility identifier when global config is disabled (ViewInspector not available)")
             #endif
             
             cleanupTestEnvironment()
@@ -69,21 +69,22 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             config.enableAutoIDs = true
             
             // Create a framework component with .named() (this SHOULD generate an ID)
+            // .named() always generates IDs regardless of global config
             let view = Button("Test") { }
+                .environment(\.globalAutomaticAccessibilityIdentifiers, true)
                 .named("TestButton")
             
             // Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspectedView = view.tryInspect(),
-               let button = try? inspectedView.button(),
-               let accessibilityID = try? button.accessibilityIdentifier() {
+               let button = try? inspectedView.sixLayerButton(),
+               let accessibilityID = try? button.sixLayerAccessibilityIdentifier() {
                 // .named() should always generate an ID (ignoring global settings)
                 #expect(!accessibilityID.isEmpty, "Framework component with .named() should generate ID")
                 #expect(accessibilityID.contains("main"), "ID should contain screen context")
                 #expect(accessibilityID.contains("TestButton"), "ID should contain view name")
                 
-                print("✅ Framework component correctly generates ID: '\(accessibilityID)'")
             } else {
                 Issue.record("Failed to inspect framework component")
             }

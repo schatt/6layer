@@ -30,7 +30,7 @@ import Testing
 /// Tests for OCR overlay testable interface functionality
 /// TODO: Implement real tests that test actual OCR overlay testable interface functionality
 @MainActor
-@Suite("O C R Overlayable Interface")
+@Suite("OCR Overlayable Interface")
 open class OCROverlayTestableInterfaceTests: BaseTestClass {
     
     
