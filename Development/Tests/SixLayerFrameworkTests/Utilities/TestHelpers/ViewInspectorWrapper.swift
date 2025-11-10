@@ -89,9 +89,10 @@ private func callViewInspectorStringDirect(_ textView: InspectableView<ViewType.
 /// Free function to call ViewInspector's accessibilityIdentifier() method directly
 /// This is NOT part of any protocol, so it bypasses protocol method resolution
 /// and prevents infinite recursion
-private func callViewInspectorAccessibilityIdentifierDirect(_ view: InspectableView<View>) throws -> String {
+private func callViewInspectorAccessibilityIdentifierDirect<V>(_ view: InspectableView<V>) throws -> String {
     // Call ViewInspector's method directly - this is NOT our protocol method
     // because this is a free function, not a protocol extension method
+    // Use generic V to accept any InspectableView type
     return try view.accessibilityIdentifier()
 }
 
