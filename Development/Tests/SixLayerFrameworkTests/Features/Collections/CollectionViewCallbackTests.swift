@@ -77,7 +77,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
 
             // Should contain text from our sample items
@@ -111,7 +111,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             // The view should contain the collection items
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Collection view should contain text elements for items")
 
             // Should contain text from our sample items
@@ -229,7 +229,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspector in
             // Find the ListCardComponent instances
-            let listCardComponents = try inspector.sixLayerFindAll(ListCardComponent<TestItem>.self)
+            let listCardComponents = inspector.sixLayerFindAll(ListCardComponent<TestItem>.self)
 
             // Then: Verify the view structure
             #expect(listCardComponents.count == sampleItems.count, "Should have cards for each item")

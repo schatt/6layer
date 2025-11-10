@@ -205,19 +205,26 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
     
     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-    do {
-        // Use ViewInspector to directly inspect the SwiftUI view
-        // This will find identifiers that the COMPONENT applied, not the test helper
-        // NOTE: ViewInspector works on iOS and macOS (when VIEW_INSPECTOR_MAC_FIXED is defined)
+    // Use try? to safely call inspect() - if ViewInspector crashes internally, try? won't help,
+    // but it will catch thrown errors. If inspect() returns nil, fall back to platform view hosting.
+    if config.enableDebugLogging {
+        print("🔍 SWIFTUI DEBUG: Attempting to inspect view of type: \(type(of: viewWithEnvironment))")
+    }
+    guard let inspected = try? viewWithEnvironment.inspect() else {
+        // ViewInspector couldn't inspect the view (either threw error or crashed)
+        // Fall back to platform view hosting
         if config.enableDebugLogging {
-            print("🔍 SWIFTUI DEBUG: Attempting to inspect view of type: \(type(of: viewWithEnvironment))")
+            print("🔍 SWIFTUI DEBUG: ViewInspector couldn't inspect view, falling back to platform view inspection")
         }
-        let inspected = try viewWithEnvironment.inspect()
-        if config.enableDebugLogging {
-            print("🔍 SWIFTUI DEBUG: Successfully inspected view")
-        }
-        
-        // CRITICAL: Check root view first - this IS the component's body when we pass the component directly
+        let hosted = hostRootPlatformView(viewWithEnvironment)
+        let platformId = firstAccessibilityIdentifier(inHosted: hosted)
+        return platformId
+    }
+    if config.enableDebugLogging {
+        print("🔍 SWIFTUI DEBUG: Successfully inspected view")
+    }
+    
+    // CRITICAL: Check root view first - this IS the component's body when we pass the component directly
         // This ensures we're testing the component's identifier, not a parent's
         do {
             let identifier = try inspected.sixLayerAccessibilityIdentifier()
@@ -393,7 +400,8 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         #endif
         
         for (typeName, viewType) in containerTypes {
-            if let containers = try? inspected.sixLayerFindAll(viewType) {
+            let containers = inspected.sixLayerFindAll(viewType)
+            if !containers.isEmpty {
                 for container in containers {
                     if let identifier = try? container.sixLayerAccessibilityIdentifier(), !identifier.isEmpty {
                         if config.enableDebugLogging {
@@ -412,15 +420,6 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         let hosted = hostRootPlatformView(viewWithEnvironment)
         let platformId = firstAccessibilityIdentifier(inHosted: hosted)
         return platformId
-    } catch {
-        if config.enableDebugLogging {
-            print("🔍 SWIFTUI DEBUG: Could not inspect accessibility identifier: \(error)")
-        }
-        // Fallback: host platform view and search for identifier
-        let hosted = hostRootPlatformView(viewWithEnvironment)
-        let platformId = firstAccessibilityIdentifier(inHosted: hosted)
-        return platformId
-    }
     #else
     // On macOS without VIEW_INSPECTOR_MAC_FIXED, ViewInspector is not available, so use platform view hosting
     if config.enableDebugLogging {
@@ -476,28 +475,32 @@ private func findAllAccessibilityIdentifiers<V: View>(
         }
         
         // Search in VStacks
-        if let vStacks = try? inspectable.sixLayerFindAll(ViewType.VStack.self) {
+        let vStacks = inspectable.sixLayerFindAll(ViewType.VStack.self)
+        if !vStacks.isEmpty {
             for vStack in vStacks {
                 collectIdentifiers(from: vStack, depth: depth + 1)
             }
         }
         
         // Search in HStacks
-        if let hStacks = try? inspectable.sixLayerFindAll(ViewType.HStack.self) {
+        let hStacks = inspectable.sixLayerFindAll(ViewType.HStack.self)
+        if !hStacks.isEmpty {
             for hStack in hStacks {
                 collectIdentifiers(from: hStack, depth: depth + 1)
             }
         }
         
         // Search in ZStacks
-        if let zStacks = try? inspectable.sixLayerFindAll(ViewType.ZStack.self) {
+        let zStacks = inspectable.sixLayerFindAll(ViewType.ZStack.self)
+        if !zStacks.isEmpty {
             for zStack in zStacks {
                 collectIdentifiers(from: zStack, depth: depth + 1)
             }
         }
         
         // Search in AnyViews
-        if let anyViews = try? inspectable.sixLayerFindAll(ViewType.AnyView.self) {
+        let anyViews = inspectable.sixLayerFindAll(ViewType.AnyView.self)
+        if !anyViews.isEmpty {
             for anyView in anyViews {
                 collectIdentifiers(from: anyView, depth: depth + 1)
             }

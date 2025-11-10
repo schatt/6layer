@@ -135,7 +135,7 @@ open class CollectionEmptyStateViewTests {
                 // Find the message text in the VStack
                 if let vStack = inspected.sixLayerTryFind(ViewType.VStack.self) {
                     // The message should be in a Text view within the VStack
-                    let texts = try? vStack.sixLayerFindAll(ViewType.Text.self)
+                    let texts = vStack.sixLayerFindAll(ViewType.Text.self)
                     let messageText = texts?.first { text in
                         let string = try? text.sixLayerString()
                         return string?.contains("vehicles") ?? false || string?.contains("vehicle") ?? false
@@ -235,7 +235,7 @@ open class CollectionEmptyStateViewTests {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let inspected = view.tryInspect() {
                 if let vStack = inspected.sixLayerTryFind(ViewType.VStack.self) {
-                    let texts = try? vStack.sixLayerFindAll(ViewType.Text.self)
+                    let texts = vStack.sixLayerFindAll(ViewType.Text.self)
                     let messageText = texts?.first { text in
                         let string = try? text.sixLayerString()
                         return string?.count ?? 0 > 10 // Find the longer message text

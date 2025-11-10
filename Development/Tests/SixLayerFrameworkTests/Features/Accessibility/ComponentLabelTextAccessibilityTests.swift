@@ -801,9 +801,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             let name: String
         }
         
-        let item1 = TestItem(id: "item-1", name: "Product A")
-        let item2 = TestItem(id: "item-2", name: "Product B")
-        
         let button1 = AdaptiveUIPatterns.AdaptiveButton("Add to Cart", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -847,7 +844,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let item1 = TestItem(id: "card-1", title: "Important Card")
         let item2 = TestItem(id: "card-2", title: "Another Card")
         
-        let hints = PresentationHints()
         let layoutDecision = IntelligentCardLayoutDecision(
             columns: 2,
             spacing: 16,
@@ -948,7 +944,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // This is a simplified test - full test would verify all items are unique
             let viewID = try? inspected.sixLayerAccessibilityIdentifier()
             
-            print("🔴 RED: ForEach List View ID: '\(viewID)'")
+            print("🔴 RED: ForEach List View ID: '\(viewID ?? "nil")'")
             print("🔴 RED: Note - Need to verify each item in ForEach gets unique identifier")
             
             // TDD RED: Should verify each item has unique identifier with item name
@@ -1550,9 +1546,6 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             let size: Int64
             let type: String
         }
-        
-        let file1 = FileInfo(name: "document.pdf", size: 1024, type: "pdf")
-        let file2 = FileInfo(name: "image.jpg", size: 2048, type: "jpg")
         
         // FileRow uses FileInfo which has different structure, but we can test the concept
         // Note: FileRow is a component that displays file.name, so it should include that in identifier

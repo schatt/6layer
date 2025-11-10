@@ -81,7 +81,7 @@ open class PlatformPresentContentL1Tests {
             // anyView is non-optional InspectableView (throws on failure), so it exists if we reach here
             
             // The view should contain text elements with our string content
-            let viewText = try inspected.sixLayerFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #else
             let anyView: Inspectable = DummyInspectable()
             let viewText: [Inspectable] = []
@@ -157,7 +157,7 @@ open class PlatformPresentContentL1Tests {
             #expect(anyView != nil, "Number content should be wrapped in AnyView")
             
             // The view should contain text elements with our number content
-            let viewText = try inspected.sixLayerFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #else
             let anyView: Inspectable = DummyInspectable()
             let viewText: [Inspectable] = []

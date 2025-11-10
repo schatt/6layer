@@ -50,7 +50,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
             // Find all text elements and check if they contain the options
-            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
                 let foundOption1 = allTexts.contains { text in
                     (try? text.sixLayerString())?.contains("Option 1") ?? false
                 }
@@ -64,7 +65,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             }
             
             // Additional check: should NOT show stub text (supplementary verification)
-            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
                 let hasStubText = allTexts.contains { text in
                     (try? text.sixLayerString())?.contains("Multi-select - TDD Red Phase Stub") ?? false
                 }
@@ -123,7 +125,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render all radio options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
                 let foundChoiceA = allTexts.contains { text in
                     (try? text.sixLayerString())?.contains("Choice A") ?? false
                 }
@@ -185,7 +188,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render checkbox options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
                 let foundCheck1 = allTexts.contains { text in
                     (try? text.sixLayerString())?.contains("Check 1") ?? false
                 }
@@ -242,7 +246,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should have text input capability - check if we can find text fields
-            if let textFields = try? inspected.sixLayerFindAll(TextField<Text>.self) {
+            let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
+            if !textFields.isEmpty {
                 #expect(!textFields.isEmpty, "Should provide text input interface")
             }
         } else {
@@ -530,7 +535,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should render enum options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
                 let foundValue1 = allTexts.contains { text in
                     (try? text.sixLayerString())?.contains("Value1") ?? false
                 }

@@ -209,7 +209,8 @@ open class CapabilityMatrixTests {
                     #expect(!encodedData.isEmpty, "Color encoding should produce data")
                     
                     let decodedColor = try platformColorDecode(encodedData)
-                    #expect(decodedColor != nil, "Color decoding should work")
+                    // decodedColor is non-optional Color, so just verify it exists
+                    #expect(true, "Color decoding should work")
                 } catch {
                     Issue.record("Color encoding/decoding should work on all platforms: \(error)")
                 }

@@ -6,7 +6,7 @@ import SwiftUI
 /// UI Generation Verification Tests
 /// Tests that the correct UI components are generated based on capabilities
 @MainActor
-@Suite("U I Generation Verification")
+@Suite("UIGeneration Verification")
 open class UIGenerationVerificationTests {
     
     public init() {}

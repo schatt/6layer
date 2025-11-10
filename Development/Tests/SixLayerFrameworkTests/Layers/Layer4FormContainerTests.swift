@@ -48,7 +48,7 @@ open class Layer4FormContainerTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
             // The form container should contain the test content
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Form container should contain text elements")
 
             // Should contain the test content
@@ -120,7 +120,7 @@ open class Layer4FormContainerTests {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Standard container should contain text elements")
 
             // Should contain the test content

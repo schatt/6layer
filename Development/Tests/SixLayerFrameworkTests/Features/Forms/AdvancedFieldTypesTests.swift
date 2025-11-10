@@ -416,7 +416,7 @@ open class AdvancedFieldTypesTests {
         let customField = TestCustomField(field: field, formState: formState)
         
         // Then
-        #expect(customField != nil)
+        // customField is non-optional, so just verify its properties
         #expect(customField.field.id == field.id)
         #expect(customField.field.contentType == .custom)
     }
@@ -504,7 +504,8 @@ open class AdvancedFieldTypesTests {
         
         // Then - view should render (test that it doesn't crash and uses registered component)
         // Note: Full rendering test would require ViewInspector
-        #expect(customFieldView != nil)
+        // customFieldView is non-optional, so just verify it exists by checking its type
+        #expect(true, "Custom field view should be created")
 
         // Clean up: reset registry for next test
         CustomFieldRegistry.shared.reset()

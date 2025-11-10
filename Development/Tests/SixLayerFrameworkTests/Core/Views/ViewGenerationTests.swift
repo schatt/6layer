@@ -71,7 +71,7 @@ open class ViewGenerationTests: BaseTestClass {
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
 
             // Try to find text elements within the AnyView
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain field names from our test data
@@ -120,7 +120,7 @@ open class ViewGenerationTests: BaseTestClass {
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
 
             // The view should contain text elements with our custom format
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain custom field content in the format "fieldName: value"
@@ -170,7 +170,7 @@ open class ViewGenerationTests: BaseTestClass {
             #expect(anyView != nil, "Detail view should be wrapped in AnyView")
 
             // The view should contain text elements
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain field content from our test data

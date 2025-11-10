@@ -403,20 +403,32 @@ struct PlatformTypesCompilationTests {
     
     @Test func testCardLayoutDecisionCompilation() {
         // Verify CardLayoutDecision compiles and can be instantiated
+        // Use the most conservative/safe values to avoid framework preconditions
+        let safeResponsive = ResponsiveBehavior(type: .adaptive)
         let decision = CardLayoutDecision(
             layout: .uniform,
             sizing: .fixed,
             interaction: .tap,
-            responsive: ResponsiveBehavior(type: .adaptive),
+            responsive: safeResponsive,
             spacing: 16.0,
             columns: 2
         )
+
+        // Validate fields without invoking any behavior that might precondition-fail
         #expect(decision.layout == .uniform)
         #expect(decision.sizing == .fixed)
         #expect(decision.interaction == .tap)
         #expect(decision.responsive.type == .adaptive)
         #expect(decision.spacing == 16.0)
         #expect(decision.columns == 2)
+
+        // Defensive assertions to catch invalid values without crashing
+        if decision.columns < 1 {
+            Issue.record("CardLayoutDecision.columns should be >= 1")
+        }
+        if decision.spacing < 0 {
+            Issue.record("CardLayoutDecision.spacing should be >= 0")
+        }
     }
     
     @Test func testCardLayoutTypeCompilation() {

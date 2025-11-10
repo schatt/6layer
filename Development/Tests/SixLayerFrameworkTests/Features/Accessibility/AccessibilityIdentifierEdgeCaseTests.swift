@@ -152,7 +152,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
-                    let buttons = try inspectedView.sixLayerFindAll(ViewType.Button.self)
+                    let buttons = inspectedView.sixLayerFindAll(ViewType.Button.self)
                     
                     #expect(buttons.count == 2, "Should find both buttons")
                     

@@ -660,7 +660,7 @@ open class DynamicFormViewTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = viewWithOCR.tryInspect() {
             // Should find the batch OCR button by finding buttons and checking their accessibility identifiers
-            let buttons = inspected.sixLayerTryFindAll(Button<Text>.self)
+            let buttons = inspected.sixLayerFindAll(Button<Text>.self)
             let hasOCRButton = buttons.contains { button in
                 (try? button.sixLayerAccessibilityIdentifier())?.contains("Scan Document") ?? false
             }
@@ -671,7 +671,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
         // Non-OCR form should not show batch OCR button
         if let inspected = viewWithoutOCR.tryInspect() {
-            let buttons = inspected.sixLayerTryFindAll(Button<Text>.self)
+            let buttons = inspected.sixLayerFindAll(Button<Text>.self)
             let hasOCRButton = buttons.contains { button in
                 (try? button.sixLayerAccessibilityIdentifier())?.contains("Scan Document") ?? false
             }

@@ -62,7 +62,7 @@ struct ViewGenerationVerificationTests {
             // Detail view creation succeeded (non-optional result)
 
             // The view should contain text elements with our data
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Detail view should contain text elements")
 
             // Should contain the title from our test data
@@ -134,7 +134,7 @@ struct ViewGenerationVerificationTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let compactInspectionResult = withInspectedView(compactView) { compactInspected in
             // Compact view should contain our test data
-            let compactText = compactInspected.sixLayerTryFindAll(ViewType.Text.self)
+            let compactText = compactInspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!compactText.isEmpty, "Compact view should contain text elements")
 
             // Should contain the title
@@ -151,7 +151,7 @@ struct ViewGenerationVerificationTests {
 
         let detailedInspectionResult = withInspectedView(detailedView) { detailedInspected in
             // Detailed view should contain our test data
-            let detailedText = detailedInspected.sixLayerTryFindAll(ViewType.Text.self)
+            let detailedText = detailedInspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!detailedText.isEmpty, "Detailed view should contain text elements")
 
             // Should contain the title

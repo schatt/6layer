@@ -40,7 +40,7 @@ open class NavigationLayer4Tests {
         do {
             // The navigation link should contain text elements
             guard let inspected = link.tryInspect() else { return }
-            let viewText = try inspected.sixLayerFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "Navigation link should contain text elements")
             
             // Should contain the label text

@@ -165,7 +165,7 @@ open class TestPatterns {
         // 2. Contains what it needs to contain - The view should contain expected text
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
-            let viewText = inspected.sixLayerTryFindAll(ViewType.Text.self)
+            let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
             #expect(!viewText.isEmpty, "View should contain text elements for \(testName)")
 
             let hasExpectedText = viewText.contains { text in
@@ -196,7 +196,7 @@ open class TestPatterns {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let inspectionResult = withInspectedView(view) { inspected in
-            let viewImages = inspected.sixLayerTryFindAll(ViewType.Image.self)
+            let viewImages = inspected.sixLayerFindAll(ViewType.Image.self)
             #expect(!viewImages.isEmpty, "View should contain image elements for \(testName)")
         }
         #else

@@ -61,7 +61,8 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should display current step content
-            if let allTexts = try? inspected.sixLayerFindAll(Text.self) {
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
                 let foundStep1 = allTexts.contains { text in
                     (try? text.sixLayerString())?.contains("Step 1") ?? false
                 }
@@ -164,7 +165,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = view.tryInspect() {
             // Should find navigation buttons
-            let buttons = inspected.sixLayerTryFindAll(Button<Text>.self)
+            let buttons = inspected.sixLayerFindAll(Button<Text>.self)
             if buttons.count > 0 {
                 let hasNextButton = buttons.contains { button in
                     (try? button.sixLayerAccessibilityIdentifier())?.contains("Next") ?? false

@@ -41,9 +41,9 @@ open class FormCallbackFunctionalTests {
         // When: Simulating Cancel button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let inspectionResult = withInspectedView(formView) { inspector in
-            // Find all buttons in the view using ViewType.Button (not Button<Text>)
-            let buttons = try inspector.sixLayerFindAll(ViewType.Button.self)
+        _ = withInspectedView(formView) { inspector in
+            // Find all buttons in the view using ViewType.Button<Text>
+            let buttons = inspector.sixLayerFindAll(ViewType.Button<Text>.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -109,9 +109,9 @@ open class FormCallbackFunctionalTests {
         // When: Simulating Update button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let inspectionResult = withInspectedView(formView) { inspector in
-            // Find all buttons in the view using ViewType.Button (not Button<Text>)
-            let buttons = try inspector.sixLayerFindAll(ViewType.Button.self)
+        _ = withInspectedView(formView) { inspector in
+            // Find all buttons in the view using ViewType.Button<Text>
+            let buttons = inspector.sixLayerFindAll(ViewType.Button<Text>.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -180,9 +180,9 @@ open class FormCallbackFunctionalTests {
         // When: Simulating Submit button tap using ViewInspector
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let inspectionResult = withInspectedView(formView) { inspector in
-            // Find all buttons in the view using ViewType.Button
-            let buttons = try inspector.sixLayerFindAll(ViewType.Button.self)
+        _ = withInspectedView(formView) { inspector in
+            // Find all buttons in the view using ViewType.Button<Text>
+            let buttons = inspector.sixLayerFindAll(ViewType.Button<Text>.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -245,7 +245,9 @@ open class FormCallbackFunctionalTests {
             onCancel: {}
         )
         
-        #expect(formView != nil, "Form view should be accessible externally")
+        // Form view is always non-nil (it's a View, not Optional<View>)
+        #expect(true, "Form view should be accessible externally")
+        #expect(callbackInvoked == false, "Callback should not be invoked before interaction")
         #expect(true, "Callbacks can be provided by external modules")
     }
 }

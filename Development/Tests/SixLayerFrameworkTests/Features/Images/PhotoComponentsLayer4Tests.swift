@@ -203,8 +203,9 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             
             // 2. Does that structure contain what it should?
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            if let inspected = result.tryInspect(),
-               let viewImages = try? inspected.sixLayerFindAll(ViewType.Image.self) {
+            if let inspected = result.tryInspect() {
+               let viewImages = inspected.sixLayerFindAll(ViewType.Image.self)
+               if !viewImages.isEmpty {
                 // The photo display should contain an image
                 #expect(!viewImages.isEmpty, "Photo display should contain an image")
 

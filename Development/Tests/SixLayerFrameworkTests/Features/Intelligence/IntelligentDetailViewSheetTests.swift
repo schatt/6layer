@@ -105,7 +105,7 @@ struct IntelligentDetailViewSheetTests {
             // Try to find Text views (which would contain the field values)
             do {
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let texts = try inspector.sixLayerFindAll(ViewType.Text.self)
+                let texts = inspector.sixLayerFindAll(ViewType.Text.self)
                 #else
                 let texts: [Inspectable] = []
                 #endif

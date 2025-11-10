@@ -62,10 +62,10 @@ public protocol Inspectable {
     func sixLayerTextField() throws -> Inspectable
     func sixLayerTextField(_ index: Int) throws -> Inspectable
     func sixLayerAccessibilityIdentifier() throws -> String
-    func sixLayerFindAll<T>(_ type: T.Type) throws -> [Inspectable]
+    func sixLayerFindAll<T>(_ type: T.Type) -> [Inspectable]
     func sixLayerFind<T>(_ type: T.Type) throws -> Inspectable
     func sixLayerTryFind<T>(_ type: T.Type) -> Inspectable?
-    func sixLayerTryFindAll<T>(_ type: T.Type) -> [Inspectable]
+    // sixLayerTryFindAll removed - use sixLayerFindAll instead (it's now non-throwing)
     func sixLayerAnyView() throws -> Inspectable
     func sixLayerString() throws -> String
     func sixLayerCallOnTapGesture() throws
@@ -215,15 +215,17 @@ extension InspectableView: Inspectable {
         return identifier
     }
     
-    public func sixLayerFindAll<T>(_ type: T.Type) throws -> [Inspectable] {
+    public func sixLayerFindAll<T>(_ type: T.Type) -> [Inspectable] {
         // Use findAll(where:) to search for views matching the type
         // This works for all types but requires runtime type checking
-        // Note: findAll can throw, but compiler may warn - this is a false positive
-        let allViews = try self.findAll(where: { view in
+        // Non-throwing version - returns empty array on failure
+        guard let allViews = try? self.findAll(where: { view in
             // Check if the view matches the requested type by trying to access it
             // This is a best-effort approach since we can't use internal ViewInspector APIs
             return true // Accept all views - filtering happens at usage site
-        })
+        }) else {
+            return []
+        }
         return allViews.map { $0 as Inspectable }
     }
     
@@ -238,12 +240,7 @@ extension InspectableView: Inspectable {
         return try? self.sixLayerFind(type)
     }
     
-    public func sixLayerTryFindAll<T>(_ type: T.Type) -> [Inspectable] {
-        guard let results = try? self.sixLayerFindAll(type) else {
-            return []
-        }
-        return results
-    }
+    // sixLayerTryFindAll removed - sixLayerFindAll is now non-throwing, so use it directly
     
     public func sixLayerAnyView() throws -> Inspectable {
         // Use find(where:) to find any view, avoiding SingleViewContent constraint
@@ -320,10 +317,9 @@ struct DummyInspectable: Inspectable {
     func sixLayerTextField() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
     func sixLayerTextField(_ index: Int) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
     func sixLayerAccessibilityIdentifier() throws -> String { throw ViewInspectorNotAvailableError() }
-    func sixLayerFindAll<T>(_ type: T.Type) throws -> [Inspectable] { throw ViewInspectorNotAvailableError() }
+    func sixLayerFindAll<T>(_ type: T.Type) -> [Inspectable] { return [] }
     func sixLayerFind<T>(_ type: T.Type) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
     func sixLayerTryFind<T>(_ type: T.Type) -> Inspectable? { return nil }
-    func sixLayerTryFindAll<T>(_ type: T.Type) -> [Inspectable] { return [] }
     func sixLayerAnyView() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
     func sixLayerString() throws -> String { throw ViewInspectorNotAvailableError() }
     func sixLayerCallOnTapGesture() throws { throw ViewInspectorNotAvailableError() }
