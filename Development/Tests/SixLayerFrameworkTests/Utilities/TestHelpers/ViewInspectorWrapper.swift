@@ -221,8 +221,58 @@ extension InspectableView: Inspectable {
     }
     
     public func sixLayerFind<T>(_ type: T.Type) throws -> Inspectable {
-        // Use find(where:) to search for a view matching the type
-        // This is a simplified approach - actual type checking happens at usage
+        // WARNING: This method can be slow for complex views because it uses find(where: { _ in true })
+        // which searches the entire view hierarchy without filtering.
+        // 
+        // For better performance, use the specific methods directly:
+        // - sixLayerVStack() instead of sixLayerFind(ViewType.VStack.self)
+        // - sixLayerHStack() instead of sixLayerFind(ViewType.HStack.self)
+        // - sixLayerZStack() instead of sixLayerFind(ViewType.ZStack.self)
+        // - sixLayerText() instead of sixLayerFind(ViewType.Text.self)
+        // - sixLayerTextField() instead of sixLayerFind(ViewType.TextField.self)
+        //
+        // This method is kept for backward compatibility but should be avoided when possible.
+        
+        // Try to use findAll with the specific type first (faster than find(where:))
+        // This works for ViewType.X types
+        if let vStackType = type as? ViewType.VStack.Type {
+            let vStacks = try self.findAll(vStackType)
+            if let first = vStacks.first {
+                return first as Inspectable
+            }
+            throw InspectionError.notSupported("sixLayerFind(ViewType.VStack.self) requires a VStack view")
+        }
+        if let hStackType = type as? ViewType.HStack.Type {
+            let hStacks = try self.findAll(hStackType)
+            if let first = hStacks.first {
+                return first as Inspectable
+            }
+            throw InspectionError.notSupported("sixLayerFind(ViewType.HStack.self) requires an HStack view")
+        }
+        if let zStackType = type as? ViewType.ZStack.Type {
+            let zStacks = try self.findAll(zStackType)
+            if let first = zStacks.first {
+                return first as Inspectable
+            }
+            throw InspectionError.notSupported("sixLayerFind(ViewType.ZStack.self) requires a ZStack view")
+        }
+        if let textType = type as? ViewType.Text.Type {
+            let texts = try self.findAll(textType)
+            if let first = texts.first {
+                return first as Inspectable
+            }
+            throw InspectionError.notSupported("sixLayerFind(ViewType.Text.self) requires a Text view")
+        }
+        if let textFieldType = type as? ViewType.TextField.Type {
+            let textFields = try self.findAll(textFieldType)
+            if let first = textFields.first {
+                return first as Inspectable
+            }
+            throw InspectionError.notSupported("sixLayerFind(ViewType.TextField.self) requires a TextField view")
+        }
+        
+        // Last resort: use find(where:) but this is slow for complex views
+        // This should rarely be reached if we handle common types above
         let found = try self.find(where: { _ in true })
         return found as Inspectable
     }

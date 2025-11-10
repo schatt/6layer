@@ -291,8 +291,9 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         // Only if root isn't a container, search deeper for containers
         // This is a fallback for components that wrap their body in another view
         // But we still prefer direct body access above
-        // Handle each container type separately since they have different return types
-        if let vStack = try? inspected.sixLayerFind(ViewType.VStack.self) {
+        // OPTIMIZATION: Use direct methods instead of sixLayerFind() to avoid slow recursive searches
+        // sixLayerFind() uses find(where: { _ in true }) which searches everything and can be very slow
+        if let vStack = try? inspected.sixLayerVStack() {
             do {
                 let identifier = try vStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
@@ -308,7 +309,7 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             }
         }
         
-        if let hStack = try? inspected.sixLayerFind(ViewType.HStack.self) {
+        if let hStack = try? inspected.sixLayerHStack() {
             do {
                 let identifier = try hStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
@@ -324,7 +325,7 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             }
         }
         
-        if let zStack = try? inspected.sixLayerFind(ViewType.ZStack.self) {
+        if let zStack = try? inspected.sixLayerZStack() {
             do {
                 let identifier = try zStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {

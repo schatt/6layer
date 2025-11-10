@@ -482,11 +482,12 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         // Given: AppleHIGComplianceManager
         let manager = AppleHIGComplianceManager()
         
-        // When: Creating a view with AppleHIGComplianceManager
-        let view = VStack {
+        // When: Creating a view with AppleHIGComplianceManager and applying compliance
+        let baseView = VStack {
             Text("Apple HIG Compliance Manager Content")
         }
-        .environmentObject(manager)
+        let view = manager.applyHIGCompliance(to: baseView)
+            .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
