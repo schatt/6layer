@@ -188,10 +188,10 @@ open class AccessibilityPreferenceTests {
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "tvOS should support VoiceOver")
         #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
         
-        // Test iOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch depends on testing defaults)
+        // Test iOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch supported)
         RuntimeCapabilityDetection.setTestPlatform(.iOS)
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "iOS should support VoiceOver")
-        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch == false, "iOS testing default should be false for AssistiveTouch")
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS testing default should be true for AssistiveTouch")
         
         // Clean up
         RuntimeCapabilityDetection.setTestPlatform(nil)

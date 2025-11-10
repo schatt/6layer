@@ -691,18 +691,19 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     
     private func getActualCapabilityValue(_ capability: String, config: SixLayerFramework.CardExpansionPlatformConfig) -> Bool {
         // Accept case-insensitive and different naming styles in test inputs
-        let platform = SixLayerPlatform.current
+        // Use RuntimeCapabilityDetection.currentPlatform to respect test platform overrides
+        let platform = RuntimeCapabilityDetection.currentPlatform
         switch capability.lowercased() {
         case "touch": return config.supportsTouch
         case "hover": return config.supportsHover
         case "haptic": return config.supportsHapticFeedback
         case "assistivetouch": return config.supportsAssistiveTouch
-        case "voiceover": return config.supportsVoiceOver
-        case "switchcontrol": return config.supportsSwitchControl
-        case "vision": return isVisionFrameworkAvailable()
-        case "ocr": return isVisionOCRAvailable()
-        case "gesture": return platform == .visionOS && isVisionFrameworkAvailable()
-        case "eyetracking": return platform == .visionOS && isVisionFrameworkAvailable()
+        case "voiceover": return config.supportsVoiceOver ?? false
+        case "switchcontrol": return config.supportsSwitchControl ?? false
+        case "vision": return RuntimeCapabilityDetection.supportsVision
+        case "ocr": return RuntimeCapabilityDetection.supportsOCR
+        case "gesture": return platform == .visionOS && RuntimeCapabilityDetection.supportsVision
+        case "eyetracking": return platform == .visionOS && RuntimeCapabilityDetection.supportsVision
         case "remote": return platform == .tvOS
         default:
             Issue.record("Unknown capability type: \(capability)")
