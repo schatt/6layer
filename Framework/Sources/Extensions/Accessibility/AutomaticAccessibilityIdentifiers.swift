@@ -57,22 +57,38 @@ import Combine
 /// Modifier that automatically generates accessibility identifiers for views
 /// This is the core modifier that all framework components should use
 public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
-    @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
-    @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
-    @Environment(\.accessibilityIdentifierLabel) private var accessibilityIdentifierLabel
-    @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
-    @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+    // NOTE: Environment properties moved to EnvironmentAccessor helper view
+    // to avoid SwiftUI warnings about accessing environment outside of view context
     @ObservedObject private var configObserver = ConfigObserver.shared
 
     public func body(content: Content) -> some View {
-        // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
-        // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
-        // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
-        // config.enableAutoIDs IS the global setting - it's the single source of truth
-        // The environment variable allows local opt-in when global is off (defaults to false)
-        // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
-        let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
+        // about accessing environment outside of view context. The helper view ensures environment
+        // is only accessed when the view is actually installed in the hierarchy.
+        EnvironmentAccessor(content: content)
+    }
+    
+    // Helper view that defers environment access until view is installed
+    private struct EnvironmentAccessor: View {
+        let content: Content
+        
+        // Access environment values here - this view is only created when body is called
+        // and the view is installed, so environment is guaranteed to be available
+        @Environment(\.accessibilityIdentifierName) private var accessibilityIdentifierName
+        @Environment(\.accessibilityIdentifierElementType) private var accessibilityIdentifierElementType
+        @Environment(\.accessibilityIdentifierLabel) private var accessibilityIdentifierLabel
+        @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
+        @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+        
+        var body: some View {
+            // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
+            // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+            // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
+            let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
+            // config.enableAutoIDs IS the global setting - it's the single source of truth
+            // The environment variable allows local opt-in when global is off (defaults to false)
+            // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
+            let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
         // Always check debug logging and print immediately (helps verify modifier is being called)
         if config.enableDebugLogging {
@@ -83,7 +99,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         }
         
         if shouldApply {
-            let identifier = generateIdentifier()
+            let identifier = generateIdentifier(
+                config: config,
+                accessibilityIdentifierName: accessibilityIdentifierName,
+                accessibilityIdentifierElementType: accessibilityIdentifierElementType,
+                accessibilityIdentifierLabel: accessibilityIdentifierLabel
+            )
             if config.enableDebugLogging {
                 let debugMsg = "🔍 MODIFIER DEBUG: Applying identifier '\(identifier)' to view"
                 print(debugMsg)
@@ -102,10 +123,12 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
     }
     
     @MainActor
-    private func generateIdentifier() -> String {
-        // Use task-local test config (for per-test isolation), then injected config, then shared (for production)
-        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
-        
+    private func generateIdentifier(
+        config: AccessibilityIdentifierConfig,
+        accessibilityIdentifierName: String?,
+        accessibilityIdentifierElementType: String?,
+        accessibilityIdentifierLabel: String?
+    ) -> String {
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
