@@ -97,6 +97,11 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     // MARK: - DynamicFormView Tests
     
     @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+        // Enable debug logging to see what identifiers are generated
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
+        let wasDebugLogging = config.enableDebugLogging
+        config.enableDebugLogging = true
+        
         // When: Creating a form view using shared helper
         let view = createTestFormView()
         
@@ -108,6 +113,9 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             platform: SixLayerPlatform.iOS,
             testName: "DynamicFormView should generate accessibility identifiers"
         )
+        
+        // Restore debug logging setting
+        config.enableDebugLogging = wasDebugLogging
         
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers")
     }

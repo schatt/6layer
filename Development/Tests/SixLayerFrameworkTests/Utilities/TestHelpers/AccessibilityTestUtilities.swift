@@ -181,6 +181,77 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     #endif
 }
 
+/// Find ALL accessibility identifiers in a platform view hierarchy (not just the first one)
+/// This is used as a fallback when ViewInspector is not available
+@MainActor
+private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [String] {
+    var identifiers: Set<String> = []
+    
+    #if canImport(UIKit)
+    guard let rootView = root as? UIView else { return [] }
+    
+    // Check root view
+    if let id = rootView.accessibilityIdentifier, !id.isEmpty {
+        identifiers.insert(id)
+    }
+    
+    // Search through all subviews
+    var stack: [UIView] = rootView.subviews
+    var depth = 0
+    var checkedViews: Set<ObjectIdentifier> = []
+    
+    while let next = stack.popLast(), depth < 30 { // Increased depth for comprehensive search
+        let nextId = ObjectIdentifier(next)
+        if checkedViews.contains(nextId) {
+            continue
+        }
+        checkedViews.insert(nextId)
+        
+        if let id = next.accessibilityIdentifier, !id.isEmpty {
+            identifiers.insert(id)
+        }
+        
+        stack.append(contentsOf: next.subviews)
+        depth += 1
+    }
+    
+    return Array(identifiers)
+    #elseif canImport(AppKit)
+    guard let rootView = root as? NSView else { return [] }
+    
+    // Check root view
+    let rootId = rootView.accessibilityIdentifier()
+    if !rootId.isEmpty {
+        identifiers.insert(rootId)
+    }
+    
+    // Search through all subviews
+    var stack: [NSView] = rootView.subviews
+    var depth = 0
+    var checkedViews: Set<ObjectIdentifier> = []
+    
+    while let next = stack.popLast(), depth < 30 { // Increased depth for comprehensive search
+        let nextId = ObjectIdentifier(next)
+        if checkedViews.contains(nextId) {
+            continue
+        }
+        checkedViews.insert(nextId)
+        
+        let id = next.accessibilityIdentifier()
+        if !id.isEmpty {
+            identifiers.insert(id)
+        }
+        
+        stack.append(contentsOf: next.subviews)
+        depth += 1
+    }
+    
+    return Array(identifiers)
+    #else
+    return []
+    #endif
+}
+
 /// Convenience: Return the accessibility identifier directly from a SwiftUI view
 /// This is much simpler than hosting the view and searching platform views
 /// 
@@ -457,10 +528,17 @@ private func findAllAccessibilityIdentifiers<V: View>(
     
     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
     guard let inspected = try? viewWithEnvironment.inspect() else {
-        // Fallback to platform view
+        // Fallback to platform view - collect ALL identifiers from platform view hierarchy
         let hosted = hostRootPlatformView(viewWithEnvironment)
-        if let platformId = firstAccessibilityIdentifier(inHosted: hosted), !platformId.isEmpty {
-            return [platformId]
+        let allPlatformIds = findAllAccessibilityIdentifiersFromPlatformView(hosted)
+        if !allPlatformIds.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 PLATFORM FALLBACK: Found \(allPlatformIds.count) identifiers from platform view hierarchy: \(allPlatformIds)")
+            }
+            return allPlatformIds
+        }
+        if config.enableDebugLogging {
+            print("🔍 PLATFORM FALLBACK: No identifiers found in platform view hierarchy")
         }
         return []
     }
@@ -471,12 +549,18 @@ private func findAllAccessibilityIdentifiers<V: View>(
         
         // Try to get identifier from this view
         if let id = try? inspectable.sixLayerAccessibilityIdentifier(), !id.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found identifier '\(id)' at depth \(depth)")
+            }
             identifiers.insert(id)
         }
         
         // Search in VStacks
         let vStacks = inspectable.sixLayerFindAll(ViewType.VStack.self)
         if !vStacks.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found \(vStacks.count) VStacks at depth \(depth)")
+            }
             for vStack in vStacks {
                 collectIdentifiers(from: vStack, depth: depth + 1)
             }
@@ -485,6 +569,9 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Search in HStacks
         let hStacks = inspectable.sixLayerFindAll(ViewType.HStack.self)
         if !hStacks.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found \(hStacks.count) HStacks at depth \(depth)")
+            }
             for hStack in hStacks {
                 collectIdentifiers(from: hStack, depth: depth + 1)
             }
@@ -493,6 +580,9 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Search in ZStacks
         let zStacks = inspectable.sixLayerFindAll(ViewType.ZStack.self)
         if !zStacks.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found \(zStacks.count) ZStacks at depth \(depth)")
+            }
             for zStack in zStacks {
                 collectIdentifiers(from: zStack, depth: depth + 1)
             }
@@ -501,13 +591,54 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Search in AnyViews
         let anyViews = inspectable.sixLayerFindAll(ViewType.AnyView.self)
         if !anyViews.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found \(anyViews.count) AnyViews at depth \(depth)")
+            }
             for anyView in anyViews {
                 collectIdentifiers(from: anyView, depth: depth + 1)
             }
         }
+        
+        // Also search in Text views (they might have identifiers)
+        let texts = inspectable.sixLayerFindAll(ViewType.Text.self)
+        if !texts.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found \(texts.count) Text views at depth \(depth)")
+            }
+            for text in texts {
+                if let id = try? text.sixLayerAccessibilityIdentifier(), !id.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 COLLECT: Found identifier '\(id)' on Text view at depth \(depth)")
+                    }
+                    identifiers.insert(id)
+                }
+            }
+        }
+        
+        // Also search in Button views (they might have identifiers)
+        let buttons = inspectable.sixLayerFindAll(ViewType.Button.self)
+        if !buttons.isEmpty {
+            if config.enableDebugLogging {
+                print("🔍 COLLECT: Found \(buttons.count) Button views at depth \(depth)")
+            }
+            for button in buttons {
+                if let id = try? button.sixLayerAccessibilityIdentifier(), !id.isEmpty {
+                    if config.enableDebugLogging {
+                        print("🔍 COLLECT: Found identifier '\(id)' on Button view at depth \(depth)")
+                    }
+                    identifiers.insert(id)
+                }
+            }
+        }
     }
     
+    if config.enableDebugLogging {
+        print("🔍 COLLECT: Starting identifier collection from root view")
+    }
     collectIdentifiers(from: inspected)
+    if config.enableDebugLogging {
+        print("🔍 COLLECT: Finished collection, found \(identifiers.count) unique identifiers: \(Array(identifiers))")
+    }
     #endif
     
     // Also check platform view hierarchy
