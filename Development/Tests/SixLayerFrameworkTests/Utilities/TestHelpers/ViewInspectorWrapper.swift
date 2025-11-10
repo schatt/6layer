@@ -149,27 +149,19 @@ extension InspectableView: Inspectable {
         // Since we can't easily do this at compile time, we'll use ViewInspector's findAll(where:) 
         // with a condition that properly filters by type
         
-        // Use ViewInspector's findAll(where:) - this is the base method that doesn't conflict
-        // with our protocol method signature
-        func findAllWhere(_ condition: @escaping ViewSearch.Condition) throws -> [InspectableView<ViewType.ClassifiedView>] {
-            // Call ViewInspector's method directly using the ViewSearch.Condition type
-            // This ensures we call ViewInspector's method, not our protocol method
-            return try (self as InspectableView<ViewType.ClassifiedView>).findAll(where: condition)
-        }
-        
-        // Create a condition that accepts all views (type filtering happens elsewhere)
+        // Use ViewInspector's findAll(where:) - this method signature doesn't conflict with our protocol
+        // The key is using ViewSearch.Condition type explicitly to ensure we call ViewInspector's method
         let condition: ViewSearch.Condition = { _ in true }
-        let results = try findAllWhere(condition)
+        // Call ViewInspector's findAll(where:) directly - this is available on all InspectableView instances
+        // The ViewSearch.Condition type ensures we call the right overload
+        let results: [InspectableView<ViewType.ClassifiedView>] = try self.findAll(where: condition)
         return results.map { $0 as Inspectable }
     }
     
     public func find<T>(_ type: T.Type) throws -> Inspectable {
         // Similar fix - use ViewInspector's find(where:) directly
-        func findWhere(_ condition: @escaping ViewSearch.Condition) throws -> InspectableView<ViewType.ClassifiedView> {
-            return try (self as InspectableView<ViewType.ClassifiedView>).find(where: condition)
-        }
         let condition: ViewSearch.Condition = { _ in true }
-        let result = try findWhere(condition)
+        let result: InspectableView<ViewType.ClassifiedView> = try self.find(where: condition)
         return result as Inspectable
     }
     
