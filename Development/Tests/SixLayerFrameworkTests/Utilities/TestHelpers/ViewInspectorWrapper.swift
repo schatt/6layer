@@ -75,6 +75,17 @@ public protocol Inspectable {
 }
 
 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+// MARK: - Helper Functions for ViewInspector Direct Calls
+
+/// Free function to call ViewInspector's string() method directly
+/// This is NOT part of any protocol, so it bypasses protocol method resolution
+/// and prevents infinite recursion
+private func callViewInspectorStringDirect(_ textView: InspectableView<ViewType.Text>) throws -> String {
+    // Call ViewInspector's method directly - this is NOT our protocol method
+    // because this is a free function, not a protocol extension method
+    return try textView.string()
+}
+
 // Make InspectableView conform to our protocol
 extension InspectableView: Inspectable {
     public func button() throws -> Inspectable {
