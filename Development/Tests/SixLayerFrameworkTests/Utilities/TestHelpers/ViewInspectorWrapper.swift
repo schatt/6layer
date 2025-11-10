@@ -110,6 +110,7 @@ extension InspectableView: Inspectable {
             return try vStackSelf.text(index) as Inspectable
         }
         // Fallback: try direct access via findAll
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let texts = try self.findAll(ViewType.Text.self)
         if let firstText = texts.first {
             return firstText as Inspectable
@@ -120,6 +121,7 @@ extension InspectableView: Inspectable {
     public func sixLayerVStack() throws -> Inspectable {
         // Use ViewInspector's findAll with ViewType.VStack to recursively search for VStacks
         // This will find VStacks even when wrapped in modifiers
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let vStacks = try self.findAll(ViewType.VStack.self)
         if let firstVStack = vStacks.first {
             return firstVStack as Inspectable
@@ -133,6 +135,7 @@ extension InspectableView: Inspectable {
             return try vStackSelf.vStack(index) as Inspectable
         }
         // Fallback: try direct access via findAll
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let vStacks = try self.findAll(ViewType.VStack.self)
         if let firstVStack = vStacks.first {
             return firstVStack as Inspectable
@@ -142,6 +145,7 @@ extension InspectableView: Inspectable {
     
     public func sixLayerHStack() throws -> Inspectable {
         // Use ViewInspector's findAll with ViewType.HStack to recursively search for HStacks
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let hStacks = try self.findAll(ViewType.HStack.self)
         if let firstHStack = hStacks.first {
             return firstHStack as Inspectable
@@ -155,6 +159,7 @@ extension InspectableView: Inspectable {
             return try vStackSelf.hStack(index) as Inspectable
         }
         // Fallback: try direct access via findAll
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let hStacks = try self.findAll(ViewType.HStack.self)
         if let firstHStack = hStacks.first {
             return firstHStack as Inspectable
@@ -164,6 +169,7 @@ extension InspectableView: Inspectable {
     
     public func sixLayerZStack() throws -> Inspectable {
         // Use ViewInspector's findAll with ViewType.ZStack to recursively search for ZStacks
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let zStacks = try self.findAll(ViewType.ZStack.self)
         if let firstZStack = zStacks.first {
             return firstZStack as Inspectable
@@ -173,6 +179,7 @@ extension InspectableView: Inspectable {
     
     public func sixLayerTextField() throws -> Inspectable {
         // Use ViewInspector's findAll with ViewType.TextField to recursively search for TextFields
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let textFields = try self.findAll(ViewType.TextField.self)
         if let firstTextField = textFields.first {
             return firstTextField as Inspectable
@@ -186,6 +193,7 @@ extension InspectableView: Inspectable {
             return try vStackSelf.textField(index) as Inspectable
         }
         // Fallback: try direct access via findAll
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let textFields = try self.findAll(ViewType.TextField.self)
         if let firstTextField = textFields.first {
             return firstTextField as Inspectable
@@ -195,12 +203,15 @@ extension InspectableView: Inspectable {
     
     public func sixLayerAccessibilityIdentifier() throws -> String {
         // No recursion risk - different method name than ViewInspector's accessibilityIdentifier()
+        // Only return the identifier for this specific view, do not search children recursively
+        // If a test needs to find an identifier in a child view, it should navigate to that child first
         return try self.accessibilityIdentifier()
     }
     
     public func sixLayerFindAll<T>(_ type: T.Type) throws -> [Inspectable] {
         // Use findAll(where:) to search for views matching the type
         // This works for all types but requires runtime type checking
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         let allViews = try self.findAll(where: { view in
             // Check if the view matches the requested type by trying to access it
             // This is a best-effort approach since we can't use internal ViewInspector APIs
@@ -354,6 +365,7 @@ extension InspectableView {
 
     /// Safely find all views of a type, returning empty array if none found
     func tryFindAll<T: SwiftUI.View>(_ type: T.Type) -> [InspectableView<ViewType.View<T>>] {
+        // Note: findAll can throw, but compiler may warn - this is a false positive
         return (try? self.findAll(type)) ?? []
     }
 }
