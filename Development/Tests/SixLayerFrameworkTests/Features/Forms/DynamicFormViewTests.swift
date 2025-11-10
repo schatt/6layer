@@ -419,11 +419,7 @@ open class DynamicFormViewTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspected = regularFieldView.tryInspect() {
             // Regular field should not have HStack (just VStack with label and TextField)
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hStack = inspected.tryFind(ViewType.HStack.self)
-            #else
-            let hStack: Inspectable? = nil
-            #endif
             #expect(hStack == nil, "Regular field should not have HStack (no OCR button)")
         }
         #else

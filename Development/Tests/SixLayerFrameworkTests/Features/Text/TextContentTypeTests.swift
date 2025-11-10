@@ -49,10 +49,10 @@ open class TextContentTypeTests {
         for uiTextContentType in textContentTypes {
             // Convert UITextContentType to SixLayerTextContentType
             #if os(iOS)
-            let textContentType = SixLayerTextContentType(uiTextContentType: uiTextContentType)
+            let textContentType = SixLayerTextContentType(uiTextContentType)
             #else
             // On macOS, create a default mapping
-            let textContentType = SixLayerTextContentType(rawValue: uiTextContentType.rawValue) ?? .none
+            let textContentType = SixLayerTextContentType(rawValue: uiTextContentType.rawValue) ?? .name
             #endif
             let field = DynamicFormField(
                 id: "test_\(textContentType.rawValue)",
