@@ -104,7 +104,11 @@ struct IntelligentDetailViewSheetTests {
             
             // Try to find Text views (which would contain the field values)
             do {
+                #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
                 let texts = try inspector.findAll(ViewType.Text.self)
+                #else
+                let texts: [Inspectable] = []
+                #endif
                 // If we found text views, the view is displaying content
                 #expect(texts.count > 0, "platformDetailView should display model properties as text")
             } catch {

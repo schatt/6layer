@@ -292,6 +292,7 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         // This is a fallback for components that wrap their body in another view
         // But we still prefer direct body access above
         // Handle each container type separately since they have different return types
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let vStack = try? inspected.find(ViewType.VStack.self) {
             do {
                 let identifier = try vStack.accessibilityIdentifier()
@@ -308,7 +309,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             }
         }
         
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let hStack = try? inspected.find(ViewType.HStack.self) {
+        #else
+        if false {
+        #endif
             do {
                 let identifier = try hStack.accessibilityIdentifier()
                 if !identifier.isEmpty {
@@ -324,7 +329,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             }
         }
         
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let zStack = try? inspected.find(ViewType.ZStack.self) {
+        #else
+        if false {
+        #endif
             do {
                 let identifier = try zStack.accessibilityIdentifier()
                 if !identifier.isEmpty {
@@ -360,7 +369,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             // Try to find identifier deeper in the view hierarchy
             // The identifier might be on a modifier applied to the AnyView
             // Try to find Text or other views that might have the identifier
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             if let text = try? anyView.find(ViewType.Text.self) {
+            #else
+            if false {
+            #endif
                 do {
                     let textId = try text.accessibilityIdentifier()
                     if !textId.isEmpty {
@@ -380,12 +393,16 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         // ENHANCED: Search through all VStacks, HStacks, ZStacks, and AnyViews in the hierarchy
         // This finds identifiers that might be on nested views or modified views
         // Use findAll to get all instances of each container type and check their identifiers
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let containerTypes: [(String, Any.Type)] = [
             ("VStack", ViewType.VStack.self),
             ("HStack", ViewType.HStack.self),
             ("ZStack", ViewType.ZStack.self),
             ("AnyView", ViewType.AnyView.self)
         ]
+        #else
+        let containerTypes: [(String, Any.Type)] = []
+        #endif
         
         for (typeName, viewType) in containerTypes {
             if let containers = try? inspected.findAll(viewType) {

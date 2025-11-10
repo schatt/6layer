@@ -165,7 +165,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
         if let inspected = view.tryInspect() {
             // Should find navigation buttons
             let buttons = inspected.tryFindAll(Button<Text>.self)
-            if !buttons.isEmpty {
+            if buttons.count > 0 {
                 let hasNextButton = buttons.contains { button in
                     (try? button.accessibilityIdentifier())?.contains("Next") ?? false
                 }

@@ -76,11 +76,16 @@ open class PlatformPresentContentL1Tests {
         do {
             // The view should be wrapped in AnyView
             guard let inspected = view.tryInspect() else { return }
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let anyView = try inspected.anyView()
             // anyView is non-optional InspectableView (throws on failure), so it exists if we reach here
             
             // The view should contain text elements with our string content
             let viewText = try inspected.findAll(ViewType.Text.self)
+            #else
+            let anyView: Inspectable = DummyInspectable()
+            let viewText: [Inspectable] = []
+            #endif
             #expect(!viewText.isEmpty, "String content view should contain text elements")
             
             // Should contain our actual string content
@@ -147,11 +152,16 @@ open class PlatformPresentContentL1Tests {
         do {
             // The view should be wrapped in AnyView
             guard let inspected = view.tryInspect() else { return }
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let anyView = try inspected.anyView()
             #expect(anyView != nil, "Number content should be wrapped in AnyView")
             
             // The view should contain text elements with our number content
             let viewText = try inspected.findAll(ViewType.Text.self)
+            #else
+            let anyView: Inspectable = DummyInspectable()
+            let viewText: [Inspectable] = []
+            #endif
             #expect(!viewText.isEmpty, "Number content view should contain text elements")
             
             // Should contain our actual number content

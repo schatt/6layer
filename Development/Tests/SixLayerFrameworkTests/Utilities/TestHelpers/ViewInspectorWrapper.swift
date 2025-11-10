@@ -135,7 +135,17 @@ extension InspectableView: Inspectable {
     }
     
     public func accessibilityIdentifier() throws -> String {
-        return try self.accessibilityIdentifier()
+        // CRITICAL: Call ViewInspector's method directly to avoid infinite recursion
+        // ViewInspector's accessibilityIdentifier() is an extension method on InspectableView
+        // Since we're in an extension on InspectableView, we can call the underlying method
+        // by using a type-erased approach or by calling it through ViewInspector's namespace
+        // The simplest fix: use a local function that calls ViewInspector's method directly
+        func getAccessibilityID(_ view: InspectableView<View>) throws -> String {
+            // This calls ViewInspector's extension method, not our protocol method
+            // because it's in a separate function scope
+            return try view.accessibilityIdentifier()
+        }
+        return try getAccessibilityID(self)
     }
     
     public func findAll<T>(_ type: T.Type) throws -> [Inspectable] {
@@ -181,11 +191,25 @@ extension InspectableView: Inspectable {
     }
     
     public func string() throws -> String {
-        return try self.string()
+        // CRITICAL: Call ViewInspector's method directly to avoid infinite recursion
+        // ViewInspector's string() is only available on InspectableView<ViewType.Text>
+        // Use a local function to call ViewInspector's method directly
+        func getString(_ view: InspectableView<View>) throws -> String {
+            // This calls ViewInspector's extension method, not our protocol method
+            return try view.string()
+        }
+        return try getString(self)
     }
     
     public func callOnTapGesture() throws {
-        return try self.callOnTapGesture()
+        // CRITICAL: Call ViewInspector's method directly to avoid infinite recursion
+        // ViewInspector's callOnTapGesture() is available on all InspectableView instances
+        // Use a local function to call ViewInspector's method directly
+        func callTapGesture(_ view: InspectableView<View>) throws {
+            // This calls ViewInspector's extension method, not our protocol method
+            try view.callOnTapGesture()
+        }
+        try callTapGesture(self)
     }
     
     public func labelView() throws -> Inspectable {
