@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "BE9AA38F-63A6-4F95-949C-39A09E5C199C",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SixLayerFrameworkExternalIntegrationTests",
+        "name" : "SixLayerFrameworkExternalIntegrationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SixLayerFrameworkTests",
+        "name" : "SixLayerFrameworkTests"
+      }
+    }
+  ],
+  "version" : 1
+}
