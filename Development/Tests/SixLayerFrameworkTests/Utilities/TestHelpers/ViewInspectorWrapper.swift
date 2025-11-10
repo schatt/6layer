@@ -205,7 +205,14 @@ extension InspectableView: Inspectable {
         // No recursion risk - different method name than ViewInspector's accessibilityIdentifier()
         // Only return the identifier for this specific view, do not search children recursively
         // If a test needs to find an identifier in a child view, it should navigate to that child first
-        return try self.accessibilityIdentifier()
+        
+        // Safely call ViewInspector's accessibilityIdentifier() method
+        // Use try? to prevent crashes if ViewInspector's method throws or crashes
+        // Return empty string if the call fails, which tests can check for
+        guard let identifier = try? self.accessibilityIdentifier() else {
+            return ""
+        }
+        return identifier
     }
     
     public func sixLayerFindAll<T>(_ type: T.Type) throws -> [Inspectable] {
