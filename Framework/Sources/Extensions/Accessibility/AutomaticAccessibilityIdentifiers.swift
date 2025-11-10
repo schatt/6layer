@@ -213,7 +213,7 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
         
         return identifier
     }
-    
+    }
 }
 
 // MARK: - Named Automatic Accessibility Identifiers Modifier
