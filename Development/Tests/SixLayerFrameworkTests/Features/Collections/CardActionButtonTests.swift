@@ -526,10 +526,16 @@ open class CardActionButtonTests: BaseTestClass {
     }
     
     @Test func testActionButtonCallbackTypes() {
+        let startTime = Date()
+        print("⏱️ [TIMING] Test started at \(startTime)")
+        
         // GIVEN: Test item and different callback types
+        let itemStartTime = Date()
         let item = CardActionButtonTests.sampleItems[0]
+        print("⏱️ [TIMING] Item creation took: \(Date().timeIntervalSince(itemStartTime)) seconds")
         
         // Test with all callbacks
+        let cardStartTime = Date()
         let fullCallbackCard = ExpandableCardComponent(
             item: item,
             layoutDecision: CardActionButtonTests.layoutDecision,
@@ -543,8 +549,13 @@ open class CardActionButtonTests: BaseTestClass {
             onItemDeleted: { _ in },
             onItemEdited: { _ in }
         )
+        print("⏱️ [TIMING] Card creation took: \(Date().timeIntervalSince(cardStartTime)) seconds")
+        
+        let totalTime = Date().timeIntervalSince(startTime)
+        print("⏱️ [TIMING] Total test time so far: \(totalTime) seconds")
         
         // Test with only edit callback
+        let editCardStartTime = Date()
         let editOnlyCard = ExpandableCardComponent(
             item: item,
             layoutDecision: CardActionButtonTests.layoutDecision,
@@ -586,6 +597,10 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(noCallbackCard.onItemEdited == nil, "No-callback card should not have edit callback")
         #expect(noCallbackCard.onItemDeleted == nil, "No-callback card should not have delete callback")
         #expect(noCallbackCard.onItemSelected == nil, "No-callback card should not have select callback")
+        
+        let finalTime = Date().timeIntervalSince(startTime)
+        print("⏱️ [TIMING] Test completed - Total execution time: \(finalTime) seconds")
+        print("⏱️ [TIMING] Edit card creation took: \(Date().timeIntervalSince(editCardStartTime)) seconds")
     }
     
     // MARK: - Accessibility Tests
