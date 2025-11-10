@@ -193,12 +193,11 @@ extension InspectableView: Inspectable {
     public func string() throws -> String {
         // CRITICAL: Call ViewInspector's method directly to avoid infinite recursion
         // ViewInspector's string() is only available on InspectableView<ViewType.Text>
-        // Use a local function to call ViewInspector's method directly
-        func getString(_ view: InspectableView<View>) throws -> String {
-            // This calls ViewInspector's extension method, not our protocol method
-            return try view.string()
+        // We use a free function (not part of any protocol) to bypass protocol method resolution
+        if let textView = self as? InspectableView<ViewType.Text> {
+            return try callViewInspectorStringDirect(textView)
         }
-        return try getString(self)
+        throw InspectionError.notSupported("string() can only be called on Text views")
     }
     
     public func callOnTapGesture() throws {
