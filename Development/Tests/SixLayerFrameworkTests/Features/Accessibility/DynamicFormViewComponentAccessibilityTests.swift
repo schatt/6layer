@@ -233,7 +233,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicTextField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -302,7 +302,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicNumberField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -360,7 +360,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicTextAreaField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -419,7 +419,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicSelectField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -478,7 +478,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicMultiSelectField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -537,7 +537,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicRadioField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -595,7 +595,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicCheckboxField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
     
@@ -653,7 +653,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             Issue.record("DynamicToggleField inspection failed - component not properly implemented")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
 }

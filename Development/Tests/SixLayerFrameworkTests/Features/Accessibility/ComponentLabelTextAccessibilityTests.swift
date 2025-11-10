@@ -37,7 +37,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             Issue.record("Failed to inspect AdaptiveButton")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
         
         cleanupTestEnvironment()

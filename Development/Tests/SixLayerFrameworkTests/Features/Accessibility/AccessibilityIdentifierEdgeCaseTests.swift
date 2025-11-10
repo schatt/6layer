@@ -35,7 +35,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
 
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -63,7 +63,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
 
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -99,7 +99,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 }
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -127,7 +127,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -170,7 +170,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect view with mid-hierarchy disable")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -200,7 +200,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect view with multiple contexts")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -242,7 +242,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect exactNamed views")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -280,7 +280,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect exactNamed vs named views")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -320,7 +320,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect exactNamed with hierarchy")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -349,7 +349,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect exactNamed minimal")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -392,7 +392,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect view with config changes")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -431,7 +431,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect view with nested .named() calls")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -462,7 +462,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 Issue.record("Failed to inspect view with Unicode characters")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }

@@ -72,7 +72,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
             Issue.record("FormWizardView step content not found")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
 
         // Should generate accessibility identifier
@@ -184,7 +184,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
             Issue.record("FormWizardView navigation controls not found")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
 

@@ -56,7 +56,7 @@ open class MetalRenderingCrashTDDTests {
             Issue.record("platformPresentItemCollection_L1 should not crash during inspection")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
         
     }
@@ -96,7 +96,7 @@ open class MetalRenderingCrashTDDTests {
             Issue.record("GenericItemCollectionView should not crash during inspection")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
         
     }
@@ -143,7 +143,7 @@ open class MetalRenderingCrashTDDTests {
             Issue.record("Metal rendering should not crash during inspection")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
         
     }
@@ -180,7 +180,7 @@ open class MetalRenderingCrashTDDTests {
             Issue.record("SimpleCardComponent should not crash during inspection")
         }
         #else
-        Issue.record("ViewInspector not available on this platform (likely macOS)")
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
         
     }

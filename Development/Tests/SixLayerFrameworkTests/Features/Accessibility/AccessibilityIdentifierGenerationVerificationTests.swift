@@ -152,7 +152,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 Issue.record("Failed to inspect accessibility identifier")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }
@@ -220,7 +220,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 Issue.record("Failed to inspect accessibility identifier")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }

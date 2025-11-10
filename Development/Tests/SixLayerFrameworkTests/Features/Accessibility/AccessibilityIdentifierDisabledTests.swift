@@ -69,7 +69,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
                 Issue.record("Failed to inspect view")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
         }
     }

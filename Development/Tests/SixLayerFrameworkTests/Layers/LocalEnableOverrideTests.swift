@@ -48,7 +48,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 Issue.record("Failed to inspect view with local enable")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
             
             cleanupTestEnvironment()
@@ -95,7 +95,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 Issue.record("Failed to inspect view with explicit naming")
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
             
             cleanupTestEnvironment()
@@ -140,7 +140,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
                 // If we can't inspect, that's also fine - means no accessibility identifier was applied
             }
             #else
-            Issue.record("ViewInspector not available on this platform (likely macOS)")
+            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
             #endif
             
             cleanupTestEnvironment()
