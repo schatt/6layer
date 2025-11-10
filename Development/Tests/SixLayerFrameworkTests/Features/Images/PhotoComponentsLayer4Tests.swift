@@ -211,8 +211,9 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
 
                 // Verify the view structure is inspectable
                 let _ = result.tryInspect()
-            } else {
+               } else {
                 Issue.record("Failed to inspect photo display structure")
+               }
             }
             #else
             Issue.record("ViewInspector not available on this platform (likely macOS)")

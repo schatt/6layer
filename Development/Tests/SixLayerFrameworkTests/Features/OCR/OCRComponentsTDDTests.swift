@@ -58,7 +58,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // Should have overlay interface
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let anyViews = inspected.sixLayerFindAll(ViewType.AnyView.self)
-            let hasInterface = (anyViews?.count ?? 0) > 0
+            let hasInterface = anyViews.count > 0
             #else
             let hasInterface = false
             #endif
@@ -106,7 +106,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // Should have OCR processing interface
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let anyViews = inspected.sixLayerFindAll(ViewType.AnyView.self)
-            let hasInterface = (anyViews?.count ?? 0) > 0
+            let hasInterface = anyViews.count > 0
             #else
             let hasInterface = false
             #endif
@@ -173,7 +173,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // Should display candidate alternatives
             // Note: ViewInspector doesn't have a find(text:) method, so we check for any view structure
             let anyViews = inspected.sixLayerFindAll(ViewType.AnyView.self)
-            let hasStructure = (anyViews?.count ?? 0) > 0
+            let hasStructure = anyViews.count > 0
             #expect(hasStructure, "Should display candidate alternatives")
         } else {
             Issue.record("OCRDisambiguationView candidates not found")
@@ -244,7 +244,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // Should find all candidate texts
             // Note: ViewInspector doesn't have a find(text:) method, so we check for any view structure
             let anyViews = inspected.sixLayerFindAll(ViewType.AnyView.self)
-            let hasStructure = (anyViews?.count ?? 0) > 0
+            let hasStructure = anyViews.count > 0
             #expect(hasStructure, "Should display candidate alternatives")
         } else {
             Issue.record("OCRDisambiguationView candidates not found")
@@ -292,7 +292,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
             // Should have some UI structure
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let anyViews = inspected.sixLayerFindAll(ViewType.AnyView.self)
-            let hasInterface = (anyViews?.count ?? 0) > 0
+            let hasInterface = anyViews.count > 0
             #else
             let hasInterface = false
             #endif

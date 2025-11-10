@@ -42,8 +42,8 @@ open class FormCallbackFunctionalTests {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         _ = withInspectedView(formView) { inspector in
-            // Find all buttons in the view using ViewType.Button<Text>
-            let buttons = inspector.sixLayerFindAll(ViewType.Button<Text>.self)
+            // Find all buttons in the view
+            let buttons = inspector.sixLayerFindAll(ViewType.Button.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -74,12 +74,8 @@ open class FormCallbackFunctionalTests {
             }
         }
         #else
-        let inspectionResult: Bool? = nil
+        Issue.record("View inspection not available on this platform (likely macOS)")
         #endif
-
-        if inspectionResult == nil {
-            Issue.record("View inspection not available on this platform (likely macOS)")
-        }
     }
     
     
@@ -110,8 +106,8 @@ open class FormCallbackFunctionalTests {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         _ = withInspectedView(formView) { inspector in
-            // Find all buttons in the view using ViewType.Button<Text>
-            let buttons = inspector.sixLayerFindAll(ViewType.Button<Text>.self)
+            // Find all buttons in the view
+            let buttons = inspector.sixLayerFindAll(ViewType.Button.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -144,13 +140,8 @@ open class FormCallbackFunctionalTests {
             }
         }
         #else
-        let inspectionResult: Bool? = nil
+        Issue.record("View inspection not available on this platform (likely macOS)")
         #endif
-
-        if inspectionResult == nil {
-            Issue.record("View inspection not available on this platform (likely macOS)")
-        }
-        
     }
     
     
@@ -181,8 +172,8 @@ open class FormCallbackFunctionalTests {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         _ = withInspectedView(formView) { inspector in
-            // Find all buttons in the view using ViewType.Button<Text>
-            let buttons = inspector.sixLayerFindAll(ViewType.Button<Text>.self)
+            // Find all buttons in the view
+            let buttons = inspector.sixLayerFindAll(ViewType.Button.self)
 
             // Verify button exists
             #expect(buttons.count > 0, "Form should have buttons")
@@ -214,13 +205,8 @@ open class FormCallbackFunctionalTests {
             }
         }
         #else
-        let inspectionResult: Bool? = nil
+        Issue.record("View inspection not available on this platform (likely macOS)")
         #endif
-
-        if inspectionResult == nil {
-            Issue.record("View inspection not available on this platform (likely macOS)")
-        }
-        
     }
     
     

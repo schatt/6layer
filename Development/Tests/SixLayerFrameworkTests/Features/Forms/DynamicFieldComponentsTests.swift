@@ -65,9 +65,9 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             }
             
             // Additional check: should NOT show stub text (supplementary verification)
-            let allTexts = inspected.sixLayerFindAll(Text.self)
-            if !allTexts.isEmpty {
-                let hasStubText = allTexts.contains { text in
+            let allTextsForStubCheck = inspected.sixLayerFindAll(Text.self)
+            if !allTextsForStubCheck.isEmpty {
+                let hasStubText = allTextsForStubCheck.contains { text in
                     (try? text.sixLayerString())?.contains("Multi-select - TDD Red Phase Stub") ?? false
                 }
                 if hasStubText {

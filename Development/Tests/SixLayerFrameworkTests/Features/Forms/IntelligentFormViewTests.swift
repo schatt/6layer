@@ -3,6 +3,10 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
+
+#if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+import ViewInspector
+#endif
 /// Tests for IntelligentFormView.swift
 /// 
 /// BUSINESS PURPOSE: Ensure IntelligentFormView generates proper accessibility identifiers
@@ -81,8 +85,8 @@ open class IntelligentFormViewTests: BaseTestClass {
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
                 if let inspected = view.tryInspect() {
                     // Find the Update button
-                    let buttons = inspected.sixLayerFindAll(Button<Text>.self)
-                    let updateButton = buttons?.first { button in
+                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
+                    let updateButton = buttons.first { button in
                         let text = try? button.sixLayerText().sixLayerString()
                         return text?.lowercased().contains("update") ?? false
                     }
@@ -132,8 +136,8 @@ open class IntelligentFormViewTests: BaseTestClass {
                 // Find and tap the Update button
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
                 if let inspected = view.tryInspect() {
-                    let buttons = inspected.sixLayerFindAll(Button<Text>.self)
-                    let updateButton = buttons?.first { button in
+                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
+                    let updateButton = buttons.first { button in
                         let text = try? button.sixLayerText().sixLayerString()
                         return text?.lowercased().contains("update") ?? false
                     }
@@ -182,8 +186,8 @@ open class IntelligentFormViewTests: BaseTestClass {
                 // After fix, we should verify that feedback (success message, form dismissal, etc.) occurs
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
                 if let inspected = view.tryInspect() {
-                    let buttons = inspected.sixLayerFindAll(Button<Text>.self)
-                    let updateButton = buttons?.first { button in
+                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
+                    let updateButton = buttons.first { button in
                         let text = try? button.sixLayerText().sixLayerString()
                         return text?.lowercased().contains("update") ?? false
                     }
@@ -259,8 +263,8 @@ open class IntelligentFormViewTests: BaseTestClass {
                 // For now, we can only verify onSubmit is called
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
                 if let inspected = view.tryInspect() {
-                    let buttons = inspected.sixLayerFindAll(Button<Text>.self)
-                    let updateButton = buttons?.first { button in
+                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
+                    let updateButton = buttons.first { button in
                         let text = try? button.sixLayerText().sixLayerString()
                         return text?.lowercased().contains("update") ?? false
                     }
@@ -304,8 +308,8 @@ open class IntelligentFormViewTests: BaseTestClass {
                 
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
                 if let inspected = view.tryInspect() {
-                    let buttons = inspected.sixLayerFindAll(Button<Text>.self)
-                    let updateButton = buttons?.first { button in
+                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
+                    let updateButton = buttons.first { button in
                         let text = try? button.sixLayerText().sixLayerString()
                         return text?.lowercased().contains("update") ?? false
                     }

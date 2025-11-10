@@ -755,6 +755,8 @@ open class ViewGenerationIntegrationTests {
             let subtitle: String?
         }
         
+        let testItem = TestItem(title: "Test Item", subtitle: "Test Subtitle")
+        
         // Create hints for the view
         let hints = PresentationHints(
             dataType: .generic,
