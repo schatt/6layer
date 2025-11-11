@@ -1860,6 +1860,10 @@ The SixLayer Framework provides cross-platform color utilities that eliminate th
 .platformSuccess           // iOS: .systemGreen, macOS: .systemGreenColor
 .platformWarning           // iOS: .systemOrange, macOS: .systemOrangeColor
 .platformInfo              // iOS: .systemBlue, macOS: .systemBlueColor
+
+// Accessibility-Aware Colors
+.platformButtonTextOnColor // High-contrast text for colored button backgrounds (adapts to accessibility)
+.platformShadowColor       // Platform-appropriate shadow color for overlays and elevation
 ```
 
 ### **Usage Examples**

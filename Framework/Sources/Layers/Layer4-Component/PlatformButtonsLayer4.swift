@@ -17,7 +17,7 @@ public extension View {
                 return AnyView(self.buttonStyle(.borderedProminent))
             } else {
                 return AnyView(self.buttonStyle(.bordered)
-                    .foregroundColor(.white)
+                    .foregroundColor(.platformButtonTextOnColor)
                     .background(Color.accentColor))
             }
             #else
@@ -52,22 +52,26 @@ public extension View {
     /// Platform-specific destructive button style
     /// Provides consistent destructive button appearance across platforms
     func platformDestructiveButtonStyle() -> some View {
-        #if os(iOS)
-        return self.buttonStyle(.borderedProminent)
-            .foregroundColor(.red)
-        #elseif os(macOS)
-        if #available(macOS 12.0, *) {
-            return self.buttonStyle(.borderedProminent)
-                .foregroundColor(.red)
-        } else {
-            return self.buttonStyle(.bordered)
-                .foregroundColor(.white)
-                .background(Color.red)
-        }
-        #else
-        return self.buttonStyle(.borderedProminent)
-            .foregroundColor(.red)
-        #endif
+        let styledView: AnyView = {
+            #if os(iOS)
+            return AnyView(self.buttonStyle(.borderedProminent)
+                .foregroundColor(.red))
+            #elseif os(macOS)
+            if #available(macOS 12.0, *) {
+                return AnyView(self.buttonStyle(.borderedProminent)
+                    .foregroundColor(.red))
+            } else {
+                return AnyView(self.buttonStyle(.bordered)
+                    .foregroundColor(.platformButtonTextOnColor)
+                    .background(Color.red))
+            }
+            #else
+            return AnyView(self.buttonStyle(.borderedProminent)
+                .foregroundColor(.red))
+            #endif
+        }()
+        return styledView
+            .automaticAccessibilityIdentifiers(named: "platformDestructiveButtonStyle")
     }
     
     /// Platform-specific icon button with consistent styling
@@ -82,15 +86,15 @@ public extension View {
             #if os(macOS)
             if #available(macOS 11.0, *) {
                 Image(systemName: systemImage)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.platformLabel)
             } else {
                 // Fallback for older macOS versions
                 Text("•")
-                    .foregroundColor(.primary)
+                    .foregroundColor(.platformLabel)
             }
             #else
             Image(systemName: systemImage)
-                .foregroundColor(.primary)
+                .foregroundColor(.platformLabel)
             #endif
         }
         .buttonStyle(PlainButtonStyle())

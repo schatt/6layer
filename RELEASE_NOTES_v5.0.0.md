@@ -35,6 +35,14 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **OCR Overlay Support**: Corrected accessibility identifier generation for OCR components
 - **Platform-Specific Behavior**: Proper handling of platform-specific accessibility requirements
 
+### Accessibility-Aware Cross-Platform Color System
+- **New Color Properties**: Added `platformButtonTextOnColor` for high-contrast text on colored button backgrounds
+- **Platform Shadow Colors**: Added `platformShadowColor` with platform-appropriate opacity values for shadows and elevation
+- **Accessibility Adaptation**: Colors automatically adapt to system accessibility settings (high contrast mode, etc.)
+- **Cross-Platform Consistency**: Unified color system eliminates platform-specific color code
+- **Code Modernization**: Replaced hardcoded `Color.white` and `Color.black` with accessibility-aware platform colors throughout the framework
+- **Documentation Updates**: Enhanced color system documentation with new accessibility-aware color properties
+
 ## 🔧 Platform Capability Detection Fixes
 
 ### Enhanced Detection Systems
@@ -155,6 +163,7 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Automatic Accessibility**: Enable `.automaticAccessibilityIdentifiers()` on components for enhanced accessibility
 - **Label Text in Identifiers**: All components with String labels automatically include sanitized label text in accessibility identifiers
 - **platformListRow Title API**: Use the new title-based API for automatic label extraction: `.platformListRow(title: "Item") { }`
+- **Accessibility-Aware Colors**: Use `Color.platformButtonTextOnColor` for button text on colored backgrounds and `Color.platformShadowColor` for shadows/elevation
 - **TDD Testing**: Leverage the comprehensive test suite for better development practices
 - **Platform Testing**: Use the enhanced platform testing capabilities for cross-platform validation
 

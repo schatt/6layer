@@ -190,7 +190,7 @@ public struct FormatButton: View {
             .font(.system(.body, design: .monospaced))
             .frame(width: 32, height: 32)
             .background(Color.accentColor)
-            .foregroundColor(.white)
+            .foregroundColor(.platformButtonTextOnColor)
             .cornerRadius(4)
     }
 }

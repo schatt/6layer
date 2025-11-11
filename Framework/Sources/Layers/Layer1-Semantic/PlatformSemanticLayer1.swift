@@ -1391,7 +1391,7 @@ public struct CollectionEmptyStateView: View {
                             Text(createButtonTitle)
                         }
                         .font(.headline)
-                        .foregroundColor(.white)
+                        .foregroundColor(.platformButtonTextOnColor)
                         .padding(.horizontal, 24)
                         .padding(.vertical, 12)
                         .background(Color.accentColor)

@@ -76,11 +76,11 @@ public struct ThemedCardStyle: ViewModifier {
         
         private var shadowColor: Color {
             switch platform {
-            case .ios: return Color.black.opacity(0.1)
-            case .macOS: return Color.black.opacity(0.05)
+            case .ios: return Color.platformShadowColor
+            case .macOS: return Color.platformShadowColor
             case .watchOS: return Color.clear
-            case .tvOS: return Color.black.opacity(0.2)
-            case .visionOS: return Color.black.opacity(0.15)
+            case .tvOS: return Color.platformShadowColor
+            case .visionOS: return Color.platformShadowColor
             }
         }
         

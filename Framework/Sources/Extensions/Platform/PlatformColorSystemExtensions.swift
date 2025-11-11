@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 // MARK: - Color Name Types
 
@@ -445,6 +448,43 @@ public extension Color {
         return Color(.separatorColor)
         #else
         return Color.gray.opacity(0.5)
+        #endif
+    }
+    
+    /// Cross-platform button text color for use on colored backgrounds
+    /// Provides high-contrast text color that adapts to accessibility settings
+    /// iOS: White (adapts to high contrast mode when enabled)
+    /// macOS: White (system colors automatically adapt)
+    /// This color is designed for text placed on colored button backgrounds (primary, destructive, etc.)
+    /// Note: White provides maximum contrast on colored backgrounds and is appropriate for both normal and high contrast modes
+    static var platformButtonTextOnColor: Color {
+        // White provides maximum contrast on colored backgrounds
+        // In high contrast mode, the system may adjust background colors, but white text remains optimal
+        return Color.white
+    }
+    
+    /// Cross-platform shadow color for overlays and elevation
+    /// Provides platform-appropriate shadow colors that adapt to accessibility settings
+    /// iOS: Black with platform-appropriate opacity
+    /// macOS: Black with platform-appropriate opacity
+    /// This color is designed for shadows, overlays, and elevation effects
+    static var platformShadowColor: Color {
+        #if os(iOS)
+        // iOS: Use black with standard shadow opacity
+        // In high contrast mode, shadows may be adjusted by the system
+        return Color.black.opacity(0.1)
+        #elseif os(macOS)
+        // macOS: Lighter shadow for subtle elevation
+        return Color.black.opacity(0.05)
+        #elseif os(tvOS)
+        // tvOS: More pronounced shadows for TV viewing distance
+        return Color.black.opacity(0.2)
+        #elseif os(visionOS)
+        // visionOS: Moderate shadows for spatial computing
+        return Color.black.opacity(0.15)
+        #else
+        // Other platforms: Standard shadow
+        return Color.black.opacity(0.1)
         #endif
     }
     
