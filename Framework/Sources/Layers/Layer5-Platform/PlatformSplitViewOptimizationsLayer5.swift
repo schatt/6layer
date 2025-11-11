@@ -34,14 +34,16 @@ public extension View {
     #if os(iOS)
     func platformIOSSplitViewOptimizations_L5() -> some View {
         return self
-            // Memory optimization: Use drawingGroup for complex views
+            // Memory optimization: Use drawingGroup for complex views to reduce layer count
             .drawingGroup()
-            // Performance: Reduce view updates during animations
-            .animation(.easeInOut(duration: 0.25), value: UUID())
-            // Touch optimization: Improve touch responsiveness
+            // Touch optimization: Improve touch hit testing for better responsiveness
             .contentShape(Rectangle())
-            // Memory: Optimize rendering for mobile devices
+            // Memory: Optimize rendering for mobile devices with compositing
             .compositingGroup()
+            // Performance: Optimize for smooth scrolling and animations
+            .transaction { transaction in
+                transaction.animation = .easeInOut(duration: 0.25)
+            }
     }
     #else
     func platformIOSSplitViewOptimizations_L5() -> some View {
@@ -55,12 +57,14 @@ public extension View {
     #if os(macOS)
     func platformMacOSSplitViewOptimizations_L5() -> some View {
         return self
-            // Performance: Optimize for large datasets
+            // Performance: Optimize for large datasets with drawing group
             .drawingGroup()
-            // Window performance: Optimize rendering for desktop
+            // Window performance: Optimize rendering for desktop with compositing
             .compositingGroup()
-            // Memory: Efficient rendering for desktop applications
-            .background(.clear)
+            // Performance: Optimize split view divider interactions
+            .transaction { transaction in
+                transaction.animation = .easeInOut(duration: 0.2)
+            }
     }
     #else
     func platformMacOSSplitViewOptimizations_L5() -> some View {
