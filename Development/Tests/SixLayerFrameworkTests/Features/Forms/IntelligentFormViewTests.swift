@@ -233,7 +233,7 @@ open class IntelligentFormViewTests: BaseTestClass {
                 }
                 
                 let context = container.mainContext
-                let task = TestTask(title: "Original Title")
+                let task = TestSwiftDataTask(title: "Original Title")
                 context.insert(task)
                 
                 // Save initial state

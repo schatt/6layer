@@ -173,21 +173,119 @@ public struct PlatformSplitViewSizing: Sendable {
     }
 }
 
+// MARK: - Platform Split View Advanced Features Configuration
+
+/// Animation configuration for split view transitions
+/// Implements Issue #18: Advanced Split View Features
+public struct PlatformSplitViewAnimationConfiguration: Sendable {
+    /// Animation duration in seconds
+    public let duration: TimeInterval
+    /// Animation curve type
+    public let curveType: AnimationCurveType
+    
+    /// Animation curve types
+    public enum AnimationCurveType: Sendable, Equatable {
+        case easeInOut
+        case easeIn
+        case easeOut
+        case linear
+        case spring
+    }
+    
+    /// Get the SwiftUI Animation for this configuration
+    public var animation: Animation {
+        switch curveType {
+        case .easeInOut:
+            return .easeInOut(duration: duration)
+        case .easeIn:
+            return .easeIn(duration: duration)
+        case .easeOut:
+            return .easeOut(duration: duration)
+        case .linear:
+            return .linear(duration: duration)
+        case .spring:
+            return .spring(response: duration, dampingFraction: 0.8)
+        }
+    }
+    
+    public init(
+        duration: TimeInterval = 0.3,
+        curve: AnimationCurveType = .easeInOut
+    ) {
+        self.duration = duration
+        self.curveType = curve
+    }
+}
+
+#if os(macOS)
+/// Keyboard shortcut action types
+/// Implements Issue #18: Advanced Split View Features
+public enum PlatformSplitViewKeyboardAction: Sendable, Equatable {
+    /// Toggle visibility of a specific pane
+    case togglePane(Int)
+    /// Show a specific pane
+    case showPane(Int)
+    /// Hide a specific pane
+    case hidePane(Int)
+    /// Toggle all panes
+    case toggleAll
+}
+
+/// Keyboard shortcut configuration for split views
+/// macOS only - keyboard shortcuts are not available on iOS
+/// Implements Issue #18: Advanced Split View Features
+public struct PlatformSplitViewKeyboardShortcut: Sendable, Equatable {
+    /// Key to press (single character or key name)
+    public let key: String
+    /// Modifier keys (Command, Option, Control, Shift)
+    public let modifiers: EventModifiers
+    /// Action to perform when shortcut is pressed
+    public let action: PlatformSplitViewKeyboardAction
+    
+    public init(
+        key: String,
+        modifiers: EventModifiers,
+        action: PlatformSplitViewKeyboardAction
+    ) {
+        self.key = key
+        self.modifiers = modifiers
+        self.action = action
+    }
+}
+#endif
+
 // MARK: - Platform Split View State Management
 
 /// State management for split views
 /// Implements Issue #15: Split View State Management & Visibility Control
+/// Implements Issue #18: Advanced Split View Features (animations, keyboard shortcuts, pane locking, divider callbacks)
 @MainActor
 public class PlatformSplitViewState: ObservableObject {
     /// Visibility state for each pane (index -> visible)
     /// Codable for persistence
     @Published private var paneVisibility: [Int: Bool] = [:]
     
+    /// Lock state for each pane (index -> locked)
+    /// Locked panes cannot be resized
+    @Published private var paneLocked: [Int: Bool] = [:]
+    
     /// Callback for visibility changes
     public var onVisibilityChange: ((Int, Bool) -> Void)?
     
+    /// Callback for divider drag interactions
+    /// Parameters: (paneIndex, newPosition)
+    public var onDividerDrag: ((Int, CGFloat) -> Void)?
+    
     /// Default visibility for new panes
     public var defaultVisibility: Bool = true
+    
+    /// Animation configuration for pane visibility transitions
+    public var animationConfiguration: PlatformSplitViewAnimationConfiguration?
+    
+    #if os(macOS)
+    /// Keyboard shortcuts for pane management (macOS only)
+    public var keyboardShortcuts: [PlatformSplitViewKeyboardShortcut] = []
+    #endif
     
     public init(defaultVisibility: Bool = true) {
         self.defaultVisibility = defaultVisibility
@@ -207,6 +305,16 @@ public class PlatformSplitViewState: ObservableObject {
     /// Toggle pane visibility
     public func togglePane(_ index: Int) {
         setPaneVisible(index, visible: !isPaneVisible(index))
+    }
+    
+    /// Check if a pane is locked (cannot be resized)
+    public func isPaneLocked(_ index: Int) -> Bool {
+        return paneLocked[index] ?? false
+    }
+    
+    /// Set pane lock state
+    public func setPaneLocked(_ index: Int, locked: Bool) {
+        paneLocked[index] = locked
     }
     
     /// Save state to UserDefaults

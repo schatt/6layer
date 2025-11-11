@@ -43,7 +43,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         
         // Then: Configuration should be created
         #expect(animation.duration == 0.3, "Animation duration should be set")
-        #expect(animation.curve == .easeInOut, "Animation curve should be set")
+        #expect(animation.curveType == .easeInOut, "Animation curve should be set")
     }
     
     @Test func testPlatformSplitViewStateSupportsAnimation() async {
@@ -56,6 +56,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         
         // Then: Animation configuration should be accessible
         #expect(state.animationConfiguration?.duration == 0.25, "State should support animation configuration")
+        #expect(state.animationConfiguration?.curveType == .easeOut, "State should support animation curve type")
     }
     
     // MARK: - Keyboard Shortcut Tests
