@@ -94,13 +94,24 @@ public extension View {
     }
     
     /// Unified sheet presentation helper
-    /// iOS: Uses `.sheet()` with full-screen or half-sheet based on content
-    /// macOS: Uses `.sheet()` with appropriate sizing
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **iOS (iPhone)**: Full-screen modal (default) or half-sheet with detents (iOS 16+)
+    ///   - Supports drag-to-dismiss gestures
+    ///   - Can use `.medium` or `.large` detents for partial screen coverage
+    /// - **iOS (iPad)**: Centered modal window (can be resized)
+    /// - **macOS**: Modal window (not full-screen)
+    ///   - Minimum size: 400x300 points
+    ///   - User can move and resize the window
+    ///   - Detents parameter is ignored (macOS doesn't support detents)
+    ///
+    /// **Use For**: Forms, detail views, editing interfaces, multi-step workflows
+    ///
     /// - Parameters:
     ///   - isPresented: Binding to control sheet presentation
     ///   - onDismiss: Optional callback when sheet is dismissed
-    ///   - detents: Presentation detents for iOS (default: [.large])
-    ///   - dragIndicator: Whether to show drag indicator (iOS only)
+    ///   - detents: Presentation detents for iOS (default: [.large]). Ignored on macOS.
+    ///   - dragIndicator: Whether to show drag indicator (iOS only, ignored on macOS)
     ///   - content: View builder for sheet content
     /// - Returns: View with sheet modifier applied
     @ViewBuilder

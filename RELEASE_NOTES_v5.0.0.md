@@ -62,13 +62,21 @@ This major release represents a significant milestone in the SixLayer Framework'
 
 #### Popover and Sheet Helpers (Issue #11)
 - **`platformPopover_L4()`**: Unified popover presentation helper with platform-agnostic API
-  - iOS: Uses `.popover()` modifier with full feature support
-  - macOS: Uses `.popover()` with platform-specific positioning
+  - **iOS (iPad)**: Floating panel with arrow pointing to source element, dismisses on outside tap
+  - **iOS (iPhone)**: Automatically converted to full-screen sheet by SwiftUI
+  - **macOS**: Floating panel attached to source element (common for tool palettes)
   - Supports attachment anchors, arrow edges, and programmatic control
+  - **Use For**: Contextual actions, tool palettes, quick information displays
 - **`platformSheet_L4()`**: Unified sheet presentation helper
-  - iOS: Full-screen or half-sheet with detents support (iOS 16+)
-  - macOS: Appropriate sizing and positioning
-  - Supports drag-to-dismiss, item-based binding, and custom detents
+  - **iOS (iPhone)**: Full-screen modal (default) or half-sheet with detents (iOS 16+)
+  - **iOS (iPad)**: Centered modal window (can be resized)
+  - **macOS**: Modal window (not full-screen) with minimum size 400x300, user can move/resize
+  - Supports drag-to-dismiss, item-based binding, and custom detents (iOS only)
+  - **Use For**: Forms, detail views, editing interfaces, multi-step workflows
+- **Cross-Platform Mapping**: 
+  - Popovers are contextual and temporary (small-medium size)
+  - Sheets are modal and focused (medium-large size)
+  - iPhone automatically converts popovers to sheets for better UX
 - **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformPopoverSheetLayer4.swift`
 
 #### Share and Clipboard Helpers (Issue #12)
