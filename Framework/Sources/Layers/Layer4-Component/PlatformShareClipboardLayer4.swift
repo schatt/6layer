@@ -126,7 +126,7 @@ public enum PlatformClipboard {
     /// - Parameter image: Image to copy
     /// - Returns: Success status
     @MainActor
-    public static func copyToClipboard(_ image: PlatformImage) -> Bool {
+    public static func copyToClipboard(_ image: ClipboardImage) -> Bool {
         #if os(iOS)
         UIPasteboard.general.image = image
         return UIPasteboard.general.image != nil
@@ -165,11 +165,11 @@ public enum PlatformClipboard {
 }
 
 #if os(iOS)
-typealias PlatformImage = UIImage
+typealias ClipboardImage = UIImage
 #elseif os(macOS)
-typealias PlatformImage = NSImage
+typealias ClipboardImage = NSImage
 #else
-typealias PlatformImage = Any
+typealias ClipboardImage = Any
 #endif
 
 /// Unified clipboard copy operation helper
@@ -188,7 +188,7 @@ public func platformCopyToClipboard_L4(
         success = PlatformClipboard.copyToClipboard(text)
     } else if let url = content as? URL {
         success = PlatformClipboard.copyToClipboard(url)
-    } else if let image = content as? PlatformImage {
+    } else if let image = content as? ClipboardImage {
         success = PlatformClipboard.copyToClipboard(image)
     } else {
         // Try to convert to string

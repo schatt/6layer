@@ -38,30 +38,34 @@ public struct CardDisplayHelper {
         // Priority 1: Check for configured title property in hints (developer's explicit intent)
         var shouldFallbackToReflection = false
         if let hints = hints,
-           let titleProperty = hints.customPreferences["itemTitleProperty"],
-           !titleProperty.isEmpty {
-            if let value = extractPropertyValue(from: item, propertyName: titleProperty) as? String {
-                // Use whatever the hint extracts, including empty strings
-                // UNLESS there's an explicit default value configured
-                if value.isEmpty {
-                    if let defaultValue = hints.customPreferences["itemTitleDefault"],
-                       !defaultValue.isEmpty {
-                        return defaultValue
+           let titleProperty = hints.customPreferences["itemTitleProperty"] {
+            // Empty property name should be ignored and fall back to reflection
+            if titleProperty.isEmpty {
+                shouldFallbackToReflection = true
+            } else {
+                if let value = extractPropertyValue(from: item, propertyName: titleProperty) as? String {
+                    // Use whatever the hint extracts, including empty strings
+                    // UNLESS there's an explicit default value configured
+                    if value.isEmpty {
+                        if let defaultValue = hints.customPreferences["itemTitleDefault"],
+                           !defaultValue.isEmpty {
+                            return defaultValue
+                        }
+                        // No default configured - return nil for empty string
+                        return nil
                     }
-                    // No default configured - return nil for empty string
-                    return nil
+                    return value
                 }
-                return value
+                
+                // Priority 1.5: Check for default value when hint property fails (property doesn't exist)
+                if let defaultValue = hints.customPreferences["itemTitleDefault"],
+                   !defaultValue.isEmpty {
+                    return defaultValue
+                }
+                
+                // Property doesn't exist and no default - fall back to reflection
+                shouldFallbackToReflection = true
             }
-            
-            // Priority 1.5: Check for default value when hint property fails (property doesn't exist)
-            if let defaultValue = hints.customPreferences["itemTitleDefault"],
-               !defaultValue.isEmpty {
-                return defaultValue
-            }
-            
-            // Property doesn't exist and no default - fall back to reflection
-            shouldFallbackToReflection = true
         }
         
         // Use reflection if no hints were provided OR if hint property doesn't exist
