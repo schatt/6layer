@@ -439,7 +439,6 @@ public extension View {
     ///   - appearance: Optional appearance configuration
     ///   - content: View builder for split view content
     /// - Returns: View with vertical split modifier and styling applied
-    @ViewBuilder
     func platformVerticalSplit_L4<Content: View>(
         spacing: CGFloat = 0,
         style: PlatformSplitViewStyle = .custom,
@@ -485,11 +484,11 @@ public extension View {
         }
         
         #if os(macOS)
-        view
+        return view
             .automaticAccessibility()
             .automaticAccessibilityIdentifiers(named: identifierName)
         #else
-        view
+        return view
             .automaticAccessibilityIdentifiers(named: identifierName)
         #endif
     }
@@ -648,7 +647,6 @@ public extension View {
     ///   - appearance: Optional appearance configuration
     ///   - content: View builder for split view content
     /// - Returns: View with horizontal split modifier and styling applied
-    @ViewBuilder
     func platformHorizontalSplit_L4<Content: View>(
         spacing: CGFloat = 0,
         style: PlatformSplitViewStyle = .custom,
@@ -694,11 +692,11 @@ public extension View {
         }
         
         #if os(macOS)
-        view
+        return view
             .automaticAccessibility()
             .automaticAccessibilityIdentifiers(named: identifierName)
         #else
-        view
+        return view
             .automaticAccessibilityIdentifiers(named: identifierName)
         #endif
     }
