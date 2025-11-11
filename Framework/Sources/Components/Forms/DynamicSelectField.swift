@@ -54,6 +54,7 @@ public struct DynamicSelectField: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     let formState = DynamicFormState(configuration: DynamicFormConfiguration(
         id: "test-form",
@@ -72,3 +73,4 @@ public struct DynamicSelectField: View {
     DynamicSelectField(field: field, formState: formState)
         .padding()
 }
+#endif

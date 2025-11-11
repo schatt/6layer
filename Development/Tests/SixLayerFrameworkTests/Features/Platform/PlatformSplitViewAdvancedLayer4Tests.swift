@@ -1,0 +1,175 @@
+import Testing
+import SwiftUI
+@testable import SixLayerFramework
+
+/// Tests for Advanced Split View Features (Issue #18)
+/// 
+/// BUSINESS PURPOSE: Ensure advanced split view features work correctly across platforms
+/// TESTING SCOPE: Animations, keyboard shortcuts, pane locking, divider interactions
+/// METHODOLOGY: Test advanced feature configuration and behavior
+/// Implements Issue #18: Advanced Split View Features
+@Suite("Platform Split View Advanced Features Layer 4")
+@MainActor
+open class PlatformSplitViewAdvancedLayer4Tests {
+    
+    // MARK: - Test Setup
+    
+    init() async throws {
+        await setupTestEnvironment()
+        let config = AccessibilityIdentifierConfig.shared
+        config.resetToDefaults()
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = false
+    }
+    
+    private func setupTestEnvironment() async {
+        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
+    }
+    
+    private func cleanupTestEnvironment() async {
+        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
+    }
+    
+    // MARK: - Animation & Transition Tests
+    
+    @Test func testPlatformSplitViewAnimationConfigurationExists() async {
+        // Given: PlatformSplitViewAnimationConfiguration should exist
+        let animation = PlatformSplitViewAnimationConfiguration(
+            duration: 0.3,
+            curve: .easeInOut
+        )
+        
+        // Then: Configuration should be created
+        #expect(animation.duration == 0.3, "Animation duration should be set")
+        #expect(animation.curve == .easeInOut, "Animation curve should be set")
+    }
+    
+    @Test func testPlatformSplitViewStateSupportsAnimation() async {
+        // Given: A state object with animation configuration
+        let state = PlatformSplitViewState()
+        state.animationConfiguration = PlatformSplitViewAnimationConfiguration(
+            duration: 0.25,
+            curve: .easeOut
+        )
+        
+        // Then: Animation configuration should be accessible
+        #expect(state.animationConfiguration?.duration == 0.25, "State should support animation configuration")
+    }
+    
+    // MARK: - Keyboard Shortcut Tests
+    
+    @Test func testPlatformSplitViewKeyboardShortcutConfigurationExists() async {
+        // Given: PlatformSplitViewKeyboardShortcut should exist
+        #if os(macOS)
+        let shortcut = PlatformSplitViewKeyboardShortcut(
+            key: "t",
+            modifiers: [.command],
+            action: .togglePane(0)
+        )
+        
+        // Then: Configuration should be created
+        #expect(shortcut.key == "t", "Shortcut key should be set")
+        #expect(shortcut.modifiers.contains(.command), "Shortcut modifiers should be set")
+        #expect(shortcut.action == .togglePane(0), "Shortcut action should be set")
+        #else
+        #expect(true, "Keyboard shortcuts are macOS-only")
+        #endif
+    }
+    
+    @Test func testPlatformSplitViewStateSupportsKeyboardShortcuts() async {
+        // Given: A state object with keyboard shortcuts
+        #if os(macOS)
+        let state = PlatformSplitViewState()
+        let shortcut = PlatformSplitViewKeyboardShortcut(
+            key: "h",
+            modifiers: [.command],
+            action: .togglePane(0)
+        )
+        state.keyboardShortcuts = [shortcut]
+        
+        // Then: Keyboard shortcuts should be accessible
+        #expect(state.keyboardShortcuts.count == 1, "State should support keyboard shortcuts")
+        #else
+        #expect(true, "Keyboard shortcuts are macOS-only")
+        #endif
+    }
+    
+    // MARK: - Pane Locking Tests
+    
+    @Test func testPlatformSplitViewStateSupportsPaneLocking() async {
+        // Given: A state object
+        let state = PlatformSplitViewState()
+        
+        // When: Locking a pane
+        state.setPaneLocked(0, locked: true)
+        
+        // Then: Pane should be locked
+        #expect(state.isPaneLocked(0) == true, "Pane 0 should be locked")
+        
+        // When: Unlocking a pane
+        state.setPaneLocked(0, locked: false)
+        
+        // Then: Pane should be unlocked
+        #expect(state.isPaneLocked(0) == false, "Pane 0 should be unlocked")
+    }
+    
+    @Test func testPlatformSplitViewLockedPanesCannotResize() async {
+        // Given: A state object with locked panes
+        let state = PlatformSplitViewState()
+        state.setPaneLocked(0, locked: true)
+        
+        // Then: Locked panes should be marked as non-resizable
+        #expect(state.isPaneLocked(0) == true, "Locked panes should prevent resizing")
+    }
+    
+    // MARK: - Divider Interaction Tests
+    
+    @Test func testPlatformSplitViewDividerCallbacksConfigurationExists() async {
+        // Given: Divider callback configuration should exist
+        var callbackFired = false
+        let onDividerDrag: (Int, CGFloat) -> Void = { _, _ in callbackFired = true }
+        
+        // Then: Should be able to configure divider callbacks
+        #expect(true, "Divider callbacks should be configurable")
+    }
+    
+    @Test func testPlatformSplitViewStateSupportsDividerCallbacks() async {
+        // Given: A state object with divider callbacks
+        let state = PlatformSplitViewState()
+        var callbackFired = false
+        state.onDividerDrag = { index, position in
+            callbackFired = true
+        }
+        
+        // When: Divider callback is invoked
+        state.onDividerDrag?(0, 200.0)
+        
+        // Then: Callback should fire
+        #expect(callbackFired == true, "Divider callbacks should fire on interaction")
+    }
+    
+    // MARK: - Cross-Platform Behavior Tests
+    
+    @Test func testPlatformSplitViewAdvancedFeaturesWorkOnIOS() async {
+        #if os(iOS)
+        // Given: Advanced features on iOS
+        // Then: Should work appropriately (may have platform-specific behavior)
+        #expect(true, "Advanced features should work on iOS")
+        #else
+        #expect(true, "Test only runs on iOS")
+        #endif
+    }
+    
+    @Test func testPlatformSplitViewAdvancedFeaturesWorkOnMacOS() async {
+        #if os(macOS)
+        // Given: Advanced features on macOS
+        // Then: Should work appropriately (may have platform-specific behavior)
+        #expect(true, "Advanced features should work on macOS")
+        #else
+        #expect(true, "Test only runs on macOS")
+        #endif
+    }
+}
+

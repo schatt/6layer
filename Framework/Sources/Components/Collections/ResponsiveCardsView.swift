@@ -462,11 +462,13 @@ public struct ResponsiveCardData: Identifiable {
 
 // MARK: - Preview
 
+#if ENABLE_PREVIEWS
 #Preview {
     NavigationView {
         ResponsiveCardsView()
     }
 }
+#endif
 
 // MARK: - Hybrid Layout Testing
 

@@ -26,7 +26,9 @@ public struct PlatformSecurity: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     PlatformSecurity()
         .padding()
 }
+#endif

@@ -36,7 +36,8 @@ public struct CrossPlatformOptimization: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     CrossPlatformOptimization()
         .padding()
-}
+}#endif

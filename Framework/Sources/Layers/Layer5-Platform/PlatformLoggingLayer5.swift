@@ -84,6 +84,8 @@ public struct LogEntry {
 
 // MARK: - Preview Provider
 
+#if ENABLE_PREVIEWS
 #Preview {
     PlatformLoggingLayer5()
 }
+#endif

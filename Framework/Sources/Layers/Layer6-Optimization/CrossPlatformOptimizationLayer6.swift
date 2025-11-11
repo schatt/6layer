@@ -903,6 +903,7 @@ public struct TestResult {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     VStack(spacing: 20) {
         Text("Cross-Platform Optimization Layer 6")
@@ -927,3 +928,4 @@ public struct TestResult {
     .padding()
     .environmentObject(CrossPlatformOptimizationManager())
 }
+#endif

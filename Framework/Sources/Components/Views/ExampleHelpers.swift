@@ -24,7 +24,9 @@ public struct ExampleHelpers: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     ExampleHelpers()
         .padding()
 }
+#endif

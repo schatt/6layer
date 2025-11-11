@@ -32,7 +32,9 @@ public struct PlatformWisdomLayer5: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     PlatformWisdomLayer5()
         .padding()
 }
+#endif

@@ -203,6 +203,7 @@ public struct FormFieldData {
 
 // MARK: - Example Preview
 
+#if ENABLE_PREVIEWS
 #Preview {
     VStack(spacing: 20) {
         ExampleProjectCard(
@@ -246,3 +247,4 @@ public struct FormFieldData {
     }
     .padding()
 }
+#endif

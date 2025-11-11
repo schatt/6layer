@@ -177,6 +177,7 @@ public struct macOSDesktopDataItem: Identifiable {
 
 // MARK: - macOS Preview
 
+#if ENABLE_PREVIEWS
 #Preview {
     VStack(spacing: 20) {
         macOSDesktopCard(
@@ -215,5 +216,6 @@ public struct macOSDesktopDataItem: Identifiable {
     .padding()
     .frame(width: 400, height: 600)
 }
+#endif
 
 #endif

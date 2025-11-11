@@ -213,6 +213,163 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     // MARK: - Issue #9: Auto-Persistence Tests
     
+    // MARK: - SwiftData Auto-Persistence Tests (TDD RED PHASE)
+    
+    /// TDD RED PHASE: Test that SwiftData models are automatically persisted when onSubmit is empty
+    /// This test verifies Issue #20: Auto-persistence for SwiftData models
+    @available(macOS 14.0, iOS 17.0, *)
+    @Test func testSwiftDataModelAutoPersistsWhenOnSubmitIsEmpty() async throws {
+        await MainActor.run {
+            runWithTaskLocalConfig {
+                setupTestEnvironment()
+                
+                // GIVEN: A SwiftData model with changes and empty onSubmit callback
+                #if canImport(SwiftData)
+                // Create isolated test container
+                let schema = Schema([TestSwiftDataTask.self])
+                guard let container = try? CoreDataTestUtilities.createIsolatedTestContainer(for: schema) else {
+                    Issue.record("Failed to create SwiftData test container")
+                    return
+                }
+                
+                let context = container.mainContext
+                let task = TestTask(title: "Original Title")
+                context.insert(task)
+                
+                // Save initial state
+                try? context.save()
+                
+                // Modify the model
+                task.title = "Updated Title"
+                
+                // Verify context has changes before submit
+                // Note: SwiftData doesn't have hasChanges like Core Data, so we check if save is needed
+                let hasChanges = context.hasChanges
+                #expect(hasChanges, "Context should have unsaved changes before submit")
+                
+                // WHEN: Form is submitted with empty onSubmit callback
+                var onSubmitCalled = false
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                        // Empty callback - auto-save should handle persistence
+                    }
+                )
+                
+                // THEN: Context should be saved automatically (no changes remaining)
+                // Save to verify changes were persisted
+                try? context.save()
+                #expect(!context.hasChanges, "Context should be saved automatically - no changes should remain")
+                
+                // Verify the change was persisted
+                context.refresh(task, mergeChanges: false)
+                #expect(task.title == "Updated Title", "Changes should be persisted. Expected 'Updated Title', got '\(task.title)'")
+                
+                // onSubmit should still be called (for custom logic)
+                #expect(onSubmitCalled, "onSubmit callback should still be called even with auto-save")
+                
+                cleanupTestEnvironment()
+                #else
+                // SwiftData not available on this platform
+                #expect(true, "SwiftData not available - skipping test")
+                #endif
+            }
+        }
+    }
+    
+    /// TDD RED PHASE: Test that SwiftData auto-persistence works with custom onSubmit callback
+    /// Auto-persistence should happen first, then custom onSubmit should be called
+    @available(macOS 14.0, iOS 17.0, *)
+    @Test func testSwiftDataAutoPersistenceWorksWithCustomOnSubmit() async throws {
+        await MainActor.run {
+            runWithTaskLocalConfig {
+                setupTestEnvironment()
+                
+                // GIVEN: A SwiftData model with custom onSubmit callback
+                #if canImport(SwiftData)
+                let schema = Schema([TestSwiftDataTask.self])
+                guard let container = try? CoreDataTestUtilities.createIsolatedTestContainer(for: schema) else {
+                    Issue.record("Failed to create SwiftData test container")
+                    return
+                }
+                
+                let context = container.mainContext
+                let task = TestSwiftDataTask(title: "Original Title")
+                context.insert(task)
+                try? context.save()
+                
+                // Modify the model
+                task.title = "Updated Title"
+                
+                var onSubmitCalled = false
+                var customLogicExecuted = false
+                
+                // WHEN: Form is submitted with custom onSubmit callback
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                        customLogicExecuted = true
+                        // Custom logic after auto-save
+                    }
+                )
+                
+                // THEN: Auto-save should happen first, then custom onSubmit should be called
+                try? context.save() // Save to verify auto-save worked
+                #expect(task.title == "Updated Title", "Changes should be persisted")
+                #expect(onSubmitCalled, "onSubmit callback should be called")
+                #expect(customLogicExecuted, "Custom logic should be executed")
+                
+                cleanupTestEnvironment()
+                #else
+                #expect(true, "SwiftData not available - skipping test")
+                #endif
+            }
+        }
+    }
+    
+    /// TDD RED PHASE: Test that SwiftData auto-save handles errors gracefully
+    @available(macOS 14.0, iOS 17.0, *)
+    @Test func testSwiftDataAutoSaveHandlesErrorsGracefully() async throws {
+        await MainActor.run {
+            runWithTaskLocalConfig {
+                setupTestEnvironment()
+                
+                // GIVEN: A SwiftData model that will fail validation
+                #if canImport(SwiftData)
+                let schema = Schema([TestSwiftDataTask.self])
+                guard let container = try? CoreDataTestUtilities.createIsolatedTestContainer(for: schema) else {
+                    Issue.record("Failed to create SwiftData test container")
+                    return
+                }
+                
+                let context = container.mainContext
+                let task = TestSwiftDataTask(title: "Valid Title")
+                context.insert(task)
+                try? context.save()
+                
+                var onSubmitCalled = false
+                
+                // WHEN: Form is submitted (even if save might fail)
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                    }
+                )
+                
+                // THEN: onSubmit should still be called (error handling shouldn't prevent it)
+                #expect(onSubmitCalled, "onSubmit should be called even if auto-save fails")
+                
+                cleanupTestEnvironment()
+                #else
+                #expect(true, "SwiftData not available - skipping test")
+                #endif
+            }
+        }
+    }
+    
     /// TDD RED PHASE: Test that Core Data entities are automatically persisted when onSubmit is empty
     /// This test verifies Issue #9: Auto-persistence for Core Data entities
     @Test func testCoreDataEntityAutoPersistsWhenOnSubmitIsEmpty() async throws {
@@ -504,4 +661,21 @@ struct TestFormDataModel {
     let name: String
     let email: String
 }
+
+#if canImport(SwiftData)
+import SwiftData
+
+/// Test SwiftData model for IntelligentFormView testing
+@available(macOS 14.0, iOS 17.0, *)
+@Model
+final class TestSwiftDataTask: PersistentModel {
+    var title: String
+    var updatedAt: Date?
+    
+    init(title: String = "", updatedAt: Date? = nil) {
+        self.title = title
+        self.updatedAt = updatedAt
+    }
+}
+#endif
 

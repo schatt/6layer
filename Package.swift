@@ -38,6 +38,12 @@ let package = Package(
                 "Extensions",
                 "Services",
                 "Shared"
+            ],
+            swiftSettings: [
+                // Enable previews only when building in Xcode (where PreviewsMacros plugin is available)
+                // Command-line builds (swift test, swift build) don't have PreviewsMacros plugin
+                // Uncomment this line when building in Xcode to enable #Preview macros:
+                // .define("ENABLE_PREVIEWS")
             ]
         ),
         

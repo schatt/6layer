@@ -176,6 +176,7 @@ public struct iOSTouchDataItem: Identifiable {
 
 // MARK: - iOS Preview
 
+#if ENABLE_PREVIEWS
 #Preview {
     NavigationView {
         VStack(spacing: 20) {
@@ -216,3 +217,4 @@ public struct iOSTouchDataItem: Identifiable {
         .navigationTitle("iOS Helpers")
     }
 }
+#endif

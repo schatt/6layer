@@ -892,6 +892,7 @@ private struct AsyncFormView: View {
         return modelName != nil
     }
     
+    // Cache initial sections to avoid recreating on every body evaluation
     private var initialSections: [DynamicFormSection]? {
         // Precedence 1: Explicit layoutSpec takes highest priority
         if let explicitSpec = layoutSpec {

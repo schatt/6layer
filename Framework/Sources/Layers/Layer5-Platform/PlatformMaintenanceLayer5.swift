@@ -83,6 +83,8 @@ public enum HealthStatus: String, CaseIterable {
 
 // MARK: - Preview Provider
 
+#if ENABLE_PREVIEWS
 #Preview {
     PlatformMaintenanceLayer5()
 }
+#endif

@@ -26,7 +26,9 @@ public struct VisionSafety: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     VisionSafety()
         .padding()
 }
+#endif

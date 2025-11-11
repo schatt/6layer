@@ -89,6 +89,8 @@ public enum InsightType: String, CaseIterable {
 
 // MARK: - Preview Provider
 
+#if ENABLE_PREVIEWS
 #Preview {
     PlatformKnowledgeLayer5()
 }
+#endif

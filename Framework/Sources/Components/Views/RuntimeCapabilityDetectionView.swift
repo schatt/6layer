@@ -56,7 +56,9 @@ public struct RuntimeCapabilityDetectionView: View {
     }
 }
 
+#if ENABLE_PREVIEWS
 #Preview {
     RuntimeCapabilityDetectionView()
         .padding()
 }
+#endif
