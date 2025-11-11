@@ -1,6 +1,87 @@
 import SwiftUI
 import Foundation
 
+// MARK: - Platform Split View Sizing Configuration
+
+/// Sizing constraints for a single split view pane
+/// Implements Issue #16: Split View Sizing & Constraints
+public struct PlatformSplitViewPaneSizing: Sendable {
+    /// Minimum width constraint
+    public let minWidth: CGFloat?
+    /// Ideal/preferred width
+    public let idealWidth: CGFloat?
+    /// Maximum width constraint
+    public let maxWidth: CGFloat?
+    /// Minimum height constraint
+    public let minHeight: CGFloat?
+    /// Ideal/preferred height
+    public let idealHeight: CGFloat?
+    /// Maximum height constraint
+    public let maxHeight: CGFloat?
+    /// Resizing priority (higher = more flexible)
+    public let priority: Double
+    
+    public init(
+        minWidth: CGFloat? = nil,
+        idealWidth: CGFloat? = nil,
+        maxWidth: CGFloat? = nil,
+        minHeight: CGFloat? = nil,
+        idealHeight: CGFloat? = nil,
+        maxHeight: CGFloat? = nil,
+        priority: Double = 0.5
+    ) {
+        self.minWidth = minWidth
+        self.idealWidth = idealWidth
+        self.maxWidth = maxWidth
+        self.minHeight = minHeight
+        self.idealHeight = idealHeight
+        self.maxHeight = maxHeight
+        self.priority = priority
+    }
+}
+
+/// Sizing configuration for split views
+/// Implements Issue #16: Split View Sizing & Constraints
+public struct PlatformSplitViewSizing: Sendable {
+    /// Sizing for first pane (or all panes if using array)
+    public let firstPane: PlatformSplitViewPaneSizing?
+    /// Sizing for second pane
+    public let secondPane: PlatformSplitViewPaneSizing?
+    /// Sizing for all panes (alternative to firstPane/secondPane)
+    public let panes: [PlatformSplitViewPaneSizing]
+    /// Container-level sizing constraints
+    public let container: PlatformSplitViewPaneSizing?
+    /// Whether to use responsive sizing based on content
+    public let responsive: Bool
+    
+    /// Initialize with first and second pane sizing
+    public init(
+        firstPane: PlatformSplitViewPaneSizing? = nil,
+        secondPane: PlatformSplitViewPaneSizing? = nil,
+        container: PlatformSplitViewPaneSizing? = nil,
+        responsive: Bool = false
+    ) {
+        self.firstPane = firstPane
+        self.secondPane = secondPane
+        self.panes = []
+        self.container = container
+        self.responsive = responsive
+    }
+    
+    /// Initialize with array of pane sizing
+    public init(
+        panes: [PlatformSplitViewPaneSizing],
+        container: PlatformSplitViewPaneSizing? = nil,
+        responsive: Bool = false
+    ) {
+        self.firstPane = panes.first
+        self.secondPane = panes.count > 1 ? panes[1] : nil
+        self.panes = panes
+        self.container = container
+        self.responsive = responsive
+    }
+}
+
 // MARK: - Platform Split View State Management
 
 /// State management for split views
