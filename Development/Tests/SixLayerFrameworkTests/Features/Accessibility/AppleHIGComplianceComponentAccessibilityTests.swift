@@ -412,12 +412,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformNavigationModifier should generate accessibility identifiers (modifier verified in code)") 
-            // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:237.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
+        #expect(hasAccessibilityID || true, "PlatformNavigationModifier should generate accessibility identifiers (modifier verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: PlatformIconModifier DOES have .automaticAccessibilityIdentifiers() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:268.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
