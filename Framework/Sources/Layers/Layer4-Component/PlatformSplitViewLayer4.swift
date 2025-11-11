@@ -235,19 +235,30 @@ public enum PlatformSplitViewKeyboardAction: Sendable, Equatable {
 /// macOS only - keyboard shortcuts are not available on iOS
 /// Implements Issue #18: Advanced Split View Features
 public struct PlatformSplitViewKeyboardShortcut: Sendable, Equatable {
-    /// Key to press (single character or key name)
-    public let key: String
+    /// Key to press
+    public let key: KeyEquivalent
     /// Modifier keys (Command, Option, Control, Shift)
     public let modifiers: EventModifiers
     /// Action to perform when shortcut is pressed
     public let action: PlatformSplitViewKeyboardAction
     
     public init(
-        key: String,
+        key: KeyEquivalent,
         modifiers: EventModifiers,
         action: PlatformSplitViewKeyboardAction
     ) {
         self.key = key
+        self.modifiers = modifiers
+        self.action = action
+    }
+    
+    /// Convenience initializer with String key
+    public init(
+        key: String,
+        modifiers: EventModifiers,
+        action: PlatformSplitViewKeyboardAction
+    ) {
+        self.key = KeyEquivalent(key.first ?? Character(""))
         self.modifiers = modifiers
         self.action = action
     }

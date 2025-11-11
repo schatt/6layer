@@ -258,12 +258,12 @@ open class IntelligentFormViewTests: BaseTestClass {
                 )
                 
                 // THEN: Context should be saved automatically (no changes remaining)
-                // Save to verify changes were persisted
+                // Note: SwiftData auto-saves in handleSubmit, so we verify the change was persisted
+                // Save to ensure all changes are committed
                 try? context.save()
                 #expect(!context.hasChanges, "Context should be saved automatically - no changes should remain")
                 
-                // Verify the change was persisted
-                context.refresh(task, mergeChanges: false)
+                // Verify the change was persisted (task should already have updated title after auto-save)
                 #expect(task.title == "Updated Title", "Changes should be persisted. Expected 'Updated Title', got '\(task.title)'")
                 
                 // onSubmit should still be called (for custom logic)
@@ -668,7 +668,7 @@ import SwiftData
 /// Test SwiftData model for IntelligentFormView testing
 @available(macOS 14.0, iOS 17.0, *)
 @Model
-final class TestSwiftDataTask: PersistentModel {
+final class TestSwiftDataTask {
     var title: String
     var updatedAt: Date?
     

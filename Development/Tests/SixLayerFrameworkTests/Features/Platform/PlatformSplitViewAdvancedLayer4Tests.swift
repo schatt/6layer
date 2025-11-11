@@ -71,7 +71,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         )
         
         // Then: Configuration should be created
-        #expect(shortcut.key == "t", "Shortcut key should be set")
+        #expect(shortcut.key.character == "t", "Shortcut key should be set")
         #expect(shortcut.modifiers.contains(.command), "Shortcut modifiers should be set")
         #expect(shortcut.action == .togglePane(0), "Shortcut action should be set")
         #else
@@ -92,6 +92,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         
         // Then: Keyboard shortcuts should be accessible
         #expect(state.keyboardShortcuts.count == 1, "State should support keyboard shortcuts")
+        #expect(state.keyboardShortcuts[0].key.character == "h", "Keyboard shortcut key should be accessible")
         #else
         #expect(true, "Keyboard shortcuts are macOS-only")
         #endif
