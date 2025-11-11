@@ -211,75 +211,135 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that Core Data entities are automatically persisted when onSubmit is empty
     /// This test verifies Issue #9: Auto-persistence for Core Data entities
-    @Test func testCoreDataEntityAutoPersistsWhenOnSubmitIsEmpty() async {
+    @Test func testCoreDataEntityAutoPersistsWhenOnSubmitIsEmpty() async throws {
         await MainActor.run {
             runWithTaskLocalConfig {
                 setupTestEnvironment()
                 
-                // TDD RED: This test should FAIL until auto-persistence is implemented
-                // For now, we can only document the expected behavior
+                // GIVEN: A Core Data entity with changes and empty onSubmit callback
+                #if canImport(CoreData)
+                let model = NSManagedObjectModel()
                 
-                // TODO: Create a test Core Data entity and verify:
-                // 1. When onSubmit is empty, Core Data context is saved automatically
-                // 2. Changes are persisted to the managed object context
-                // 3. No errors occur during auto-save
+                let taskEntity = NSEntityDescription()
+                taskEntity.name = "Task"
                 
-                // This test requires Core Data setup, which may not be available in all test environments
-                // We'll need to create a test Core Data stack or use a mock
-                // For now, skip this test by expecting true (test passes by verifying compilation)
-                #expect(true, "Core Data auto-persistence test requires Core Data test setup - skipping for now")
+                let titleAttribute = NSAttributeDescription()
+                titleAttribute.name = "title"
+                titleAttribute.attributeType = .stringAttributeType
+                titleAttribute.isOptional = true
+                
+                taskEntity.properties = [titleAttribute]
+                model.entities = [taskEntity]
+                
+                let container = CoreDataTestUtilities.createIsolatedTestContainer(
+                    name: "TestModel",
+                    managedObjectModel: model
+                )
+                
+                let context = container.viewContext
+                let task = NSManagedObject(entity: taskEntity, insertInto: context)
+                task.setValue("Original Title", forKey: "title")
+                
+                // Save initial state
+                try? context.save()
+                
+                // Modify the entity
+                task.setValue("Updated Title", forKey: "title")
+                
+                // Verify context has changes before submit
+                #expect(context.hasChanges, "Context should have unsaved changes before submit")
+                
+                // WHEN: Form is submitted with empty onSubmit callback
+                var onSubmitCalled = false
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                        // Empty callback - auto-save should handle persistence
+                    }
+                )
+                
+                // THEN: Context should be saved automatically (no changes remaining)
+                #expect(!context.hasChanges, "Context should be saved automatically - no changes should remain")
+                
+                // Verify the change was persisted
+                context.refresh(task, mergeChanges: false)
+                let savedTitle = task.value(forKey: "title") as? String
+                #expect(savedTitle == "Updated Title", "Changes should be persisted. Expected 'Updated Title', got '\(savedTitle ?? "nil")'")
+                
+                // onSubmit should still be called (for custom logic)
+                #expect(onSubmitCalled, "onSubmit callback should still be called even with auto-save")
                 
                 cleanupTestEnvironment()
+                #else
+                // Core Data not available on this platform
+                #expect(true, "Core Data not available - skipping test")
+                #endif
             }
         }
     }
     
     /// TDD RED PHASE: Test that auto-persistence works with custom onSubmit callback
     /// Auto-persistence should happen first, then custom onSubmit should be called
-    @Test func testAutoPersistenceWorksWithCustomOnSubmit() async {
+    @Test func testAutoPersistenceWorksWithCustomOnSubmit() async throws {
         await MainActor.run {
             runWithTaskLocalConfig {
                 setupTestEnvironment()
                 
-                var onSubmitCalled = false
+                // GIVEN: A Core Data entity with custom onSubmit callback
+                #if canImport(CoreData)
+                let model = NSManagedObjectModel()
                 
-                let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
+                let taskEntity = NSEntityDescription()
+                taskEntity.name = "Task"
                 
-                let view = IntelligentFormView.generateForm(
-                    for: TestFormDataModel.self,
-                    initialData: testData,
-                    onSubmit: { _ in
-                        onSubmitCalled = true
-                        // Custom logic after auto-save
-                    },
-                    onCancel: {}
+                let titleAttribute = NSAttributeDescription()
+                titleAttribute.name = "title"
+                titleAttribute.attributeType = .stringAttributeType
+                titleAttribute.isOptional = true
+                
+                taskEntity.properties = [titleAttribute]
+                model.entities = [taskEntity]
+                
+                let container = CoreDataTestUtilities.createIsolatedTestContainer(
+                    name: "TestModel",
+                    managedObjectModel: model
                 )
                 
-                // TDD RED: After auto-persistence is implemented:
-                // 1. Auto-save should happen first (for Core Data entities)
-                // 2. Then onSubmit callback should be called
-                // 3. Both should succeed
+                let context = container.viewContext
+                let task = NSManagedObject(entity: taskEntity, insertInto: context)
+                task.setValue("Original Title", forKey: "title")
+                try? context.save()
                 
-                // For now, we can only verify onSubmit is called
-                #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                if let inspected = view.tryInspect() {
-                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
-                    let updateButton = buttons.first { button in
-                        let text = try? button.sixLayerText().sixLayerString()
-                        return text?.lowercased().contains("update") ?? false
+                // Modify the entity
+                task.setValue("Updated Title", forKey: "title")
+                
+                var onSubmitCalled = false
+                var onSubmitCalledAfterSave = false
+                
+                // Track if context was saved before onSubmit
+                let originalHasChanges = context.hasChanges
+                
+                // WHEN: Form is submitted with custom onSubmit callback
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                        // Verify context was already saved (auto-save happened first)
+                        onSubmitCalledAfterSave = !context.hasChanges
                     }
-                    
-                    if let updateButton = updateButton {
-                        try? updateButton.sixLayerTap()
-                        #expect(onSubmitCalled, "onSubmit should be called after auto-save")
-                        // TODO: After fix, verify Core Data was saved before onSubmit was called
-                    }
-                }
-                #else
-                // ViewInspector not available on this platform - this is expected, not a failure
-                #endif
+                )
+                
+                // THEN: Auto-save should happen first, then onSubmit should be called
+                #expect(onSubmitCalled, "onSubmit callback should be called")
+                #expect(onSubmitCalledAfterSave, "Context should be saved before onSubmit callback is called")
+                #expect(!context.hasChanges, "Context should have no changes after auto-save and onSubmit")
                 
                 cleanupTestEnvironment()
+                #else
+                // Core Data not available on this platform
+                #expect(true, "Core Data not available - skipping test")
+                #endif
             }
         }
     }
@@ -291,38 +351,143 @@ open class IntelligentFormViewTests: BaseTestClass {
             runWithTaskLocalConfig {
                 setupTestEnvironment()
                 
-                // TestFormDataModel is a struct, not a Core Data entity
-                // Auto-persistence should NOT happen for non-Core Data entities
+                // GIVEN: A non-Core Data entity (struct)
                 let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
                 
-                let view = IntelligentFormView.generateForm(
-                    for: TestFormDataModel.self,
+                var onSubmitCalled = false
+                
+                // WHEN: Form is submitted
+                IntelligentFormView.handleSubmit(
                     initialData: testData,
-                    onSubmit: { _ in },
-                    onCancel: {}
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                    }
                 )
                 
-                // TDD RED: Should PASS - non-Core Data entities should not auto-persist
-                // The onSubmit callback should still be called, but no auto-save should occur
-                // This test verifies that auto-persistence is selective (Core Data only)
-                
-                #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                if let inspected = view.tryInspect() {
-                    let buttons = inspected.sixLayerFindAll(ViewType.Button.self)
-                    let updateButton = buttons.first { button in
-                        let text = try? button.sixLayerText().sixLayerString()
-                        return text?.lowercased().contains("update") ?? false
-                    }
-                    
-                    // Button should exist and be clickable
-                    #expect(updateButton != nil, "Update button should exist for non-Core Data entities")
-                    // TODO: After fix, verify that no auto-save occurred (would require Core Data context monitoring)
-                }
-                #else
-                // ViewInspector not available on this platform - this is expected, not a failure
-                #endif
+                // THEN: onSubmit should be called, but no auto-save should occur
+                // (Auto-save only works for NSManagedObject, not regular structs)
+                #expect(onSubmitCalled, "onSubmit callback should still be called for non-Core Data entities")
+                // Note: We can't verify "no auto-save" directly, but we verify onSubmit is called
+                // The implementation should check for NSManagedObject before attempting auto-save
                 
                 cleanupTestEnvironment()
+            }
+        }
+    }
+    
+    /// TDD RED PHASE: Test that timestamp fields are automatically updated
+    /// When a Core Data entity has updatedAt, modifiedAt, or lastModified, they should be set
+    @Test func testTimestampFieldsAreAutoUpdated() async throws {
+        await MainActor.run {
+            runWithTaskLocalConfig {
+                setupTestEnvironment()
+                
+                // GIVEN: A Core Data entity with updatedAt field
+                #if canImport(CoreData)
+                let model = NSManagedObjectModel()
+                
+                let taskEntity = NSEntityDescription()
+                taskEntity.name = "Task"
+                
+                let titleAttribute = NSAttributeDescription()
+                titleAttribute.name = "title"
+                titleAttribute.attributeType = .stringAttributeType
+                titleAttribute.isOptional = true
+                
+                let updatedAtAttribute = NSAttributeDescription()
+                updatedAtAttribute.name = "updatedAt"
+                updatedAtAttribute.attributeType = .dateAttributeType
+                updatedAtAttribute.isOptional = true
+                
+                taskEntity.properties = [titleAttribute, updatedAtAttribute]
+                model.entities = [taskEntity]
+                
+                let container = CoreDataTestUtilities.createIsolatedTestContainer(
+                    name: "TestModel",
+                    managedObjectModel: model
+                )
+                
+                let context = container.viewContext
+                let task = NSManagedObject(entity: taskEntity, insertInto: context)
+                task.setValue("Test Title", forKey: "title")
+                
+                let originalDate = Date().addingTimeInterval(-3600) // 1 hour ago
+                task.setValue(originalDate, forKey: "updatedAt")
+                try? context.save()
+                
+                // WHEN: Form is submitted
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in }
+                )
+                
+                // THEN: updatedAt should be updated to current date
+                let updatedDate = task.value(forKey: "updatedAt") as? Date
+                #expect(updatedDate != nil, "updatedAt should be set")
+                #expect(updatedDate! > originalDate, "updatedAt should be updated to a more recent date")
+                
+                cleanupTestEnvironment()
+                #else
+                // Core Data not available on this platform
+                #expect(true, "Core Data not available - skipping test")
+                #endif
+            }
+        }
+    }
+    
+    /// TDD RED PHASE: Test that auto-save handles errors gracefully
+    /// If Core Data save fails, error should be logged but not crash
+    @Test func testAutoSaveHandlesErrorsGracefully() async throws {
+        await MainActor.run {
+            runWithTaskLocalConfig {
+                setupTestEnvironment()
+                
+                // GIVEN: A Core Data entity that will fail validation
+                #if canImport(CoreData)
+                let model = NSManagedObjectModel()
+                
+                let taskEntity = NSEntityDescription()
+                taskEntity.name = "Task"
+                
+                let titleAttribute = NSAttributeDescription()
+                titleAttribute.name = "title"
+                titleAttribute.attributeType = .stringAttributeType
+                titleAttribute.isOptional = false // Required field
+                
+                taskEntity.properties = [titleAttribute]
+                model.entities = [taskEntity]
+                
+                let container = CoreDataTestUtilities.createIsolatedTestContainer(
+                    name: "TestModel",
+                    managedObjectModel: model
+                )
+                
+                let context = container.viewContext
+                let task = NSManagedObject(entity: taskEntity, insertInto: context)
+                // Don't set required "title" field - this will cause validation error
+                
+                var onSubmitCalled = false
+                
+                // WHEN: Form is submitted with invalid data
+                // (This should not crash, but should log error)
+                IntelligentFormView.handleSubmit(
+                    initialData: task,
+                    onSubmit: { _ in
+                        onSubmitCalled = true
+                    }
+                )
+                
+                // THEN: onSubmit should still be called (error handling shouldn't prevent it)
+                // Context may still have changes if save failed
+                #expect(onSubmitCalled, "onSubmit should be called even if auto-save fails")
+                // Note: We can't easily verify error logging without capturing print output,
+                // but we verify the function doesn't crash
+                
+                cleanupTestEnvironment()
+                #else
+                // Core Data not available on this platform
+                #expect(true, "Core Data not available - skipping test")
+                #endif
             }
         }
     }

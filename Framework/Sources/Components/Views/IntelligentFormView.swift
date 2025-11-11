@@ -541,7 +541,7 @@ public struct IntelligentFormView {
     /// Handle form submission with auto-persistence for Core Data entities
     /// Implements Issue #8 and #9: Auto-save Core Data entities and provide feedback
     @MainActor
-    private static func handleSubmit<T>(
+    internal static func handleSubmit<T>(
         initialData: T?,
         onSubmit: @escaping (T) -> Void
     ) {

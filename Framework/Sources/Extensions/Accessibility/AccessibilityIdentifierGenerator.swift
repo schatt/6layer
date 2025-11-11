@@ -37,7 +37,10 @@ public class AccessibilityIdentifierGenerator {
     ///   - context: The context where the component is used
     /// - Returns: A formatted accessibility identifier
     public func generateID(for componentName: String, role: String, context: String) -> String {
-        let config = AccessibilityIdentifierConfig.shared
+        // Use task-local config (automatic per-test isolation), then shared (production)
+        // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
+        // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
+        let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
         
         // Generate the identifier using the same logic as AutomaticAccessibilityIdentifiersModifier
         // Get configured values (empty means skip entirely - no framework forcing)
