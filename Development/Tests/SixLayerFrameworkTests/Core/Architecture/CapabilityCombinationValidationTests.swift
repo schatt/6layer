@@ -160,10 +160,17 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     
     @Test func testAccessibilityDependencies() {
         // VoiceOver and SwitchControl should always be available
-        #expect(RuntimeCapabilityDetection.supportsVoiceOver, 
-                     "VoiceOver should be available on all platforms")
-        #expect(RuntimeCapabilityDetection.supportsSwitchControl, 
-                     "SwitchControl should be available on all platforms")
+        // Test on each platform to ensure they're available
+        let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        for platform in platforms {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            
+            #expect(RuntimeCapabilityDetection.supportsVoiceOver, 
+                         "VoiceOver should be available on \(platform)")
+            #expect(RuntimeCapabilityDetection.supportsSwitchControl, 
+                         "SwitchControl should be available on \(platform)")
+        }
     }
     
     // MARK: - Capability Interaction Tests

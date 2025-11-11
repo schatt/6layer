@@ -96,7 +96,40 @@ public extension View {
         #endif
     }
     
-    /// Unified context menu presentation helper
+    /// Unified context menu presentation helper (without preview)
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **iOS**: Long press to reveal menu
+    ///   - Touch-based long press gesture
+    /// - **macOS**: Right-click to reveal menu
+    ///   - Mouse-based right-click interaction
+    ///   - Traditional desktop context menu
+    ///
+    /// **Use For**: Secondary actions, information, or navigation options
+    ///
+    /// - Parameters:
+    ///   - menuItems: View builder for menu items
+    /// - Returns: View with context menu modifier applied
+    func platformContextMenu_L4<MenuItems: View>(
+        @ViewBuilder menuItems: @escaping () -> MenuItems
+    ) -> some View {
+        #if os(iOS)
+        self.contextMenu {
+            menuItems()
+        }
+        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        #elseif os(macOS)
+        self.contextMenu {
+            menuItems()
+        }
+        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        #else
+        self
+            .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        #endif
+    }
+    
+    /// Unified context menu presentation helper (with preview for iOS)
     ///
     /// **Cross-Platform Behavior:**
     /// - **iOS**: Long press to reveal menu with optional preview (iOS 16+)
@@ -108,38 +141,26 @@ public extension View {
     ///   - Preview parameter is ignored (macOS doesn't support previews)
     ///   - Traditional desktop context menu
     ///
-    /// **Use For**: Secondary actions, information, or navigation options
+    /// **Use For**: Secondary actions, information, or navigation options with preview
     ///
     /// - Parameters:
     ///   - menuItems: View builder for menu items
-    ///   - preview: Optional preview view for iOS (ignored on macOS)
+    ///   - preview: Preview view for iOS (ignored on macOS)
     /// - Returns: View with context menu modifier applied
+    @available(iOS 16.0, *)
     func platformContextMenu_L4<MenuItems: View, Preview: View>(
         @ViewBuilder menuItems: @escaping () -> MenuItems,
-        preview: (() -> Preview)? = nil
+        @ViewBuilder preview: @escaping () -> Preview
     ) -> some View {
         #if os(iOS)
-        if let preview = preview {
-            if #available(iOS 16.0, *) {
-                self.contextMenu {
-                    menuItems()
-                } preview: {
-                    preview()
-                }
-                .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
-            } else {
-                self.contextMenu {
-                    menuItems()
-                }
-                .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
-            }
-        } else {
-            self.contextMenu {
-                menuItems()
-            }
-            .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        self.contextMenu {
+            menuItems()
+        } preview: {
+            preview()
         }
+        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
         #elseif os(macOS)
+        // macOS doesn't support preview, so ignore it
         self.contextMenu {
             menuItems()
         }

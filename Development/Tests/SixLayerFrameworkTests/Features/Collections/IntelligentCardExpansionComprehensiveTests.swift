@@ -459,7 +459,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             hover: false,
             voiceOver: true,
             switchControl: true,
-            assistiveTouch: false
+            assistiveTouch: true  // iOS supports AssistiveTouch per test defaults
         )
         
         // Test macOS platform configuration
