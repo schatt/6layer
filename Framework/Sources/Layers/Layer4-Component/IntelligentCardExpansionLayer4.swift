@@ -873,7 +873,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .onTapGesture {
             onItemSelected?(item)
         }
-        .contextMenu {
+        .platformContextMenu_L4 {
             if let onItemEdited = onItemEdited {
                 Button("Edit") {
                     onItemEdited(item)

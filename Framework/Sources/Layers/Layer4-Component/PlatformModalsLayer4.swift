@@ -9,29 +9,26 @@ public extension View {
     
     /// Platform-specific sheet presentation with consistent styling
     /// Provides standardized sheet appearance across platforms
+    ///
+    /// **Note**: For new code, prefer `platformSheet_L4()` which provides additional features
+    /// like detents support (iOS 16+) and better cross-platform documentation.
+    /// This function is maintained for backward compatibility.
+    ///
+    /// - SeeAlso: `platformSheet_L4()` for enhanced sheet presentation with detents support
     func platformSheet<SheetContent: View>(
         isPresented: Binding<Bool>,
         onDismiss: (() -> Void)? = nil,
         @ViewBuilder content: @escaping () -> SheetContent
     ) -> some View {
-        let sheetView: AnyView = {
-            #if os(iOS)
-            return AnyView(self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
-                content()
-            })
-            #elseif os(macOS)
-            return AnyView(self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
-                content()
-                    .frame(minWidth: 400, minHeight: 300)
-            })
-            #else
-            return AnyView(self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
-                content()
-            })
-            #endif
-        }()
-        return sheetView
-            .automaticAccessibilityIdentifiers(named: "platformSheet")
+        // Use platformSheet_L4 internally for consistency
+        return self.platformSheet_L4(
+            isPresented: isPresented,
+            onDismiss: onDismiss,
+            detents: [.large],
+            dragIndicator: .automatic,
+            content: content
+        )
+        .automaticAccessibilityIdentifiers(named: "platformSheet")
     }
     
     /// Platform-specific alert presentation with consistent styling
