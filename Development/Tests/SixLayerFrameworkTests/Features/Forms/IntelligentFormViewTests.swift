@@ -308,6 +308,7 @@ open class IntelligentFormViewTests: BaseTestClass {
                 // WHEN: Form is submitted with custom onSubmit callback
                 IntelligentFormView.handleSubmit(
                     initialData: task,
+                    modelContext: context, // Pass the ModelContext for SwiftData
                     onSubmit: { _ in
                         onSubmitCalled = true
                         customLogicExecuted = true
@@ -354,6 +355,7 @@ open class IntelligentFormViewTests: BaseTestClass {
                 // WHEN: Form is submitted (even if save might fail)
                 IntelligentFormView.handleSubmit(
                     initialData: task,
+                    modelContext: context, // Pass the ModelContext for SwiftData
                     onSubmit: { _ in
                         onSubmitCalled = true
                     }
