@@ -127,8 +127,8 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsTouch
         }
         
@@ -469,8 +469,8 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsAssistiveTouch
         }
         
@@ -506,8 +506,8 @@ public struct RuntimeCapabilityDetection {
     /// Detects if Vision framework is actually available
     @MainActor
     public static var supportsVision: Bool {
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsVision
         }
         
@@ -543,8 +543,8 @@ public struct RuntimeCapabilityDetection {
     /// Detects if OCR capabilities are actually available
     @MainActor
     public static var supportsOCR: Bool {
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsOCR
         }
         
