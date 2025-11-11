@@ -146,7 +146,7 @@ open class PlatformSplitViewStylesLayer4Tests {
     @Test func testPlatformSplitViewAppearanceConfiguration() async {
         // Given: Creating an appearance configuration
         let appearance = PlatformSplitViewAppearance(
-            backgroundColor: Color(NSColor.systemBackground),
+            backgroundColor: .platformBackground,
             cornerRadius: 8.0,
             shadow: PlatformSplitViewShadow(color: .black.opacity(0.1), radius: 4.0, x: 0, y: 2)
         )
@@ -158,13 +158,8 @@ open class PlatformSplitViewStylesLayer4Tests {
     
     @Test func testPlatformVerticalSplitL4AcceptsAppearance() async {
         // Given: An appearance configuration
-        #if os(macOS)
-        let backgroundColor = Color(NSColor.systemBackground)
-        #else
-        let backgroundColor = Color(UIColor.systemBackground)
-        #endif
         let appearance = PlatformSplitViewAppearance(
-            backgroundColor: backgroundColor,
+            backgroundColor: .platformBackground,
             cornerRadius: 8.0
         )
         
