@@ -118,7 +118,7 @@ This major release represents a significant milestone in the SixLayer Framework'
   - `PlatformDestructiveRowActionButton`: Destructive action button with confirmation support
 - **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformRowActionsLayer4.swift`
 
-#### Split View Helpers (Issue #14)
+#### Split View Helpers (Issues #14, #15, #16, #17)
 - **`platformVerticalSplit_L4()`**: Unified vertical split view presentation
   - **macOS**: Uses `VSplitView` for resizable vertical split panes (user can drag divider)
   - **iOS**: Uses `VStack` for vertical layout (split views not available on iOS)
@@ -134,6 +134,59 @@ This major release represents a significant milestone in the SixLayer Framework'
   - Horizontal Split: macOS = resizable HSplitView, iOS = HStack with spacing
 - **TDD Implementation**: 16 comprehensive tests covering all functionality
 - **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformSplitViewLayer4.swift`
+
+##### Split View State Management & Visibility Control (Issue #15)
+- **`PlatformSplitViewState`**: Observable object for managing pane visibility and state persistence
+  - **Pane Visibility Control**: Show/hide individual panes programmatically
+  - **State Persistence**: Save/restore pane visibility to `UserDefaults` or `AppStorage`
+  - **Visibility Callbacks**: `onVisibilityChange` callback for responding to pane visibility changes
+  - **Default Visibility**: Configurable default visibility state for all panes
+- **`splitViewPaneVisibility()`**: View modifier for applying visibility control to individual panes
+  - Automatically handles opacity and frame adjustments based on visibility state
+  - Works cross-platform (iOS and macOS)
+- **State Management Methods**:
+  - `isPaneVisible(_:)`: Check if a pane is currently visible
+  - `setPaneVisible(_:visible:)`: Show or hide a specific pane
+  - `togglePane(_:)`: Toggle pane visibility
+  - `saveToUserDefaults(key:)`: Persist state to UserDefaults
+  - `restoreFromUserDefaults(key:)`: Restore state from UserDefaults
+  - `saveToAppStorage(key:)`: Persist state to AppStorage
+- **TDD Implementation**: 14 comprehensive tests covering state management and persistence
+- **Use Cases**: Collapsible sidebars, hideable detail panes, responsive layouts
+
+##### Split View Sizing & Constraints (Issue #16)
+- **`PlatformSplitViewPaneSizing`**: Configuration for individual pane size constraints
+  - **Width Constraints**: `minWidth`, `idealWidth`, `maxWidth`
+  - **Height Constraints**: `minHeight`, `idealHeight`, `maxHeight`
+  - **Resizing Priority**: Control which panes are more flexible during resizing
+- **`PlatformSplitViewSizing`**: Overall split view sizing configuration
+  - **Per-Pane Sizing**: `firstPane`, `secondPane`, and `panes` array for multiple panes
+  - **Container Constraints**: Overall container min/ideal/max width/height
+  - **Responsive Sizing**: Flag to enable responsive behavior
+- **`splitViewPaneSizing()`**: View modifier for applying size constraints to individual panes
+  - Automatically applies frame constraints based on sizing configuration
+  - Works cross-platform (iOS and macOS)
+- **TDD Implementation**: 12 comprehensive tests covering sizing configuration and constraints
+- **Use Cases**: Fixed-width sidebars, flexible detail panes, responsive multi-pane layouts
+
+##### Split View Styles & Appearance (Issue #17)
+- **`PlatformSplitViewStyle`**: Enum for defining split view presentation styles
+  - `.balanced`: Equal emphasis on all panes
+  - `.prominentDetail`: Detail pane is emphasized
+  - `.custom`: Platform-appropriate default
+- **`PlatformSplitViewDivider`**: Configuration for divider appearance
+  - **Color**: Customizable divider color (defaults to `.separator`)
+  - **Width**: Divider thickness (defaults to 1.0)
+  - **Style**: `.solid`, `.dashed`, `.dotted`, or `.none`
+- **`PlatformSplitViewAppearance`**: Configuration for overall split view appearance
+  - **Background Color**: Customizable background (uses cross-platform `Color.platformBackground`)
+  - **Corner Radius**: Rounded corners for split view container
+  - **Shadow**: Customizable shadow configuration (color, radius, offset)
+- **`PlatformSplitViewShadow`**: Shadow configuration structure
+  - Color, radius, and X/Y offset customization
+- **TDD Implementation**: 10 comprehensive tests covering style, divider, and appearance configuration
+- **Cross-Platform Colors**: Uses framework's `Color.platformBackground` for consistent theming
+- **Use Cases**: Themed split views, custom divider styling, elevated containers
 
 ### Accessibility Integration
 - **Card Expansion Components**: Enhanced with automatic accessibility identifier support
