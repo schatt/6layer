@@ -42,10 +42,13 @@ public struct RuntimeCapabilityDetection {
     
     /// Get platform-specific defaults for the current test platform
     private static func getTestDefaults() -> TestingCapabilityDefaults {
-        guard let platform = testPlatform else {
-            return TestingCapabilityDetection.getTestingDefaults(for: SixLayerPlatform.current)
+        // If test platform is explicitly set, use it
+        if let platform = testPlatform {
+            return TestingCapabilityDetection.getTestingDefaults(for: platform)
         }
-        return TestingCapabilityDetection.getTestingDefaults(for: platform)
+        // Otherwise, use currentPlatform (which may be a test platform or the actual platform)
+        // This handles cases where testPlatform is set but not accessible due to thread/actor isolation
+        return TestingCapabilityDetection.getTestingDefaults(for: currentPlatform)
     }
     
     // MARK: - Capability-Level Override Support
