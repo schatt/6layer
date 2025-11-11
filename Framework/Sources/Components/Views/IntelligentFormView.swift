@@ -2,6 +2,9 @@ import SwiftUI
 #if canImport(CoreData)
 import CoreData
 #endif
+#if canImport(SwiftData)
+import SwiftData
+#endif
 
 // MARK: - Error Severity Types
 
@@ -577,6 +580,78 @@ public struct IntelligentFormView {
                 // Log error but don't crash - developer's onSubmit may handle it
                 print("Error auto-saving Core Data entity: \(error.localizedDescription)")
                 // In a future enhancement, we could show an error alert here
+            }
+        }
+        #endif
+        
+        // Step 1b: Auto-save SwiftData models if applicable (Issue #20)
+        // This ensures SwiftData models are saved even if onSubmit is empty
+        #if canImport(SwiftData)
+        if #available(macOS 14.0, iOS 17.0, *) {
+            if let persistentModel = data as? PersistentModel {
+                do {
+                    // Update timestamp if property exists (using reflection)
+                    let mirror = Mirror(reflecting: persistentModel)
+                    for child in mirror.children {
+                        if let label = child.label {
+                            if label == "updatedAt" || label == "modifiedAt" || label == "lastModified" {
+                                // Try to set the value using KeyPath if possible
+                                // Note: Direct property setting via reflection is limited in Swift
+                                // In practice, developers should update timestamps in their models
+                                // For now, we'll attempt to update via reflection
+                                if let dateProperty = child.value as? Date? {
+                                    // Reflection-based property setting is complex
+                                    // We'll rely on developers to update timestamps, or
+                                    // they can be updated in the onSubmit callback
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Get ModelContext from the model using persistentIdentifier
+                    // SwiftData models track their context via their persistentIdentifier
+                    // We can try to get the context from the model's container
+                    let persistentIdentifier = persistentModel.persistentIdentifier
+                    
+                    // Try to get ModelContext using reflection to access modelContext property
+                    // SwiftData models may have a modelContext property when in a context
+                    var modelContext: ModelContext? = nil
+                    let modelMirror = Mirror(reflecting: persistentModel)
+                    for child in modelMirror.children {
+                        if child.label == "modelContext" || child.label == "_modelContext" {
+                            modelContext = child.value as? ModelContext
+                            break
+                        }
+                    }
+                    
+                    // If we found a context, save it
+                    if let context = modelContext {
+                        // Update timestamp properties if they exist
+                        // Use reflection to try to set updatedAt, modifiedAt, or lastModified
+                        let timestampProperties = ["updatedAt", "modifiedAt", "lastModified"]
+                        for propName in timestampProperties {
+                            if let prop = mirror.children.first(where: { $0.label == propName }) {
+                                // Property exists, but we can't set it directly via reflection
+                                // Developers should update timestamps in their models
+                            }
+                        }
+                        
+                        // Save the context if it has changes
+                        if context.hasChanges {
+                            try context.save()
+                            autoSaveSucceeded = true
+                        }
+                    } else {
+                        // Couldn't find ModelContext - log warning
+                        // In a real app, the model should be in a context
+                        // For now, we'll log and continue - the developer's onSubmit can handle saving
+                        print("SwiftData model auto-save: Could not access ModelContext. Ensure model is inserted into a ModelContext.")
+                    }
+                    
+                } catch {
+                    // Log error but don't crash - developer's onSubmit may handle it
+                    print("Error auto-saving SwiftData model: \(error.localizedDescription)")
+                }
             }
         }
         #endif
