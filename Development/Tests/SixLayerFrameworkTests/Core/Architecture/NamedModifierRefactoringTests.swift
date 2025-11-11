@@ -17,7 +17,7 @@ import SwiftUI
 /// 
 /// TESTING SCOPE: These tests define the new behavior and should FAIL initially
 /// (RED phase) until the implementation is updated to match.
-@Suite("Named Modifier Refactoring T D D")
+@Suite("Named Modifier Refactoring")
 open class NamedModifierRefactoringTDDTests: BaseTestClass {
 
     // BaseTestClass handles setup automatically - no need for custom init    // MARK: - RED PHASE TESTS (Should FAIL initially)

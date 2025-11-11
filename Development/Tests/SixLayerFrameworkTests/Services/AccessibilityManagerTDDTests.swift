@@ -16,7 +16,7 @@ import SwiftUI
  * fail until proper implementations are complete.
  */
 
-@Suite("Accessibility Manager TDD")
+@Suite("Accessibility Manager")
 @MainActor
 open class AccessibilityManagerTDDTests: BaseTestClass {
 

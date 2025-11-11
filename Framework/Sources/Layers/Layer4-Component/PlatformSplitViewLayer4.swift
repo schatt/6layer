@@ -193,6 +193,7 @@ public struct PlatformSplitViewAnimationConfiguration: Sendable {
     }
     
     /// Get the SwiftUI Animation for this configuration
+    /// - Returns: Configured SwiftUI Animation instance
     public var animation: Animation {
         switch curveType {
         case .easeInOut:
@@ -204,6 +205,7 @@ public struct PlatformSplitViewAnimationConfiguration: Sendable {
         case .linear:
             return .linear(duration: duration)
         case .spring:
+            // Spring animation uses duration as response time
             return .spring(response: duration, dampingFraction: 0.8)
         }
     }
@@ -323,11 +325,17 @@ public class PlatformSplitViewState: ObservableObject {
     }
     
     /// Check if a pane is locked (cannot be resized)
+    /// - Parameter index: Pane index (0-based)
+    /// - Returns: `true` if pane is locked, `false` otherwise
     public func isPaneLocked(_ index: Int) -> Bool {
         return paneLocked[index] ?? false
     }
     
     /// Set pane lock state
+    /// Locked panes cannot be resized by user interaction
+    /// - Parameters:
+    ///   - index: Pane index (0-based)
+    ///   - locked: `true` to lock the pane, `false` to unlock
     public func setPaneLocked(_ index: Int, locked: Bool) {
         paneLocked[index] = locked
     }

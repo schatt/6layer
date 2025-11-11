@@ -13,7 +13,7 @@ import SwiftUI
  * manages step state, provides navigation controls, and integrates with FormWizardState.
  */
 
-@Suite("Form Wizard View TDD")
+@Suite("Form Wizard View")
 @MainActor
 open class FormWizardViewTDDTests: BaseTestClass {
 

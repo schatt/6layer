@@ -8,7 +8,7 @@ import SwiftUI
 /// 
 /// UPDATE: Performance layer has been removed entirely, eliminating the Metal crash bug
 @MainActor
-@Suite("Metal Rendering Crash T D D")
+@Suite("Metal Rendering Crash")
 open class MetalRenderingCrashTDDTests {
     
     init() async throws {

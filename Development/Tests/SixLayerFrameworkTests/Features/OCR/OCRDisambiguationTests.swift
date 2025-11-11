@@ -28,7 +28,7 @@ import Testing
 @testable import SixLayerFramework
 
 /// Tests for OCR disambiguation functionality
-@Suite("OCR Disambiguation TDD")
+@Suite("OCR Disambiguation")
 @MainActor
 open class OCRDisambiguationTDDTests: BaseTestClass {
 

@@ -15,7 +15,7 @@ import SwiftUI
  * are complete. Tests cover platform-specific integrations and cross-platform capabilities.
  */
 
-@Suite("Layer 5 Platform Components TDD")
+@Suite("Layer 5 Platform Components")
 @MainActor
 open class Layer5PlatformComponentTDDTests: BaseTestClass {
 

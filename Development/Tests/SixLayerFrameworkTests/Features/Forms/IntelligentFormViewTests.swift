@@ -251,6 +251,7 @@ open class IntelligentFormViewTests: BaseTestClass {
                 var onSubmitCalled = false
                 IntelligentFormView.handleSubmit(
                     initialData: task,
+                    modelContext: context, // Pass the ModelContext for SwiftData
                     onSubmit: { _ in
                         onSubmitCalled = true
                         // Empty callback - auto-save should handle persistence

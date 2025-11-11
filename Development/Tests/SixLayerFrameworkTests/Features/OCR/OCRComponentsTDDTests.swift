@@ -17,7 +17,7 @@ import ViewInspector
  * handle camera/photo library access, display extracted text, and provide disambiguation UI.
  */
 
-@Suite("OCR Components TDD")
+@Suite("OCR Components")
 @MainActor
 open class OCRComponentsTDDTests: BaseTestClass {
 
