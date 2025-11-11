@@ -170,7 +170,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             navigation,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "PlatformNavigation"
+            componentName: "platformNavigation"
         )
         
         #expect(hasAccessibilityID, "Platform navigation should generate accessibility identifiers")

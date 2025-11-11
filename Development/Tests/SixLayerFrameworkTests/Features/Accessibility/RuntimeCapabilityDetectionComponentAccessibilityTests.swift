@@ -26,7 +26,7 @@ open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass 
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
-            componentName: "RuntimeCapabilityDetection"
+            componentName: "RuntimeCapabilityDetectionView"
         )
         
         #expect(hasAccessibilityID, "RuntimeCapabilityDetection should generate accessibility identifiers")
