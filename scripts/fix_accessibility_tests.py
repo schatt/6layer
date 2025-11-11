@@ -34,8 +34,11 @@ COMPONENT_NAME_PATTERN = re.compile(r'componentName:\s*["\'](\w+)["\']')
 # Pattern to find struct/class definitions (Views and ViewModifiers)
 STRUCT_PATTERN = re.compile(r'(?:public\s+)?(?:struct|class)\s+(\w+)\s*:\s*(?:View|ViewModifier)')
 
-# Pattern to find functions that return views
+# Pattern to find functions that return views (including View extension functions)
 FUNCTION_PATTERN = re.compile(r'(?:public\s+)?(?:@MainActor\s+)?func\s+(\w+)\s*\([^)]*\)\s*->\s*some\s+View')
+
+# Pattern to find View extension functions (func name() in extension View)
+VIEW_EXTENSION_FUNCTION_PATTERN = re.compile(r'func\s+(\w+)\s*\([^)]*\)\s*->\s*some\s+View')
 
 # Pattern to find automaticAccessibilityIdentifiers modifier
 MODIFIER_PATTERN = re.compile(r'\.automaticAccessibilityIdentifiers(?:\(named:\s*["\'](\w+)["\']\))?\s*$', re.MULTILINE)
@@ -115,12 +118,35 @@ class AccessibilityTestFixer:
             for swift_file in framework_path.rglob('*.swift'):
                 try:
                     with open(swift_file, 'r', encoding='utf-8') as f:
-                        lines = f.readlines()
+                        content = f.read()
+                        lines = content.split('\n')
+                        
+                        # Check for standalone functions
                         for i, line in enumerate(lines, 1):
-                            # Check for function definition
                             match = FUNCTION_PATTERN.search(line)
                             if match and match.group(1) == component_name:
                                 return (swift_file, i, line.strip())
+                        
+                        # Check for View extension functions (look for "extension View" then function)
+                        in_view_extension = False
+                        for i, line in enumerate(lines, 1):
+                            if 'extension View' in line or 'public extension View' in line:
+                                in_view_extension = True
+                                continue
+                            if in_view_extension:
+                                if line.strip().startswith('extension ') or line.strip().startswith('// MARK:'):
+                                    in_view_extension = False
+                                    continue
+                                # Check if this is the function we're looking for
+                                match = VIEW_EXTENSION_FUNCTION_PATTERN.search(line)
+                                if match:
+                                    func_name = match.group(1)
+                                    # Try exact match
+                                    if func_name == component_name:
+                                        return (swift_file, i, line.strip())
+                                    # Try camelCase match (PlatformPrimaryButtonStyle -> platformPrimaryButtonStyle)
+                                    if func_name.lower() == component_name[0].lower() + component_name[1:].lower():
+                                        return (swift_file, i, line.strip())
                 except Exception as e:
                     continue
         
@@ -192,25 +218,50 @@ class AccessibilityTestFixer:
                 content = f.read()
                 lines = content.split('\n')
                 
-            # Find the component struct/class
+            # Find the component struct/class or function
             struct_line = None
             struct_index = None
             for i, line in enumerate(lines):
+                # Check for struct/class
                 match = STRUCT_PATTERN.search(line)
                 if match and match.group(1) == component_name:
                     struct_line = i
                     struct_index = i
                     break
+                # Check for function (standalone or in extension)
+                match = FUNCTION_PATTERN.search(line)
+                if match and match.group(1) == component_name:
+                    struct_line = i
+                    struct_index = i
+                    break
+                # Check for View extension function (handle camelCase mismatch)
+                match = VIEW_EXTENSION_FUNCTION_PATTERN.search(line)
+                if match:
+                    func_name = match.group(1)
+                    # Try exact match
+                    if func_name == component_name:
+                        struct_line = i
+                        struct_index = i
+                        break
+                    # Try camelCase match (PlatformPrimaryButtonStyle -> platformPrimaryButtonStyle)
+                    if func_name.lower() == component_name[0].lower() + component_name[1:].lower():
+                        struct_line = i
+                        struct_index = i
+                        break
             
             if struct_line is None:
                 return None
             
             # Check if this is a function (not a struct/class)
-            is_function = FUNCTION_PATTERN.search(lines[struct_line]) is not None
+            is_function = (FUNCTION_PATTERN.search(lines[struct_line]) is not None or 
+                          VIEW_EXTENSION_FUNCTION_PATTERN.search(lines[struct_line]) is not None)
             
             if is_function:
                 # For functions, search from the function definition line
+                # Look for the return statement or the modifier application
                 body_start = struct_line
+                # Functions might have the modifier on the return line or shortly after
+                # Search a bit further for View extension functions
             else:
                 # Look for body: some View (for Views) or func body(content: Content) (for ViewModifiers)
                 body_start = None

@@ -254,6 +254,10 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(testView != nil, "View with automatic accessibility identifiers should be created successfully")
             
             // The fix ensures that automatic accessibility identifiers work correctly
+            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiers DOES have .automaticAccessibilityIdentifiers() 
+            // modifier applied in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:668.
+            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
+            // This is a ViewInspector limitation, not a missing modifier issue.
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
