@@ -83,8 +83,8 @@ open class PlatformSplitViewSizingLayer4Tests {
     @Test func testPlatformVerticalSplitL4AcceptsSizingConfiguration() async {
         // Given: A sizing configuration
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // When: Creating a view with sizing
@@ -104,8 +104,8 @@ open class PlatformSplitViewSizingLayer4Tests {
     @Test func testPlatformHorizontalSplitL4AcceptsSizingConfiguration() async {
         // Given: A sizing configuration
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // When: Creating a view with sizing
@@ -126,8 +126,8 @@ open class PlatformSplitViewSizingLayer4Tests {
         #if os(macOS)
         // Given: A sizing configuration on macOS
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // When: Creating a view with sizing
@@ -151,8 +151,8 @@ open class PlatformSplitViewSizingLayer4Tests {
         #if os(macOS)
         // Given: A sizing configuration on macOS
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // When: Creating a view with sizing
@@ -175,9 +175,9 @@ open class PlatformSplitViewSizingLayer4Tests {
     @Test func testPlatformVerticalSplitL4AppliesContainerConstraints() async {
         // Given: A sizing configuration with container constraints
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600),
-            container: .init(minWidth: 700, idealWidth: 900, maxWidth: 1200)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600),
+            container: PlatformSplitViewPaneSizing(minWidth: 700, idealWidth: 900, maxWidth: 1200)
         )
         
         // When: Creating a view with container constraints
@@ -198,9 +198,9 @@ open class PlatformSplitViewSizingLayer4Tests {
         // Given: A sizing configuration with multiple panes
         let sizing = PlatformSplitViewSizing(
             panes: [
-                .init(minWidth: 200, idealWidth: 250, maxWidth: 300),
-                .init(minWidth: 300, idealWidth: 400, maxWidth: 500),
-                .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+                PlatformSplitViewPaneSizing(minWidth: 200, idealWidth: 250, maxWidth: 300),
+                PlatformSplitViewPaneSizing(minWidth: 300, idealWidth: 400, maxWidth: 500),
+                PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
             ]
         )
         
@@ -216,8 +216,8 @@ open class PlatformSplitViewSizingLayer4Tests {
     @Test func testPlatformSplitViewSizingWithResponsiveBehavior() async {
         // Given: A sizing configuration with responsive behavior
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600),
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600),
             responsive: true
         )
         
@@ -231,8 +231,8 @@ open class PlatformSplitViewSizingLayer4Tests {
         #if os(iOS)
         // Given: A sizing configuration on iOS
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // When: Creating a view with sizing
@@ -256,8 +256,8 @@ open class PlatformSplitViewSizingLayer4Tests {
         #if os(macOS)
         // Given: A sizing configuration on macOS
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // When: Creating a view with sizing
