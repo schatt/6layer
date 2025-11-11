@@ -317,11 +317,13 @@ public extension View {
     func assistiveTouchEnabled() -> some View {
         self.accessibilityElement(children: .contain)
             .accessibilityAddTraits(.allowsDirectInteraction)
+            .automaticAccessibilityIdentifiers(named: "AssistiveTouchEnabled")
     }
     
     /// Enable AssistiveTouch support with custom configuration
     func assistiveTouchEnabled(config: AssistiveTouchConfig) -> some View {
         self.accessibilityElement(children: .contain)
             .accessibilityAddTraits(.allowsDirectInteraction)
+            .automaticAccessibilityIdentifiers(named: "AssistiveTouchEnabled")
     }
 }

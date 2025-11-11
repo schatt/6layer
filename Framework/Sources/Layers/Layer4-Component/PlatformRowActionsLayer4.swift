@@ -50,7 +50,6 @@ public extension View {
     ///   - menuItems: View builder for menu items
     ///   - preview: Optional preview view for iOS
     /// - Returns: View with context menu modifier applied
-    @ViewBuilder
     func platformContextMenu_L4<MenuItems: View, Preview: View>(
         @ViewBuilder menuItems: @escaping () -> MenuItems,
         @ViewBuilder preview: (() -> Preview)? = nil

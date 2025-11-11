@@ -27,7 +27,11 @@ public extension View {
     func platformShare_L4(
         isPresented: Binding<Bool>,
         items: [Any],
+        #if os(iOS)
         excludedActivityTypes: [UIActivity.ActivityType]? = nil,
+        #else
+        excludedActivityTypes: [String]? = nil,
+        #endif
         onComplete: ((Bool) -> Void)? = nil
     ) -> some View {
         #if os(iOS)
@@ -87,7 +91,9 @@ private struct ShareSheet: UIViewControllerRepresentable {
             activityItems: items,
             applicationActivities: nil
         )
-        controller.excludedActivityTypes = excludedActivityTypes
+        if let excludedActivityTypes = excludedActivityTypes {
+            controller.excludedActivityTypes = excludedActivityTypes
+        }
         controller.completionWithItemsHandler = { _, completed, _, _ in
             onComplete?(completed)
         }
@@ -165,11 +171,11 @@ public enum PlatformClipboard {
 }
 
 #if os(iOS)
-typealias ClipboardImage = UIImage
+public typealias ClipboardImage = UIImage
 #elseif os(macOS)
-typealias ClipboardImage = NSImage
+public typealias ClipboardImage = NSImage
 #else
-typealias ClipboardImage = Any
+public typealias ClipboardImage = Any
 #endif
 
 /// Unified clipboard copy operation helper
