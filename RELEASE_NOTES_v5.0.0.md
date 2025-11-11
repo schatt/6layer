@@ -118,6 +118,23 @@ This major release represents a significant milestone in the SixLayer Framework'
   - `PlatformDestructiveRowActionButton`: Destructive action button with confirmation support
 - **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformRowActionsLayer4.swift`
 
+#### Split View Helpers (Issue #14)
+- **`platformVerticalSplit_L4()`**: Unified vertical split view presentation
+  - **macOS**: Uses `VSplitView` for resizable vertical split panes (user can drag divider)
+  - **iOS**: Uses `VStack` for vertical layout (split views not available on iOS)
+  - Spacing parameter applied on iOS, ignored on macOS (uses split view divider)
+  - **Use For**: Sidebars, detail views, master-detail interfaces
+- **`platformHorizontalSplit_L4()`**: Unified horizontal split view presentation
+  - **macOS**: Uses `HSplitView` for resizable horizontal split panes (user can drag divider)
+  - **iOS**: Uses `HStack` for horizontal layout (split views not available on iOS)
+  - Spacing parameter applied on iOS, ignored on macOS (uses split view divider)
+  - **Use For**: Multi-column layouts, side-by-side content
+- **Cross-Platform Mapping**:
+  - Vertical Split: macOS = resizable VSplitView, iOS = VStack with spacing
+  - Horizontal Split: macOS = resizable HSplitView, iOS = HStack with spacing
+- **TDD Implementation**: 16 comprehensive tests covering all functionality
+- **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformSplitViewLayer4.swift`
+
 ### Accessibility Integration
 - **Card Expansion Components**: Enhanced with automatic accessibility identifier support
 - **Form Field Components**: Complete accessibility integration across all form field types
