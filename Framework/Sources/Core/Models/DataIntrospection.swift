@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 import CoreData
+#if canImport(SwiftData)
+import SwiftData
+#endif
 
 // MARK: - Data Structure Analysis
 
@@ -15,13 +18,27 @@ import CoreData
 public struct DataIntrospectionEngine {
     
     /// Analyze a data model and provide UI recommendations
+    /// Supports Core Data (NSManagedObject), SwiftData (PersistentModel), and regular Swift types
         public static func analyze<T>(_ data: T) -> DataAnalysisResult {
         // Check if this is a Core Data managed object
         if let managedObject = data as? NSManagedObject {
             return analyzeCoreData(managedObject)
         }
+        
+        // Check if this is a SwiftData PersistentModel (iOS 17+, macOS 14+)
+        // SwiftData models work with standard Mirror introspection since they're regular Swift classes
+        // The @Model macro doesn't prevent Mirror from working
+        #if canImport(SwiftData)
+        if #available(macOS 14.0, iOS 17.0, *) {
+            if data is any PersistentModel {
+                // SwiftData models can be analyzed using standard Mirror introspection
+                // The @Model macro doesn't hide properties from Mirror
+                // Fall through to standard Mirror analysis below
+            }
+        }
+        #endif
 
-        // Use standard Mirror introspection for non-Core Data objects
+        // Use standard Mirror introspection for non-Core Data objects (including SwiftData)
         let mirror = Mirror(reflecting: data)
         let fields = extractFields(from: mirror)
         let complexity = calculateComplexity(fields: fields, data: data)

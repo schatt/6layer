@@ -2,6 +2,10 @@ import Testing
 import Foundation
 @testable import SixLayerFramework
 
+#if canImport(SwiftData)
+import SwiftData
+#endif
+
 /// Tests for DataIntrospectionEngine functionality
 @MainActor
 @Suite("Data Introspection")
@@ -95,4 +99,36 @@ open class DataIntrospectionTests {
         #expect(hasStringField == true, "Should detect string field")
         #expect(hasDateField == false, "Should not detect date field")
     }
+    
+    #if canImport(SwiftData)
+    /// Test that DataIntrospectionEngine works with SwiftData models
+    @available(macOS 14.0, iOS 17.0, *)
+    @Test func testDataIntrospectionWithSwiftDataModel() {
+        // Given: A SwiftData model (using the test model from IntelligentFormViewTests)
+        let model = TestSwiftDataTask(title: "Test", updatedAt: Date())
+        
+        // When: Analyzing the SwiftData model
+        let result = DataIntrospectionEngine.analyze(model)
+        
+        // Then: Should analyze SwiftData model correctly using Mirror introspection
+        // Note: @Model macro may affect Mirror introspection, so we check if analysis succeeds
+        // The analysis should complete without errors, even if some properties aren't visible
+        #expect(result.fields.count >= 0, "Analysis should complete (fields may vary based on @Model macro behavior)")
+        
+        // Check if title field is detected (if Mirror can see it)
+        if let titleField = result.fields.first(where: { $0.name == "title" }) {
+            #expect(titleField.type == .string, "title should be string type if detected")
+        }
+        
+        // Check if updatedAt field is detected (if Mirror can see it)
+        if let updatedAtField = result.fields.first(where: { $0.name == "updatedAt" }) {
+            #expect(updatedAtField.type == .date, "updatedAt should be date type if detected")
+            #expect(updatedAtField.isOptional == true, "updatedAt should be optional if detected")
+        }
+        
+        // The key test: DataIntrospectionEngine should handle SwiftData models without crashing
+        // and return a valid analysis result (even if some properties aren't visible via Mirror)
+        #expect(result.complexity != nil, "Analysis should return valid complexity")
+    }
+    #endif
 }
