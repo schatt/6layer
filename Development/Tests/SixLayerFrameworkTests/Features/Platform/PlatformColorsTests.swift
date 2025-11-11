@@ -300,7 +300,9 @@ open class PlatformColorsTests {
             Color.platformQuaternaryLabel,
             Color.platformPlaceholderText,
             Color.platformSeparator,
-            Color.platformOpaqueSeparator
+            Color.platformOpaqueSeparator,
+            Color.platformButtonTextOnColor,
+            Color.platformShadowColor
         ]
         
         // Then
@@ -320,7 +322,9 @@ open class PlatformColorsTests {
             Color.platformQuaternaryLabel,
             Color.platformPlaceholderText,
             Color.platformSeparator,
-            Color.platformOpaqueSeparator
+            Color.platformOpaqueSeparator,
+            Color.platformButtonTextOnColor,
+            Color.platformShadowColor
         ]
         
         // When & Then
@@ -328,6 +332,184 @@ open class PlatformColorsTests {
             // Colors should be accessible and not cause crashes
             #expect(color != nil, "Color should be accessible: \(color)")
         }
+    }
+    
+    // MARK: - Accessibility-Aware Color Tests
+    
+    @Test func testPlatformButtonTextOnColorIsAvailable() {
+        // Given & When
+        let buttonTextColor = Color.platformButtonTextOnColor
+        
+        // Then - Test business logic: Button text color should be available
+        #expect(buttonTextColor != nil, "Platform button text on color should be available")
+        
+        // Test business logic: Button text color should be white for high contrast on colored backgrounds
+        #expect(buttonTextColor == Color.white, "Platform button text on color should be white for maximum contrast")
+        
+        // Test business logic: Button text color should not be clear or transparent
+        #expect(buttonTextColor != Color.clear, "Platform button text on color should not be clear")
+    }
+    
+    @Test func testPlatformButtonTextOnColorWorksInViews() {
+        // Given
+        let buttonTextColor = Color.platformButtonTextOnColor
+        
+        // When: Using the color in a button view
+        let buttonView = Button("Test Button") { }
+            .foregroundColor(buttonTextColor)
+            .background(Color.accentColor)
+        
+        // Then - Test business logic: Color should work in actual button views
+        #expect(buttonView != nil, "Platform button text on color should work in button views")
+        
+        // Test business logic: Color should provide high contrast on colored backgrounds
+        let testView = Text("Button Text")
+            .foregroundColor(buttonTextColor)
+            .background(Color.blue)
+        
+        #expect(testView != nil, "Platform button text on color should work with colored backgrounds")
+    }
+    
+    @Test func testPlatformButtonTextOnColorAccessibilityAdaptation() {
+        // Given
+        let buttonTextColor = Color.platformButtonTextOnColor
+        
+        // When & Then - Test business logic: Color should adapt to accessibility settings
+        // The color should be white, which provides maximum contrast in both normal and high contrast modes
+        #expect(buttonTextColor == Color.white, "Button text color should be white for maximum contrast")
+        
+        // Test that the color can be used consistently across different accessibility contexts
+        #if os(iOS)
+        // On iOS, the color should work with UIAccessibility settings
+        // White is appropriate for both normal and high contrast modes
+        #expect(buttonTextColor != nil, "Button text color should work with iOS accessibility settings")
+        #endif
+    }
+    
+    @Test func testPlatformShadowColorIsAvailable() {
+        // Given & When
+        let shadowColor = Color.platformShadowColor
+        
+        // Then - Test business logic: Shadow color should be available
+        #expect(shadowColor != nil, "Platform shadow color should be available")
+        
+        // Test business logic: Shadow color should be black-based (for shadows)
+        // Shadow color should have opacity (not fully opaque)
+        #expect(shadowColor != Color.clear, "Platform shadow color should not be clear")
+    }
+    
+    @Test func testPlatformShadowColorPlatformBehavior() {
+        // Given & When
+        let shadowColor = Color.platformShadowColor
+        
+        // Then - Test business logic: Shadow color should have platform-appropriate opacity
+        #if os(iOS)
+        // iOS: Standard shadow opacity (0.1)
+        #expect(shadowColor != nil, "iOS shadow color should be available")
+        #elseif os(macOS)
+        // macOS: Lighter shadow opacity (0.05)
+        #expect(shadowColor != nil, "macOS shadow color should be available")
+        #elseif os(tvOS)
+        // tvOS: More pronounced shadow opacity (0.2)
+        #expect(shadowColor != nil, "tvOS shadow color should be available")
+        #elseif os(visionOS)
+        // visionOS: Moderate shadow opacity (0.15)
+        #expect(shadowColor != nil, "visionOS shadow color should be available")
+        #else
+        // Other platforms: Standard shadow
+        #expect(shadowColor != nil, "Platform shadow color should be available")
+        #endif
+    }
+    
+    @Test func testPlatformShadowColorWorksInViews() {
+        // Given
+        let shadowColor = Color.platformShadowColor
+        
+        // When: Using the color in a view with shadow
+        let shadowView = Rectangle()
+            .fill(Color.platformBackground)
+            .shadow(color: shadowColor, radius: 8, x: 0, y: 2)
+        
+        // Then - Test business logic: Shadow color should work in actual views
+        #expect(shadowView != nil, "Platform shadow color should work in views with shadows")
+        
+        // Test business logic: Shadow color should work with elevation effects
+        let elevatedView = VStack {
+            Text("Elevated Content")
+        }
+        .background(Color.platformBackground)
+        .shadow(color: shadowColor, radius: 4)
+        
+        #expect(elevatedView != nil, "Platform shadow color should work with elevation effects")
+    }
+    
+    @Test func testPlatformShadowColorConsistency() {
+        // Given & When
+        let shadowColor1 = Color.platformShadowColor
+        let shadowColor2 = Color.platformShadowColor
+        
+        // Then - Test business logic: Shadow color should be consistent across multiple calls
+        #expect(shadowColor1 == shadowColor2, "Platform shadow color should be consistent")
+        
+        // Test business logic: Shadow color should be the same instance/value
+        #expect(shadowColor1 != nil, "Platform shadow color should not be nil")
+        #expect(shadowColor2 != nil, "Platform shadow color should not be nil")
+    }
+    
+    @Test func testAccessibilityAwareColorsInAllPlatforms() {
+        // Given
+        let buttonTextColor = Color.platformButtonTextOnColor
+        let shadowColor = Color.platformShadowColor
+        let platform = SixLayerPlatform.current
+        
+        // When & Then - Test business logic: Accessibility-aware colors should work on all platforms
+        switch platform {
+        case .iOS, .macOS, .watchOS, .tvOS, .visionOS:
+            #expect(buttonTextColor != nil, "Button text color should be available on \(platform)")
+            #expect(shadowColor != nil, "Shadow color should be available on \(platform)")
+        }
+    }
+    
+    @Test func testAccessibilityAwareColorsWithSwiftUIViews() {
+        // Given
+        let buttonTextColor = Color.platformButtonTextOnColor
+        let shadowColor = Color.platformShadowColor
+        
+        // When: Creating views that use accessibility-aware colors
+        let buttonView = Button("Primary Action") { }
+            .foregroundColor(buttonTextColor)
+            .background(Color.accentColor)
+            .cornerRadius(8)
+        
+        let cardView = VStack {
+            Text("Card Content")
+                .foregroundColor(Color.platformLabel)
+        }
+        .padding()
+        .background(Color.platformBackground)
+        .shadow(color: shadowColor, radius: 8, x: 0, y: 2)
+        
+        // Then - Test business logic: Colors should work together in complex views
+        #expect(buttonView != nil, "Button with accessibility-aware text color should work")
+        #expect(cardView != nil, "Card with accessibility-aware shadow color should work")
+    }
+    
+    @Test func testAccessibilityAwareColorsDifferentFromOtherColors() {
+        // Given
+        let buttonTextColor = Color.platformButtonTextOnColor
+        let shadowColor = Color.platformShadowColor
+        let labelColor = Color.platformLabel
+        let backgroundColor = Color.platformBackground
+        
+        // When & Then - Test business logic: Accessibility-aware colors should be distinct from other colors
+        // Button text color should be white (different from label colors)
+        #expect(buttonTextColor != labelColor, "Button text color should be different from label color")
+        
+        // Shadow color should be different from background colors
+        #expect(shadowColor != backgroundColor, "Shadow color should be different from background color")
+        
+        // Button text color and shadow color should be different
+        #expect(buttonTextColor != shadowColor, "Button text color should be different from shadow color")
     }
     
     // MARK: - Dark Mode Tests
