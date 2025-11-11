@@ -139,13 +139,13 @@ private struct DataFrameAnalysisView: View {
     }
     
     private func performAnalysis() {
-        // Run analysis off main thread since it's CPU-intensive
-        Task.detached(priority: .userInitiated) {
-            let result = self.analysisEngine.analyzeDataFrame(self.dataFrame)
-            await MainActor.run {
-                self.analysisResult = result
-                self.isLoading = false
-            }
+        // Run analysis in background task to avoid blocking UI
+        // Note: analyzeDataFrame is synchronous but CPU-intensive
+        Task(priority: .userInitiated) {
+            let result = analysisEngine.analyzeDataFrame(dataFrame)
+            // Update state on main actor
+            analysisResult = result
+            isLoading = false
         }
     }
 }
@@ -501,13 +501,13 @@ private struct DataQualityAssessmentView: View {
     }
     
     private func performAnalysis() {
-        // Run analysis off main thread since it's CPU-intensive
-        Task.detached(priority: .userInitiated) {
-            let result = self.analysisEngine.analyzeDataFrame(self.dataFrame)
-            await MainActor.run {
-                self.analysisResult = result
-                self.isLoading = false
-            }
+        // Run analysis in background task to avoid blocking UI
+        // Note: analyzeDataFrame is synchronous but CPU-intensive
+        Task(priority: .userInitiated) {
+            let result = analysisEngine.analyzeDataFrame(dataFrame)
+            // Update state on main actor
+            analysisResult = result
+            isLoading = false
         }
     }
 }
