@@ -651,12 +651,12 @@ public struct TestingCapabilityDetection {
             )
         case .visionOS:
             return TestingCapabilityDefaults(
-                supportsTouch: false, // visionOS doesn't support touch in tests
-                supportsHapticFeedback: false, // visionOS doesn't support haptic feedback in tests
-                supportsHover: false, // visionOS doesn't support hover in tests
+                supportsTouch: true, // visionOS supports touch gestures
+                supportsHapticFeedback: true, // visionOS supports haptic feedback
+                supportsHover: true, // visionOS supports hover
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
-                supportsAssistiveTouch: false, // visionOS doesn't support AssistiveTouch
+                supportsAssistiveTouch: true, // visionOS supports AssistiveTouch
                 supportsVision: true, // Vision Pro supports Vision framework
                 supportsOCR: true // Vision Pro supports OCR through Vision framework
             )
