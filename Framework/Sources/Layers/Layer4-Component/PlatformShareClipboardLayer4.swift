@@ -20,25 +20,19 @@ public extension View {
     /// - Parameters:
     ///   - isPresented: Binding to control share sheet presentation
     ///   - items: Array of items to share (text, URLs, images, files)
-    ///   - excludedActivityTypes: Activity types to exclude (iOS only)
     ///   - onComplete: Optional callback when sharing completes
     /// - Returns: View with share sheet modifier applied
     @ViewBuilder
     func platformShare_L4(
         isPresented: Binding<Bool>,
         items: [Any],
-        #if os(iOS)
-        excludedActivityTypes: [UIActivity.ActivityType]? = nil,
-        #else
-        excludedActivityTypes: [String]? = nil,
-        #endif
         onComplete: ((Bool) -> Void)? = nil
     ) -> some View {
         #if os(iOS)
         self.sheet(isPresented: isPresented) {
             ShareSheet(
                 items: items,
-                excludedActivityTypes: excludedActivityTypes,
+                excludedActivityTypes: nil,
                 onComplete: onComplete
             )
         }
@@ -59,6 +53,26 @@ public extension View {
             .automaticAccessibilityIdentifiers(named: "platformShare_L4")
         #endif
     }
+    
+    #if os(iOS)
+    /// iOS-specific share sheet with excluded activity types
+    @ViewBuilder
+    func platformShare_L4(
+        isPresented: Binding<Bool>,
+        items: [Any],
+        excludedActivityTypes: [UIActivity.ActivityType]?,
+        onComplete: ((Bool) -> Void)? = nil
+    ) -> some View {
+        self.sheet(isPresented: isPresented) {
+            ShareSheet(
+                items: items,
+                excludedActivityTypes: excludedActivityTypes,
+                onComplete: onComplete
+            )
+        }
+        .automaticAccessibilityIdentifiers(named: "platformShare_L4")
+    }
+    #endif
     
     #if os(macOS)
     /// macOS-specific share implementation
