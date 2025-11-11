@@ -769,7 +769,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     // MARK: - Accessibility Tests
     
     @Test func testAccessibilitySupport() {
-        // Test accessibility support
+        // Test accessibility support on iOS (which supports AssistiveTouch)
+        RuntimeCapabilityDetection.setTestPlatform(.iOS)
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
@@ -787,8 +788,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Test that accessibility features are properly configured
         #expect(platformConfig.supportsVoiceOver)
         #expect(platformConfig.supportsSwitchControl)
-        // NOTE: AssistiveTouch support is working as expected in the current implementation
-        #expect(platformConfig.supportsAssistiveTouch, "AssistiveTouch support is working as expected")
+        // NOTE: AssistiveTouch support is working as expected on iOS
+        #expect(platformConfig.supportsAssistiveTouch, "AssistiveTouch support is working as expected on iOS")
     }
     
     // MARK: - Edge Case Tests
