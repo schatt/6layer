@@ -188,6 +188,52 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Cross-Platform Colors**: Uses framework's `Color.platformBackground` for consistent theming
 - **Use Cases**: Themed split views, custom divider styling, elevated containers
 
+##### Split View Advanced Features (Issue #18)
+- **`PlatformSplitViewAnimationConfiguration`**: Animation configuration for split view transitions
+  - **Duration**: Configurable animation duration (defaults to 0.3 seconds)
+  - **Curve Types**: `.easeInOut`, `.easeIn`, `.easeOut`, `.linear`, `.spring`
+  - **Animation Property**: Returns configured SwiftUI `Animation` instance
+- **Keyboard Shortcuts (macOS)**: `PlatformSplitViewKeyboardShortcut` for pane management
+  - **Actions**: `.togglePane(Int)`, `.showPane(Int)`, `.hidePane(Int)`, `.toggleAll`
+  - **Key Configuration**: Uses `KeyEquivalent` with `EventModifiers` (Command, Option, Control, Shift)
+  - **Convenience Initializer**: String-based key initialization for easier use
+- **Pane Locking**: Methods to prevent pane resizing
+  - `isPaneLocked(_:)`: Check if a pane is locked
+  - `setPaneLocked(_:locked:)`: Lock or unlock a pane
+  - Locked panes cannot be resized by user interaction
+- **Divider Callbacks**: `onDividerDrag` callback for divider interaction events
+  - Parameters: `(paneIndex, newPosition)`
+  - Fires when user interacts with split view divider
+- **State Integration**: All advanced features integrated into `PlatformSplitViewState`
+  - Animation configuration stored in state
+  - Keyboard shortcuts stored in state (macOS only)
+  - Pane locking state persisted with visibility state
+- **State Persistence Enhancement**: `saveToUserDefaults()` and `restoreFromUserDefaults()` now save/restore both pane visibility AND pane lock state
+- **TDD Implementation**: 10 comprehensive tests covering all advanced features
+- **Use Cases**: Animated pane transitions, keyboard-driven workflows, locked sidebar panes, divider interaction tracking
+
+##### Split View Platform-Specific Optimizations (Issue #19)
+- **`platformSplitViewOptimizations_L5()`**: Cross-platform optimization wrapper
+  - Automatically selects iOS or macOS optimizations based on platform
+  - Provides unified API for applying platform-appropriate optimizations
+- **iOS-Specific Optimizations**: `platformIOSSplitViewOptimizations_L5()`
+  - **Memory Optimization**: Uses `drawingGroup()` to reduce layer count for complex views
+  - **Touch Responsiveness**: `contentShape(Rectangle())` for improved hit testing
+  - **Rendering Optimization**: `compositingGroup()` for efficient mobile rendering
+  - **Smooth Animations**: Transaction-based animation configuration (0.25s easeInOut)
+  - **Optimized For**: Touch responsiveness, smooth animations, memory efficiency
+- **macOS-Specific Optimizations**: `platformMacOSSplitViewOptimizations_L5()`
+  - **Large Dataset Handling**: `drawingGroup()` for efficient rendering of large content
+  - **Desktop Rendering**: `compositingGroup()` for optimized desktop rendering
+  - **Divider Interactions**: Transaction-based animation for smooth divider interactions (0.2s easeInOut)
+  - **Optimized For**: Window performance, large dataset handling, desktop-optimized rendering
+- **Layer 5 Integration**: Follows SixLayer architecture pattern
+  - Layer 4 provides base split view functionality
+  - Layer 5 enhances with platform-specific performance optimizations
+- **TDD Implementation**: 8 comprehensive tests covering all optimization scenarios
+- **Location**: `Framework/Sources/Layers/Layer5-Platform/PlatformSplitViewOptimizationsLayer5.swift`
+- **Use Cases**: High-performance split views, large dataset presentations, smooth animations, memory-efficient mobile apps
+
 ### Accessibility Integration
 - **Card Expansion Components**: Enhanced with automatic accessibility identifier support
 - **Form Field Components**: Complete accessibility integration across all form field types
