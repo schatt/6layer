@@ -52,7 +52,7 @@ public extension View {
     /// - Returns: View with context menu modifier applied
     func platformContextMenu_L4<MenuItems: View, Preview: View>(
         @ViewBuilder menuItems: @escaping () -> MenuItems,
-        @ViewBuilder preview: (() -> Preview)? = nil
+        preview: (() -> Preview)? = nil
     ) -> some View {
         #if os(iOS)
         if let preview = preview {
