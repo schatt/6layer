@@ -12,11 +12,52 @@ import AppKit
 
 /// Platform-agnostic helpers for sharing content and clipboard operations
 /// Implements Issue #12: Add Share/Clipboard Helpers to Six-Layer Architecture (Layer 4)
+///
+/// ## Cross-Platform Behavior
+///
+/// ### Share Sheet (`platformShare_L4`)
+/// **Semantic Purpose**: Share content with other apps or services
+/// - **iOS**: Uses `UIActivityViewController` presented as a sheet
+///   - Full-screen or half-sheet modal presentation
+///   - Shows grid of sharing options (Messages, Mail, AirDrop, etc.)
+///   - User-friendly, visual selection interface
+///   - Supports excluded activity types for customization
+/// - **macOS**: Uses `NSSharingServicePicker` as a popover/menu
+///   - Appears as a popover near the source element
+///   - Shows menu of sharing services
+///   - More compact, menu-based interface
+///   - Automatically positions near the trigger point
+///
+/// **When to Use**: Sharing text, URLs, images, or files with other apps
+/// **Interaction Model**: iOS = modal sheet, macOS = popover menu
+///
+/// ### Clipboard Operations (`platformCopyToClipboard_L4`)
+/// **Semantic Purpose**: Copy content to system clipboard
+/// - **iOS**: Uses `UIPasteboard` with optional haptic feedback
+///   - Provides tactile feedback on successful copy
+///   - Better user experience with confirmation
+/// - **macOS**: Uses `NSPasteboard`
+///   - Standard clipboard operations
+///   - No haptic feedback (not applicable to desktop)
+///
+/// **When to Use**: Copy text, images, or URLs to clipboard
+/// **Feedback**: iOS provides haptic feedback, macOS relies on visual confirmation
 public extension View {
     
     /// Unified share sheet presentation helper
-    /// iOS: Uses UIActivityViewController via .sheet()
-    /// macOS: Uses NSSharingServicePicker or native share sheet
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **iOS**: Presents `UIActivityViewController` as a modal sheet
+    ///   - Full-screen or half-sheet presentation
+    ///   - Visual grid of sharing options
+    ///   - Supports excluded activity types
+    /// - **macOS**: Presents `NSSharingServicePicker` as a popover
+    ///   - Appears near the source element
+    ///   - Menu-based interface
+    ///   - Automatically positions and dismisses
+    ///
+    /// **Use For**: Sharing text, URLs, images, or files with other apps
+    ///
     /// - Parameters:
     ///   - isPresented: Binding to control share sheet presentation
     ///   - items: Array of items to share (text, URLs, images, files)

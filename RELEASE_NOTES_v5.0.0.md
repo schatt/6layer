@@ -81,28 +81,38 @@ This major release represents a significant milestone in the SixLayer Framework'
 
 #### Share and Clipboard Helpers (Issue #12)
 - **`platformShare_L4()`**: Unified share sheet presentation
-  - iOS: Uses `UIActivityViewController` via `.sheet()`
-  - macOS: Uses `NSSharingServicePicker` with native integration
+  - **iOS**: Presents `UIActivityViewController` as a modal sheet (full-screen or half-sheet)
+  - **macOS**: Presents `NSSharingServicePicker` as a popover menu
   - Supports multiple content types (text, URLs, images, files)
-  - Optional completion callbacks and excluded activity types (iOS)
+  - Optional completion callbacks and excluded activity types (iOS only)
+  - **Use For**: Sharing content with other apps or services
 - **`platformCopyToClipboard_L4()`**: Unified clipboard copy operation
   - Supports text, images, and URLs
-  - Optional haptic feedback on iOS
+  - **iOS**: Optional haptic feedback for user confirmation
+  - **macOS**: Visual confirmation only (no haptic feedback)
   - Returns success status for error handling
 - **`PlatformClipboard`**: Platform-agnostic clipboard operations enum
   - `copyToClipboard()` methods for text, images, and URLs
   - `getTextFromClipboard()` for reading clipboard content
+- **Cross-Platform Mapping**:
+  - Share: iOS = modal sheet, macOS = popover menu
+  - Clipboard: iOS = haptic feedback, macOS = visual only
 - **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformShareClipboardLayer4.swift`
 
 #### Row Actions Helpers (Issue #13)
 - **`platformRowActions_L4()`**: Unified row action presentation
-  - iOS: Uses `.swipeActions()` for swipe-to-reveal actions
-  - macOS: Uses context menus for row actions
-  - Supports leading and trailing actions, full-swipe gestures (iOS)
+  - **iOS**: Swipe left/right on row to reveal action buttons (touch-based)
+  - **macOS**: Right-click on row to reveal context menu (mouse-based)
+  - Supports leading and trailing actions, full-swipe gestures (iOS only)
+  - **Use For**: Quick actions like delete, edit, share on list items
 - **`platformContextMenu_L4()`**: Unified context menu presentation
-  - iOS: Uses `.contextMenu()` with optional preview support (iOS 16+)
-  - macOS: Uses `.contextMenu()` with platform-appropriate styling
+  - **iOS**: Long press to reveal menu with optional preview (iOS 16+)
+  - **macOS**: Right-click to reveal menu (no preview support)
   - Supports menu sections, dividers, and disabled actions
+  - **Use For**: Secondary actions, information, or navigation options
+- **Cross-Platform Mapping**:
+  - Row Actions: iOS = swipe gesture, macOS = right-click menu
+  - Context Menus: iOS = long press with preview, macOS = right-click
 - **Helper Components**:
   - `PlatformRowActionButton`: Consistent action button styling
   - `PlatformDestructiveRowActionButton`: Destructive action button with confirmation support

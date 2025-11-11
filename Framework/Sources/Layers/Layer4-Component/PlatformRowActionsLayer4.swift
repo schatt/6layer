@@ -4,14 +4,67 @@ import SwiftUI
 
 /// Platform-agnostic helpers for row actions (swipe actions, context menus, etc.)
 /// Implements Issue #13: Add Row Actions Helpers to Six-Layer Architecture (Layer 4)
+///
+/// ## Cross-Platform Behavior
+///
+/// ### Row Actions (`platformRowActions_L4`)
+/// **Semantic Purpose**: Quick actions available for list/table rows
+/// - **iOS**: Uses `.swipeActions()` - swipe left/right on row to reveal actions
+///   - Touch-based interaction (swipe gesture)
+///   - Actions appear as buttons that slide in from the edge
+///   - Supports full-swipe to trigger first action quickly
+///   - Leading edge: Swipe right to reveal
+///   - Trailing edge: Swipe left to reveal (most common)
+/// - **macOS**: Uses `.contextMenu()` - right-click on row to reveal actions
+///   - Mouse-based interaction (right-click)
+///   - Actions appear as a context menu
+///   - More traditional desktop interaction pattern
+///
+/// **When to Use**: Delete, edit, share, or other quick actions on list items
+/// **Interaction Model**: iOS = swipe gesture, macOS = right-click menu
+///
+/// ### Context Menus (`platformContextMenu_L4`)
+/// **Semantic Purpose**: Secondary actions and information via long-press/right-click
+/// - **iOS**: 
+///   - Long press (or 3D Touch on supported devices) to reveal
+///   - Supports preview (iOS 16+) - shows preview of content before menu
+///   - More visual, preview-based interaction
+/// - **macOS**: 
+///   - Right-click to reveal
+///   - More commonly used than on iOS
+///   - No preview support (macOS context menus don't support previews)
+///   - Traditional desktop context menu pattern
+///
+/// **When to Use**: Secondary actions, information, or navigation options
+/// **Interaction Model**: iOS = long press with preview, macOS = right-click menu
+///
+/// ## Platform Mapping
+///
+/// | Concept | iOS Interaction | macOS Interaction | Unified API |
+/// |---------|----------------|-------------------|------------|
+/// | Row Actions | Swipe gesture | Right-click menu | `platformRowActions_L4()` |
+/// | Context Menu | Long press (with preview) | Right-click | `platformContextMenu_L4()` |
+///
+/// **Note**: The unified API automatically uses the appropriate interaction model for each platform.
+/// Developers don't need to handle platform differences - the framework adapts automatically.
 public extension View {
     
     /// Unified row action presentation helper
-    /// iOS: Uses `.swipeActions()` for swipe-to-reveal actions
-    /// macOS: Uses context menus or trailing actions
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **iOS**: Swipe left/right on row to reveal action buttons
+    ///   - Touch-based swipe gesture
+    ///   - Actions slide in from the specified edge
+    ///   - Supports full-swipe to quickly trigger first action
+    /// - **macOS**: Right-click on row to reveal context menu with actions
+    ///   - Mouse-based right-click interaction
+    ///   - Actions appear as menu items
+    ///
+    /// **Use For**: Quick actions like delete, edit, share on list/table rows
+    ///
     /// - Parameters:
     ///   - edge: Edge where actions appear (default: .trailing)
-    ///   - allowsFullSwipe: Whether to allow full swipe to trigger first action (iOS only)
+    ///   - allowsFullSwipe: Whether to allow full swipe to trigger first action (iOS only, ignored on macOS)
     ///   - actions: View builder for action buttons
     /// - Returns: View with row actions modifier applied
     @ViewBuilder
@@ -44,11 +97,22 @@ public extension View {
     }
     
     /// Unified context menu presentation helper
-    /// iOS: Uses `.contextMenu()` with preview
-    /// macOS: Uses `.contextMenu()` with platform-appropriate styling
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **iOS**: Long press to reveal menu with optional preview (iOS 16+)
+    ///   - Touch-based long press gesture
+    ///   - Preview shows content before menu appears (if provided)
+    ///   - More visual, preview-based interaction
+    /// - **macOS**: Right-click to reveal menu
+    ///   - Mouse-based right-click interaction
+    ///   - Preview parameter is ignored (macOS doesn't support previews)
+    ///   - Traditional desktop context menu
+    ///
+    /// **Use For**: Secondary actions, information, or navigation options
+    ///
     /// - Parameters:
     ///   - menuItems: View builder for menu items
-    ///   - preview: Optional preview view for iOS
+    ///   - preview: Optional preview view for iOS (ignored on macOS)
     /// - Returns: View with context menu modifier applied
     func platformContextMenu_L4<MenuItems: View, Preview: View>(
         @ViewBuilder menuItems: @escaping () -> MenuItems,
