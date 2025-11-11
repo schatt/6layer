@@ -80,11 +80,8 @@ private struct OCRDisambiguationWrapper: View {
                 initialView
             }
         }
-        .onAppear {
-            processImage()
-        }
         .task {
-            // Process immediately for testing
+            // Process image when view appears
             if disambiguationResult == nil && !isProcessing {
                 processImage()
             }

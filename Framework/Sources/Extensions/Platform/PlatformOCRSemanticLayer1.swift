@@ -152,16 +152,9 @@ private struct OCRWithVisualCorrectionWrapper: View {
             }
         }
         .automaticAccessibilityIdentifiers()
-        .onAppear {
-            processImage()
-        }
         .task {
-            // For testing, also process immediately
-            #if DEBUG
-            if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
-                processImage()
-            }
-            #endif
+            // Process image when view appears
+            processImage()
         }
     }
     

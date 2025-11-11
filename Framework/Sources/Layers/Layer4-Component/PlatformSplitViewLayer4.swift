@@ -69,6 +69,29 @@ public class PlatformSplitViewState: ObservableObject {
     }
 }
 
+/// Helper modifier for applying visibility control to split view panes
+/// Use this modifier on individual panes within a split view to control their visibility
+public extension View {
+    /// Apply visibility control to a split view pane
+    /// - Parameters:
+    ///   - index: The index of this pane (0-based)
+    ///   - state: The split view state object (from environment or binding)
+    /// - Returns: View with visibility control applied
+    @ViewBuilder
+    func splitViewPaneVisibility(
+        index: Int,
+        state: PlatformSplitViewState
+    ) -> some View {
+        self
+            .opacity(state.isPaneVisible(index) ? 1.0 : 0.0)
+            .frame(
+                width: state.isPaneVisible(index) ? nil : 0,
+                height: state.isPaneVisible(index) ? nil : 0
+            )
+            .clipped()
+    }
+}
+
 // MARK: - Platform Split View Layer 4: Component Implementation
 
 /// Platform-agnostic helpers for split view presentation
@@ -175,15 +198,18 @@ public extension View {
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         let identifierName = "platformVerticalSplit_L4"
+        let stateValue = state.wrappedValue
         #if os(macOS)
         VSplitView {
             content()
+                .environmentObject(stateValue)
         }
         .automaticAccessibility()
         .automaticAccessibilityIdentifiers(named: identifierName)
         #else
         VStack(spacing: spacing) {
             content()
+                .environmentObject(stateValue)
         }
         .automaticAccessibilityIdentifiers(named: identifierName)
         #endif
@@ -251,15 +277,18 @@ public extension View {
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         let identifierName = "platformHorizontalSplit_L4"
+        let stateValue = state.wrappedValue
         #if os(macOS)
         HSplitView {
             content()
+                .environmentObject(stateValue)
         }
         .automaticAccessibility()
         .automaticAccessibilityIdentifiers(named: identifierName)
         #else
         HStack(spacing: spacing) {
             content()
+                .environmentObject(stateValue)
         }
         .automaticAccessibilityIdentifiers(named: identifierName)
         #endif

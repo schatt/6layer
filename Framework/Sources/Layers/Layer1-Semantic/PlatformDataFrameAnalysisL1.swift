@@ -139,8 +139,9 @@ private struct DataFrameAnalysisView: View {
     }
     
     private func performAnalysis() {
-        Task {
-            let result = analysisEngine.analyzeDataFrame(dataFrame)
+        // Run analysis off main thread since it's CPU-intensive
+        Task.detached(priority: .userInitiated) {
+            let result = self.analysisEngine.analyzeDataFrame(self.dataFrame)
             await MainActor.run {
                 self.analysisResult = result
                 self.isLoading = false
@@ -500,8 +501,9 @@ private struct DataQualityAssessmentView: View {
     }
     
     private func performAnalysis() {
-        Task {
-            let result = analysisEngine.analyzeDataFrame(dataFrame)
+        // Run analysis off main thread since it's CPU-intensive
+        Task.detached(priority: .userInitiated) {
+            let result = self.analysisEngine.analyzeDataFrame(self.dataFrame)
             await MainActor.run {
                 self.analysisResult = result
                 self.isLoading = false
