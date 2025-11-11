@@ -311,10 +311,8 @@ open class AssistiveTouchTests: BaseTestClass {
         let compliance = AssistiveTouchManager.checkCompliance(for: view)
         
         // Then: View should be compliant
-        // NOTE: .assistiveTouchEnabled() modifier is not working as expected
-        // The view is not compliant despite having the modifier
-        #expect(!compliance.isCompliant, "View with .assistiveTouchEnabled() is not compliant - modifier may not be working")
-        #expect(compliance.issues.count > 0, "View with .assistiveTouchEnabled() has compliance issues - modifier may not be working")
+        #expect(compliance.isCompliant, "View with .assistiveTouchEnabled() should be compliant")
+        #expect(compliance.issues.count == 0, "View with .assistiveTouchEnabled() should have no compliance issues")
     }
     
     /// BUSINESS PURPOSE: AssistiveTouchManager identifies compliance issues in views that lack proper accessibility support
@@ -331,10 +329,8 @@ open class AssistiveTouchTests: BaseTestClass {
         let compliance = AssistiveTouchManager.checkCompliance(for: view)
         
         // Then: View should have compliance issues
-        // NOTE: The compliance checker is not working as expected
-        // The view without AssistiveTouch support is being marked as compliant
-        #expect(compliance.isCompliant, "View without AssistiveTouch support is compliant - compliance checker may not be working")
-        #expect(compliance.issues.count == 0, "View without AssistiveTouch support has no issues - compliance checker may not be working")
+        #expect(!compliance.isCompliant, "View without AssistiveTouch support should not be compliant")
+        #expect(compliance.issues.count > 0, "View without AssistiveTouch support should have compliance issues")
     }
     
     // MARK: - AssistiveTouch Performance Tests

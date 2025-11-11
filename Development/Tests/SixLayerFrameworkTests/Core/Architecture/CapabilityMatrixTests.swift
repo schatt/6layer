@@ -241,6 +241,13 @@ open class CapabilityMatrixTests {
             RuntimeCapabilityDetection.setTestPlatform(platform)
             defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
             
+            // Verify platform is set correctly before testing
+            let currentPlatform = RuntimeCapabilityDetection.currentPlatform
+            guard currentPlatform == platform else {
+                Issue.record("Test platform not set correctly: expected \(platform), got \(currentPlatform)")
+                continue
+            }
+            
             let isSupported = capabilityTest.testSupported()
             let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)
             
@@ -249,6 +256,8 @@ open class CapabilityMatrixTests {
                          "\(capabilityTest.name) detection should be correct for \(platform)")
             
             // Test 2: Behavior should be appropriate for support status
+            // Re-verify platform is still set before behavior test
+            RuntimeCapabilityDetection.setTestPlatform(platform)
             capabilityTest.testBehavior()
             
             // Test 3: Log the capability status for verification
@@ -262,6 +271,13 @@ open class CapabilityMatrixTests {
             // Mock the platform for this test
             RuntimeCapabilityDetection.setTestPlatform(platform)
             defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            
+            // Verify platform is set correctly before testing
+            let currentPlatform = RuntimeCapabilityDetection.currentPlatform
+            guard currentPlatform == platform else {
+                Issue.record("Test platform not set correctly: expected \(platform), got \(currentPlatform)")
+                continue
+            }
             
             let isSupported = capabilityTest.testSupported()
             let shouldBeSupported = capabilityTest.expectedPlatforms.contains(platform)

@@ -269,11 +269,13 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     // CRITICAL: Tests must pass their isolated config instance to prevent singleton race conditions
     // Each test should use testConfig from BaseTestClass, not .shared
     
-    // Set up environment variable only - components should check this and apply the modifier themselves
+    // Set up environment variable AND inject config - components should check this and apply the modifier themselves
     // We do NOT apply .automaticAccessibilityIdentifiers() here because that would test the test helper,
     // not the framework components.
+    // CRITICAL: Set both the environment variable AND inject the config to ensure modifiers can access it
     let viewWithEnvironment = view
         .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
+        .environment(\.accessibilityIdentifierConfig, config)
     
     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
     // Use try? to safely call inspect() - if ViewInspector crashes internally, try? won't help,
