@@ -171,6 +171,26 @@ public extension View {
             )
             .clipped()
     }
+    
+    /// Apply sizing constraints to a split view pane
+    /// Use this modifier on individual panes within a split view to apply size constraints
+    /// - Parameters:
+    ///   - sizing: The sizing configuration for this pane
+    /// - Returns: View with sizing constraints applied
+    @ViewBuilder
+    func splitViewPaneSizing(
+        _ sizing: PlatformSplitViewPaneSizing
+    ) -> some View {
+        self
+            .frame(
+                minWidth: sizing.minWidth,
+                idealWidth: sizing.idealWidth,
+                maxWidth: sizing.maxWidth,
+                minHeight: sizing.minHeight,
+                idealHeight: sizing.idealHeight,
+                maxHeight: sizing.maxHeight
+            )
+    }
 }
 
 // MARK: - Platform Split View Layer 4: Component Implementation
@@ -253,6 +273,60 @@ public extension View {
         #endif
     }
     
+    /// Unified vertical split view presentation helper with sizing
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **macOS**: Uses `VSplitView` with frame modifiers for size constraints
+    ///   - Applies minWidth, idealWidth, maxWidth to panes
+    ///   - Container constraints applied to overall view
+    /// - **iOS**: Uses `VStack` with frame modifiers
+    ///   - Size constraints applied via frame modifiers
+    ///   - Container constraints applied to overall view
+    ///
+    /// **Use For**: Sidebars, detail views with specific size requirements
+    ///
+    /// - Parameters:
+    ///   - spacing: Spacing between views (iOS only, ignored on macOS)
+    ///   - sizing: Sizing configuration for panes and container
+    ///   - content: View builder for split view content (should provide 2+ views)
+    /// - Returns: View with vertical split modifier and sizing applied
+    @ViewBuilder
+    func platformVerticalSplit_L4<Content: View>(
+        spacing: CGFloat = 0,
+        sizing: PlatformSplitViewSizing,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        let identifierName = "platformVerticalSplit_L4"
+        #if os(macOS)
+        VSplitView {
+            content()
+        }
+        .frame(
+            minWidth: sizing.container?.minWidth,
+            idealWidth: sizing.container?.idealWidth,
+            maxWidth: sizing.container?.maxWidth,
+            minHeight: sizing.container?.minHeight,
+            idealHeight: sizing.container?.idealHeight,
+            maxHeight: sizing.container?.maxHeight
+        )
+        .automaticAccessibility()
+        .automaticAccessibilityIdentifiers(named: identifierName)
+        #else
+        VStack(spacing: spacing) {
+            content()
+        }
+        .frame(
+            minWidth: sizing.container?.minWidth,
+            idealWidth: sizing.container?.idealWidth,
+            maxWidth: sizing.container?.maxWidth,
+            minHeight: sizing.container?.minHeight,
+            idealHeight: sizing.container?.idealHeight,
+            maxHeight: sizing.container?.maxHeight
+        )
+        .automaticAccessibilityIdentifiers(named: identifierName)
+        #endif
+    }
+    
     /// Unified vertical split view presentation helper with state management
     ///
     /// **Cross-Platform Behavior:**
@@ -328,6 +402,60 @@ public extension View {
         HStack(spacing: spacing) {
             content()
         }
+        .automaticAccessibilityIdentifiers(named: identifierName)
+        #endif
+    }
+    
+    /// Unified horizontal split view presentation helper with sizing
+    ///
+    /// **Cross-Platform Behavior:**
+    /// - **macOS**: Uses `HSplitView` with frame modifiers for size constraints
+    ///   - Applies minWidth, idealWidth, maxWidth to panes
+    ///   - Container constraints applied to overall view
+    /// - **iOS**: Uses `HStack` with frame modifiers
+    ///   - Size constraints applied via frame modifiers
+    ///   - Container constraints applied to overall view
+    ///
+    /// **Use For**: Multi-column layouts with specific size requirements
+    ///
+    /// - Parameters:
+    ///   - spacing: Spacing between views (iOS only, ignored on macOS)
+    ///   - sizing: Sizing configuration for panes and container
+    ///   - content: View builder for split view content (should provide 2+ views)
+    /// - Returns: View with horizontal split modifier and sizing applied
+    @ViewBuilder
+    func platformHorizontalSplit_L4<Content: View>(
+        spacing: CGFloat = 0,
+        sizing: PlatformSplitViewSizing,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        let identifierName = "platformHorizontalSplit_L4"
+        #if os(macOS)
+        HSplitView {
+            content()
+        }
+        .frame(
+            minWidth: sizing.container?.minWidth,
+            idealWidth: sizing.container?.idealWidth,
+            maxWidth: sizing.container?.maxWidth,
+            minHeight: sizing.container?.minHeight,
+            idealHeight: sizing.container?.idealHeight,
+            maxHeight: sizing.container?.maxHeight
+        )
+        .automaticAccessibility()
+        .automaticAccessibilityIdentifiers(named: identifierName)
+        #else
+        HStack(spacing: spacing) {
+            content()
+        }
+        .frame(
+            minWidth: sizing.container?.minWidth,
+            idealWidth: sizing.container?.idealWidth,
+            maxWidth: sizing.container?.maxWidth,
+            minHeight: sizing.container?.minHeight,
+            idealHeight: sizing.container?.idealHeight,
+            maxHeight: sizing.container?.maxHeight
+        )
         .automaticAccessibilityIdentifiers(named: identifierName)
         #endif
     }
