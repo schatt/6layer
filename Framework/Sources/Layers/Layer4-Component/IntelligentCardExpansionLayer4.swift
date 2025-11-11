@@ -873,17 +873,21 @@ public struct ListCardComponent<Item: Identifiable>: View {
         .onTapGesture {
             onItemSelected?(item)
         }
-        .platformContextMenu_L4 {
+        .platformRowActions_L4(edge: .trailing, allowsFullSwipe: false) {
             if let onItemEdited = onItemEdited {
-                Button("Edit") {
-                    onItemEdited(item)
-                }
+                PlatformRowActionButton(
+                    title: "Edit",
+                    systemImage: "pencil",
+                    action: { onItemEdited(item) }
+                )
             }
             
             if let onItemDeleted = onItemDeleted {
-                Button("Delete", role: .destructive) {
-                    onItemDeleted(item)
-                }
+                PlatformDestructiveRowActionButton(
+                    title: "Delete",
+                    systemImage: "trash",
+                    action: { onItemDeleted(item) }
+                )
             }
         }
         .accessibilityElement(children: .combine)

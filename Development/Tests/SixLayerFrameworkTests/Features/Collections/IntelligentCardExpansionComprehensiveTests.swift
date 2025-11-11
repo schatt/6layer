@@ -450,6 +450,9 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     @Test func testGetCardExpansionPlatformConfig() {
         // Test iOS platform configuration
         RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        // Verify test platform is set correctly
+        let currentPlatform = RuntimeCapabilityDetection.currentPlatform
+        #expect(currentPlatform == .iOS, "Test platform should be iOS, got \(currentPlatform)")
         var config = getCardExpansionPlatformConfig()
         // Platform config creation succeeded (non-optional result)
         TestSetupUtilities.shared.assertCardExpansionConfig(

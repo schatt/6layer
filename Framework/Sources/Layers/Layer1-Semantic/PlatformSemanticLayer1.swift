@@ -80,6 +80,30 @@ public enum ValidationRuleType: String, CaseIterable {
 
 /// Generic function for presenting any collection of identifiable items
 /// Uses hints to determine optimal presentation strategy
+///
+/// ## Built-in Callbacks
+/// The framework provides four optional callbacks that automatically integrate with row actions:
+/// - `onCreateItem`: Displays "Add Item" button in empty state
+/// - `onItemSelected`: Handles item selection/navigation
+/// - `onItemEdited`: **Automatically appears as "Edit" button in row actions** (swipe actions on iOS, context menu on macOS)
+/// - `onItemDeleted`: **Automatically appears as "Delete" button in row actions** (swipe actions on iOS, context menu on macOS)
+///
+/// When `onItemEdited` or `onItemDeleted` are provided, the framework automatically adds platform-appropriate row actions
+/// using `platformRowActions_L4()`. Actions adapt to platform conventions (iOS = swipe, macOS = right-click).
+///
+/// ## Custom Actions
+/// For actions beyond Edit/Delete, use the `customItemView` parameter overload. This allows full control over
+/// item appearance and actions. See `README_Layer1_Semantic.md` for detailed examples.
+///
+/// - Parameters:
+///   - items: Array of identifiable items to display
+///   - hints: Presentation hints that guide layout and presentation decisions
+///   - onCreateItem: Optional callback when user wants to create a new item
+///   - onItemSelected: Optional callback when user selects an item
+///   - onItemDeleted: Optional callback when user wants to delete an item (automatically appears in row actions)
+///   - onItemEdited: Optional callback when user wants to edit an item (automatically appears in row actions)
+/// - Returns: A view that presents the collection with appropriate layout and actions
+/// - SeeAlso: `README_Layer1_Semantic.md` for detailed callback documentation and examples
 @MainActor
 public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
@@ -673,6 +697,26 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
 
 /// Generic function for presenting any collection of identifiable items with custom views
 /// Allows specifying custom views for item display, editing, and creation
+///
+/// Use this overload when you need:
+/// - Custom actions beyond Edit/Delete (e.g., Share, Archive, Duplicate)
+/// - Custom item layout/styling
+/// - Item-specific conditional actions
+/// - Full control over row appearance
+///
+/// **Note**: When using `customItemView`, you can still use `platformRowActions_L4()` within your custom view
+/// to get platform-appropriate row actions (swipe actions on iOS, context menu on macOS).
+///
+/// - Parameters:
+///   - items: Array of identifiable items to display
+///   - hints: Presentation hints that guide layout and presentation decisions
+///   - onCreateItem: Optional callback when user wants to create a new item
+///   - onItemSelected: Optional callback when user selects an item
+///   - onItemDeleted: Optional callback when user wants to delete an item
+///   - onItemEdited: Optional callback when user wants to edit an item
+///   - customItemView: View builder for custom item display (replaces default item view)
+/// - Returns: A view that presents the collection with custom item views
+/// - SeeAlso: `README_Layer1_Semantic.md` for examples of custom views with actions
 @MainActor
 public func platformPresentItemCollection_L1<Item: Identifiable>(
     items: [Item],
