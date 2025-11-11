@@ -886,9 +886,33 @@ private struct AsyncFormView: View {
     @State private var resolvedSections: [DynamicFormSection]?
     @State private var isLoading = true
     
+    // Optimize: Compute initial sections synchronously when no async work is needed
+    private var needsAsyncLoading: Bool {
+        // Only need async if we have a modelName (which requires file I/O)
+        return modelName != nil
+    }
+    
+    private var initialSections: [DynamicFormSection]? {
+        // Precedence 1: Explicit layoutSpec takes highest priority
+        if let explicitSpec = layoutSpec {
+            return explicitSpec.sections
+        }
+        
+        // If no async work needed, return default sections immediately
+        if !needsAsyncLoading {
+            return createDefaultSections()
+        }
+        
+        return nil
+    }
+    
     var body: some View {
         Group {
-            if isLoading {
+            if let sections = initialSections {
+                // Fast path: No async work needed, render immediately
+                createFormView(with: sections)
+            } else if isLoading {
+                // Slow path: Need to load hints asynchronously
                 ProgressView()
                     .task {
                         await loadSections()
