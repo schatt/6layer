@@ -4,6 +4,10 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+#if canImport(CoreData)
+import CoreData
+#endif
+
 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 import ViewInspector
 #endif
