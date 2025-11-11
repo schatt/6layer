@@ -36,6 +36,7 @@ public struct CardDisplayHelper {
     /// Extract meaningful title from any item using hints or reflection
     public static func extractTitle(from item: Any, hints: PresentationHints? = nil) -> String? {
         // Priority 1: Check for configured title property in hints (developer's explicit intent)
+        var shouldFallbackToReflection = false
         if let hints = hints,
            let titleProperty = hints.customPreferences["itemTitleProperty"],
            !titleProperty.isEmpty {
@@ -58,10 +59,13 @@ public struct CardDisplayHelper {
                !defaultValue.isEmpty {
                 return defaultValue
             }
+            
+            // Property doesn't exist and no default - fall back to reflection
+            shouldFallbackToReflection = true
         }
         
-        // Only use reflection if no hints were provided at all
-        if hints == nil {
+        // Use reflection if no hints were provided OR if hint property doesn't exist
+        if hints == nil || shouldFallbackToReflection {
             // Use reflection to find common title properties
             let mirror = Mirror(reflecting: item)
             

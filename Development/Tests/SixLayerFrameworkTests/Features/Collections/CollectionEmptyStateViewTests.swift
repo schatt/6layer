@@ -210,6 +210,80 @@ open class CollectionEmptyStateViewTests {
         }
     }
     
+    /// TDD RED PHASE: Test Issue #10 - Hints should not be overridden when passed to platformPresentItemCollection_L1
+    /// When hints with dataType .collection and context .browse are passed, they should not be changed to .generic/.navigation
+    @Test
+    func testHintsNotOverriddenInPlatformPresentItemCollection() async {
+        await MainActor.run {
+            setupTestEnvironment()
+            
+            // GIVEN: Hints with .collection dataType and .browse context, with custom message
+            let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."
+            let originalHints = PresentationHints(
+                dataType: .collection,
+                context: .browse,
+                customPreferences: [
+                    "customMessage": customMessage
+                ]
+            )
+            
+            var onCreateItemCalled = false
+            let onCreateItem: () -> Void = {
+                onCreateItemCalled = true
+            }
+            
+            // WHEN: platformPresentItemCollection_L1 is called with empty items
+            struct TestItem: Identifiable {
+                let id = UUID()
+            }
+            
+            let view = platformPresentItemCollection_L1(
+                items: [] as [TestItem], // Empty collection
+                hints: originalHints,
+                onCreateItem: onCreateItem
+            )
+            
+            // THEN: The empty state should use the original hints (not overridden)
+            // The empty state should show custom message and create button
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            if let inspected = view.tryInspect() {
+                // Find the empty state view
+                let emptyState = inspected.sixLayerTryFind(ViewType.VStack.self)
+                
+                if let emptyState = emptyState {
+                    // Check that custom message is displayed
+                    let texts = emptyState.sixLayerFindAll(ViewType.Text.self)
+                    let hasCustomMessage = texts.contains { text in
+                        let string = try? text.sixLayerString()
+                        return string?.contains("vehicles") ?? false || string?.contains("vehicle") ?? false
+                    }
+                    
+                    // Check that create button exists (onCreateItem was provided)
+                    let button = emptyState.sixLayerTryFind(ViewType.Button.self)
+                    
+                    // TDD RED: Should FAIL if hints are overridden
+                    #expect(hasCustomMessage, "Custom message should be displayed when hints are not overridden")
+                    #expect(button != nil, "Create button should be displayed when onCreateItem is provided and hints are not overridden")
+                    
+                    // Verify button works
+                    if let button = button {
+                        try? button.sixLayerTap()
+                        #expect(onCreateItemCalled, "Create button should call onCreateItem callback")
+                    }
+                } else {
+                    Issue.record("Could not find empty state view")
+                }
+            } else {
+                Issue.record("Failed to inspect platformPresentItemCollection_L1 view")
+            }
+            #else
+            // ViewInspector not available on this platform - this is expected, not a failure
+            #endif
+            
+            cleanupTestEnvironment()
+        }
+    }
+    
     /// TDD RED PHASE: Test that custom message takes precedence over default context message
     @Test
     func testCustomMessageTakesPrecedenceOverDefaultMessage() async {

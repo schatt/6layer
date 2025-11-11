@@ -112,7 +112,7 @@ open class AccessibilityPreferenceTests {
                          "macOS hover support should be determinable")
             #expect(config.supportsTouch == true || config.supportsTouch == false, 
                          "macOS touch support should be determinable")
-            #expect(config.hoverDelay == 0.1, "macOS should have 0.1s hover delay")
+            #expect(config.hoverDelay == 0.5, "macOS should have 0.5s hover delay (per RuntimeCapabilityDetection)")
             
         case .watchOS:
             // watchOS should support touch and haptic feedback
