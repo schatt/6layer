@@ -37,22 +37,22 @@ open class PlatformSplitViewSizingLayer4Tests {
     @Test func testPlatformSplitViewSizingCreatesConfiguration() async {
         // Given: Creating a sizing configuration
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600)
         )
         
         // Then: Configuration should be created
-        #expect(sizing.firstPane.minWidth == 250, "First pane minWidth should be set")
-        #expect(sizing.firstPane.idealWidth == 280, "First pane idealWidth should be set")
-        #expect(sizing.firstPane.maxWidth == 350, "First pane maxWidth should be set")
+        #expect(sizing.firstPane?.minWidth == 250, "First pane minWidth should be set")
+        #expect(sizing.firstPane?.idealWidth == 280, "First pane idealWidth should be set")
+        #expect(sizing.firstPane?.maxWidth == 350, "First pane maxWidth should be set")
     }
     
     @Test func testPlatformSplitViewSizingWithContainerConstraints() async {
         // Given: Creating sizing with container constraints
         let sizing = PlatformSplitViewSizing(
-            firstPane: .init(minWidth: 250, idealWidth: 280, maxWidth: 350),
-            secondPane: .init(minWidth: 400, idealWidth: 500, maxWidth: 600),
-            container: .init(minWidth: 700, idealWidth: 900, maxWidth: 1200)
+            firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
+            secondPane: PlatformSplitViewPaneSizing(minWidth: 400, idealWidth: 500, maxWidth: 600),
+            container: PlatformSplitViewPaneSizing(minWidth: 700, idealWidth: 900, maxWidth: 1200)
         )
         
         // Then: Container constraints should be set
