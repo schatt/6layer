@@ -37,8 +37,10 @@ open class PlatformSplitViewStylesLayer4Tests {
     @Test func testPlatformSplitViewStyleEnumExists() async {
         // Given: PlatformSplitViewStyle enum should exist
         // Then: Should be able to reference styles
-        #expect(PlatformSplitViewStyle.balanced != nil, "balanced style should exist")
-        #expect(PlatformSplitViewStyle.prominentDetail != nil, "prominentDetail style should exist")
+        let balanced = PlatformSplitViewStyle.balanced
+        let prominentDetail = PlatformSplitViewStyle.prominentDetail
+        #expect(balanced == .balanced, "balanced style should exist")
+        #expect(prominentDetail == .prominentDetail, "prominentDetail style should exist")
     }
     
     @Test func testPlatformSplitViewDividerConfigurationCreates() async {
