@@ -485,11 +485,11 @@ public extension View {
         }
         
         #if os(macOS)
-        return view
+        view
             .automaticAccessibility()
             .automaticAccessibilityIdentifiers(named: identifierName)
         #else
-        return view
+        view
             .automaticAccessibilityIdentifiers(named: identifierName)
         #endif
     }
@@ -694,11 +694,11 @@ public extension View {
         }
         
         #if os(macOS)
-        return view
+        view
             .automaticAccessibility()
             .automaticAccessibilityIdentifiers(named: identifierName)
         #else
-        return view
+        view
             .automaticAccessibilityIdentifiers(named: identifierName)
         #endif
     }
