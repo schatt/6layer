@@ -58,6 +58,48 @@ This major release represents a significant milestone in the SixLayer Framework'
 
 ## 🏗️ Component Architecture Improvements
 
+### New Layer 4 Platform Helpers (Issues #11, #12, #13)
+
+#### Popover and Sheet Helpers (Issue #11)
+- **`platformPopover_L4()`**: Unified popover presentation helper with platform-agnostic API
+  - iOS: Uses `.popover()` modifier with full feature support
+  - macOS: Uses `.popover()` with platform-specific positioning
+  - Supports attachment anchors, arrow edges, and programmatic control
+- **`platformSheet_L4()`**: Unified sheet presentation helper
+  - iOS: Full-screen or half-sheet with detents support (iOS 16+)
+  - macOS: Appropriate sizing and positioning
+  - Supports drag-to-dismiss, item-based binding, and custom detents
+- **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformPopoverSheetLayer4.swift`
+
+#### Share and Clipboard Helpers (Issue #12)
+- **`platformShare_L4()`**: Unified share sheet presentation
+  - iOS: Uses `UIActivityViewController` via `.sheet()`
+  - macOS: Uses `NSSharingServicePicker` with native integration
+  - Supports multiple content types (text, URLs, images, files)
+  - Optional completion callbacks and excluded activity types (iOS)
+- **`platformCopyToClipboard_L4()`**: Unified clipboard copy operation
+  - Supports text, images, and URLs
+  - Optional haptic feedback on iOS
+  - Returns success status for error handling
+- **`PlatformClipboard`**: Platform-agnostic clipboard operations enum
+  - `copyToClipboard()` methods for text, images, and URLs
+  - `getTextFromClipboard()` for reading clipboard content
+- **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformShareClipboardLayer4.swift`
+
+#### Row Actions Helpers (Issue #13)
+- **`platformRowActions_L4()`**: Unified row action presentation
+  - iOS: Uses `.swipeActions()` for swipe-to-reveal actions
+  - macOS: Uses context menus for row actions
+  - Supports leading and trailing actions, full-swipe gestures (iOS)
+- **`platformContextMenu_L4()`**: Unified context menu presentation
+  - iOS: Uses `.contextMenu()` with optional preview support (iOS 16+)
+  - macOS: Uses `.contextMenu()` with platform-appropriate styling
+  - Supports menu sections, dividers, and disabled actions
+- **Helper Components**:
+  - `PlatformRowActionButton`: Consistent action button styling
+  - `PlatformDestructiveRowActionButton`: Destructive action button with confirmation support
+- **Location**: `Framework/Sources/Layers/Layer4-Component/PlatformRowActionsLayer4.swift`
+
 ### Accessibility Integration
 - **Card Expansion Components**: Enhanced with automatic accessibility identifier support
 - **Form Field Components**: Complete accessibility integration across all form field types
@@ -75,6 +117,19 @@ This major release represents a significant milestone in the SixLayer Framework'
   - **Migration Tools**: Provided migration script and test suite for automated API updates
 
 ## 🐛 Critical Bug Fixes
+
+### IntelligentFormView Enhancements (Issues #8, #9)
+- **Auto-Persistence for Core Data**: `IntelligentFormView` now automatically persists Core Data entities when the Update button is clicked, even when `onSubmit` callback is empty
+- **Update Button Fix**: Resolved issue where Update button appeared functional but did nothing when `onSubmit` was empty
+- **Automatic Timestamp Updates**: Framework automatically updates `updatedAt`, `modifiedAt`, or `lastModified` fields when present
+- **Error Handling**: Graceful error handling for Core Data save failures with proper logging
+- **Backward Compatibility**: Existing code continues to work; auto-save happens before custom `onSubmit` callbacks
+- **Comprehensive Testing**: Added 5 TDD tests covering all auto-persistence scenarios
+
+### Empty State Verification (Issue #10)
+- **Framework Verification**: Verified that `platformPresentItemCollection_L1` correctly preserves hints and displays custom messages
+- **Empty State Support**: Confirmed proper handling of `onCreateItem` callbacks in empty collection states
+- **Custom Message Display**: Verified custom messages from `customPreferences` are correctly displayed
 
 ### Accessibility Fixes
 - **Pattern Matching**: Fixed component name verification in accessibility identifiers
@@ -166,6 +221,11 @@ This major release represents a significant milestone in the SixLayer Framework'
 - **Accessibility-Aware Colors**: Use `Color.platformButtonTextOnColor` for button text on colored backgrounds and `Color.platformShadowColor` for shadows/elevation
 - **TDD Testing**: Leverage the comprehensive test suite for better development practices
 - **Platform Testing**: Use the enhanced platform testing capabilities for cross-platform validation
+- **IntelligentFormView Auto-Persistence**: Core Data entities are automatically saved when using `IntelligentFormView.generateForm()` - no need to manually implement `onSubmit` for persistence
+- **Layer 4 Platform Helpers**: Use new platform-agnostic helpers to eliminate `#if` blocks:
+  - **Popovers/Sheets**: `.platformPopover_L4()` and `.platformSheet_L4()` for unified presentation
+  - **Sharing**: `.platformShare_L4()` and `platformCopyToClipboard_L4()` for cross-platform sharing
+  - **Row Actions**: `.platformRowActions_L4()` and `.platformContextMenu_L4()` for consistent action presentation
 
 ## Breaking Changes
 - **Accessibility Identifier Patterns**: Some accessibility identifier patterns have been standardized - verify custom patterns if used
