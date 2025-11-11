@@ -4,11 +4,55 @@ import SwiftUI
 
 /// Platform-agnostic helpers for popover and sheet presentation
 /// Implements Issue #11: Add Popover/Sheet Helpers to Six-Layer Architecture (Layer 4)
+///
+/// ## Cross-Platform Behavior
+///
+/// ### Popovers
+/// **Semantic Purpose**: Contextual, temporary information or actions attached to a specific UI element
+/// - **iOS (iPad)**: Floating panel with arrow pointing to source element. Dismisses when tapping outside.
+///   - **iPhone**: Popovers are automatically converted to sheets (full-screen) by the system
+/// - **macOS**: Floating panel attached to source element. More commonly used than on iOS.
+///   - Appears as a detached window-like panel
+///   - Typically used for tool palettes, contextual menus, or quick actions
+///
+/// **When to Use**: Quick actions, contextual information, tool palettes, secondary controls
+/// **Size**: Small to medium (typically 200-400 points wide)
+///
+/// ### Sheets
+/// **Semantic Purpose**: Modal presentation for focused tasks or detailed content
+/// - **iOS**: 
+///   - **iPhone**: Full-screen modal (default) or half-sheet with detents (iOS 16+)
+///   - **iPad**: Centered modal window (can be resized)
+///   - Supports drag-to-dismiss gestures
+/// - **macOS**: Modal window (not full-screen)
+///   - Appears as a centered window with minimum size constraints
+///   - User can move/resize the window
+///   - More window-like than iOS sheets
+///
+/// **When to Use**: Forms, detail views, editing interfaces, multi-step workflows
+/// **Size**: Medium to large (typically 400-800+ points)
+///
+/// ## Platform Mapping
+///
+/// | Concept | iOS Behavior | macOS Behavior | Unified API |
+/// |---------|-------------|----------------|------------|
+/// | Popover | Floating panel (iPad) / Sheet (iPhone) | Floating panel | `platformPopover_L4()` |
+/// | Sheet | Full-screen or half-sheet | Modal window | `platformSheet_L4()` |
+///
+/// **Note**: On iPhone, popovers are automatically converted to sheets by SwiftUI. The unified API
+/// handles this automatically, so you can use `platformPopover_L4()` on all devices and it will
+/// behave appropriately for each platform.
 public extension View {
     
     /// Unified popover presentation helper
-    /// iOS: Uses `.popover()` modifier
-    /// macOS: Uses `.popover()` modifier with platform-specific positioning
+    /// 
+    /// **Cross-Platform Behavior:**
+    /// - **iOS (iPad)**: Floating panel with arrow, dismisses on outside tap
+    /// - **iOS (iPhone)**: Automatically converted to full-screen sheet by SwiftUI
+    /// - **macOS**: Floating panel attached to source element
+    ///
+    /// **Use For**: Contextual actions, tool palettes, quick information displays
+    ///
     /// - Parameters:
     ///   - isPresented: Binding to control popover presentation
     ///   - attachmentAnchor: Point where popover attaches (default: .point(.center))

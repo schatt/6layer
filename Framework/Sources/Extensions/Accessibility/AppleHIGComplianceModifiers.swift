@@ -401,6 +401,7 @@ public extension View {
             accessibilityState: AccessibilitySystemState(),
             platform: .iOS
         ))
+        .automaticAccessibilityIdentifiers(named: "AppleHIGCompliant")
     }
     
     /// Apply automatic accessibility features
