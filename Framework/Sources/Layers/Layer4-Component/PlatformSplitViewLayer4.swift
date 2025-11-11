@@ -253,12 +253,16 @@ public struct PlatformSplitViewKeyboardShortcut: Sendable, Equatable {
     }
     
     /// Convenience initializer with String key
+    /// - Parameter key: Single character string (e.g., "t", "h", "1")
+    /// - Note: Only the first character is used. Empty strings will use "a" as fallback.
     public init(
         key: String,
         modifiers: EventModifiers,
         action: PlatformSplitViewKeyboardAction
     ) {
-        self.key = KeyEquivalent(key.first ?? Character(""))
+        // Safely extract first character, with fallback
+        let character = key.first ?? "a"
+        self.key = KeyEquivalent(character)
         self.modifiers = modifiers
         self.action = action
     }
@@ -329,10 +333,15 @@ public class PlatformSplitViewState: ObservableObject {
     }
     
     /// Save state to UserDefaults
+    /// Saves both pane visibility and pane lock state
     public func saveToUserDefaults(key: String) -> Bool {
         do {
             let encoder = JSONEncoder()
-            let data = try encoder.encode(paneVisibility)
+            let stateData: [String: [Int: Bool]] = [
+                "visibility": paneVisibility,
+                "locked": paneLocked
+            ]
+            let data = try encoder.encode(stateData)
             UserDefaults.standard.set(data, forKey: key)
             return true
         } catch {
@@ -341,13 +350,16 @@ public class PlatformSplitViewState: ObservableObject {
     }
     
     /// Restore state from UserDefaults
+    /// Restores both pane visibility and pane lock state
     public func restoreFromUserDefaults(key: String) -> Bool {
         guard let data = UserDefaults.standard.data(forKey: key) else {
             return false
         }
         do {
             let decoder = JSONDecoder()
-            paneVisibility = try decoder.decode([Int: Bool].self, from: data)
+            let stateData = try decoder.decode([String: [Int: Bool]].self, from: data)
+            paneVisibility = stateData["visibility"] ?? [:]
+            paneLocked = stateData["locked"] ?? [:]
             return true
         } catch {
             return false

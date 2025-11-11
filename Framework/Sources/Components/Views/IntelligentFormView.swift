@@ -548,13 +548,12 @@ public struct IntelligentFormView {
     /// Implements Issue #8, #9, and #20: Auto-save Core Data and SwiftData entities
     /// - Parameters:
     ///   - initialData: The data model to save
-    ///   - modelContext: Optional ModelContext for SwiftData models (if nil, will attempt to find via reflection)
+    ///   - modelContext: Optional ModelContext for SwiftData models (iOS 17+, macOS 14+)
     ///   - onSubmit: Callback to execute after auto-save
     @MainActor
-    @available(macOS 14.0, iOS 17.0, *)
     internal static func handleSubmit<T>(
         initialData: T?,
-        modelContext: ModelContext? = nil,
+        modelContext: Any? = nil,
         onSubmit: @escaping (T) -> Void
     ) {
         guard let data = initialData else {
@@ -599,28 +598,27 @@ public struct IntelligentFormView {
         if #available(macOS 14.0, iOS 17.0, *) {
             if let persistentModel = data as? any PersistentModel {
                 // SwiftData models need their ModelContext to save
-                // Since we're in a static function, we can't access @Environment(\.modelContext)
-                // We'll attempt to get the context using reflection
-                var modelContext: ModelContext? = nil
+                // Use provided context or try to find via reflection
+                var contextToUse: ModelContext? = nil
                 
-                // Try to get ModelContext using reflection
-                // SwiftData models may store context reference internally
+                // Create mirror for reflection operations
                 let modelMirror = Mirror(reflecting: persistentModel)
-                for child in modelMirror.children {
-                    if let label = child.label,
-                       (label == "modelContext" || label == "_modelContext" || label.contains("context")) {
-                        if let context = child.value as? ModelContext {
-                            modelContext = context
-                            break
+                
+                // First, try to use the provided context
+                if let providedContext = modelContext as? ModelContext {
+                    contextToUse = providedContext
+                } else {
+                    // If no context provided, try to get ModelContext using reflection
+                    // SwiftData models may store context reference internally
+                    for child in modelMirror.children {
+                        if let label = child.label,
+                           (label == "modelContext" || label == "_modelContext" || label.contains("context")) {
+                            if let context = child.value as? ModelContext {
+                                contextToUse = context
+                                break
+                            }
                         }
                     }
-                }
-                
-                // Use provided context or try to find via reflection
-                var contextToUse = modelContext
-                if contextToUse == nil {
-                    // Try to find via reflection (fallback)
-                    contextToUse = modelContext
                 }
                 
                 // If we have a context, save it
