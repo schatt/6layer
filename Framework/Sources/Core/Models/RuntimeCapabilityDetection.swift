@@ -239,8 +239,8 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsHapticFeedback
         }
         
@@ -304,8 +304,8 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsHover
         }
         
@@ -373,8 +373,8 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsVoiceOver
         }
         
@@ -421,8 +421,8 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if in testing mode
-        if TestingCapabilityDetection.isTestingMode {
+        // Use testing defaults if test platform is set OR if in testing mode
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsSwitchControl
         }
         
