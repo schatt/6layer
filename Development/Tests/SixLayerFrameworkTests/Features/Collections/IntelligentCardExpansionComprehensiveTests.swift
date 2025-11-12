@@ -455,6 +455,12 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         #expect(currentPlatform == .iOS, "Test platform should be iOS, got \(currentPlatform)")
         var config = getCardExpansionPlatformConfig()
         // Platform config creation succeeded (non-optional result)
+        // TODO: Thread/Actor Isolation Issue - The test platform is set correctly (currentPlatform == .iOS),
+        // but getCardExpansionPlatformConfig() may not be accessing test defaults due to thread/actor isolation
+        // with Thread.current.threadDictionary. The framework code correctly uses RuntimeCapabilityDetection,
+        // but the test platform may not be accessible from the MainActor context where getCardExpansionPlatformConfig runs.
+        // This needs deeper investigation into thread/actor isolation for test platform settings.
+        // For now, we verify the platform is set correctly and note the limitation.
         TestSetupUtilities.shared.assertCardExpansionConfig(
             config,
             touch: true,
