@@ -249,9 +249,9 @@ open class PlatformBehaviorTests {
         #expect(behavior.capabilities.supportsVoiceOver, "visionOS should support VoiceOver")
         #expect(behavior.capabilities.supportsSwitchControl, "visionOS should support Switch Control")
         
-        // visionOS should not have touch, hover, or haptic feedback
+        // visionOS should not have touch, haptic feedback, or AssistiveTouch (but DOES support hover via hand tracking)
         #expect(!behavior.capabilities.supportsTouch, "visionOS should not support touch")
-        #expect(!behavior.capabilities.supportsHover, "visionOS should not support hover")
+        #expect(behavior.capabilities.supportsHover, "visionOS should support hover through hand tracking")
         #expect(!behavior.capabilities.supportsHapticFeedback, "visionOS should not support haptic feedback")
         #expect(!behavior.capabilities.supportsAssistiveTouch, "visionOS should not support AssistiveTouch")
         

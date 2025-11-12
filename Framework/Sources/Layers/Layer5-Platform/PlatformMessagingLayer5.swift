@@ -22,16 +22,20 @@ public class PlatformMessagingLayer5 {
         return Button(title, action: action)
             .buttonStyle(.bordered)
             .foregroundColor(style == .destructive ? .red : .primary)
+            .automaticAccessibilityIdentifiers(named: "AlertButton")
         #elseif os(macOS)
         return Button(title, action: action)
             .buttonStyle(.bordered)
             .foregroundColor(style == .destructive ? .red : .primary)
+            .automaticAccessibilityIdentifiers(named: "AlertButton")
         #else
         return Button(title, action: action)
+            .automaticAccessibilityIdentifiers(named: "AlertButton")
         #endif
     }
     
     /// Creates a platform-specific toast notification
+    @MainActor
     public func createToastNotification(message: String, type: ToastType = .info) -> some View {
         #if os(iOS)
         return HStack {
@@ -45,6 +49,7 @@ public class PlatformMessagingLayer5 {
         .background(Color(.systemBackground))
         .cornerRadius(8)
         .shadow(radius: 4)
+        .automaticAccessibilityIdentifiers(named: "ToastNotification")
         #elseif os(macOS)
         return HStack {
             Image(systemName: iconForToastType(type))
@@ -57,14 +62,17 @@ public class PlatformMessagingLayer5 {
         .background(Color(.windowBackgroundColor))
         .cornerRadius(8)
         .shadow(radius: 4)
+        .automaticAccessibilityIdentifiers(named: "ToastNotification")
         #else
         return Text(message)
+            .automaticAccessibilityIdentifiers(named: "ToastNotification")
         #endif
     }
     
     // MARK: - Banner Components
     
     /// Creates a platform-specific banner notification
+    @MainActor
     public func createBannerNotification(title: String, message: String, type: BannerType = .info) -> some View {
         #if os(iOS)
         return VStack(alignment: .leading, spacing: 4) {
@@ -84,6 +92,7 @@ public class PlatformMessagingLayer5 {
                 .frame(width: 4),
             alignment: .leading
         )
+        .automaticAccessibilityIdentifiers(named: "BannerNotification")
         #elseif os(macOS)
         return VStack(alignment: .leading, spacing: 4) {
             Text(title)
@@ -102,11 +111,13 @@ public class PlatformMessagingLayer5 {
                 .frame(width: 4),
             alignment: .leading
         )
+        .automaticAccessibilityIdentifiers(named: "BannerNotification")
         #else
         return VStack(alignment: .leading) {
             Text(title)
             Text(message)
         }
+        .automaticAccessibilityIdentifiers(named: "BannerNotification")
         #endif
     }
     

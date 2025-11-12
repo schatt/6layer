@@ -354,6 +354,7 @@ private struct StructuredDataExtractionWrapper: View {
                     .foregroundColor(.secondary)
             }
         }
+        .automaticAccessibilityIdentifiers()
         .onAppear {
             startStructuredExtraction()
         }

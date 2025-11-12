@@ -61,9 +61,13 @@ open class CapabilityMatrixTests {
                     // Touch should enable haptic feedback
                     #expect(RuntimeCapabilityDetection.supportsHapticFeedback, 
                                 "Touch platforms should support haptic feedback")
-                    // Touch should enable AssistiveTouch
-                    #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, 
-                                "Touch platforms should support AssistiveTouch")
+                    // AssistiveTouch is iOS/watchOS-specific, not all touch platforms support it
+                    // Only check AssistiveTouch for iOS and watchOS
+                    let platform = SixLayerPlatform.current
+                    if platform == .iOS || platform == .watchOS {
+                        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, 
+                                    "iOS and watchOS should support AssistiveTouch")
+                    }
                 } else {
                     // Non-touch platforms should not have haptic feedback
                     #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
@@ -91,7 +95,7 @@ open class CapabilityMatrixTests {
                     // since RuntimeCapabilityDetection doesn't expose timing values
                 }
             },
-            expectedPlatforms: [SixLayerPlatform.macOS]
+            expectedPlatforms: [SixLayerPlatform.macOS, SixLayerPlatform.visionOS]
         ),
         
         // Haptic Feedback Capability

@@ -164,7 +164,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports touch gestures
+            return false // Vision Pro is spatial computing, not touchscreen
             #else
             return getTestDefaults().supportsTouch
             #endif
@@ -277,7 +277,7 @@ public struct RuntimeCapabilityDetection {
             #endif
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports haptics
+            return false // Vision Pro doesn't have native haptic feedback
             #else
             return getTestDefaults().supportsHapticFeedback
             #endif
@@ -487,22 +487,33 @@ public struct RuntimeCapabilityDetection {
             #if os(iOS)
             return UIAccessibility.isAssistiveTouchRunning
             #else
+            // When not on iOS, use test defaults if available, otherwise return true (iOS supports AssistiveTouch)
             return getTestDefaults().supportsAssistiveTouch
             #endif
         case .macOS:
+            // When not on macOS, use test defaults if available, otherwise return false
+            if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
+                return getTestDefaults().supportsAssistiveTouch
+            }
             return false // macOS doesn't have AssistiveTouch
         case .watchOS:
             #if os(watchOS)
             return true // Apple Watch supports AssistiveTouch
             #else
+            // When not on watchOS, use test defaults if available, otherwise return true (watchOS supports AssistiveTouch)
             return getTestDefaults().supportsAssistiveTouch
             #endif
         case .tvOS:
+            // When not on tvOS, use test defaults if available, otherwise return false
+            if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
+                return getTestDefaults().supportsAssistiveTouch
+            }
             return false // Apple TV doesn't have AssistiveTouch
         case .visionOS:
             #if os(visionOS)
-            return true // Vision Pro supports AssistiveTouch
+            return false // AssistiveTouch is iOS-specific, not available on visionOS
             #else
+            // When not on visionOS, use test defaults if available, otherwise return false (visionOS doesn't support AssistiveTouch)
             return getTestDefaults().supportsAssistiveTouch
             #endif
         }
@@ -651,12 +662,12 @@ public struct TestingCapabilityDetection {
             )
         case .visionOS:
             return TestingCapabilityDefaults(
-                supportsTouch: true, // visionOS supports touch gestures
-                supportsHapticFeedback: true, // visionOS supports haptic feedback
-                supportsHover: true, // visionOS supports hover
+                supportsTouch: false, // visionOS is spatial computing, not touchscreen
+                supportsHapticFeedback: false, // visionOS doesn't have native haptic feedback
+                supportsHover: true, // visionOS supports hover through hand tracking
                 supportsVoiceOver: true, // Vision Pro supports VoiceOver
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
-                supportsAssistiveTouch: true, // visionOS supports AssistiveTouch
+                supportsAssistiveTouch: false, // AssistiveTouch is iOS-specific, not available on visionOS
                 supportsVision: true, // Vision Pro supports Vision framework
                 supportsOCR: true // Vision Pro supports OCR through Vision framework
             )
