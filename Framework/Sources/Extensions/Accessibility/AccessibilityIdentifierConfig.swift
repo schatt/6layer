@@ -13,6 +13,12 @@
 //
 
 import Foundation
+#if canImport(AppKit)
+import AppKit
+#endif
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Accessibility configuration mode
 public enum AccessibilityMode: String, CaseIterable, Sendable {
@@ -223,7 +229,100 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     
     /// Generate UI test code and copy to clipboard
     public func generateUITestCodeToClipboard() {
-        // Stub implementation - would copy to clipboard in real implementation
+        let testCode = generateUITestCode()
+        
+        #if os(macOS)
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(testCode, forType: .string)
+        #elseif os(iOS)
+        UIPasteboard.general.string = testCode
+        #endif
+    }
+    
+    /// Generate UI test code from debug log entries
+    /// Extracts accessibility identifiers from debug log and generates XCTest code
+    private func generateUITestCode() -> String {
+        // Extract identifiers from debug log entries
+        var identifiers: Set<String> = []
+        
+        for entry in debugLogEntries {
+            // Look for "Generated ID: ..." pattern (from AccessibilityIdentifierGenerator)
+            if let generatedIDRange = entry.range(of: "Generated ID: ", options: .caseInsensitive) {
+                let afterGeneratedID = entry[generatedIDRange.upperBound...]
+                // Extract ID up to " for:" or end of line
+                if let forRange = afterGeneratedID.range(of: " for:") {
+                    let identifier = String(afterGeneratedID[..<forRange.lowerBound]).trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !identifier.isEmpty {
+                        identifiers.insert(identifier)
+                    }
+                } else {
+                    // No " for:" found, take the rest of the line
+                    let identifier = String(afterGeneratedID).trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !identifier.isEmpty {
+                        identifiers.insert(identifier)
+                    }
+                }
+            }
+            // Look for patterns like "identifier '...'" (from modifier debug logs)
+            if let identifierRange = entry.range(of: "identifier '", options: .caseInsensitive) {
+                let afterIdentifier = entry[identifierRange.upperBound...]
+                if let quoteRange = afterIdentifier.range(of: "'") {
+                    let identifier = String(afterIdentifier[..<quoteRange.lowerBound])
+                    if !identifier.isEmpty {
+                        identifiers.insert(identifier)
+                    }
+                }
+            }
+            // Also check for "Generated identifier:" pattern
+            if let generatedRange = entry.range(of: "Generated identifier:", options: .caseInsensitive) {
+                let afterGenerated = entry[generatedRange.upperBound...]
+                let identifier = afterGenerated.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !identifier.isEmpty {
+                    identifiers.insert(identifier)
+                }
+            }
+        }
+        
+        // If no identifiers found in debug log, generate a basic test structure
+        if identifiers.isEmpty {
+            return """
+            // Generated UI Test Code
+            // Generated at: \(Date())
+            
+            // Screen: \(currentScreenContext ?? "main")
+            func test_generated_ui_test() {
+                let app = XCUIApplication()
+                app.launch()
+                // No accessibility identifiers found in debug log
+            }
+            """
+        }
+        
+        // Generate test code with found identifiers
+        var testCode = "// Generated UI Test Code\n"
+        testCode += "// Generated at: \(Date())\n\n"
+        
+        if let screenContext = currentScreenContext {
+            testCode += "// Screen: \(screenContext)\n"
+        }
+        
+        testCode += "func test_generated_ui_elements() {\n"
+        testCode += "    let app = XCUIApplication()\n"
+        testCode += "    app.launch()\n\n"
+        
+        for identifier in identifiers.sorted() {
+            let methodName = identifier
+                .replacingOccurrences(of: ".", with: "_")
+                .replacingOccurrences(of: "-", with: "_")
+                .replacingOccurrences(of: " ", with: "_")
+            testCode += "    let \(methodName) = app.otherElements[\"\(identifier)\"]\n"
+            testCode += "    XCTAssertTrue(\(methodName).exists, \"Element '\(identifier)' should exist\")\n\n"
+        }
+        
+        testCode += "}\n"
+        
+        return testCode
     }
     
     /// Pop view hierarchy context

@@ -1,5 +1,7 @@
 # SixLayer Framework Examples
 
+**Version**: v5.0.0
+
 ## Overview
 
 This folder contains example types and implementations that demonstrate how to use the SixLayer Framework. These are **example implementations** that you can copy and modify for your own use cases.

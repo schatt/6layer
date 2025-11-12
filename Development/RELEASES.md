@@ -1,12 +1,80 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v4.6.1 - UI Placeholder Styling Enhancement** 🎯
+## 📍 **Current Release: v5.0.0 - Major Testing and Accessibility Release** 🎯
 
-**Release Date**: October 24, 2025  
+**Release Date**: January 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.6.0 - Default Values in Hints System  
-**Note**: UI enhancement for better visual distinction of placeholder content  
+**Previous Release**: v4.9.1 - Field Ordering and Accessibility Improvements  
+**Note**: Major release focusing on comprehensive testing maturity and advanced accessibility compliance  
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.0.0 - Major Testing and Accessibility Release** (January 2025)
+
+### **What's New:**
+
+#### **🎯 TDD (Test-Driven Development) Maturity**
+- **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
+- **Green Phase Completion**: All stub components replaced with comprehensive behavioral tests
+- **Test Coverage Enhancement**: Added comprehensive TDD tests for all framework components
+- **Behavior Verification**: Replaced stub-verification tests with proper behavior validation
+- **Testing Infrastructure Revolution**: Suite organization, platform test coverage, comprehensive documentation
+
+#### **♿ Advanced Accessibility System Overhaul**
+- **Automatic Accessibility Identifier Generation**: Complete overhaul of accessibility ID system
+- **Component Integration**: Added `.automaticAccessibilityIdentifiers()` to all framework components
+- **Global Accessibility Configuration**: Unified accessibility settings across all layers
+- **Pattern Standardization**: Consistent accessibility identifier patterns across platforms
+- **Label Text Inclusion**: All components with String labels/titles automatically include label text in accessibility identifiers
+- **Label Sanitization**: Automatic sanitization of label text for identifier compatibility
+- **Apple HIG Compliance**: Full compliance with Apple's Human Interface Guidelines
+- **Accessibility-Aware Colors**: New `platformButtonTextOnColor` and `platformShadowColor` properties
+
+#### **🤖 Advanced OCR Form-Filling Intelligence**
+- **Calculation Groups**: Fields can belong to multiple calculation groups with priority-based conflict resolution
+- **Intelligent OCR Processing**: System calculates missing form values from partial OCR data using mathematical relationships
+- **OCR Field Hints**: Keyword arrays improve OCR recognition accuracy for field identification
+- **Data Quality Assurance**: Conflicting calculations marked as "very low confidence" to prevent silent data corruption
+
+#### **🏗️ Component Architecture Improvements**
+- **New Layer 4 Platform Helpers**: Popovers, sheets, sharing, clipboard, row actions, context menus, split views
+- **IntelligentFormView Auto-Persistence**: Core Data entities automatically persist when Update button is clicked
+- **platformListRow API Refactoring**: New title-based API with automatic label extraction
+- **Accessibility Integration**: All components support automatic accessibility identifier generation
+
+### **Technical Changes:**
+- Complete accessibility system overhaul with automatic identifier generation
+- Comprehensive TDD test suite with 800+ tests
+- Enhanced platform capability detection (AssistiveTouch, visionOS, etc.)
+- New Layer 4 platform helpers eliminating `#if` blocks
+- IntelligentFormView auto-persistence for Core Data
+- Accessibility-aware cross-platform color system
+
+### **Bug Fixes:**
+- Fixed accessibility pattern matching and component name verification
+- Fixed OCR overlay accessibility identifier generation
+- Fixed IntelligentFormView Update button behavior when `onSubmit` is empty
+- Fixed compilation errors and test configuration issues
+- Fixed platform image properties and platform-specific behavior
+
+### **Documentation:**
+- **[Calculation Groups Guide](Framework/docs/CalculationGroupsGuide.md)**: Comprehensive guide for intelligent form calculations
+- **[OCR Field Hints Guide](Framework/docs/OCRFieldHintsGuide.md)**: Documentation for improving OCR recognition
+- **[AI Agent Guide Updates](Framework/docs/AI_AGENT_GUIDE.md)**: Added OCR intelligence features
+- Complete testing commands documentation for iOS and macOS
+- API migration tools and comprehensive test coverage
+
+### **Migration Guide:**
+- **Accessibility Configuration**: Review and update accessibility identifier configurations if using custom settings
+- **platformListRow Migration**: Migrate to new title-based API: `.platformListRow(title: "Item Title") { }`
+- **Test Updates**: Update any tests affected by new accessibility identifier patterns
+- **Breaking Changes**: Some accessibility identifier patterns have been standardized - verify custom patterns if used
+
+### **Release Notes Summary:**
+This major release represents a significant milestone focusing on comprehensive testing maturity and advanced accessibility compliance. The framework now follows strict TDD principles and provides complete automatic accessibility identifier generation across all components. Includes new Layer 4 platform helpers, OCR form-filling intelligence, and comprehensive documentation updates.
+
+---
 
 ---
 
