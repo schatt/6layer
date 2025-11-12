@@ -162,10 +162,11 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     @Test func testVisionOSTouchDefaults() {
         let visionDefaults = TestingCapabilityDetection.getTestingDefaults(for: .visionOS)
         
-        // visionOS testing defaults should be predictable (intentionally false for testing)
-        #expect(!visionDefaults.supportsTouch, "visionOS testing default should be false for touch (testing default)")
-        #expect(!visionDefaults.supportsHapticFeedback, "visionOS testing default should be false for haptic (testing default)")
-        #expect(!visionDefaults.supportsHover, "visionOS testing default should be false for hover (testing default)")
+        // visionOS testing defaults should match actual platform capabilities
+        // visionOS is spatial computing: no touch, no haptic, but supports hover through hand tracking
+        #expect(!visionDefaults.supportsTouch, "visionOS testing default should be false for touch (spatial computing, not touchscreen)")
+        #expect(!visionDefaults.supportsHapticFeedback, "visionOS testing default should be false for haptic (no native haptic feedback)")
+        #expect(visionDefaults.supportsHover, "visionOS testing default should be true for hover (hand tracking provides hover)")
         #expect(visionDefaults.supportsVoiceOver, "visionOS testing default should be true for VoiceOver")
         #expect(visionDefaults.supportsVision, "visionOS testing default should be true for Vision framework")
         #expect(visionDefaults.supportsOCR, "visionOS testing default should be true for OCR")
