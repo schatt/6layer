@@ -27,10 +27,10 @@ import Foundation
 /// The warnings only appear during test execution and do not affect production code.
 
 /// Environment key for enabling automatic accessibility identifiers locally (when global is off)
-/// Defaults to false - only enables when explicitly set via environment
+/// Defaults to true - automatic identifiers enabled by default (changed in 4.2.0)
 /// config.enableAutoIDs is the global setting; this env var allows local opt-in when global is off
 public struct GlobalAutomaticAccessibilityIdentifiersKey: EnvironmentKey {
-    public static let defaultValue: Bool = false
+    public static let defaultValue: Bool = true
 }
 
 /// Environment key for setting the accessibility identifier prefix
