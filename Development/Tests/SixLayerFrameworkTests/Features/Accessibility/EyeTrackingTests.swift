@@ -318,11 +318,11 @@ open class EyeTrackingTests: BaseTestClass {
         }
         
         // Wait for calibration to complete (simulated)
-        // Reduced from 2.5s to 0.1s for faster test execution
-        try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+        // startCalibration() schedules completion after 2.0 seconds, so we need to wait at least that long
+        try? await Task.sleep(nanoseconds: 2_100_000_000) // 2.1 seconds (slightly longer than 2.0s to ensure completion)
         
         await MainActor.run {
-            #expect(eyeTrackingManager.isCalibrated)
+            #expect(eyeTrackingManager.isCalibrated, "Calibration should complete after startCalibration() is called")
         }
     }
     
