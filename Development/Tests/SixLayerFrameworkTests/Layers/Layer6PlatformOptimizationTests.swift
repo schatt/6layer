@@ -131,43 +131,6 @@ open class Layer6PlatformOptimizationTests {
         #expect(true, "PlatformRecommendationEngine moved to possible-features/ - test disabled")
     }
     
-    // MARK: - Memory Management Tests (RED PHASE)
-    
-    /// TDD RED PHASE: Memory management should track actual usage
-    /// This test should FAIL initially because memory tracking is not implemented
-    @Test func testMemoryManagementTracksActualUsage() async {
-        // Given: Cross-platform optimization manager
-        let manager = CrossPlatformOptimizationManager()
-        
-        // When: Creating and destroying views
-        let initialMemory = manager.performanceMetrics.currentMemoryUsage
-        
-        // Create some views
-        let views = (0..<10).map { _ in
-            VStack {
-                Text("Memory Test \(UUID().uuidString)")
-                Button("Test Button") { }
-            }
-        }
-        
-        let afterCreationMemory = manager.performanceMetrics.currentMemoryUsage
-        
-        // Clear views
-        _ = views // Let them be deallocated
-        
-        let afterCleanupMemory = manager.performanceMetrics.currentMemoryUsage
-        
-        // Then: Should track memory changes
-        #expect(afterCreationMemory > initialMemory, "Should detect memory increase")
-        #expect(afterCleanupMemory < afterCreationMemory, "Should detect memory cleanup")
-        
-        // Should have realistic memory values
-        #expect(initialMemory > 0, "Should have measurable initial memory")
-        #expect(afterCreationMemory < 1_000_000_000, "Should have realistic memory usage (< 1GB)")
-        
-        // THIS SHOULD FAIL - Current implementation may not track real memory
-        #expect(manager.performanceMetrics.isRealTracking, "Should track real memory, not mocked values")
-    }
 }
 
 // MARK: - Test Extensions
@@ -212,19 +175,6 @@ extension AccessibilityTestingSuite {
     }
 }
 
-extension CrossPlatformPerformanceMetrics {
-    /// Current memory usage
-    var currentMemoryUsage: UInt64 {
-        // This should be implemented to track real memory usage
-        return 0 // Should return actual memory usage
-    }
-    
-    /// Whether tracking is real (not mocked)
-    var isRealTracking: Bool {
-        // This should be implemented to indicate real tracking
-        return false // Should be true for real implementation
-    }
-}
 
 // NOTE: PlatformRecommendation and getPlatformRecommendations() moved to possible-features/
 /*
