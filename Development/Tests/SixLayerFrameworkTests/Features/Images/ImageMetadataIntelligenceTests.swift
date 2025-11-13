@@ -80,7 +80,7 @@ open class ImageMetadataIntelligenceTests {
             let metadata = try await intelligence.extractMetadata(from: image)
             
             // Then
-            #expect(metadata != nil)
+            #expect(Bool(true), "metadata is non-optional")  // metadata is non-optional
             #expect(metadata.dimensions == image.size)
             #expect(metadata.fileSize != nil)
             #expect(metadata.creationDate != nil)
@@ -102,7 +102,7 @@ open class ImageMetadataIntelligenceTests {
         let exifData = try await intelligence.extractEXIFData(from: image)
         
         // Then
-        #expect(exifData != nil)
+        #expect(Bool(true), "exifData is non-optional")  // exifData is non-optional
         #expect(exifData.cameraMake != nil)
         #expect(exifData.cameraModel != nil)
         #expect(exifData.exposureTime != nil)
@@ -138,7 +138,7 @@ open class ImageMetadataIntelligenceTests {
         let colorProfile = try await intelligence.extractColorProfile(from: image)
         
         // Then
-        #expect(colorProfile != nil)
+        #expect(Bool(true), "colorProfile is non-optional")  // colorProfile is non-optional
         #expect(colorProfile.colorSpace != nil)
         #expect(colorProfile.colorGamut != nil)
         #expect(colorProfile.bitDepth != nil)
@@ -156,7 +156,7 @@ open class ImageMetadataIntelligenceTests {
         let technicalData = try await intelligence.extractTechnicalData(from: image)
         
         // Then
-        #expect(technicalData != nil)
+        #expect(Bool(true), "technicalData is non-optional")  // technicalData is non-optional
         #expect(technicalData.resolution != nil)
         #expect(technicalData.compressionRatio != nil)
         #expect(technicalData.hasAlpha != nil)
@@ -177,7 +177,7 @@ open class ImageMetadataIntelligenceTests {
         let categorization = try await intelligence.categorizeByContent(image)
         
         // Then
-        #expect(categorization != nil)
+        #expect(Bool(true), "categorization is non-optional")  // categorization is non-optional
         #expect(categorization.primaryCategory != nil)
         #expect(categorization.confidence != nil)
         #expect(categorization.tags != nil)
@@ -195,7 +195,7 @@ open class ImageMetadataIntelligenceTests {
         let purposeCategorization = try await intelligence.categorizeByPurpose(image)
         
         // Then
-        #expect(purposeCategorization != nil)
+        #expect(Bool(true), "purposeCategorization is non-optional")  // purposeCategorization is non-optional
         #expect(purposeCategorization.recommendedPurpose != nil)
         #expect(purposeCategorization.confidence != nil)
         #expect(purposeCategorization.alternativePurposes != nil)
@@ -213,7 +213,7 @@ open class ImageMetadataIntelligenceTests {
         let qualityCategorization = try await intelligence.categorizeByQuality(image)
         
         // Then
-        #expect(qualityCategorization != nil)
+        #expect(Bool(true), "qualityCategorization is non-optional")  // qualityCategorization is non-optional
         #expect(qualityCategorization.qualityScore != nil)
         #expect(qualityCategorization.qualityLevel != nil)
         #expect(qualityCategorization.issues != nil)
@@ -233,7 +233,7 @@ open class ImageMetadataIntelligenceTests {
         let recommendations = try await intelligence.generateOptimizationRecommendations(for: image)
         
         // Then
-        #expect(recommendations != nil)
+        #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
         #expect(recommendations.compressionRecommendations != nil)
         #expect(recommendations.formatRecommendations != nil)
         #expect(recommendations.enhancementRecommendations != nil)
@@ -251,7 +251,7 @@ open class ImageMetadataIntelligenceTests {
         let recommendations = try await intelligence.generateAccessibilityRecommendations(for: image)
         
         // Then
-        #expect(recommendations != nil)
+        #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
         #expect(recommendations.altTextSuggestions != nil)
         #expect(recommendations.contrastRecommendations != nil)
         #expect(recommendations.voiceOverOptimizations != nil)
@@ -269,7 +269,7 @@ open class ImageMetadataIntelligenceTests {
         let recommendations = try await intelligence.generateUsageRecommendations(for: image)
         
         // Then
-        #expect(recommendations != nil)
+        #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
         #expect(recommendations.recommendedUseCases != nil)
         #expect(recommendations.performanceConsiderations != nil)
         #expect(recommendations.storageRecommendations != nil)
@@ -289,7 +289,7 @@ open class ImageMetadataIntelligenceTests {
         let composition = try await intelligence.analyzeImageComposition(image)
         
         // Then
-        #expect(composition != nil)
+        #expect(Bool(true), "composition is non-optional")  // composition is non-optional
         #expect(composition.ruleOfThirds != nil)
         #expect(composition.symmetry != nil)
         #expect(composition.balance != nil)
@@ -308,7 +308,7 @@ open class ImageMetadataIntelligenceTests {
         let colorDistribution = try await intelligence.analyzeColorDistribution(image)
         
         // Then
-        #expect(colorDistribution != nil)
+        #expect(Bool(true), "colorDistribution is non-optional")  // colorDistribution is non-optional
         #expect(colorDistribution.dominantColors != nil)
         #expect(colorDistribution.colorHarmony != nil)
         #expect(colorDistribution.brightness != nil)
@@ -327,7 +327,7 @@ open class ImageMetadataIntelligenceTests {
         let textContent = try await intelligence.analyzeTextContent(image)
         
         // Then
-        #expect(textContent != nil)
+        #expect(Bool(true), "textContent is non-optional")  // textContent is non-optional
         // Note: Test image may not have text content, so some values could be nil
         // XCTAssertNotNil(textContent.hasText)
         // XCTAssertNotNil(textContent.textRegions)
@@ -349,7 +349,7 @@ open class ImageMetadataIntelligenceTests {
         let metadata = try await intelligence.extractMetadata(from: image)
         
         // Then
-        #expect(metadata != nil)
+        #expect(Bool(true), "metadata is non-optional")  // metadata is non-optional
     }
     
     /// BUSINESS PURPOSE: Validate batch processing functionality
@@ -432,9 +432,9 @@ open class ImageMetadataIntelligenceTests {
         let recommendations = try await intelligence.generateOptimizationRecommendations(for: image)
         
         // Then
-        #expect(metadata != nil)
-        #expect(categorization != nil)
-        #expect(recommendations != nil)
+        #expect(Bool(true), "metadata is non-optional")  // metadata is non-optional
+        #expect(Bool(true), "categorization is non-optional")  // categorization is non-optional
+        #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
         
         // Verify integration between components
         #expect(metadata.dimensions == image.size)

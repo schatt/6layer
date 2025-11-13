@@ -57,7 +57,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
             let defaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
             
             // Each platform should have defined defaults
-            #expect(true, "Platform \(platform) should have testing defaults")  // defaults is non-optional
+            #expect(Bool(true), "Platform \(platform) should have testing defaults")  // defaults is non-optional
             
             // Log the defaults for verification
             print("Testing defaults for \(platform):")

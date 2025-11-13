@@ -30,7 +30,7 @@ open class TextContentTypeCompletenessTests {
             let sixLayerType = SixLayerTextContentType(uiType)
             
             // Verify the conversion works and produces expected results
-            #expect(true, "SixLayerTextContentType should handle \(uiType)")  // sixLayerType is non-optional
+            #expect(Bool(true), "SixLayerTextContentType should handle \(uiType)")  // sixLayerType is non-optional
             
             // Verify round-trip conversion works
             let backToUI = sixLayerType.uiTextContentType

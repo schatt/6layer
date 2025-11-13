@@ -16,7 +16,7 @@ open class InternationalizationServiceTests {
         let service = InternationalizationService()
         
         // Then: Service should be created successfully
-        #expect(service != nil)
+        #expect(Bool(true), "service is non-optional")  // service is non-optional
     }
     
     // MARK: - Localization Tests

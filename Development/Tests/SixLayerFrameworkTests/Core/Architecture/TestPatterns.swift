@@ -190,7 +190,7 @@ open class TestPatterns {
             Issue.record("View inspection failed on this platform for \(testName)")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "View created for \(testName) (ViewInspector not available on macOS)")
+            #expect(Bool(true), "View created for \(testName) (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -218,7 +218,7 @@ open class TestPatterns {
             Issue.record("View inspection failed on this platform for \(testName)")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "View created for \(testName) (ViewInspector not available on macOS)")
+            #expect(Bool(true), "View created for \(testName) (ViewInspector not available on macOS)")
             #endif
         }
     }

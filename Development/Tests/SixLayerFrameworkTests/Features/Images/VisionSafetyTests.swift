@@ -23,10 +23,10 @@ open class VisionSafetyTests {
         
         #if canImport(Vision)
         // Vision is available - this is expected on iOS 11+ and macOS 10.15+
-        #expect(true, "Vision framework should be available on supported platforms")
+        #expect(Bool(true), "Vision framework should be available on supported platforms")
         #else
         // Vision is not available - should have fallback behavior
-        #expect(true, "Should handle Vision unavailability gracefully")
+        #expect(Bool(true), "Should handle Vision unavailability gracefully")
         #endif
     }
     

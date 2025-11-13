@@ -128,10 +128,10 @@ open class TextContentTypeTests {
             )
             
             let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-            let textField = DynamicFormFieldView(field: field, formState: formState)
+            let _ = DynamicFormFieldView(field: field, formState: formState)
             
             // Verify text content type is appropriate for field type
-            #expect(true, "Should create text field for \(textContentType)")  // textField is non-optional
+            #expect(Bool(true), "Should create text field for \(textContentType)")  // textField is non-optional
             #expect(field.textContentType == textContentType, "Should use correct text content type")
         }
         #endif
@@ -154,7 +154,7 @@ open class TextContentTypeTests {
         let textField = DynamicFormFieldView(field: field, formState: formState)
         
         // Verify OTP field configuration
-        #expect(true, "Should create OTP text field")  // textField is non-optional
+        #expect(Bool(true), "Should create OTP text field")  // textField is non-optional
         #expect(field.textContentType == SixLayerTextContentType.oneTimeCode, "OTP field should use oneTimeCode content type")
         #expect(field.contentType == nil, "OTP field should not have custom contentType")
         #else
@@ -169,7 +169,7 @@ open class TextContentTypeTests {
         let textField = DynamicFormFieldView(field: field, formState: formState)
         
         // Verify OTP field configuration
-        #expect(true, "Should create OTP text field")  // textField is non-optional
+        #expect(Bool(true), "Should create OTP text field")  // textField is non-optional
         #expect(field.textContentType == SixLayerTextContentType.oneTimeCode, "OTP field should use oneTimeCode content type")
         #expect(field.contentType == nil, "OTP field should not have custom contentType")
         #endif
@@ -425,9 +425,9 @@ open class TextContentTypeTests {
             )
             
             let formState = DynamicFormState(configuration: SixLayerFramework.DynamicFormConfiguration(id: "test", title: "Test Form", description: "Test form for content type", sections: [], submitButtonText: "Submit", cancelButtonText: "Cancel"))
-            let textField = DynamicFormFieldView(field: field, formState: formState)
+            let _ = DynamicFormFieldView(field: field, formState: formState)
             
-            #expect(true, "Text field should be created on \(platform)")  // textField is non-optional
+            #expect(Bool(true), "Text field should be created on \(platform)")  // textField is non-optional
         }
         
         // Clean up

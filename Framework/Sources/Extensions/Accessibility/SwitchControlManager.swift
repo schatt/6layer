@@ -259,8 +259,8 @@ public class SwitchControlManager: ObservableObject {
     public static func checkCompliance(for view: some View) -> SwitchControlCompliance {
         // Simulate compliance checking
         // In a real implementation, this would analyze the view's Switch Control support
-        var issues: [String] = []
-        var score = 100.0
+        let issues: [String] = []
+        let score = 100.0
         
         // TODO: View introspection limitation - We cannot reliably detect if a view has .switchControlEnabled()
         // modifier applied without ViewInspector, which has limitations. The test call counter approach is

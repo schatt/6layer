@@ -50,7 +50,7 @@ open class IntelligentCardExpansionTests {
         )
         
         // Verify the function returns a view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testExpandableHintsStructure() {
@@ -135,7 +135,7 @@ open class IntelligentCardExpansionTests {
             contentDensity: .balanced
         )
         
-        #expect(strategy != nil)
+        #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
         #expect(strategy.supportedStrategies.contains(.hoverExpand))
     }
     
@@ -202,7 +202,7 @@ open class IntelligentCardExpansionTests {
             hints: expandableHints
         )
         
-        #expect(container != nil)
+        #expect(Bool(true), "container is non-optional")  // container is non-optional
     }
     
     @Test func testExpandableCardComponent() {
@@ -232,7 +232,7 @@ open class IntelligentCardExpansionTests {
             onItemEdited: { _ in }
         )
         
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
         #expect(!card.isExpanded)
     }
     
@@ -283,7 +283,7 @@ open class IntelligentCardExpansionTests {
             accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
         
-        #expect(nativeView != nil)
+        #expect(Bool(true), "nativeView is non-optional")  // nativeView is non-optional
     }
     
     @Test func testPlatformSpecificOptimizations() {
@@ -306,7 +306,7 @@ open class IntelligentCardExpansionTests {
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // Verify that the system can handle the complete workflow
         let layoutDecision = determineIntelligentCardLayout_L2(
@@ -324,8 +324,8 @@ open class IntelligentCardExpansionTests {
             contentDensity: .balanced
         )
         
-        #expect(layoutDecision != nil)
-        #expect(strategy != nil)
+        #expect(Bool(true), "layoutDecision is non-optional")  // layoutDecision is non-optional
+        #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
     }
     
     @Test func testPerformanceRequirements() {
@@ -344,7 +344,7 @@ open class IntelligentCardExpansionTests {
             hints: expandableHints
         )
         
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // Verify that all menu items are processed
         for item in sampleMenuItems {

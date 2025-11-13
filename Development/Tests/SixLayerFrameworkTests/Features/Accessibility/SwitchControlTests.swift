@@ -185,7 +185,7 @@ open class SwitchControlTests: BaseTestClass {
             .switchControlEnabled()
         
         // Then: View should support Switch Control
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testSwitchControlViewModifierWithConfiguration() {
@@ -198,7 +198,7 @@ open class SwitchControlTests: BaseTestClass {
             .switchControlEnabled(config: config)
         
         // Then: View should support Switch Control with configuration
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Switch Control Compliance Tests

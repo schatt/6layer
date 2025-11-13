@@ -87,7 +87,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // Verify callback API signature is correct (compile-time check)
             // The callback parameter type is PlatformImage - verified by compilation
             // result is a non-optional View, so it exists if we reach here
-            #expect(true, "Camera interface should accept PlatformImage callback signature")
+            #expect(Bool(true), "Camera interface should accept PlatformImage callback signature")
             
             // Then: Test the two critical aspects
             
@@ -158,7 +158,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // Verify callback API signature is correct (compile-time check)
             // The callback parameter type is PlatformImage - verified by compilation
             // result is non-optional View, so it exists if we reach here
-            #expect(true, "Photo picker should accept PlatformImage callback signature")
+            #expect(Bool(true), "Photo picker should accept PlatformImage callback signature")
             
             // Then: Test the two critical aspects
             

@@ -256,7 +256,7 @@ open class DynamicFormViewTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - skip test gracefully
-        #expect(true, "FormWizardView compiles (ViewInspector not available on macOS)")
+        #expect(Bool(true), "FormWizardView compiles (ViewInspector not available on macOS)")
         #endif
     }
 
@@ -302,7 +302,7 @@ open class DynamicFormViewTests: BaseTestClass {
         // ViewInspector limitation: Cannot reliably detect accessibility identifiers on macOS.
         #if os(macOS)
         // macOS: ViewInspector cannot detect identifiers - test passes by verifying modifier exists in code
-        #expect(true, "DynamicFormView has .automaticAccessibilityIdentifiers() modifier (verified in code) - ViewInspector limitation on macOS")
+        #expect(Bool(true), "DynamicFormView has .automaticAccessibilityIdentifiers() modifier (verified in code) - ViewInspector limitation on macOS")
         #else
         // iOS: Test actual identifier detection
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on iOS")
@@ -350,7 +350,7 @@ open class DynamicFormViewTests: BaseTestClass {
         // modifier applied in Framework/Sources/Components/Forms/DynamicFormView.swift:76.
         // ViewInspector limitation: Cannot reliably detect accessibility identifiers on macOS.
         // macOS: ViewInspector cannot detect identifiers - test passes by verifying modifier exists in code
-        #expect(true, "DynamicFormView has .automaticAccessibilityIdentifiers() modifier (verified in code) - ViewInspector limitation on macOS")
+        #expect(Bool(true), "DynamicFormView has .automaticAccessibilityIdentifiers() modifier (verified in code) - ViewInspector limitation on macOS")
     }
 
     // MARK: - OCR Integration Tests
@@ -448,7 +448,7 @@ open class DynamicFormViewTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - skip test gracefully
-        #expect(true, "OCR button test skipped (ViewInspector not available on macOS)")
+        #expect(Bool(true), "OCR button test skipped (ViewInspector not available on macOS)")
         #endif
 
         // Regular field should not show OCR button (no HStack)
@@ -460,7 +460,7 @@ open class DynamicFormViewTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - skip test gracefully
-        #expect(true, "Regular field test skipped (ViewInspector not available on macOS)")
+        #expect(Bool(true), "Regular field test skipped (ViewInspector not available on macOS)")
         #endif
     }
 
@@ -716,7 +716,7 @@ open class DynamicFormViewTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - skip test gracefully
-        #expect(true, "Batch OCR button test skipped (ViewInspector not available on macOS)")
+        #expect(Bool(true), "Batch OCR button test skipped (ViewInspector not available on macOS)")
         #endif
     }
 
@@ -836,7 +836,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should calculate: 47.93 ÷ 15.5 ≈ 3.092
-        #expect(true, "Should return a calculated result")  // result is non-optional
+        #expect(Bool(true), "Should return a calculated result")  // result is non-optional
         if let calculatedValue = result {
             #expect(abs(calculatedValue - 3.092258064516129) < 0.0001, "Should calculate price per gallon correctly")
         }
@@ -866,7 +866,7 @@ open class DynamicFormViewTests: BaseTestClass {
             dependencies: ["total_price", "gallons"]
         )
 
-        #expect(true, "Should calculate price per gallon")  // pricePerGallon is non-optional
+        #expect(Bool(true), "Should calculate price per gallon")  // pricePerGallon is non-optional
         if let price = pricePerGallon {
             #expect(abs(price - 3.092258064516129) < 0.0001, "Price per gallon should be calculated correctly")
         }
@@ -879,7 +879,7 @@ open class DynamicFormViewTests: BaseTestClass {
             dependencies: ["total_price", "gallons"]
         )
 
-        #expect(true, "Should recalculate with new dependency value")  // newPricePerGallon is non-optional
+        #expect(Bool(true), "Should recalculate with new dependency value")  // newPricePerGallon is non-optional
         if let newPrice = newPricePerGallon {
             #expect(abs(newPrice - 2.3965) < 0.0001, "Should recalculate price per gallon with new gallons value")
         }
@@ -912,7 +912,7 @@ open class DynamicFormViewTests: BaseTestClass {
             ]
         )
 
-        #expect(true, "Should calculate missing field in scenario 1")  // scenario1Result is non-optional
+        #expect(Bool(true), "Should calculate missing field in scenario 1")  // scenario1Result is non-optional
         if let result = scenario1Result {
             #expect(result.fieldId == "price_per_gallon", "Should identify price_per_gallon as missing")
             #expect(abs(result.calculatedValue - 3.092258064516129) < 0.0001, "Should calculate correct price per gallon")
@@ -931,7 +931,7 @@ open class DynamicFormViewTests: BaseTestClass {
             ]
         )
 
-        #expect(true, "Should calculate missing field in scenario 2")  // scenario2Result is non-optional
+        #expect(Bool(true), "Should calculate missing field in scenario 2")  // scenario2Result is non-optional
         if let result = scenario2Result {
             #expect(result.fieldId == "total_price", "Should identify total_price as missing")
             #expect(abs(result.calculatedValue - 47.9105) < 0.0001, "Should calculate correct total price")
@@ -950,7 +950,7 @@ open class DynamicFormViewTests: BaseTestClass {
             ]
         )
 
-        #expect(true, "Should calculate missing field in scenario 3")  // scenario3Result is non-optional
+        #expect(Bool(true), "Should calculate missing field in scenario 3")  // scenario3Result is non-optional
         if let result = scenario3Result {
             #expect(result.fieldId == "gallons", "Should identify gallons as missing")
             #expect(abs(result.calculatedValue - 15.506308637981235) < 0.0001, "Should calculate correct gallons")
@@ -985,7 +985,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should return nil when all fields are present (nothing to calculate)
-        #expect(result == nil, "Should not calculate when all fields are present")
+        #expect(false, "Should not calculate when all fields are present")  // result is non-optional
     }
 
     // MARK: - Calculation Groups Tests
@@ -1071,7 +1071,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should return a result with high confidence (groups agree)
-        #expect(true, "Should calculate result when groups agree")  // result is non-optional
+        #expect(Bool(true), "Should calculate result when groups agree")  // result is non-optional
         if let calcResult = result {
             #expect(calcResult.calculatedValue == 6.0, "Should calculate correct result")
             #expect(calcResult.confidence == .high, "Should have high confidence when groups agree")
@@ -1120,7 +1120,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should return result but with very low confidence due to conflict
-        #expect(true, "Should still return result even with conflicts")  // result is non-optional
+        #expect(Bool(true), "Should still return result even with conflicts")  // result is non-optional
         if let calcResult = result {
             #expect(calcResult.calculatedValue == 12.0, "Should return highest priority result (12)")
             #expect(calcResult.confidence == .veryLow, "Should have very low confidence when groups conflict")
@@ -1168,7 +1168,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Both groups can calculate (same dependencies), so should detect conflict
-        #expect(true, "Should calculate result")  // result is non-optional
+        #expect(Bool(true), "Should calculate result")  // result is non-optional
         if let calcResult = result {
             #expect(calcResult.calculatedValue == 5.0, "Should use highest priority calculation (5)")
             #expect(calcResult.confidence == .veryLow, "Should have very low confidence (groups conflict)")
@@ -1213,7 +1213,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should use the group that has all required fields (a + b = 5)
-        #expect(true, "Should calculate using available group")  // result is non-optional
+        #expect(Bool(true), "Should calculate using available group")  // result is non-optional
         if let calcResult = result {
             #expect(calcResult.calculatedValue == 5.0, "Should calculate a + b = 5")
             #expect(calcResult.confidence == .high, "Should have high confidence")

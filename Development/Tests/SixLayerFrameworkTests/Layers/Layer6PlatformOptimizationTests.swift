@@ -128,7 +128,7 @@ open class Layer6PlatformOptimizationTests {
         
         // THIS SHOULD FAIL - Current implementation may not generate real recommendations
         // #expect(recommendations.allSatisfy { $0.isRealRecommendation }, "All recommendations should be real, not placeholder")
-        #expect(true, "PlatformRecommendationEngine moved to possible-features/ - test disabled")
+        #expect(Bool(true), "PlatformRecommendationEngine moved to possible-features/ - test disabled")
     }
     
 }

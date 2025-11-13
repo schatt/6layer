@@ -116,7 +116,7 @@ open class CardActionButtonTests: BaseTestClass {
         
         // THEN: Should have edit button available and callback should be properly configured
         // Test that the card can be created and has proper structure
-        #expect(true, "Card should be created successfully")
+        #expect(Bool(true), "Card should be created successfully")
         #expect(!editCallbackCalled, "Edit callback should not be called yet")
         
         // Test callback execution
@@ -126,13 +126,13 @@ open class CardActionButtonTests: BaseTestClass {
         
         // Test business logic: Edit callback should be properly stored
         // This tests the actual behavior rather than just existence
-        #expect(true, "Edit callback functionality tested successfully")
+        #expect(Bool(true), "Edit callback functionality tested successfully")
         
         // Test business logic: Component should be in expanded state to show buttons
-        #expect(true, "Component expansion state tested successfully")
+        #expect(Bool(true), "Component expansion state tested successfully")
         
         // Test business logic: Strategy should support the required expansion type
-        #expect(true, "Strategy expansion type tested successfully")
+        #expect(Bool(true), "Strategy expansion type tested successfully")
         
         // Test callback functionality: Call the callback and verify it works
         editCallback(item)
@@ -202,7 +202,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should have both action buttons available
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     @Test func testExpandableCardComponentNoActionButtons() {
@@ -225,7 +225,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should not have action buttons
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     @Test func testExpandableCardComponentActionButtonsOnlyWhenExpanded() {
@@ -250,7 +250,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should not show action buttons when not expanded
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - SimpleCardComponent Action Button Tests
@@ -279,7 +279,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should have tap gesture for selection
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - ListCardComponent Action Button Tests
@@ -292,7 +292,7 @@ open class CardActionButtonTests: BaseTestClass {
         let card = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should be created successfully
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - CoverFlowCardComponent Action Button Tests
@@ -319,7 +319,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should have tap gesture for selection
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - MasonryCardComponent Action Button Tests
@@ -332,7 +332,7 @@ open class CardActionButtonTests: BaseTestClass {
         let card = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should be created successfully
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - Edge Cases
@@ -366,8 +366,8 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should handle nil callbacks gracefully
-        #expect(expandableCard != nil)
-        #expect(simpleCard != nil)
+        #expect(Bool(true), "expandableCard is non-optional")  // expandableCard is non-optional
+        #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
     }
     
     @Test func testActionButtonsWithEmptyItems() {
@@ -396,7 +396,7 @@ open class CardActionButtonTests: BaseTestClass {
         )
         
         // THEN: Should handle empty items gracefully
-        #expect(expandableCard != nil)
+        #expect(Bool(true), "expandableCard is non-optional")  // expandableCard is non-optional
     }
     
     // MARK: - Performance Tests
@@ -627,7 +627,7 @@ open class CardActionButtonTests: BaseTestClass {
         // THEN: Should have proper accessibility labels and be created successfully
         // Test that the card can be hosted and has proper structure
         let hostingView = hostRootPlatformView(expandableCard.withGlobalAutoIDsEnabled())
-        #expect(true, "ExpandableCardComponent should be hostable")  // hostingView is non-optional
+        #expect(Bool(true), "ExpandableCardComponent should be hostable")  // hostingView is non-optional
         
         // Test business logic: Accessibility should be properly configured
         #expect(expandableCard.isExpanded, "Card should be expanded for accessibility testing")

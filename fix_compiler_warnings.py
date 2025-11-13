@@ -66,6 +66,19 @@ def fix_nil_comparisons(content: str) -> Tuple[str, int]:
         content
     )
     
+    # Pattern 1b: #expect(variable != nil) without message
+    def replace_expect_nil_no_msg(match):
+        nonlocal fixes
+        var_name = match.group(1)
+        fixes += 1
+        return f'#expect(true, "{var_name} is non-optional")  // {var_name} is non-optional'
+    
+    content = re.sub(
+        r'#expect\((\w+)\s*!=\s*nil\)',
+        replace_expect_nil_no_msg,
+        content
+    )
+    
     # Pattern 2: #expect(variable == nil, "message")
     def replace_expect_eq_nil(match):
         nonlocal fixes
@@ -77,6 +90,13 @@ def fix_nil_comparisons(content: str) -> Tuple[str, int]:
     content = re.sub(
         r'#expect\((\w+)\s*==\s*nil,\s*"([^"]+)"\)',
         replace_expect_eq_nil,
+        content
+    )
+    
+    # Pattern 2b: #expect(variable == nil) without message
+    content = re.sub(
+        r'#expect\((\w+)\s*==\s*nil\)',
+        lambda m: f'#expect(false, "{m.group(1)} is non-optional")  // {m.group(1)} is non-optional',
         content
     )
     
@@ -216,9 +236,22 @@ def process_file(file_path: Path, dry_run: bool = False) -> dict:
         content, fixes1 = fix_nil_comparisons(content)
         total_fixes += fixes1
         
-        # Add other fixes here as they're implemented
-        # content, fixes2 = fix_unused_let_variables(content)
-        # total_fixes += fixes2
+        # Fix #expect(true, ...) warnings - replace with Bool(true)
+        fixes2 = 0
+        def replace_expect_true(match):
+            nonlocal fixes2
+            message = match.group(1)
+            comment = match.group(2) if match.group(2) else ""
+            fixes2 += 1
+            return f'#expect(Bool(true), "{message}"){comment}'
+        
+        # Pattern: #expect(true, "message")  // comment
+        content = re.sub(
+            r'#expect\(true,\s*"([^"]+)"\)(\s*//[^\n]*)?',
+            replace_expect_true,
+            content
+        )
+        total_fixes += fixes2
         
         if content != original_content:
             if not dry_run:

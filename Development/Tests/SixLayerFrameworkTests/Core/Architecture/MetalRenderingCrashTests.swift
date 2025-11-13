@@ -86,7 +86,7 @@ open class MetalRenderingCrashTDDTests {
             onItemEdited: nil
         )
         
-        #expect(true, "GenericItemCollectionView should not crash")  // view is non-optional
+        #expect(Bool(true), "GenericItemCollectionView should not crash")  // view is non-optional
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -133,7 +133,7 @@ open class MetalRenderingCrashTDDTests {
         .padding()
         
         // This should NOT crash - performance layer removed
-        #expect(true, "Metal rendering should not crash")  // view is non-optional
+        #expect(Bool(true), "Metal rendering should not crash")  // view is non-optional
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -170,7 +170,7 @@ open class MetalRenderingCrashTDDTests {
             onItemEdited: nil
         )
         
-        #expect(true, "SimpleCardComponent should not crash")  // view is non-optional
+        #expect(Bool(true), "SimpleCardComponent should not crash")  // view is non-optional
         
         // Try to inspect the view (should not crash)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -208,7 +208,7 @@ open class MetalRenderingCrashTDDTests {
         // PERFORMANCE LAYER REMOVED: No more .drawingGroup(), .compositingGroup(), or Metal rendering
         // This eliminates the Metal crash bug entirely
         
-        #expect(true, "View should be created")  // view is non-optional
+        #expect(Bool(true), "View should be created")  // view is non-optional
         
     }
 }

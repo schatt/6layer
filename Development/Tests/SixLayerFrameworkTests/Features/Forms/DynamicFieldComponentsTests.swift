@@ -272,7 +272,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicRichTextField interface not found")
             #else
-            #expect(true, "DynamicRichTextField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicRichTextField created (ViewInspector not available on macOS)")
             #endif
         }
         #else
@@ -325,12 +325,12 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let _ = view.tryInspect() {
             // View is inspectable - file picker interface should be present
-            #expect(true, "Should provide file picker interface")
+            #expect(Bool(true), "Should provide file picker interface")
         } else {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicFileField interface not found")
             #else
-            #expect(true, "DynamicFileField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicFileField created (ViewInspector not available on macOS)")
             #endif
         }
         #else
@@ -383,12 +383,12 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let _ = view.tryInspect() {
             // View is inspectable - image picker interface should be present
-            #expect(true, "Should provide image picker interface")
+            #expect(Bool(true), "Should provide image picker interface")
         } else {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicImageField interface not found")
             #else
-            #expect(true, "DynamicImageField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicImageField created (ViewInspector not available on macOS)")
             #endif
         }
         #else
@@ -441,12 +441,12 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let _ = view.tryInspect() {
             // View is inspectable - array input interface should be present
-            #expect(true, "Should provide array input interface")
+            #expect(Bool(true), "Should provide array input interface")
         } else {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicArrayField interface not found")
             #else
-            #expect(true, "DynamicArrayField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicArrayField created (ViewInspector not available on macOS)")
             #endif
         }
         #else
@@ -499,12 +499,12 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let _ = view.tryInspect() {
             // View is inspectable - data input interface should be present
-            #expect(true, "Should provide data input interface")
+            #expect(Bool(true), "Should provide data input interface")
         } else {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicDataField interface not found")
             #else
-            #expect(true, "DynamicDataField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicDataField created (ViewInspector not available on macOS)")
             #endif
         }
         #else
@@ -564,7 +564,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             Issue.record("DynamicAutocompleteField interface not found")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "DynamicAutocompleteField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicAutocompleteField created (ViewInspector not available on macOS)")
             #endif
         }
 
@@ -683,7 +683,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicCustomField interface not found")
             #else
-            #expect(true, "DynamicCustomField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicCustomField created (ViewInspector not available on macOS)")
             #endif
         }
 
@@ -738,7 +738,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicColorField interface not found")
             #else
-            #expect(true, "DynamicColorField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicColorField created (ViewInspector not available on macOS)")
             #endif
         }
 
@@ -793,7 +793,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("DynamicTextAreaField interface not found")
             #else
-            #expect(true, "DynamicTextAreaField created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "DynamicTextAreaField created (ViewInspector not available on macOS)")
             #endif
         }
 

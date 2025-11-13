@@ -167,7 +167,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             .named("AddFuelButton")
             
             // Then: The view should be created successfully
-            #expect(true, "The exact bug scenario should now work correctly")  // testView is non-optional
+            #expect(Bool(true), "The exact bug scenario should now work correctly")  // testView is non-optional
             
             // Verify that all configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
@@ -198,7 +198,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
                 .automaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully
-            #expect(true, "View should work with explicitly enabled config")  // testView is non-optional
+            #expect(Bool(true), "View should work with explicitly enabled config")  // testView is non-optional
             
             // Verify configuration is correct (explicitly set, not relying on defaults)
             #expect(config.enableAutoIDs, "Automatic IDs should be enabled (explicitly set)")
@@ -222,7 +222,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
                 .automaticAccessibilityIdentifiers()
             
             // Then: Manual identifier should take precedence
-            #expect(true, "View with manual identifier should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with manual identifier should be created successfully")  // testView is non-optional
             
             // Verify configuration is correct
             #expect(config.enableAutoIDs, "Automatic IDs should be enabled")
@@ -248,7 +248,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
                 .automaticAccessibilityIdentifiers()
             
             // Then: View should be created successfully (but no automatic ID generated)
-            #expect(true, "View with opt-out should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with opt-out should be created successfully")  // testView is non-optional
             
             // Verify configuration is correct
             #expect(config.enableAutoIDs, "Automatic IDs should be enabled globally")

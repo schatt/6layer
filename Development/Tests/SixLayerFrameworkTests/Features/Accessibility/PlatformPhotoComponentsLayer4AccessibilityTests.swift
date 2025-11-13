@@ -40,14 +40,14 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             if platform == .iOS {
                 // On iOS, the view should be inspectable (UIViewControllerRepresentable wraps UIKit)
                 // Just verify the view is inspectable - can't directly inspect UIViewControllerRepresentable
-                #expect(true, "iOS platform should return UIKit-based photo picker")
+                #expect(Bool(true), "iOS platform should return UIKit-based photo picker")
             } else {
                 // On iOS compiled code, macOS test should still get UIKit (compile-time detection)
-                #expect(true, "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
+                #expect(Bool(true), "Compile-time detection: iOS-compiled code returns UIKit even when testing macOS")
             }
             #else
             // On platforms without ViewInspector, we can't inspect but the view should still be created
-            #expect(true, "View should be created even when inspection is not available")
+            #expect(Bool(true), "View should be created even when inspection is not available")
             #endif
             }
         }
@@ -56,11 +56,11 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         if inspectionResult == nil {
             // ViewInspector couldn't inspect - this is expected for UIViewControllerRepresentable on some platforms
             // The view is still created correctly, just not inspectable
-            #expect(true, "Photo picker view created (UIViewControllerRepresentable may not be inspectable)")
+            #expect(Bool(true), "Photo picker view created (UIViewControllerRepresentable may not be inspectable)")
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying view creation
-        #expect(true, "Photo picker view created (ViewInspector not available on this platform)")
+        #expect(Bool(true), "Photo picker view created (ViewInspector not available on this platform)")
         #endif
     }
     

@@ -190,7 +190,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ))
 
         // Then: Should handle option-based fields correctly
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
 
     @Test @MainActor func testPlatformPresentFormData_L1_MultiValueFields() {
@@ -217,7 +217,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ))
 
         // Then: Should handle multi-value fields
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
 
     // MARK: - Enhanced Hints Tests
@@ -257,7 +257,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
 
         // Then: Should create view with enhanced hints support
-        #expect(true, "Should create view with enhanced hints")  // view is non-optional
+        #expect(Bool(true), "Should create view with enhanced hints")  // view is non-optional
 
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
@@ -298,7 +298,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
 
         // Then: Should process all extensible hints
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         #expect(enhancedHints.extensibleHints.count == 2, 
                       "Should have 2 extensible hints")
     }
@@ -345,7 +345,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Should work across all platforms
-            #expect(true, "Should work with context: \(context)")  // view is non-optional
+            #expect(Bool(true), "Should work with context: \(context)")  // view is non-optional
 
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AsyncFormView")
@@ -373,7 +373,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         ))
 
         // Then: Should handle platform-specific keyboard types
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
 
     // MARK: - Performance Tests
@@ -402,7 +402,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: memoryFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: complexHints))
 
         // Then: Should handle memory efficiently
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
 
         // Verify view type
         let mirror = Mirror(reflecting: view)
@@ -512,7 +512,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: specialCharFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
         // Then: Should handle special characters correctly
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
 
         // Verify all fields have special character content
         for field in specialCharFields {
@@ -544,7 +544,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             let view = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Each combination should work
-            #expect(true, "Hint combination \(index) should work")  // view is non-optional
+            #expect(Bool(true), "Hint combination \(index) should work")  // view is non-optional
         }
     }
 
@@ -574,7 +574,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hintsWithPreferences))
 
         // Then: Should integrate custom preferences
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         #expect(hintsWithPreferences.customPreferences.count == 5, 
                       "Should have 5 custom preferences")
     }
@@ -622,7 +622,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: accessibilityFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: accessibilityHints))
 
         // Then: Should support accessibility
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
 
         // Verify accessibility considerations
         let requiredFields = accessibilityFields.filter { $0.isRequired }
@@ -655,7 +655,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
         let view = platformPresentFormData_L1(fields: problematicFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
         // Then: Should handle errors gracefully and still create view
-        #expect(true, "Should handle problematic data gracefully")  // view is non-optional
+        #expect(Bool(true), "Should handle problematic data gracefully")  // view is non-optional
 
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "AsyncFormView")

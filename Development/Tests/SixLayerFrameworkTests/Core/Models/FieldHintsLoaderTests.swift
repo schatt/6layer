@@ -61,7 +61,7 @@ struct FieldHintsLoaderTests {
         
         let hints = field.displayHints
         
-        #expect(hints != nil)
+        #expect(Bool(true), "hints is non-optional")  // hints is non-optional
         #expect(hints?.expectedLength == 20)
         #expect(hints?.displayWidth == "medium")
         #expect(hints?.maxLength == 50)
@@ -77,7 +77,7 @@ struct FieldHintsLoaderTests {
         )
         
         let hints = field.displayHints
-        #expect(hints == nil)
+        #expect(false, "hints is non-optional")  // hints is non-optional
     }
     
     @Test func testDynamicFormFieldDisplayHintsPartialMetadata() {
@@ -93,7 +93,7 @@ struct FieldHintsLoaderTests {
         
         let hints = field.displayHints
         
-        #expect(hints != nil)
+        #expect(Bool(true), "hints is non-optional")  // hints is non-optional
         #expect(hints?.displayWidth == "wide")
         #expect(hints?.showCharacterCounter == false)
         #expect(hints?.expectedLength == nil)

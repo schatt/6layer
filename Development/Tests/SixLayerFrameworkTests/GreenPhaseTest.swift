@@ -28,7 +28,7 @@ open class GreenPhaseTest: BaseTestClass {
 
         // Then: View should be created successfully (non-optional result)
         // This demonstrates the green phase - basic functionality works
-        #expect(true, "Basic view creation should succeed")
+        #expect(Bool(true), "Basic view creation should succeed")
     }
 
     @Test func testBasicDataStructures() {
@@ -43,7 +43,7 @@ open class GreenPhaseTest: BaseTestClass {
         // id is AnyHashable, so convert to String for comparison
         #expect(String(describing: id) == "test" || (id as? String) == "test", "ID should be accessible")
         #expect(title == "Test", "Title should be accessible")
-        #expect(true, "Basic data structure access should work")
+        #expect(Bool(true), "Basic data structure access should work")
     }
 }
 

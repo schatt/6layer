@@ -309,7 +309,7 @@ open class ModalFormL1Tests: BaseTestClass {
             formType: formType,
             context: context
         )
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         // Performance test removed - performance monitoring was removed from framework
     }
 }

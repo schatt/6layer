@@ -355,14 +355,14 @@ open class EyeTrackingTests: BaseTestClass {
     /// METHODOLOGY: Create eye tracking modifier and verify proper setup
     @Test func testEyeTrackingModifierInitialization() {
         // Test that modifier can be created
-        #expect(true, "Modifier should be created successfully")
+        #expect(Bool(true), "Modifier should be created successfully")
     }
     
     /// BUSINESS PURPOSE: Validate EyeTrackingModifier configuration functionality
     /// TESTING SCOPE: Tests SwiftUI eye tracking modifier with custom configuration
     /// METHODOLOGY: Apply eye tracking modifier with config and verify configuration
     @Test func testEyeTrackingModifierWithConfig() {
-        #expect(true, "Modifier should be created successfully")
+        #expect(Bool(true), "Modifier should be created successfully")
     }
     
     /// BUSINESS PURPOSE: Validate EyeTrackingModifier callback functionality
@@ -372,7 +372,7 @@ open class EyeTrackingTests: BaseTestClass {
         var _ = false // gazeCallbackCalled
         var _ = false // dwellCallbackCalled
         
-        #expect(true, "Modifier should be created successfully")
+        #expect(Bool(true), "Modifier should be created successfully")
         // Note: We can't easily test the callbacks without a full view hierarchy
     }
     
@@ -390,8 +390,8 @@ open class EyeTrackingTests: BaseTestClass {
         
         // Test that the modifier can be applied and the view can be hosted
         _ = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        #expect(true, "Eye tracking enabled view should be hostable")
-        #expect(true, "Eye tracking enabled view should be created")
+        #expect(Bool(true), "Eye tracking enabled view should be hostable")
+        #expect(Bool(true), "Eye tracking enabled view should be created")
     }
     
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled with config functionality
@@ -407,8 +407,8 @@ open class EyeTrackingTests: BaseTestClass {
         
         // Test that the modifier with config can be applied and the view can be hosted
         _ = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        #expect(true, "Eye tracking enabled view with config should be hostable")
-        #expect(true, "Eye tracking enabled view with config should be created")
+        #expect(Bool(true), "Eye tracking enabled view with config should be hostable")
+        #expect(Bool(true), "Eye tracking enabled view with config should be created")
     }
     
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled with callbacks functionality
@@ -426,8 +426,8 @@ open class EyeTrackingTests: BaseTestClass {
         
         // Test that the modifier with callbacks can be applied and the view can be hosted
         _ = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        #expect(true, "Eye tracking enabled view with callbacks should be hostable")
-        #expect(true, "Eye tracking enabled view with callbacks should be created")
+        #expect(Bool(true), "Eye tracking enabled view with callbacks should be hostable")
+        #expect(Bool(true), "Eye tracking enabled view with callbacks should be created")
     }
     
     // MARK: - Performance Tests
@@ -466,19 +466,19 @@ open class EyeTrackingTests: BaseTestClass {
         
         await MainActor.run {
             // Enable tracking (force for testing)
-            #expect(true, "Manager should be created successfully")
+            #expect(Bool(true), "Manager should be created successfully")
             
             // Process gaze events
             for _ in 0..<10 {
                 // Process gaze event
-                #expect(true, "Gaze event should be processed")
+                #expect(Bool(true), "Gaze event should be processed")
             }
             
             // Complete calibration
-            #expect(true, "Calibration should be completed")
+            #expect(Bool(true), "Calibration should be completed")
             
             // Disable tracking
-            #expect(true, "Tracking should be disabled")
+            #expect(Bool(true), "Tracking should be disabled")
         }
     }
     
@@ -496,7 +496,7 @@ open class EyeTrackingTests: BaseTestClass {
                 _ = EyeTrackingManager(config: config)
             }
             
-            #expect(true, "Manager should be created successfully")
+            #expect(Bool(true), "Manager should be created successfully")
             // Test that manager can be created with different sensitivities
         }
     }
@@ -513,7 +513,7 @@ open class EyeTrackingTests: BaseTestClass {
                 _ = EyeTrackingManager(config: config)
             }
             
-            #expect(true, "Manager should be created successfully")
+            #expect(Bool(true), "Manager should be created successfully")
             // Test that manager can be created with different dwell times
         }
     }

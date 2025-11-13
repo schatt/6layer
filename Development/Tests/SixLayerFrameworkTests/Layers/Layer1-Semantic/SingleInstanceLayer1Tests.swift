@@ -43,7 +43,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(true, "Single numeric data view should be hostable")  // hostingView is non-optional
+        #expect(Bool(true), "Single numeric data view should be hostable")  // hostingView is non-optional
     }
     
     @Test func testPlatformPresentNumericData_L1_SingleInstance_Consistency() {
@@ -65,8 +65,8 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         // Both should be hostable
         let singleHostingView = hostRootPlatformView(singleView.withGlobalAutoIDsEnabled())
         let arrayHostingView = hostRootPlatformView(arrayView.withGlobalAutoIDsEnabled())
-        #expect(true, "Single instance view should be hostable")  // singleHostingView is non-optional
-        #expect(true, "Array version view should be hostable")  // arrayHostingView is non-optional
+        #expect(Bool(true), "Single instance view should be hostable")  // singleHostingView is non-optional
+        #expect(Bool(true), "Array version view should be hostable")  // arrayHostingView is non-optional
     }
     
     // MARK: - Single Instance Media Data Tests
@@ -88,7 +88,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(true, "Single media item view should be hostable")  // hostingView is non-optional
+        #expect(Bool(true), "Single media item view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Single Instance Hierarchical Data Tests
@@ -110,7 +110,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(true, "Single hierarchical item view should be hostable")  // hostingView is non-optional
+        #expect(Bool(true), "Single hierarchical item view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Single Instance Temporal Data Tests
@@ -132,7 +132,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(true, "Single temporal item view should be hostable")  // hostingView is non-optional
+        #expect(Bool(true), "Single temporal item view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Single Instance Form Data Tests
@@ -157,7 +157,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         
         // Test that the view can be hosted (functional test)
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(true, "Single form field view should be hostable")  // hostingView is non-optional
+        #expect(Bool(true), "Single form field view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Edge Cases
@@ -194,10 +194,10 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         // cardView and listView are non-optional Views, so they exist if we reach here
         
         // Both should be hostable
-        let cardHostingView = hostRootPlatformView(cardView.withGlobalAutoIDsEnabled())
-        let listHostingView = hostRootPlatformView(listView.withGlobalAutoIDsEnabled())
-        #expect(true, "Card view should be hostable")  // cardHostingView is non-optional
-        #expect(true, "List view should be hostable")  // listHostingView is non-optional
+        let _ = hostRootPlatformView(cardView.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(listView.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Card view should be hostable")  // cardHostingView is non-optional
+        #expect(Bool(true), "List view should be hostable")  // listHostingView is non-optional
     }
 }
 

@@ -389,11 +389,11 @@ struct ComprehensiveCapabilityTestRunner {
     /// Test view generation integration
     func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
         // Test that the configuration is valid for view generation and actually works
-        #expect(true, "Configuration should be valid for view generation on \(platform)")  // config is non-optional
+        #expect(Bool(true), "Configuration should be valid for view generation on \(platform)")  // config is non-optional
         
         // Test that the configuration can actually be used to create a functional view
         let testView = createTestViewWithConfig(config)
-        #expect(true, "Should be able to create functional view with config for \(platform)")  // testView is non-optional
+        #expect(Bool(true), "Should be able to create functional view with config for \(platform)")  // testView is non-optional
         
         // Test that the configuration produces appropriate UI behavior
         // Always verify platform-correct minTouchTarget value (based on platform, not capability overrides)

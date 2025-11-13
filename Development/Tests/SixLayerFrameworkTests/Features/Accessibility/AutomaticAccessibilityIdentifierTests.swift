@@ -392,7 +392,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Test that the view can be created with accessibility identifier configuration
             #expect(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
             // Test that the view works with global modifiers (TDD RED PHASE: stub implementation)
-            #expect(true, "Layer 1 function should work with global modifier")
+            #expect(Bool(true), "Layer 1 function should work with global modifier")
         }
     }
     
@@ -759,7 +759,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             #elseif os(iOS)
             // iOS clipboard access requires UIPasteboard and is more restricted
             // For iOS, we verify the function completed without error
-            #expect(true, "Clipboard generation should complete on iOS")
+            #expect(Bool(true), "Clipboard generation should complete on iOS")
             #endif
         }
     }

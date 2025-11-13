@@ -92,7 +92,7 @@ open class Layer1CallbackFunctionalTests {
         
         // Use ViewInspector to simulate tap
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
-        let inspectionResult = withInspectedView(view) { inspector in
+        let inspectionResult: ()? = withInspectedView(view) { inspector in
             let listViews = inspector.sixLayerFindAll(ListCollectionView<TestItem>.self)
 
             if let firstList = listViews.first {
@@ -121,7 +121,7 @@ open class Layer1CallbackFunctionalTests {
             Issue.record("View inspection failed on this platform")
             #else
             // ViewInspector not available on macOS - test passes by verifying callback signature
-            #expect(true, "Layer 1 callback verified by compilation (ViewInspector not available on macOS)")
+            #expect(Bool(true), "Layer 1 callback verified by compilation (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -154,6 +154,7 @@ open class Layer1CallbackFunctionalTests {
         // View exists but we can't easily test settings callbacks without actual UI interaction
         // This documents expected behavior
         // view is a non-optional View, so it exists if we reach here
+        let _ = view
     }
     
     // MARK: - platformPresentItemCollection_L1 with Custom Views
@@ -202,7 +203,7 @@ open class Layer1CallbackFunctionalTests {
             GenericNumericData(value: 84.0, label: "Test Value 2", unit: "items")
         ]
         
-        let view = platformPresentNumericData_L1(
+        let _ = platformPresentNumericData_L1(
             data: numericData,
             hints: PresentationHints(
                 dataType: .numeric,
@@ -211,8 +212,6 @@ open class Layer1CallbackFunctionalTests {
                 context: .dashboard
             )
         )
-        
-        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformPresentMediaData_L1 Tests
@@ -225,7 +224,7 @@ open class Layer1CallbackFunctionalTests {
             GenericMediaItem(title: "Media Item 2", url: "https://example.com/media2", thumbnail: "https://example.com/thumb2")
         ]
         
-        let view = platformPresentMediaData_L1(
+        let _ = platformPresentMediaData_L1(
             media: mediaData,
             hints: PresentationHints(
                 dataType: .media,
@@ -234,8 +233,6 @@ open class Layer1CallbackFunctionalTests {
                 context: .gallery
             )
         )
-        
-        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformPresentHierarchicalData_L1 Tests
@@ -251,7 +248,7 @@ open class Layer1CallbackFunctionalTests {
             GenericHierarchicalItem(title: "Parent 2", level: 0)
         ]
         
-        let view = platformPresentHierarchicalData_L1(
+        let _ = platformPresentHierarchicalData_L1(
             items: hierarchicalData,
             hints: PresentationHints(
                 dataType: .hierarchical,
@@ -260,8 +257,6 @@ open class Layer1CallbackFunctionalTests {
                 context: .dashboard
             )
         )
-        
-        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformPresentTemporalData_L1 Tests
@@ -274,7 +269,7 @@ open class Layer1CallbackFunctionalTests {
             GenericTemporalItem(title: "Event 2", date: Date().addingTimeInterval(86400), duration: 7200)
         ]
         
-        let view = platformPresentTemporalData_L1(
+        let _ = platformPresentTemporalData_L1(
             items: temporalData,
             hints: PresentationHints(
                 dataType: .temporal,
@@ -283,8 +278,6 @@ open class Layer1CallbackFunctionalTests {
                 context: .dashboard
             )
         )
-        
-        // view is non-optional and not used further, so no check needed
     }
     
     // MARK: - platformResponsiveCard_L1 Tests
@@ -292,7 +285,7 @@ open class Layer1CallbackFunctionalTests {
     @Test func testPlatformResponsiveCardL1() async throws {
         // Rule 6.2 & 7.4: Functional testing
         
-        let view = platformResponsiveCard_L1(
+        let _ = platformResponsiveCard_L1(
             content: {
                 Text("Card Content")
             },
@@ -313,7 +306,7 @@ open class Layer1CallbackFunctionalTests {
     @Test func testPlatformPresentItemCollectionL1ExternallyAccessible() async {
         // This should be in external integration test module
         // Documenting here for now
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: sampleItems,
             hints: PresentationHints(
                 dataType: .collection,
@@ -323,8 +316,6 @@ open class Layer1CallbackFunctionalTests {
             ),
             onItemSelected: { _ in }
         )
-        
-        // view is non-optional and not used further, so no check needed
     }
 }
 

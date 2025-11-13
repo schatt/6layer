@@ -67,7 +67,7 @@ open class AdvancedFieldTypesTests {
         let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
-        #expect(richTextField != nil)
+        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
         #expect(field.contentType == .richtext)
         #expect(field.label == "Rich Text Content")
     }
@@ -88,7 +88,7 @@ open class AdvancedFieldTypesTests {
         // Then
         // Test that editing mode can be toggled
         // This tests the internal state management
-        #expect(richTextField != nil)
+        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
     }
     
     @Test @MainActor func testRichTextEditorTextBinding() {
@@ -107,7 +107,7 @@ open class AdvancedFieldTypesTests {
         let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
-        #expect(richTextField != nil)
+        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
         #expect(formState.getValue(for: field.id) == testText)
     }
     
@@ -119,7 +119,7 @@ open class AdvancedFieldTypesTests {
         let toolbar = RichTextToolbar(selectedText: .constant(selectedText))
         
         // Then
-        #expect(toolbar != nil)
+        #expect(Bool(true), "toolbar is non-optional")  // toolbar is non-optional
         // Test that formatting buttons are present
         // This tests the toolbar UI structure
     }
@@ -132,7 +132,7 @@ open class AdvancedFieldTypesTests {
         let preview = RichTextPreview(text: testText)
         
         // Then
-        #expect(preview != nil)
+        #expect(Bool(true), "preview is non-optional")  // preview is non-optional
         // Test that preview displays the text correctly
     }
     
@@ -163,7 +163,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(autocompleteField != nil)
+        #expect(Bool(true), "autocompleteField is non-optional")  // autocompleteField is non-optional
         #expect(field.contentType == .autocomplete)
         #expect(field.label == "Search")
     }
@@ -187,7 +187,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(autocompleteField != nil)
+        #expect(Bool(true), "autocompleteField is non-optional")  // autocompleteField is non-optional
         // Test that suggestions are properly filtered
         // This tests the internal filtering logic
     }
@@ -212,7 +212,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(autocompleteField != nil)
+        #expect(Bool(true), "autocompleteField is non-optional")  // autocompleteField is non-optional
         // Test that suggestion selection updates the form state
     }
     
@@ -229,7 +229,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(suggestionsView != nil)
+        #expect(Bool(true), "suggestionsView is non-optional")  // suggestionsView is non-optional
         // Test that suggestions are displayed correctly
     }
     
@@ -263,7 +263,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         #expect(field.contentType == .file)
         #expect(field.label == "Upload Files")
     }
@@ -289,7 +289,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         // Test that allowed types are properly configured
     }
     
@@ -314,7 +314,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         // Test that max file size is properly configured
     }
     
@@ -336,7 +336,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadArea != nil)
+        #expect(Bool(true), "fileUploadArea is non-optional")  // fileUploadArea is non-optional
         // Test that drag and drop area is properly configured
     }
     
@@ -371,7 +371,7 @@ open class AdvancedFieldTypesTests {
         }
         
         // Then
-        #expect(fileList != nil)
+        #expect(Bool(true), "fileList is non-optional")  // fileList is non-optional
         // Test that file list displays files correctly
     }
     
@@ -385,7 +385,7 @@ open class AdvancedFieldTypesTests {
         }
         
         // Then
-        #expect(fileRow != nil)
+        #expect(Bool(true), "fileRow is non-optional")  // fileRow is non-optional
         // Test that file row displays file information correctly
     }
     
@@ -505,7 +505,7 @@ open class AdvancedFieldTypesTests {
         // Then - view should render (test that it doesn't crash and uses registered component)
         // Note: Full rendering test would require ViewInspector
         // customFieldView is non-optional, so just verify it exists by checking its type
-        #expect(true, "Custom field view should be created")
+        #expect(Bool(true), "Custom field view should be created")
 
         // Clean up: reset registry for next test
         CustomFieldRegistry.shared.reset()
@@ -618,12 +618,12 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(richTextComponent != nil)
-        #expect(autocompleteComponent != nil)
-        #expect(fileUploadComponent != nil)
+        #expect(Bool(true), "richTextComponent is non-optional")  // richTextComponent is non-optional
+        #expect(Bool(true), "autocompleteComponent is non-optional")  // autocompleteComponent is non-optional
+        #expect(Bool(true), "fileUploadComponent is non-optional")  // fileUploadComponent is non-optional
         
         // Test that all components work together in the same form state
-        #expect(formState != nil)
+        #expect(Bool(true), "formState is non-optional")  // formState is non-optional
     }
     
     // MARK: - Accessibility Tests
@@ -643,7 +643,7 @@ open class AdvancedFieldTypesTests {
         let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
-        #expect(richTextField != nil)
+        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
         // Test that accessibility labels and hints are properly set
         // This tests the accessibility implementation
     }
@@ -667,7 +667,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(autocompleteField != nil)
+        #expect(Bool(true), "autocompleteField is non-optional")  // autocompleteField is non-optional
         // Test that accessibility labels and hints are properly set
     }
     
@@ -691,7 +691,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         // Test that accessibility labels and hints are properly set
     }
     
@@ -718,7 +718,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         // Test that invalid file types are properly handled
     }
     
@@ -743,7 +743,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         // Test that file size limits are properly enforced
     }
     
@@ -767,7 +767,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(autocompleteField != nil)
+        #expect(Bool(true), "autocompleteField is non-optional")  // autocompleteField is non-optional
         // Test that empty suggestions are handled gracefully
     }
     
@@ -790,7 +790,7 @@ open class AdvancedFieldTypesTests {
         let richTextField = RichTextEditorField(field: field, formState: formState)
         
         // Then
-        #expect(richTextField != nil)
+        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
         // Test that large text is handled efficiently
     }
     
@@ -814,7 +814,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(autocompleteField != nil)
+        #expect(Bool(true), "autocompleteField is non-optional")  // autocompleteField is non-optional
         // Test that large suggestion lists are handled efficiently
     }
     
@@ -838,7 +838,7 @@ open class AdvancedFieldTypesTests {
         )
         
         // Then
-        #expect(fileUploadField != nil)
+        #expect(Bool(true), "fileUploadField is non-optional")  // fileUploadField is non-optional
         // Test that many files are handled efficiently
     }
     

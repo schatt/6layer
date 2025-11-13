@@ -239,7 +239,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
             Issue.record("FormWizardView step information not found")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "FormWizardView created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "FormWizardView created (ViewInspector not available on macOS)")
             #endif
         }
     }

@@ -56,7 +56,7 @@ open class CrossPlatformColorTests {
     @Test func testCardBackgroundColorIsCrossPlatform() {
         // Test that cardBackground works on both platforms
         let cardColor = Color.cardBackground
-        #expect(cardColor != nil)
+        #expect(Bool(true), "cardColor is non-optional")  // cardColor is non-optional
         
         // Verify it's not the same as system colors (should be our custom implementation)
         #expect(cardColor != Color.clear)
@@ -66,7 +66,7 @@ open class CrossPlatformColorTests {
     @Test func testSecondaryBackgroundColorIsCrossPlatform() {
         // Test that secondaryBackground works on both platforms
         let secondaryColor = Color.secondaryBackground
-        #expect(secondaryColor != nil)
+        #expect(Bool(true), "secondaryColor is non-optional")  // secondaryColor is non-optional
         
         // Verify it's not the same as system colors
         #expect(secondaryColor != Color.clear)
@@ -76,7 +76,7 @@ open class CrossPlatformColorTests {
     @Test func testPrimaryBackgroundColorIsCrossPlatform() {
         // Test that primaryBackground works on both platforms
         let primaryColor = Color.primaryBackground
-        #expect(primaryColor != nil)
+        #expect(Bool(true), "primaryColor is non-optional")  // primaryColor is non-optional
         
         // Verify it's not the same as system colors
         #expect(primaryColor != Color.clear)
@@ -86,7 +86,7 @@ open class CrossPlatformColorTests {
     @Test func testGroupedBackgroundColorIsCrossPlatform() {
         // Test that groupedBackground works on both platforms
         let groupedColor = Color.groupedBackground
-        #expect(groupedColor != nil)
+        #expect(Bool(true), "groupedColor is non-optional")  // groupedColor is non-optional
         
         // Verify it's not the same as system colors
         #expect(groupedColor != Color.clear)
@@ -96,7 +96,7 @@ open class CrossPlatformColorTests {
     @Test func testSeparatorColorIsCrossPlatform() {
         // Test that separator works on both platforms
         let separatorColor = Color.separator
-        #expect(separatorColor != nil)
+        #expect(Bool(true), "separatorColor is non-optional")  // separatorColor is non-optional
         
         // Verify it's not the same as system colors
         #expect(separatorColor != Color.clear)
@@ -108,8 +108,8 @@ open class CrossPlatformColorTests {
         let labelColor = Color.label
         let secondaryLabelColor = Color.secondaryLabel
         
-        #expect(labelColor != nil)
-        #expect(secondaryLabelColor != nil)
+        #expect(Bool(true), "labelColor is non-optional")  // labelColor is non-optional
+        #expect(Bool(true), "secondaryLabelColor is non-optional")  // secondaryLabelColor is non-optional
         
         // Verify they're not the same as system colors
         #expect(labelColor != Color.clear)
@@ -131,7 +131,7 @@ open class CrossPlatformColorTests {
         
         // All colors should be valid and usable
         for color in colors {
-            #expect(color != nil)
+            #expect(Bool(true), "color is non-optional")  // color is non-optional
             // Verify color can be used in SwiftUI views
             let _ = Rectangle().fill(color)
         }
@@ -156,8 +156,8 @@ open class CrossPlatformColorTests {
                     .frame(width: 100, height: 100)
             }
             
-            #expect(view != nil)
-            #expect(color != nil)
+            #expect(Bool(true), "view is non-optional")  // view is non-optional
+            #expect(Bool(true), "color is non-optional")  // color is non-optional
             
             // Verify the color name is descriptive and meaningful
             #expect(name.contains("Background"), "Color name should be descriptive: \(name)")

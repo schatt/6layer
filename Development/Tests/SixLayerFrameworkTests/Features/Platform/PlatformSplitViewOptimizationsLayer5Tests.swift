@@ -38,9 +38,9 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
         // Given: iOS-specific optimizations should exist
         #if os(iOS)
         // Then: Should be able to apply iOS optimizations
-        #expect(true, "iOS optimizations should be available")
+        #expect(Bool(true), "iOS optimizations should be available")
         #else
-        #expect(true, "Test only runs on iOS")
+        #expect(Bool(true), "Test only runs on iOS")
         #endif
     }
     
@@ -55,9 +55,9 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
             .platformIOSSplitViewOptimizations_L5()
         
         // Then: iOS optimizations should be applied
-        #expect(true, "iOS optimizations should be applied to split view")
+        #expect(Bool(true), "iOS optimizations should be applied to split view")
         #else
-        #expect(true, "Test only runs on iOS")
+        #expect(Bool(true), "Test only runs on iOS")
         #endif
     }
     
@@ -67,9 +67,9 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
         // Given: macOS-specific optimizations should exist
         #if os(macOS)
         // Then: Should be able to apply macOS optimizations
-        #expect(true, "macOS optimizations should be available")
+        #expect(Bool(true), "macOS optimizations should be available")
         #else
-        #expect(true, "Test only runs on macOS")
+        #expect(Bool(true), "Test only runs on macOS")
         #endif
     }
     
@@ -84,9 +84,9 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
             .platformMacOSSplitViewOptimizations_L5()
         
         // Then: macOS optimizations should be applied
-        #expect(true, "macOS optimizations should be applied to split view")
+        #expect(Bool(true), "macOS optimizations should be applied to split view")
         #else
-        #expect(true, "Test only runs on macOS")
+        #expect(Bool(true), "Test only runs on macOS")
         #endif
     }
     
@@ -102,7 +102,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
             .platformSplitViewOptimizations_L5()
         
         // Then: Optimizations should be applied appropriately for platform
-        #expect(true, "Cross-platform optimizations should work")
+        #expect(Bool(true), "Cross-platform optimizations should work")
     }
     
     @Test func testPlatformSplitViewOptimizationsWithState() async {
@@ -116,7 +116,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
             .platformSplitViewOptimizations_L5()
         
         // Then: Optimizations should work with state management
-        #expect(true, "Optimizations should work with state management")
+        #expect(Bool(true), "Optimizations should work with state management")
     }
     
     // MARK: - Performance Optimization Tests
@@ -131,7 +131,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
             .platformSplitViewOptimizations_L5()
         
         // Then: Performance optimizations should be applied
-        #expect(true, "Performance optimizations should be applied")
+        #expect(Bool(true), "Performance optimizations should be applied")
     }
     
     // MARK: - Memory Optimization Tests
@@ -146,7 +146,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests {
             .platformSplitViewOptimizations_L5()
         
         // Then: Memory optimizations should be included
-        #expect(true, "Memory optimizations should be included")
+        #expect(Bool(true), "Memory optimizations should be included")
     }
 }
 

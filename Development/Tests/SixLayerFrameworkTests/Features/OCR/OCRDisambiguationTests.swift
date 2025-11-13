@@ -91,7 +91,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
             Issue.record("View inspection failed on this platform")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "OCR disambiguation view created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "OCR disambiguation view created (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -151,7 +151,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
             Issue.record("View inspection failed on this platform")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "OCR disambiguation view created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "OCR disambiguation view created (ViewInspector not available on macOS)")
             #endif
         }
     }

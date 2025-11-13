@@ -122,7 +122,7 @@ open class L3StrategySelectionTests {
         )
         // Test that the strategy can be used to create a functional view
         let macTestView = createTestViewWithCardLayoutStrategy(macStrategy)
-        #expect(true, "Should be able to create view with mac card layout strategy")  // macTestView is non-optional
+        #expect(Bool(true), "Should be able to create view with mac card layout strategy")  // macTestView is non-optional
     }
     
     @Test func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
@@ -137,7 +137,7 @@ open class L3StrategySelectionTests {
             deviceType: deviceType,
             contentComplexity: .simple
         )
-        #expect(true, "Simple complexity should return a strategy")  // simpleStrategy is non-optional
+        #expect(Bool(true), "Simple complexity should return a strategy")  // simpleStrategy is non-optional
         
         // Test moderate complexity
         let moderateStrategy = selectCardLayoutStrategy_L3(
@@ -146,7 +146,7 @@ open class L3StrategySelectionTests {
             deviceType: deviceType,
             contentComplexity: .moderate
         )
-        #expect(true, "Moderate complexity should return a strategy")  // moderateStrategy is non-optional
+        #expect(Bool(true), "Moderate complexity should return a strategy")  // moderateStrategy is non-optional
         
         // Test complex complexity
         let complexStrategy = selectCardLayoutStrategy_L3(
@@ -155,7 +155,7 @@ open class L3StrategySelectionTests {
             deviceType: deviceType,
             contentComplexity: .complex
         )
-        #expect(true, "Complex complexity should return a strategy")  // complexStrategy is non-optional
+        #expect(Bool(true), "Complex complexity should return a strategy")  // complexStrategy is non-optional
     }
     
     // MARK: - chooseGridStrategy Tests
@@ -308,7 +308,7 @@ open class L3StrategySelectionTests {
         let strategy = selectFormStrategy_AddFuelView_L3(layout: layout)
         
         // Then
-        #expect(true, "selectFormStrategy_AddFuelView_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectFormStrategy_AddFuelView_L3 should return a strategy")  // strategy is non-optional
     }
     
     @Test func testSelectModalStrategy_Form_L3() {
@@ -322,7 +322,7 @@ open class L3StrategySelectionTests {
         let strategy = selectModalStrategy_Form_L3(layout: layout)
         
         // Then
-        #expect(true, "selectModalStrategy_Form_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectModalStrategy_Form_L3 should return a strategy")  // strategy is non-optional
     }
     
     // MARK: - OCR Strategy Tests
@@ -339,7 +339,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -357,7 +357,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -375,7 +375,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -393,7 +393,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -407,35 +407,35 @@ open class L3StrategySelectionTests {
             textTypes: textTypes,
             platform: .iOS
         )
-        #expect(true, "iOS platform should return a strategy")  // iOSStrategy is non-optional
+        #expect(Bool(true), "iOS platform should return a strategy")  // iOSStrategy is non-optional
         
         // Test macOS
         let macOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .macOS
         )
-        #expect(true, "macOS platform should return a strategy")  // macOSStrategy is non-optional
+        #expect(Bool(true), "macOS platform should return a strategy")  // macOSStrategy is non-optional
         
         // Test watchOS
         let watchOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .watchOS
         )
-        #expect(true, "watchOS platform should return a strategy")  // watchOSStrategy is non-optional
+        #expect(Bool(true), "watchOS platform should return a strategy")  // watchOSStrategy is non-optional
         
         // Test tvOS
         let tvOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .tvOS
         )
-        #expect(true, "tvOS platform should return a strategy")  // tvOSStrategy is non-optional
+        #expect(Bool(true), "tvOS platform should return a strategy")  // tvOSStrategy is non-optional
         
         // Test visionOS
         let visionOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .visionOS
         )
-        #expect(true, "visionOS platform should return a strategy")  // visionOSStrategy is non-optional
+        #expect(Bool(true), "visionOS platform should return a strategy")  // visionOSStrategy is non-optional
     }
     
     @Test func testPlatformDocumentOCRStrategy_L3() {
@@ -450,7 +450,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformDocumentOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformDocumentOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -464,7 +464,7 @@ open class L3StrategySelectionTests {
         let strategy = platformReceiptOCRStrategy_L3(platform: platform)
         
         // Then
-        #expect(true, "platformReceiptOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformReceiptOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -478,7 +478,7 @@ open class L3StrategySelectionTests {
         let strategy = platformBusinessCardOCRStrategy_L3(platform: platform)
         
         // Then
-        #expect(true, "platformBusinessCardOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformBusinessCardOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -492,7 +492,7 @@ open class L3StrategySelectionTests {
         let strategy = platformInvoiceOCRStrategy_L3(platform: platform)
         
         // Then
-        #expect(true, "platformInvoiceOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformInvoiceOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -512,7 +512,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformOptimalOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformOptimalOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -531,7 +531,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "platformBatchOCRStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "platformBatchOCRStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedTextTypes.isEmpty, "Should support text types")
         #expect(!strategy.supportedLanguages.isEmpty, "Should support languages")
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
@@ -557,7 +557,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectCardExpansionStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectCardExpansionStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(strategy.supportedStrategies == [ExpansionStrategy.none], "Static interaction should only support none strategy")
         #expect(strategy.primaryStrategy == ExpansionStrategy.none, "Primary strategy should be none")
         #expect(strategy.expansionScale == 1.0, "Expansion scale should be 1.0")
@@ -582,7 +582,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectCardExpansionStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectCardExpansionStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedStrategies.isEmpty, "Should support expansion strategies")
         #expect(strategy.primaryStrategy != ExpansionStrategy.none, "Primary strategy should not be none")
         #expect(strategy.expansionScale > 0, "Should have positive expansion scale")
@@ -607,7 +607,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectCardExpansionStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectCardExpansionStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect(!strategy.supportedStrategies.isEmpty, "Should support expansion strategies")
         #expect(strategy.primaryStrategy != ExpansionStrategy.none, "Primary strategy should not be none")
         #expect(strategy.expansionScale > 0, "Should have positive expansion scale")
@@ -628,7 +628,7 @@ open class L3StrategySelectionTests {
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(true, "Phone device type should return a strategy")  // phoneStrategy is non-optional
+        #expect(Bool(true), "Phone device type should return a strategy")  // phoneStrategy is non-optional
         
         // Test pad
         let padStrategy = selectCardExpansionStrategy_L3(
@@ -638,7 +638,7 @@ open class L3StrategySelectionTests {
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(true, "Pad device type should return a strategy")  // padStrategy is non-optional
+        #expect(Bool(true), "Pad device type should return a strategy")  // padStrategy is non-optional
         
         // Test mac
         let macStrategy = selectCardExpansionStrategy_L3(
@@ -648,7 +648,7 @@ open class L3StrategySelectionTests {
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(true, "Mac device type should return a strategy")  // macStrategy is non-optional
+        #expect(Bool(true), "Mac device type should return a strategy")  // macStrategy is non-optional
     }
     
     @Test func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
@@ -665,7 +665,7 @@ open class L3StrategySelectionTests {
             interactionStyle: interactionStyle,
             contentDensity: .dense
         )
-        #expect(true, "Dense density should return a strategy")  // denseDensityStrategy is non-optional
+        #expect(Bool(true), "Dense density should return a strategy")  // denseDensityStrategy is non-optional
         
         // Test balanced density
         let balancedDensityStrategy = selectCardExpansionStrategy_L3(
@@ -675,7 +675,7 @@ open class L3StrategySelectionTests {
             interactionStyle: interactionStyle,
             contentDensity: .balanced
         )
-        #expect(true, "Balanced density should return a strategy")  // balancedDensityStrategy is non-optional
+        #expect(Bool(true), "Balanced density should return a strategy")  // balancedDensityStrategy is non-optional
         
         // Test spacious density
         let spaciousDensityStrategy = selectCardExpansionStrategy_L3(
@@ -685,7 +685,7 @@ open class L3StrategySelectionTests {
             interactionStyle: interactionStyle,
             contentDensity: .spacious
         )
-        #expect(true, "Spacious density should return a strategy")  // spaciousDensityStrategy is non-optional
+        #expect(Bool(true), "Spacious density should return a strategy")  // spaciousDensityStrategy is non-optional
     }
     
     // MARK: - Photo Strategy Tests
@@ -702,7 +702,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -718,7 +718,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -734,7 +734,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -750,7 +750,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -766,7 +766,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -782,7 +782,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -798,7 +798,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -814,7 +814,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoCaptureStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
@@ -830,7 +830,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -846,7 +846,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -862,7 +862,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -878,7 +878,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -894,7 +894,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -910,7 +910,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -926,7 +926,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -942,7 +942,7 @@ open class L3StrategySelectionTests {
         )
         
         // Then
-        #expect(true, "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "selectPhotoDisplayStrategy_L3 should return a strategy")  // strategy is non-optional
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
@@ -974,7 +974,7 @@ open class L3StrategySelectionTests {
             )
             
             // Then: Should return correct data structure
-            #expect(true, "Layer 3 function should return a result")  // result is non-optional
+            #expect(Bool(true), "Layer 3 function should return a result")  // result is non-optional
             #expect(result.primaryStrategy != nil, "Should have expansion strategy")
             #expect(result.animationDuration >= 0, "Should have non-negative duration")
             #expect(result.expansionScale > 0, "Should have positive expansion scale")

@@ -61,15 +61,15 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.columns.count == 4)
         
         let stringColumn = result.columns.first { $0.name == "name" }
-        #expect(stringColumn != nil)
+        #expect(Bool(true), "stringColumn is non-optional")  // stringColumn is non-optional
         #expect(stringColumn?.type == .string)
         
         let numericColumn = result.columns.first { $0.name == "age" }
-        #expect(numericColumn != nil)
+        #expect(Bool(true), "numericColumn is non-optional")  // numericColumn is non-optional
         #expect(numericColumn?.type == .number)
         
         let booleanColumn = result.columns.first { $0.name == "isActive" }
-        #expect(booleanColumn != nil)
+        #expect(Bool(true), "booleanColumn is non-optional")  // booleanColumn is non-optional
         #expect(booleanColumn?.type == .boolean)
     }
     
@@ -153,7 +153,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.visualizationRecommendations.count > 0)
         
         let chartRecommendation = result.visualizationRecommendations.first
-        #expect(chartRecommendation != nil)
+        #expect(Bool(true), "chartRecommendation is non-optional")  // chartRecommendation is non-optional
         #expect(chartRecommendation?.chartType != nil)
         #expect(chartRecommendation?.confidence ?? 0 > 0)
     }

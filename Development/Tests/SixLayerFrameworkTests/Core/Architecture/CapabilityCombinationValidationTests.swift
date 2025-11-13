@@ -57,7 +57,7 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         let _ = RuntimeCapabilityDetection.supportsOCR
         
         // Framework can access all capability properties - that's what matters
-        #expect(true, "Framework can access capability detection for \(platform)")
+        #expect(Bool(true), "Framework can access capability detection for \(platform)")
     }
     
     // MARK: - Capability Dependency Tests
@@ -121,7 +121,7 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
             // Framework can access these properties - that's what matters
             let _ = RuntimeCapabilityDetection.supportsVoiceOver
             let _ = RuntimeCapabilityDetection.supportsSwitchControl
-            #expect(true, "Framework can access accessibility capabilities for \(platform)")
+            #expect(Bool(true), "Framework can access accessibility capabilities for \(platform)")
         }
     }
     
@@ -145,7 +145,7 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         
         // Framework can handle both being true or false - that's what matters
         // No logical constraint prevents them from coexisting
-        #expect(true, "Framework handles touch and hover capabilities correctly")
+        #expect(Bool(true), "Framework handles touch and hover capabilities correctly")
     }
     
     @Test func testTouchHapticInteraction() {
@@ -207,7 +207,7 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         
         // Framework can handle both being true or false - that's what matters
         // No logical constraint prevents them from coexisting
-        #expect(true, "Framework handles capability combinations correctly (touch and hover can coexist)")
+        #expect(Bool(true), "Framework handles capability combinations correctly (touch and hover can coexist)")
     }
     
     // MARK: - Comprehensive Combination Test

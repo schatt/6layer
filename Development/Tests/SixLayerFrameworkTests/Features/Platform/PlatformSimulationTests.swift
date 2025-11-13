@@ -70,7 +70,7 @@ open class PlatformSimulationTests {
         // Test touch target size appropriateness
         if RuntimeCapabilityDetection.supportsTouch {
             // Use a reasonable default for touch targets
-            #expect(true, "Touch platform should have adequate touch targets")
+            #expect(Bool(true), "Touch platform should have adequate touch targets")
         }
     }
     
@@ -192,6 +192,6 @@ open class PlatformSimulationTests {
     
     @Test func testPlatformCapabilityEdgeCases() {
         // Test that capabilities are properly defined
-        #expect(true, "Platform capabilities should be properly defined")
+        #expect(Bool(true), "Platform capabilities should be properly defined")
     }
 }

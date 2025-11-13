@@ -568,7 +568,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             
             // Then
             // Button should be created without crashing
-            #expect(button != nil)
+            #expect(Bool(true), "button is non-optional")  // button is non-optional
         }
     }
     
@@ -585,7 +585,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
                 let button = PlatformInteractionButton(style: style, action: {}) {
                     Text("Test")
                 }
-                #expect(button != nil)
+                #expect(Bool(true), "button is non-optional")  // button is non-optional
         }
             }
     }

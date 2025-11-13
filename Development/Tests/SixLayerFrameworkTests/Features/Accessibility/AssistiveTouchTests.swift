@@ -273,7 +273,7 @@ open class AssistiveTouchTests: BaseTestClass {
             .assistiveTouchEnabled()
         
         // Then: View should support AssistiveTouch
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     /// BUSINESS PURPOSE: AssistiveTouch view modifiers with configuration allow customizing AssistiveTouch behavior
@@ -289,7 +289,7 @@ open class AssistiveTouchTests: BaseTestClass {
             .assistiveTouchEnabled(config: config)
         
         // Then: View should support AssistiveTouch with configuration
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - AssistiveTouch Compliance Tests

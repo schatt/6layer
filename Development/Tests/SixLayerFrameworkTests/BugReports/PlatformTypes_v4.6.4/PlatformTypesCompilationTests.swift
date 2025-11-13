@@ -536,7 +536,7 @@ struct PlatformTypesCompilationTests {
         // Test data initialization (with empty data should return nil)
         let emptyData = Data()
         let imageFromEmptyData = PlatformImage(data: emptyData)
-        #expect(imageFromEmptyData == nil)
+        #expect(false, "imageFromEmptyData is non-optional")  // imageFromEmptyData is non-optional
     }
     
     // MARK: - Content Analysis Types Tests

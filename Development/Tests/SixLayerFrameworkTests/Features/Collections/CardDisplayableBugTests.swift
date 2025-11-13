@@ -100,7 +100,7 @@ struct CardDisplayableBugTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: task, hints: hints)
         
         // Then: Should return nil when hints fail to extract meaningful values
-        #expect(extractedTitle == nil, "Should return nil when hints fail to extract meaningful values")
+        #expect(false, "Should return nil when hints fail to extract meaningful values")  // extractedTitle is non-optional
     }
     
     /// RED PHASE: Test that empty strings are respected as valid content (not fallback to CardDisplayable)
@@ -118,7 +118,7 @@ struct CardDisplayableBugTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: task, hints: hints)
         
         // Then: Should return nil for empty string (no default configured)
-        #expect(extractedTitle == nil, "Should return nil for empty string when no default is configured")
+        #expect(false, "Should return nil for empty string when no default is configured")  // extractedTitle is non-optional
     }
     
     /// RED PHASE: Test that CardDisplayable protocol is used when hints extract nil values
@@ -135,7 +135,7 @@ struct CardDisplayableBugTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: project, hints: hints)
         
         // Then: Should return nil when hints extract nil values
-        #expect(extractedTitle == nil, "Should return nil when hints extract nil values")
+        #expect(false, "Should return nil when hints extract nil values")  // extractedTitle is non-optional
     }
     
     /// RED PHASE: Test that CardDisplayable protocol is used when hints are missing
@@ -194,7 +194,7 @@ struct CardDisplayableBugTests {
         // For subtitle/icon/color: reflection doesn't find them, so should fall back to CardDisplayable
         #expect(extractedTitle == "in_progress", "Should fall back to reflection and find 'status' property when hints fail")
         // Subtitle: reflection doesn't find subtitle properties, so CardDisplayable.cardSubtitle returns nil (status is not empty but it's not the subtitle)
-        #expect(extractedSubtitle == nil, "Should return nil when reflection and CardDisplayable both fail for subtitle")
+        #expect(false, "Should return nil when reflection and CardDisplayable both fail for subtitle")  // extractedSubtitle is non-optional
         // Icon: reflection doesn't find icon properties, so should use CardDisplayable.cardIcon which returns "clock.fill" for "in_progress" status
         #expect(extractedIcon == "clock.fill", "Should fall back to CardDisplayable when reflection fails for icon")
         // Color: reflection doesn't find color properties, so should use CardDisplayable.cardColor which returns .red for "urgent" priority
@@ -291,7 +291,7 @@ struct CardDisplayableBugTests {
         
         // Then: Should return nil when hints extract non-string values (property exists but wrong type)
         // Property exists but is not a String, so return nil (don't fall back)
-        #expect(extractedTitle == nil, "Should return nil when hints extract non-string values")
-        #expect(extractedSubtitle == nil, "Should return nil when hints extract non-string values")
+        #expect(false, "Should return nil when hints extract non-string values")  // extractedTitle is non-optional
+        #expect(false, "Should return nil when hints extract non-string values")  // extractedSubtitle is non-optional
     }
 }

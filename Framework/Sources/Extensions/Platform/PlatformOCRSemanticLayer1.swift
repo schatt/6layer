@@ -25,6 +25,8 @@ public func platformOCRWithVisualCorrection_L1(
         context: context,
         onResult: onResult
     )
+    .automaticAccessibility()
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Cross-platform semantic OCR intent interface with custom configuration
@@ -42,6 +44,8 @@ public func platformOCRWithVisualCorrection_L1(
         configuration: configuration,
         onResult: onResult
     )
+    .automaticAccessibility()
+    .automaticAccessibilityIdentifiers()
 }
 
 /// Cross-platform semantic structured data extraction interface
@@ -58,6 +62,8 @@ public func platformExtractStructuredData_L1(
         context: context,
         onResult: onResult
     )
+    .automaticAccessibility()
+    .automaticAccessibilityIdentifiers()
 }
 
 // MARK: - Test Helper Functions

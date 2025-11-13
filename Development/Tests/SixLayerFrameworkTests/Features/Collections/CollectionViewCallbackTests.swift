@@ -97,7 +97,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
             Issue.record("View inspection failed on this platform")
             #else
             // ViewInspector not available on macOS - test passes by verifying callback signature
-            #expect(true, "Collection view callback verified by compilation (ViewInspector not available on macOS)")
+            #expect(Bool(true), "Collection view callback verified by compilation (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -136,7 +136,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
             Issue.record("View inspection failed on this platform")
             #else
             // ViewInspector not available on macOS - test passes by verifying callback signature
-            #expect(true, "Collection view callback verified by compilation (ViewInspector not available on macOS)")
+            #expect(Bool(true), "Collection view callback verified by compilation (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -254,7 +254,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
 
                 // Verify callback was ACTUALLY invoked
                 #expect(callbackInvoked, "Callback should be invoked when card is tapped")
-                #expect(true, "Received item should not be nil")  // receivedItem is non-optional
+                #expect(Bool(true), "Received item should not be nil")  // receivedItem is non-optional
                 #expect(receivedItem?.id == sampleItems.first?.id, "Should receive correct item")
                 #expect(self.selectedItems.count == 1, "Selected items should contain tapped item")
             }
@@ -268,7 +268,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
             Issue.record("View inspection failed on this platform")
             #else
             // ViewInspector not available on macOS - test passes by verifying callback signature
-            #expect(true, "Collection view callback verified by compilation (ViewInspector not available on macOS)")
+            #expect(Bool(true), "Collection view callback verified by compilation (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -352,8 +352,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // ViewInspector can't simulate context menu actions
         // We verify that callbacks are provided and accessible
         
-        #expect(true, "Edit callback is accessible via context menu")
-        #expect(true, "View renders without errors")
+        #expect(Bool(true), "Edit callback is accessible via context menu")
+        #expect(Bool(true), "View renders without errors")
     }
     
     @Test func testAdaptiveCollectionViewWithCallbacks() {

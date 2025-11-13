@@ -64,7 +64,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             }
             
             // Then: The view should be created successfully with automatic accessibility identifiers
-            #expect(true, "FuelView should be created successfully")  // fuelView is non-optional
+            #expect(Bool(true), "FuelView should be created successfully")  // fuelView is non-optional
             
             // Verify configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")
@@ -96,7 +96,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             .named("AddFuelButton")
             
             // Then: The view should be created successfully
-            #expect(true, "View with .named() should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with .named() should be created successfully")  // testView is non-optional
             
             // Test actual accessibility identifier generation (should use default "main" screen context)
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -164,7 +164,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             }
             
             // Then: The view should be created successfully
-            #expect(true, "View with named modifier should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with named modifier should be created successfully")  // testView is non-optional
             
             // Test actual accessibility identifier generation
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -201,7 +201,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             }
             
             // Then: The view should be created successfully
-            #expect(true, "View with named modifier should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with named modifier should be created successfully")  // testView is non-optional
             
             // Test actual accessibility identifier generation
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -239,7 +239,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             .accessibilityIdentifier("manual-add-fuel-button")
             
             // Then: The view should be created successfully
-            #expect(true, "View with manual accessibility identifier should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with manual accessibility identifier should be created successfully")  // testView is non-optional
             
             // Verify that manual identifiers continue to work
             // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
@@ -275,7 +275,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             .named("TestButton")
             
             // Then: The view should be created successfully
-            #expect(true, "View with automatic accessibility identifiers should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with automatic accessibility identifiers should be created successfully")  // testView is non-optional
             
             // The fix ensures that automatic accessibility identifiers work correctly
             // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiers DOES have .automaticAccessibilityIdentifiers() 
@@ -309,7 +309,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 .enableGlobalAutomaticAccessibilityIdentifiers()
             
             // Then: The view should be created successfully
-            #expect(true, "View with global modifier should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with global modifier should be created successfully")  // testView is non-optional
             
             // Verify that the original approach still works
             // This was the only way to make automatic identifiers work before the fix

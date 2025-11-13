@@ -67,7 +67,7 @@ open class AutomaticHIGComplianceTests {
             // The fact that this compiles and runs successfully means the modifiers
             // .appleHIGCompliant(), .automaticAccessibility(), .platformPatterns(), 
             // and .visualConsistency() are being applied without errors
-            #expect(true, "Automatic HIG compliance should be applied without errors")
+            #expect(Bool(true), "Automatic HIG compliance should be applied without errors")
         }
     }
     
@@ -86,12 +86,12 @@ open class AutomaticHIGComplianceTests {
             )
             
             // Then: View should automatically have VoiceOver support
-            #expect(true, "Layer 1 function should create a valid view")  // view is non-optional
+            #expect(Bool(true), "Layer 1 function should create a valid view")  // view is non-optional
             #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
             
             // Verify that automatic accessibility features are applied
             // The view should automatically adapt to VoiceOver being enabled
-            #expect(true, "Automatic VoiceOver support should be applied")
+            #expect(Bool(true), "Automatic VoiceOver support should be applied")
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -121,11 +121,11 @@ open class AutomaticHIGComplianceTests {
                 )
                 
             // Then: View should automatically have platform-specific patterns
-            #expect(true, "Layer 1 function should create a valid view on \(platform)")  // view is non-optional
+            #expect(Bool(true), "Layer 1 function should create a valid view on \(platform)")  // view is non-optional
             
             // Verify that automatic platform patterns are applied
             // The view should automatically adapt to the current platform
-            #expect(true, "Automatic platform patterns should be applied on \(platform)")
+            #expect(Bool(true), "Automatic platform patterns should be applied on \(platform)")
             }
         }
     }
@@ -142,11 +142,11 @@ open class AutomaticHIGComplianceTests {
             )
             
             // Then: View should automatically have visual consistency applied
-            #expect(true, "Layer 1 function should create a valid view")  // view is non-optional
+            #expect(Bool(true), "Layer 1 function should create a valid view")  // view is non-optional
             
             // Verify that automatic visual consistency is applied
             // The view should automatically have consistent styling and theming
-            #expect(true, "Automatic visual consistency should be applied")
+            #expect(Bool(true), "Automatic visual consistency should be applied")
         }
     }
     
@@ -162,7 +162,7 @@ open class AutomaticHIGComplianceTests {
             )
             // Test that collection view can be hosted and has proper structure
             let collectionHostingView = hostRootPlatformView(collectionView.withGlobalAutoIDsEnabled())
-            #expect(true, "Collection view should be hostable")  // collectionHostingView is non-optional
+            #expect(Bool(true), "Collection view should be hostable")  // collectionHostingView is non-optional
             
             // Test platformPresentNumericData_L1
             let numericData = [
@@ -175,12 +175,12 @@ open class AutomaticHIGComplianceTests {
             
             // Test that numeric view can be hosted and has proper structure
             let numericHostingView = hostRootPlatformView(numericView.withGlobalAutoIDsEnabled())
-            #expect(true, "Numeric view should be hostable")  // numericHostingView is non-optional
+            #expect(Bool(true), "Numeric view should be hostable")  // numericHostingView is non-optional
             
             // Verify that both views are created successfully and can be hosted
             // This tests that the HIG compliance modifiers are applied without compilation errors
-            #expect(true, "Collection view should be created")  // collectionView is non-optional
-            #expect(true, "Numeric view should be created")  // numericView is non-optional
+            #expect(Bool(true), "Collection view should be created")  // collectionView is non-optional
+            #expect(Bool(true), "Numeric view should be created")  // numericView is non-optional
         }
     }
     
@@ -200,7 +200,7 @@ open class AutomaticHIGComplianceTests {
             )
             // Test that VoiceOver-enabled view can be hosted
             let voiceOverHostingView = hostRootPlatformView(viewWithVoiceOver.withGlobalAutoIDsEnabled())
-            #expect(true, "VoiceOver view should be hostable")  // voiceOverHostingView is non-optional
+            #expect(Bool(true), "VoiceOver view should be hostable")  // voiceOverHostingView is non-optional
             
             // Test with Switch Control enabled
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -214,7 +214,7 @@ open class AutomaticHIGComplianceTests {
             
             // Test that Switch Control-enabled view can be hosted
             let switchControlHostingView = hostRootPlatformView(viewWithSwitchControl.withGlobalAutoIDsEnabled())
-            #expect(true, "Switch Control view should be hostable")  // switchControlHostingView is non-optional
+            #expect(Bool(true), "Switch Control view should be hostable")  // switchControlHostingView is non-optional
             
             // Test with AssistiveTouch enabled
             RuntimeCapabilityDetection.setTestVoiceOver(false)
@@ -228,7 +228,7 @@ open class AutomaticHIGComplianceTests {
             
             // Test that AssistiveTouch-enabled view can be hosted
             let assistiveTouchHostingView = hostRootPlatformView(viewWithAssistiveTouch.withGlobalAutoIDsEnabled())
-            #expect(true, "AssistiveTouch view should be hostable")  // assistiveTouchHostingView is non-optional
+            #expect(Bool(true), "AssistiveTouch view should be hostable")  // assistiveTouchHostingView is non-optional
             
             // Test with all accessibility features enabled
             RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -242,14 +242,14 @@ open class AutomaticHIGComplianceTests {
             
             // Test that all-accessibility view can be hosted
             let allAccessibilityHostingView = hostRootPlatformView(viewWithAllAccessibility.withGlobalAutoIDsEnabled())
-            #expect(true, "All accessibility view should be hostable")  // allAccessibilityHostingView is non-optional
+            #expect(Bool(true), "All accessibility view should be hostable")  // allAccessibilityHostingView is non-optional
             
             // Verify that all views are created successfully and can be hosted
             // This tests that the HIG compliance modifiers adapt to different accessibility capabilities
-            #expect(true, "VoiceOver view should be created")  // viewWithVoiceOver is non-optional
-            #expect(true, "Switch Control view should be created")  // viewWithSwitchControl is non-optional
-            #expect(true, "AssistiveTouch view should be created")  // viewWithAssistiveTouch is non-optional
-            #expect(true, "All accessibility view should be created")  // viewWithAllAccessibility is non-optional
+            #expect(Bool(true), "VoiceOver view should be created")  // viewWithVoiceOver is non-optional
+            #expect(Bool(true), "Switch Control view should be created")  // viewWithSwitchControl is non-optional
+            #expect(Bool(true), "AssistiveTouch view should be created")  // viewWithAssistiveTouch is non-optional
+            #expect(Bool(true), "All accessibility view should be created")  // viewWithAllAccessibility is non-optional
             
             // Reset for next test
             RuntimeCapabilityDetection.setTestVoiceOver(false)

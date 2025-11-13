@@ -87,7 +87,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid full screen container
-        #expect(true, "Full screen container should be created successfully")  // container is non-optional
+        #expect(Bool(true), "Full screen container should be created successfully")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_Custom() {
@@ -102,7 +102,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid custom container
-        #expect(true, "Custom container should be created successfully")  // container is non-optional
+        #expect(Bool(true), "Custom container should be created successfully")  // container is non-optional
     }
     
     // MARK: - Sizing Tests
@@ -121,10 +121,10 @@ open class ModalContainerTests: BaseTestClass {
         let customContainer = platformModalContainer_Form_L4(strategy: customStrategy)
         
         // Then: All containers should be created successfully
-        #expect(true, "Small container should be created")  // smallContainer is non-optional
-        #expect(true, "Medium container should be created")  // mediumContainer is non-optional
-        #expect(true, "Large container should be created")  // largeContainer is non-optional
-        #expect(true, "Custom container should be created")  // customContainer is non-optional
+        #expect(Bool(true), "Small container should be created")  // smallContainer is non-optional
+        #expect(Bool(true), "Medium container should be created")  // mediumContainer is non-optional
+        #expect(Bool(true), "Large container should be created")  // largeContainer is non-optional
+        #expect(Bool(true), "Custom container should be created")  // customContainer is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_MultipleDetents() {
@@ -137,7 +137,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with multiple detents
-        #expect(true, "Container with multiple detents should be created")  // container is non-optional
+        #expect(Bool(true), "Container with multiple detents should be created")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_CustomDetent() {
@@ -151,7 +151,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with custom detent
-        #expect(true, "Container with custom detent should be created")  // container is non-optional
+        #expect(Bool(true), "Container with custom detent should be created")  // container is non-optional
     }
     
     // MARK: - Platform Optimization Tests
@@ -183,7 +183,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with platform optimizations
-        #expect(true, "Container with platform optimizations should be created")  // container is non-optional
+        #expect(Bool(true), "Container with platform optimizations should be created")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_iOSOptimization() {
@@ -201,7 +201,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create iOS-optimized container
-        #expect(true, "iOS-optimized container should be created")  // container is non-optional
+        #expect(Bool(true), "iOS-optimized container should be created")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_macOSOptimization() {
@@ -219,7 +219,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create macOS-optimized container
-        #expect(true, "macOS-optimized container should be created")  // container is non-optional
+        #expect(Bool(true), "macOS-optimized container should be created")  // container is non-optional
     }
     
     // MARK: - Complex Strategy Tests
@@ -249,7 +249,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create complex container
-        #expect(true, "Complex container should be created")  // container is non-optional
+        #expect(Bool(true), "Complex container should be created")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_AllPresentationTypes() {
@@ -264,7 +264,7 @@ open class ModalContainerTests: BaseTestClass {
             let container = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each presentation type
-            #expect(true, "Container should be created for presentation type: \(presentationType)")  // container is non-optional
+            #expect(Bool(true), "Container should be created for presentation type: \(presentationType)")  // container is non-optional
         }
     }
     
@@ -280,7 +280,7 @@ open class ModalContainerTests: BaseTestClass {
             let container = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each sizing option
-            #expect(true, "Container should be created for sizing: \(sizing)")  // container is non-optional
+            #expect(Bool(true), "Container should be created for sizing: \(sizing)")  // container is non-optional
         }
     }
     
@@ -296,7 +296,7 @@ open class ModalContainerTests: BaseTestClass {
             let container = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each detent type
-            #expect(true, "Container should be created for detent: \(detent)")  // container is non-optional
+            #expect(Bool(true), "Container should be created for detent: \(detent)")  // container is non-optional
         }
     }
     
@@ -310,7 +310,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle empty detents gracefully
-        #expect(true, "Container should handle empty detents gracefully")  // container is non-optional
+        #expect(Bool(true), "Container should handle empty detents gracefully")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_EmptyPlatformOptimizations() {
@@ -321,7 +321,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle empty optimizations gracefully
-        #expect(true, "Container should handle empty platform optimizations gracefully")  // container is non-optional
+        #expect(Bool(true), "Container should handle empty platform optimizations gracefully")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_MultipleCustomDetents() {
@@ -338,7 +338,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle multiple custom detents
-        #expect(true, "Container should handle multiple custom detents")  // container is non-optional
+        #expect(Bool(true), "Container should handle multiple custom detents")  // container is non-optional
     }
     
     @Test func testPlatformModalContainer_Form_L4_ExtremeConstraints() {
@@ -357,7 +357,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle extreme constraints
-        #expect(true, "Container should handle extreme constraints")  // container is non-optional
+        #expect(Bool(true), "Container should handle extreme constraints")  // container is non-optional
     }
     
     // MARK: - Performance Tests
@@ -408,7 +408,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: modalStrategy)
         
         // Then: Should create container that can work with forms
-        #expect(true, "Modal container should integrate with form strategy")  // container is non-optional
+        #expect(Bool(true), "Modal container should integrate with form strategy")  // container is non-optional
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_CrossPlatformCompatibility() {
@@ -427,7 +427,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create cross-platform compatible container
-        #expect(true, "Modal container should be cross-platform compatible")  // container is non-optional
+        #expect(Bool(true), "Modal container should be cross-platform compatible")  // container is non-optional
         // Performance test removed - performance monitoring was removed from framework
     }
     

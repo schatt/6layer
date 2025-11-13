@@ -45,11 +45,11 @@ struct ExternalModuleIntegrationTests {
             })
             
             // Test that it compiles and creates a view
-            #expect(true, "Function is accessible")
+            #expect(Bool(true), "Function is accessible")
             
             // Test that callback signature is accessible
             // In real usage, external modules would call this with their own callback
-            #expect(true, "Callback can be provided")
+            #expect(Bool(true), "Callback can be provided")
         }
     }
     
@@ -62,11 +62,11 @@ struct ExternalModuleIntegrationTests {
             })
             
             // Test that it compiles and creates a view
-            #expect(true, "Function is accessible")
+            #expect(Bool(true), "Function is accessible")
             
             // Test that callback signature is accessible
             // In real usage, external modules would call this with their own callback
-            #expect(true, "Callback can be provided")
+            #expect(Bool(true), "Callback can be provided")
         }
     }
     
@@ -76,7 +76,7 @@ struct ExternalModuleIntegrationTests {
         let image = PlatformImage()
         await MainActor.run {
             let _ = platformPhotoDisplay_L4(image: image, style: .thumbnail)
-            #expect(true, "Function is accessible")
+            #expect(Bool(true), "Function is accessible")
         }
     }
     
@@ -87,11 +87,11 @@ struct ExternalModuleIntegrationTests {
         #if os(iOS)
         let uiImage = UIImage(systemName: "photo") ?? UIImage()
         let platformImage = PlatformImage(uiImage: uiImage)
-        #expect(true, "iOS conversion works")
+        #expect(Bool(true), "iOS conversion works")
         #elseif os(macOS)
         let nsImage = NSImage(systemSymbolName: "photo", accessibilityDescription: nil) ?? NSImage()
         let platformImage = PlatformImage(nsImage: nsImage)
-        #expect(true, "macOS conversion works")
+        #expect(Bool(true), "macOS conversion works")
         #endif
     }
     
@@ -101,7 +101,7 @@ struct ExternalModuleIntegrationTests {
         // Note: PlatformMessagingLayer5 has internal init, so we can't instantiate it
         // This test verifies that we're testing from external perspective
         // In real usage, external modules would use the public static methods
-        #expect(true, "Testing from external perspective")
+        #expect(Bool(true), "Testing from external perspective")
     }
     
     /// Tests that photo components have accessibility identifiers (external perspective)
@@ -120,7 +120,7 @@ struct ExternalModuleIntegrationTests {
             let _ = platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
             
             // If these compile and create views, the API is accessible
-            #expect(true, "Photo components accessible and creating views")
+            #expect(Bool(true), "Photo components accessible and creating views")
         }
     }
     
@@ -134,7 +134,7 @@ struct ExternalModuleIntegrationTests {
             let _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: PlatformImage(), style: .thumbnail)
             
             // If these compile, the enum methods are accessible from external modules
-            #expect(true, "Enum methods accessible")
+            #expect(Bool(true), "Enum methods accessible")
         }
     }
     
@@ -171,10 +171,10 @@ struct ExternalModuleIntegrationTests {
             )
             
             // If this compiles and creates a view, the API is accessible
-            #expect(true, "OCROverlayView accessible and creating views")
+            #expect(Bool(true), "OCROverlayView accessible and creating views")
             
             // Test that callback signatures are accessible
-            #expect(true, "Callbacks can be provided")
+            #expect(Bool(true), "Callbacks can be provided")
         }
     }
     
@@ -205,7 +205,7 @@ struct ExternalModuleIntegrationTests {
             )
             
             // If this compiles and creates a view, the API is accessible
-            #expect(true, "ListCollectionView with callbacks accessible")
+            #expect(Bool(true), "ListCollectionView with callbacks accessible")
         }
     }
     
@@ -238,7 +238,7 @@ struct ExternalModuleIntegrationTests {
             )
             
             // If these compile and create views, the API is accessible
-            #expect(true, "IntelligentFormView.generateForm is accessible from external modules")
+            #expect(Bool(true), "IntelligentFormView.generateForm is accessible from external modules")
         }
     }
     
@@ -258,7 +258,7 @@ struct ExternalModuleIntegrationTests {
             let _ = IntelligentDetailView.platformDetailView(for: testData)
             
             // If this compiles and creates a view, the API is accessible
-            #expect(true, "IntelligentDetailView.platformDetailView is accessible from external modules")
+            #expect(Bool(true), "IntelligentDetailView.platformDetailView is accessible from external modules")
         }
     }
     
@@ -272,7 +272,7 @@ struct ExternalModuleIntegrationTests {
             }
             
             // If this compiles, ResponsiveLayout is accessible
-            #expect(true, "ResponsiveLayout is accessible from external modules")
+            #expect(Bool(true), "ResponsiveLayout is accessible from external modules")
         }
     }
     
@@ -290,7 +290,7 @@ struct ExternalModuleIntegrationTests {
             }
             
             // If this compiles, ResponsiveContainer is accessible
-            #expect(true, "ResponsiveContainer is accessible from external modules")
+            #expect(Bool(true), "ResponsiveContainer is accessible from external modules")
         }
     }
     
@@ -313,7 +313,7 @@ struct ExternalModuleIntegrationTests {
             )
             
             // If this compiles, OCR functions are accessible
-            #expect(true, "OCR Layer 1 functions are accessible from external modules")
+            #expect(Bool(true), "OCR Layer 1 functions are accessible from external modules")
         }
     }
     
@@ -348,7 +348,7 @@ struct ExternalModuleIntegrationTests {
         let _ = PresentationHints()
         
         // If this compiles, PresentationHints is accessible
-        #expect(true, "PresentationHints is accessible from external modules")
+        #expect(Bool(true), "PresentationHints is accessible from external modules")
     }
     
     /// Tests AccessibilityManager is accessible
@@ -358,7 +358,7 @@ struct ExternalModuleIntegrationTests {
         // Test that AccessibilityManager can be created
         let manager = AccessibilityManager()
 
-        #expect(true, "AccessibilityManager is accessible from external modules")
+        #expect(Bool(true), "AccessibilityManager is accessible from external modules")
     }
 }
 

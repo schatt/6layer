@@ -64,8 +64,8 @@ open class Layer4PlatformImageArchitectureTests {
         
         // Verify interfaces were created successfully
         // cameraInterface and photoPicker are non-optional Views, so they exist if we reach here
-        #expect(true, "Camera interface should accept PlatformImage callback")  // cameraInterface is non-optional
-        #expect(true, "Photo picker should accept PlatformImage callback")  // photoPicker is non-optional
+        #expect(Bool(true), "Camera interface should accept PlatformImage callback")  // cameraInterface is non-optional
+        #expect(Bool(true), "Photo picker should accept PlatformImage callback")  // photoPicker is non-optional
     }
     
     /// BUSINESS PURPOSE: Verify Layer 4 delegate methods work with PlatformImage
@@ -92,7 +92,7 @@ open class Layer4PlatformImageArchitectureTests {
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Delegate should convert UIImage to PlatformImage and call callback
-        #expect(true, "Delegate should convert UIImage to PlatformImage and call callback")  // capturedImage is non-optional
+        #expect(Bool(true), "Delegate should convert UIImage to PlatformImage and call callback")  // capturedImage is non-optional
         #expect(capturedImage!.size.width > 0, "PlatformImage should have valid properties")
         
         #elseif os(macOS)
@@ -108,7 +108,7 @@ open class Layer4PlatformImageArchitectureTests {
         coordinator.takePhoto()
         
         // Then: Delegate should work with PlatformImage
-        #expect(true, "macOS delegate should work with PlatformImage")  // capturedImage is non-optional
+        #expect(Bool(true), "macOS delegate should work with PlatformImage")  // capturedImage is non-optional
         #expect(capturedImage!.size.width > 0, "PlatformImage should have valid properties")
         #endif
     }
@@ -223,7 +223,7 @@ open class Layer4PlatformImageArchitectureTests {
         // Note: Callbacks are not executed in unit tests (only when views are actually used)
         // We verify that the callback accepts PlatformImage by checking the interface was created successfully
         // (The callback parameter type is PlatformImage, not UIImage/NSImage)
-        #expect(true, "Camera interface should accept PlatformImage callback")  // cameraInterface is non-optional
+        #expect(Bool(true), "Camera interface should accept PlatformImage callback")  // cameraInterface is non-optional
     }
     
     // MARK: - Test Data Helpers

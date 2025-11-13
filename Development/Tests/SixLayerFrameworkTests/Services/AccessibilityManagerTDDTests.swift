@@ -91,7 +91,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         let result = manager.validateAccessibility(for: mockElement)
 
         // Should return a proper validation result
-        #expect(true, "Should return a validation result")  // result is non-optional
+        #expect(Bool(true), "Should return a validation result")  // result is non-optional
         if let validationResult = result {
             #expect(validationResult.isValid == true, "Currently stub returns valid result")
             #expect(validationResult.issues.isEmpty, "Currently stub returns no issues")
@@ -112,7 +112,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
 
         // Get current configuration
         let config = manager.getAccessibilityConfiguration()
-        #expect(true, "Should return configuration object")  // config is non-optional
+        #expect(Bool(true), "Should return configuration object")  // config is non-optional
 
         if let config = config {
             #expect(config.enableVoiceOver == false, "VoiceOver currently stub as disabled")

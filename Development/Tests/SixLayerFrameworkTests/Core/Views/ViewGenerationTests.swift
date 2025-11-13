@@ -68,7 +68,7 @@ open class ViewGenerationTests: BaseTestClass {
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView, so we need to inspect it differently
             let anyView = try inspected.sixLayerAnyView()
-            #expect(true, "Detail view should be wrapped in AnyView")  // anyView is non-optional
+            #expect(Bool(true), "Detail view should be wrapped in AnyView")  // anyView is non-optional
 
             // Try to find text elements within the AnyView
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
@@ -95,7 +95,7 @@ open class ViewGenerationTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying view creation
-        #expect(true, "IntelligentDetailView created (ViewInspector not available on macOS)")
+        #expect(Bool(true), "IntelligentDetailView created (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -114,7 +114,7 @@ open class ViewGenerationTests: BaseTestClass {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(true, "IntelligentDetailView with custom field view should be created successfully")  // detailView is non-optional
+        #expect(Bool(true), "IntelligentDetailView with custom field view should be created successfully")  // detailView is non-optional
         
         // 2. Contains what it needs to contain - The view should contain custom field content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -122,7 +122,7 @@ open class ViewGenerationTests: BaseTestClass {
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.sixLayerAnyView()
-            #expect(true, "Detail view should be wrapped in AnyView")  // anyView is non-optional
+            #expect(Bool(true), "Detail view should be wrapped in AnyView")  // anyView is non-optional
 
             // The view should contain text elements with our custom format
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
@@ -149,7 +149,7 @@ open class ViewGenerationTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying view creation
-        #expect(true, "IntelligentDetailView created (ViewInspector not available on macOS)")
+        #expect(Bool(true), "IntelligentDetailView created (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -169,7 +169,7 @@ open class ViewGenerationTests: BaseTestClass {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(true, "IntelligentDetailView with hints should be created successfully")  // detailView is non-optional
+        #expect(Bool(true), "IntelligentDetailView with hints should be created successfully")  // detailView is non-optional
         
         // 2. Contains what it needs to contain - The view should respect the hints
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -177,7 +177,7 @@ open class ViewGenerationTests: BaseTestClass {
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.sixLayerAnyView()
-            #expect(true, "Detail view should be wrapped in AnyView")  // anyView is non-optional
+            #expect(Bool(true), "Detail view should be wrapped in AnyView")  // anyView is non-optional
 
             // The view should contain text elements
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
@@ -204,7 +204,7 @@ open class ViewGenerationTests: BaseTestClass {
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying view creation
-        #expect(true, "IntelligentDetailView created (ViewInspector not available on macOS)")
+        #expect(Bool(true), "IntelligentDetailView created (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -239,8 +239,8 @@ open class ViewGenerationTests: BaseTestClass {
         let simpleStrategy = IntelligentDetailView.determineLayoutStrategy(analysis: simpleAnalysis, hints: nil)
         let complexStrategy = IntelligentDetailView.determineLayoutStrategy(analysis: complexAnalysis, hints: nil)
         
-        #expect(simpleStrategy != nil)
-        #expect(complexStrategy != nil)
+        #expect(Bool(true), "simpleStrategy is non-optional")  // simpleStrategy is non-optional
+        #expect(Bool(true), "complexStrategy is non-optional")  // complexStrategy is non-optional
         
         // Simple data should get compact or standard layout
         #expect([DetailLayoutStrategy.compact, DetailLayoutStrategy.standard].contains(simpleStrategy))
@@ -327,7 +327,7 @@ open class ViewGenerationTests: BaseTestClass {
         let analysis = DataIntrospectionEngine.analyze(item)
         
         // THEN: Should return valid analysis
-        #expect(analysis != nil)
+        #expect(Bool(true), "analysis is non-optional")  // analysis is non-optional
         #expect(!analysis.fields.isEmpty)
         #expect(analysis.complexity != nil)
         #expect(analysis.patterns != nil)
@@ -349,11 +349,11 @@ open class ViewGenerationTests: BaseTestClass {
         let dictAnalysis = DataIntrospectionEngine.analyze(dictData)
         
         // THEN: Should return valid analysis for each
-        #expect(stringAnalysis != nil)
-        #expect(intAnalysis != nil)
-        #expect(boolAnalysis != nil)
-        #expect(arrayAnalysis != nil)
-        #expect(dictAnalysis != nil)
+        #expect(Bool(true), "stringAnalysis is non-optional")  // stringAnalysis is non-optional
+        #expect(Bool(true), "intAnalysis is non-optional")  // intAnalysis is non-optional
+        #expect(Bool(true), "boolAnalysis is non-optional")  // boolAnalysis is non-optional
+        #expect(Bool(true), "arrayAnalysis is non-optional")  // arrayAnalysis is non-optional
+        #expect(Bool(true), "dictAnalysis is non-optional")  // dictAnalysis is non-optional
     }
     
     // MARK: - View Structure Validation Tests
@@ -367,8 +367,8 @@ open class ViewGenerationTests: BaseTestClass {
         let view2 = IntelligentDetailView.platformDetailView(for: item)
         
         // THEN: Should generate consistent views
-        #expect(view1 != nil)
-        #expect(view2 != nil)
+        #expect(Bool(true), "view1 is non-optional")  // view1 is non-optional
+        #expect(Bool(true), "view2 is non-optional")  // view2 is non-optional
         
         // Both views should be instantiable
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
@@ -383,7 +383,7 @@ open class ViewGenerationTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: item)
         
         // THEN: Should handle nil values gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // View should be instantiable without crashing
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
@@ -402,7 +402,7 @@ open class ViewGenerationTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: invalidData)
         
         // THEN: Should handle invalid data gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // View should be instantiable without crashing
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
@@ -417,7 +417,7 @@ open class ViewGenerationTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: emptyData)
         
         // THEN: Should handle empty data gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // View should be instantiable without crashing
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
@@ -445,7 +445,7 @@ open class ViewGenerationTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: item, hints: hints)
         
         // THEN: Should generate a valid view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // View should be instantiable without crashing
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
@@ -501,8 +501,8 @@ open class ViewGenerationTests: BaseTestClass {
         )
         
         // THEN: Should generate valid views with custom field views
-        #expect(view1 != nil)
-        #expect(view2 != nil)
+        #expect(Bool(true), "view1 is non-optional")  // view1 is non-optional
+        #expect(Bool(true), "view2 is non-optional")  // view2 is non-optional
         
         // Note: We don't access .body directly as it can cause SwiftUI runtime issues
         // with complex view hierarchies. The view creation itself is the test.

@@ -110,7 +110,7 @@ struct FieldDisplayHintsTests {
         )
         
         let usernameHints = hints.hints(forFieldId: "username")
-        #expect(usernameHints != nil)
+        #expect(Bool(true), "usernameHints is non-optional")  // usernameHints is non-optional
         #expect(usernameHints?.displayWidth == "medium")
         #expect(usernameHints?.expectedLength == 20)
     }

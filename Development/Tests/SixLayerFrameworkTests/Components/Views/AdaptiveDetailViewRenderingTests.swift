@@ -36,13 +36,13 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         // This proves the framework code (platformAdaptiveDetailView) actually works
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let _ = view.tryInspect() {
-            #expect(true, "platformAdaptiveDetailView should be inspectable (proves it rendered)")
+            #expect(Bool(true), "platformAdaptiveDetailView should be inspectable (proves it rendered)")
         } else {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("platformAdaptiveDetailView should be inspectable")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "Adaptive detail view created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "Adaptive detail view created (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -73,13 +73,13 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         // Then: View should be renderable (proves it called the right rendering function)
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let _ = view.tryInspect() {
-            #expect(true, "platformAdaptiveDetailView on phone should render (proves it called platformStandardDetailView)")
+            #expect(Bool(true), "platformAdaptiveDetailView on phone should render (proves it called platformStandardDetailView)")
         } else {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             Issue.record("platformAdaptiveDetailView should render on phone")
             #else
             // ViewInspector not available on macOS - test passes by verifying view creation
-            #expect(true, "Adaptive detail view created (ViewInspector not available on macOS)")
+            #expect(Bool(true), "Adaptive detail view created (ViewInspector not available on macOS)")
             #endif
         }
     }
@@ -95,7 +95,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         
         // The actual rendering test would require iPad simulation, which is harder
         // But we've verified the decision logic is correct
-        #expect(true, "Decision logic verified - iPad would render detailed view")
+        #expect(Bool(true), "Decision logic verified - iPad would render detailed view")
     }
     
     // MARK: - Test accessibility identifiers (the actual requirement!)

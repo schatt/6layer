@@ -105,7 +105,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Apple HIG compliance is applied
         // Then: Framework component should have compliance applied
-        #expect(true, "Framework component with Apple HIG compliance should be valid")  // testView is non-optional
+        #expect(Bool(true), "Framework component with Apple HIG compliance should be valid")  // testView is non-optional
     }
     
     @Test func testAutomaticAccessibilityModifier() {
@@ -117,7 +117,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Automatic accessibility is applied (framework components do this automatically)
         // Then: Framework component should generate accessibility identifiers
-        #expect(true, "Framework component should support automatic accessibility")  // testView is non-optional
+        #expect(Bool(true), "Framework component should support automatic accessibility")  // testView is non-optional
     }
     
     @Test func testPlatformPatternsModifier() {
@@ -130,7 +130,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Platform patterns are applied
         // Then: Framework component should have platform patterns
-        #expect(true, "Framework component with platform patterns should be valid")  // testView is non-optional
+        #expect(Bool(true), "Framework component with platform patterns should be valid")  // testView is non-optional
     }
     
     @Test func testVisualConsistencyModifier() {
@@ -143,7 +143,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Visual consistency is applied
         // Then: Framework component should have visual consistency
-        #expect(true, "Framework component with visual consistency should be valid")  // testView is non-optional
+        #expect(Bool(true), "Framework component with visual consistency should be valid")  // testView is non-optional
     }
     
     @Test func testInteractionPatternsModifier() {
@@ -155,7 +155,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Interaction patterns are applied (framework handles this)
         // Then: Framework component should support interactions
-        #expect(true, "Framework component should support interaction patterns")  // testView is non-optional
+        #expect(Bool(true), "Framework component should support interaction patterns")  // testView is non-optional
     }
     
     // MARK: - Compliance Checking Tests

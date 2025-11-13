@@ -39,7 +39,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
         let state = PlatformSplitViewState()
         
         // Then: State should be created successfully
-        #expect(true, "PlatformSplitViewState should be created")  // state is non-optional
+        #expect(Bool(true), "PlatformSplitViewState should be created")  // state is non-optional
     }
     
     @Test func testPlatformSplitViewStateHasDefaultVisibility() async {
@@ -48,7 +48,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
         
         // Then: Should have default visibility values
         // Default visibility depends on implementation, but should be accessible
-        #expect(true, "PlatformSplitViewState should have default visibility")
+        #expect(Bool(true), "PlatformSplitViewState should have default visibility")
     }
     
     @Test func testPlatformVerticalSplitL4AcceptsStateBinding() async {
@@ -66,7 +66,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
             }
         
         // Then: View should be created successfully
-        #expect(true, "platformVerticalSplit_L4 should accept state binding")
+        #expect(Bool(true), "platformVerticalSplit_L4 should accept state binding")
     }
     
     @Test func testPlatformHorizontalSplitL4AcceptsStateBinding() async {
@@ -84,7 +84,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
             }
         
         // Then: View should be created successfully
-        #expect(true, "platformHorizontalSplit_L4 should accept state binding")
+        #expect(Bool(true), "platformHorizontalSplit_L4 should accept state binding")
     }
     
     // MARK: - Visibility Control Tests
@@ -132,7 +132,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
         
         // Then: View should respect visibility state
         // Hidden panes should not be displayed
-        #expect(true, "platformVerticalSplit_L4 should respect visibility state")
+        #expect(Bool(true), "platformVerticalSplit_L4 should respect visibility state")
     }
     
     @Test func testPlatformHorizontalSplitL4RespectsVisibilityState() async {
@@ -151,7 +151,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
             }
         
         // Then: View should respect visibility state
-        #expect(true, "platformHorizontalSplit_L4 should respect visibility state")
+        #expect(Bool(true), "platformHorizontalSplit_L4 should respect visibility state")
     }
     
     // MARK: - State Change Callbacks Tests
@@ -238,9 +238,9 @@ open class PlatformSplitViewStateManagementLayer4Tests {
             }
         
         // Then: Should work on iOS
-        #expect(true, "State management should work on iOS")
+        #expect(Bool(true), "State management should work on iOS")
         #else
-        #expect(true, "Test only runs on iOS")
+        #expect(Bool(true), "Test only runs on iOS")
         #endif
     }
     
@@ -260,9 +260,9 @@ open class PlatformSplitViewStateManagementLayer4Tests {
             }
         
         // Then: Should work on macOS
-        #expect(true, "State management should work on macOS")
+        #expect(Bool(true), "State management should work on macOS")
         #else
-        #expect(true, "Test only runs on macOS")
+        #expect(Bool(true), "Test only runs on macOS")
         #endif
     }
 }

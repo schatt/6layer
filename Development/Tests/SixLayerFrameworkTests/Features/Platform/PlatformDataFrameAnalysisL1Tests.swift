@@ -58,7 +58,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformAnalyzeDataFrame_L1(dataFrame: testDataFrame, hints: hints)
         
         // Then: Should return a view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testPlatformAnalyzeDataFrame_L1_WithHints() {
@@ -73,7 +73,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformAnalyzeDataFrame_L1(dataFrame: testDataFrame, hints: hints)
         
         // Then: Should return a view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testPlatformAnalyzeDataFrame_L1_EmptyDataFrame() {
@@ -85,7 +85,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformAnalyzeDataFrame_L1(dataFrame: emptyDataFrame, hints: hints)
         
         // Then: Should handle empty DataFrame gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - DataFrame Comparison Tests
@@ -99,7 +99,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
         
         // Then: Should return a comparison view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testPlatformCompareDataFrames_L1_SingleDataFrame() {
@@ -111,7 +111,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
         
         // Then: Should handle single DataFrame
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testPlatformCompareDataFrames_L1_EmptyArray() {
@@ -123,7 +123,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
         
         // Then: Should handle empty array gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Data Quality Assessment Tests
@@ -136,7 +136,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformAssessDataQuality_L1(dataFrame: testDataFrame, hints: hints)
         
         // Then: Should return a quality assessment view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testPlatformAssessDataQuality_L1_WithMissingData() {
@@ -148,7 +148,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformAssessDataQuality_L1(dataFrame: dataFrameWithMissing, hints: hints)
         
         // Then: Should return a quality assessment view
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - DataFrame Analysis Hints Tests
@@ -228,7 +228,7 @@ open class PlatformDataFrameAnalysisL1Tests {
         let view = platformAnalyzeDataFrame_L1(dataFrame: testDataFrame, hints: hints)
         
         // Then: Should integrate with existing systems
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Helper Methods

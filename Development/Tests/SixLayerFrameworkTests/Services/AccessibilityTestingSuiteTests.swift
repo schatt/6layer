@@ -28,7 +28,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let testResults = suite.runBasicAccessibilityTests()
         
         // Then: Should return test results
-        #expect(testResults != nil)
+        #expect(Bool(true), "testResults is non-optional")  // testResults is non-optional
     }
     
     @Test func testAccessibilityTestingSuiteRunsComprehensiveTests() async {
@@ -39,7 +39,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let testResults = suite.runComprehensiveAccessibilityTests()
         
         // Then: Should return test results
-        #expect(testResults != nil)
+        #expect(Bool(true), "testResults is non-optional")  // testResults is non-optional
     }
     
     @Test func testAccessibilityTestingSuiteValidatesUIComponent() async {
@@ -51,7 +51,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let validationResult = suite.validateComponent(testView)
         
         // Then: Should return validation result
-        #expect(validationResult != nil)
+        #expect(Bool(true), "validationResult is non-optional")  // validationResult is non-optional
     }
     
     // MARK: - Test Reporting Tests
@@ -64,7 +64,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let report = suite.generateAccessibilityReport()
         
         // Then: Should return a report
-        #expect(report != nil)
+        #expect(Bool(true), "report is non-optional")  // report is non-optional
         #expect(!report.isEmpty)
     }
     
@@ -76,7 +76,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let violations = suite.getAccessibilityViolations()
         
         // Then: Should return violations array
-        #expect(violations != nil)
+        #expect(Bool(true), "violations is non-optional")  // violations is non-optional
     }
     
     @Test func testAccessibilityTestingSuiteReportsCompliance() async {
@@ -87,7 +87,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let complianceStatus = suite.getComplianceStatus()
         
         // Then: Should return compliance status
-        #expect(complianceStatus != nil)
+        #expect(Bool(true), "complianceStatus is non-optional")  // complianceStatus is non-optional
     }
     
     // MARK: - Test Configuration Tests
@@ -107,7 +107,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         
         // Then: Configuration should be applied
         let currentConfig = suite.getTestConfiguration()
-        #expect(currentConfig != nil)
+        #expect(Bool(true), "currentConfig is non-optional")  // currentConfig is non-optional
     }
     
     // MARK: - Comprehensive Business Logic Tests

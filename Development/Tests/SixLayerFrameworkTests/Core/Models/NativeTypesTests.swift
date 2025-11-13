@@ -258,7 +258,7 @@ open class NativeTypesTests: BaseTestClass {
         
         // Then
         let retrievedValue: String? = formState.getValue(for: field.id)
-        #expect(retrievedValue == nil)
+        #expect(false, "retrievedValue is non-optional")  // retrievedValue is non-optional
     }
     
     @Test func testCustomTypeValidation() {
@@ -345,7 +345,7 @@ open class NativeTypesTests: BaseTestClass {
         
         // Then - Should handle gracefully
         let retrievedValue: Int? = formState.getValue(for: field.id)
-        #expect(retrievedValue == nil) // Should be nil due to type mismatch
+        #expect(false, "retrievedValue is non-optional")  // retrievedValue is non-optional // Should be nil due to type mismatch
     }
     
     
@@ -369,6 +369,6 @@ open class NativeTypesTests: BaseTestClass {
         // Clear and verify memory is released
         formState.setValue(nil as MockImage?, for: field.id)
         let clearedImage: MockImage? = formState.getValue(for: field.id)
-        #expect(clearedImage == nil)
+        #expect(false, "clearedImage is non-optional")  // clearedImage is non-optional
     }
 }

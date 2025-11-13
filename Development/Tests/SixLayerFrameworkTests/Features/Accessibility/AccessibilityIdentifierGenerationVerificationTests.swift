@@ -108,7 +108,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             // Then: Test the two critical aspects
                 
             // 1. View created - The view can be instantiated successfully
-            #expect(true, "Automatic accessibility identifiers should create view successfully")  // testView is non-optional
+            #expect(Bool(true), "Automatic accessibility identifiers should create view successfully")  // testView is non-optional
                 
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
             // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
@@ -152,7 +152,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             // Then: Test the two critical aspects
                 
             // 1. View created - The view can be instantiated successfully
-            #expect(true, "View with manual identifier should be created successfully")  // testView is non-optional
+            #expect(Bool(true), "View with manual identifier should be created successfully")  // testView is non-optional
                 
             // 2. Contains what it needs to contain - The view has the manual accessibility identifier assigned
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -192,7 +192,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             .automaticAccessibilityIdentifiers()
                 
             // 1. View created - The view can be instantiated successfully
-            #expect(true, "View should be created even when automatic IDs are disabled")  // testView1 is non-optional
+            #expect(Bool(true), "View should be created even when automatic IDs are disabled")  // testView1 is non-optional
                 
             // 2. Contains what it needs to contain - The view should NOT have an automatic accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -220,7 +220,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             .automaticAccessibilityIdentifiers()
                 
             // 1. View created - The view can be instantiated successfully
-            #expect(true, "View should be created when automatic IDs are enabled")  // testView2 is non-optional
+            #expect(Bool(true), "View should be created when automatic IDs are enabled")  // testView2 is non-optional
                 
             // 2. Contains what it needs to contain - The view should have an automatic accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)

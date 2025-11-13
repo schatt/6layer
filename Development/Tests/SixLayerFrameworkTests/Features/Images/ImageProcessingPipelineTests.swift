@@ -92,7 +92,7 @@ open class ImageProcessingPipelineTests {
             )
             
             // Then
-            #expect(processedImage != nil)
+            #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
             #expect(processedImage.originalImage != nil)
             #expect(processedImage.purpose == purpose)
             #expect(processedImage.metadata != nil)
@@ -118,7 +118,7 @@ open class ImageProcessingPipelineTests {
         )
         
         // Then
-        #expect(processedImage != nil)
+        #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
         #expect(processedImage.purpose == purpose)
         #expect(processedImage.isOptimizedForOCR)
     }
@@ -140,7 +140,7 @@ open class ImageProcessingPipelineTests {
         )
         
         // Then
-        #expect(processedImage != nil)
+        #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
         #expect(processedImage.purpose == purpose)
         #expect(processedImage.enhancementResults != nil)
     }
@@ -162,7 +162,7 @@ open class ImageProcessingPipelineTests {
         )
         
         // Then
-        #expect(processedImage != nil)
+        #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
         #expect(processedImage.purpose == purpose)
         #expect(processedImage.optimizationResults != nil)
     }
@@ -189,7 +189,7 @@ open class ImageProcessingPipelineTests {
         )
         
         // Then
-        #expect(processedImage != nil)
+        #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
         #expect(processedImage.purpose == purpose)
         #expect(processedImage.isCompressed)
     }
@@ -216,7 +216,7 @@ open class ImageProcessingPipelineTests {
         )
         
         // Then
-        #expect(processedImage != nil)
+        #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
         #expect(processedImage.purpose == purpose)
         #expect(processedImage.isCompressed)
     }
@@ -241,7 +241,7 @@ open class ImageProcessingPipelineTests {
         let enhancedImage = try await processor.enhance(image, with: options)
         
         // Then
-        #expect(enhancedImage != nil)
+        #expect(Bool(true), "enhancedImage is non-optional")  // enhancedImage is non-optional
         // Note: PlatformImage doesn't conform to Equatable, so we can't directly compare
     }
     
@@ -257,7 +257,7 @@ open class ImageProcessingPipelineTests {
         let analysis = try await processor.analyze(image)
         
         // Then
-        #expect(analysis != nil)
+        #expect(Bool(true), "analysis is non-optional")  // analysis is non-optional
         #expect(analysis.qualityScore != nil)
         #expect(analysis.dimensions != nil)
         #expect(analysis.colorPalette != nil)
@@ -277,7 +277,7 @@ open class ImageProcessingPipelineTests {
         let enhancedImage = try await strategy.enhance(image)
         
         // Then
-        #expect(enhancedImage != nil)
+        #expect(Bool(true), "enhancedImage is non-optional")  // enhancedImage is non-optional
         #expect(strategy.validate(enhancedImage))
     }
     
@@ -293,7 +293,7 @@ open class ImageProcessingPipelineTests {
         let textRegions = try await strategy.detectTextRegions(image)
         
         // Then
-        #expect(textRegions != nil)
+        #expect(Bool(true), "textRegions is non-optional")  // textRegions is non-optional
         // Note: Test image may not have text, so regions could be empty
     }
     
@@ -309,7 +309,7 @@ open class ImageProcessingPipelineTests {
         let optimizedImage = try await strategy.optimizeForOCR(image)
         
         // Then
-        #expect(optimizedImage != nil)
+        #expect(Bool(true), "optimizedImage is non-optional")  // optimizedImage is non-optional
         #expect(strategy.validate(optimizedImage))
     }
     

@@ -97,7 +97,7 @@ open class Layer2LayoutDecisionTests {
         )
         
         // Then: Should return appropriate layout decision
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.columns > 1) // Complex content should use multiple columns
         #expect(decision.spacing > 0)
         #expect(!decision.reasoning.isEmpty)
@@ -139,9 +139,9 @@ open class Layer2LayoutDecisionTests {
         )
         
         // Then: Should return different decisions based on device capabilities
-        #expect(phoneDecision != nil)
-        #expect(padDecision != nil)
-        #expect(macDecision != nil)
+        #expect(Bool(true), "phoneDecision is non-optional")  // phoneDecision is non-optional
+        #expect(Bool(true), "padDecision is non-optional")  // padDecision is non-optional
+        #expect(Bool(true), "macDecision is non-optional")  // macDecision is non-optional
         
         // Mac should generally have more columns than phone
         #expect(macDecision.columns >= phoneDecision.columns)
@@ -218,7 +218,7 @@ open class Layer2LayoutDecisionTests {
         )
         
         // Then: Should handle empty array gracefully
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.columns >= 1) // Should have at least 1 column
         #expect(decision.spacing >= 0)
         #expect(!decision.reasoning.isEmpty)
@@ -243,7 +243,7 @@ open class Layer2LayoutDecisionTests {
         )
         
         // Then: Should use auto-detection and return valid decision
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.columns > 0)
         #expect(decision.spacing >= 0)
         #expect(!decision.reasoning.isEmpty)
@@ -379,7 +379,7 @@ open class Layer2LayoutDecisionTests {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then: Should return appropriate form layout decision
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.preferredContainer == .adaptive)
         #expect(decision.fieldLayout == .standard)
         #expect(decision.spacing == .comfortable)
@@ -406,7 +406,7 @@ open class Layer2LayoutDecisionTests {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then: Should return appropriate form layout decision
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.preferredContainer == .adaptive)
         #expect(decision.fieldLayout == .standard)
         #expect(decision.spacing == .comfortable)
@@ -428,7 +428,7 @@ open class Layer2LayoutDecisionTests {
         let decision = determineOptimalFormLayout_L2(hints: hints)
         
         // Then: Should use default values
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.preferredContainer == .adaptive)
         #expect(decision.fieldLayout == .standard)
         #expect(decision.spacing == .comfortable)
@@ -460,7 +460,7 @@ open class Layer2LayoutDecisionTests {
         )
         
         // Then: Should handle extreme values gracefully
-        #expect(decision != nil)
+        #expect(Bool(true), "decision is non-optional")  // decision is non-optional
         #expect(decision.columns > 0)
         #expect(decision.spacing >= 0)
         #expect(decision.performance == .maximumPerformance) // Very complex should use maximum performance

@@ -97,7 +97,7 @@ open class Layer1PresentationTests {
         ))
         
         // Then: Should return a view (AsyncFormView is the actual implementation)
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // Verify the view type - AsyncFormView is the actual implementation, not AnyView
         // The function returns 'some View' which provides type erasure at the API level
@@ -123,7 +123,7 @@ open class Layer1PresentationTests {
         ))
         
         // Then: Should return a view even with empty fields (AsyncFormView is the actual implementation)
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
@@ -152,8 +152,8 @@ open class Layer1PresentationTests {
         let complexView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: complexHints))
         
         // Then: Both should return SimpleFormView
-        #expect(simpleView != nil)
-        #expect(complexView != nil)
+        #expect(Bool(true), "simpleView is non-optional")  // simpleView is non-optional
+        #expect(Bool(true), "complexView is non-optional")  // complexView is non-optional
         
         let simpleMirror = Mirror(reflecting: simpleView)
         let complexMirror = Mirror(reflecting: complexView)
@@ -187,8 +187,8 @@ open class Layer1PresentationTests {
         let textView = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: textHints))
         
         // Then: Both should return SimpleFormView
-        #expect(formView != nil)
-        #expect(textView != nil)
+        #expect(Bool(true), "formView is non-optional")  // formView is non-optional
+        #expect(Bool(true), "textView is non-optional")  // textView is non-optional
         
         let formMirror = Mirror(reflecting: formView)
         let textMirror = Mirror(reflecting: textView)
@@ -212,7 +212,7 @@ open class Layer1PresentationTests {
         let view = platformPresentModalForm_L1(formType: formType, context: context)
         
         // Then: Should return a ModalFormView
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>")
@@ -251,7 +251,7 @@ open class Layer1PresentationTests {
             let view = platformPresentModalForm_L1(formType: formType, context: context)
             
             // Then: Should return a ModalFormView for each context
-            #expect(true, "Should handle context: \(context)")  // view is non-optional
+            #expect(Bool(true), "Should handle context: \(context)")  // view is non-optional
             
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>", "Should return ModalFormView with accessibility modifiers for context: \(context)")
@@ -276,7 +276,7 @@ open class Layer1PresentationTests {
             let view = platformPresentModalForm_L1(formType: formType, context: .form)
             
             // Then: Should return a ModalFormView
-            #expect(true, "Should handle form type: \(formType)")  // view is non-optional
+            #expect(Bool(true), "Should handle form type: \(formType)")  // view is non-optional
             
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>", "Should return ModalFormView with accessibility modifiers for type: \(formType)")
@@ -305,7 +305,7 @@ open class Layer1PresentationTests {
         let view = platformPresentFormData_L1(fields: largeFieldSet, hints: enhancedHints(from: hints))
         
         // Then: Should handle large field sets gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
@@ -337,7 +337,7 @@ open class Layer1PresentationTests {
         let view = platformPresentFormData_L1(fields: specialFields, hints: enhancedHints(from: hints))
         
         // Then: Should handle special characters gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
@@ -354,7 +354,7 @@ open class Layer1PresentationTests {
         let view = platformPresentModalForm_L1(formType: formType, context: context)
         
         // Then: Should return a ModalFormView (falls back to generic form)
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>")
@@ -380,7 +380,7 @@ open class Layer1PresentationTests {
         let view = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: comprehensiveHints))
         
         // Then: Should return a view (AsyncFormView is the actual implementation)
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
@@ -397,7 +397,7 @@ open class Layer1PresentationTests {
         let view = platformPresentModalForm_L1(formType: formType, context: context)
         
         // Then: Should return a ModalFormView
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
         #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>")

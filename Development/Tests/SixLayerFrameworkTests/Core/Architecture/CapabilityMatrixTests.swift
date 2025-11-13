@@ -56,7 +56,7 @@ open class CapabilityMatrixTests {
                 
                 // The framework should use runtime detection (not hardcoded values)
                 // This is verified by the fact that supportsTouchGestures uses RuntimeCapabilityDetection
-                #expect(true, "Framework uses runtime detection for touch gestures")
+                #expect(Bool(true), "Framework uses runtime detection for touch gestures")
             }
         ),
         
@@ -73,7 +73,7 @@ open class CapabilityMatrixTests {
                 // Note: The actual behavior testing would be in components that use haptic feedback
                 // This test verifies that the detection result is available for framework components to use
                 let _ = RuntimeCapabilityDetection.supportsHapticFeedback // Verify it's accessible
-                #expect(true, "Haptic feedback detection is available for framework components")
+                #expect(Bool(true), "Haptic feedback detection is available for framework components")
             }
         ),
         

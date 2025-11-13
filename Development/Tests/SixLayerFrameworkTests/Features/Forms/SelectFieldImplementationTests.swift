@@ -54,7 +54,7 @@ open class SelectFieldImplementationTests {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testDynamicSelectFieldShowsOptions() {
@@ -65,7 +65,7 @@ open class SelectFieldImplementationTests {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         #expect(field.options?.count ?? 0 == 4)
     }
     
@@ -77,7 +77,7 @@ open class SelectFieldImplementationTests {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Generic Select Field Tests
@@ -99,7 +99,7 @@ open class SelectFieldImplementationTests {
         }
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testGenericSelectFieldShowsOptions() {
@@ -119,7 +119,7 @@ open class SelectFieldImplementationTests {
         }
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         #expect(field.options?.count ?? 0 == 4)
     }
     
@@ -156,7 +156,7 @@ open class SelectFieldImplementationTests {
         }
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Platform Semantic Layer Tests
@@ -182,7 +182,7 @@ open class SelectFieldImplementationTests {
         }
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Radio Button Tests
@@ -212,7 +212,7 @@ open class SelectFieldImplementationTests {
         }
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Edge Case Tests
@@ -231,7 +231,7 @@ open class SelectFieldImplementationTests {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testSelectFieldWithSingleOption() {
@@ -248,7 +248,7 @@ open class SelectFieldImplementationTests {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testSelectFieldWithManyOptions() {
@@ -266,7 +266,7 @@ open class SelectFieldImplementationTests {
         let view = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Accessibility Tests
@@ -281,7 +281,7 @@ open class SelectFieldImplementationTests {
             .accessibilityHint("Choose an option from the dropdown")
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Data Binding Tests
@@ -303,7 +303,7 @@ open class SelectFieldImplementationTests {
         .pickerStyle(.menu)
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Validation Tests
@@ -324,6 +324,6 @@ open class SelectFieldImplementationTests {
         }
         
         // Then: View should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
 }

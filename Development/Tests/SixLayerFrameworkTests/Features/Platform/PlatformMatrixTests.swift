@@ -158,9 +158,9 @@ open class PlatformMatrixTests {
         // Vision framework availability by platform
         switch currentPlatform {
         case .iOS, .macOS:
-            #expect(true, "Vision should be available on \(currentPlatform)")
+            #expect(Bool(true), "Vision should be available on \(currentPlatform)")
         case .watchOS, .tvOS, .visionOS:
-            #expect(true, "Vision availability varies on \(currentPlatform)")
+            #expect(Bool(true), "Vision availability varies on \(currentPlatform)")
         }
     }
     

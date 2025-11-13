@@ -25,7 +25,7 @@ open class WindowDetectionTests {
         
         // WHEN: Initialized
         // THEN: Should have default values
-        #expect(windowDetection != nil)
+        #expect(Bool(true), "windowDetection is non-optional")  // windowDetection is non-optional
         #expect(windowDetection.windowSize == CGSize(width: 375, height: 667))
         #expect(windowDetection.screenSize == CGSize(width: 375, height: 667))
         #expect(windowDetection.screenSizeClass == .compact)
@@ -297,7 +297,7 @@ open class WindowDetectionTests {
         // WHEN: Detect window size modifier is applied
         // THEN: Should return modified view without crashing
         let modifiedView = view.detectWindowSize()
-        #expect(modifiedView != nil)
+        #expect(Bool(true), "modifiedView is non-optional")  // modifiedView is non-optional
     }
     
     @Test func testDetectWindowSizeOnDifferentViewTypes() {
@@ -361,7 +361,7 @@ open class WindowDetectionTests {
         // WHEN: Initialized
         // THEN: Should have iOS-specific defaults
         let iOSDetection = iOSWindowDetection()
-        #expect(iOSDetection != nil)
+        #expect(Bool(true), "iOSDetection is non-optional")  // iOSDetection is non-optional
         #expect(iOSDetection.windowSize == CGSize(width: 375, height: 667))
         #expect(iOSDetection.screenSize == CGSize(width: 375, height: 667))
     }
@@ -402,7 +402,7 @@ open class WindowDetectionTests {
         // WHEN: Initialized
         // THEN: Should have macOS-specific defaults
         let macOSDetection = macOSWindowDetection()
-        #expect(macOSDetection != nil)
+        #expect(Bool(true), "macOSDetection is non-optional")  // macOSDetection is non-optional
         #expect(macOSDetection.windowSize == CGSize(width: 1024, height: 768))
         #expect(macOSDetection.screenSize == CGSize(width: 1024, height: 768))
     }

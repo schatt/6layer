@@ -36,13 +36,9 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
-            // modifier applied. The componentName "platformOCRWithVisualCorrection_L1" is a test label, not a framework component.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        // Now that .automaticAccessibility() and .automaticAccessibilityIdentifiers() are applied at the Layer 1 function level,
+        // the test should properly detect accessibility identifiers
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers
@@ -72,13 +68,9 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
-            // modifier applied. The componentName "platformOCRWithVisualCorrection_L1" is a test label, not a framework component.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        // Now that .automaticAccessibility() and .automaticAccessibilityIdentifiers() are applied at the Layer 1 function level,
+        // the test should properly detect accessibility identifiers
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
@@ -108,13 +100,9 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
-            // modifier applied. The componentName "platformOCRWithVisualCorrection_L1" is a test label, not a framework component.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        // Now that .automaticAccessibility() and .automaticAccessibilityIdentifiers() are applied at the Layer 1 function level,
+        // the test should properly detect accessibility identifiers
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
@@ -144,12 +132,8 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
-            // modifier applied. The componentName "platformOCRWithVisualCorrection_L1" is a test label, not a framework component.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        // Now that .automaticAccessibility() and .automaticAccessibilityIdentifiers() are applied at the Layer 1 function level,
+        // the test should properly detect accessibility identifiers
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS")
     }
 }

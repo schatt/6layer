@@ -69,10 +69,10 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             // That's it! HIG compliance is automatically applied.
             
             // Verify the view is created successfully with automatic compliance
-            #expect(true, "Layer 1 function should create a view with automatic HIG compliance")  // view is non-optional
+            #expect(Bool(true), "Layer 1 function should create a view with automatic HIG compliance")  // view is non-optional
             
             // The fact that this compiles and runs means the automatic modifiers are working
-            #expect(true, "Automatic HIG compliance is now working!")
+            #expect(Bool(true), "Automatic HIG compliance is now working!")
         }
     }
     
@@ -94,7 +94,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
                 items: testItems,
                 hints: testHints
             )
-            #expect(true, "View should work with VoiceOver enabled")  // voiceOverView is non-optional
+            #expect(Bool(true), "View should work with VoiceOver enabled")  // voiceOverView is non-optional
             #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
             
             // Test with Switch Control enabled
@@ -104,7 +104,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
                 items: testItems,
                 hints: testHints
             )
-            #expect(true, "View should work with Switch Control enabled")  // switchControlView is non-optional
+            #expect(Bool(true), "View should work with Switch Control enabled")  // switchControlView is non-optional
             #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
             
             // Test with AssistiveTouch enabled
@@ -114,7 +114,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
                 items: testItems,
                 hints: testHints
             )
-            #expect(true, "View should work with AssistiveTouch enabled")  // assistiveTouchView is non-optional
+            #expect(Bool(true), "View should work with AssistiveTouch enabled")  // assistiveTouchView is non-optional
             #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
             
             // Reset for next test
@@ -145,8 +145,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
                     hints: testHints
                 )
                 
-                #expect(true, "View should work on \(platform)")  // view is non-optional
-                #expect(true, "Automatic HIG compliance works on \(platform)")
+                #expect(Bool(true), "View should work on \(platform)")  // view is non-optional
+                #expect(Bool(true), "Automatic HIG compliance works on \(platform)")
             }
         }
     }
@@ -168,7 +168,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
                 items: testItems,
                 hints: testHints
             )
-            #expect(true, "Collection view should have automatic compliance")  // collectionView is non-optional
+            #expect(Bool(true), "Collection view should have automatic compliance")  // collectionView is non-optional
             
             // Test platformPresentNumericData_L1
             let numericData = [
@@ -178,10 +178,10 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
                 data: numericData,
                 hints: testHints
             )
-            #expect(true, "Numeric view should have automatic compliance")  // numericView is non-optional
+            #expect(Bool(true), "Numeric view should have automatic compliance")  // numericView is non-optional
             
             // Both views should automatically have HIG compliance applied
-            #expect(true, "All Layer 1 functions now have automatic HIG compliance!")
+            #expect(Bool(true), "All Layer 1 functions now have automatic HIG compliance!")
         }
     }
 }

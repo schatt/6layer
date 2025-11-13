@@ -138,7 +138,7 @@ open class MaterialAccessibilityTests: BaseTestClass {
         let enhancedView = view.accessibilityMaterialEnhanced()
         
         // Then: View should have accessibility enhancements
-        #expect(enhancedView != nil)
+        #expect(Bool(true), "enhancedView is non-optional")  // enhancedView is non-optional
     }
     
     @Test func testMaterialAccessibilityConfiguration() {

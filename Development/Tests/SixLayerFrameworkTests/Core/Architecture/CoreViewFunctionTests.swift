@@ -75,7 +75,7 @@ open class CoreViewFunctionTests {
     @Test func testIntelligentDetailViewWithAllCapabilities() async {
         // This test is now handled by the parameterized test testIntelligentDetailViewWithSpecificCombination
         // which automatically tests all combinations of CapabilityType and AccessibilityType
-        #expect(true, "Parameterized tests handle all capability combinations")
+        #expect(Bool(true), "Parameterized tests handle all capability combinations")
     }
     
     /// BUSINESS PURPOSE: Validate intelligent detail view functionality with specific capability combinations
@@ -135,7 +135,7 @@ open class CoreViewFunctionTests {
     @Test func testIntelligentDetailViewWithTouchCapability() {
         // This test is now handled by the parameterized test testIntelligentDetailViewWithSpecificCombination
         // which automatically tests CapabilityType.touchOnly combinations
-        #expect(true, "Parameterized tests handle touch capability combinations")
+        #expect(Bool(true), "Parameterized tests handle touch capability combinations")
     }
     
     /// BUSINESS PURPOSE: Validate intelligent detail view functionality with hover capability
@@ -145,7 +145,7 @@ open class CoreViewFunctionTests {
     @Test func testIntelligentDetailViewWithHoverCapability() {
         // This test is now handled by the parameterized test testIntelligentDetailViewWithSpecificCombination
         // which automatically tests CapabilityType.hoverOnly combinations
-        #expect(true, "Parameterized tests handle hover capability combinations")
+        #expect(Bool(true), "Parameterized tests handle hover capability combinations")
     }
     
     /// BUSINESS PURPOSE: Validate intelligent detail view functionality with accessibility features
@@ -155,7 +155,7 @@ open class CoreViewFunctionTests {
     @Test func testIntelligentDetailViewWithAccessibilityFeatures() {
         // This test is now handled by the parameterized test testIntelligentDetailViewWithSpecificCombination
         // which automatically tests AccessibilityType combinations
-        #expect(true, "Parameterized tests handle accessibility feature combinations")
+        #expect(Bool(true), "Parameterized tests handle accessibility feature combinations")
     }
     
     // MARK: - SimpleCardComponent Tests (DRY Version)
@@ -167,7 +167,7 @@ open class CoreViewFunctionTests {
     @Test func testSimpleCardComponentWithAllCapabilities() async {
         // This test is now handled by the parameterized test testSimpleCardComponentWithSpecificCombination
         // which automatically tests all combinations of CapabilityType and AccessibilityType
-        #expect(true, "Parameterized tests handle all capability combinations")
+        #expect(Bool(true), "Parameterized tests handle all capability combinations")
     }
     
     

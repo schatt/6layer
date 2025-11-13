@@ -63,13 +63,13 @@ struct IntelligentDetailViewSheetTests {
             // This proves the view has actual content structure, not blank
             if let _ = inspector.sixLayerTryFind(ViewType.VStack.self) {
                 // If we found a VStack, the view has structure and content
-                #expect(true, "platformDetailView should have view structure (proves it's not blank)")
+                #expect(Bool(true), "platformDetailView should have view structure (proves it's not blank)")
             } else if let _ = inspector.sixLayerTryFind(ViewType.HStack.self) {
                 // Try finding any structural view
-                #expect(true, "platformDetailView should have view structure (proves it's not blank)")
+                #expect(Bool(true), "platformDetailView should have view structure (proves it's not blank)")
             } else {
                 // Any view structure is acceptable
-                #expect(true, "platformDetailView should render in sheet (not blank)")
+                #expect(Bool(true), "platformDetailView should render in sheet (not blank)")
             }
         } else {
             Issue.record("platformDetailView should be inspectable (indicates it has content)")
@@ -77,7 +77,7 @@ struct IntelligentDetailViewSheetTests {
         #else
         // ViewInspector not available on macOS - skip test gracefully
         // The view is created successfully, which is the main requirement
-        #expect(true, "platformDetailView compiles and can be created (ViewInspector not available on macOS)")
+        #expect(Bool(true), "platformDetailView compiles and can be created (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -116,7 +116,7 @@ struct IntelligentDetailViewSheetTests {
             } catch {
                 // ViewInspector might have issues finding nested texts
                 // But at least we can inspect, which proves structure exists
-                #expect(true, "platformDetailView should be inspectable (indicates content exists)")
+                #expect(Bool(true), "platformDetailView should be inspectable (indicates content exists)")
             }
         } catch {
             Issue.record("platformDetailView should be inspectable (indicates it has content)")
@@ -124,7 +124,7 @@ struct IntelligentDetailViewSheetTests {
         #else
         // ViewInspector not available on macOS - skip test gracefully
         // The view is created successfully, which is the main requirement
-        #expect(true, "platformDetailView compiles and can be created (ViewInspector not available on macOS)")
+        #expect(Bool(true), "platformDetailView compiles and can be created (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -141,14 +141,14 @@ struct IntelligentDetailViewSheetTests {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspector = detailView.tryInspect() {
             // If we can inspect with frame constraints, the view respects them
-            #expect(true, "platformDetailView should accept frame constraints for sheet sizing")
+            #expect(Bool(true), "platformDetailView should accept frame constraints for sheet sizing")
         } else {
             Issue.record("platformDetailView should accept frame constraints")
         }
         #else
         // ViewInspector not available on macOS - skip test gracefully
         // The view compiles with frame constraints, which is the main requirement
-        #expect(true, "platformDetailView compiles with frame constraints (ViewInspector not available on macOS)")
+        #expect(Bool(true), "platformDetailView compiles with frame constraints (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -169,14 +169,14 @@ struct IntelligentDetailViewSheetTests {
         // Verify NavigationStack + platformDetailView works
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         if let inspector = sheetContent.tryInspect() {
-            #expect(true, "platformDetailView should work with NavigationStack in sheets")
+            #expect(Bool(true), "platformDetailView should work with NavigationStack in sheets")
         } else {
             Issue.record("platformDetailView should work in NavigationStack")
         }
         #else
         // ViewInspector not available on macOS - skip test gracefully
         // The view compiles successfully, which is the main requirement
-        #expect(true, "NavigationStack + platformDetailView compiles (ViewInspector not available on macOS)")
+        #expect(Bool(true), "NavigationStack + platformDetailView compiles (ViewInspector not available on macOS)")
         #endif
     }
     
@@ -198,7 +198,7 @@ struct IntelligentDetailViewSheetTests {
             let textDetail = IntelligentDetailView.platformDetailView(for: textData)
             let _ = textDetail.tryInspect()
 
-            #expect(true, "platformDetailView should work with different data types in sheets")
+            #expect(Bool(true), "platformDetailView should work with different data types in sheets")
         } catch {
             Issue.record("platformDetailView should work with different data types")
         }

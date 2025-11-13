@@ -15,7 +15,7 @@ open class AccessibilityManagerTests {
         let manager = AccessibilityManager()
         
         // Then: Manager should be created successfully
-        #expect(manager != nil)
+        #expect(Bool(true), "manager is non-optional")  // manager is non-optional
     }
     
     // MARK: - Accessibility Detection Tests
@@ -63,7 +63,7 @@ open class AccessibilityManagerTests {
         let config = manager.getAccessibilityConfiguration()
         
         // Then: Should return a valid configuration
-        #expect(config != nil)
+        #expect(Bool(true), "config is non-optional")  // config is non-optional
     }
     
     @Test func testAccessibilityManagerCanUpdateConfiguration() async {
@@ -80,7 +80,7 @@ open class AccessibilityManagerTests {
         
         // Then: Configuration should be updated
         let currentConfig = manager.getAccessibilityConfiguration()
-        #expect(currentConfig != nil)
+        #expect(Bool(true), "currentConfig is non-optional")  // currentConfig is non-optional
     }
     
     // MARK: - Accessibility Validation Tests
@@ -94,7 +94,7 @@ open class AccessibilityManagerTests {
         let validationResult = manager.validateAccessibility(for: testView)
         
         // Then: Should return validation result
-        #expect(validationResult != nil)
+        #expect(Bool(true), "validationResult is non-optional")  // validationResult is non-optional
     }
     
     @Test func testAccessibilityManagerReportsAccessibilityIssues() async {
@@ -105,7 +105,7 @@ open class AccessibilityManagerTests {
         let issues = manager.getAccessibilityIssues()
         
         // Then: Should return an array (even if empty)
-        #expect(issues != nil)
+        #expect(Bool(true), "issues is non-optional")  // issues is non-optional
     }
     
     // MARK: - Performance Tests

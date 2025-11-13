@@ -95,7 +95,7 @@ struct LiquidGlassDesignSystemTests {
         let reflection = material.generateReflection(for: CGSize(width: 100, height: 100))
         
         // Then
-        #expect(reflection != nil)
+        #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
         #expect(reflection.size == CGSize(width: 100, height: 100))
         #expect(reflection.isReflective == true)
     }
@@ -115,7 +115,7 @@ struct LiquidGlassDesignSystemTests {
         let reflection = material.generateReflection(for: CGSize(width: 200, height: 200))
         
         // Then
-        #expect(reflection != nil)
+        #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
         #expect(reflection.size == CGSize(width: 200, height: 200))
     }
     
@@ -325,7 +325,7 @@ struct LiquidGlassDesignSystemTests {
         let reflection = material.generateReflection(for: CGSize(width: 1000, height: 1000))
         
         // Then
-        #expect(reflection != nil)
+        #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
     }
     
     @MainActor
@@ -369,7 +369,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Then
         #expect(material.isTranslucent) // Should be accessible
-        #expect(reflection != nil)
+        #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
     }
     
     @MainActor
@@ -435,7 +435,7 @@ struct LiquidGlassDesignSystemTests {
             let fallbackBehavior = system.getFallbackBehavior(for: feature)
             
             // Then
-            #expect(true, "Feature \(feature.rawValue) should have a fallback behavior")  // fallbackBehavior is non-optional
+            #expect(Bool(true), "Feature \(feature.rawValue) should have a fallback behavior")  // fallbackBehavior is non-optional
         }
     }
 }

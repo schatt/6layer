@@ -31,7 +31,7 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded "Untitled"
-        #expect(extractedTitle == nil, "Should return nil when no meaningful content is found")
+        #expect(false, "Should return nil when no meaningful content is found")  // extractedTitle is non-optional
     }
     
     /// RED PHASE: Test that extractTitle returns nil when hints fail and no default
@@ -49,7 +49,7 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: entity, hints: hints)
         
         // Then: Should return nil instead of hardcoded fallback
-        #expect(extractedTitle == nil, "Should return nil when hints fail and no default provided")
+        #expect(false, "Should return nil when hints fail and no default provided")  // extractedTitle is non-optional
     }
     
     /// RED PHASE: Test that extractTitle returns nil when hints extract empty string and no default
@@ -67,7 +67,7 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: entity, hints: hints)
         
         // Then: Should return nil instead of hardcoded fallback
-        #expect(extractedTitle == nil, "Should return nil when empty string and no default provided")
+        #expect(false, "Should return nil when empty string and no default provided")  // extractedTitle is non-optional
     }
     
     /// RED PHASE: Test that extractSubtitle returns nil when no meaningful content
@@ -79,7 +79,7 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded fallback
-        #expect(extractedSubtitle == nil, "Should return nil when no meaningful content is found")
+        #expect(false, "Should return nil when no meaningful content is found")  // extractedSubtitle is non-optional
     }
     
     /// RED PHASE: Test that extractIcon returns nil when no meaningful content
@@ -91,7 +91,7 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedIcon = CardDisplayHelper.extractIcon(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded "star.fill"
-        #expect(extractedIcon == nil, "Should return nil when no meaningful content is found")
+        #expect(false, "Should return nil when no meaningful content is found")  // extractedIcon is non-optional
     }
     
     /// RED PHASE: Test that extractColor returns nil when no meaningful content
@@ -103,7 +103,7 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedColor = CardDisplayHelper.extractColor(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded .blue
-        #expect(extractedColor == nil, "Should return nil when no meaningful content is found")
+        #expect(false, "Should return nil when no meaningful content is found")  // extractedColor is non-optional
     }
     
     /// RED PHASE: Test that meaningful content is still returned correctly

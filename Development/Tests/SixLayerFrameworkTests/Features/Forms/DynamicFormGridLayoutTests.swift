@@ -69,7 +69,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should detect grid fields
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
@@ -91,7 +91,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should not detect grid fields
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
@@ -116,7 +116,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should calculate 4 columns
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
@@ -138,7 +138,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should calculate 5 columns (max value)
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
@@ -171,7 +171,7 @@ open class DynamicFormGridLayoutTests {
         )
         
         // Then: Form should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // Verify configuration
         #expect(configuration.title == "Test Form")
@@ -209,7 +209,7 @@ open class DynamicFormGridLayoutTests {
         )
         
         // Then: Form should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // Verify configuration
         #expect(configuration.sections.count == 2)
@@ -235,7 +235,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testHandlesInvalidGridColumnMetadata() {
@@ -254,7 +254,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle gracefully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     @Test func testHandlesSingleGridField() {
@@ -273,7 +273,7 @@ open class DynamicFormGridLayoutTests {
         let view = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle single field
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
     // MARK: - Real-World Scenario Tests
@@ -306,7 +306,7 @@ open class DynamicFormGridLayoutTests {
         )
         
         // Then: Form should be created successfully
-        #expect(view != nil)
+        #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         // Verify all fields have gridColumn metadata
         for field in fuelFields {

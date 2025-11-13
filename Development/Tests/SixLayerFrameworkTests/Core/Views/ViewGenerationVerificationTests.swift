@@ -90,7 +90,7 @@ struct ViewGenerationVerificationTests {
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying compilation
-        #expect(true, "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
+        #expect(Bool(true), "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
         #endif
     }
     
@@ -169,7 +169,7 @@ struct ViewGenerationVerificationTests {
 
         #if !(canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED))
         // ViewInspector not available on macOS - test passes by verifying compilation
-        #expect(true, "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
+        #expect(Bool(true), "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
         #endif
     }
 
@@ -216,7 +216,7 @@ struct ViewGenerationVerificationTests {
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying compilation
-        #expect(true, "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
+        #expect(Bool(true), "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
         #endif
     }
     
@@ -269,7 +269,7 @@ struct ViewGenerationVerificationTests {
         }
         #else
         // ViewInspector not available on macOS - test passes by verifying compilation
-        #expect(true, "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
+        #expect(Bool(true), "View inspection not available on this platform (likely macOS) - test passes by verifying compilation")
         #endif
     }
     

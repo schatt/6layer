@@ -75,7 +75,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         #expect(shortcut.modifiers.contains(.command), "Shortcut modifiers should be set")
         #expect(shortcut.action == .togglePane(0), "Shortcut action should be set")
         #else
-        #expect(true, "Keyboard shortcuts are macOS-only")
+        #expect(Bool(true), "Keyboard shortcuts are macOS-only")
         #endif
     }
     
@@ -94,7 +94,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         #expect(state.keyboardShortcuts.count == 1, "State should support keyboard shortcuts")
         #expect(state.keyboardShortcuts[0].key.character == "h", "Keyboard shortcut key should be accessible")
         #else
-        #expect(true, "Keyboard shortcuts are macOS-only")
+        #expect(Bool(true), "Keyboard shortcuts are macOS-only")
         #endif
     }
     
@@ -134,7 +134,7 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         let onDividerDrag: (Int, CGFloat) -> Void = { _, _ in callbackFired = true }
         
         // Then: Should be able to configure divider callbacks
-        #expect(true, "Divider callbacks should be configurable")
+        #expect(Bool(true), "Divider callbacks should be configurable")
     }
     
     @Test func testPlatformSplitViewStateSupportsDividerCallbacks() async {
@@ -158,9 +158,9 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         #if os(iOS)
         // Given: Advanced features on iOS
         // Then: Should work appropriately (may have platform-specific behavior)
-        #expect(true, "Advanced features should work on iOS")
+        #expect(Bool(true), "Advanced features should work on iOS")
         #else
-        #expect(true, "Test only runs on iOS")
+        #expect(Bool(true), "Test only runs on iOS")
         #endif
     }
     
@@ -168,9 +168,9 @@ open class PlatformSplitViewAdvancedLayer4Tests {
         #if os(macOS)
         // Given: Advanced features on macOS
         // Then: Should work appropriately (may have platform-specific behavior)
-        #expect(true, "Advanced features should work on macOS")
+        #expect(Bool(true), "Advanced features should work on macOS")
         #else
-        #expect(true, "Test only runs on macOS")
+        #expect(Bool(true), "Test only runs on macOS")
         #endif
     }
 }

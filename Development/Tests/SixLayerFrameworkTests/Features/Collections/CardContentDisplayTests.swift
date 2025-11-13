@@ -70,7 +70,7 @@ open class CardContentDisplayTests: BaseTestClass {
         
         // THEN: Should display the item's title instead of hardcoded text
         // Note: This test will fail initially (RED phase) until we implement proper content display
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
         // The actual assertion would be done through UI testing or by checking the view's content
     }
     
@@ -91,7 +91,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // THEN: Should display the item's icon instead of hardcoded star
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     @Test func testSimpleCardComponentHandlesMissingIcon() {
@@ -111,7 +111,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // THEN: Should handle missing icon gracefully
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - ExpandableCardComponent Tests
@@ -144,7 +144,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // THEN: Should display the item's title and description instead of hardcoded text
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     @Test func testExpandableCardComponentExpandedContent() {
@@ -175,7 +175,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // THEN: Should display expanded content with item data
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - ListCardComponent Tests
@@ -189,7 +189,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let card = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should display the item's title and subtitle instead of hardcoded text
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     @Test func testListCardComponentHandlesMissingSubtitle() {
@@ -201,7 +201,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let card = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should handle missing subtitle gracefully
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - MasonryCardComponent Tests
@@ -215,7 +215,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let card = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should display the item's title instead of hardcoded text
-        #expect(card != nil)
+        #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
     // MARK: - Generic Item Display Tests
@@ -242,9 +242,9 @@ open class CardContentDisplayTests: BaseTestClass {
         let masonryCard = MasonryCardComponent(item: genericItems[0], hints: PresentationHints())
         
         // THEN: Should display the generic item's title and subtitle
-        #expect(simpleCard != nil)
-        #expect(listCard != nil)
-        #expect(masonryCard != nil)
+        #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
+        #expect(Bool(true), "listCard is non-optional")  // listCard is non-optional
+        #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
     }
     
     @Test func testCardComponentsWorkWithGenericVehicle() {
@@ -269,9 +269,9 @@ open class CardContentDisplayTests: BaseTestClass {
         let masonryCard = MasonryCardComponent(item: vehicles[0], hints: PresentationHints())
         
         // THEN: Should display the vehicle's name and description
-        #expect(simpleCard != nil)
-        #expect(listCard != nil)
-        #expect(masonryCard != nil)
+        #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
+        #expect(Bool(true), "listCard is non-optional")  // listCard is non-optional
+        #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
     }
     
     // MARK: - Edge Cases
@@ -295,9 +295,9 @@ open class CardContentDisplayTests: BaseTestClass {
         let masonryCard = MasonryCardComponent(item: emptyItem, hints: PresentationHints())
         
         // THEN: Should handle empty strings gracefully
-        #expect(simpleCard != nil)
-        #expect(listCard != nil)
-        #expect(masonryCard != nil)
+        #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
+        #expect(Bool(true), "listCard is non-optional")  // listCard is non-optional
+        #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
     }
     
     @Test func testCardComponentsWithVeryLongText() {
@@ -326,9 +326,9 @@ open class CardContentDisplayTests: BaseTestClass {
         let masonryCard = MasonryCardComponent(item: longItem, hints: PresentationHints())
         
         // THEN: Should handle long text with proper truncation
-        #expect(simpleCard != nil)
-        #expect(listCard != nil)
-        #expect(masonryCard != nil)
+        #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
+        #expect(Bool(true), "listCard is non-optional")  // listCard is non-optional
+        #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
     }
     
     // MARK: - Performance Tests
@@ -356,9 +356,9 @@ open class CardContentDisplayTests: BaseTestClass {
         let masonryCard = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should have proper accessibility labels
-        #expect(simpleCard != nil)
-        #expect(listCard != nil)
-        #expect(masonryCard != nil)
+        #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
+        #expect(Bool(true), "listCard is non-optional")  // listCard is non-optional
+        #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
         // Performance test removed - performance monitoring was removed from framework
     }
 }

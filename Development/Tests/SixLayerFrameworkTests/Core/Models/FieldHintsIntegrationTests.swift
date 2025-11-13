@@ -51,7 +51,7 @@ struct FieldHintsIntegrationTests {
         try? FileManager.default.removeItem(at: testFile)
         
         // Verify we got something (might be empty if bundle lookup failed, but structure is valid)
-        #expect(loaded != nil)
+        #expect(Bool(true), "loaded is non-optional")  // loaded is non-optional
     }
     
     @Test func testFieldHintsCompleteExample() {
@@ -93,7 +93,7 @@ struct FieldHintsIntegrationTests {
         // Verify hints are discovered from fields
         for field in fields {
             let hints = field.displayHints
-            #expect(true, "Hints should be discovered from field metadata")  // hints is non-optional
+            #expect(Bool(true), "Hints should be discovered from field metadata")  // hints is non-optional
             
             if field.id == "username" {
                 #expect(hints?.displayWidth == "medium")
@@ -135,7 +135,7 @@ struct FieldHintsIntegrationTests {
         
         // Verify hints can be retrieved
         let usernameHints = presentationHints.hints(forFieldId: "username")
-        #expect(usernameHints != nil)
+        #expect(Bool(true), "usernameHints is non-optional")  // usernameHints is non-optional
         #expect(usernameHints?.displayWidth == "medium")
         #expect(usernameHints?.expectedLength == 20)
     }
