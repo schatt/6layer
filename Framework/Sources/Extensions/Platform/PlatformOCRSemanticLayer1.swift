@@ -25,6 +25,7 @@ public func platformOCRWithVisualCorrection_L1(
         context: context,
         onResult: onResult
     )
+    .environment(\.accessibilityIdentifierName, "platformOCRWithVisualCorrection_L1")
     .automaticAccessibility()
     .automaticAccessibilityIdentifiers()
 }
@@ -44,6 +45,7 @@ public func platformOCRWithVisualCorrection_L1(
         configuration: configuration,
         onResult: onResult
     )
+    .environment(\.accessibilityIdentifierName, "platformOCRWithVisualCorrection_L1")
     .automaticAccessibility()
     .automaticAccessibilityIdentifiers()
 }
@@ -62,6 +64,7 @@ public func platformExtractStructuredData_L1(
         context: context,
         onResult: onResult
     )
+    .environment(\.accessibilityIdentifierName, "platformExtractStructuredData_L1")
     .automaticAccessibility()
     .automaticAccessibilityIdentifiers()
 }

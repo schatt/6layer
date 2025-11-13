@@ -23,6 +23,8 @@ public func platformOCRWithDisambiguation_L1(
         context: context,
         onResult: onResult
     )
+    .environment(\.accessibilityIdentifierName, "platformOCRWithDisambiguation_L1")
+    .automaticAccessibility()
     .automaticAccessibilityIdentifiers()
 }
 
@@ -40,6 +42,8 @@ public func platformOCRWithDisambiguation_L1(
         configuration: configuration,
         onResult: onResult
     )
+    .environment(\.accessibilityIdentifierName, "platformOCRWithDisambiguation_L1")
+    .automaticAccessibility()
     .automaticAccessibilityIdentifiers()
 }
 
