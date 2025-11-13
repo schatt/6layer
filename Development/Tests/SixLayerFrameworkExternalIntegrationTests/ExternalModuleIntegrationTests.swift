@@ -152,22 +152,13 @@ struct ExternalModuleIntegrationTests {
                 language: .english
             )
             
-            var editedText: String?
-            var editedBounds: CGRect?
-            var deletedBounds: CGRect?
-            
             // Test that OCROverlayView can be created from external module
-            let ocrView = OCROverlayView(
+            let _ = OCROverlayView(
                 image: testImage,
                 result: testResult,
                 configuration: OCROverlayConfiguration(),
-                onTextEdit: { text, bounds in
-                    editedText = text
-                    editedBounds = bounds
-                },
-                onTextDelete: { bounds in
-                    deletedBounds = bounds
-                }
+                onTextEdit: { _, _ in },
+                onTextDelete: { _ in }
             )
             
             // If this compiles and creates a view, the API is accessible
@@ -267,7 +258,7 @@ struct ExternalModuleIntegrationTests {
     func testResponsiveLayoutAccessible() async throws {
         await MainActor.run {
             // Test that ResponsiveLayout static methods can be used from external modules
-            let adaptiveView = ResponsiveLayout.adaptiveGrid {
+            let _ = ResponsiveLayout.adaptiveGrid {
                 Text("Test content")
             }
             
@@ -282,7 +273,7 @@ struct ExternalModuleIntegrationTests {
         await MainActor.run {
             // Test that ResponsiveContainer can be used from external modules
             // Note: Uses proper 2-parameter closure signature
-            let container = ResponsiveContainer { isHorizontal, isVertical in
+            let _ = ResponsiveContainer { isHorizontal, isVertical in
                 VStack {
                     Text("H: \(isHorizontal ? "Yes" : "No")")
                     Text("V: \(isVertical ? "Yes" : "No")")
@@ -306,7 +297,7 @@ struct ExternalModuleIntegrationTests {
             )
             
             // Test platformOCRWithVisualCorrection_L1
-            let ocrView = platformOCRWithVisualCorrection_L1(
+            let _ = platformOCRWithVisualCorrection_L1(
                 image: testImage,
                 context: context,
                 onResult: { _ in }
@@ -356,7 +347,7 @@ struct ExternalModuleIntegrationTests {
     @MainActor
     func testAccessibilityManagerAccessible() async throws {
         // Test that AccessibilityManager can be created
-        let manager = AccessibilityManager()
+        let _ = AccessibilityManager()
 
         #expect(Bool(true), "AccessibilityManager is accessible from external modules")
     }
