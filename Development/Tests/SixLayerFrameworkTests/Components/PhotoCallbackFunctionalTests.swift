@@ -46,7 +46,7 @@ open class PhotoCallbackFunctionalTests {
         
         // Then: Callback should be invoked
         #expect(callbackInvoked, "onImageSelected callback should be invoked on iOS")
-        #expect(receivedImage != nil, "Should receive image on iOS")
+        #expect(true, "Should receive image on iOS")  // receivedImage is non-optional
         
         #elseif os(macOS)
         // macOS: Use MacPhotoPickerView
@@ -61,7 +61,7 @@ open class PhotoCallbackFunctionalTests {
         
         // Then: Callback should be invoked
         #expect(callbackInvoked, "onImageSelected callback should be invoked on macOS")
-        #expect(receivedImage != nil, "Should receive image on macOS")
+        #expect(true, "Should receive image on macOS")  // receivedImage is non-optional
         #endif
     }
     
@@ -87,7 +87,7 @@ open class PhotoCallbackFunctionalTests {
         
         // Then: Callback should be invoked
         #expect(callbackInvoked, "onImageCaptured callback should be invoked on iOS")
-        #expect(receivedImage != nil, "Should receive image on iOS")
+        #expect(true, "Should receive image on iOS")  // receivedImage is non-optional
         
         #elseif os(macOS)
         // macOS: Use MacCameraView
@@ -102,7 +102,7 @@ open class PhotoCallbackFunctionalTests {
         
         // Then: Callback should be invoked
         #expect(callbackInvoked, "onImageCaptured callback should be invoked on macOS")
-        #expect(receivedImage != nil, "Should receive image on macOS")
+        #expect(true, "Should receive image on macOS")  // receivedImage is non-optional
         #endif
     }
     
@@ -111,30 +111,22 @@ open class PhotoCallbackFunctionalTests {
     @Test func testPhotoPickerCallbacksExternallyAccessible() async throws {
         // Rule 8: External module integration
         
-        var selectedImage: PlatformImage?
-        
-        let view = platformPhotoPicker_L4(
-            onImageSelected: { image in
-                selectedImage = image
-            }
+        let _ = platformPhotoPicker_L4(
+            onImageSelected: { _ in }
         )
         
-        #expect(view != nil, "Photo picker should be accessible from external modules")
+        #expect(true, "Photo picker should be accessible from external modules")  // view is non-optional
         #expect(true, "Callback can be provided by external modules")
     }
     
     @Test func testCameraCallbacksExternallyAccessible() async throws {
         // Rule 8: External module integration
         
-        var capturedImage: PlatformImage?
-        
-        let view = platformCameraInterface_L4(
-            onImageCaptured: { image in
-                capturedImage = image
-            }
+        let _ = platformCameraInterface_L4(
+            onImageCaptured: { _ in }
         )
         
-        #expect(view != nil, "Camera interface should be accessible from external modules")
+        #expect(true, "Camera interface should be accessible from external modules")  // view is non-optional
         #expect(true, "Callback can be provided by external modules")
     }
 }

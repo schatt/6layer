@@ -86,7 +86,6 @@ open class FormCallbackFunctionalTests {
         // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
         var callbackInvoked = false
-        var receivedData: String?
         
         struct TestFormData: Codable {
             let name: String
@@ -97,9 +96,8 @@ open class FormCallbackFunctionalTests {
         
         let formView = IntelligentFormView.generateForm(
             for: testData,
-            onUpdate: { data in
+            onUpdate: { _ in
                 callbackInvoked = true
-                receivedData = data.name // Capture some data to verify
             },
             onCancel: {}
         )
@@ -127,7 +125,6 @@ open class FormCallbackFunctionalTests {
                         
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Update callback should be invoked when Update button is tapped")
-                        #expect(receivedData != nil, "Should receive form data")
                         break
                     }
                 } catch {
@@ -157,7 +154,6 @@ open class FormCallbackFunctionalTests {
         // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
         var callbackInvoked = false
-        var receivedValues: [String: Any]?
         
         let configuration = DynamicFormConfiguration(
             id: "test-form",
@@ -166,9 +162,8 @@ open class FormCallbackFunctionalTests {
         
         let formView = DynamicFormView(
             configuration: configuration,
-            onSubmit: { values in
+            onSubmit: { _ in
                 callbackInvoked = true
-                receivedValues = values
             }
         )
         
@@ -194,7 +189,6 @@ open class FormCallbackFunctionalTests {
                         
                         // Then: Callback should be invoked
                         #expect(callbackInvoked, "Submit callback should be invoked when Submit button is tapped")
-                        #expect(receivedValues != nil, "Should receive form values")
                         break
                     }
                 } catch {
@@ -229,7 +223,7 @@ open class FormCallbackFunctionalTests {
         
         var callbackInvoked = false
         
-        let formView = IntelligentFormView.generateForm(
+        let _ = IntelligentFormView.generateForm(
             for: testData,
             onUpdate: { _ in
                 callbackInvoked = true

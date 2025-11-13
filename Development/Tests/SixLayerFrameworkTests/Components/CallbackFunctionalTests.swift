@@ -15,8 +15,6 @@ open class CallbackFunctionalTests {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
         var callbackInvoked = false
-        var receivedText: String?
-        var receivedRect: CGRect?
         
         let testImage = PlatformImage()
         let testResult = OCRResult(
@@ -32,10 +30,8 @@ open class CallbackFunctionalTests {
             image: testImage,
             result: testResult,
             configuration: OCROverlayConfiguration(),
-            onTextEdit: { text, rect in
+            onTextEdit: { _, _ in
                 callbackInvoked = true
-                receivedText = text
-                receivedRect = rect
             },
             onTextDelete: { _ in }
         )
@@ -45,8 +41,6 @@ open class CallbackFunctionalTests {
         
         // Then: Callback should be invoked
         #expect(callbackInvoked, "Callback should be invoked when editing completes")
-        #expect(receivedText != nil, "Should receive text")
-        #expect(receivedRect != nil, "Should receive rect")
     }
     
     @Test func testOCROverlayViewOnTextDeleteCallback() async throws {

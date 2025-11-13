@@ -26,7 +26,7 @@ open class DebugLoggingTDDTests: BaseTestClass {
             let generator = AccessibilityIdentifierGenerator()
             
             // Then: It should be created successfully
-            #expect(generator != nil, "AccessibilityIdentifierGenerator should be instantiable")
+            #expect(true, "AccessibilityIdentifierGenerator should be instantiable")  // generator is non-optional
         }
     }
     

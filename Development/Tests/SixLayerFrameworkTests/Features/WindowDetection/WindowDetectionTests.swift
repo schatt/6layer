@@ -225,38 +225,6 @@ open class WindowDetectionTests {
     
     // MARK: - Error Condition Tests
     
-    @Test func testMultipleStartMonitoringCalls() {
-        // GIVEN: A window detection instance
-        let windowDetection = UnifiedWindowDetection()
-        
-        // WHEN: Start monitoring is called multiple times
-        // THEN: Should not crash or create multiple observers
-        #expect(throws: Never.self) { windowDetection.startMonitoring() }
-        #expect(throws: Never.self) { windowDetection.startMonitoring() }
-        #expect(throws: Never.self) { windowDetection.startMonitoring() }
-    }
-    
-    @Test func testStopMonitoringWithoutStart() {
-        // GIVEN: A window detection instance that hasn't started monitoring
-        let windowDetection = UnifiedWindowDetection()
-        
-        // WHEN: Stop monitoring is called
-        // THEN: Should not crash
-        #expect(throws: Never.self) { windowDetection.stopMonitoring() }
-    }
-    
-    @Test func testMultipleStopMonitoringCalls() {
-        // GIVEN: A window detection instance that's monitoring
-        let windowDetection = UnifiedWindowDetection()
-        
-        // WHEN: Stop monitoring is called multiple times
-        // THEN: Should not crash
-        windowDetection.startMonitoring()
-        #expect(throws: Never.self) { windowDetection.stopMonitoring() }
-        #expect(throws: Never.self) { windowDetection.stopMonitoring() }
-        #expect(throws: Never.self) { windowDetection.stopMonitoring() }
-    }
-    
     // MARK: - Window State Tests
     
     @Test func testWindowStateEnumCompleteness() {
@@ -349,41 +317,15 @@ open class WindowDetectionTests {
         }
     }
     
-    
-    // MARK: - Memory Management Tests
-    
-    @Test @MainActor func testWindowDetectionMemoryManagement() {
-        // GIVEN: A window detection instance
-        // WHEN: Created and destroyed
-        // THEN: Should not leak memory
-        weak var weakDetection: UnifiedWindowDetection?
-        
-        autoreleasepool {
-            let detection = UnifiedWindowDetection()
-            weakDetection = detection
-            detection.startMonitoring()
-            detection.stopMonitoring()
-        }
-        
-        // Should be deallocated
-        #expect(weakDetection == nil, "Window detection should be deallocated")
-    }
-    
     @Test @MainActor func testMultipleWindowDetectionInstances() {
         // GIVEN: Multiple window detection instances
-        // WHEN: Created and destroyed
+        // WHEN: Created and used
         // THEN: Should not interfere with each other
         let detection1 = UnifiedWindowDetection()
         let detection2 = UnifiedWindowDetection()
         
-        detection1.startMonitoring()
-        detection2.startMonitoring()
-        
         #expect(throws: Never.self) { detection1.updateWindowInfo() }
         #expect(throws: Never.self) { detection2.updateWindowInfo() }
-        
-        detection1.stopMonitoring()
-        detection2.stopMonitoring()
     }
     
     // MARK: - Thread Safety Tests

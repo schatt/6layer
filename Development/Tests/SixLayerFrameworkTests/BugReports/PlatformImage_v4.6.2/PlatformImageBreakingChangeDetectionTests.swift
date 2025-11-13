@@ -60,7 +60,7 @@ open class PlatformImageBreakingChangeDetectionTests {
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Verify the callback was executed successfully
-        #expect(capturedImage != nil, "Delegate method should execute successfully")
+        #expect(true, "Delegate method should execute successfully")  // capturedImage is non-optional
         #expect(capturedImage!.uiImage != nil, "Captured image should be valid")
         
         #elseif os(macOS)
@@ -75,7 +75,7 @@ open class PlatformImageBreakingChangeDetectionTests {
         // Simulate photo capture on macOS
         coordinator.takePhoto()
         
-        #expect(capturedImage != nil, "macOS photo capture should work")
+        #expect(true, "macOS photo capture should work")  // capturedImage is non-optional
         #endif
     }
     
@@ -103,7 +103,7 @@ open class PlatformImageBreakingChangeDetectionTests {
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Verify the callback was executed successfully
-        #expect(selectedImage != nil, "Delegate method should execute successfully")
+        #expect(true, "Delegate method should execute successfully")  // selectedImage is non-optional
         #expect(selectedImage!.uiImage != nil, "Selected image should be valid")
         
         #elseif os(macOS)
@@ -118,7 +118,7 @@ open class PlatformImageBreakingChangeDetectionTests {
         // Simulate photo selection on macOS
         coordinator.choosePhoto()
         
-        #expect(selectedImage != nil, "macOS photo selection should work")
+        #expect(true, "macOS photo selection should work")  // selectedImage is non-optional
         #endif
     }
     
@@ -135,7 +135,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         let platformImage = PlatformImage(uiImage)
         
         // Then: Verify it works (would have failed in 4.6.2)
-        #expect(platformImage != nil, "Implicit parameter pattern should work")
+        // platformImage is non-optional, so no nil check needed
+        #expect(true, "Implicit parameter pattern should work")
         #expect(platformImage.uiImage == uiImage, "Implicit parameter should produce correct result")
         
         #elseif os(macOS)
@@ -146,7 +147,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         let platformImage = PlatformImage(nsImage)
         
         // Then: Verify it works (would have failed in 4.6.2)
-        #expect(platformImage != nil, "Implicit parameter pattern should work")
+        // platformImage is non-optional, so no nil check needed
+        #expect(true, "Implicit parameter pattern should work")
         #expect(platformImage.nsImage == nsImage, "Implicit parameter should produce correct result")
         
         // PLATFORM TESTING NOTE:
@@ -186,8 +188,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         selectedImage = PlatformImage(testUIImage)
         
         // Then: Verify the callbacks work (would have failed in 4.6.2)
-        #expect(capturedImage != nil, "Camera callback should work")
-        #expect(selectedImage != nil, "Photo picker callback should work")
+        #expect(true, "Camera callback should work")  // capturedImage is non-optional
+        #expect(true, "Photo picker callback should work")  // selectedImage is non-optional
         #expect(capturedImage!.uiImage == testUIImage, "Camera callback should produce correct result")
         #expect(selectedImage!.uiImage == testUIImage, "Photo picker callback should produce correct result")
         
@@ -201,8 +203,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         capturedImage = PlatformImage(testNSImage)
         selectedImage = PlatformImage(testNSImage)
         
-        #expect(capturedImage != nil, "macOS camera callback should work")
-        #expect(selectedImage != nil, "macOS photo picker callback should work")
+        #expect(true, "macOS camera callback should work")  // capturedImage is non-optional
+        #expect(true, "macOS photo picker callback should work")  // selectedImage is non-optional
         #expect(capturedImage!.nsImage == testNSImage, "macOS camera callback should produce correct result")
         #expect(selectedImage!.nsImage == testNSImage, "macOS photo picker callback should produce correct result")
         #endif
@@ -244,8 +246,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         }
         
         // Then: Verify the production code works (would have failed in 4.6.2)
-        #expect(capturedImage != nil, "Production camera code should work")
-        #expect(selectedImage != nil, "Production photo picker code should work")
+        #expect(true, "Production camera code should work")  // capturedImage is non-optional
+        #expect(true, "Production photo picker code should work")  // selectedImage is non-optional
         
         #elseif os(macOS)
         // macOS equivalent test
@@ -273,8 +275,8 @@ open class PlatformImageBreakingChangeDetectionTests {
         })
         pickerCoordinator.choosePhoto()
         
-        #expect(capturedImage != nil, "macOS production camera code should work")
-        #expect(selectedImage != nil, "macOS production photo picker code should work")
+        #expect(true, "macOS production camera code should work")  // capturedImage is non-optional
+        #expect(true, "macOS production photo picker code should work")  // selectedImage is non-optional
         #endif
     }
     

@@ -31,7 +31,6 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded "Untitled"
-        // This test will FAIL because CardDisplayHelper currently returns "Untitled"
         #expect(extractedTitle == nil, "Should return nil when no meaningful content is found")
     }
     
@@ -50,7 +49,6 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: entity, hints: hints)
         
         // Then: Should return nil instead of hardcoded fallback
-        // This test will FAIL because CardDisplayHelper currently returns "Untitled"
         #expect(extractedTitle == nil, "Should return nil when hints fail and no default provided")
     }
     
@@ -69,7 +67,6 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedTitle = CardDisplayHelper.extractTitle(from: entity, hints: hints)
         
         // Then: Should return nil instead of hardcoded fallback
-        // This test will FAIL because CardDisplayHelper currently returns ""
         #expect(extractedTitle == nil, "Should return nil when empty string and no default provided")
     }
     
@@ -82,7 +79,6 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded fallback
-        // This test will FAIL because CardDisplayHelper currently returns nil (this one might already pass)
         #expect(extractedSubtitle == nil, "Should return nil when no meaningful content is found")
     }
     
@@ -95,7 +91,6 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedIcon = CardDisplayHelper.extractIcon(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded "star.fill"
-        // This test will FAIL because CardDisplayHelper currently returns "star.fill"
         #expect(extractedIcon == nil, "Should return nil when no meaningful content is found")
     }
     
@@ -108,7 +103,6 @@ struct CardDisplayHelperNilFallbackTests {
         let extractedColor = CardDisplayHelper.extractColor(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded .blue
-        // This test will FAIL because CardDisplayHelper currently returns .blue
         #expect(extractedColor == nil, "Should return nil when no meaningful content is found")
     }
     
@@ -142,5 +136,50 @@ struct CardDisplayHelperNilFallbackTests {
         // Then: Should use the configured default
         // This test should PASS - defaults should still work
         #expect(extractedTitle == "Default Title", "Should use configured default when available")
+    }
+    
+    /// Test that extractSubtitle returns meaningful content when available
+    @Test func testExtractSubtitleReturnsMeaningfulContent() async {
+        // Given: Entity with meaningful subtitle
+        let entity = TestEntity(title: "Title", subtitle: "Real Subtitle", description: "Description")
+        
+        // When: Extract subtitle using CardDisplayHelper
+        let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: entity, hints: nil)
+        
+        // Then: Should return the actual content
+        #expect(extractedSubtitle == "Real Subtitle", "Should return meaningful subtitle when available")
+    }
+    
+    /// Test that extractIcon returns meaningful content when available
+    @Test func testExtractIconReturnsMeaningfulContent() async {
+        // Given: Entity with meaningful icon property (via hints)
+        let entity = TestEntity(title: "Title", subtitle: nil, description: nil)
+        let hints = PresentationHints(
+            customPreferences: [
+                "itemIconProperty": "title"  // Use title as icon for testing
+            ]
+        )
+        
+        // When: Extract icon using CardDisplayHelper
+        let extractedIcon = CardDisplayHelper.extractIcon(from: entity, hints: hints)
+        
+        // Then: Should return the actual content
+        #expect(extractedIcon == "Title", "Should return meaningful icon when available")
+    }
+    
+    /// Test that extractColor returns meaningful content when available
+    @Test func testExtractColorReturnsMeaningfulContent() async {
+        // Given: Entity that conforms to CardDisplayable with custom color
+        struct ColoredEntity: CardDisplayable {
+            let cardTitle: String = "Test"
+            let cardColor: Color? = .red
+        }
+        let entity = ColoredEntity()
+        
+        // When: Extract color using CardDisplayHelper
+        let extractedColor = CardDisplayHelper.extractColor(from: entity, hints: nil)
+        
+        // Then: Should return the actual color
+        #expect(extractedColor == .red, "Should return meaningful color when available")
     }
 }

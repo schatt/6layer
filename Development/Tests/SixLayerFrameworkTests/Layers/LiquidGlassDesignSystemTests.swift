@@ -435,7 +435,7 @@ struct LiquidGlassDesignSystemTests {
             let fallbackBehavior = system.getFallbackBehavior(for: feature)
             
             // Then
-            #expect(fallbackBehavior != nil, "Feature \(feature.rawValue) should have a fallback behavior")
+            #expect(true, "Feature \(feature.rawValue) should have a fallback behavior")  // fallbackBehavior is non-optional
         }
     }
 }

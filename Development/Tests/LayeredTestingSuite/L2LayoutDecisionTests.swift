@@ -54,7 +54,7 @@ class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layoutDecision != nil, "Layout decision should be created")
+        #expect(true, "Layout decision should be created")  // layoutDecision is non-optional
         #expect(layoutDecision.columns > 0, "Should have at least 1 column")
         #expect(layoutDecision.spacing > 0, "Spacing should be positive")
         #expect(layoutDecision.cardWidth > 0, "Card width should be positive")
@@ -118,7 +118,7 @@ class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layout != nil, "OCR layout should be created")
+        #expect(true, "OCR layout should be created")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Max image width should be positive")
         #expect(layout.maxImageSize.height > 0, "Max image height should be positive")
         #expect(layout.recommendedImageSize.width > 0, "Recommended image width should be positive")
@@ -139,7 +139,7 @@ class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layout != nil, "Document OCR layout should be created")
+        #expect(true, "Document OCR layout should be created")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Max image width should be positive")
         #expect(layout.maxImageSize.height > 0, "Max image height should be positive")
     }
@@ -156,7 +156,7 @@ class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layout != nil, "Receipt OCR layout should be created")
+        #expect(true, "Receipt OCR layout should be created")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Max image width should be positive")
         #expect(layout.maxImageSize.height > 0, "Max image height should be positive")
     }
@@ -173,7 +173,7 @@ class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layout != nil, "Business card OCR layout should be created")
+        #expect(true, "Business card OCR layout should be created")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Max image width should be positive")
         #expect(layout.maxImageSize.height > 0, "Max image height should be positive")
     }
@@ -356,7 +356,7 @@ class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layout != nil, "Layout decision should be created")
+        #expect(true, "Layout decision should be created")  // layout is non-optional
     }
 }
 

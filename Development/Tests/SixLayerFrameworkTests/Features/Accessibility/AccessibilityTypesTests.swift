@@ -121,9 +121,9 @@ open class AccessibilityTypesTests {
         let actionString = actionType.rawValue
         
         // Then: Test business logic for type conversion
-        #expect(announcementString != nil, "Announcement type should convert to string")
-        #expect(gestureString != nil, "Gesture type should convert to string")
-        #expect(actionString != nil, "Action type should convert to string")
+        #expect(true, "Announcement type should convert to string")  // announcementString is non-optional
+        #expect(true, "Gesture type should convert to string")  // gestureString is non-optional
+        #expect(true, "Action type should convert to string")  // actionString is non-optional
         
         // Test business logic: String conversion should be reversible
         #expect(VoiceOverAnnouncementType(rawValue: announcementString) == announcementType, 

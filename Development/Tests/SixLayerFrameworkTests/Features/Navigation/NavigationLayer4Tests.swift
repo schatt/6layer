@@ -105,8 +105,8 @@ open class NavigationLayer4Tests {
         
         // Then: Should create valid navigation link that can be hosted
         let hostingView = hostRootPlatformView(link.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "Navigation link with title and system image should be hostable")
-        #expect(link != nil, "Navigation link with title and system image should be created")
+        #expect(true, "Navigation link with title and system image should be hostable")  // hostingView is non-optional
+        #expect(true, "Navigation link with title and system image should be created")  // link is non-optional
     }
     
     @Test func testPlatformNavigationLink_L4_WithValue() {
@@ -122,7 +122,7 @@ open class NavigationLayer4Tests {
         }
         
         // Then: Should create valid navigation link
-        #expect(link != nil, "Navigation link with value should be created")
+        #expect(true, "Navigation link with value should be created")  // link is non-optional
     }
     
     @Test func testPlatformNavigationLink_L4_WithNilValue() {
@@ -138,7 +138,7 @@ open class NavigationLayer4Tests {
         }
         
         // Then: Should create valid navigation link (should handle nil gracefully)
-        #expect(link != nil, "Navigation link with nil value should be created")
+        #expect(true, "Navigation link with nil value should be created")  // link is non-optional
     }
     
     @Test func testPlatformNavigationLink_L4_WithTagAndSelection() {
@@ -158,7 +158,7 @@ open class NavigationLayer4Tests {
             }
         
         // Then: Should create valid navigation link
-        #expect(link != nil, "Navigation link with tag should be created")
+        #expect(true, "Navigation link with tag should be created")  // link is non-optional
     }
     
     @Test func testPlatformNavigationLink_L4_WithDifferentTagTypes() {
@@ -194,9 +194,9 @@ open class NavigationLayer4Tests {
             }
         
         // Then: All links should be created successfully
-        #expect(stringLink != nil, "String tag navigation link should be created")
-        #expect(intLink != nil, "Int tag navigation link should be created")
-        #expect(uuidLink != nil, "UUID tag navigation link should be created")
+        #expect(true, "String tag navigation link should be created")  // stringLink is non-optional
+        #expect(true, "Int tag navigation link should be created")  // intLink is non-optional
+        #expect(true, "UUID tag navigation link should be created")  // uuidLink is non-optional
     }
     
     // MARK: - Navigation Bar Items Tests
@@ -210,7 +210,7 @@ open class NavigationLayer4Tests {
             .platformNavigationBarItems_L4(trailing: trailingItem)
         
         // Then: Should create view with navigation bar items
-        #expect(view != nil, "View with navigation bar items should be created")
+        #expect(true, "View with navigation bar items should be created")  // view is non-optional
     }
     
     @Test func testPlatformNavigationBarItems_L4_WithDifferentTrailingItems() {
@@ -230,9 +230,9 @@ open class NavigationLayer4Tests {
             .platformNavigationBarItems_L4(trailing: imageItem)
         
         // Then: All views should be created successfully
-        #expect(buttonView != nil, "View with button trailing item should be created")
-        #expect(textView != nil, "View with text trailing item should be created")
-        #expect(imageView != nil, "View with image trailing item should be created")
+        #expect(true, "View with button trailing item should be created")  // buttonView is non-optional
+        #expect(true, "View with text trailing item should be created")  // textView is non-optional
+        #expect(true, "View with image trailing item should be created")  // imageView is non-optional
     }
     
     // MARK: - Navigation Container Tests
@@ -247,7 +247,7 @@ open class NavigationLayer4Tests {
         }
         
         // Then: Should create navigation container
-        #expect(container != nil, "Navigation container should be created")
+        #expect(true, "Navigation container should be created")  // container is non-optional
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
@@ -299,7 +299,7 @@ open class NavigationLayer4Tests {
             }
         
         // Then: Should create container with complex content
-        #expect(container != nil, "Navigation container with complex content should be created")
+        #expect(true, "Navigation container with complex content should be created")  // container is non-optional
     }
     
     // MARK: - Navigation Destination Tests
@@ -315,7 +315,7 @@ open class NavigationLayer4Tests {
             }
         
         // Then: Should create navigation destination
-        #expect(destination != nil, "Navigation destination should be created")
+        #expect(true, "Navigation destination should be created")  // destination is non-optional
     }
     
     @Test func testPlatformNavigationDestination_WithNilItem() {
@@ -329,7 +329,7 @@ open class NavigationLayer4Tests {
             }
         
         // Then: Should create navigation destination (should handle nil gracefully)
-        #expect(destination != nil, "Navigation destination with nil item should be created")
+        #expect(true, "Navigation destination with nil item should be created")  // destination is non-optional
     }
     
     @Test func testPlatformNavigationDestination_WithDifferentItemTypes() {
@@ -355,9 +355,9 @@ open class NavigationLayer4Tests {
             }
         
         // Then: All destinations should be created successfully
-        #expect(destination1 != nil, "String item destination should be created")
-        #expect(destination2 != nil, "Number item destination should be created")
-        #expect(destination3 != nil, "UUID item destination should be created")
+        #expect(true, "String item destination should be created")  // destination1 is non-optional
+        #expect(true, "Number item destination should be created")  // destination2 is non-optional
+        #expect(true, "UUID item destination should be created")  // destination3 is non-optional
     }
     
     // MARK: - Platform Navigation Tests
@@ -372,7 +372,7 @@ open class NavigationLayer4Tests {
         }
         
         // Then: Should create platform navigation
-        #expect(navigation != nil, "Platform navigation should be created")
+        #expect(true, "Platform navigation should be created")  // navigation is non-optional
         
         // 3. Platform-specific implementation verification (REQUIRED)
         #if os(iOS)
@@ -415,7 +415,7 @@ open class NavigationLayer4Tests {
             }
         
         // Then: Should create platform navigation with complex content
-        #expect(navigation != nil, "Platform navigation with complex content should be created")
+        #expect(true, "Platform navigation with complex content should be created")  // navigation is non-optional
     }
     
     // MARK: - Integration Tests
@@ -454,7 +454,7 @@ open class NavigationLayer4Tests {
             .platformNavigationBarItems_L4(trailing: Button("Save") { })
         
         // Then: Should create integrated navigation view
-        #expect(integratedView != nil, "Integrated navigation view should be created")
+        #expect(true, "Integrated navigation view should be created")  // integratedView is non-optional
     }
     
     @Test func testNavigationComponents_WithStateManagement() {
@@ -492,7 +492,7 @@ open class NavigationLayer4Tests {
             .platformNavigationBarItems_L4(trailing: Button("Action") { })
         
         // Then: Should create stateful navigation view
-        #expect(statefulView != nil, "Stateful navigation view should be created")
+        #expect(true, "Stateful navigation view should be created")  // statefulView is non-optional
     }
     
     // MARK: - Edge Cases and Error Handling
@@ -511,8 +511,8 @@ open class NavigationLayer4Tests {
         }
         
         // Then: Should handle empty content gracefully
-        #expect(emptyNavigation != nil, "Empty navigation should be created")
-        #expect(emptyContainer != nil, "Empty container should be created")
+        #expect(true, "Empty navigation should be created")  // emptyNavigation is non-optional
+        #expect(true, "Empty container should be created")  // emptyContainer is non-optional
     }
     
     @Test func testNavigationComponents_WithNilBindings() {
@@ -542,8 +542,8 @@ open class NavigationLayer4Tests {
             }
         
         // Then: Should handle nil bindings gracefully
-        #expect(nilLink != nil, "Nil link should be created")
-        #expect(nilDestination != nil, "Nil destination should be created")
+        #expect(true, "Nil link should be created")  // nilLink is non-optional
+        #expect(true, "Nil destination should be created")  // nilDestination is non-optional
     }
     
 }

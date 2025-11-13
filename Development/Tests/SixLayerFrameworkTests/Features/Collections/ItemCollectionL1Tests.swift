@@ -49,7 +49,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with empty items should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with empty items should return a view")  // view is non-optional
     }
     
     @Test func testPlatformPresentItemCollection_L1_WithSingleItem() {
@@ -69,7 +69,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with single item should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with single item should return a view")  // view is non-optional
     }
     
     @Test func testPlatformPresentItemCollection_L1_WithManyItems() {
@@ -89,7 +89,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with many items should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with many items should return a view")  // view is non-optional
     }
     
     // MARK: - Different Hint Types
@@ -111,7 +111,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with compact hints should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with compact hints should return a view")  // view is non-optional
     }
     
     @Test func testPlatformPresentItemCollection_L1_WithDetailedHints() {
@@ -131,7 +131,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with detailed hints should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with detailed hints should return a view")  // view is non-optional
     }
     
     @Test func testPlatformPresentItemCollection_L1_WithGridHints() {
@@ -151,7 +151,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with grid hints should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with grid hints should return a view")  // view is non-optional
     }
     
     @Test func testPlatformPresentItemCollection_L1_WithListHints() {
@@ -171,7 +171,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // Then
-        #expect(view != nil, "platformPresentItemCollection_L1 with list hints should return a view")
+        #expect(true, "platformPresentItemCollection_L1 with list hints should return a view")  // view is non-optional
     }
     
     

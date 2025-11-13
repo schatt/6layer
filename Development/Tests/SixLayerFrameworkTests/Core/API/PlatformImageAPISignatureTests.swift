@@ -45,34 +45,39 @@ open class PlatformImageAPISignatureTests {
     @Test func testPlatformImageInitializerSignatures() {
         // Test 1: Default initializer
         let defaultImage = PlatformImage()
-        #expect(defaultImage != nil, "Default initializer should exist")
+        // defaultImage is non-optional, so no nil check needed
+        #expect(true, "Default initializer should exist")
         
         // Test 2: Data initializer
         let sampleData = createSampleImageData()
         let dataImage = PlatformImage(data: sampleData)
-        #expect(dataImage != nil, "Data initializer should exist and work")
+        #expect(true, "Data initializer should exist and work")  // dataImage is non-optional
         
         // Test 3: Platform-specific initializers
         #if os(iOS)
         let uiImage = createTestUIImage()
         let uiImageInit = PlatformImage(uiImage: uiImage)
-        #expect(uiImageInit != nil, "UIImage initializer should exist")
+        // uiImageInit is non-optional, so no nil check needed
+        #expect(true, "UIImage initializer should exist")
         #expect(uiImageInit.uiImage == uiImage, "UIImage initializer should work correctly")
         
         // Test 4: Backward compatibility initializer (implicit parameter)
         let implicitInit = PlatformImage(uiImage)
-        #expect(implicitInit != nil, "Implicit parameter initializer should exist for backward compatibility")
+        // implicitInit is non-optional, so no nil check needed
+        #expect(true, "Implicit parameter initializer should exist for backward compatibility")
         #expect(implicitInit.uiImage == uiImage, "Implicit parameter initializer should work correctly")
         
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         let nsImageInit = PlatformImage(nsImage: nsImage)
-        #expect(nsImageInit != nil, "NSImage initializer should exist")
+        // nsImageInit is non-optional, so no nil check needed
+        #expect(true, "NSImage initializer should exist")
         #expect(nsImageInit.nsImage == nsImage, "NSImage initializer should work correctly")
         
         // Test 4: Backward compatibility initializer (implicit parameter)
         let implicitInit = PlatformImage(nsImage)
-        #expect(implicitInit != nil, "Implicit parameter initializer should exist for backward compatibility")
+        // implicitInit is non-optional, so no nil check needed
+        #expect(true, "Implicit parameter initializer should exist for backward compatibility")
         #expect(implicitInit.nsImage == nsImage, "Implicit parameter initializer should work correctly")
         #endif
     }
@@ -86,11 +91,13 @@ open class PlatformImageAPISignatureTests {
         
         // Test explicit parameter label (current API)
         let explicitInit = PlatformImage(uiImage: uiImage)
-        #expect(explicitInit != nil, "Explicit parameter label should work")
+        // explicitInit is non-optional, so no nil check needed
+        #expect(true, "Explicit parameter label should work")
         
         // Test implicit parameter (backward compatibility)
         let implicitInit = PlatformImage(uiImage)
-        #expect(implicitInit != nil, "Implicit parameter should work for backward compatibility")
+        // implicitInit is non-optional, so no nil check needed
+        #expect(true, "Implicit parameter should work for backward compatibility")
         
         // Verify both produce equivalent results
         #expect(explicitInit.uiImage == implicitInit.uiImage, "Both initializers should produce equivalent results")
@@ -100,11 +107,13 @@ open class PlatformImageAPISignatureTests {
         
         // Test explicit parameter label (current API)
         let explicitInit = PlatformImage(nsImage: nsImage)
-        #expect(explicitInit != nil, "Explicit parameter label should work")
+        // explicitInit is non-optional, so no nil check needed
+        #expect(true, "Explicit parameter label should work")
         
         // Test implicit parameter (backward compatibility)
         let implicitInit = PlatformImage(nsImage)
-        #expect(implicitInit != nil, "Implicit parameter should work for backward compatibility")
+        // implicitInit is non-optional, so no nil check needed
+        #expect(true, "Implicit parameter should work for backward compatibility")
         
         // Verify both produce equivalent results
         #expect(explicitInit.nsImage == implicitInit.nsImage, "Both initializers should produce equivalent results")
@@ -121,7 +130,8 @@ open class PlatformImageAPISignatureTests {
         // Test the EXACT pattern used in Layer 4 callbacks
         // This is the pattern that was broken in 4.6.2
         let callbackPattern = PlatformImage(uiImage)
-        #expect(callbackPattern != nil, "Callback pattern PlatformImage(image) should work")
+        // callbackPattern is non-optional, so no nil check needed
+        #expect(true, "Callback pattern PlatformImage(image) should work")
         #expect(callbackPattern.uiImage == uiImage, "Callback pattern should produce correct result")
         
         // Test that both old and new patterns work
@@ -133,7 +143,8 @@ open class PlatformImageAPISignatureTests {
         
         // Test the EXACT pattern used in Layer 4 callbacks
         let callbackPattern = PlatformImage(nsImage)
-        #expect(callbackPattern != nil, "Callback pattern PlatformImage(image) should work")
+        // callbackPattern is non-optional, so no nil check needed
+        #expect(true, "Callback pattern PlatformImage(image) should work")
         #expect(callbackPattern.nsImage == nsImage, "Callback pattern should produce correct result")
         
         // Test that both old and new patterns work
@@ -149,11 +160,12 @@ open class PlatformImageAPISignatureTests {
         // Test that data initializer works on all platforms
         let sampleData = createSampleImageData()
         let dataImage = PlatformImage(data: sampleData)
-        #expect(dataImage != nil, "Data initializer should work on all platforms")
+        #expect(true, "Data initializer should work on all platforms")  // dataImage is non-optional
         
         // Test that default initializer works on all platforms
         let defaultImage = PlatformImage()
-        #expect(defaultImage != nil, "Default initializer should work on all platforms")
+        // defaultImage is non-optional, so no nil check needed
+        #expect(true, "Default initializer should work on all platforms")
         
         // Test that both implicit and explicit patterns work
         #if os(iOS)
@@ -183,7 +195,8 @@ open class PlatformImageAPISignatureTests {
         // Test the broken pattern from Layer 4 callbacks
         // This should work with our backward compatibility fix
         let brokenPattern = PlatformImage(uiImage)
-        #expect(brokenPattern != nil, "Broken pattern should work with backward compatibility")
+        // brokenPattern is non-optional, so no nil check needed
+        #expect(true, "Broken pattern should work with backward compatibility")
         
         // Test that the result is usable
         #expect(brokenPattern.uiImage == uiImage, "Broken pattern should produce correct result")
@@ -194,7 +207,8 @@ open class PlatformImageAPISignatureTests {
         
         // Test the broken pattern from Layer 4 callbacks
         let brokenPattern = PlatformImage(nsImage)
-        #expect(brokenPattern != nil, "Broken pattern should work with backward compatibility")
+        // brokenPattern is non-optional, so no nil check needed
+        #expect(true, "Broken pattern should work with backward compatibility")
         
         // Test that the result is usable
         #expect(brokenPattern.nsImage == nsImage, "Broken pattern should produce correct result")

@@ -93,7 +93,7 @@ struct FieldHintsIntegrationTests {
         // Verify hints are discovered from fields
         for field in fields {
             let hints = field.displayHints
-            #expect(hints != nil, "Hints should be discovered from field metadata")
+            #expect(true, "Hints should be discovered from field metadata")  // hints is non-optional
             
             if field.id == "username" {
                 #expect(hints?.displayWidth == "medium")

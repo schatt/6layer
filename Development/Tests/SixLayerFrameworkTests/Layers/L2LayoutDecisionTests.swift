@@ -122,7 +122,7 @@ open class L2LayoutDecisionTests {
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(moderateDecision != nil, "Moderate complexity should return a decision")
+        #expect(true, "Moderate complexity should return a decision")  // moderateDecision is non-optional
         
         // Test complex complexity
         let complexHints = PresentationHints(
@@ -137,7 +137,7 @@ open class L2LayoutDecisionTests {
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(complexDecision != nil, "Complex complexity should return a decision")
+        #expect(true, "Complex complexity should return a decision")  // complexDecision is non-optional
     }
     
     @Test func testDetermineOptimalLayout_L2_WithDifferentDeviceTypes() {
@@ -150,7 +150,7 @@ open class L2LayoutDecisionTests {
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(phoneDecision != nil, "Phone device type should return a decision")
+        #expect(true, "Phone device type should return a decision")  // phoneDecision is non-optional
         
         // Test pad
         let padDecision = determineOptimalLayout_L2(
@@ -159,7 +159,7 @@ open class L2LayoutDecisionTests {
             screenWidth: 768,
             deviceType: .pad
         )
-        #expect(padDecision != nil, "Pad device type should return a decision")
+        #expect(true, "Pad device type should return a decision")  // padDecision is non-optional
         
         // Test mac
         let macDecision = determineOptimalLayout_L2(
@@ -168,7 +168,7 @@ open class L2LayoutDecisionTests {
             screenWidth: 1024,
             deviceType: .mac
         )
-        #expect(macDecision != nil, "Mac device type should return a decision")
+        #expect(true, "Mac device type should return a decision")  // macDecision is non-optional
     }
     
     // MARK: - Form Layout Decision Tests
@@ -264,7 +264,7 @@ open class L2LayoutDecisionTests {
             deviceType: .phone,
             contentComplexity: complexity
         )
-        #expect(phoneDecision != nil, "Phone device type should return a decision")
+        #expect(true, "Phone device type should return a decision")  // phoneDecision is non-optional
         
         // Test pad
         let padDecision = determineOptimalCardLayout_L2(
@@ -273,7 +273,7 @@ open class L2LayoutDecisionTests {
             deviceType: .pad,
             contentComplexity: complexity
         )
-        #expect(padDecision != nil, "Pad device type should return a decision")
+        #expect(true, "Pad device type should return a decision")  // padDecision is non-optional
         
         // Test mac
         let macDecision = determineOptimalCardLayout_L2(
@@ -282,7 +282,7 @@ open class L2LayoutDecisionTests {
             deviceType: .mac,
             contentComplexity: complexity
         )
-        #expect(macDecision != nil, "Mac device type should return a decision")
+        #expect(true, "Mac device type should return a decision")  // macDecision is non-optional
     }
     
     // MARK: - Intelligent Card Layout Decision Tests
@@ -349,7 +349,7 @@ open class L2LayoutDecisionTests {
         let layout = platformOCRLayout_L2(context: context)
         
         // Then
-        #expect(layout != nil, "platformOCRLayout_L2 should return a layout")
+        #expect(true, "platformOCRLayout_L2 should return a layout")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
         #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
         #expect(layout.recommendedImageSize.width > 0, "Should have positive recommended image width")
@@ -368,7 +368,7 @@ open class L2LayoutDecisionTests {
         )
         
         // Then
-        #expect(layout != nil, "platformDocumentOCRLayout_L2 should return a layout")
+        #expect(true, "platformDocumentOCRLayout_L2 should return a layout")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
         #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
@@ -381,7 +381,7 @@ open class L2LayoutDecisionTests {
         let layout = platformReceiptOCRLayout_L2(context: context)
         
         // Then
-        #expect(layout != nil, "platformReceiptOCRLayout_L2 should return a layout")
+        #expect(true, "platformReceiptOCRLayout_L2 should return a layout")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
         #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
@@ -394,7 +394,7 @@ open class L2LayoutDecisionTests {
         let layout = platformBusinessCardOCRLayout_L2(context: context)
         
         // Then
-        #expect(layout != nil, "platformBusinessCardOCRLayout_L2 should return a layout")
+        #expect(true, "platformBusinessCardOCRLayout_L2 should return a layout")  // layout is non-optional
         #expect(layout.maxImageSize.width > 0, "Should have positive max image width")
         #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
@@ -514,7 +514,7 @@ open class L2LayoutDecisionTests {
         let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then
-        #expect(strategy != nil, "determinePhotoCaptureStrategy_L2 should return a strategy")
+        #expect(true, "determinePhotoCaptureStrategy_L2 should return a strategy")  // strategy is non-optional
     }
     
     @Test func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
@@ -526,7 +526,7 @@ open class L2LayoutDecisionTests {
         let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then
-        #expect(strategy != nil, "determinePhotoCaptureStrategy_L2 should return a strategy")
+        #expect(true, "determinePhotoCaptureStrategy_L2 should return a strategy")  // strategy is non-optional
     }
     
     // MARK: - Performance Tests

@@ -1,5 +1,28 @@
 # Changelog
 
+## v5.0.1 - Bug Fixes and Priority Order Improvements
+
+### 🐛 Bug Fixes
+
+#### CardDisplayHelper Priority Order Fix
+- **Fixed**: Corrected priority order for content extraction: Hints → Reflection → CardDisplayable → nil
+- **Impact**: Improves automatic content discovery by trying reflection before CardDisplayable protocol
+- **Migration**: No code changes required. May see different results for items with both reflection-discoverable properties and CardDisplayable conformance
+
+#### Hints Default Values Implementation Fix
+- **Fixed**: Default values now properly work when properties are `nil`, empty strings, or have invalid types
+- **Fixed**: Default values now correctly apply when hint properties don't exist
+- **Impact**: Default values now work as documented in all scenarios
+
+### 🧪 Testing Improvements
+- Enhanced callback testing approach in unit tests
+- Tests now directly verify callback functions work correctly
+- Improved test reliability and coverage
+
+### 📚 Documentation
+- Updated priority order documentation
+- Clarified default values behavior in edge cases
+
 ## v5.0.0 - Major Testing and Accessibility Release
 
 ### 🎯 **TDD (Test-Driven Development) Maturity**

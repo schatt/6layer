@@ -96,7 +96,7 @@ open class PlatformColorEncodeTests {
                 let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
-                #expect(encodedData != nil, "Should encode \(name) successfully")
+                #expect(true, "Should encode \(name) successfully")  // encodedData is non-optional
                 #expect(!encodedData.isEmpty, "Encoded data should not be empty for \(name)")
                 
             } catch {
@@ -121,7 +121,7 @@ open class PlatformColorEncodeTests {
                 let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
-                #expect(encodedData != nil, "Should encode color with alpha \(expectedAlpha) successfully")
+                #expect(true, "Should encode color with alpha \(expectedAlpha) successfully")  // encodedData is non-optional
                 #expect(!encodedData.isEmpty, "Encoded data should not be empty")
                 
             } catch {
@@ -141,7 +141,7 @@ open class PlatformColorEncodeTests {
             let encodedData = try platformColorEncode(color)
             
             // Then: Should work on current platform
-            #expect(encodedData != nil, "Should encode color on current platform")
+            #expect(true, "Should encode color on current platform")  // encodedData is non-optional
             #expect(!encodedData.isEmpty, "Encoded data should not be empty")
             
             // Verify platform-specific encoding
@@ -174,7 +174,7 @@ open class PlatformColorEncodeTests {
                 let encodedData = try platformColorEncode(color)
                 
                 // Then: Should handle edge cases gracefully
-                #expect(encodedData != nil, "Should handle edge case color gracefully")
+                #expect(true, "Should handle edge case color gracefully")  // encodedData is non-optional
                 
             } catch {
                 // Edge cases might throw errors, which is acceptable
@@ -195,7 +195,7 @@ open class PlatformColorEncodeTests {
             let decodedColor = try platformColorDecode(encodedData)
             
             // Then: Decoded color should match original (within tolerance)
-            #expect(decodedColor != nil, "Should decode color successfully")
+            #expect(true, "Should decode color successfully")  // decodedColor is non-optional
             
             // Note: Exact color matching might be difficult due to platform differences
             // We'll verify the data was encoded and decoded successfully

@@ -370,7 +370,7 @@ open class AccessibilityFeaturesLayer5Tests {
         let enhancedView = testView.accessibilityEnhanced()
         
         // THEN: Should return modified view with accessibility identifier
-        #expect(enhancedView != nil, "Should return accessibility enhanced view with default config")
+        #expect(true, "Should return accessibility enhanced view with default config")  // enhancedView is non-optional
             // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.

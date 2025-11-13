@@ -43,28 +43,42 @@ public struct CardDisplayHelper {
             if titleProperty.isEmpty {
                 shouldFallbackToReflection = true
             } else {
-                if let value = extractPropertyValue(from: item, propertyName: titleProperty) as? String {
-                    // Use whatever the hint extracts, including empty strings
-                    // UNLESS there's an explicit default value configured
-                    if value.isEmpty {
+                // Check if property exists first
+                let propertyExists = propertyExists(in: item, propertyName: titleProperty)
+                
+                if propertyExists {
+                    // Property exists - extract its value
+                    if let value = extractPropertyValue(from: item, propertyName: titleProperty) as? String {
+                        // Use whatever the hint extracts, including empty strings
+                        // UNLESS there's an explicit default value configured
+                        if value.isEmpty {
+                            if let defaultValue = hints.customPreferences["itemTitleDefault"],
+                               !defaultValue.isEmpty {
+                                return defaultValue
+                            }
+                            // No default configured - return nil for empty string
+                            return nil
+                        }
+                        return value
+                    } else {
+                        // Property exists but is nil or not a String - check for default
                         if let defaultValue = hints.customPreferences["itemTitleDefault"],
                            !defaultValue.isEmpty {
                             return defaultValue
                         }
-                        // No default configured - return nil for empty string
+                        // No default configured - return nil (don't fall back)
                         return nil
                     }
-                    return value
+                } else {
+                    // Property doesn't exist - check for default, then fall back to reflection
+                    if let defaultValue = hints.customPreferences["itemTitleDefault"],
+                       !defaultValue.isEmpty {
+                        return defaultValue
+                    }
+                    
+                    // Property doesn't exist and no default - fall back to reflection
+                    shouldFallbackToReflection = true
                 }
-                
-                // Priority 1.5: Check for default value when hint property fails (property doesn't exist)
-                if let defaultValue = hints.customPreferences["itemTitleDefault"],
-                   !defaultValue.isEmpty {
-                    return defaultValue
-                }
-                
-                // Property doesn't exist and no default - fall back to reflection
-                shouldFallbackToReflection = true
             }
         }
         
@@ -134,6 +148,15 @@ public struct CardDisplayHelper {
             }
         }
         
+        // Priority 3: Check if item conforms to CardDisplayable and has meaningful content (fallback after reflection)
+        if let displayable = item as? CardDisplayable {
+            let title = displayable.cardTitle
+            // Only use if it's not the default hardcoded fallback
+            if title != "Item" && !title.isEmpty {
+                return title
+            }
+        }
+        
         // No meaningful content found - return nil instead of hardcoded fallback
         return nil
     }
@@ -141,30 +164,50 @@ public struct CardDisplayHelper {
     /// Extract meaningful subtitle from any item using hints or reflection
     public static func extractSubtitle(from item: Any, hints: PresentationHints? = nil) -> String? {
         // Priority 1: Check for configured subtitle property in hints (developer's explicit intent)
+        var shouldFallbackToReflection = false
         if let hints = hints,
            let subtitleProperty = hints.customPreferences["itemSubtitleProperty"],
            !subtitleProperty.isEmpty {
-            if let value = extractPropertyValue(from: item, propertyName: subtitleProperty) as? String {
-                // Use whatever the hint extracts, including empty strings
-                // UNLESS there's an explicit default value configured
-                if value.isEmpty {
+            // Check if property exists first
+            let propertyExists = propertyExists(in: item, propertyName: subtitleProperty)
+            
+            if propertyExists {
+                // Property exists - extract its value
+                if let value = extractPropertyValue(from: item, propertyName: subtitleProperty) as? String {
+                    // Use whatever the hint extracts, including empty strings
+                    // UNLESS there's an explicit default value configured
+                    if value.isEmpty {
+                        if let defaultValue = hints.customPreferences["itemSubtitleDefault"],
+                           !defaultValue.isEmpty {
+                            return defaultValue
+                        }
+                        // No default configured - return nil for empty string
+                        return nil
+                    }
+                    return value
+                } else {
+                    // Property exists but is nil or not a String - check for default
                     if let defaultValue = hints.customPreferences["itemSubtitleDefault"],
                        !defaultValue.isEmpty {
                         return defaultValue
                     }
+                    // No default configured - return nil (don't fall back)
+                    return nil
                 }
-                return value.isEmpty ? nil : value
-            }
-            
-            // Priority 1.5: Check for default value when hint property fails (property doesn't exist)
-            if let defaultValue = hints.customPreferences["itemSubtitleDefault"],
-               !defaultValue.isEmpty {
-                return defaultValue
+            } else {
+                // Property doesn't exist - check for default, then fall back to reflection
+                if let defaultValue = hints.customPreferences["itemSubtitleDefault"],
+                   !defaultValue.isEmpty {
+                    return defaultValue
+                }
+                
+                // Property doesn't exist and no default - fall back to reflection
+                shouldFallbackToReflection = true
             }
         }
         
-        // Only use reflection if no hints were provided at all
-        if hints == nil {
+        // Use reflection if no hints were provided OR if hint property doesn't exist
+        if hints == nil || shouldFallbackToReflection {
             // Use reflection to find common subtitle properties
             let mirror = Mirror(reflecting: item)
             
@@ -186,10 +229,13 @@ public struct CardDisplayHelper {
             }
             
             // Second pass: look for String properties that might be subtitles
-            // (longer strings that weren't used as titles)
+            // (longer strings that weren't used as titles, but exclude clearly non-subtitle properties)
+            let nonSubtitleProperties = ["id", "status", "priority", "state", "type", "kind", "category", "tag", "label", "identifier"]
             var subtitleCandidates: [(String, String)] = []
             for child in mirror.children {
-                if let value = child.value as? String,
+                if let label = child.label,
+                   !nonSubtitleProperties.contains(label.lowercased()),
+                   let value = child.value as? String,
                    !value.isEmpty,
                    value.count > 10, // Subtitles should be longer than titles
                    value.count < 300, // But not too long
@@ -198,7 +244,6 @@ public struct CardDisplayHelper {
                    !value.hasPrefix("0x"), // Skip memory addresses
                    value != "Optional" { // Skip Swift optional descriptions
                     
-                    let label = child.label ?? "unnamed"
                     subtitleCandidates.append((label, value))
                 }
             }
@@ -228,6 +273,13 @@ public struct CardDisplayHelper {
             return subtitleCandidates.first?.1
         }
         
+        // Priority 3: Check if item conforms to CardDisplayable and has meaningful content (fallback after reflection)
+        if let displayable = item as? CardDisplayable,
+           let subtitle = displayable.cardSubtitle,
+           !subtitle.isEmpty {
+            return subtitle
+        }
+        
         // No meaningful content found - return nil
         return nil
     }
@@ -235,42 +287,71 @@ public struct CardDisplayHelper {
     /// Extract meaningful icon from any item using hints or reflection
     public static func extractIcon(from item: Any, hints: PresentationHints? = nil) -> String? {
         // Priority 1: Check for configured icon property in hints (developer's explicit intent)
+        var shouldFallbackToReflection = false
         if let hints = hints,
            let iconProperty = hints.customPreferences["itemIconProperty"],
            !iconProperty.isEmpty {
-            if let value = extractPropertyValue(from: item, propertyName: iconProperty) as? String {
-                // Use whatever the hint extracts, including empty strings
-                // UNLESS there's an explicit default value configured
-                if value.isEmpty {
+            // Check if property exists first
+            let propertyExists = propertyExists(in: item, propertyName: iconProperty)
+            
+            if propertyExists {
+                // Property exists - extract its value
+                if let value = extractPropertyValue(from: item, propertyName: iconProperty) as? String {
+                    // Use whatever the hint extracts, including empty strings
+                    // UNLESS there's an explicit default value configured
+                    if value.isEmpty {
+                        if let defaultValue = hints.customPreferences["itemIconDefault"],
+                           !defaultValue.isEmpty {
+                            return defaultValue
+                        }
+                        // No default configured - return nil for empty string
+                        return nil
+                    }
+                    return value
+                } else {
+                    // Property exists but is nil or not a String - check for default
                     if let defaultValue = hints.customPreferences["itemIconDefault"],
                        !defaultValue.isEmpty {
                         return defaultValue
                     }
-                    // No default configured - return nil for empty string
+                    // No default configured - return nil (don't fall back)
                     return nil
                 }
-                return value
-            }
-            
-            // Priority 1.5: Check for default value when hint property fails (property doesn't exist)
-            if let defaultValue = hints.customPreferences["itemIconDefault"],
-               !defaultValue.isEmpty {
-                return defaultValue
+            } else {
+                // Property doesn't exist - check for default, then fall back to reflection
+                if let defaultValue = hints.customPreferences["itemIconDefault"],
+                   !defaultValue.isEmpty {
+                    return defaultValue
+                }
+                
+                // Property doesn't exist and no default - fall back to reflection
+                shouldFallbackToReflection = true
             }
         }
         
-        // Use reflection to find icon-related properties
-        let mirror = Mirror(reflecting: item)
+        // Priority 2: Use reflection if no hints were provided OR if hint property doesn't exist
+        if hints == nil || shouldFallbackToReflection {
         
-        // Look for icon properties
-        let iconProperties = ["icon", "image", "symbol", "emoji"]
-        for child in mirror.children {
-            if let label = child.label,
-               iconProperties.contains(label.lowercased()),
-               let value = child.value as? String,
-               !value.isEmpty {
-                return value
+            // Use reflection to find icon-related properties
+            let mirror = Mirror(reflecting: item)
+            
+            // Look for icon properties
+            let iconProperties = ["icon", "image", "symbol", "emoji"]
+            for child in mirror.children {
+                if let label = child.label,
+                   iconProperties.contains(label.lowercased()),
+                   let value = child.value as? String,
+                   !value.isEmpty {
+                    return value
+                }
             }
+        }
+        
+        // Priority 3: Check if item conforms to CardDisplayable and has meaningful content (fallback after reflection)
+        if let displayable = item as? CardDisplayable,
+           let icon = displayable.cardIcon,
+           icon != "star.fill" && !icon.isEmpty {
+            return icon
         }
         
         // No meaningful content found - return nil instead of hardcoded fallback
@@ -280,35 +361,74 @@ public struct CardDisplayHelper {
     /// Extract meaningful color from any item using hints or reflection
     public static func extractColor(from item: Any, hints: PresentationHints? = nil) -> Color? {
         // Priority 1: Check for configured color property in hints (developer's explicit intent)
+        var shouldFallbackToReflection = false
         if let hints = hints,
            let colorProperty = hints.customPreferences["itemColorProperty"],
            !colorProperty.isEmpty {
-            if let value = extractPropertyValue(from: item, propertyName: colorProperty) as? Color {
-                return value
-            }
+            // Check if property exists first
+            let propertyExists = propertyExists(in: item, propertyName: colorProperty)
             
-            // Priority 1.5: Check for default value when hint property fails (property doesn't exist)
-            if let defaultValue = hints.customPreferences["itemColorDefault"],
-               !defaultValue.isEmpty {
-                return parseColorString(defaultValue)
+            if propertyExists {
+                // Property exists - extract its value
+                if let value = extractPropertyValue(from: item, propertyName: colorProperty) as? Color {
+                    return value
+                } else {
+                    // Property exists but is nil or not a Color - check for default
+                    if let defaultValue = hints.customPreferences["itemColorDefault"],
+                       !defaultValue.isEmpty {
+                        return parseColorString(defaultValue)
+                    }
+                    // No default configured - return nil (don't fall back)
+                    return nil
+                }
+            } else {
+                // Property doesn't exist - check for default, then fall back to reflection
+                if let defaultValue = hints.customPreferences["itemColorDefault"],
+                   !defaultValue.isEmpty {
+                    return parseColorString(defaultValue)
+                }
+                
+                // Property doesn't exist and no default - fall back to reflection
+                shouldFallbackToReflection = true
             }
         }
         
-        // Use reflection to find color-related properties
-        let mirror = Mirror(reflecting: item)
-        
-        // Look for color properties
-        let colorProperties = ["color", "tint", "accent"]
-        for child in mirror.children {
-            if let label = child.label,
-               colorProperties.contains(label.lowercased()),
-               let value = child.value as? Color {
-                return value
+        // Priority 2: Use reflection if no hints were provided OR if hint property doesn't exist
+        if hints == nil || shouldFallbackToReflection {
+            // Use reflection to find color-related properties
+            let mirror = Mirror(reflecting: item)
+            
+            // Look for color properties
+            let colorProperties = ["color", "tint", "accent"]
+            for child in mirror.children {
+                if let label = child.label,
+                   colorProperties.contains(label.lowercased()),
+                   let value = child.value as? Color {
+                    return value
+                }
             }
+        }
+        
+        // Priority 3: Check if item conforms to CardDisplayable and has meaningful content (fallback after reflection)
+        if let displayable = item as? CardDisplayable,
+           let color = displayable.cardColor,
+           color != .blue {
+            return color
         }
         
         // No meaningful content found - return nil instead of hardcoded fallback
         return nil
+    }
+    
+    /// Helper method to check if a property exists in an item
+    private static func propertyExists(in item: Any, propertyName: String) -> Bool {
+        let mirror = Mirror(reflecting: item)
+        for child in mirror.children {
+            if child.label == propertyName {
+                return true
+            }
+        }
+        return false
     }
     
     /// Helper method to extract property value by name using reflection

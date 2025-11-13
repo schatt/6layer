@@ -137,7 +137,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentNumericData_L1 view should be hostable")
+        #expect(true, "platformPresentNumericData_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -153,7 +153,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformResponsiveCard_L1 view should be hostable")
+        #expect(true, "platformResponsiveCard_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -170,7 +170,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentFormData_L1 view should be hostable")
+        #expect(true, "platformPresentFormData_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -187,7 +187,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentModalForm_L1 view should be hostable")
+        #expect(true, "platformPresentModalForm_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -204,7 +204,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentMediaData_L1 view should be hostable")
+        #expect(true, "platformPresentMediaData_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -221,7 +221,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentHierarchicalData_L1 view should be hostable")
+        #expect(true, "platformPresentHierarchicalData_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -238,7 +238,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentTemporalData_L1 view should be hostable")
+        #expect(true, "platformPresentTemporalData_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -255,7 +255,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentContent_L1 view should be hostable")
+        #expect(true, "platformPresentContent_L1 view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - OCR Functions
@@ -275,7 +275,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformOCRWithVisualCorrection_L1 view should be hostable")
+        #expect(true, "platformOCRWithVisualCorrection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -293,7 +293,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformExtractStructuredData_L1 view should be hostable")
+        #expect(true, "platformExtractStructuredData_L1 view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Photo Functions
@@ -313,7 +313,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoCapture_L1 view should be hostable")
+        #expect(true, "platformPhotoCapture_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -331,7 +331,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -350,7 +350,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoDisplay_L1 view should be hostable")
+        #expect(true, "platformPhotoDisplay_L1 view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Internationalization Functions
@@ -369,7 +369,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedText_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedText_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -386,7 +386,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedNumber_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedNumber_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -405,7 +405,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedCurrency_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedCurrency_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -422,7 +422,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedDate_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedDate_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -439,7 +439,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedTime_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedTime_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -456,7 +456,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedPercentage_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedPercentage_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -477,7 +477,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedPlural_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedPlural_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -494,7 +494,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPresentLocalizedString_L1 view should be hostable")
+        #expect(true, "platformPresentLocalizedString_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -511,7 +511,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformLocalizedTextField_L1 view should be hostable")
+        #expect(true, "platformLocalizedTextField_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -528,7 +528,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformLocalizedSecureField_L1 view should be hostable")
+        #expect(true, "platformLocalizedSecureField_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -545,7 +545,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformLocalizedTextEditor_L1 view should be hostable")
+        #expect(true, "platformLocalizedTextEditor_L1 view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - DataFrame Analysis Functions
@@ -564,7 +564,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformAnalyzeDataFrame_L1 view should be hostable")
+        #expect(true, "platformAnalyzeDataFrame_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -581,7 +581,7 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformCompareDataFrames_L1 view should be hostable")
+        #expect(true, "platformCompareDataFrames_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -598,6 +598,6 @@ class L1SemanticTests {
         
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformAssessDataQuality_L1 view should be hostable")
+        #expect(true, "platformAssessDataQuality_L1 view should be hostable")  // hostingView is non-optional
     }
 }

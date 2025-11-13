@@ -94,7 +94,7 @@ open class AccessibilityPreferenceTests {
         
         // Then: Test actual business logic
         // The configuration should be appropriate for the current platform
-        #expect(config != nil, "Platform configuration should be available")
+        #expect(true, "Platform configuration should be available")  // config is non-optional
         
         // Test platform-specific expectations
         switch platform {
@@ -147,7 +147,7 @@ open class AccessibilityPreferenceTests {
         
         // Then: Test actual business logic
         // The configuration should have valid performance settings
-        #expect(config != nil, "Performance configuration should be available")
+        #expect(true, "Performance configuration should be available")  // config is non-optional
         
         // Test that performance settings are reasonable
         #expect(config.maxAnimationDuration >= 0, "Animation duration should be non-negative")

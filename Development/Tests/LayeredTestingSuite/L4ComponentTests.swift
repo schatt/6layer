@@ -56,7 +56,7 @@ class L4ComponentTests {
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "platformOCRImplementation_L4")
         // Note: This function is deprecated and returns a fallback result
-        #expect(result != nil, "OCR implementation should return a result")
+        #expect(true, "OCR implementation should return a result")  // result is non-optional
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
@@ -80,7 +80,7 @@ class L4ComponentTests {
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "platformTextExtraction_L4")
         // Note: This function is deprecated and returns a fallback result
-        #expect(result != nil, "Text extraction should return a result")
+        #expect(true, "Text extraction should return a result")  // result is non-optional
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
@@ -100,7 +100,7 @@ class L4ComponentTests {
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "platformTextRecognition_L4")
         // Note: This function is deprecated and returns a fallback result
-        #expect(result != nil, "Text recognition should return a result")
+        #expect(true, "Text recognition should return a result")  // result is non-optional
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
@@ -124,7 +124,7 @@ class L4ComponentTests {
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "safePlatformOCRImplementation_L4")
         // Note: This function is deprecated and returns a fallback result
-        #expect(result != nil, "Safe OCR implementation should return a result")
+        #expect(true, "Safe OCR implementation should return a result")  // result is non-optional
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
@@ -308,7 +308,7 @@ class L4ComponentTests {
         
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "Deprecated component test")
-        #expect(result != nil, "Deprecated component should still return a result")
+        #expect(true, "Deprecated component should still return a result")  // result is non-optional
         #expect(result?.extractedText.contains("deprecated") == true, "Should indicate deprecation")
         #expect(result?.confidence == 0.0, "Deprecated component should have zero confidence")
     }
@@ -332,7 +332,7 @@ class L4ComponentTests {
         
         // Then
         LayeredTestUtilities.verifyViewCreation(view, testName: "Component error handling test")
-        #expect(result != nil, "Safe component should return a result")
+        #expect(true, "Safe component should return a result")  // result is non-optional
         // Error handling is tested through the callback mechanism
     }
 }

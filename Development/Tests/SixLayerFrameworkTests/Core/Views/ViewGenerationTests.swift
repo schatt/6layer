@@ -68,7 +68,7 @@ open class ViewGenerationTests: BaseTestClass {
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView, so we need to inspect it differently
             let anyView = try inspected.sixLayerAnyView()
-            #expect(anyView != nil, "Detail view should be wrapped in AnyView")
+            #expect(true, "Detail view should be wrapped in AnyView")  // anyView is non-optional
 
             // Try to find text elements within the AnyView
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
@@ -114,7 +114,7 @@ open class ViewGenerationTests: BaseTestClass {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(detailView != nil, "IntelligentDetailView with custom field view should be created successfully")
+        #expect(true, "IntelligentDetailView with custom field view should be created successfully")  // detailView is non-optional
         
         // 2. Contains what it needs to contain - The view should contain custom field content
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -122,7 +122,7 @@ open class ViewGenerationTests: BaseTestClass {
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.sixLayerAnyView()
-            #expect(anyView != nil, "Detail view should be wrapped in AnyView")
+            #expect(true, "Detail view should be wrapped in AnyView")  // anyView is non-optional
 
             // The view should contain text elements with our custom format
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
@@ -169,7 +169,7 @@ open class ViewGenerationTests: BaseTestClass {
         // THEN: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(detailView != nil, "IntelligentDetailView with hints should be created successfully")
+        #expect(true, "IntelligentDetailView with hints should be created successfully")  // detailView is non-optional
         
         // 2. Contains what it needs to contain - The view should respect the hints
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -177,7 +177,7 @@ open class ViewGenerationTests: BaseTestClass {
         let inspectionResult = withInspectedView(detailView) { inspected in
             // The view is wrapped in AnyView
             let anyView = try inspected.sixLayerAnyView()
-            #expect(anyView != nil, "Detail view should be wrapped in AnyView")
+            #expect(true, "Detail view should be wrapped in AnyView")  // anyView is non-optional
 
             // The view should contain text elements
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)

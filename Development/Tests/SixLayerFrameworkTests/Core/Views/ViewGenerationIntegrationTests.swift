@@ -730,7 +730,7 @@ open class ViewGenerationIntegrationTests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(testView != nil, "Should be able to create view with mock config for \(config.name)")
+        #expect(true, "Should be able to create view with mock config for \(config.name)")  // testView is non-optional
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -1017,19 +1017,19 @@ open class ViewGenerationIntegrationTests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(touchView != nil, "Touch platform should generate a valid view")
-        #expect(hoverView != nil, "Hover platform should generate a valid view")
+        #expect(true, "Touch platform should generate a valid view")  // touchView is non-optional
+        #expect(true, "Hover platform should generate a valid view")  // hoverView is non-optional
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         let touchInspectionResult = withInspectedView(touchView) { touchInspection in
             // Touch view should be inspectable
-            #expect(touchInspection != nil, "Touch view should be inspectable")
+            #expect(true, "Touch view should be inspectable")  // touchInspection is non-optional
         }
 
         let hoverInspectionResult = withInspectedView(hoverView) { hoverInspection in
             // Hover view should be inspectable
-            #expect(hoverInspection != nil, "Hover view should be inspectable")
+            #expect(true, "Hover view should be inspectable")  // hoverInspection is non-optional
         }
             
             // The views should be different because they represent different platforms
@@ -1067,19 +1067,19 @@ open class ViewGenerationIntegrationTests {
         // Then: Test the two critical aspects
         
         // 1. Does it return a valid structure of the kind it's supposed to?
-        #expect(iOSView != nil, "iOS platform should generate a valid view")
-        #expect(macOSView != nil, "macOS platform should generate a valid view")
+        #expect(true, "iOS platform should generate a valid view")  // iOSView is non-optional
+        #expect(true, "macOS platform should generate a valid view")  // macOSView is non-optional
         
         // 2. Does that structure contain what it should?
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         let iOSInspectionResult = withInspectedView(iOSView) { iOSInspection in
             // iOS view should be valid SwiftUI view
-            #expect(iOSInspection != nil, "iOS view should be inspectable")
+            #expect(true, "iOS view should be inspectable")  // iOSInspection is non-optional
         }
 
         let macOSInspectionResult = withInspectedView(macOSView) { macOSInspection in
             // macOS view should be valid SwiftUI view
-            #expect(macOSInspection != nil, "macOS view should be inspectable")
+            #expect(true, "macOS view should be inspectable")  // macOSInspection is non-optional
         }
 
             // Verify platform-specific capabilities

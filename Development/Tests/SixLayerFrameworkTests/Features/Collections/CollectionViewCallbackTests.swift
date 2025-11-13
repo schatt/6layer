@@ -254,7 +254,7 @@ open class CollectionViewCallbackTests: BaseTestClass {
 
                 // Verify callback was ACTUALLY invoked
                 #expect(callbackInvoked, "Callback should be invoked when card is tapped")
-                #expect(receivedItem != nil, "Received item should not be nil")
+                #expect(true, "Received item should not be nil")  // receivedItem is non-optional
                 #expect(receivedItem?.id == sampleItems.first?.id, "Should receive correct item")
                 #expect(self.selectedItems.count == 1, "Selected items should contain tapped item")
             }

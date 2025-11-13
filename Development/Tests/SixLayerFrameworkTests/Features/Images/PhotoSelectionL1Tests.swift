@@ -46,7 +46,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -63,11 +63,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 with different purpose should return a view")
+        #expect(true, "platformPhotoSelection_L1 with different purpose should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Different Photo Purposes
@@ -86,11 +86,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for fuel receipt should return a view")
+        #expect(true, "platformPhotoSelection_L1 for fuel receipt should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -107,11 +107,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for pump display should return a view")
+        #expect(true, "platformPhotoSelection_L1 for pump display should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -128,11 +128,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for odometer should return a view")
+        #expect(true, "platformPhotoSelection_L1 for odometer should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -149,11 +149,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for maintenance should return a view")
+        #expect(true, "platformPhotoSelection_L1 for maintenance should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -170,11 +170,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for expense should return a view")
+        #expect(true, "platformPhotoSelection_L1 for expense should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -191,11 +191,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for profile should return a view")
+        #expect(true, "platformPhotoSelection_L1 for profile should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     @Test @MainActor
@@ -212,11 +212,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 for document should return a view")
+        #expect(true, "platformPhotoSelection_L1 for document should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
     // MARK: - Edge Cases
@@ -240,11 +240,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view that can be hosted
-        #expect(view != nil, "platformPhotoSelection_L1 with empty context should return a view")
+        #expect(true, "platformPhotoSelection_L1 with empty context should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(hostingView != nil, "platformPhotoSelection_L1 view should be hostable")
+        #expect(true, "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
 }

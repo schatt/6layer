@@ -115,20 +115,6 @@ public class UnifiedWindowDetection: ObservableObject {
         screenSizeClass = convertToSizeClass(windowSize)
     }
     
-    // MARK: - Monitoring Methods (for compatibility with platform-specific classes)
-    
-    /// Start monitoring window changes - stub implementation for compatibility
-    public func startMonitoring() {
-        // UnifiedWindowDetection doesn't actively monitor - it relies on SwiftUI updates
-        // This is a stub for compatibility with platform-specific implementations
-    }
-    
-    /// Stop monitoring window changes - stub implementation for compatibility
-    public func stopMonitoring() {
-        // UnifiedWindowDetection doesn't actively monitor - it relies on SwiftUI updates
-        // This is a stub for compatibility with platform-specific implementations
-    }
-    
     /// Update window information - stub implementation for compatibility
     public func updateWindowInfo() {
         // UnifiedWindowDetection doesn't actively monitor - it relies on SwiftUI updates

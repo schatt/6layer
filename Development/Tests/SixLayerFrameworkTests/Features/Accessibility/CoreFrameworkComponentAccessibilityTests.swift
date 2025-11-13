@@ -310,7 +310,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             let state = AccessibilitySystemState()
             
             // Then: Should be properly initialized
-            #expect(state != nil, "AccessibilitySystemState should be properly initialized")
+            #expect(true, "AccessibilitySystemState should be properly initialized")  // state is non-optional
         }
     }
     
@@ -320,7 +320,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             let platform = "iOS" // Use real platform
             
             // Then: Should detect platform correctly
-            #expect(platform != nil, "Platform detection should work correctly")
+            #expect(true, "Platform detection should work correctly")  // platform is non-optional
         }
     }
     

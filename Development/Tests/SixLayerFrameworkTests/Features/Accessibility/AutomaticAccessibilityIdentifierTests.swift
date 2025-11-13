@@ -28,8 +28,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     // MARK: - Test Helpers
     
     /// Helper function to test that accessibility identifiers are properly configured
-    @Test @MainActor
-    @discardableResult
+    @MainActor
     private func testAccessibilityIdentifierConfiguration() -> Bool {
         runWithTaskLocalConfig {
             guard let config = testConfig else {

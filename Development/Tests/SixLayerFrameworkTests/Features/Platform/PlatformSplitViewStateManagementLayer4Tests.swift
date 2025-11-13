@@ -39,7 +39,7 @@ open class PlatformSplitViewStateManagementLayer4Tests {
         let state = PlatformSplitViewState()
         
         // Then: State should be created successfully
-        #expect(state != nil, "PlatformSplitViewState should be created")
+        #expect(true, "PlatformSplitViewState should be created")  // state is non-optional
     }
     
     @Test func testPlatformSplitViewStateHasDefaultVisibility() async {

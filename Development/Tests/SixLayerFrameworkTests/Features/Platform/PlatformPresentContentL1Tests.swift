@@ -103,7 +103,7 @@ open class PlatformPresentContentL1Tests {
             }
             
             // Verify string content detection works
-            #expect(hasStringContent != nil, "String content detection should work")
+            #expect(true, "String content detection should work")  // hasStringContent is non-optional
             // Note: Currently BasicValueView shows "Value" instead of actual content due to framework bug
             // So we expect hasStringContent to be false until the bug is fixed
             #expect(!hasStringContent, "Currently BasicValueView doesn't show actual string content due to framework bug")
@@ -145,7 +145,7 @@ open class PlatformPresentContentL1Tests {
         // Then: Test the two critical aspects
         
         // 1. View created - The view can be instantiated successfully
-        #expect(view != nil, "platformPresentContent_L1 should return a view for number content")
+        #expect(true, "platformPresentContent_L1 should return a view for number content")  // view is non-optional
         
         // 2. Contains what it needs to contain - The view should contain the actual number content
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -154,7 +154,7 @@ open class PlatformPresentContentL1Tests {
             guard let inspected = view.tryInspect() else { return }
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let anyView = try inspected.sixLayerAnyView()
-            #expect(anyView != nil, "Number content should be wrapped in AnyView")
+            #expect(true, "Number content should be wrapped in AnyView")  // anyView is non-optional
             
             // The view should contain text elements with our number content
             let viewText = inspected.sixLayerFindAll(ViewType.Text.self)
@@ -185,18 +185,18 @@ open class PlatformPresentContentL1Tests {
         // Test different number types
         let doubleContent = 42.5
         let doubleView = platformPresentContent_L1(content: doubleContent, hints: hints)
-        #expect(doubleView != nil, "Should handle double values")
+        #expect(true, "Should handle double values")  // doubleView is non-optional
         
         let floatContent: Float = 42.0
         let floatView = platformPresentContent_L1(content: floatContent, hints: hints)
-        #expect(floatView != nil, "Should handle float values")
+        #expect(true, "Should handle float values")  // floatView is non-optional
         
         // Test edge cases
         let zeroView = platformPresentContent_L1(content: 0, hints: hints)
-        #expect(zeroView != nil, "Should handle zero values")
+        #expect(true, "Should handle zero values")  // zeroView is non-optional
         
         let negativeView = platformPresentContent_L1(content: -42, hints: hints)
-        #expect(negativeView != nil, "Should handle negative values")
+        #expect(true, "Should handle negative values")  // negativeView is non-optional
     }
     
     @Test func testPlatformPresentContent_L1_WithArray() {
@@ -211,23 +211,23 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for array content")
+        #expect(true, "platformPresentContent_L1 should return a view for array content")  // view is non-optional
         
         // Test different array types
         let stringArray = ["hello", "world", "test"]
         let stringArrayView = platformPresentContent_L1(content: stringArray, hints: hints)
-        #expect(stringArrayView != nil, "Should handle string arrays")
+        #expect(true, "Should handle string arrays")  // stringArrayView is non-optional
         
         let mixedArray: [Any] = [1, "hello", 3.14, true]
         let mixedArrayView = platformPresentContent_L1(content: mixedArray, hints: hints)
-        #expect(mixedArrayView != nil, "Should handle mixed type arrays")
+        #expect(true, "Should handle mixed type arrays")  // mixedArrayView is non-optional
         
         // Test edge cases
         let emptyArrayView = platformPresentContent_L1(content: [] as [Int], hints: hints)
-        #expect(emptyArrayView != nil, "Should handle empty arrays")
+        #expect(true, "Should handle empty arrays")  // emptyArrayView is non-optional
         
         let singleElementView = platformPresentContent_L1(content: [42], hints: hints)
-        #expect(singleElementView != nil, "Should handle single element arrays")
+        #expect(true, "Should handle single element arrays")  // singleElementView is non-optional
     }
     
     @Test func testPlatformPresentContent_L1_WithDictionary() {
@@ -242,23 +242,23 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for dictionary content")
+        #expect(true, "platformPresentContent_L1 should return a view for dictionary content")  // view is non-optional
         
         // Test different dictionary types
         let stringDict = ["key1": "value1", "key2": "value2"]
         let stringDictView = platformPresentContent_L1(content: stringDict, hints: hints)
-        #expect(stringDictView != nil, "Should handle string dictionaries")
+        #expect(true, "Should handle string dictionaries")  // stringDictView is non-optional
         
         let numberDict = ["count": 42, "price": 99.99]
         let numberDictView = platformPresentContent_L1(content: numberDict, hints: hints)
-        #expect(numberDictView != nil, "Should handle number dictionaries")
+        #expect(true, "Should handle number dictionaries")  // numberDictView is non-optional
         
         // Test edge cases
         let emptyDictView = platformPresentContent_L1(content: [:] as [String: Any], hints: hints)
-        #expect(emptyDictView != nil, "Should handle empty dictionaries")
+        #expect(true, "Should handle empty dictionaries")  // emptyDictView is non-optional
         
         let singleKeyView = platformPresentContent_L1(content: ["single": "value"], hints: hints)
-        #expect(singleKeyView != nil, "Should handle single key dictionaries")
+        #expect(true, "Should handle single key dictionaries")  // singleKeyView is non-optional
     }
     
     @Test func testPlatformPresentContent_L1_WithNil() {
@@ -273,7 +273,7 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for nil content")
+        #expect(true, "platformPresentContent_L1 should return a view for nil content")  // view is non-optional
     }
     
     // MARK: - Different Hint Types Tests
@@ -295,7 +295,7 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view with different data type hints")
+        #expect(true, "platformPresentContent_L1 should return a view with different data type hints")  // view is non-optional
     }
     
     @Test func testPlatformPresentContent_L1_WithComplexContent() {
@@ -315,7 +315,7 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for complex content")
+        #expect(true, "platformPresentContent_L1 should return a view for complex content")  // view is non-optional
     }
     
     // MARK: - Edge Cases Tests
@@ -332,7 +332,7 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for empty string")
+        #expect(true, "platformPresentContent_L1 should return a view for empty string")  // view is non-optional
     }
     
     @Test func testPlatformPresentContent_L1_WithEmptyArray() {
@@ -347,7 +347,7 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for empty array")
+        #expect(true, "platformPresentContent_L1 should return a view for empty array")  // view is non-optional
     }
     
     @Test func testPlatformPresentContent_L1_WithEmptyDictionary() {
@@ -362,7 +362,7 @@ open class PlatformPresentContentL1Tests {
         )
         
         // Then
-        #expect(view != nil, "platformPresentContent_L1 should return a view for empty dictionary")
+        #expect(true, "platformPresentContent_L1 should return a view for empty dictionary")  // view is non-optional
     }
     
     // MARK: - Performance Tests
@@ -380,7 +380,7 @@ open class PlatformPresentContentL1Tests {
             
             // Force SwiftUI to actually render the view by hosting it
             let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-            #expect(hostingView != nil, "Performance test should successfully render the view")
+            #expect(true, "Performance test should successfully render the view")  // hostingView is non-optional
         // Performance test removed - performance monitoring was removed from framework
     }
 }

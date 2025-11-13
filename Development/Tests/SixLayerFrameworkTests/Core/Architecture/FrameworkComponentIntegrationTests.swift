@@ -30,7 +30,7 @@ open class FrameworkComponentIntegrationTests {
             contentView
         }
         
-        #expect(testView != nil, "platformPresentContent_L1 should work in view hierarchy")
+        #expect(true, "platformPresentContent_L1 should work in view hierarchy")  // testView is non-optional
     }
     
     @Test func testPlatformPresentBasicValueL1CanBeCreated() {
@@ -38,14 +38,14 @@ open class FrameworkComponentIntegrationTests {
         let valueView = platformPresentBasicValue_L1(value: 42, hints: PresentationHints())
         
         // Test that the component can be created and doesn't crash
-        #expect(valueView != nil, "platformPresentBasicValue_L1 should be creatable")
+        #expect(true, "platformPresentBasicValue_L1 should be creatable")  // valueView is non-optional
         
         // Test that it can be used in a view hierarchy
         let testView = VStack {
             valueView
         }
         
-        #expect(testView != nil, "platformPresentBasicValue_L1 should work in view hierarchy")
+        #expect(true, "platformPresentBasicValue_L1 should work in view hierarchy")  // testView is non-optional
     }
     
     @Test func testPlatformPresentBasicArrayL1CanBeCreated() {
@@ -53,14 +53,14 @@ open class FrameworkComponentIntegrationTests {
         let arrayView = platformPresentBasicArray_L1(array: [1, 2, 3], hints: PresentationHints())
         
         // Test that the component can be created and doesn't crash
-        #expect(arrayView != nil, "platformPresentBasicArray_L1 should be creatable")
+        #expect(true, "platformPresentBasicArray_L1 should be creatable")  // arrayView is non-optional
         
         // Test that it can be used in a view hierarchy
         let testView = VStack {
             arrayView
         }
         
-        #expect(testView != nil, "platformPresentBasicArray_L1 should work in view hierarchy")
+        #expect(true, "platformPresentBasicArray_L1 should work in view hierarchy")  // testView is non-optional
     }
     
     // MARK: - TDD Red Phase: Components That SHOULD FAIL (Missing .automaticAccessibility())
@@ -85,14 +85,14 @@ open class FrameworkComponentIntegrationTests {
         )
         
         // Test that the component can be created and doesn't crash
-        #expect(collectionView != nil, "platformPresentItemCollection_L1 should be creatable")
+        #expect(true, "platformPresentItemCollection_L1 should be creatable")  // collectionView is non-optional
         
         // Test that it can be used in a view hierarchy
         let testView = VStack {
             collectionView
         }
         
-        #expect(testView != nil, "platformPresentItemCollection_L1 should work in view hierarchy")
+        #expect(true, "platformPresentItemCollection_L1 should work in view hierarchy")  // testView is non-optional
         print("Testing platformPresentItemCollection_L1 integration with accessibility")
     }
     
@@ -118,7 +118,7 @@ open class FrameworkComponentIntegrationTests {
             platformPresentItemCollection_L1(items: mockItems, hints: hints)
         }
         
-        #expect(testView != nil, "Multiple framework components should work together")
+        #expect(true, "Multiple framework components should work together")  // testView is non-optional
     }
 }
 

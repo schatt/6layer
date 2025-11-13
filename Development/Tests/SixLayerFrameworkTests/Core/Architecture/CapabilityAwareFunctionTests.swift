@@ -328,10 +328,10 @@ open class CapabilityAwareFunctionTests {
                     strategy: strategy
                 )
                 // Should provide fallback result when Vision is disabled
-                #expect(result != nil, "Should provide fallback result when Vision is disabled")
+                #expect(true, "Should provide fallback result when Vision is disabled")  // result is non-optional
             } catch {
                 // Should handle error gracefully when Vision is disabled
-                #expect(error != nil, "Should handle error gracefully when Vision is disabled")
+                #expect(true, "Should handle error gracefully when Vision is disabled")  // error is non-optional
             }
         }
     }
@@ -380,7 +380,7 @@ open class CapabilityAwareFunctionTests {
             #expect(!encodedData.isEmpty, "Color encoding should work on all platforms")
             
             let decodedColor = try platformColorDecode(encodedData)
-            #expect(decodedColor != nil, "Color decoding should work on all platforms")
+            #expect(true, "Color decoding should work on all platforms")  // decodedColor is non-optional
         } catch {
             Issue.record("Color encoding/decoding should work on all platforms: \(error)")
         }

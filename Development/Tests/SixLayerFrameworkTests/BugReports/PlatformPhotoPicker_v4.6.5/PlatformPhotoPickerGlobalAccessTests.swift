@@ -66,16 +66,16 @@ struct PlatformPhotoPickerGlobalAccessTests {
         
         let callback: (PlatformImage) -> Void = { image in
             // Simulate what CarManager does
-            #expect(image != nil, "Callback should receive a PlatformImage")
+            #expect(true, "Callback should receive a PlatformImage")  // image is non-optional
         }
         
         // These should compile when called from external modules
-        let photoPicker = platformPhotoPicker_L4(onImageSelected: callback)
-        let cameraView = platformCameraInterface_L4(onImageCaptured: callback)
+        let _ = platformPhotoPicker_L4(onImageSelected: callback)
+        let _ = platformCameraInterface_L4(onImageCaptured: callback)
         
         // Verify they return views
-        #expect(photoPicker != nil, "platformPhotoPicker_L4 should return a view")
-        #expect(cameraView != nil, "platformCameraInterface_L4 should return a view")
+        #expect(true, "platformPhotoPicker_L4 should return a view")  // photoPicker is non-optional
+        #expect(true, "platformCameraInterface_L4 should return a view")  // cameraView is non-optional
     }
 }
 
