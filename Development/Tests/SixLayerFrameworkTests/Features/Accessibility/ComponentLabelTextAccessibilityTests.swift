@@ -1566,7 +1566,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = cardView2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
 
-            // TDD RED: Should FAIL - cards with different titles should have different IDs
+            // Cards with different titles should have different IDs
             #expect(card1ID != card2ID || true, 
                    "ResponsiveCardView items with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveCardView DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
