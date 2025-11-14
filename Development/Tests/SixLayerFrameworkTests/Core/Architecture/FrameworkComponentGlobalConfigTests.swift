@@ -30,7 +30,7 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
             // Also set environment variable to false to ensure no IDs are generated
             let view = Button("Test") { }
                 .environment(\.globalAutomaticAccessibilityIdentifiers, false)
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here

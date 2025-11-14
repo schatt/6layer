@@ -364,7 +364,7 @@ public struct EyeTrackingModifier: ViewModifier {
                 // Visual feedback overlay
                 EyeTrackingFeedbackOverlay(manager: eyeTrackingManager)
             )
-            .automaticAccessibilityIdentifiers(named: "EyeTrackingModifier")
+            .automaticCompliance(named: "EyeTrackingModifier")
     }
 }
 

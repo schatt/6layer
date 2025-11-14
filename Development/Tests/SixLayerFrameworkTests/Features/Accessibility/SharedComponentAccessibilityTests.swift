@@ -31,7 +31,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericNumericDataView(values: testData, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1716.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -42,7 +42,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericNumericDataView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1716.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -83,7 +83,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericFormView(fields: testFields, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericFormView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericFormView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1793.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -94,7 +94,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericFormView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericFormView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericFormView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1793.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -113,7 +113,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericMediaView(media: testMediaItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1810.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -124,7 +124,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericMediaView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1810.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -145,7 +145,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericSettingsView(settings: testSettings, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3534.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -156,7 +156,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericSettingsView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3534.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -183,7 +183,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericItemCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "GenericItemCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -204,7 +204,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericHierarchicalView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericHierarchicalView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericHierarchicalView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1827.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -215,7 +215,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericHierarchicalView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericHierarchicalView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericHierarchicalView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1827.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -234,7 +234,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericTemporalView(items: testItems, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericTemporalView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericTemporalView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1844.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -245,7 +245,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericTemporalView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericTemporalView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericTemporalView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1844.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -261,7 +261,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         let testView = GenericContentView(content: testContent, hints: hints)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3138.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -272,7 +272,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             componentName: "GenericContentView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3138.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

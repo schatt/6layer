@@ -23,7 +23,7 @@ public struct PlatformLoggingLayer5: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 

@@ -13,12 +13,12 @@ public struct PlatformRecognitionLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Recognition")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("AI/ML-powered content recognition")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             // Recognition features interface would go here
             VStack(alignment: .leading, spacing: 8) {
@@ -28,9 +28,9 @@ public struct PlatformRecognitionLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformRecognitionLayer5")
+        .automaticCompliance(named: "PlatformRecognitionLayer5")
     }
 }

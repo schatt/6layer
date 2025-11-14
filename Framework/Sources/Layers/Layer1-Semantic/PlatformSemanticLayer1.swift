@@ -124,7 +124,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemEdited: onItemEdited
     )
     .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting numeric data
@@ -135,7 +135,7 @@ public func platformPresentNumericData_L1(
 ) -> some View {
     return GenericNumericDataView(data: data, hints: hints)
         .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Present a single numeric data item
@@ -162,7 +162,7 @@ public func platformPresentNumericData_L1(
         customDataView: { AnyView(customDataView($0)) }
     )
     .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting numeric data with custom views and enhanced hints
@@ -192,7 +192,7 @@ public func platformPresentNumericData_L1(
     )
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting responsive cards
@@ -254,7 +254,7 @@ public func platformPresentFormData_L1(
         modelName: nil,
         layoutSpec: nil
     )
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting modal forms
@@ -277,7 +277,7 @@ public func platformPresentModalForm_L1(
     
     // Return a modal form with the generated fields
     return ModalFormView(fields: fields, formType: formType, context: context, hints: hints)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Generic function for presenting media data
@@ -291,7 +291,7 @@ public func platformPresentMediaData_L1(
     
     return GenericMediaView(media: media, hints: hints)
         .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Present a single media item
@@ -350,7 +350,7 @@ public func platformPresentMediaData_L1(
         customMediaView: { AnyView(customMediaView($0)) }
     )
     .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting media data with custom views and enhanced hints
@@ -380,7 +380,7 @@ public func platformPresentMediaData_L1(
     )
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting hierarchical data
@@ -391,7 +391,7 @@ public func platformPresentHierarchicalData_L1(
 ) -> some View {
     return GenericHierarchicalView(items: items, hints: hints)
         .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Present a single hierarchical item
@@ -418,7 +418,7 @@ public func platformPresentHierarchicalData_L1(
         customItemView: { AnyView(customItemView($0)) }
     )
     .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting hierarchical data with custom views and enhanced hints
@@ -448,7 +448,7 @@ public func platformPresentHierarchicalData_L1(
     )
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting temporal data
@@ -459,7 +459,7 @@ public func platformPresentTemporalData_L1(
 ) -> some View {
     return GenericTemporalView(items: items, hints: hints)
         .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Present a single temporal item
@@ -486,7 +486,7 @@ public func platformPresentTemporalData_L1(
         customItemView: { AnyView(customItemView($0)) }
     )
     .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting temporal data with custom views and enhanced hints
@@ -516,7 +516,7 @@ public func platformPresentTemporalData_L1(
     )
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting unknown content at runtime
@@ -541,7 +541,7 @@ public func platformPresentContent_L1(
             .automaticAccessibility()
             .platformPatterns()
             .visualConsistency()
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
 }
 
 /// Present basic numeric values (Int, Float, Double, Bool) with appropriate formatting
@@ -555,7 +555,7 @@ public func platformPresentBasicValue_L1(
         .automaticAccessibility()
         .platformPatterns()
         .visualConsistency()
-        .automaticAccessibilityIdentifiers())
+        .automaticCompliance())
 }
 
 /// Present basic arrays with appropriate formatting
@@ -569,7 +569,7 @@ public func platformPresentBasicArray_L1(
         .automaticAccessibility()
         .platformPatterns()
         .visualConsistency()
-        .automaticAccessibilityIdentifiers())
+        .automaticCompliance())
 }
 
 /// Generic function for presenting settings interface
@@ -592,7 +592,7 @@ public func platformPresentSettings_L1(
         onSettingsSaved: onSettingsSaved,
         onSettingsCancelled: onSettingsCancelled
     )
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting settings interface with custom views
@@ -615,7 +615,7 @@ public func platformPresentSettings_L1(
         customSettingView: { AnyView(customSettingView($0)) }
     )
     .environment(\.accessibilityIdentifierName, "platformPresentSettings_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting settings interface with custom views and enhanced hints
@@ -651,7 +651,7 @@ public func platformPresentSettings_L1(
     )
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentSettings_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 // MARK: - Enhanced Presentation Hints Overloads
@@ -690,7 +690,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     )
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 // MARK: - Custom View Support Overloads
@@ -736,7 +736,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemEdited: onItemEdited
     ))
     .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting any collection of identifiable items with custom views and enhanced hints
@@ -773,7 +773,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
     ))
     .environment(\.extensibleHints, hints.extensibleHints)
     .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting any collection of identifiable items with custom views for all actions
@@ -798,7 +798,7 @@ public func platformPresentItemCollection_L1<Item: Identifiable>(
         onItemEdited: onItemEdited
     ))
     .environment(\.accessibilityIdentifierName, "platformPresentItemCollection_L1")
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Generic function for presenting numeric data with enhanced hints
@@ -821,7 +821,7 @@ public func platformPresentNumericData_L1(
     return GenericNumericDataView(data: data, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
         .environment(\.accessibilityIdentifierName, "platformPresentNumericData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Generic function for presenting responsive cards with enhanced hints
@@ -1086,7 +1086,7 @@ public func platformPresentMediaData_L1(
     return GenericMediaView(media: media, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
         .environment(\.accessibilityIdentifierName, "platformPresentMediaData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Generic function for presenting hierarchical data with enhanced hints
@@ -1109,7 +1109,7 @@ public func platformPresentHierarchicalData_L1(
     return GenericHierarchicalView(items: items, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
         .environment(\.accessibilityIdentifierName, "platformPresentHierarchicalData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Generic function for presenting temporal data with enhanced hints
@@ -1132,7 +1132,7 @@ public func platformPresentTemporalData_L1(
     return GenericTemporalView(items: items, hints: processedHints)
         .environment(\.extensibleHints, hints.extensibleHints)
         .environment(\.accessibilityIdentifierName, "platformPresentTemporalData_L1")
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 // MARK: - Generic View Structures
@@ -1268,7 +1268,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
             return AnyView(CollectionEmptyStateView(hints: hints, onCreateItem: onCreateItem)
                 .appleHIGCompliant()
                 .automaticAccessibility()
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
                 .platformPatterns()
                 .visualConsistency())
         }
@@ -1337,7 +1337,7 @@ public struct GenericItemCollectionView<Item: Identifiable>: View {
         return AnyView(baseView
             .appleHIGCompliant()
             .automaticAccessibility()
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             .platformPatterns()
             .visualConsistency())
     }
@@ -1472,7 +1472,7 @@ public struct CollectionEmptyStateView: View {
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     private var emptyStateIcon: String {
@@ -1782,7 +1782,7 @@ public struct GenericNumericDataView: View {
             .automaticAccessibility()
             .platformPatterns()
             .visualConsistency()
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -1859,7 +1859,7 @@ public struct GenericFormView: View {
                 }
             }
         )
-        .automaticAccessibilityIdentifiers(named: "GenericFormView")
+        .automaticCompliance(named: "GenericFormView")
     }
 }
 
@@ -1876,7 +1876,7 @@ public struct GenericMediaView: View {
                 .font(.caption)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -1893,7 +1893,7 @@ public struct GenericHierarchicalView: View {
                 .font(.caption)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -1910,7 +1910,7 @@ public struct GenericTemporalView: View {
                 .font(.caption)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -1951,7 +1951,7 @@ public struct ModalFormView: View {
         }
         .frame(minWidth: 400, minHeight: 300)
         .background(Color.platformBackground)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     @ViewBuilder
@@ -2093,7 +2093,7 @@ public struct ModalFormView: View {
                     .textFieldStyle(.roundedBorder)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -2578,7 +2578,7 @@ public struct SimpleFormView: View {
                     .foregroundColor(.red)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     // MARK: - Helper Methods
@@ -3204,7 +3204,7 @@ public struct GenericContentView: View {
         } else {
             // Fallback to generic presentation for truly unknown types
             return AnyView(GenericFallbackView(content: content, hints: hints)
-                .automaticAccessibilityIdentifiers(named: "GenericContentView"))
+                .automaticCompliance(named: "GenericContentView"))
         }
     }
     
@@ -3303,7 +3303,7 @@ private struct BasicValueView: View {
         .padding()
         .background(Color.blue.opacity(0.1))
         .cornerRadius(12)
-        .automaticAccessibilityIdentifiers(named: "BasicValueView")
+        .automaticCompliance(named: "BasicValueView")
     }
 }
 
@@ -3352,7 +3352,7 @@ private struct BasicArrayView: View {
         .padding()
         .background(Color.orange.opacity(0.1))
         .cornerRadius(12)
-        .automaticAccessibilityIdentifiers(named: "BasicArrayView")
+        .automaticCompliance(named: "BasicArrayView")
     }
 }
 
@@ -3394,7 +3394,7 @@ private struct GenericFallbackView: View {
         .padding()
         .background(Color.secondary.opacity(0.1))
         .cornerRadius(12)
-        .automaticAccessibilityIdentifiers(named: "GenericFallbackView")
+        .automaticCompliance(named: "GenericFallbackView")
     }
 }
 
@@ -3600,7 +3600,7 @@ public struct GenericSettingsView: View {
         .onAppear {
             initializeValues()
         }
-        .automaticAccessibilityIdentifiers(named: "GenericSettingsView")
+        .automaticCompliance(named: "GenericSettingsView")
     }
     
     private func initializeValues() {

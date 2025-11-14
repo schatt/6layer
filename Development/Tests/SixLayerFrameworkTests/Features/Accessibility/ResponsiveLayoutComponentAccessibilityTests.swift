@@ -45,7 +45,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
                 componentName: "ResponsiveGrid"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ResponsiveGrid" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -81,7 +81,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
                 componentName: "ResponsiveNavigation"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ResponsiveNavigation" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -116,7 +116,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
                 componentName: "ResponsiveStack"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ResponsiveStack" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -136,7 +136,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             let view = ResponsiveLayoutExample()
         
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayoutExample DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayoutExample DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:207.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -147,7 +147,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
                 componentName: "ResponsiveLayoutExample"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayoutExample DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayoutExample DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:207.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -167,7 +167,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             let view = ResponsiveNavigationExample()
         
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveNavigationExample DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveNavigationExample DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:233.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -178,7 +178,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
                 componentName: "ResponsiveNavigationExample"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveNavigationExample DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveNavigationExample DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:233.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -203,7 +203,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // When: Applying ResponsivePadding modifier
             let view = testContent.modifier(ResponsivePadding())
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsivePadding DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsivePadding DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:100.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -214,7 +214,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
                 componentName: "ResponsivePadding"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsivePadding DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsivePadding DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:100.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

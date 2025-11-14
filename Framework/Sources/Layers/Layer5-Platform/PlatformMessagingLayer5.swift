@@ -22,15 +22,15 @@ public class PlatformMessagingLayer5 {
         return Button(title, action: action)
             .buttonStyle(.bordered)
             .foregroundColor(style == .destructive ? .red : .primary)
-            .automaticAccessibilityIdentifiers(named: "AlertButton")
+            .automaticCompliance(named: "AlertButton")
         #elseif os(macOS)
         return Button(title, action: action)
             .buttonStyle(.bordered)
             .foregroundColor(style == .destructive ? .red : .primary)
-            .automaticAccessibilityIdentifiers(named: "AlertButton")
+            .automaticCompliance(named: "AlertButton")
         #else
         return Button(title, action: action)
-            .automaticAccessibilityIdentifiers(named: "AlertButton")
+            .automaticCompliance(named: "AlertButton")
         #endif
     }
     
@@ -49,7 +49,7 @@ public class PlatformMessagingLayer5 {
         .background(Color(.systemBackground))
         .cornerRadius(8)
         .shadow(radius: 4)
-        .automaticAccessibilityIdentifiers(named: "ToastNotification")
+        .automaticCompliance(named: "ToastNotification")
         #elseif os(macOS)
         return HStack {
             Image(systemName: iconForToastType(type))
@@ -62,10 +62,10 @@ public class PlatformMessagingLayer5 {
         .background(Color(.windowBackgroundColor))
         .cornerRadius(8)
         .shadow(radius: 4)
-        .automaticAccessibilityIdentifiers(named: "ToastNotification")
+        .automaticCompliance(named: "ToastNotification")
         #else
         return Text(message)
-            .automaticAccessibilityIdentifiers(named: "ToastNotification")
+            .automaticCompliance(named: "ToastNotification")
         #endif
     }
     
@@ -92,7 +92,7 @@ public class PlatformMessagingLayer5 {
                 .frame(width: 4),
             alignment: .leading
         )
-        .automaticAccessibilityIdentifiers(named: "BannerNotification")
+        .automaticCompliance(named: "BannerNotification")
         #elseif os(macOS)
         return VStack(alignment: .leading, spacing: 4) {
             Text(title)
@@ -111,13 +111,13 @@ public class PlatformMessagingLayer5 {
                 .frame(width: 4),
             alignment: .leading
         )
-        .automaticAccessibilityIdentifiers(named: "BannerNotification")
+        .automaticCompliance(named: "BannerNotification")
         #else
         return VStack(alignment: .leading) {
             Text(title)
             Text(message)
         }
-        .automaticAccessibilityIdentifiers(named: "BannerNotification")
+        .automaticCompliance(named: "BannerNotification")
         #endif
     }
     

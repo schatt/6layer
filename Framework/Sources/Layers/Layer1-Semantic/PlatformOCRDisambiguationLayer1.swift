@@ -25,7 +25,7 @@ public func platformOCRWithDisambiguation_L1(
     )
     .environment(\.accessibilityIdentifierName, "platformOCRWithDisambiguation_L1")
     .automaticAccessibility()
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Layer 1 semantic function for OCR with disambiguation and custom configuration
@@ -44,7 +44,7 @@ public func platformOCRWithDisambiguation_L1(
     )
     .environment(\.accessibilityIdentifierName, "platformOCRWithDisambiguation_L1")
     .automaticAccessibility()
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 // MARK: - OCR Disambiguation Wrapper

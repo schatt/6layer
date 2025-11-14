@@ -263,7 +263,7 @@ public struct AccessibilityEnhancedView<Content: View>: View {
                         voiceOverManager.announce("View loaded", priority: .normal)
                     }
                 }
-                .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
+                .automaticCompliance() // Apply accessibility identifiers to the entire view
         }
     }
 }
@@ -285,7 +285,7 @@ public struct VoiceOverEnabledView<Content: View>: View {
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Enhanced accessibility view")
             .accessibilityHint("This view has enhanced VoiceOver support")
-            .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
+            .automaticCompliance() // Apply accessibility identifiers to the entire view
     }
 }
 
@@ -318,7 +318,7 @@ public struct KeyboardNavigableView<Content: View>: View {
                     .environmentObject(keyboardManager)
             }
         }
-        .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
+        .automaticCompliance() // Apply accessibility identifiers to the entire view
     }
 }
 
@@ -337,7 +337,7 @@ public struct HighContrastEnabledView<Content: View>: View {
         content()
             .environmentObject(highContrastManager)
             .preferredColorScheme(highContrastManager.isHighContrastEnabled ? .dark : nil)
-            .automaticAccessibilityIdentifiers() // Apply accessibility identifiers to the entire view
+            .automaticCompliance() // Apply accessibility identifiers to the entire view
     }
 }
 
@@ -356,10 +356,10 @@ public struct AccessibilityHostingView<Content: View>: View {
         AccessibilityHostingControllerWrapper {
             content()
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         #else
         content()
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         #endif
     }
 }
@@ -485,7 +485,7 @@ public struct AccessibilityTestingView: View {
         }
         .padding()
         .environmentObject(testingManager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     private func statusIcon(for status: TestStatus) -> String {

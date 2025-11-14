@@ -81,7 +81,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers(named: "ExpandableCardCollectionView")
+        .automaticCompliance(named: "ExpandableCardCollectionView")
     }
     
     @ViewBuilder
@@ -162,7 +162,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
             handleTap()
         }
         .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "ExpandableCardComponent")
+        .automaticCompliance(named: "ExpandableCardComponent")
     }
     
     @ViewBuilder
@@ -358,7 +358,7 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers(named: "CoverFlowCollectionView")
+        .automaticCompliance(named: "CoverFlowCollectionView")
     }
 }
 
@@ -396,7 +396,7 @@ public struct CoverFlowCardComponent<Item: Identifiable>: View {
             onItemSelected?(item)
         }
         .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "CoverFlowCardComponent")
+        .automaticCompliance(named: "CoverFlowCardComponent")
     }
     
     // MARK: - Card Displayable Support
@@ -504,7 +504,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers(named: "GridCollectionView")
+        .automaticCompliance(named: "GridCollectionView")
     }
 }
 
@@ -570,7 +570,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
                 .padding(16)
             }
         }
-        .automaticAccessibilityIdentifiers(named: "ListCollectionView")
+        .automaticCompliance(named: "ListCollectionView")
     }
 }
 
@@ -633,7 +633,7 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
                 .padding(16)
             }
         }
-        .automaticAccessibilityIdentifiers(named: "MasonryCollectionView")
+        .automaticCompliance(named: "MasonryCollectionView")
     }
 }
 
@@ -695,7 +695,7 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers(named: "AdaptiveCollectionView")
+        .automaticCompliance(named: "AdaptiveCollectionView")
     }
 }
 
@@ -795,7 +795,7 @@ public struct SimpleCardComponent<Item: Identifiable>: View {
         // Always apply automatic accessibility identifiers with component name
         view = AnyView(view
             .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
-            .automaticAccessibilityIdentifiers(named: "SimpleCardComponent"))
+            .automaticCompliance(named: "SimpleCardComponent"))
         
         return view
     }
@@ -895,7 +895,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
             onItemSelected?(item)
         }
         .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "ListCardComponent")
+        .automaticCompliance(named: "ListCardComponent")
     }
     
     // MARK: - Card Displayable Support
@@ -957,7 +957,7 @@ public struct MasonryCardComponent<Item: Identifiable>: View {
         .cornerRadius(12)
         .shadow(radius: 4)
         .environment(\.accessibilityIdentifierLabel, cardTitle) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "MasonryCardComponent")
+        .automaticCompliance(named: "MasonryCardComponent")
     }
     
     // MARK: - Card Displayable Support

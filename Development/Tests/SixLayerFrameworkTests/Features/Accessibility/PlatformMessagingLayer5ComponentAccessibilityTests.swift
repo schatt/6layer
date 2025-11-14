@@ -49,7 +49,7 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: createAlertButton, createToastNotification, and createBannerNotification 
-        // DO have .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Layers/Layer5-Platform/PlatformMessagingLayer5.swift:25,51,93.
+        // DO have .automaticCompliance() modifiers applied in Framework/Sources/Layers/Layer5-Platform/PlatformMessagingLayer5.swift:25,51,93.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it

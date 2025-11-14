@@ -22,7 +22,7 @@ open class CrossPlatformComponentAccessibilityTests: BaseTestClass {
         let testView = CrossPlatformOptimization()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: CrossPlatformOptimization DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: CrossPlatformOptimization DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/CrossPlatformOptimization.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -33,7 +33,7 @@ open class CrossPlatformComponentAccessibilityTests: BaseTestClass {
             componentName: "CrossPlatformOptimization"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: CrossPlatformOptimization DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: CrossPlatformOptimization DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/CrossPlatformOptimization.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

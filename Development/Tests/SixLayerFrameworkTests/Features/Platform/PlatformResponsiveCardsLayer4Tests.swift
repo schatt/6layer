@@ -66,7 +66,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1340.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -100,7 +100,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1340.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -133,7 +133,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1785.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -164,7 +164,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1785.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -197,7 +197,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1879.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -228,7 +228,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericMediaView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1879.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -273,7 +273,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3603.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -316,7 +316,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericSettingsView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3603.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -346,7 +346,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3207.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -374,7 +374,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericContentView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:3207.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -407,7 +407,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1785.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -438,7 +438,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1785.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -471,7 +471,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1340.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -502,7 +502,7 @@ open class PlatformResponsiveCardsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericItemCollectionView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1340.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

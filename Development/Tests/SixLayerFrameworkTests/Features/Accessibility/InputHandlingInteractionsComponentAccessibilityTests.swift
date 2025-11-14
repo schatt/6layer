@@ -39,7 +39,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformInteractionButton"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformInteractionButton" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -69,7 +69,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             componentName: "InputHandlingManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "InputHandlingManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -95,7 +95,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             componentName: "KeyboardShortcutManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "KeyboardShortcutManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -121,7 +121,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             componentName: "HapticFeedbackManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "HapticFeedbackManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -147,7 +147,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             componentName: "DragDropManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "DragDropManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

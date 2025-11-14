@@ -55,7 +55,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ExpandableCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ExpandableCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -107,7 +107,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ExpandableCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ExpandableCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -142,7 +142,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "CoverFlowCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CoverFlowCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -175,7 +175,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "CoverFlowCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CoverFlowCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -203,7 +203,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "CoverFlowCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CoverFlowCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -229,7 +229,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "CoverFlowCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CoverFlowCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -264,7 +264,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "GridCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "GridCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -297,7 +297,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "GridCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "GridCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -332,7 +332,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ListCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -365,7 +365,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ListCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -400,7 +400,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "MasonryCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -433,7 +433,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "MasonryCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -468,7 +468,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "AdaptiveCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AdaptiveCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -501,7 +501,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "AdaptiveCollectionView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AdaptiveCollectionView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -541,7 +541,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "SimpleCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "SimpleCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -579,7 +579,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "SimpleCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "SimpleCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -608,7 +608,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ListCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -635,7 +635,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "ListCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ListCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -658,7 +658,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "MasonryCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -679,7 +679,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
             componentName: "MasonryCardComponent"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "MasonryCardComponent" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

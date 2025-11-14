@@ -195,7 +195,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             
             // When: Creating a view with explicitly enabled config
             let testView = Text("Hello World")
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Then: The view should be created successfully
             #expect(Bool(true), "View should work with explicitly enabled config")  // testView is non-optional
@@ -219,7 +219,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             let manualID = "manual-custom-id"
             let testView = Text("Test")
                 .accessibilityIdentifier(manualID)
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Then: Manual identifier should take precedence
             #expect(Bool(true), "View with manual identifier should be created successfully")  // testView is non-optional
@@ -245,7 +245,7 @@ open class AccessibilityIdentifierLogicVerificationTests {
             // When: Creating view with opt-out modifier
             let testView = Text("Test")
                 .disableAutomaticAccessibilityIdentifiers()
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Then: View should be created successfully (but no automatic ID generated)
             #expect(Bool(true), "View with opt-out should be created successfully")  // testView is non-optional

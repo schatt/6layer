@@ -77,7 +77,7 @@ public extension View {
                 onComplete: onComplete
             )
         }
-        .automaticAccessibilityIdentifiers(named: "platformShare_L4")
+        .automaticCompliance(named: "platformShare_L4")
         #elseif os(macOS)
         self.onChange(of: isPresented.wrappedValue) { newValue in
             if newValue {
@@ -88,10 +88,10 @@ public extension View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers(named: "platformShare_L4")
+        .automaticCompliance(named: "platformShare_L4")
         #else
         self
-            .automaticAccessibilityIdentifiers(named: "platformShare_L4")
+            .automaticCompliance(named: "platformShare_L4")
         #endif
     }
     
@@ -111,7 +111,7 @@ public extension View {
                 onComplete: onComplete
             )
         }
-        .automaticAccessibilityIdentifiers(named: "platformShare_L4")
+        .automaticCompliance(named: "platformShare_L4")
     }
     #endif
     

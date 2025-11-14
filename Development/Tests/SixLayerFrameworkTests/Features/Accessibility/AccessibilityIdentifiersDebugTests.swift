@@ -3,18 +3,18 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-/// Debug Test: Check if .automaticAccessibilityIdentifiers() works at all
+/// Debug Test: Check if .automaticCompliance() works at all
 @MainActor
 @Suite("Accessibility Identifiers Debug")
 open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
-        // Test .automaticAccessibilityIdentifiers() directly
+        // Test .automaticCompliance() directly
         let testView = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         
         // Should look for button-specific accessibility identifier with current format
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -25,8 +25,8 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "DirectAutomaticAccessibilityIdentifiers"
-        ) , "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
-        print("🔍 Testing direct .automaticAccessibilityIdentifiers()")
+        ) , "Direct .automaticCompliance() should generate button-specific accessibility ID")
+        print("🔍 Testing direct .automaticCompliance()")
     }
     
     @Test func testNamedModifierWorks() {
@@ -35,10 +35,10 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
             .named("TestButton")
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         
         // Should look for named button-specific accessibility identifier: "SixLayer.main.ui.TestButton"
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -49,8 +49,8 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             expectedPattern: "SixLayer.*TestButton", 
             platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
-        ) , ".named() + .automaticAccessibilityIdentifiers() should generate named button-specific accessibility ID")
-        print("🔍 Testing .named() + .automaticAccessibilityIdentifiers()")
+        ) , ".named() + .automaticCompliance() should generate named button-specific accessibility ID")
+        print("🔍 Testing .named() + .automaticCompliance()")
     }
     
     @Test func testAutomaticAccessibilityModifierWorks() {
@@ -64,7 +64,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             ))
         
         // Should look for modifier-specific accessibility identifier with current format
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -87,7 +87,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             .automaticAccessibility()
         
         // Should look for extension-specific accessibility identifier with current format
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

@@ -28,7 +28,7 @@ open class LocalEnableOverrideTests: BaseTestClass {
             
             // 2. Create a view with local enable (without .named() to avoid modifier chain issues)
             let view = Button("Special Button") { }
-                .automaticAccessibilityIdentifiers()  // ← Local enable should override global disable
+                .automaticCompliance()  // ← Local enable should override global disable
             
             // 3. Try to inspect for accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)

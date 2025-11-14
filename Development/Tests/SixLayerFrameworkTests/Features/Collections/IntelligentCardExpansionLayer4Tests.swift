@@ -38,7 +38,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 componentName: "ExpandableCardCollectionView"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExpandableCardCollectionView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExpandableCardCollectionView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:84.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -75,7 +75,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 componentName: "ExpandableCardCollectionView"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExpandableCardCollectionView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExpandableCardCollectionView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:84.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -108,7 +108,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 componentName: "ExpandableCardCollectionView"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExpandableCardCollectionView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExpandableCardCollectionView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:84.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

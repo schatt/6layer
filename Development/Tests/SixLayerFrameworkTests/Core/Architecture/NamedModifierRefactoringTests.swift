@@ -194,7 +194,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // Given: A container with .named and subcomponent with automatic accessibility
             let testView = VStack {
                 Button("Save") { }
-                    .automaticAccessibilityIdentifiers()
+                    .automaticCompliance()
             }
             .named("ActionContainer")
                 

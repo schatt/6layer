@@ -22,7 +22,7 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
         let testView = VisionSafety()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/VisionSafety.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -33,7 +33,7 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "VisionSafety"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/VisionSafety.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

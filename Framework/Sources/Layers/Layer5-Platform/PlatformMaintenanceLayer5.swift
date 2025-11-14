@@ -23,7 +23,7 @@ public struct PlatformMaintenanceLayer5: View {
                 .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 

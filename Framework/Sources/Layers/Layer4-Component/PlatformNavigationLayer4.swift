@@ -26,7 +26,7 @@ public extension View {
             #endif
         }()
         return baseView
-            .automaticAccessibilityIdentifiers(named: "platformNavigation")
+            .automaticCompliance(named: "platformNavigation")
     }
 
     /// Wraps nested navigation in a platform-appropriate container
@@ -36,14 +36,14 @@ public extension View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             NavigationStack { content() }
-                .automaticAccessibilityIdentifiers(named: "platformNavigationContainer")
+                .automaticCompliance(named: "platformNavigationContainer")
         } else {
             content()
-                .automaticAccessibilityIdentifiers(named: "platformNavigationContainer")
+                .automaticCompliance(named: "platformNavigationContainer")
         }
         #else
         content()
-            .automaticAccessibilityIdentifiers(named: "platformNavigationContainer")
+            .automaticCompliance(named: "platformNavigationContainer")
         #endif
     }
 
@@ -57,13 +57,13 @@ public extension View {
         #if os(iOS)
         if #available(iOS 17.0, *) {
             self.navigationDestination(item: item, destination: destination)
-                .automaticAccessibilityIdentifiers(named: "platformNavigationDestination")
+                .automaticCompliance(named: "platformNavigationDestination")
         } else {
             // iOS 15-16 fallback: no navigation destination support
-            self.automaticAccessibilityIdentifiers(named: "platformNavigationDestination")
+            self.automaticCompliance(named: "platformNavigationDestination")
         }
         #else
-        self.automaticAccessibilityIdentifiers(named: "platformNavigationDestination")
+        self.automaticCompliance(named: "platformNavigationDestination")
         #endif
     }
 
@@ -104,7 +104,7 @@ public extension View {
         .accessibilityHint(accessibilityHint)
         .accessibilityAddTraits(.isButton)
         .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 
     /// Platform-specific navigation title configuration
@@ -112,15 +112,15 @@ public extension View {
         #if os(iOS)
         return self.navigationTitle(title)
             .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-            .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
+            .automaticCompliance(named: "platformNavigationTitle")
         #elseif os(macOS)
         return self.navigationTitle(title)
             .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-            .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
+            .automaticCompliance(named: "platformNavigationTitle")
         #else
         return self.navigationTitle(title)
             .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-            .automaticAccessibilityIdentifiers(named: "platformNavigationTitle")
+            .automaticCompliance(named: "platformNavigationTitle")
         #endif
     }
 
@@ -128,10 +128,10 @@ public extension View {
     func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
-            .automaticAccessibilityIdentifiers(named: "platformNavigationTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationTitleDisplayMode")
         #else
         return self
-            .automaticAccessibilityIdentifiers(named: "platformNavigationTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationTitleDisplayMode")
         #endif
     }
 
@@ -139,10 +139,10 @@ public extension View {
     func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
-            .automaticAccessibilityIdentifiers(named: "platformNavigationBarTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationBarTitleDisplayMode")
         #else
         return self
-            .automaticAccessibilityIdentifiers(named: "platformNavigationBarTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationBarTitleDisplayMode")
         #endif
     }
 

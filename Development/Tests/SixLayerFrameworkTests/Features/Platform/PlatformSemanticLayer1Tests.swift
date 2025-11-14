@@ -55,7 +55,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentItemCollection_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentItemCollection_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:127.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -86,7 +86,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentItemCollection_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentItemCollection_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:127.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -116,7 +116,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentNumericData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentNumericData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:138.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -144,7 +144,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentNumericData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentNumericData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:138.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -181,7 +181,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentFormData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentFormData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:257.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -216,7 +216,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentFormData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentFormData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:257.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -246,7 +246,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentMediaData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentMediaData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:294.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -274,7 +274,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentMediaData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentMediaData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:294.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -316,7 +316,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentSettings_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentSettings_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:654.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -356,7 +356,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentSettings_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentSettings_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:654.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -386,7 +386,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -414,7 +414,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -444,7 +444,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicValue_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicValue_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:558.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -472,7 +472,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentBasicValue_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicValue_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicValue_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:558.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -502,7 +502,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicArray_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicArray_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:572.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -530,7 +530,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentBasicArray_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicArray_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentBasicArray_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:572.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -556,7 +556,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -580,7 +580,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -604,7 +604,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -628,7 +628,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -652,7 +652,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -679,7 +679,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -699,7 +699,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -719,7 +719,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -739,7 +739,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -763,7 +763,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformPresentContent_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -794,7 +794,7 @@ open class PlatformSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformResponsiveCard_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformResponsiveCard_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift (via ResponsiveCardView).
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -823,7 +823,7 @@ open class PlatformSemanticLayer1Tests {
             componentName: "platformResponsiveCard_L1"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformResponsiveCard_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformResponsiveCard_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift (via ResponsiveCardView).
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

@@ -349,13 +349,13 @@ public extension View {
     func switchControlEnabled() -> some View {
         self.accessibilityElement(children: .contain)
             .accessibilityAddTraits(.allowsDirectInteraction)
-            .automaticAccessibilityIdentifiers(named: "SwitchControlEnabled")
+            .automaticCompliance(named: "SwitchControlEnabled")
     }
     
     /// Enable Switch Control support with custom configuration
     func switchControlEnabled(config: SwitchControlConfig) -> some View {
         self.accessibilityElement(children: .contain)
             .accessibilityAddTraits(.allowsDirectInteraction)
-            .automaticAccessibilityIdentifiers(named: "SwitchControlEnabled")
+            .automaticCompliance(named: "SwitchControlEnabled")
     }
 }

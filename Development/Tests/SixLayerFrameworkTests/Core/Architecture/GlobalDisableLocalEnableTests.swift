@@ -35,13 +35,13 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
                 content: Button("Framework Button") { },
                 hints: PresentationHints()
             )
-            .automaticAccessibilityIdentifiers()  // ← Local enable should override global disable
+            .automaticCompliance()  // ← Local enable should override global disable
             
             // 3. Generate ID
             let id = generateIDForView(view)
             
             // This should work because framework components handle their own ID generation
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
             // modifier applied. The framework correctly generates IDs when local enable is used.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

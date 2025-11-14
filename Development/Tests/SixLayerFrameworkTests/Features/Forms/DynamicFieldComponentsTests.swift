@@ -44,7 +44,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicMultiSelectField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render all options from field
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -86,7 +86,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicMultiSelectField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -126,7 +126,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicRadioField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render all radio options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -156,7 +156,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicRadioField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -195,7 +195,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicCheckboxField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render checkbox options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -225,7 +225,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicCheckboxField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -258,7 +258,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicRichTextField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render text input interface
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -286,7 +286,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicRichTextField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -319,7 +319,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicFileField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render file picker interface
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -344,7 +344,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicFileField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -377,7 +377,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicImageField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render image picker interface
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -402,7 +402,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicImageField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -435,7 +435,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicArrayField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render array input interface
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -460,7 +460,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicArrayField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -493,7 +493,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicDataField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render data input interface
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -518,7 +518,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicDataField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -552,7 +552,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicAutocompleteField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render autocomplete interface
         if let inspected = view.tryInspect() {
@@ -575,7 +575,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicAutocompleteField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -609,7 +609,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicEnumField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render enum options
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -639,7 +639,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicEnumField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -672,7 +672,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicCustomField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render custom component or error
         if let inspected = view.tryInspect() {
@@ -694,7 +694,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicCustomField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -727,7 +727,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicColorField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render color picker interface
         if let inspected = view.tryInspect() {
@@ -749,7 +749,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicColorField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -782,7 +782,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         )
 
         let view = DynamicTextAreaField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
 
         // Should render multi-line text editor
         if let inspected = view.tryInspect() {
@@ -804,7 +804,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             platform: .iOS,
             componentName: "DynamicTextAreaField"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFieldComponents DO have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

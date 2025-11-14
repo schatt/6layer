@@ -30,12 +30,12 @@ public struct OCROverlayView: View {
             Image(uiImage: image.uiImage)
                 .resizable()
                 .scaledToFit()
-                .automaticAccessibilityIdentifiers(named: "OCRImage")
+                .automaticCompliance(named: "OCRImage")
             #else
             Image(nsImage: image.nsImage)
                 .resizable()
                 .scaledToFit()
-                .automaticAccessibilityIdentifiers(named: "OCRImage")
+                .automaticCompliance(named: "OCRImage")
             #endif
             
             // Display extracted text
@@ -43,11 +43,11 @@ public struct OCROverlayView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Extracted Text:")
                         .font(.headline)
-                        .automaticAccessibilityIdentifiers(named: "ExtractedTextLabel")
+                        .automaticCompliance(named: "ExtractedTextLabel")
                     
                     Text(result.extractedText)
                         .font(.body)
-                        .automaticAccessibilityIdentifiers(named: "ExtractedText")
+                        .automaticCompliance(named: "ExtractedText")
                 }
                 .padding()
                 .background(Color.gray.opacity(0.1))
@@ -58,10 +58,10 @@ public struct OCROverlayView: View {
             Text("Confidence: \(Int(result.confidence * 100))%")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "ConfidenceScore")
+                .automaticCompliance(named: "ConfidenceScore")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "OCROverlayView")
+        .automaticCompliance(named: "OCROverlayView")
     }
     
     // MARK: - Interactive Methods (Red-phase stubs)

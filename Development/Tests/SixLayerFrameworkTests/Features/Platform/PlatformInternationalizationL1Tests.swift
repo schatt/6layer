@@ -29,7 +29,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
                 testName: "PlatformTest"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedContent_L1 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformInternationalizationL1.swift:31.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -57,7 +57,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
                 testName: "PlatformTest"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedContent_L1 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformInternationalizationL1.swift:31.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -83,7 +83,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
                 testName: "PlatformTest"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedText_L1 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedText_L1 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformInternationalizationL1.swift:53.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -107,7 +107,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
                 testName: "PlatformTest"
             )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedText_L1 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentLocalizedText_L1 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformInternationalizationL1.swift:53.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

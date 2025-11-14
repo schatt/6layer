@@ -73,7 +73,7 @@ public extension View {
             arrowEdge: arrowEdge,
             content: content
         )
-        .automaticAccessibilityIdentifiers(named: "platformPopover_L4")
+        .automaticCompliance(named: "platformPopover_L4")
         #elseif os(macOS)
         self.popover(
             isPresented: isPresented,
@@ -81,7 +81,7 @@ public extension View {
             arrowEdge: arrowEdge,
             content: content
         )
-        .automaticAccessibilityIdentifiers(named: "platformPopover_L4")
+        .automaticCompliance(named: "platformPopover_L4")
         #else
         self.popover(
             isPresented: isPresented,
@@ -89,7 +89,7 @@ public extension View {
             arrowEdge: arrowEdge,
             content: content
         )
-        .automaticAccessibilityIdentifiers(named: "platformPopover_L4")
+        .automaticCompliance(named: "platformPopover_L4")
         #endif
     }
     
@@ -129,20 +129,20 @@ public extension View {
                     .presentationDetents(detents)
                     .presentationDragIndicator(dragIndicator)
             }
-            .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+            .automaticCompliance(named: "platformSheet_L4")
         } else {
             self.sheet(isPresented: isPresented, onDismiss: onDismiss, content: content)
-                .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+                .automaticCompliance(named: "platformSheet_L4")
         }
         #elseif os(macOS)
         self.sheet(isPresented: isPresented, onDismiss: onDismiss) {
             content()
                 .frame(minWidth: 400, minHeight: 300)
         }
-        .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+        .automaticCompliance(named: "platformSheet_L4")
         #else
         self.sheet(isPresented: isPresented, onDismiss: onDismiss, content: content)
-            .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+            .automaticCompliance(named: "platformSheet_L4")
         #endif
     }
     
@@ -169,20 +169,20 @@ public extension View {
                     .presentationDetents(detents)
                     .presentationDragIndicator(dragIndicator)
             }
-            .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+            .automaticCompliance(named: "platformSheet_L4")
         } else {
             self.sheet(item: item, onDismiss: onDismiss, content: content)
-                .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+                .automaticCompliance(named: "platformSheet_L4")
         }
         #elseif os(macOS)
         self.sheet(item: item, onDismiss: onDismiss) { item in
             content(item)
                 .frame(minWidth: 400, minHeight: 300)
         }
-        .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+        .automaticCompliance(named: "platformSheet_L4")
         #else
         self.sheet(item: item, onDismiss: onDismiss, content: content)
-            .automaticAccessibilityIdentifiers(named: "platformSheet_L4")
+            .automaticCompliance(named: "platformSheet_L4")
         #endif
     }
 }

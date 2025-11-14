@@ -59,7 +59,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             content: "Test",
             hints: PresentationHints()
         )
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
@@ -68,7 +68,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -82,7 +82,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             content: "Test",
             hints: PresentationHints()
         )
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
@@ -91,7 +91,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             componentName: "automaticAccessibilityIdentifiers modifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -116,7 +116,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             componentName: "named modifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -139,7 +139,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             componentName: "named modifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -160,7 +160,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // Create a simple root view with the modifier applied
             // This simulates the scenario from Issue #7 where warnings occur
             let rootView = Text("Test Content")
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
                 .environment(\.accessibilityIdentifierConfig, testConfig)
                 .environment(\.globalAutomaticAccessibilityIdentifiers, true)
             
@@ -201,7 +201,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             let view = VStack {
                 Text("Content")
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             .environment(\.accessibilityIdentifierConfig, testConfig)
             .environment(\.globalAutomaticAccessibilityIdentifiers, true)
             .environment(\.accessibilityIdentifierName, "TestView")
@@ -237,12 +237,12 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             
             // Test automaticAccessibilityIdentifiers()
             let view1 = Text("Test")
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
                 .environment(\.accessibilityIdentifierConfig, testConfig)
             
             // Test automaticAccessibilityIdentifiers(named:)
             let view2 = Text("Test")
-                .automaticAccessibilityIdentifiers(named: "TestComponent")
+                .automaticCompliance(named: "TestComponent")
                 .environment(\.accessibilityIdentifierConfig, testConfig)
             
             // Test named()

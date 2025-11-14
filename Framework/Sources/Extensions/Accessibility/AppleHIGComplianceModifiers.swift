@@ -29,7 +29,7 @@ public struct AppleHIGComplianceModifier: ViewModifier {
                 platform: manager.currentPlatform,
                 accessibilityState: manager.accessibilityState
             ))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -56,7 +56,7 @@ public struct SystemAccessibilityModifier: ViewModifier {
                 isEnabled: accessibilityState.isReducedMotionEnabled
             ))
             .modifier(DynamicTypeModifier())
-            .automaticAccessibilityIdentifiers() // FIXED: Add missing accessibility identifier generation
+            .automaticCompliance() // FIXED: Add missing accessibility identifier generation
     }
 }
 
@@ -72,7 +72,7 @@ public struct PlatformPatternModifier: ViewModifier {
             .modifier(PlatformNavigationModifier(platform: platform))
             .modifier(PlatformStylingModifier(designSystem: designSystem))
             .modifier(PlatformIconModifier(iconSystem: designSystem.iconSystem))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -89,7 +89,7 @@ public struct VisualConsistencyModifier: ViewModifier {
             .modifier(SystemTypographyModifier(typographySystem: designSystem.typographySystem))
             .modifier(SpacingModifier(spacingSystem: designSystem.spacingSystem))
             .modifier(TouchTargetModifier(platform: platform))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -105,7 +105,7 @@ public struct InteractionPatternModifier: ViewModifier {
             .modifier(PlatformInteractionModifier(platform: platform))
             .modifier(HapticFeedbackModifier(platform: platform))
             .modifier(GestureRecognitionModifier(platform: platform))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -121,10 +121,10 @@ public struct VoiceOverSupportModifier: ViewModifier {
                 .accessibilityLabel(extractAccessibilityLabel(from: content))
                 .accessibilityHint(extractAccessibilityHint(from: content))
                 .accessibilityAddTraits(extractAccessibilityTraits(from: content))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         } else {
             content
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
     }
     
@@ -176,7 +176,7 @@ public struct KeyboardNavigationModifier: ViewModifier {
         } else {
             modifiedContent = AnyView(content)
         }
-        return modifiedContent.automaticAccessibilityIdentifiers()
+        return modifiedContent.automaticCompliance()
     }
 }
 
@@ -193,10 +193,10 @@ public struct HighContrastModifier: ViewModifier {
                 #else
                 .background(.gray)
                 #endif
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         } else {
             content
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
     }
 }
@@ -209,10 +209,10 @@ public struct ReducedMotionModifier: ViewModifier {
         if isEnabled {
             content
                 .animation(.none, value: UUID())
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         } else {
             content
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
     }
 }
@@ -222,7 +222,7 @@ public struct DynamicTypeModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .dynamicTypeSize(.accessibility1...)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -234,14 +234,14 @@ public struct PlatformNavigationModifier: ViewModifier {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return AnyView(content.navigationBarTitleDisplayMode(.inline).automaticAccessibilityIdentifiers())
+            return AnyView(content.navigationBarTitleDisplayMode(.inline).automaticCompliance())
             #else
-            return AnyView(content.automaticAccessibilityIdentifiers())
+            return AnyView(content.automaticCompliance())
             #endif
         case .macOS:
-            return AnyView(content.navigationTitle("").automaticAccessibilityIdentifiers())
+            return AnyView(content.navigationTitle("").automaticCompliance())
         default:
-            return AnyView(content.automaticAccessibilityIdentifiers())
+            return AnyView(content.automaticCompliance())
         }
     }
 }
@@ -254,7 +254,7 @@ public struct PlatformStylingModifier: ViewModifier {
         content
             .foregroundStyle(designSystem.colorSystem.text)
             .background(designSystem.colorSystem.background)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -265,7 +265,7 @@ public struct PlatformIconModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .imageScale(.medium)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -277,7 +277,7 @@ public struct SystemColorModifier: ViewModifier {
         content
             .foregroundStyle(colorSystem.text)
             .background(colorSystem.background)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -288,7 +288,7 @@ public struct SystemTypographyModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .font(typographySystem.body)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -299,7 +299,7 @@ public struct SpacingModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .padding(spacingSystem.md)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
@@ -314,7 +314,7 @@ public struct TouchTargetModifier: ViewModifier {
         } else {
             modifiedContent = AnyView(content)
         }
-        return modifiedContent.automaticAccessibilityIdentifiers()
+        return modifiedContent.automaticCompliance()
     }
 }
 
@@ -338,7 +338,7 @@ public struct PlatformInteractionModifier: ViewModifier {
         default:
             modifiedContent = AnyView(content)
         }
-        return modifiedContent.automaticAccessibilityIdentifiers()
+        return modifiedContent.automaticCompliance()
     }
 }
 
@@ -355,12 +355,12 @@ public struct HapticFeedbackModifier: ViewModifier {
                     let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
                     impactFeedback.impactOccurred()
                 }
-                .automaticAccessibilityIdentifiers())
+                .automaticCompliance())
             #else
-            return AnyView(content.automaticAccessibilityIdentifiers())
+            return AnyView(content.automaticCompliance())
             #endif
         } else {
-            return AnyView(content.automaticAccessibilityIdentifiers())
+            return AnyView(content.automaticCompliance())
         }
     }
 }
@@ -379,15 +379,15 @@ public struct GestureRecognitionModifier: ViewModifier {
                             // Handle tap gesture
                         }
                 )
-                .automaticAccessibilityIdentifiers())
+                .automaticCompliance())
         case .macOS:
             return AnyView(content
                 .onTapGesture {
                     // Handle click gesture
                 }
-                .automaticAccessibilityIdentifiers())
+                .automaticCompliance())
         default:
-            return AnyView(content.automaticAccessibilityIdentifiers())
+            return AnyView(content.automaticCompliance())
         }
     }
 }
@@ -401,7 +401,7 @@ public extension View {
             accessibilityState: AccessibilitySystemState(),
             platform: .iOS
         ))
-        .automaticAccessibilityIdentifiers(named: "AppleHIGCompliant")
+        .automaticCompliance(named: "AppleHIGCompliant")
     }
     
     /// Apply automatic accessibility features

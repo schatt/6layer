@@ -209,7 +209,7 @@ struct IntelligentDetailViewSheetTests {
         let task = TestTask(title: "Accessible Task")
         
         let detailView = IntelligentDetailView.platformDetailView(for: task)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         
         // Verify accessibility identifiers are generated
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -219,7 +219,7 @@ struct IntelligentDetailViewSheetTests {
             componentName: "IntelligentDetailViewInSheet"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformDetailView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformDetailView DOES have .automaticCompliance() 
         // modifier applied. The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it

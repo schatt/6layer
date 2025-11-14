@@ -75,7 +75,7 @@ public struct ExampleProjectCard: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(radius: 2)
-        .automaticAccessibilityIdentifiers(named: "ExampleProjectCard")
+        .automaticCompliance(named: "ExampleProjectCard")
     }
 }
 

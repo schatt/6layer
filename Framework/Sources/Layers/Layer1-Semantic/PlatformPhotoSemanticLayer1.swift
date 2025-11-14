@@ -23,20 +23,20 @@ public func platformPhotoCapture_L1(
     case .camera:
         // Use camera interface for direct capture
         PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     case .photoLibrary:
         // Use photo library picker
         PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageCaptured)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     case .both:
         // Provide both options
         VStack {
             PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageCaptured)
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -55,7 +55,7 @@ public func platformPhotoSelection_L1(
     // Use photo picker with optimized layout
     PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
         .frame(width: layout.width, height: layout.height)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Cross-platform semantic photo display interface
@@ -79,7 +79,7 @@ public func platformPhotoDisplay_L1(
         style: displayStyleForPurpose(purpose)
     )
     .frame(width: layout.width, height: layout.height)
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 // MARK: - Helper Functions

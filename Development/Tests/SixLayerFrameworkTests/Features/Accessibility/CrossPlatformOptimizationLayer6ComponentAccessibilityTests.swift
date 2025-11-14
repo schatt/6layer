@@ -27,7 +27,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
                 Text("Cross Platform Optimization Manager Content")
             }
             .environmentObject(manager)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             
             // Then: Should generate accessibility identifiers
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -37,7 +37,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
                 componentName: "CrossPlatformOptimizationManager"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CrossPlatformOptimizationManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -66,7 +66,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             componentName: "PlatformOptimizationSettings"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformOptimizationSettings" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -95,7 +95,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             componentName: "CrossPlatformPerformanceMetrics"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CrossPlatformPerformanceMetrics" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -123,7 +123,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             componentName: "PlatformUIPatterns"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformUIPatterns" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -153,7 +153,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             componentName: "PlatformRecommendationEngine"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformRecommendationEngine" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -182,7 +182,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             componentName: "CrossPlatformTesting"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CrossPlatformTesting" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

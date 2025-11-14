@@ -21,7 +21,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             // Simulate first app launch
             let id1 = generateIDForView(view1)
@@ -43,7 +43,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             // Simulate second app launch
             let id2 = generateIDForView(view2)
@@ -70,7 +70,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let id1 = generateIDForView(view1)
             
@@ -79,7 +79,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let id2 = generateIDForView(view2)
             
@@ -105,7 +105,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let id = generateIDForView(view)
             
@@ -117,7 +117,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let id2 = generateIDForView(view2)
             
@@ -154,7 +154,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                     .named(buttonName)
-                    .enableGlobalAutomaticAccessibilityIdentifiers()
+                    .enableGlobalAutomaticCompliance()
                 
                 ids[buttonName] = generateIDForView(view)
             }
@@ -178,7 +178,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                     .named(buttonName)
-                    .enableGlobalAutomaticAccessibilityIdentifiers()
+                    .enableGlobalAutomaticCompliance()
                 
                 let newID = generateIDForView(view)
                 let originalID = ids[buttonName]!
@@ -206,7 +206,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let id1 = generateIDForView(view1)
             
@@ -218,7 +218,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
                 platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
             }
                 .named("AddFuelButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let id2 = generateIDForView(view2)
             

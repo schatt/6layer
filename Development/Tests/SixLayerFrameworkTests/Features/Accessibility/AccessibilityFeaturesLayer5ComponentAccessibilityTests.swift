@@ -39,7 +39,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "AccessibilityEnhancedView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityEnhancedView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -70,7 +70,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "VoiceOverEnabledView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "VoiceOverEnabledView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -101,7 +101,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "KeyboardNavigableView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "KeyboardNavigableView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -132,7 +132,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "HighContrastEnabledView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "HighContrastEnabledView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -164,7 +164,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "AccessibilityHostingView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityHostingView" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -180,7 +180,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
         let view = AccessibilityTestingView()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: AccessibilityTestingView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AccessibilityTestingView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/AccessibilityFeaturesLayer5.swift:488.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -191,7 +191,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "AccessibilityTestingView"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: AccessibilityTestingView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AccessibilityTestingView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/AccessibilityFeaturesLayer5.swift:488.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -211,7 +211,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("VoiceOver Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -221,7 +221,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "VoiceOverManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "VoiceOverManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -241,7 +241,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("Keyboard Navigation Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -251,7 +251,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "KeyboardNavigationManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "KeyboardNavigationManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -271,7 +271,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("High Contrast Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -281,7 +281,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "HighContrastManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "HighContrastManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -301,7 +301,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("Accessibility Testing Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -311,7 +311,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "AccessibilityTestingManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityTestingManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -339,7 +339,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("Switch Control Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -349,7 +349,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "SwitchControlManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "SwitchControlManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -369,7 +369,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("Material Accessibility Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -379,7 +379,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "MaterialAccessibilityManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "MaterialAccessibilityManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -399,7 +399,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("Eye Tracking Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -409,7 +409,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "EyeTrackingManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "EyeTrackingManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -437,7 +437,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             Text("Assistive Touch Manager Content")
         }
         .environmentObject(manager)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         
         // Then: Should generate accessibility identifiers
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -447,7 +447,7 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
             componentName: "AssistiveTouchManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AssistiveTouchManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

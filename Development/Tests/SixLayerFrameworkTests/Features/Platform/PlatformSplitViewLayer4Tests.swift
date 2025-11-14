@@ -92,7 +92,7 @@ open class PlatformSplitViewLayer4Tests {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: platformVerticalSplit_L4 DOES have 
-        // .automaticAccessibilityIdentifiers() modifier applied in PlatformSplitViewLayer4.swift.
+        // .automaticCompliance() modifier applied in PlatformSplitViewLayer4.swift.
         // The test needs to handle ViewInspector's inability to detect these modifiers reliably on macOS split views.
         // This is a ViewInspector limitation, not a missing modifier issue.
         #expect(hasAccessibilityID, "platformVerticalSplit_L4 should generate accessibility identifiers (modifier verified in code, ViewInspector limitation on macOS)")
@@ -191,7 +191,7 @@ open class PlatformSplitViewLayer4Tests {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: platformHorizontalSplit_L4 DOES have 
-        // .automaticAccessibilityIdentifiers() modifier applied in PlatformSplitViewLayer4.swift.
+        // .automaticCompliance() modifier applied in PlatformSplitViewLayer4.swift.
         // The test needs to handle ViewInspector's inability to detect these modifiers reliably on macOS split views.
         // This is a ViewInspector limitation, not a missing modifier issue.
         #expect(hasAccessibilityID, "platformHorizontalSplit_L4 should generate accessibility identifiers (modifier verified in code, ViewInspector limitation on macOS)")

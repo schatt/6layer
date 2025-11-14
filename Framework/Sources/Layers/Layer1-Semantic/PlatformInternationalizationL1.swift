@@ -28,7 +28,7 @@ public func platformPresentLocalizedContent_L1<Content: View>(
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
         .environmentObject(i18n)
-        .automaticAccessibilityIdentifiers(named: "platformPresentLocalizedContent_L1"))
+        .automaticCompliance(named: "platformPresentLocalizedContent_L1"))
 }
 
 /// Present localized text with automatic formatting
@@ -50,7 +50,7 @@ public func platformPresentLocalizedText_L1(
         .environment(\.layoutDirection, direction == .rightToLeft ? .rightToLeft : .leftToRight)
         .environment(\.locale, hints.locale)
         .environmentObject(i18n)
-        .automaticAccessibilityIdentifiers(named: "platformPresentLocalizedText_L1"))
+        .automaticCompliance(named: "platformPresentLocalizedText_L1"))
 }
 
 /// Present localized number with proper formatting

@@ -14,12 +14,12 @@ public struct PlatformInterpretationLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Interpretation")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Intelligent data display adaptation")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Data interpretation and analysis")
@@ -28,9 +28,9 @@ public struct PlatformInterpretationLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformInterpretationLayer5")
+        .automaticCompliance(named: "PlatformInterpretationLayer5")
     }
 }

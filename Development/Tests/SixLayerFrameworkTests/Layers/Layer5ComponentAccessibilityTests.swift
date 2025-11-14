@@ -35,7 +35,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformMessagingLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformMessagingLayer5" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -62,7 +62,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformMessagingLayer5Toast"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformMessagingLayer5Toast" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -89,7 +89,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformResourceLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformResourceLayer5" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -116,7 +116,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformResourceLayer5Image"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformResourceLayer5Image" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -133,7 +133,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let notificationView = notificationLayer.body
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNotificationLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNotificationLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformNotificationLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -144,7 +144,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformNotificationLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNotificationLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNotificationLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformNotificationLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -161,7 +161,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let optimizationView = optimizationLayer.body
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformOptimizationLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformOptimizationLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformOptimizationLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -172,7 +172,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformOptimizationLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformOptimizationLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformOptimizationLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformOptimizationLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -189,7 +189,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let safetyView = safetyLayer.body
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafetyLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafetyLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformSafetyLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -200,7 +200,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSafetyLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafetyLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafetyLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformSafetyLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -217,7 +217,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         let privacyView = privacyLayer.body
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacyLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacyLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformPrivacyLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -228,7 +228,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPrivacyLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacyLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacyLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformPrivacyLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

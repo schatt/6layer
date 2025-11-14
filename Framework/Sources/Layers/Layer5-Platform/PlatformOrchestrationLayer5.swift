@@ -13,12 +13,12 @@ public struct PlatformOrchestrationLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Orchestration")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Service coordination and orchestration")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Service coordination and orchestration")
@@ -27,9 +27,9 @@ public struct PlatformOrchestrationLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformOrchestrationLayer5")
+        .automaticCompliance(named: "PlatformOrchestrationLayer5")
     }
 }

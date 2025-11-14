@@ -297,12 +297,12 @@ open class DynamicFormViewTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        // VERIFIED: DynamicFormView DOES have .automaticAccessibilityIdentifiers(named: "DynamicFormView") 
+        // VERIFIED: DynamicFormView DOES have .automaticCompliance(named: "DynamicFormView") 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFormView.swift:76.
         // ViewInspector limitation: Cannot reliably detect accessibility identifiers on macOS.
         #if os(macOS)
         // macOS: ViewInspector cannot detect identifiers - test passes by verifying modifier exists in code
-        #expect(Bool(true), "DynamicFormView has .automaticAccessibilityIdentifiers() modifier (verified in code) - ViewInspector limitation on macOS")
+        #expect(Bool(true), "DynamicFormView has .automaticCompliance() modifier (verified in code) - ViewInspector limitation on macOS")
         #else
         // iOS: Test actual identifier detection
         #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers with component name on iOS")
@@ -346,11 +346,11 @@ open class DynamicFormViewTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        // VERIFIED: DynamicFormView DOES have .automaticAccessibilityIdentifiers(named: "DynamicFormView") 
+        // VERIFIED: DynamicFormView DOES have .automaticCompliance(named: "DynamicFormView") 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFormView.swift:76.
         // ViewInspector limitation: Cannot reliably detect accessibility identifiers on macOS.
         // macOS: ViewInspector cannot detect identifiers - test passes by verifying modifier exists in code
-        #expect(Bool(true), "DynamicFormView has .automaticAccessibilityIdentifiers() modifier (verified in code) - ViewInspector limitation on macOS")
+        #expect(Bool(true), "DynamicFormView has .automaticCompliance() modifier (verified in code) - ViewInspector limitation on macOS")
     }
 
     // MARK: - OCR Integration Tests

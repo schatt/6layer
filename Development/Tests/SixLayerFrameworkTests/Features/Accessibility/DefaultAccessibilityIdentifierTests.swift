@@ -6,7 +6,7 @@ import SwiftUI
 
 /**
  * BUSINESS PURPOSE: Verify that automatic accessibility identifiers now work by default
- * without requiring explicit .enableGlobalAutomaticAccessibilityIdentifiers() call.
+ * without requiring explicit .enableGlobalAutomaticCompliance() call.
  * 
  * TESTING SCOPE: Tests that the default behavior now enables automatic identifiers
  * METHODOLOGY: Tests that views get automatic identifiers without explicit enabling
@@ -15,7 +15,7 @@ import SwiftUI
 @MainActor
 open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS PURPOSE: Verify that automatic identifiers work by default
     /// TESTING SCOPE: Tests that no explicit enabling is required
-    /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticAccessibilityIdentifiers()
+    /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticCompliance()
     @Test func testAutomaticIdentifiersWorkByDefault() async {
         await runWithTaskLocalConfig {
             // Given: Explicitly set configuration for this test
@@ -35,7 +35,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             }
                 
             // Then: The view should be created successfully with accessibility identifier
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -99,7 +99,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             .accessibilityIdentifier("manual-test-button")
                 
             // Then: The view should be created successfully with manual accessibility identifier
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

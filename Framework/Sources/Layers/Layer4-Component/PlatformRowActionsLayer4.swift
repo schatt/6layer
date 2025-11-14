@@ -78,21 +78,21 @@ public extension View {
             self.swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe) {
                 actions()
             }
-            .automaticAccessibilityIdentifiers(named: "platformRowActions_L4")
+            .automaticCompliance(named: "platformRowActions_L4")
         } else {
             // Fallback for older iOS versions
             self
-                .automaticAccessibilityIdentifiers(named: "platformRowActions_L4")
+                .automaticCompliance(named: "platformRowActions_L4")
         }
         #elseif os(macOS)
         // macOS uses context menus for row actions
         self.contextMenu {
             actions()
         }
-        .automaticAccessibilityIdentifiers(named: "platformRowActions_L4")
+        .automaticCompliance(named: "platformRowActions_L4")
         #else
         self
-            .automaticAccessibilityIdentifiers(named: "platformRowActions_L4")
+            .automaticCompliance(named: "platformRowActions_L4")
         #endif
     }
     
@@ -117,15 +117,15 @@ public extension View {
         self.contextMenu {
             menuItems()
         }
-        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        .automaticCompliance(named: "platformContextMenu_L4")
         #elseif os(macOS)
         self.contextMenu {
             menuItems()
         }
-        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        .automaticCompliance(named: "platformContextMenu_L4")
         #else
         self
-            .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+            .automaticCompliance(named: "platformContextMenu_L4")
         #endif
     }
     
@@ -158,16 +158,16 @@ public extension View {
         } preview: {
             preview()
         }
-        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        .automaticCompliance(named: "platformContextMenu_L4")
         #elseif os(macOS)
         // macOS doesn't support preview, so ignore it
         self.contextMenu {
             menuItems()
         }
-        .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+        .automaticCompliance(named: "platformContextMenu_L4")
         #else
         self
-            .automaticAccessibilityIdentifiers(named: "platformContextMenu_L4")
+            .automaticCompliance(named: "platformContextMenu_L4")
         #endif
     }
 }

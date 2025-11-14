@@ -72,7 +72,7 @@ public struct CustomFieldView: View {
                 DynamicCustomField(field: field, formState: formState)
             }
         }
-        .automaticAccessibilityIdentifiers(named: "CustomFieldView")
+        .automaticCompliance(named: "CustomFieldView")
     }
 }
 
@@ -102,7 +102,7 @@ public struct DynamicTextField: View {
                         set: { formState.setValue($0, for: field.id) }
                     ))
                     .textFieldStyle(.roundedBorder)
-                    .automaticAccessibilityIdentifiers()
+                    .automaticCompliance()
 
                     Button(action: {
                         // TODO: Implement OCR scanning workflow
@@ -115,7 +115,7 @@ public struct DynamicTextField: View {
                     .buttonStyle(.borderless)
                     .accessibilityLabel("Scan with OCR")
                     .accessibilityHint(field.ocrHint ?? "Scan document to fill this field")
-                    .automaticAccessibilityIdentifiers()
+                    .automaticCompliance()
                 }
             } else {
                 TextField(field.placeholder ?? "Enter text", text: Binding(
@@ -123,12 +123,12 @@ public struct DynamicTextField: View {
                     set: { formState.setValue($0, for: field.id) }
                 ))
                 .textFieldStyle(.roundedBorder)
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticAccessibilityIdentifiers(named: "DynamicTextField")
+        .automaticCompliance(named: "DynamicTextField")
     }
 }
 
@@ -157,11 +157,11 @@ public struct DynamicEmailField: View {
             #if os(iOS)
             .keyboardType(.emailAddress)
             #endif
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticAccessibilityIdentifiers(named: "DynamicEmailField")
+        .automaticCompliance(named: "DynamicEmailField")
     }
 }
 
@@ -187,11 +187,11 @@ public struct DynamicPasswordField: View {
                 set: { formState.setValue($0, for: field.id) }
             ))
             .textFieldStyle(.roundedBorder)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticAccessibilityIdentifiers(named: "DynamicPasswordField")
+        .automaticCompliance(named: "DynamicPasswordField")
     }
 }
 
@@ -220,11 +220,11 @@ public struct DynamicPhoneField: View {
             #if os(iOS)
             .keyboardType(.phonePad)
             #endif
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticAccessibilityIdentifiers(named: "DynamicPhoneField")
+        .automaticCompliance(named: "DynamicPhoneField")
     }
 }
 
@@ -253,11 +253,11 @@ public struct DynamicURLField: View {
             #if os(iOS)
             .keyboardType(.URL)
             #endif
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticAccessibilityIdentifiers(named: "DynamicURLField")
+        .automaticCompliance(named: "DynamicURLField")
     }
 }
 
@@ -286,11 +286,11 @@ public struct DynamicNumberField: View {
             #if os(iOS)
             .keyboardType(.decimalPad)
             #endif
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticAccessibilityIdentifiers(named: "DynamicNumberField")
+        .automaticCompliance(named: "DynamicNumberField")
     }
 }
 
@@ -319,11 +319,11 @@ public struct DynamicIntegerField: View {
             #if os(iOS)
             .keyboardType(.numberPad)
             #endif
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicIntegerField")
+        .automaticCompliance(named: "DynamicIntegerField")
     }
 }
 
@@ -350,11 +350,11 @@ public struct DynamicDateField: View {
                           set: { _ in } // TODO: Store in formState
                       ),
                       displayedComponents: .date)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicDateField")
+        .automaticCompliance(named: "DynamicDateField")
     }
 }
 
@@ -381,11 +381,11 @@ public struct DynamicTimeField: View {
                           set: { _ in } // TODO: Store in formState
                       ),
                       displayedComponents: .hourAndMinute)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicTimeField")
+        .automaticCompliance(named: "DynamicTimeField")
     }
 }
 
@@ -411,11 +411,11 @@ public struct DynamicDateTimeField: View {
                           get: { Date() }, // TODO: Parse from formState
                           set: { _ in } // TODO: Store in formState
                       ))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicDateTimeField")
+        .automaticCompliance(named: "DynamicDateTimeField")
     }
 }
 
@@ -437,7 +437,7 @@ public struct DynamicMultiSelectField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             if let options = field.options {
                 ForEach(options, id: \.self) { option in
@@ -458,13 +458,13 @@ public struct DynamicMultiSelectField: View {
                             formState.setValue(selectedValues, for: field.id)
                         }
                     ))
-                    .automaticAccessibilityIdentifiers(named: "MultiSelectOption")
+                    .automaticCompliance(named: "MultiSelectOption")
                 }
             }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicMultiSelectField")
+        .automaticCompliance(named: "DynamicMultiSelectField")
     }
 }
 
@@ -485,7 +485,7 @@ public struct DynamicRadioField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             if let options = field.options {
                 #if os(macOS)
@@ -498,7 +498,7 @@ public struct DynamicRadioField: View {
                     }
                 }
                 .pickerStyle(.radioGroup)
-                .automaticAccessibilityIdentifiers(named: "RadioGroup")
+                .automaticCompliance(named: "RadioGroup")
                 #else
                 // iOS: Use custom radio button implementation
                 VStack(alignment: .leading, spacing: 8) {
@@ -514,17 +514,17 @@ public struct DynamicRadioField: View {
                                 }
                             }
                             .buttonStyle(.plain)
-                            .automaticAccessibilityIdentifiers(named: "RadioOption")
+                            .automaticCompliance(named: "RadioOption")
                             Spacer()
                         }
                     }
                 }
-                .automaticAccessibilityIdentifiers(named: "RadioGroup")
+                .automaticCompliance(named: "RadioGroup")
                 #endif
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicRadioField")
+        .automaticCompliance(named: "DynamicRadioField")
     }
 }
 
@@ -545,7 +545,7 @@ public struct DynamicCheckboxField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             if let options = field.options {
                 ForEach(options, id: \.self) { option in
@@ -566,13 +566,13 @@ public struct DynamicCheckboxField: View {
                             formState.setValue(selectedValues, for: field.id)
                         }
                     ))
-                    .automaticAccessibilityIdentifiers(named: "CheckboxOption")
+                    .automaticCompliance(named: "CheckboxOption")
                 }
             }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicCheckboxField")
+        .automaticCompliance(named: "DynamicCheckboxField")
     }
 }
 
@@ -598,7 +598,7 @@ public struct DynamicRichTextField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             #if os(iOS)
             TextEditor(text: Binding(
@@ -607,7 +607,7 @@ public struct DynamicRichTextField: View {
             ))
             .frame(minHeight: 100)
             .border(Color.gray.opacity(0.2))
-            .automaticAccessibilityIdentifiers(named: "RichTextEditor")
+            .automaticCompliance(named: "RichTextEditor")
             #else
             TextField(field.placeholder ?? "Enter text", text: Binding(
                 get: { formState.fieldValues[field.id] as? String ?? field.defaultValue ?? "" },
@@ -615,11 +615,11 @@ public struct DynamicRichTextField: View {
             ))
             .textFieldStyle(.roundedBorder)
             .frame(minHeight: 100)
-            .automaticAccessibilityIdentifiers(named: "RichTextEditor")
+            .automaticCompliance(named: "RichTextEditor")
             #endif
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicRichTextField")
+        .automaticCompliance(named: "DynamicRichTextField")
     }
 }
 
@@ -640,7 +640,7 @@ public struct DynamicFileField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             Button(action: {
                 // TODO: Implement file picker integration
@@ -653,18 +653,18 @@ public struct DynamicFileField: View {
                 }
             }
             .buttonStyle(.bordered)
-            .automaticAccessibilityIdentifiers(named: "FilePickerButton")
+            .automaticCompliance(named: "FilePickerButton")
 
             if let fileName = formState.fieldValues[field.id] as? String, !fileName.isEmpty {
                 Text("Selected: \(fileName)")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .automaticAccessibilityIdentifiers(named: "SelectedFileName")
+                    .automaticCompliance(named: "SelectedFileName")
             }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicFileField")
+        .automaticCompliance(named: "DynamicFileField")
     }
 }
 
@@ -685,7 +685,7 @@ public struct DynamicImageField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             Button(action: {
                 // TODO: Implement image picker integration
@@ -698,7 +698,7 @@ public struct DynamicImageField: View {
                 }
             }
             .buttonStyle(.bordered)
-            .automaticAccessibilityIdentifiers(named: "ImagePickerButton")
+            .automaticCompliance(named: "ImagePickerButton")
 
             if let imageData = formState.fieldValues[field.id] as? Data, let image = PlatformImage(data: imageData) {
                 #if os(iOS)
@@ -706,18 +706,18 @@ public struct DynamicImageField: View {
                     .resizable()
                     .scaledToFit()
                     .frame(height: 100)
-                    .automaticAccessibilityIdentifiers(named: "ImagePreview")
+                    .automaticCompliance(named: "ImagePreview")
                 #else
                 Image(nsImage: image.nsImage)
                     .resizable()
                     .scaledToFit()
                     .frame(height: 100)
-                    .automaticAccessibilityIdentifiers(named: "ImagePreview")
+                    .automaticCompliance(named: "ImagePreview")
                 #endif
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicImageField")
+        .automaticCompliance(named: "DynamicImageField")
     }
 }
 
@@ -742,11 +742,11 @@ public struct DynamicRangeField: View {
                 get: { Double(formState.getValue(for: field.id) ?? field.defaultValue ?? "0") ?? 0 },
                 set: { formState.setValue(String($0), for: field.id) }
             ), in: 0...100)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicRangeField")
+        .automaticCompliance(named: "DynamicRangeField")
     }
 }
 
@@ -767,7 +767,7 @@ public struct DynamicArrayField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             ForEach(Array((formState.fieldValues[field.id] as? [String] ?? []).enumerated()), id: \.offset) { index, value in
                 HStack {
@@ -783,7 +783,7 @@ public struct DynamicArrayField: View {
                     ))
                     .textFieldStyle(.roundedBorder)
                     .environment(\.accessibilityIdentifierLabel, value) // TDD GREEN: Pass array item value to identifier generation
-                    .automaticAccessibilityIdentifiers(named: "ArrayItem")
+                    .automaticCompliance(named: "ArrayItem")
 
                     Button(action: {
                         var values = formState.fieldValues[field.id] as? [String] ?? []
@@ -796,7 +796,7 @@ public struct DynamicArrayField: View {
                             .foregroundColor(.red)
                     }
                     .buttonStyle(.borderless)
-                    .automaticAccessibilityIdentifiers(named: "RemoveItem")
+                    .automaticCompliance(named: "RemoveItem")
                 }
             }
 
@@ -811,11 +811,11 @@ public struct DynamicArrayField: View {
                 }
             }
             .buttonStyle(.bordered)
-            .automaticAccessibilityIdentifiers(named: "AddItem")
+            .automaticCompliance(named: "AddItem")
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicArrayField")
+        .automaticCompliance(named: "DynamicArrayField")
     }
 }
 
@@ -836,7 +836,7 @@ public struct DynamicDataField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             TextEditor(text: Binding(
                 get: {
@@ -853,17 +853,17 @@ public struct DynamicDataField: View {
             ))
             .frame(minHeight: 100)
             .border(Color.gray.opacity(0.2))
-            .automaticAccessibilityIdentifiers(named: "DataInput")
+            .automaticCompliance(named: "DataInput")
 
             if let data = formState.fieldValues[field.id] as? Data {
                 Text("Data size: \(data.count) bytes")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .automaticAccessibilityIdentifiers(named: "DataSize")
+                    .automaticCompliance(named: "DataSize")
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicDataField")
+        .automaticCompliance(named: "DynamicDataField")
     }
 }
 
@@ -886,7 +886,7 @@ public struct DynamicAutocompleteField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             TextField(field.placeholder ?? "Type to search", text: Binding(
                 get: { formState.fieldValues[field.id] as? String ?? field.defaultValue ?? "" },
@@ -897,7 +897,7 @@ public struct DynamicAutocompleteField: View {
                 }
             ))
             .textFieldStyle(.roundedBorder)
-            .automaticAccessibilityIdentifiers(named: "AutocompleteInput")
+            .automaticCompliance(named: "AutocompleteInput")
             .onAppear {
                 searchText = formState.fieldValues[field.id] as? String ?? ""
             }
@@ -916,18 +916,18 @@ public struct DynamicAutocompleteField: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .buttonStyle(.plain)
-                            .automaticAccessibilityIdentifiers(named: "Suggestion")
+                            .automaticCompliance(named: "Suggestion")
                         }
                     }
                     .padding(8)
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(8)
-                    .automaticAccessibilityIdentifiers(named: "SuggestionsList")
+                    .automaticCompliance(named: "SuggestionsList")
                 }
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicAutocompleteField")
+        .automaticCompliance(named: "DynamicAutocompleteField")
     }
 }
 
@@ -948,7 +948,7 @@ public struct DynamicEnumField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             if let options = field.options {
                 Picker(field.label, selection: Binding(
@@ -960,12 +960,12 @@ public struct DynamicEnumField: View {
                     }
                 }
                 .pickerStyle(.menu)
-                .automaticAccessibilityIdentifiers(named: "EnumPicker")
+                .automaticCompliance(named: "EnumPicker")
             }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicEnumField")
+        .automaticCompliance(named: "DynamicEnumField")
     }
 }
 
@@ -986,7 +986,7 @@ public struct DynamicCustomField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             if let customComponent = CustomFieldRegistry.shared.createComponent(for: field, formState: formState) {
                 AnyView(customComponent)
@@ -994,11 +994,11 @@ public struct DynamicCustomField: View {
                 Text("Custom field not registered: \(field.contentType?.rawValue ?? "unknown")")
                     .foregroundColor(.red)
                     .font(.caption)
-                    .automaticAccessibilityIdentifiers(named: "CustomFieldError")
+                    .automaticCompliance(named: "CustomFieldError")
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicCustomField")
+        .automaticCompliance(named: "DynamicCustomField")
     }
 }
 
@@ -1021,7 +1021,7 @@ public struct DynamicColorField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
             
             let colorValue = formState.fieldValues[field.id] as? String ?? "#000000"
             let color = Color(hex: colorValue) ?? .black
@@ -1033,16 +1033,16 @@ public struct DynamicColorField: View {
                     formState.setValue(hex, for: field.id)
                 }
             ))
-            .automaticAccessibilityIdentifiers(named: "ColorPicker")
+            .automaticCompliance(named: "ColorPicker")
             
             Rectangle()
                 .fill(color)
                 .frame(height: 40)
                 .cornerRadius(8)
-                .automaticAccessibilityIdentifiers(named: "ColorPreview")
+                .automaticCompliance(named: "ColorPreview")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "DynamicColorField")
+        .automaticCompliance(named: "DynamicColorField")
     }
 }
 
@@ -1067,7 +1067,7 @@ public struct DynamicToggleField: View {
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicToggleField")
+        .automaticCompliance(named: "DynamicToggleField")
     }
 }
 
@@ -1089,7 +1089,7 @@ public struct DynamicTextAreaField: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
             
             #if os(iOS)
             TextEditor(text: Binding(
@@ -1098,7 +1098,7 @@ public struct DynamicTextAreaField: View {
             ))
             .frame(minHeight: 100)
             .border(Color.gray.opacity(0.2))
-            .automaticAccessibilityIdentifiers(named: "TextArea")
+            .automaticCompliance(named: "TextArea")
             #else
             TextField(field.placeholder ?? "Enter text", text: Binding(
                 get: { formState.fieldValues[field.id] as? String ?? field.defaultValue ?? "" },
@@ -1106,11 +1106,11 @@ public struct DynamicTextAreaField: View {
             ), axis: .vertical)
             .textFieldStyle(.roundedBorder)
             .lineLimit(5...10)
-            .automaticAccessibilityIdentifiers(named: "TextArea")
+            .automaticCompliance(named: "TextArea")
             #endif
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicTextAreaField")
+        .automaticCompliance(named: "DynamicTextAreaField")
     }
 }

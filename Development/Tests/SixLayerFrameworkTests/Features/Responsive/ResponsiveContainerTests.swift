@@ -45,7 +45,7 @@ open class ResponsiveContainerTests {
             componentName: "ResponsiveContainer"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveContainer DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveContainer DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/ResponsiveContainer.swift:14.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -66,7 +66,7 @@ open class ResponsiveContainerTests {
             componentName: "ResponsiveContainer"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveContainer DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveContainer DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/ResponsiveContainer.swift:14.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

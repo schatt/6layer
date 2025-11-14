@@ -47,7 +47,7 @@ public func platformOCRImplementation_L4(
             )
             onResult(fallbackResult)
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
 }
 
 /// Cross-platform text extraction implementation
@@ -76,7 +76,7 @@ public func platformTextExtraction_L4(
             )
             onResult(fallbackResult)
         }
-        .automaticAccessibilityIdentifiers(named: "platformTextExtraction_L4")
+        .automaticCompliance(named: "platformTextExtraction_L4")
 }
 
 /// Cross-platform text recognition implementation
@@ -103,7 +103,7 @@ public func platformTextRecognition_L4(
             )
             onResult(fallbackResult)
         }
-        .automaticAccessibilityIdentifiers(named: "platformTextRecognition_L4")
+        .automaticCompliance(named: "platformTextRecognition_L4")
 }
 
 // MARK: - Migration Notice

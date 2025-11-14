@@ -63,7 +63,7 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
     
     private func assertComponentGeneratesAccessibilityID<T: View>(_ component: T, name: String) {
         // Look for standard accessibility identifier pattern (framework generates generic IDs)
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

@@ -31,7 +31,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // Create a view WITHOUT automatic accessibility identifiers modifier
             // Use a simple Text view instead of PlatformInteractionButton to avoid internal modifiers
             let view = Text("Test")
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Verify config is actually disabled
             #expect(config.enableAutoIDs == false, "Config should be disabled")
@@ -69,7 +69,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             let view = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Test that the view has an accessibility identifier using the same method as working tests
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -80,7 +80,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             )
             
             // Should have an ID when global config is enabled
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityFunctionsRespectGlobalConfigEnabled" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -110,7 +110,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                 .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Apply disable FIRST
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
@@ -145,7 +145,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             let view = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-                .automaticAccessibilityIdentifiers()  // ← Local enable
+                .automaticCompliance()  // ← Local enable
             
             // Test that the view has an accessibility identifier using the same method as working tests
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -156,7 +156,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             )
             
             // Should have an ID when local enable is applied (even with global disabled)
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityFunctionsRespectLocalEnableModifier" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -185,7 +185,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                 .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Should override global enable
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Try to inspect for accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -222,7 +222,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             let view = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-                .automaticAccessibilityIdentifiers()  // ← Should override global disable
+                .automaticCompliance()  // ← Should override global disable
             
             // Test that the view has an accessibility identifier using the same method as working tests
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -233,7 +233,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             )
             
             // Should have an ID - local enable should override global disable
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "LocalEnableOverridesGlobalDisable" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -262,7 +262,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                 .environment(\.globalAutomaticAccessibilityIdentifiers, false)  // ← Environment override
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // Try to inspect for accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)

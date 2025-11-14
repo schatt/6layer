@@ -32,7 +32,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             componentName: "CrossPlatformOptimizationLayer6"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "CrossPlatformOptimizationLayer6" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -49,7 +49,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = testView.platformSpecificOptimizations(for: SixLayerPlatform.current)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSpecificOptimizations DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSpecificOptimizations DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -60,7 +60,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSpecificOptimizations"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSpecificOptimizations DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSpecificOptimizations DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -78,7 +78,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = testView.performanceOptimizations(using: settings)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PerformanceOptimizations DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PerformanceOptimizations DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -89,7 +89,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             componentName: "PerformanceOptimizations"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PerformanceOptimizations DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PerformanceOptimizations DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -107,7 +107,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = testView.uiPatternOptimizations(using: patterns)
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: UIPatternOptimizations DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: UIPatternOptimizations DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -118,7 +118,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             componentName: "UIPatternOptimizations"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: UIPatternOptimizations DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: UIPatternOptimizations DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -148,7 +148,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let performanceView = performanceLayer.body
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPerformanceLayer6 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPerformanceLayer6 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/PlatformPerformanceLayer6.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -159,7 +159,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPerformanceLayer6"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPerformanceLayer6 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPerformanceLayer6 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/PlatformPerformanceLayer6.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

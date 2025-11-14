@@ -18,7 +18,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             // Given: A view that displays an image (ImageProcessor processes images, views display them)
             // Since ImageProcessor doesn't generate views directly, we test that image views generate identifiers
             let view = Image(systemName: "photo")
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // When & Then: Should generate accessibility identifiers
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -28,7 +28,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
                 componentName: "Image"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Image" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -45,7 +45,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
             // Given: A view that displays an image (ImageProcessor processes images, views display them)
             // Since ImageProcessor doesn't generate views directly, we test that image views generate identifiers
             let view = Image(systemName: "photo")
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
             
             // When & Then: Should generate accessibility identifiers
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -55,7 +55,7 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
                 componentName: "Image"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Image" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

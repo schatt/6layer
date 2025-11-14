@@ -29,7 +29,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.appleHIGCompliance()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: AppleHIGComplianceModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AppleHIGComplianceModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:32.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -40,13 +40,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "AppleHIGComplianceModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: AppleHIGComplianceModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AppleHIGComplianceModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:32.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPatternModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPatternModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:75.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -66,7 +66,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemAccessibility()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:59.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -77,13 +77,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SystemAccessibilityModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:59.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisualConsistencyModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisualConsistencyModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:92.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -103,7 +103,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformPatterns()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPatternModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPatternModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:75.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -114,13 +114,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPatternModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPatternModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPatternModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:75.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: InteractionPatternModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: InteractionPatternModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:108.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -140,7 +140,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.visualConsistency()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisualConsistencyModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisualConsistencyModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:92.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -151,13 +151,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "VisualConsistencyModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisualConsistencyModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisualConsistencyModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:92.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: VoiceOverSupportModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VoiceOverSupportModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:124.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -177,7 +177,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.interactionPatterns()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: InteractionPatternModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: InteractionPatternModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:108.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -188,13 +188,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "InteractionPatternModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: InteractionPatternModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: InteractionPatternModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:108.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: KeyboardNavigationModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: KeyboardNavigationModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:179.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -214,7 +214,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.voiceOverSupport()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: VoiceOverSupportModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VoiceOverSupportModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:124.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -225,13 +225,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "VoiceOverSupportModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: VoiceOverSupportModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VoiceOverSupportModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:124.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: HighContrastModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HighContrastModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:196.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -251,7 +251,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.keyboardNavigation()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: KeyboardNavigationModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: KeyboardNavigationModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:179.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -262,13 +262,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "KeyboardNavigationModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: KeyboardNavigationModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: KeyboardNavigationModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:179.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: ReducedMotionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ReducedMotionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:212.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -288,7 +288,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.highContrast()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: HighContrastModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HighContrastModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:196.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -299,13 +299,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "HighContrastModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: HighContrastModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HighContrastModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:196.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: DynamicTypeModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: DynamicTypeModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:225.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -325,7 +325,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.reducedMotion()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: ReducedMotionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ReducedMotionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:212.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -336,13 +336,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "ReducedMotionModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ReducedMotionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ReducedMotionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:212.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNavigationModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNavigationModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:237.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -362,7 +362,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.dynamicType()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: DynamicTypeModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: DynamicTypeModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:225.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -373,13 +373,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "DynamicTypeModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: DynamicTypeModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: DynamicTypeModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:225.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformStylingModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformStylingModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:257.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -399,7 +399,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformNavigation()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigation() function DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigation() function DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:29.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -428,7 +428,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformStyling()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformStylingModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformStylingModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:257.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -439,13 +439,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformStylingModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformStylingModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformStylingModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:257.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:280.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -465,7 +465,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformIcon()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformIconModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformIconModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:268.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -476,13 +476,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformIconModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformIconModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformIconModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:268.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:291.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -502,7 +502,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemColor()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:280.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -513,7 +513,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SystemColorModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:280.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -535,7 +535,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemTypography()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:291.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -546,17 +546,17 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SystemTypographyModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:291.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:317.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -576,7 +576,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.spacing()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: SpacingModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SpacingModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:302.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -587,21 +587,21 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SpacingModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: SpacingModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SpacingModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:302.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:358.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -621,7 +621,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.touchTarget()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:317.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -632,13 +632,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "TouchTargetModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:317.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:358.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -658,7 +658,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.platformInteraction()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -669,13 +669,13 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformInteractionModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:382.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -695,7 +695,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.hapticFeedback()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:358.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -706,7 +706,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "HapticFeedbackModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:358.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -728,7 +728,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.gestureRecognition()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:382.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -739,7 +739,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "GestureRecognitionModifier"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:382.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -769,7 +769,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "AppleHIGComplianceManager"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AppleHIGComplianceManager" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

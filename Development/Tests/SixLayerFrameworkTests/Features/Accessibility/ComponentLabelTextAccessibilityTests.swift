@@ -23,7 +23,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // AdaptiveButton should include "Submit" in identifier
         let button = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -58,10 +58,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         let submitButton = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let cancelButton = AdaptiveUIPatterns.AdaptiveButton("Cancel", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let submitInspected = submitButton.tryInspect(),
@@ -97,7 +97,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             Text("Content")
         }
         .platformNavigationTitle("Settings")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = view.tryInspect(),
@@ -138,7 +138,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                     }
                 )
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = view.tryInspect(),
@@ -178,7 +178,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
                     action: { }
                 )
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = button.tryInspect(),
@@ -208,7 +208,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = button.tryInspect(),
@@ -237,7 +237,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         let button = AdaptiveUIPatterns.AdaptiveButton("Save & Close!", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = button.tryInspect(),
@@ -265,7 +265,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         let button = AdaptiveUIPatterns.AdaptiveButton("CamelCaseLabel", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = button.tryInspect(),
@@ -310,7 +310,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicTextField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -349,7 +349,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicEmailField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -388,7 +388,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicPasswordField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -424,7 +424,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         )
         
         let formView = DynamicFormView(configuration: config, onSubmit: { _ in })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = formView.tryInspect(),
@@ -466,7 +466,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         ))
         
         let sectionView = DynamicFormSectionView(section: section, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = sectionView.tryInspect(),
@@ -507,7 +507,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicPhoneField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -543,7 +543,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicURLField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -579,7 +579,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicNumberField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -615,7 +615,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicDateField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -651,7 +651,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicToggleField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -688,7 +688,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicMultiSelectField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -725,7 +725,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicCheckboxField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -761,7 +761,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicFileField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -798,7 +798,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicEnumField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -834,7 +834,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicIntegerField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -870,7 +870,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.initializeField(field)
         
         let fieldView = DynamicTextAreaField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -907,10 +907,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         let card1 = ListCardComponent(item: item1, hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = ListCardComponent(item: item2, hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -950,10 +950,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         }
         
         let button1 = AdaptiveUIPatterns.AdaptiveButton("Add to Cart", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let button2 = AdaptiveUIPatterns.AdaptiveButton("Add to Cart", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // In a real list, each button would be in context of its item
         // For now, test that buttons with same label at least get different IDs when in different contexts
@@ -1027,7 +1027,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let card2 = ExpandableCardComponent(
             item: item2,
@@ -1042,7 +1042,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1093,10 +1093,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let listView = VStack {
             ForEach(items) { item in
                 ListCardComponent(item: item, hints: hints)
-                    .enableGlobalAutomaticAccessibilityIdentifiers()
+                    .enableGlobalAutomaticCompliance()
             }
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = listView.tryInspect() { // ForEach creates multiple views - we need to inspect each one
@@ -1128,10 +1128,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let item2 = TestItem(id: "cover-2", title: "Cover Flow Item B")
         
         let card1 = CoverFlowCardComponent(item: item1, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = CoverFlowCardComponent(item: item2, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1188,7 +1188,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = SimpleCardComponent(
             item: item2,
@@ -1199,7 +1199,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1239,10 +1239,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         let card1 = MasonryCardComponent(item: item1, hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = MasonryCardComponent(item: item2, hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1303,7 +1303,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = SimpleCardComponent(
             item: items[1],
@@ -1314,7 +1314,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1357,10 +1357,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         ]
         
         let card1 = CoverFlowCardComponent(item: items[0], onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = CoverFlowCardComponent(item: items[1], onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1396,10 +1396,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         let card1 = MasonryCardComponent(item: items[0], hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = MasonryCardComponent(item: items[1], hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1460,10 +1460,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let listCard = ListCardComponent(item: item, hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let simpleCard = SimpleCardComponent(
             item: item,
@@ -1474,13 +1474,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             onItemDeleted: nil,
             onItemEdited: nil
         )
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let coverFlowCard = CoverFlowCardComponent(item: item, onItemSelected: nil, onItemDeleted: nil, onItemEdited: nil)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let masonryCard = MasonryCardComponent(item: item, hints: hints)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let expandableInspected = expandableCard.tryInspect(),
@@ -1554,10 +1554,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         )
         
         let cardView1 = ResponsiveCardView(data: card1)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let cardView2 = ResponsiveCardView(data: card2)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = cardView1.tryInspect(),
@@ -1614,10 +1614,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         ]
         
         let card1 = ResponsiveCardView(data: cards[0])
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let card2 = ResponsiveCardView(data: cards[1])
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = card1.tryInspect(),
@@ -1659,7 +1659,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // Create a view with the tab strip
         let tabStrip = PlatformTabStrip(selection: .constant(0), items: items)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = tabStrip.tryInspect() {            // The tab strip contains buttons - we need to verify buttons have unique IDs
@@ -1694,8 +1694,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             }
         }
         .environment(\.accessibilityIdentifierLabel, homeItem.title)
-        .automaticAccessibilityIdentifiers(named: "PlatformTabStripButton")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .automaticCompliance(named: "PlatformTabStripButton")
+        .enableGlobalAutomaticCompliance()
         
         let settingsButton = Button(action: { }) {
             HStack(spacing: 6) {
@@ -1705,8 +1705,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             }
         }
         .environment(\.accessibilityIdentifierLabel, settingsItem.title)
-        .automaticAccessibilityIdentifiers(named: "PlatformTabStripButton")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .automaticCompliance(named: "PlatformTabStripButton")
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let homeInspected = homeButton.tryInspect(),
@@ -1783,7 +1783,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.addError("Email format is invalid", for: field.id)
         
         let fieldView = DynamicFormFieldView(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = fieldView.tryInspect(),
@@ -1820,7 +1820,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         formState.setValue(["Tag1", "Tag2", "Tag3"], for: field.id)
         
         let arrayField = DynamicArrayField(field: field, formState: formState)
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected = arrayField.tryInspect(),
@@ -1852,11 +1852,11 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         let row1 = EmptyView()
             .platformListRow(title: item1.title) { }
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let row2 = EmptyView()
             .platformListRow(title: item2.title) { }
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = row1.tryInspect(),
@@ -1908,13 +1908,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             Text("Content")
         }
         .platformListSectionHeader(title: "Section One", subtitle: "Subtitle")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let header2 = VStack {
             Text("Content")
         }
         .platformListSectionHeader(title: "Section Two")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = header1.tryInspect(),
@@ -1953,7 +1953,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .platformFormField(label: "Email Address") {
             TextField("", text: .constant(""))
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let field2 = VStack {
             TextField("", text: .constant(""))
@@ -1961,7 +1961,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .platformFormField(label: "Phone Number") {
             TextField("", text: .constant(""))
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = field1.tryInspect(),
@@ -1997,7 +1997,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .platformFormFieldGroup(title: "Personal Information") {
             Text("Content")
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let group2 = VStack {
             Text("Content")
@@ -2005,7 +2005,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         .platformFormFieldGroup(title: "Contact Details") {
             Text("Content")
         }
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = group1.tryInspect(),
@@ -2039,13 +2039,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             Text("Content")
         }
         .platformListEmptyState(systemImage: "tray", title: "No Items", message: "Add items to get started")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let emptyState2 = VStack {
             Text("Content")
         }
         .platformListEmptyState(systemImage: "tray", title: "No Results", message: "Try a different search")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = emptyState1.tryInspect(),
@@ -2079,13 +2079,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             Text("Content")
         }
         .platformDetailPlaceholder(systemImage: "doc", title: "Select an Item", message: "Choose an item to view details")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let placeholder2 = VStack {
             Text("Content")
         }
         .platformDetailPlaceholder(systemImage: "doc", title: "No Selection", message: "Please select an item")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = placeholder1.tryInspect(),
@@ -2116,10 +2116,10 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: ActionButton should include title in identifier
         let button1 = ActionButton(title: "Save", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let button2 = ActionButton(title: "Delete", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = button1.tryInspect(),
@@ -2154,13 +2154,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             Text("Content")
         }
         .platformValidationMessage("Email is required", type: .error)
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         let message2 = VStack {
             Text("Content")
         }
         .platformValidationMessage("Password too short", type: .error)
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         if let inspected1 = message1.tryInspect(),

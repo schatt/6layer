@@ -48,7 +48,7 @@ open class PlatformPhotoComponentsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformCameraInterface_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformCameraInterface_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:24,27,30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -72,7 +72,7 @@ open class PlatformPhotoComponentsLayer4Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformCameraInterface_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformCameraInterface_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:24,27,30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

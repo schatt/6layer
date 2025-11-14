@@ -24,14 +24,14 @@ public struct DynamicFormView: View {
             // Form title
             Text(configuration.title)
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "FormTitle")
+                .automaticCompliance(named: "FormTitle")
 
             // Form description if present
             if let description = configuration.description {
                 Text(description)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .automaticAccessibilityIdentifiers(named: "FormDescription")
+                    .automaticCompliance(named: "FormDescription")
             }
 
             // Show batch OCR button if any fields support OCR
@@ -50,7 +50,7 @@ public struct DynamicFormView: View {
                 .buttonStyle(.bordered)
                 .accessibilityLabel("Scan document to fill multiple fields")
                 .accessibilityHint("Takes a photo and automatically fills all OCR-enabled fields")
-                .automaticAccessibilityIdentifiers(named: "BatchOCRButton")
+                .automaticCompliance(named: "BatchOCRButton")
             }
 
             // Render form sections
@@ -69,11 +69,11 @@ public struct DynamicFormView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .automaticAccessibilityIdentifiers(named: "SubmitButton")
+            .automaticCompliance(named: "SubmitButton")
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicFormView")
+        .automaticCompliance(named: "DynamicFormView")
     }
 }
 
@@ -97,14 +97,14 @@ public struct DynamicFormSectionView: View {
             Text(section.title)
                 .font(.title3)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "SectionTitle")
+                .automaticCompliance(named: "SectionTitle")
 
             // Section description if present
             if let description = section.description {
                 Text(description)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .automaticAccessibilityIdentifiers(named: "SectionDescription")
+                    .automaticCompliance(named: "SectionDescription")
             }
 
             // Render fields using section's layoutStyle (hint, not commandment - framework adapts)
@@ -114,7 +114,7 @@ public struct DynamicFormSectionView: View {
         .background(Color.gray.opacity(0.1))
         .cornerRadius(8)
         .environment(\.accessibilityIdentifierLabel, section.title)
-        .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
+        .automaticCompliance(named: "DynamicFormSectionView")
     }
     
     // MARK: - DRY: Field Layout Helper
@@ -201,14 +201,14 @@ public struct DynamicFormFieldView: View {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
-                .automaticAccessibilityIdentifiers(named: "FieldLabel")
+                .automaticCompliance(named: "FieldLabel")
 
             // Field description if present
             if let description = field.description {
                 Text(description)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .automaticAccessibilityIdentifiers(named: "FieldDescription")
+                    .automaticCompliance(named: "FieldDescription")
             }
 
             // Field input based on type
@@ -221,12 +221,12 @@ public struct DynamicFormFieldView: View {
                         .font(.caption)
                         .foregroundColor(.red)
                         .environment(\.accessibilityIdentifierLabel, error) // TDD GREEN: Pass error text to identifier generation
-                        .automaticAccessibilityIdentifiers(named: "FieldError")
+                        .automaticCompliance(named: "FieldError")
                 }
             }
         }
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "DynamicFormFieldView")
+        .automaticCompliance(named: "DynamicFormFieldView")
     }
 
     @ViewBuilder
@@ -279,14 +279,14 @@ public struct FormWizardView<Content: View, Navigation: View>: View {
                     }
                 }
                 .padding()
-                .automaticAccessibilityIdentifiers(named: "StepProgress")
+                .automaticCompliance(named: "StepProgress")
             }
             
             // Current step content
             if wizardState.currentStepIndex < steps.count {
                 let currentStep = steps[wizardState.currentStepIndex]
                 content(currentStep, wizardState)
-                    .automaticAccessibilityIdentifiers(named: "StepContent")
+                    .automaticCompliance(named: "StepContent")
             }
             
             Spacer()
@@ -298,13 +298,13 @@ public struct FormWizardView<Content: View, Navigation: View>: View {
                 { _ = wizardState.previousStep() },
                 { /* Finish action - can be handled by parent */ }
             )
-            .automaticAccessibilityIdentifiers(named: "NavigationControls")
+            .automaticCompliance(named: "NavigationControls")
         }
         .padding()
         .onAppear {
             wizardState.setSteps(steps)
         }
-        .automaticAccessibilityIdentifiers(named: "FormWizardView")
+        .automaticCompliance(named: "FormWizardView")
     }
 }
 

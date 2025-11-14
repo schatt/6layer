@@ -27,7 +27,7 @@ public func platformOCRWithVisualCorrection_L1(
     )
     .environment(\.accessibilityIdentifierName, "platformOCRWithVisualCorrection_L1")
     .automaticAccessibility()
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Cross-platform semantic OCR intent interface with custom configuration
@@ -47,7 +47,7 @@ public func platformOCRWithVisualCorrection_L1(
     )
     .environment(\.accessibilityIdentifierName, "platformOCRWithVisualCorrection_L1")
     .automaticAccessibility()
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 /// Cross-platform semantic structured data extraction interface
@@ -66,7 +66,7 @@ public func platformExtractStructuredData_L1(
     )
     .environment(\.accessibilityIdentifierName, "platformExtractStructuredData_L1")
     .automaticAccessibility()
-    .automaticAccessibilityIdentifiers()
+    .automaticCompliance()
 }
 
 // MARK: - Test Helper Functions
@@ -160,7 +160,7 @@ private struct OCRWithVisualCorrectionWrapper: View {
                 initialView
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         .task {
             // Process image when view appears
             processImage()
@@ -363,7 +363,7 @@ private struct StructuredDataExtractionWrapper: View {
                     .foregroundColor(.secondary)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
         .onAppear {
             startStructuredExtraction()
         }

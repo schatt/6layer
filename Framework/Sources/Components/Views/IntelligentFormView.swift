@@ -126,9 +126,9 @@ public struct IntelligentFormView {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Form")
                             .font(.headline)
-                            .automaticAccessibilityIdentifiers(named: "FormTitle")
+                            .automaticCompliance(named: "FormTitle")
                     }
-                    .automaticAccessibilityIdentifiers(named: "DynamicFormHeader")
+                    .automaticCompliance(named: "DynamicFormHeader")
                     
                     // DynamicFormSectionView - form content sections
                     platformFormContainer_L4(
@@ -144,9 +144,9 @@ public struct IntelligentFormView {
                             )
                         }
                     )
-                    .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
+                    .automaticCompliance(named: "DynamicFormSectionView")
                 }
-                .automaticAccessibilityIdentifiers(named: "DynamicFormView")
+                .automaticCompliance(named: "DynamicFormView")
                 .overlay(
                     generateFormActions(
                         initialData: initialData,
@@ -162,9 +162,9 @@ public struct IntelligentFormView {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Form")
                             .font(.headline)
-                            .automaticAccessibilityIdentifiers(named: "FormTitle")
+                            .automaticCompliance(named: "FormTitle")
                     }
-                    .automaticAccessibilityIdentifiers(named: "DynamicFormHeader")
+                    .automaticCompliance(named: "DynamicFormHeader")
                     
                     // DynamicFormSectionView - form content sections
                     platformFormContainer_L4(
@@ -180,9 +180,9 @@ public struct IntelligentFormView {
                             )
                         }
                     )
-                    .automaticAccessibilityIdentifiers(named: "DynamicFormSectionView")
+                    .automaticCompliance(named: "DynamicFormSectionView")
                 }
-                .automaticAccessibilityIdentifiers(named: "DynamicFormView")
+                .automaticCompliance(named: "DynamicFormView")
                 .overlay(
                     generateFormActions(
                         initialData: initialData,
@@ -196,7 +196,7 @@ public struct IntelligentFormView {
         // Apply IntelligentFormView identifier at the outermost level
         // Inner components (DynamicFormView, DynamicFormHeader, etc.) maintain their own identifiers
         return AnyView(content
-            .automaticAccessibilityIdentifiers(named: "IntelligentFormView"))
+            .automaticCompliance(named: "IntelligentFormView"))
     }
     
     /// Generate a form for updating existing data with data binding integration
@@ -540,7 +540,7 @@ public struct IntelligentFormView {
             .padding()
             .background(Color.platformSecondaryBackground)
             .cornerRadius(8)
-            .automaticAccessibilityIdentifiers(named: "DynamicFormActions")
+            .automaticCompliance(named: "DynamicFormActions")
         }
     }
     
@@ -776,7 +776,7 @@ private struct DefaultPlatformFieldView: View {
                 errorDisplayView
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     @ViewBuilder

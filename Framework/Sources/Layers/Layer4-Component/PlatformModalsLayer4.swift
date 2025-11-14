@@ -28,7 +28,7 @@ public extension View {
             dragIndicator: .automatic,
             content: content
         )
-        .automaticAccessibilityIdentifiers(named: "platformSheet")
+        .automaticCompliance(named: "platformSheet")
     }
     
     /// Platform-specific alert presentation with consistent styling

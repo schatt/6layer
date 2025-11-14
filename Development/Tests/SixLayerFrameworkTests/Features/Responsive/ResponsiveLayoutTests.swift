@@ -26,7 +26,7 @@ open class ResponsiveLayoutTests: BaseTestClass {
                 componentName: "ResponsiveLayout"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayout.adaptiveGrid DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayout.adaptiveGrid DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:148.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -49,7 +49,7 @@ open class ResponsiveLayoutTests: BaseTestClass {
                 componentName: "ResponsiveLayout"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayout.adaptiveGrid DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveLayout.adaptiveGrid DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:148.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

@@ -23,7 +23,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFormField"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormField DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormField DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -45,7 +45,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFormField"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormField DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormField DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -69,7 +69,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFormFieldGroup"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormFieldGroup DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormFieldGroup DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:56.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -91,7 +91,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFormFieldGroup"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormFieldGroup DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormFieldGroup DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:56.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -113,7 +113,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformValidationMessage"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformValidationMessage DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformValidationMessage DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:79.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -136,7 +136,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 componentName: "platformValidationMessage"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformValidationMessage DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformValidationMessage DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:79.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -159,7 +159,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFormDivider"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormDivider DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormDivider DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:89.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -184,7 +184,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 componentName: "platformFormSpacing"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformFormSpacing DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformFormSpacing DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:97.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -209,7 +209,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformNavigation"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigation DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigation DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:29.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -233,7 +233,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformNavigationContainer"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationContainer DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationContainer DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:39,42,46.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -262,7 +262,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformNavigationDestination"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationDestination DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationDestination DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:60,63,66.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -291,7 +291,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformNavigationButton"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationButton DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationButton DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:107.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -313,7 +313,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformNavigationTitle"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationTitle DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationTitle DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:115,119,123.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -338,7 +338,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 componentName: "platformNavigationTitleDisplayMode"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationTitleDisplayMode DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationTitleDisplayMode DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:131,134.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -364,7 +364,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 componentName: "platformNavigationBarTitleDisplayMode"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationBarTitleDisplayMode DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigationBarTitleDisplayMode DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:142,145.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -387,7 +387,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformBackground"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformBackground DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformBackground DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:16,19,22.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -407,7 +407,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformBackground"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformBackground DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformBackground DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:29.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -429,7 +429,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformPadding"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPadding DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPadding DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:39,42,45.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -449,7 +449,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformPadding"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPadding DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPadding DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:52.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -469,7 +469,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformPadding"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPadding DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPadding DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:58.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -489,7 +489,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformReducedPadding"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformReducedPadding DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformReducedPadding DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:64.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -511,7 +511,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformCornerRadius"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformCornerRadius DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformCornerRadius DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:73,76,79.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -531,7 +531,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformCornerRadius"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformCornerRadius DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformCornerRadius DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:86.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -553,7 +553,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformShadow"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformShadow DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformShadow DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:93,96,99.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -573,7 +573,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformShadow"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformShadow DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformShadow DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:106.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -595,7 +595,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformBorder"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformBorder DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformBorder DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:116,122,128,138.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -615,7 +615,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformBorder"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformBorder DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformBorder DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:138.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -637,7 +637,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFont"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFont DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFont DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:147,150,153.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -657,7 +657,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFont"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFont DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFont DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:160.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -679,7 +679,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformAnimation"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformAnimation DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformAnimation DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:169,172,175.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -699,7 +699,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformAnimation"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformAnimation DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformAnimation DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:182.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -721,7 +721,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformMinFrame"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformMinFrame DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformMinFrame DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:191,194,197.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -741,7 +741,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformMaxFrame"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformMaxFrame DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformMaxFrame DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:205,208,211.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -761,7 +761,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformIdealFrame"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformIdealFrame DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformIdealFrame DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:219,222,225.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -781,7 +781,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformAdaptiveFrame"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformAdaptiveFrame DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformAdaptiveFrame DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:233,236,239.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -803,7 +803,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformFormStyle"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormStyle DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformFormStyle DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:249,252,255.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -825,7 +825,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformContentSpacing"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformContentSpacing DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformContentSpacing DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:265,268,271.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -849,7 +849,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformPhotoPicker_L4"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoPicker_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoPicker_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:41.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -873,7 +873,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformCameraInterface_L4"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformCameraInterface_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformCameraInterface_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:24,27,30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -898,7 +898,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 componentName: "platformPhotoDisplay_L4"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -918,7 +918,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformPhotoDisplay_L4"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -959,7 +959,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformOCRImplementation_L4"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformOCRImplementation_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformOCRImplementation_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformOCRComponentsLayer4.swift:50.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -1013,7 +1013,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformTextExtraction_L4"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformTextExtraction_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformTextExtraction_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformOCRComponentsLayer4.swift:79.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -1048,7 +1048,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             componentName: "platformTextRecognition_L4"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformTextRecognition_L4 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformTextRecognition_L4 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformOCRComponentsLayer4.swift:106.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

@@ -33,12 +33,12 @@ import AppKit
 
 extension View {
     /// Set the environment variable to enable automatic accessibility identifiers.
-    /// Framework components should check this environment variable and apply .automaticAccessibilityIdentifiers() themselves.
+    /// Framework components should check this environment variable and apply .automaticCompliance() themselves.
     /// This should NOT apply the modifier directly - that's the component's responsibility.
     func withGlobalAutoIDsEnabled() -> some View {
         self
             .environment(\.globalAutomaticAccessibilityIdentifiers, true)
-        // NOTE: We do NOT apply .automaticAccessibilityIdentifiers() here because:
+        // NOTE: We do NOT apply .automaticCompliance() here because:
         // 1. Framework components should apply it themselves based on the environment variable
         // 2. Plain views (Text, Button, etc.) don't need it unless explicitly enabled by the app
     }
@@ -255,7 +255,7 @@ private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [S
 /// Convenience: Return the accessibility identifier directly from a SwiftUI view
 /// This is much simpler than hosting the view and searching platform views
 /// 
-/// IMPORTANT: This function does NOT apply .automaticAccessibilityIdentifiers() to the view.
+/// IMPORTANT: This function does NOT apply .automaticCompliance() to the view.
 /// Framework components should apply it themselves based on the environment variable.
 /// We're testing that components do this, not that the test helper can do it.
 /// 
@@ -270,7 +270,7 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     // Each test should use testConfig from BaseTestClass, not .shared
     
     // Set up environment variable AND inject config - components should check this and apply the modifier themselves
-    // We do NOT apply .automaticAccessibilityIdentifiers() here because that would test the test helper,
+    // We do NOT apply .automaticCompliance() here because that would test the test helper,
     // not the framework components.
     // CRITICAL: Set both the environment variable AND inject the config to ensure modifiers can access it
     let viewWithEnvironment = view

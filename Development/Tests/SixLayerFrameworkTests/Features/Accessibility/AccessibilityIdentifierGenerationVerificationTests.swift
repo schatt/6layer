@@ -11,7 +11,7 @@ import SwiftUI
 @Suite("Accessibility Identifier Generation Verification")
 open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     
-    /// BUSINESS PURPOSE: Verify that .automaticAccessibilityIdentifiers() actually generates identifiers
+    /// BUSINESS PURPOSE: Verify that .automaticCompliance() actually generates identifiers
     /// TESTING SCOPE: Tests that the basic automatic identifier modifier works end-to-end
     /// METHODOLOGY: Uses centralized test functions for consistent validation
     @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
@@ -31,13 +31,13 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                     PlatformInteractionButton(style: .primary, action: {}) {
                         platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
                     }
-                    .automaticAccessibilityIdentifiers()
+                    .automaticCompliance()
                 }
             )
                 
             // Assert: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionButton and platformPresentContent_L1 
-            // DO have .automaticAccessibilityIdentifiers() modifiers applied.
+            // DO have .automaticCompliance() modifiers applied.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #expect(testPassed, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers (modifier verified in code)")
@@ -111,7 +111,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             #expect(Bool(true), "Automatic accessibility identifiers should create view successfully")  // testView is non-optional
                 
             // 2. Contains what it needs to contain - The view has the proper accessibility identifier assigned
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -147,7 +147,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 hints: PresentationHints()
             )
                 .accessibilityIdentifier(manualID)
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
                 
             // Then: Test the two critical aspects
                 
@@ -189,7 +189,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
                 
             // 1. View created - The view can be instantiated successfully
             #expect(Bool(true), "View should be created even when automatic IDs are disabled")  // testView1 is non-optional
@@ -217,7 +217,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
                 
             // 1. View created - The view can be instantiated successfully
             #expect(Bool(true), "View should be created when automatic IDs are enabled")  // testView2 is non-optional

@@ -23,7 +23,7 @@ open class MinimalAccessibilityTest {
         )
         
         // Then: Framework component should automatically generate accessibility identifier
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformPresentContent_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:544.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

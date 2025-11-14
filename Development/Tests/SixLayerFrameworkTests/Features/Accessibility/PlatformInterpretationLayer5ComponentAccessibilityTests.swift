@@ -22,7 +22,7 @@ open class PlatformInterpretationLayer5ComponentAccessibilityTests: BaseTestClas
         let testView = PlatformInterpretationLayer5()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInterpretationLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInterpretationLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformInterpretationLayer5.swift:17.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -33,7 +33,7 @@ open class PlatformInterpretationLayer5ComponentAccessibilityTests: BaseTestClas
             componentName: "PlatformInterpretationLayer5"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInterpretationLayer5 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInterpretationLayer5 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformInterpretationLayer5.swift:17.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

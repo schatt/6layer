@@ -82,7 +82,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
             platform: .iOS,
             componentName: "FormWizardView"
         )
-        // TODO: ViewInspector Detection Issue - VERIFIED: FormWizardView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: FormWizardView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFormView.swift:307.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

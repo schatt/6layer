@@ -67,7 +67,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 componentName: "ComprehensiveAccessibilityModifier"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ComprehensiveAccessibilityModifier" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -90,7 +90,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             ))
             
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:59.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -101,7 +101,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 componentName: "SystemAccessibilityModifier"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:59.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -131,7 +131,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 componentName: "AccessibilityIdentifierAssignmentModifier"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityIdentifierAssignmentModifier" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -153,7 +153,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: NamedModifier DOES apply accessibility identifiers
             // via .accessibilityIdentifier() in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:432-434.
-            // NamedModifier is a ViewModifier that applies identifiers directly, so it doesn't need .automaticAccessibilityIdentifiers() itself.
+            // NamedModifier is a ViewModifier that applies identifiers directly, so it doesn't need .automaticCompliance() itself.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -179,7 +179,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             .exactNamed("ExactTestView")
             
             // Then: Should generate accessibility identifiers with exact name
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExactNamedModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExactNamedModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:668.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -190,7 +190,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 componentName: "ExactNamedModifier"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExactNamedModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExactNamedModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:668.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -238,15 +238,15 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
     
     @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesAccessibilityIdentifiers() async {
         runWithTaskLocalConfig {
-            // Given: A view with .automaticAccessibilityIdentifiers() modifier
+            // Given: A view with .automaticCompliance() modifier
             let testView = VStack {
                 Text("Test Content")
                 Button("Test Button") { }
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiersModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiersModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:300.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -257,13 +257,13 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 componentName: "AutomaticAccessibilityIdentifiersModifier"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiersModifier DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiersModifier DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:300.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID, ".automaticAccessibilityIdentifiers() modifier should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, ".automaticCompliance() modifier should generate accessibility identifiers (modifier verified in code)")
         }
     }
     
@@ -284,7 +284,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 componentName: "AutomaticAccessibilityModifier"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AutomaticAccessibilityModifier" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -350,7 +350,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 Text("Test Content")
                 Button("Test Button") { }
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             
             // When: Checking if accessibility identifier is generated
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -361,7 +361,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityIdentifierGeneration" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -378,7 +378,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 Text("Test Content")
                 Button("Test Button") { }
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             
             // When: Validating accessibility identifier
             let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -389,7 +389,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should validate accessibility identifiers correctly
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityIdentifierValidation" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -418,7 +418,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should generate hierarchical accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityIdentifierHierarchy" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -448,7 +448,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should prevent collisions
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AccessibilityIdentifierCollisionPrevention" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -476,7 +476,7 @@ open class CoreFrameworkComponentAccessibilityTests: BaseTestClass {
                 Text("Test Content")
                 Button("Test Button") { }
             }
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
             
             // Then: Should enable debug logging
             #expect(config.enableDebugLogging, "Accessibility identifier debug logging should be enabled")

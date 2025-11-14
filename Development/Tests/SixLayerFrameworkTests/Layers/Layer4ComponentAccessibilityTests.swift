@@ -24,7 +24,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let styledButton = testButton.platformPrimaryButtonStyle()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrimaryButtonStyle DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrimaryButtonStyle DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformButtonsLayer4.swift:28.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -35,7 +35,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPrimaryButtonStyle"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrimaryButtonStyle DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrimaryButtonStyle DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformButtonsLayer4.swift:28.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -59,7 +59,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSecondaryButtonStyle"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSecondaryButtonStyle DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSecondaryButtonStyle DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformButtonsLayer4.swift:49.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -85,7 +85,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformFormField"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformFormField" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -111,7 +111,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformListRow"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformListRow" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -138,7 +138,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformCardStyle"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformCardStyle" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -170,7 +170,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSheet"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformSheet" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -197,7 +197,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "platformNavigation"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformNavigation" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -229,7 +229,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformCardGrid"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformCardGrid" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -253,7 +253,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformBackground"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "PlatformBackground" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

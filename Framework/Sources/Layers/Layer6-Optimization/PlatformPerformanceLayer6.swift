@@ -13,12 +13,12 @@ public struct PlatformPerformanceLayer6: View {
         VStack(spacing: 16) {
             Text("Platform Performance")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Performance monitoring and optimization")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Real-time performance monitoring and metrics")
@@ -27,9 +27,9 @@ public struct PlatformPerformanceLayer6: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformPerformanceLayer6")
+        .automaticCompliance(named: "PlatformPerformanceLayer6")
     }
 }

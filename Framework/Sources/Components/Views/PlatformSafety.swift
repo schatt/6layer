@@ -12,17 +12,17 @@ public struct PlatformSafety: View {
         VStack(spacing: 12) {
             Text("Platform Safety")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Safety features across platforms")
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
         }
         .padding()
         .background(Color.platformBackground)
         .cornerRadius(12)
-        .automaticAccessibilityIdentifiers(named: "PlatformSafety")
+        .automaticCompliance(named: "PlatformSafety")
     }
 }
 

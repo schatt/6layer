@@ -524,7 +524,7 @@ public struct PlatformInteractionButton<Label: View>: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     private func backgroundColorForStyle(_ style: InteractionButtonStyle) -> Color {

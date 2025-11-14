@@ -13,12 +13,12 @@ public struct PlatformOptimizationLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Optimization")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("System optimization recommendations")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• System optimization recommendations")
@@ -27,9 +27,9 @@ public struct PlatformOptimizationLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformOptimizationLayer5")
+        .automaticCompliance(named: "PlatformOptimizationLayer5")
     }
 }

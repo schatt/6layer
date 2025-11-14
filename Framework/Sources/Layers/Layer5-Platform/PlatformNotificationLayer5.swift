@@ -13,12 +13,12 @@ public struct PlatformNotificationLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Notifications")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Notification and alert management")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Platform-specific notification styles")
@@ -27,9 +27,9 @@ public struct PlatformNotificationLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformNotificationLayer5")
+        .automaticCompliance(named: "PlatformNotificationLayer5")
     }
 }

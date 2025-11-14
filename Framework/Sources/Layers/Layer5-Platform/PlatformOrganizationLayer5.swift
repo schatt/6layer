@@ -13,12 +13,12 @@ public struct PlatformOrganizationLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Organization")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Data organization and categorization")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Data organization and categorization")
@@ -27,9 +27,9 @@ public struct PlatformOrganizationLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformOrganizationLayer5")
+        .automaticCompliance(named: "PlatformOrganizationLayer5")
     }
 }

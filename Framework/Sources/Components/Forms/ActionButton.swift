@@ -18,7 +18,7 @@ public struct ActionButton: View {
         }
         .buttonStyle(.borderedProminent)
         .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "ActionButton")
+        .automaticCompliance(named: "ActionButton")
     }
 }
 

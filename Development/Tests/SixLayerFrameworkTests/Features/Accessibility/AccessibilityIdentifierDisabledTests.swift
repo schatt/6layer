@@ -26,7 +26,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
             }
                 .named("TestButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)

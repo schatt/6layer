@@ -494,12 +494,12 @@ public extension View {
             content()
         }
         .automaticAccessibility()
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #else
         VStack(spacing: spacing) {
             content()
         }
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -540,7 +540,7 @@ public extension View {
             maxHeight: sizing.container?.maxHeight
         )
         .automaticAccessibility()
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #else
         VStack(spacing: spacing) {
             content()
@@ -553,7 +553,7 @@ public extension View {
             idealHeight: sizing.container?.idealHeight,
             maxHeight: sizing.container?.maxHeight
         )
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -625,10 +625,10 @@ public extension View {
         #if os(macOS)
         return view
             .automaticAccessibility()
-            .automaticAccessibilityIdentifiers(named: identifierName)
+            .automaticCompliance(named: identifierName)
         #else
         return view
-            .automaticAccessibilityIdentifiers(named: identifierName)
+            .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -665,13 +665,13 @@ public extension View {
                 .environmentObject(stateValue)
         }
         .automaticAccessibility()
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #else
         VStack(spacing: spacing) {
             content()
                 .environmentObject(stateValue)
         }
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -702,12 +702,12 @@ public extension View {
             content()
         }
         .automaticAccessibility()
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #else
         HStack(spacing: spacing) {
             content()
         }
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -748,7 +748,7 @@ public extension View {
             maxHeight: sizing.container?.maxHeight
         )
         .automaticAccessibility()
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #else
         HStack(spacing: spacing) {
             content()
@@ -761,7 +761,7 @@ public extension View {
             idealHeight: sizing.container?.idealHeight,
             maxHeight: sizing.container?.maxHeight
         )
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -833,10 +833,10 @@ public extension View {
         #if os(macOS)
         return view
             .automaticAccessibility()
-            .automaticAccessibilityIdentifiers(named: identifierName)
+            .automaticCompliance(named: identifierName)
         #else
         return view
-            .automaticAccessibilityIdentifiers(named: identifierName)
+            .automaticCompliance(named: identifierName)
         #endif
     }
     
@@ -873,13 +873,13 @@ public extension View {
                 .environmentObject(stateValue)
         }
         .automaticAccessibility()
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #else
         HStack(spacing: spacing) {
             content()
                 .environmentObject(stateValue)
         }
-        .automaticAccessibilityIdentifiers(named: identifierName)
+        .automaticCompliance(named: identifierName)
         #endif
     }
 }

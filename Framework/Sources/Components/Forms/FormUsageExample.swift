@@ -30,7 +30,7 @@ public struct FormUsageExample: View {
                 .padding()
             .navigationTitle("User Registration")
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     // MARK: - Form Field Creation

@@ -13,12 +13,12 @@ public struct PlatformProfilingLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Profiling")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Performance profiling and analysis")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Performance profiling and analysis")
@@ -27,9 +27,9 @@ public struct PlatformProfilingLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformProfilingLayer5")
+        .automaticCompliance(named: "PlatformProfilingLayer5")
     }
 }

@@ -62,7 +62,7 @@ open class OCRDisambiguationViewTests {
             componentName: "OCRDisambiguationView"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: OCRDisambiguationView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: OCRDisambiguationView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/OCRDisambiguationView.swift:79.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -100,7 +100,7 @@ open class OCRDisambiguationViewTests {
             componentName: "OCRDisambiguationView"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: OCRDisambiguationView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: OCRDisambiguationView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/OCRDisambiguationView.swift:79.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

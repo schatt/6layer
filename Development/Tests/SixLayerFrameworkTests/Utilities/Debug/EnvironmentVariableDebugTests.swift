@@ -25,7 +25,7 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
             
             // 2. Create a view with automaticAccessibilityIdentifiers modifier
             let view = Button("Test") { }
-                .automaticAccessibilityIdentifiers()  // ← This should set autoIDsEnabled = true
+                .automaticCompliance()  // ← This should set autoIDsEnabled = true
             
             // 3. Try to inspect for accessibility identifier
             // Using wrapper - when ViewInspector works on macOS, no changes needed here

@@ -80,7 +80,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                 .named(longName)
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             // Using wrapper - when ViewInspector works on macOS, no changes needed here
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -142,7 +142,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             let view = VStack {
                 Button("Auto") { }
                     .named("AutoButton")
-                    .enableGlobalAutomaticAccessibilityIdentifiers()
+                    .enableGlobalAutomaticCompliance()
                 
                 Button("Manual") { }
                     .named("ManualButton")
@@ -216,13 +216,13 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test1", hints: PresentationHints())
             }
                 .exactNamed("SameName")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let view2 = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test2", hints: PresentationHints())
             }
                 .exactNamed("SameName")  // ← Same exact name
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
@@ -254,11 +254,11 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             // Test: exactNamed() should produce different identifiers than named()
             let exactView = Button("Test") { }
                 .exactNamed("TestButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             let namedView = Button("Test") { }
                 .named("TestButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
@@ -300,7 +300,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             
             let exactView = Button("Test") { }
                 .exactNamed("SaveButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
@@ -332,7 +332,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             // Test: exactNamed() should produce minimal identifiers
             let exactView = Button("Test") { }
                 .exactNamed("MinimalButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
@@ -373,7 +373,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
                 .named("TestButton")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             // Change configuration after view creation
             config.namespace = "ChangedNamespace"
@@ -408,7 +408,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                 HStack {
                     Button("Content") { }
                         .named("DeepNested")
-                        .enableGlobalAutomaticAccessibilityIdentifiers()
+                        .enableGlobalAutomaticCompliance()
                 }
                 .named("Nested")
             }

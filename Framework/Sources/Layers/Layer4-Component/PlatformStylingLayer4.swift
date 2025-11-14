@@ -13,20 +13,20 @@ public extension View {
     func platformBackground() -> some View {
         #if os(iOS)
         return self.background(Color.platformGroupedBackground)
-            .automaticAccessibilityIdentifiers(named: "platformBackground")
+            .automaticCompliance(named: "platformBackground")
         #elseif os(macOS)
         return self.background(Color.platformSecondaryBackground)
-            .automaticAccessibilityIdentifiers(named: "platformBackground")
+            .automaticCompliance(named: "platformBackground")
         #else
         return self.background(Color.gray.opacity(0.1))
-            .automaticAccessibilityIdentifiers(named: "platformBackground")
+            .automaticCompliance(named: "platformBackground")
         #endif
     }
     
     /// Platform-specific background with custom color
     func platformBackground(_ color: Color) -> some View {
         return self.background(color)
-            .automaticAccessibilityIdentifiers(named: "platformBackground")
+            .automaticCompliance(named: "platformBackground")
     }
     
     // MARK: - Padding Styling
@@ -36,32 +36,32 @@ public extension View {
     func platformPadding() -> some View {
         #if os(iOS)
         return self.padding(16)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return self.padding(12)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return self.padding(16)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
     
     /// Platform-specific padding with directional control
     func platformPadding(_ edges: Edge.Set, _ length: CGFloat? = nil) -> some View {
         return self.padding(edges, length)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
     
     /// Platform-specific padding with explicit value
     func platformPadding(_ value: CGFloat) -> some View {
         return self.padding(value)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
     
     /// Platform-specific reduced padding values
     func platformReducedPadding() -> some View {
         return self.padding(8)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
     
     // MARK: - Visual Effects
@@ -70,40 +70,40 @@ public extension View {
     func platformCornerRadius() -> some View {
         #if os(iOS)
         return self.cornerRadius(12)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return self.cornerRadius(8)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return self.cornerRadius(8)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
     
     /// Platform-specific corner radius with custom value
     func platformCornerRadius(_ radius: CGFloat) -> some View {
         return self.cornerRadius(radius)
-            .automaticAccessibilityIdentifiers(named: "platformCornerRadius")
+            .automaticCompliance(named: "platformCornerRadius")
     }
     
     /// Platform-specific shadow modifier
     func platformShadow() -> some View {
         #if os(iOS)
         return self.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
-            .automaticAccessibilityIdentifiers(named: "platformShadow")
+            .automaticCompliance(named: "platformShadow")
         #elseif os(macOS)
         return self.shadow(color: Color.black.opacity(0.08), radius: 3, x: 0, y: 1)
-            .automaticAccessibilityIdentifiers(named: "platformShadow")
+            .automaticCompliance(named: "platformShadow")
         #else
         return self.shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
-            .automaticAccessibilityIdentifiers(named: "platformShadow")
+            .automaticCompliance(named: "platformShadow")
         #endif
     }
     
     /// Platform-specific shadow with custom parameters
     func platformShadow(color: Color = .black, radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) -> some View {
         return self.shadow(color: color, radius: radius, x: x, y: y)
-            .automaticAccessibilityIdentifiers(named: "platformShadow")
+            .automaticCompliance(named: "platformShadow")
     }
     
     /// Platform-specific border modifier
@@ -113,19 +113,19 @@ public extension View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.platformSeparator, lineWidth: 0.5)
         )
-        .automaticAccessibilityIdentifiers(named: "platformBorder")
+        .automaticCompliance(named: "platformBorder")
         #elseif os(macOS)
         return self.overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.platformSeparator, lineWidth: 0.5)
         )
-        .automaticAccessibilityIdentifiers(named: "platformBorder")
+        .automaticCompliance(named: "platformBorder")
         #else
         return self.overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.platformSeparator, lineWidth: 0.5)
         )
-        .automaticAccessibilityIdentifiers(named: "platformBorder")
+        .automaticCompliance(named: "platformBorder")
         #endif
     }
     
@@ -135,7 +135,7 @@ public extension View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(color, lineWidth: width)
         )
-        .automaticAccessibilityIdentifiers(named: "platformBorder")
+        .automaticCompliance(named: "platformBorder")
     }
     
     // MARK: - Typography
@@ -144,20 +144,20 @@ public extension View {
     func platformFont() -> some View {
         #if os(iOS)
         return self.font(.body)
-            .automaticAccessibilityIdentifiers(named: "platformFont")
+            .automaticCompliance(named: "platformFont")
         #elseif os(macOS)
         return self.font(.body)
-            .automaticAccessibilityIdentifiers(named: "platformFont")
+            .automaticCompliance(named: "platformFont")
         #else
         return self.font(.body)
-            .automaticAccessibilityIdentifiers(named: "platformFont")
+            .automaticCompliance(named: "platformFont")
         #endif
     }
     
     /// Platform-specific font with custom style
     func platformFont(_ style: Font) -> some View {
         return self.font(style)
-            .automaticAccessibilityIdentifiers(named: "platformFont")
+            .automaticCompliance(named: "platformFont")
     }
     
     // MARK: - Animation
@@ -166,20 +166,20 @@ public extension View {
     func platformAnimation() -> some View {
         #if os(iOS)
         return self.animation(.easeInOut(duration: 0.3), value: true)
-            .automaticAccessibilityIdentifiers(named: "platformAnimation")
+            .automaticCompliance(named: "platformAnimation")
         #elseif os(macOS)
         return self.animation(.easeInOut(duration: 0.2), value: true)
-            .automaticAccessibilityIdentifiers(named: "platformAnimation")
+            .automaticCompliance(named: "platformAnimation")
         #else
         return self.animation(.easeInOut(duration: 0.3), value: true)
-            .automaticAccessibilityIdentifiers(named: "platformAnimation")
+            .automaticCompliance(named: "platformAnimation")
         #endif
     }
     
     /// Platform-specific animation with custom parameters
     func platformAnimation(_ animation: Animation?, value: AnyHashable) -> some View {
         return self.animation(animation, value: value)
-            .automaticAccessibilityIdentifiers(named: "platformAnimation")
+            .automaticCompliance(named: "platformAnimation")
     }
     
     // MARK: - Frame Constraints
@@ -188,13 +188,13 @@ public extension View {
     func platformMinFrame() -> some View {
         #if os(iOS)
         return self
-            .automaticAccessibilityIdentifiers(named: "platformMinFrame")
+            .automaticCompliance(named: "platformMinFrame")
         #elseif os(macOS)
         return self.frame(minWidth: 600, minHeight: 800)
-            .automaticAccessibilityIdentifiers(named: "platformMinFrame")
+            .automaticCompliance(named: "platformMinFrame")
         #else
         return self
-            .automaticAccessibilityIdentifiers(named: "platformMinFrame")
+            .automaticCompliance(named: "platformMinFrame")
         #endif
     }
     
@@ -202,13 +202,13 @@ public extension View {
     func platformMaxFrame() -> some View {
         #if os(iOS)
         return self
-            .automaticAccessibilityIdentifiers(named: "platformMaxFrame")
+            .automaticCompliance(named: "platformMaxFrame")
         #elseif os(macOS)
         return self.frame(maxWidth: 1200, maxHeight: 1000)
-            .automaticAccessibilityIdentifiers(named: "platformMaxFrame")
+            .automaticCompliance(named: "platformMaxFrame")
         #else
         return self
-            .automaticAccessibilityIdentifiers(named: "platformMaxFrame")
+            .automaticCompliance(named: "platformMaxFrame")
         #endif
     }
     
@@ -216,13 +216,13 @@ public extension View {
     func platformIdealFrame() -> some View {
         #if os(iOS)
         return self
-            .automaticAccessibilityIdentifiers(named: "platformIdealFrame")
+            .automaticCompliance(named: "platformIdealFrame")
         #elseif os(macOS)
         return self.frame(idealWidth: 800, idealHeight: 900)
-            .automaticAccessibilityIdentifiers(named: "platformIdealFrame")
+            .automaticCompliance(named: "platformIdealFrame")
         #else
         return self
-            .automaticAccessibilityIdentifiers(named: "platformIdealFrame")
+            .automaticCompliance(named: "platformIdealFrame")
         #endif
     }
     
@@ -230,13 +230,13 @@ public extension View {
     func platformAdaptiveFrame() -> some View {
         #if os(iOS)
         return self
-            .automaticAccessibilityIdentifiers(named: "platformAdaptiveFrame")
+            .automaticCompliance(named: "platformAdaptiveFrame")
         #elseif os(macOS)
         return self.frame(minWidth: 600, idealWidth: 800, maxWidth: 1200, minHeight: 800, idealHeight: 900, maxHeight: 1000)
-            .automaticAccessibilityIdentifiers(named: "platformAdaptiveFrame")
+            .automaticCompliance(named: "platformAdaptiveFrame")
         #else
         return self
-            .automaticAccessibilityIdentifiers(named: "platformAdaptiveFrame")
+            .automaticCompliance(named: "platformAdaptiveFrame")
         #endif
     }
     
@@ -246,13 +246,13 @@ public extension View {
     func platformFormStyle() -> some View {
         #if os(iOS)
         return self
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return self.formStyle(.grouped)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return self
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
     
@@ -262,13 +262,13 @@ public extension View {
     func platformContentSpacing() -> some View {
         #if os(iOS)
         return self
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return self
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return self
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
     

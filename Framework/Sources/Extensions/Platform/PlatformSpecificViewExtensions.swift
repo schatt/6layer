@@ -118,13 +118,13 @@ public extension View {
     func platformContentSpacing(topPadding: CGFloat) -> some View {
         #if os(iOS)
         return AnyView(self.padding(.horizontal).padding(.top, topPadding))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return AnyView(self.padding(.horizontal).padding(.top, topPadding * 0.8))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return AnyView(self.padding(.horizontal).padding(.top, topPadding))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
 
@@ -149,21 +149,21 @@ public extension View {
             .padding(.bottom, bottom ?? 0)
             .padding(.leading, leading ?? 0)
             .padding(.trailing, trailing ?? 0))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return AnyView(self
             .padding(.top, (top ?? 0) * 0.8)
             .padding(.bottom, (bottom ?? 0) * 0.8)
             .padding(.leading, (leading ?? 0) * 0.8)
             .padding(.trailing, (trailing ?? 0) * 0.8))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return AnyView(self
             .padding(.top, top ?? 0)
             .padding(.bottom, bottom ?? 0)
             .padding(.leading, leading ?? 0)
             .padding(.trailing, trailing ?? 0))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
 
@@ -182,17 +182,17 @@ public extension View {
         return AnyView(self
             .padding(.horizontal, horizontal ?? 0)
             .padding(.vertical, vertical ?? 0))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #elseif os(macOS)
         return AnyView(self
             .padding(.horizontal, (horizontal ?? 0) * 0.8)
             .padding(.vertical, (vertical ?? 0) * 0.8))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #else
         return AnyView(self
             .padding(.horizontal, horizontal ?? 0)
             .padding(.vertical, vertical ?? 0))
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
         #endif
     }
 
@@ -205,26 +205,26 @@ public extension View {
         #if os(iOS)
         if let all = all {
             return AnyView(self.padding(.horizontal, all).padding(.vertical, all))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         } else {
             return AnyView(self.padding(.horizontal).padding(.top, 20))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
         #elseif os(macOS)
         if let all = all {
             return AnyView(self.padding(.horizontal, all * 0.8).padding(.vertical, all * 0.8))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         } else {
             return AnyView(self.padding(.horizontal).padding(.top, 16))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
         #else
         if let all = all {
             return AnyView(self.padding(.horizontal, all).padding(.vertical, all))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         } else {
             return AnyView(self.padding(.horizontal).padding(.top, 20))
-                .automaticAccessibilityIdentifiers()
+                .automaticCompliance()
         }
         #endif
     }

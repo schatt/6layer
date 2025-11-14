@@ -49,7 +49,7 @@ open class PlatformStylingLayer4Tests {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: platformStyledContainer_L4 applies modifiers through platformBorder() 
-        // which has .automaticAccessibilityIdentifiers() applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:116,122,128.
+        // which has .automaticCompliance() applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:116,122,128.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         #expect(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on iOS (modifier verified in code)")
@@ -71,7 +71,7 @@ open class PlatformStylingLayer4Tests {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: platformStyledContainer_L4 applies modifiers through platformBorder() 
-        // which has .automaticAccessibilityIdentifiers() applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:116,122,128.
+        // which has .automaticCompliance() applied in Framework/Sources/Layers/Layer4-Component/PlatformStylingLayer4.swift:116,122,128.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         #expect(hasAccessibilityID, "platformStyledContainer_L4 should generate accessibility identifiers on macOS (modifier verified in code)")

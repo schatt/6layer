@@ -124,7 +124,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
             componentName: "platformAdaptiveDetailView"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformAdaptiveDetailView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformAdaptiveDetailView DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/IntelligentDetailView.swift:466,475.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

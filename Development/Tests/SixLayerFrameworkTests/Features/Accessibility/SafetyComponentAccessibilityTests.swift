@@ -22,7 +22,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = VisionSafety()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/VisionSafety.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -33,7 +33,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "VisionSafety"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: VisionSafety DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/VisionSafety.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -47,7 +47,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSafety()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafety DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafety DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/PlatformSafety.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -58,7 +58,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSafety"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafety DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSafety DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/PlatformSafety.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -72,7 +72,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformSecurity()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSecurity DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSecurity DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/PlatformSecurity.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -83,7 +83,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSecurity"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSecurity DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformSecurity DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/PlatformSecurity.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -97,7 +97,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         let testView = PlatformPrivacy()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacy DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacy DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/PlatformPrivacy.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -108,7 +108,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPrivacy"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacy DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: PlatformPrivacy DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/PlatformPrivacy.swift:15.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

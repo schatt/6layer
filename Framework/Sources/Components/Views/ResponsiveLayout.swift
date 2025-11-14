@@ -31,7 +31,7 @@ public struct ResponsiveGrid<Content: View>: View {
         LazyVGrid(columns: columns, spacing: spacing) {
             content()
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -63,7 +63,7 @@ public struct ResponsiveNavigation<Content: View>: View {
         ResponsiveContainer { horizontal, _ in
             content(horizontal)
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -89,7 +89,7 @@ public struct ResponsiveStack<Content: View>: View {
                 })
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -97,7 +97,7 @@ public struct ResponsiveStack<Content: View>: View {
 public struct ResponsivePadding: ViewModifier {
     public func body(content: Content) -> some View {
         content.padding(paddingValue)
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 
     private var paddingValue: CGFloat {
@@ -145,7 +145,7 @@ public struct ResponsiveLayout {
                 content()
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 
     @MainActor
@@ -160,7 +160,7 @@ public struct ResponsiveLayout {
                 content()
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 
     @MainActor
@@ -175,7 +175,7 @@ public struct ResponsiveLayout {
                 content()
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -204,7 +204,7 @@ public struct ResponsiveLayoutExample: View {
                 .cornerRadius(8)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -230,6 +230,6 @@ public struct ResponsiveNavigationExample: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }

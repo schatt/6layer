@@ -13,12 +13,12 @@ public struct PlatformPrivacyLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Privacy")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Privacy settings and data protection")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Privacy settings and consent management")
@@ -27,9 +27,9 @@ public struct PlatformPrivacyLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformPrivacyLayer5")
+        .automaticCompliance(named: "PlatformPrivacyLayer5")
     }
 }

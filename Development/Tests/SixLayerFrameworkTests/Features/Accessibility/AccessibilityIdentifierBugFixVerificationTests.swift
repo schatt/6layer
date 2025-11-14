@@ -106,7 +106,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             componentName: "AddFuelButton"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "AddFuelButton" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -174,7 +174,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             componentName: "ScreenContext"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "ScreenContext" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -211,7 +211,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             componentName: "NavigationState"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "NavigationState" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -242,7 +242,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(Bool(true), "View with manual accessibility identifier should be created successfully")  // testView is non-optional
             
             // Verify that manual identifiers continue to work
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -278,7 +278,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             #expect(Bool(true), "View with automatic accessibility identifiers should be created successfully")  // testView is non-optional
             
             // The fix ensures that automatic accessibility identifiers work correctly
-            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiers DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: AutomaticAccessibilityIdentifiers DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:668.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -294,7 +294,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
     }
     
     /// BUSINESS PURPOSE: Verify that the fix doesn't break existing global modifier usage
-    /// TESTING SCOPE: Tests that .enableGlobalAutomaticAccessibilityIdentifiers() still works
+    /// TESTING SCOPE: Tests that .enableGlobalAutomaticCompliance() still works
     /// METHODOLOGY: Tests that the fix doesn't interfere with existing functionality
     @Test func testGlobalModifierStillWorks() async {
         await MainActor.run {
@@ -306,7 +306,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             
             // When: Using the global modifier (the original working approach)
             let testView = Text("Global Test")
-                .enableGlobalAutomaticAccessibilityIdentifiers()
+                .enableGlobalAutomaticCompliance()
             
             // Then: The view should be created successfully
             #expect(Bool(true), "View with global modifier should be created successfully")  // testView is non-optional

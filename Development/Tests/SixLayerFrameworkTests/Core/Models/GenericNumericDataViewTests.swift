@@ -48,7 +48,7 @@ open class GenericNumericDataViewTests {
             componentName: "GenericNumericDataView"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
         // modifier applied. The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
@@ -73,7 +73,7 @@ open class GenericNumericDataViewTests {
             componentName: "GenericNumericDataView"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: GenericNumericDataView DOES have .automaticCompliance() 
         // modifier applied. The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it

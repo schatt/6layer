@@ -46,7 +46,7 @@ public struct RichTextEditorField: View {
                 .cornerRadius(8)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -248,7 +248,7 @@ public struct AutocompleteField: View {
                 )
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     private func filterSuggestions(query: String) {
@@ -345,7 +345,7 @@ public struct EnhancedFileUploadField: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     private func updateFormState() {
@@ -506,7 +506,7 @@ public struct FileList: View {
                 FileRow(file: file, onRemove: onRemove)
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -544,7 +544,7 @@ public struct FileRow: View {
         .background(Color.tertiaryBackground)
         .cornerRadius(6)
         .environment(\.accessibilityIdentifierLabel, file.name) // TDD GREEN: Pass label to identifier generation
-        .automaticAccessibilityIdentifiers(named: "FileRow")
+        .automaticCompliance(named: "FileRow")
     }
 }
 
@@ -584,7 +584,7 @@ public struct DatePickerField: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -624,7 +624,7 @@ public struct TimePickerField: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -666,7 +666,7 @@ public struct DateTimePickerField: View {
                 }
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 

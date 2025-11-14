@@ -35,7 +35,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/OCROverlayView.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -46,7 +46,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
                 componentName: "OCROverlayView"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/OCROverlayView.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -81,7 +81,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/OCROverlayView.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -92,7 +92,7 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
                 componentName: "OCROverlayView"
             )
             
-            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: OCROverlayView DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Views/OCROverlayView.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

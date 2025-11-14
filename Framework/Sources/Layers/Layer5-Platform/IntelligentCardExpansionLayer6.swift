@@ -58,7 +58,7 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(accessibilityHint)
         .accessibilityValue(accessibilityValue)
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
     
     @ViewBuilder
@@ -270,7 +270,7 @@ public struct iOSExpandableCardView<Item: Identifiable>: View {
             performanceConfig: getCardExpansionPerformanceConfig(),
             accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -290,7 +290,7 @@ public struct macOSExpandableCardView<Item: Identifiable>: View {
         .onHover { hovering in
             // macOS-specific hover behavior
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -308,7 +308,7 @@ public struct visionOSExpandableCardView<Item: Identifiable>: View {
             accessibilityConfig: getCardExpansionAccessibilityConfig()
         )
         .modifier(FocusableModifier())
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 
@@ -339,7 +339,7 @@ public struct PlatformAwareExpandableCardView<Item: Identifiable>: View {
                 )
             }
         }
-        .automaticAccessibilityIdentifiers()
+        .automaticCompliance()
     }
 }
 

@@ -18,7 +18,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
         }
             .named("AddFuelButton")
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -53,7 +53,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         }
         .named("Container")
         .named("OuterContainer") // Multiple .named() calls
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -90,7 +90,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         }
         .named("UserProfile")
         .named("ProfileView")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -136,7 +136,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         }
         .named("ComplexView")
         .named("ComplexContainer")
-        .enableGlobalAutomaticAccessibilityIdentifiers()
+        .enableGlobalAutomaticCompliance()
         
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -168,10 +168,10 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         // TDD: Define the behavior I want - labels from String parameters should be in identifiers
         // This test SHOULD FAIL initially - labels are not included in identifiers
         let submitButton = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         let cancelButton = AdaptiveUIPatterns.AdaptiveButton("Cancel", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
@@ -203,7 +203,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         
         // TDD: Labels should be sanitized (lowercase, spaces to hyphens, etc.)
         let button = AdaptiveUIPatterns.AdaptiveButton("Add New Item", action: { })
-            .enableGlobalAutomaticAccessibilityIdentifiers()
+            .enableGlobalAutomaticCompliance()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {

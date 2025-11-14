@@ -11,7 +11,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     // MARK: - Automatic Accessibility Identifier Component Tests
     
     @Test func testAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentContent_L1(
             content: "Test Content",
             hints: PresentationHints()
@@ -25,7 +25,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentContent_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentContent_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -35,7 +35,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicValue_L1(
             value: 42,
             hints: PresentationHints()
@@ -49,7 +49,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicValue_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicValue_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -59,7 +59,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testGlobalAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicArray_L1(
             array: [1, 2, 3],
             hints: PresentationHints()
@@ -73,7 +73,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicArray_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicArray_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -97,7 +97,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentContent_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentContent_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -121,7 +121,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicValue_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicValue_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -140,7 +140,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     // MARK: - Framework Component Tests
     
     @Test func testViewHierarchyTrackingModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test")],
             hints: PresentationHints()
@@ -154,7 +154,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentItemCollection_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentItemCollection_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -164,7 +164,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentNumericData_L1(
             data: [GenericNumericData(value: 42, label: "Test")],
             hints: PresentationHints()
@@ -178,7 +178,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentNumericData_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentNumericData_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -202,7 +202,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicValue_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicValue_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -212,7 +212,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testExactAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentContent_L1(
             content: "Test Value",
             hints: PresentationHints()
@@ -226,7 +226,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentContent_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentContent_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -250,7 +250,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentContent_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentContent_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -260,7 +260,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testAccessibilityLabelAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicValue_L1(
             value: "Custom Label",
             hints: PresentationHints()
@@ -274,7 +274,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicValue_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicValue_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -284,7 +284,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testAccessibilityHintAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicArray_L1(
             array: ["Custom", "Hint"],
             hints: PresentationHints()
@@ -298,7 +298,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicArray_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicArray_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -322,7 +322,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentItemCollection_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentItemCollection_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -332,7 +332,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     }
     
     @Test func testAccessibilityValueAssignmentModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Framework component that should apply .automaticAccessibilityIdentifiers() itself
+        // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicValue_L1(
             value: "Custom Value",
             hints: PresentationHints()
@@ -346,7 +346,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
             componentName: "platformPresentBasicValue_L1"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPresentBasicValue_L1" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

@@ -18,13 +18,13 @@ public struct OCRDisambiguationView: View {
         VStack(spacing: 16) {
             Text("Multiple interpretations found")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "DisambiguationTitle")
+                .automaticCompliance(named: "DisambiguationTitle")
             
             if result.requiresUserSelection {
                 Text("Please select the correct interpretation:")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .automaticAccessibilityIdentifiers(named: "DisambiguationPrompt")
+                    .automaticCompliance(named: "DisambiguationPrompt")
                 
                 // Display all candidates
                 ForEach(result.candidates) { candidate in
@@ -54,14 +54,14 @@ public struct OCRDisambiguationView: View {
                         .cornerRadius(8)
                     }
                     .buttonStyle(.plain)
-                    .automaticAccessibilityIdentifiers(named: "CandidateOption")
+                    .automaticCompliance(named: "CandidateOption")
                 }
             } else {
                 // Auto-select highest confidence candidate
                 if let bestCandidate = result.candidates.max(by: { $0.confidence < $1.confidence }) {
                     Text("Best match: \(bestCandidate.text)")
                         .font(.body)
-                        .automaticAccessibilityIdentifiers(named: "BestMatch")
+                        .automaticCompliance(named: "BestMatch")
                     
                     Button("Confirm") {
                         let selection = OCRDisambiguationSelection(
@@ -71,11 +71,11 @@ public struct OCRDisambiguationView: View {
                         onSelection(selection)
                     }
                     .buttonStyle(.borderedProminent)
-                    .automaticAccessibilityIdentifiers(named: "ConfirmButton")
+                    .automaticCompliance(named: "ConfirmButton")
                 }
             }
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "OCRDisambiguationView")
+        .automaticCompliance(named: "OCRDisambiguationView")
     }
 }

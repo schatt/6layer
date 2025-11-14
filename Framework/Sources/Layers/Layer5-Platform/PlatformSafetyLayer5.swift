@@ -13,12 +13,12 @@ public struct PlatformSafetyLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Safety")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Safety and security features")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Safety checks and security validation")
@@ -27,9 +27,9 @@ public struct PlatformSafetyLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformSafetyLayer5")
+        .automaticCompliance(named: "PlatformSafetyLayer5")
     }
 }

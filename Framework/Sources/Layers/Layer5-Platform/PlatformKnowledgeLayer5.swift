@@ -29,7 +29,7 @@ public struct PlatformKnowledgeLayer5: View {
             .foregroundColor(.secondary)
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformKnowledgeLayer5")
+        .automaticCompliance(named: "PlatformKnowledgeLayer5")
     }
 }
 

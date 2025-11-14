@@ -56,7 +56,7 @@ open class PlatformOCRSemanticLayer1Tests {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: platformOCRWithVisualCorrection_L1 DOES have .automaticAccessibility() 
-        // and .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:28-30.
+        // and .automaticCompliance() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:28-30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
@@ -85,7 +85,7 @@ open class PlatformOCRSemanticLayer1Tests {
         )
         
         // TODO: ViewInspector Detection Issue - VERIFIED: platformOCRWithVisualCorrection_L1 DOES have .automaticAccessibility() 
-        // and .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:48-50.
+        // and .automaticCompliance() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:48-50.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
         #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
@@ -115,7 +115,7 @@ open class PlatformOCRSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformExtractStructuredData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformExtractStructuredData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift (StructuredDataExtractionWrapper - just added).
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
@@ -146,7 +146,7 @@ open class PlatformOCRSemanticLayer1Tests {
             testName: "PlatformTest"
         )
         
-        // TODO: ViewInspector Detection Issue - VERIFIED: platformExtractStructuredData_L1 DOES have .automaticAccessibilityIdentifiers() 
+        // TODO: ViewInspector Detection Issue - VERIFIED: platformExtractStructuredData_L1 DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift (StructuredDataExtractionWrapper - just added).
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.

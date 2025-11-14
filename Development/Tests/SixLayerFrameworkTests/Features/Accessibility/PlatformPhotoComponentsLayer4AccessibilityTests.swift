@@ -90,7 +90,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
             // modifier applied. The componentName "platformPhotoDisplay_L4" is a test label, not a framework component.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -114,7 +114,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testPhoto,
                 style: .thumbnail
             )
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -126,7 +126,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -148,7 +148,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
                 image: testPhoto,
                 style: .thumbnail
             )
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -160,7 +160,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             )
         }
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: platformPhotoDisplay_L4 DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

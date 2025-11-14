@@ -22,7 +22,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
         let testView = FormUsageExample()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: FormUsageExample DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: FormUsageExample DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Forms/FormUsageExample.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -33,7 +33,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
             componentName: "FormUsageExample"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: FormUsageExample DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: FormUsageExample DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Components/Forms/FormUsageExample.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -49,7 +49,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
         let testView = ExampleHelpers()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExampleProjectCard DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExampleProjectCard DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Core/ExampleHelpers.swift:78.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
@@ -60,7 +60,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
             componentName: "ExampleProjectCard"
         )
         
-            // TODO: ViewInspector Detection Issue - VERIFIED: ExampleProjectCard DOES have .automaticAccessibilityIdentifiers() 
+            // TODO: ViewInspector Detection Issue - VERIFIED: ExampleProjectCard DOES have .automaticCompliance() 
             // modifier applied in Framework/Sources/Core/ExampleHelpers.swift:78.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.

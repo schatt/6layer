@@ -13,12 +13,12 @@ public struct PlatformRoutingLayer5: View {
         VStack(spacing: 16) {
             Text("Platform Routing")
                 .font(.headline)
-                .automaticAccessibilityIdentifiers(named: "Title")
+                .automaticCompliance(named: "Title")
             
             Text("Navigation routing and navigation strategies")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-                .automaticAccessibilityIdentifiers(named: "Description")
+                .automaticCompliance(named: "Description")
             
             VStack(alignment: .leading, spacing: 8) {
                 Text("• Navigation routing and strategies")
@@ -27,9 +27,9 @@ public struct PlatformRoutingLayer5: View {
             }
             .font(.caption)
             .foregroundColor(.secondary)
-            .automaticAccessibilityIdentifiers(named: "FeaturesList")
+            .automaticCompliance(named: "FeaturesList")
         }
         .padding()
-        .automaticAccessibilityIdentifiers(named: "PlatformRoutingLayer5")
+        .automaticCompliance(named: "PlatformRoutingLayer5")
     }
 }
