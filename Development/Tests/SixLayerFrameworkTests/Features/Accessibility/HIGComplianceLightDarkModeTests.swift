@@ -91,7 +91,7 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
             // GIVEN: A view with background and automatic compliance
             let view = Text("Background Text")
                 .padding()
-                .background(Color.systemBackground)
+                .background(Color.platformBackground)
                 .automaticCompliance()
             
             // WHEN: View is created
@@ -113,7 +113,7 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
             // GIVEN: Text with colors and automatic compliance
             let view = Text("Light Mode Text")
                 .foregroundColor(.primary)
-                .background(Color.systemBackground)
+                .background(Color.platformBackground)
                 .automaticCompliance()
             
             // WHEN: View is created in light mode
@@ -133,7 +133,7 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
             // GIVEN: Text with colors and automatic compliance
             let view = Text("Dark Mode Text")
                 .foregroundColor(.primary)
-                .background(Color.systemBackground)
+                .background(Color.platformBackground)
                 .automaticCompliance()
             
             // WHEN: View is created in dark mode
