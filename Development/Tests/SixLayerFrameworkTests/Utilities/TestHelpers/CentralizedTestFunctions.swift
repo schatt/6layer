@@ -76,6 +76,7 @@ public func testAccessibilityIdentifierGeneration<T: View>(
 
 /// Centralized function for testing cross-platform accessibility identifier generation
 /// Tests the same component across multiple platforms
+/// Also tests HIG compliance features when enabled
 /// 
 /// - Parameters:
 ///   - view: The SwiftUI view to test
@@ -83,14 +84,16 @@ public func testAccessibilityIdentifierGeneration<T: View>(
 ///   - expectedPattern: Expected accessibility identifier pattern
 ///   - platforms: Array of platforms to test (defaults to iOS and macOS)
 ///   - testName: Name of the test for debugging
-/// - Returns: True if accessibility identifier test passes on all platforms
+///   - testHIGCompliance: Whether to also test HIG compliance features (default: false for backward compatibility)
+/// - Returns: True if accessibility identifier test (and HIG compliance if enabled) passes on all platforms
 @MainActor
 public func testCrossPlatformAccessibilityIdentifierGeneration<T: View>(
     _ view: T,
     componentName: String,
     expectedPattern: String = "SixLayer.*ui",
     platforms: [SixLayerPlatform] = [.iOS, .macOS],
-    testName: String = "CrossPlatformAccessibilityTest"
+    testName: String = "CrossPlatformAccessibilityTest",
+    testHIGCompliance: Bool = false
 ) -> Bool {
     // Setup: Configure test environment
     let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
@@ -103,7 +106,8 @@ public func testCrossPlatformAccessibilityIdentifierGeneration<T: View>(
         view,
         expectedPattern: expectedPattern,
         componentName: componentName,
-        testName: testName
+        testName: testName,
+        testHIGCompliance: testHIGCompliance
     )
     
     return result
