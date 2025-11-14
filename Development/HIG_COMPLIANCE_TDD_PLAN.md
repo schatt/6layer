@@ -472,7 +472,6 @@ let passed = testComponentComplianceSinglePlatform(
 14. Forms
 15. Navigation
 16. Data visualization
-13. Data visualization
 
 ## Test File Structure
 
