@@ -134,7 +134,8 @@ import Combine
 
 /// Modifier that automatically generates accessibility identifiers for views
 /// This is the core modifier that all framework components should use
-public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
+/// Applies both automatic accessibility identifiers and HIG compliance
+public struct AutomaticComplianceModifier: ViewModifier {
     // NOTE: Environment properties moved to EnvironmentAccessor helper view
     // to avoid SwiftUI warnings about accessing environment outside of view context
     @ObservedObject private var configObserver = ConfigObserver.shared
@@ -297,8 +298,8 @@ public struct AutomaticAccessibilityIdentifiersModifier: ViewModifier {
 // MARK: - Named Automatic Accessibility Identifiers Modifier
 
 /// Modifier that applies automatic accessibility identifiers with a specific component name
-/// This is used by the .automaticAccessibilityIdentifiers(named:) helper
-public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
+/// This is used by the .automaticCompliance(named:) helper
+public struct NamedAutomaticComplianceModifier: ViewModifier {
     let componentName: String
     // NOTE: Environment properties moved to helper view to avoid SwiftUI warnings
     @ObservedObject private var configObserver = ConfigObserver.shared
@@ -323,7 +324,7 @@ public struct NamedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
         // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
         let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
-        // Same logic as AutomaticAccessibilityIdentifiersModifier: respect both global and local settings
+        // Same logic as AutomaticComplianceModifier: respect both global and local settings
         let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
         // Debug logging to help diagnose identifier generation
@@ -645,27 +646,54 @@ public struct DisableAutomaticAccessibilityIdentifiersModifier: ViewModifier {
 // MARK: - View Extensions
 
 extension View {
-    /// Apply automatic accessibility identifiers to a view
+    /// Apply automatic compliance (accessibility identifiers + HIG compliance) to a view
     /// This is the primary modifier that all framework components should use
     /// Respects global and environment settings (no forced override)
+    /// 
+    /// Applies:
+    /// - Automatic accessibility identifiers
+    /// - HIG compliance features (touch targets, color contrast, typography, focus indicators, etc.)
+    public func automaticCompliance() -> some View {
+        self.modifier(AutomaticComplianceModifier())
+    }
+    
+    /// Apply automatic compliance with a specific component name
+    /// Framework components should use this to set their own name for better identifier generation
+    /// - Parameter componentName: The name of the component (e.g., "CoverFlowCardComponent")
+    public func automaticCompliance(named componentName: String) -> some View {
+        // Create a modifier that accepts the name directly
+        self.modifier(NamedAutomaticComplianceModifier(componentName: componentName))
+    }
+    
+    // MARK: - Backward Compatibility Aliases
+    
+    /// Apply automatic accessibility identifiers to a view
+    /// This is kept for backward compatibility - it now also applies HIG compliance
+    @available(*, deprecated, renamed: "automaticCompliance()", message: "Use automaticCompliance() which includes both accessibility identifiers and HIG compliance")
     public func automaticAccessibilityIdentifiers() -> some View {
-        self.modifier(AutomaticAccessibilityIdentifiersModifier())
+        self.automaticCompliance()
     }
     
     /// Apply automatic accessibility identifiers with a specific component name
-    /// Framework components should use this to set their own name for better identifier generation
-    /// - Parameter componentName: The name of the component (e.g., "CoverFlowCardComponent")
+    /// This is kept for backward compatibility - it now also applies HIG compliance
+    @available(*, deprecated, renamed: "automaticCompliance(named:)", message: "Use automaticCompliance(named:) which includes both accessibility identifiers and HIG compliance")
     public func automaticAccessibilityIdentifiers(named componentName: String) -> some View {
-        // Create a modifier that accepts the name directly
-        self.modifier(NamedAutomaticAccessibilityIdentifiersModifier(componentName: componentName))
+        self.automaticCompliance(named: componentName)
+    }
+    
+    /// Enable automatic compliance locally (for custom views when global is off)
+    /// Sets the environment variable to true, then applies the modifier
+    public func enableGlobalAutomaticCompliance() -> some View {
+        self
+            .environment(\.globalAutomaticAccessibilityIdentifiers, true)
+            .automaticCompliance()
     }
     
     /// Enable automatic accessibility identifiers locally (for custom views when global is off)
-    /// Sets the environment variable to true, then applies the modifier
+    /// This is kept for backward compatibility
+    @available(*, deprecated, renamed: "enableGlobalAutomaticCompliance()", message: "Use enableGlobalAutomaticCompliance() which includes both accessibility identifiers and HIG compliance")
     public func enableGlobalAutomaticAccessibilityIdentifiers() -> some View {
-        self
-            .environment(\.globalAutomaticAccessibilityIdentifiers, true)
-            .automaticAccessibilityIdentifiers()
+        self.enableGlobalAutomaticCompliance()
     }
     
     /// Disable automatic accessibility identifiers
@@ -696,7 +724,7 @@ public struct AutomaticAccessibilityIdentifierModifier: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
-            .automaticAccessibilityIdentifiers()
+            .automaticCompliance()
     }
 }
 
