@@ -97,10 +97,10 @@ struct CardDisplayableBugTests {
         )
         
         // When: Extract title using CardDisplayHelper
-        let extractedTitle = CardDisplayHelper.extractTitle(from: task, hints: hints)
+        let _ = CardDisplayHelper.extractTitle(from: task, hints: hints)
         
         // Then: Should return nil when hints fail to extract meaningful values
-        #expect(false, "Should return nil when hints fail to extract meaningful values")  // extractedTitle is non-optional
+        #expect(Bool(false), "Should return nil when hints fail to extract meaningful values")  // RED PHASE: Test intentionally fails
     }
     
     /// RED PHASE: Test that empty strings are respected as valid content (not fallback to CardDisplayable)
@@ -115,10 +115,10 @@ struct CardDisplayableBugTests {
         )
         
         // When: Extract title using CardDisplayHelper
-        let extractedTitle = CardDisplayHelper.extractTitle(from: task, hints: hints)
+        let _ = CardDisplayHelper.extractTitle(from: task, hints: hints)
         
         // Then: Should return nil for empty string (no default configured)
-        #expect(false, "Should return nil for empty string when no default is configured")  // extractedTitle is non-optional
+        #expect(Bool(false), "Should return nil for empty string when no default is configured")  // RED PHASE: Test intentionally fails
     }
     
     /// RED PHASE: Test that CardDisplayable protocol is used when hints extract nil values
@@ -132,10 +132,10 @@ struct CardDisplayableBugTests {
         )
         
         // When: Extract title using CardDisplayHelper
-        let extractedTitle = CardDisplayHelper.extractTitle(from: project, hints: hints)
+        let _ = CardDisplayHelper.extractTitle(from: project, hints: hints)
         
         // Then: Should return nil when hints extract nil values
-        #expect(false, "Should return nil when hints extract nil values")  // extractedTitle is non-optional
+        #expect(Bool(false), "Should return nil when hints extract nil values")  // RED PHASE: Test intentionally fails
     }
     
     /// RED PHASE: Test that CardDisplayable protocol is used when hints are missing
@@ -194,7 +194,7 @@ struct CardDisplayableBugTests {
         // For subtitle/icon/color: reflection doesn't find them, so should fall back to CardDisplayable
         #expect(extractedTitle == "in_progress", "Should fall back to reflection and find 'status' property when hints fail")
         // Subtitle: reflection doesn't find subtitle properties, so CardDisplayable.cardSubtitle returns nil (status is not empty but it's not the subtitle)
-        #expect(false, "Should return nil when reflection and CardDisplayable both fail for subtitle")  // extractedSubtitle is non-optional
+        #expect(Bool(false), "Should return nil when reflection and CardDisplayable both fail for subtitle")  // RED PHASE: Test intentionally fails
         // Icon: reflection doesn't find icon properties, so should use CardDisplayable.cardIcon which returns "clock.fill" for "in_progress" status
         #expect(extractedIcon == "clock.fill", "Should fall back to CardDisplayable when reflection fails for icon")
         // Color: reflection doesn't find color properties, so should use CardDisplayable.cardColor which returns .red for "urgent" priority
@@ -286,12 +286,12 @@ struct CardDisplayableBugTests {
         )
         
         // When: Extract title using CardDisplayHelper
-        let extractedTitle = CardDisplayHelper.extractTitle(from: item, hints: hints)
-        let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: item, hints: hints)
+        let _ = CardDisplayHelper.extractTitle(from: item, hints: hints)
+        let _ = CardDisplayHelper.extractSubtitle(from: item, hints: hints)
         
         // Then: Should return nil when hints extract non-string values (property exists but wrong type)
         // Property exists but is not a String, so return nil (don't fall back)
-        #expect(false, "Should return nil when hints extract non-string values")  // extractedTitle is non-optional
-        #expect(false, "Should return nil when hints extract non-string values")  // extractedSubtitle is non-optional
+        #expect(Bool(false), "Should return nil when hints extract non-string values")  // RED PHASE: Test intentionally fails
+        #expect(Bool(false), "Should return nil when hints extract non-string values")  // RED PHASE: Test intentionally fails
     }
 }

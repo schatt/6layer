@@ -253,6 +253,23 @@ def process_file(file_path: Path, dry_run: bool = False) -> dict:
         )
         total_fixes += fixes2
         
+        # Fix #expect(false, ...) warnings - replace with Bool(false)
+        fixes3 = 0
+        def replace_expect_false(match):
+            nonlocal fixes3
+            message = match.group(1)
+            comment = match.group(2) if match.group(2) else ""
+            fixes3 += 1
+            return f'#expect(Bool(false), "{message}"){comment}'
+        
+        # Pattern: #expect(false, "message")  // comment
+        content = re.sub(
+            r'#expect\(false,\s*"([^"]+)"\)(\s*//[^\n]*)?',
+            replace_expect_false,
+            content
+        )
+        total_fixes += fixes3
+        
         if content != original_content:
             if not dry_run:
                 with open(file_path, 'w', encoding='utf-8') as f:

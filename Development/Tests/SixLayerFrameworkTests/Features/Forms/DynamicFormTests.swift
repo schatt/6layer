@@ -336,16 +336,16 @@ open class DynamicFormTests: BaseTestClass {
         #expect(Bool(true), "field2 is non-optional")  // field2 is non-optional
         #expect(field2?.contentType == .email)
         
-        let nonExistentField = config.getField(by: "nonExistent")
-        #expect(false, "nonExistentField is non-optional")  // nonExistentField is non-optional
+        let _ = config.getField(by: "nonExistent")
+        #expect(Bool(false), "nonExistentField is non-optional")  // RED PHASE: Test intentionally fails
         
         // Test section lookup
         let section1 = config.getSection(by: "section1")
         #expect(Bool(true), "section1 is non-optional")  // section1 is non-optional
         #expect(section1?.title == "Section 1")
         
-        let nonExistentSection = config.getSection(by: "nonExistent")
-        #expect(false, "nonExistentSection is non-optional")  // nonExistentSection is non-optional
+        let _ = config.getSection(by: "nonExistent")
+        #expect(Bool(false), "nonExistentSection is non-optional")  // RED PHASE: Test intentionally fails
     }
     
     // MARK: - Dynamic Form State Tests

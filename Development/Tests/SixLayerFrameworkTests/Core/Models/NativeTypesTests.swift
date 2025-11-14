@@ -257,8 +257,8 @@ open class NativeTypesTests: BaseTestClass {
         formState.setValue(nil as String?, for: field.id)
         
         // Then
-        let retrievedValue: String? = formState.getValue(for: field.id)
-        #expect(false, "retrievedValue is non-optional")  // retrievedValue is non-optional
+        let _: String? = formState.getValue(for: field.id)
+        #expect(Bool(false), "retrievedValue is non-optional")  // RED PHASE: Test intentionally fails
     }
     
     @Test func testCustomTypeValidation() {
@@ -344,8 +344,8 @@ open class NativeTypesTests: BaseTestClass {
         formState.setValue("not a number", for: field.id)
         
         // Then - Should handle gracefully
-        let retrievedValue: Int? = formState.getValue(for: field.id)
-        #expect(false, "retrievedValue is non-optional")  // retrievedValue is non-optional // Should be nil due to type mismatch
+        let _: Int? = formState.getValue(for: field.id)
+        #expect(Bool(false), "retrievedValue is non-optional")  // RED PHASE: Test intentionally fails
     }
     
     
@@ -368,7 +368,7 @@ open class NativeTypesTests: BaseTestClass {
         
         // Clear and verify memory is released
         formState.setValue(nil as MockImage?, for: field.id)
-        let clearedImage: MockImage? = formState.getValue(for: field.id)
-        #expect(false, "clearedImage is non-optional")  // clearedImage is non-optional
+        let _: MockImage? = formState.getValue(for: field.id)
+        #expect(Bool(false), "clearedImage is non-optional")  // RED PHASE: Test intentionally fails
     }
 }

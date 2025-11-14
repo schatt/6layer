@@ -53,10 +53,10 @@ open class PhotoFunctionalityPhase1Tests {
         let invalidData = Data("invalid".utf8)
         
         // When: Creating PlatformImage from invalid data
-        let platformImage = PlatformImage(data: invalidData)
+        let _ = PlatformImage(data: invalidData)
         
         // Then: PlatformImage should be nil for invalid data
-        #expect(false, "PlatformImage should be nil for invalid data")  // platformImage is non-optional
+        #expect(Bool(false), "PlatformImage should be nil for invalid data")  // RED PHASE: Test intentionally fails
     }
     
     @Test @MainActor
