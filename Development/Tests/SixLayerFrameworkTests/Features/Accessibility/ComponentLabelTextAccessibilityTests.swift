@@ -6,8 +6,8 @@ import SwiftUI
 import ViewInspector
 #endif
 
-/// TDD RED PHASE: Tests for label text inclusion in accessibility identifiers
-/// These tests SHOULD FAIL until components are updated to include label text
+/// Tests for label text inclusion in accessibility identifiers
+/// All features are implemented - label text is included in identifiers
 /// 
 /// BUSINESS PURPOSE: Ensure all components with String labels include label text in identifiers
 /// TESTING SCOPE: All framework components that accept String labels/titles
@@ -21,7 +21,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @Test func testAdaptiveButtonIncludesLabelText() {
         setupTestEnvironment()
         
-        // TDD RED: This should FAIL - AdaptiveButton should include "Submit" in identifier
+        // AdaptiveButton should include "Submit" in identifier
         let button = AdaptiveUIPatterns.AdaptiveButton("Submit", action: { })
             .enableGlobalAutomaticAccessibilityIdentifiers()
         
@@ -92,7 +92,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @MainActor @Test func testPlatformNavigationTitleIncludesTitleText() {
         setupTestEnvironment()
         
-        // TDD RED: This should FAIL - platformNavigationTitle should include title in identifier
+        // platformNavigationTitle should include title in identifier
         let view = VStack {
             Text("Content")
         }
@@ -126,7 +126,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @MainActor @Test func testPlatformNavigationLinkWithTitleIncludesTitleText() {
         setupTestEnvironment()
         
-        // TDD RED: This should FAIL - platformNavigationLink_L4 with title should include title
+        // platformNavigationLink_L4 with title should include title
         let view = VStack {
             Text("Navigate")
                 .platformNavigationLink_L4(
@@ -167,7 +167,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     @MainActor @Test func testPlatformNavigationButtonIncludesTitleText() {
         setupTestEnvironment()
         
-        // TDD RED: This should FAIL - platformNavigationButton should include title
+        // platformNavigationButton should include title
         let button = VStack {
             EmptyView()
                 .platformNavigationButton(

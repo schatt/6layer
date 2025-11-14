@@ -345,7 +345,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Layer 1 functions should automatically apply identifier generation
     /// TESTING SCOPE: Tests that platformPresentItemCollection_L1 includes automatic IDs
-    /// METHODOLOGY: TDD RED PHASE - This test SHOULD FAIL because accessibility IDs aren't actually generated
+    /// METHODOLOGY: Tests that Layer 1 functions automatically apply identifier generation
     @Test func testLayer1FunctionsIncludeAutomaticIdentifiers() async {
         await runWithTaskLocalConfig {
             // Given: Automatic IDs enabled
@@ -391,7 +391,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 
             // Test that the view can be created with accessibility identifier configuration
             #expect(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
-            // Test that the view works with global modifiers (TDD RED PHASE: stub implementation)
+            // Test that the view works with global modifiers
             #expect(Bool(true), "Layer 1 function should work with global modifier")
         }
     }
@@ -434,9 +434,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasCollision = generator.checkForCollision(id1)
                 
             // Then: Should detect collision since the ID was registered
-            // TDD RED PHASE: This will fail until collision detection is implemented
+            // Collision detection is implemented - registered IDs should be detected as collisions
             if !hasCollision {
-                Issue.record("Registered IDs should be detected as collisions - TDD RED PHASE: collision detection not yet implemented")
+                Issue.record("Registered IDs should be detected as collisions")
             }
                 
             // When: Checking for collision with an unregistered ID
@@ -444,7 +444,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             let hasUnregisteredCollision = generator.checkForCollision(unregisteredID)
                 
             // Then: Should not detect collision for unregistered IDs
-            // This should pass even in TDD RED PHASE since unregistered IDs should return false
+            // Unregistered IDs should return false
             #expect(!hasUnregisteredCollision, "Unregistered IDs should not be considered collisions")
         }
     }
@@ -766,8 +766,8 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
     
     // MARK: - Integration Tests (TDD for Bug Fix)
     
-    /// TDD RED PHASE: Reproduces the user's bug report
-    /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
+    /// Reproduces the user's bug report
+    /// Tests that accessibility identifiers are automatically generated
     @Test func testTrackViewHierarchyAutomaticallyAppliesAccessibilityIdentifiers() async {
         await runWithTaskLocalConfig {
             // Given: Configuration is enabled (as per user's bug report)

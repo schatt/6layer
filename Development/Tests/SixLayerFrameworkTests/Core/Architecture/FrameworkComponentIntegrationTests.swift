@@ -16,7 +16,7 @@ open class FrameworkComponentIntegrationTests {
         config.mode = .automatic
         config.enableDebugLogging = true
         config.enableAutoIDs = true
-    }    // MARK: - TDD Red Phase: Components That SHOULD Work (Have .automaticAccessibility())
+    }    // MARK: - Components That Work (Have .automaticAccessibility())
     
     @Test func testPlatformPresentContentL1CanBeCreated() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
@@ -63,10 +63,10 @@ open class FrameworkComponentIntegrationTests {
         #expect(Bool(true), "platformPresentBasicArray_L1 should work in view hierarchy")  // testView is non-optional
     }
     
-    // MARK: - TDD Red Phase: Components That SHOULD FAIL (Missing .automaticAccessibility())
+    // MARK: - Components That Should Have .automaticAccessibility()
     
     @Test func testPlatformPresentItemCollectionL1CanBeCreated() {
-        // TDD Red Phase: This SHOULD PASS (creation) but FAIL (accessibility)
+        // Component can be created but should have .automaticAccessibility() for accessibility
         let mockItems = [
             MockTaskItemIntegration(id: "task1", title: "Test Task 1"),
             MockTaskItemIntegration(id: "task2", title: "Test Task 2")

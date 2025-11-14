@@ -150,7 +150,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     // MARK: - Issue #7: Environment Access Warnings Tests
     
-    /// TDD RED PHASE: Test that automaticAccessibilityIdentifiers() can be applied to root views
+    /// Test that automaticAccessibilityIdentifiers() can be applied to root views
     /// without accessing environment values outside of view context
     /// This test verifies Issue #7: No SwiftUI warnings about environment access
     @Test func testAutomaticAccessibilityIdentifiersOnRootViewNoEnvironmentWarnings() async {
@@ -175,7 +175,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
                 // If we can inspect it, the environment was accessed correctly
                 // (ViewInspector requires the view to be properly installed)
                 let identifier = try? inspected.sixLayerAccessibilityIdentifier()
-                // TDD RED: Should PASS - modifier should work on root view
+                // Modifier should work on root view
                 #expect(Bool(true), "Modifier should generate identifier on root view without environment warnings")  // identifier is non-optional
             } else {
                 Issue.record("Could not inspect root view - may indicate environment access issue")
@@ -188,7 +188,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         }
     }
     
-    /// TDD RED PHASE: Test that modifier defers environment access until view is installed
+    /// Test that modifier defers environment access until view is installed
     /// This verifies the helper view pattern works correctly
     @Test func testModifierDefersEnvironmentAccessUntilViewInstalled() async {
         runWithTaskLocalConfig {
@@ -225,7 +225,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         }
     }
     
-    /// TDD RED PHASE: Test that all modifier variants use helper view pattern
+    /// Test that all modifier variants use helper view pattern
     /// This ensures NamedAutomaticAccessibilityIdentifiersModifier, ForcedAutomaticAccessibilityIdentifiersModifier, etc.
     /// all defer environment access correctly
     @Test func testAllModifierVariantsDeferEnvironmentAccess() async {

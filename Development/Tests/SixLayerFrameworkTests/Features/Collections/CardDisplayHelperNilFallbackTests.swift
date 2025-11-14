@@ -106,7 +106,7 @@ struct CardDisplayHelperNilFallbackTests {
         #expect(result == nil, "Should return nil when no meaningful content is found")
     }
     
-    /// RED PHASE: Test that meaningful content is still returned correctly
+    /// Test that meaningful content is still returned correctly
     @Test func testExtractTitleReturnsMeaningfulContent() async {
         // Given: Entity with meaningful content
         let entity = TestEntity(title: "Real Title", subtitle: "Real Subtitle", description: "Real Description")
@@ -119,7 +119,7 @@ struct CardDisplayHelperNilFallbackTests {
         #expect(extractedTitle == "Real Title", "Should return meaningful content when available")
     }
     
-    /// RED PHASE: Test that default values are still used when configured
+    /// Test that default values are still used when configured
     @Test func testExtractTitleUsesDefaultWhenConfigured() async {
         // Given: Entity with empty content but default configured
         let entity = TestEntity(title: "", subtitle: "", description: "")

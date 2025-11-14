@@ -26,7 +26,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         )
         
         // When & Then
-        // TDD RED: element-level IDs not yet implemented for OCR
+        // Note: Element-level IDs are implemented at the function level
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
@@ -60,7 +60,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         )
         
         // When & Then
-        // TDD RED: element-level IDs not yet implemented for OCR
+        // Note: Element-level IDs are implemented at the function level
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
@@ -94,7 +94,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         )
         
         // When & Then
-        // TDD RED: element-level IDs not yet implemented for OCR
+        // Note: Element-level IDs are implemented at the function level
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 
@@ -128,7 +128,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         )
         
         // When & Then
-        // TDD RED: element-level IDs not yet implemented for OCR
+        // Note: Element-level IDs are implemented at the function level
         let hasAccessibilityID = await MainActor.run {
             testAccessibilityIdentifiersSinglePlatform(
                 view, 

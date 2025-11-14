@@ -169,7 +169,7 @@ struct ExternalModuleIntegrationTests {
         }
     }
     
-    /// Tests that ListCollectionView properly handles callbacks (TDD RED PHASE - This test will fail until callback bug is fixed)
+    /// Tests that ListCollectionView properly handles callbacks
     @Test("ListCollectionView callbacks accessible from external modules")
     func testListCollectionViewCallbacksAccessible() async throws {
         await MainActor.run {
