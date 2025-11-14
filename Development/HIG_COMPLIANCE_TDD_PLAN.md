@@ -285,6 +285,81 @@ let passed = testComponentComplianceSinglePlatform(
 
 ### Phase 3: Platform-Specific Features (Priority 2) 🟡 MEDIUM
 
+#### 3.0 Cross-Platform Accessibility Features
+
+##### 3.0.1 Zoom Support
+
+**RED Phase Test:**
+```swift
+@Test func testAutomaticComplianceSupportsSystemZoom() {
+    // Given: A view with automatic compliance
+    let view = Text("Test")
+        .automaticCompliance()
+    
+    // When: System zoom is enabled
+    // Then: View should scale appropriately while maintaining usability
+    #expect(true, "View should support system zoom")
+}
+```
+
+**GREEN Phase Implementation:**
+- Ensure components scale properly when system zoom is enabled
+- Maintain text readability at all zoom levels
+- Preserve layout integrity (no overlapping, proper spacing)
+- Use scalable fonts and layouts
+
+**Test File**: `Development/Tests/SixLayerFrameworkTests/Features/Accessibility/HIGComplianceZoomTests.swift`
+
+---
+
+##### 3.0.2 Hover Support
+
+**RED Phase Test:**
+```swift
+@Test func testAutomaticComplianceSupportsHoverStates() {
+    // Given: A button with automatic compliance
+    let button = Button("Test") { }
+        .automaticCompliance()
+    
+    // When: View is created on hover-capable platform
+    // Then: Button should have appropriate hover state feedback
+    #expect(true, "Button should support hover states")
+}
+```
+
+**GREEN Phase Implementation:**
+- Apply hover state visual feedback on hover-capable platforms (macOS, visionOS, iPad)
+- Ensure text is readable with macOS Hover Text feature
+- Support pointer interactions appropriately
+
+**Test File**: `Development/Tests/SixLayerFrameworkTests/Features/Accessibility/HIGComplianceHoverTests.swift`
+
+---
+
+##### 3.0.3 Caption Support
+
+**RED Phase Test:**
+```swift
+@Test func testAutomaticComplianceSupportsCaptions() {
+    // Given: A video component with automatic compliance
+    let video = VideoPlayer(...)
+        .automaticCompliance()
+    
+    // When: View is created
+    // Then: Video should support captions
+    #expect(true, "Video should support captions")
+}
+```
+
+**GREEN Phase Implementation:**
+- Ensure video/media components support captions
+- Position captions appropriately (not overlapping content)
+- Ensure captions are accessible (readable, proper contrast)
+
+**Test File**: `Development/Tests/SixLayerFrameworkTests/Features/Accessibility/HIGComplianceCaptionsTests.swift`
+
+---
+
 #### 3.1 iOS-Specific: Haptic Feedback, Gestures, Safe Area
 
 **RED Phase Tests:**
@@ -384,8 +459,13 @@ let passed = testComponentComplianceSinglePlatform(
 7. Animation categories
 8. Shadow, corner radius, border, opacity, blur
 
-### Sprint 4: Platform-Specific (Week 7-8)
-9. iOS-specific features
+### Sprint 4: Cross-Platform Accessibility (Week 7-8)
+9. Zoom support
+10. Hover support
+11. Caption support
+
+### Sprint 5: Platform-Specific (Week 9-10)
+12. iOS-specific features
 10. macOS-specific features
 
 ### Sprint 5: Content Categories (Week 9-10)
