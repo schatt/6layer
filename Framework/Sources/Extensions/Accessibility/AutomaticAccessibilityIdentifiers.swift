@@ -316,8 +316,18 @@ public struct AutomaticComplianceModifier: ViewModifier {
     ///   - elementType: The element type hint (e.g., "Button", "Link", "TextField")
     /// - Returns: View with all Phase 1 HIG compliance features applied
     private func applyHIGComplianceFeatures<V: View>(to view: V, elementType: String?) -> some View {
+        // Cache platform values to avoid MainActor blocking
+        // These are safe to access from any context - they use thread-local storage
         let platform = RuntimeCapabilityDetection.currentPlatform
-        let minTouchTarget = RuntimeCapabilityDetection.minTouchTarget
+        // minTouchTarget is @MainActor, but we can compute it safely from platform
+        let minTouchTarget: CGFloat = {
+            switch platform {
+            case .iOS, .watchOS:
+                return 44.0
+            case .macOS, .tvOS, .visionOS:
+                return 0.0
+            }
+        }()
         
         // Determine if this is an interactive element that needs touch target sizing
         let isInteractive = isInteractiveElement(elementType: elementType)
