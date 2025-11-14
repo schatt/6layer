@@ -466,11 +466,12 @@ let passed = testComponentComplianceSinglePlatform(
 
 ### Sprint 5: Platform-Specific (Week 9-10)
 12. iOS-specific features
-10. macOS-specific features
+13. macOS-specific features
 
-### Sprint 5: Content Categories (Week 9-10)
-11. Forms
-12. Navigation
+### Sprint 6: Content Categories (Week 11-12)
+14. Forms
+15. Navigation
+16. Data visualization
 13. Data visualization
 
 ## Test File Structure
