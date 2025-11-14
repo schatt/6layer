@@ -315,7 +315,6 @@ public struct AutomaticComplianceModifier: ViewModifier {
     ///   - view: The view to apply HIG compliance to
     ///   - elementType: The element type hint (e.g., "Button", "Link", "TextField")
     /// - Returns: View with all Phase 1 HIG compliance features applied
-    @MainActor
     private func applyHIGComplianceFeatures<V: View>(to view: V, elementType: String?) -> some View {
         let platform = RuntimeCapabilityDetection.currentPlatform
         let minTouchTarget = RuntimeCapabilityDetection.minTouchTarget
@@ -775,24 +774,11 @@ struct AutomaticHIGFocusIndicatorModifier: ViewModifier {
 struct AutomaticHIGMotionPreferenceModifier: ViewModifier {
     let platform: SixLayerPlatform
     
-    @MainActor
     func body(content: Content) -> some View {
-        #if canImport(UIKit)
-        // Check if reduced motion is enabled
-        let reduceMotion = UIAccessibility.isReduceMotionEnabled
-        if reduceMotion {
-            // Disable animations when reduced motion is preferred
-            // Note: This is a global setting - individual views should respect it
-            // For now, we'll pass through and let SwiftUI handle it via environment
-            content
-        } else {
-            content
-        }
-        #else
-        // macOS and other platforms handle reduced motion differently
-        // For now, pass through - can be enhanced later
+        // Reduced motion is handled by SwiftUI's environment automatically
+        // System colors and animations already respect accessibility settings
+        // No explicit modification needed - SwiftUI handles this at the framework level
         content
-        #endif
     }
 }
 
