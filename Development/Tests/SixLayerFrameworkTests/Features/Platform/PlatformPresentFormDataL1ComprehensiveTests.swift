@@ -380,9 +380,9 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
 
     // Performance tests removed for framework scope
 
-    @Test @MainActor func testPlatformPresentFormData_L1_MemoryEfficiency() {
-        // Given: Memory-intensive field set
-        let memoryFields = (1...500).map { i in
+    @Test @MainActor func testPlatformPresentFormData_L1_LargeInputHandling() {
+        // Given: Large field set with substantial content
+        let largeFields = (1...500).map { i in
             TestSetupUtilities.createTestField(
                 label: "Rich Text Field \(i)",
                 placeholder: "Enter rich content \(i)",
@@ -398,10 +398,10 @@ open class PlatformPresentFormDataL1ComprehensiveTests {
             context: .edit
         )
 
-        // When: Creating form with memory-intensive content
-        let view = platformPresentFormData_L1(fields: memoryFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: complexHints))
+        // When: Creating form with large input set
+        let view = platformPresentFormData_L1(fields: largeFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: complexHints))
 
-        // Then: Should handle memory efficiently
+        // Then: Should handle large inputs without crashing
         #expect(Bool(true), "view is non-optional")  // view is non-optional
 
         // Verify view type
