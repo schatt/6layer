@@ -1390,6 +1390,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 - [x] ✅ **COMPLETED**: Automatic accessibility identifier generation
 - [ ] **Ensure all components automatically apply HIG-compliant styling** - Visual design, spacing, typography
 - [ ] **Automatic platform-specific HIG patterns** - iOS vs macOS appropriate patterns built-in
+- [ ] **HIG Compliance Modifier for Custom Views** - Create `.applyHIGCompliance()` or similar modifier that can be applied to custom views (similar to `.automaticAccessibilityIdentifiers()`) to automatically apply HIG compliance features
 
 ##### **10.2 Visual Design Categories** 🎨
 - [ ] **Animation Categories** - EaseInOut, spring, custom timing functions
