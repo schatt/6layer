@@ -85,7 +85,7 @@ struct HintsDefaultValueTests {
         #expect(extractedColor == .blue, "Should use default value when property is nil")
     }
     
-    /// RED PHASE: Test that hints can specify default values for empty string properties
+    /// Test that hints can specify default values for empty string properties
     @Test func testHintsWithDefaultValuesForEmptyStringProperties() async {
         // Given: Entity with empty string values and hints with default values
         let task = CoreDataTask(title: "", taskDescription: "", status: "", priority: "")
@@ -103,12 +103,11 @@ struct HintsDefaultValueTests {
         let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: task, hints: hints)
         
         // Then: Should use default values when properties are empty strings
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedTitle == "Default Task Title", "Should use default value when property is empty string")
         #expect(extractedSubtitle == "Default Description", "Should use default value when property is empty string")
     }
     
-    /// RED PHASE: Test that hints can specify default values for invalid property names
+    /// Test that hints can specify default values for invalid property names
     @Test func testHintsWithDefaultValuesForInvalidPropertyNames() async {
         // Given: Entity with nil values and hints with invalid property names but default values
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -126,12 +125,11 @@ struct HintsDefaultValueTests {
         let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: task, hints: hints)
         
         // Then: Should use default values when property names are invalid
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedTitle == "Default Task Title", "Should use default value when property name is invalid")
         #expect(extractedSubtitle == "Default Description", "Should use default value when property name is invalid")
     }
     
-    /// RED PHASE: Test that hints with default values take precedence over CardDisplayable protocol
+    /// Test that hints with default values take precedence over CardDisplayable protocol
     @Test func testHintsDefaultValuesTakePrecedenceOverCardDisplayable() async {
         // Given: Entity with nil values, CardDisplayable implementation, and hints with default values
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -149,12 +147,11 @@ struct HintsDefaultValueTests {
         let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: task, hints: hints)
         
         // Then: Should use hint default values over CardDisplayable protocol
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedTitle == "Hint Default Title", "Should use hint default value over CardDisplayable protocol")
         #expect(extractedSubtitle == "Hint Default Subtitle", "Should use hint default value over CardDisplayable protocol")
     }
     
-    /// RED PHASE: Test that hints with default values work with non-string properties
+    /// Test that hints with default values work with non-string properties
     @Test func testHintsWithDefaultValuesForNonStringProperties() async {
         // Given: Entity with non-string values and hints with default values
         struct TestItem: Identifiable, CardDisplayable {
@@ -194,12 +191,11 @@ struct HintsDefaultValueTests {
         let extractedSubtitle = CardDisplayHelper.extractSubtitle(from: item, hints: hints)
         
         // Then: Should use default values when properties are non-string
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedTitle == "Default Title", "Should use default value when property is non-string")
         #expect(extractedSubtitle == "Default Subtitle", "Should use default value when property is non-string")
     }
     
-    /// RED PHASE: Test that hints with default values work with color properties
+    /// Test that hints with default values work with color properties
     @Test func testHintsWithDefaultValuesForColorProperties() async {
         // Given: Entity with nil color values and hints with default color values
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -214,11 +210,10 @@ struct HintsDefaultValueTests {
         let extractedColor = CardDisplayHelper.extractColor(from: task, hints: hints)
         
         // Then: Should use default color value when property is nil
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedColor == .red, "Should use default color value when property is nil")
     }
     
-    /// RED PHASE: Test that hints with default values work with mixed scenarios
+    /// Test that hints with default values work with mixed scenarios
     @Test func testHintsWithDefaultValuesMixedScenarios() async {
         // Given: Entity with mixed nil and valid values, and hints with default values
         let task = CoreDataTask(title: "Valid Title", taskDescription: nil, status: "completed", priority: nil)
@@ -242,14 +237,13 @@ struct HintsDefaultValueTests {
         let extractedColor = CardDisplayHelper.extractColor(from: task, hints: hints)
         
         // Then: Should use actual values when available, default values when nil
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedTitle == "Valid Title", "Should use actual value when available")
         #expect(extractedSubtitle == "Default Subtitle", "Should use default value when property is nil")
         #expect(extractedIcon == "completed", "Should use actual value when available")
         #expect(extractedColor == .blue, "Should use default value when property is nil")
     }
     
-    /// RED PHASE: Test that hints with default values work with platformPresentItemCollection_L1
+    /// Test that hints with default values work with platformPresentItemCollection_L1
     @Test func testPlatformPresentItemCollectionWithDefaultValues() async {
         // Given: Core Data entities with nil values and hints with default values
         let tasks = [
@@ -272,14 +266,12 @@ struct HintsDefaultValueTests {
         )
         
         // Then: View should be created successfully
-        // This test will FAIL because the framework doesn't support default values yet
-        // view is a non-optional View, so it exists if we reach here
         
         // Note: We can't easily test the actual content display in unit tests,
         // but this test documents the expected behavior for integration testing
     }
     
-    /// RED PHASE: Test that hints with default values work with color string parsing
+    /// Test that hints with default values work with color string parsing
     @Test func testHintsWithDefaultValuesColorStringParsing() async {
         // Given: Entity with nil color values and hints with various color string formats
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -294,11 +286,10 @@ struct HintsDefaultValueTests {
         let extractedColor = CardDisplayHelper.extractColor(from: task, hints: hints)
         
         // Then: Should parse color string to Color
-        // This test will FAIL because the framework doesn't support default values yet
         #expect(extractedColor == .red, "Should parse color string to Color.red")
     }
     
-    /// RED PHASE: Test that hints with default values work with icon string parsing
+    /// Test that hints with default values work with icon string parsing
     @Test func testHintsWithDefaultValuesIconStringParsing() async {
         // Given: Entity with nil icon values and hints with icon string
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
