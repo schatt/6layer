@@ -12,6 +12,17 @@ This plan outlines the Test-Driven Development (TDD) approach for implementing H
 
 ## Implementation Strategy
 
+**DRY Approach**: We're extending the existing shared test functions (`testAccessibilityIdentifiersSinglePlatform` and `testAccessibilityIdentifiersCrossPlatform`) to also test HIG compliance. This means:
+- ✅ **No duplication** - One test function for both accessibility identifiers AND HIG compliance
+- ✅ **Opt-in** - Tests can enable HIG compliance testing with `testHIGCompliance: true` parameter
+- ✅ **Backward compatible** - All 466+ existing test calls continue to work (default: false)
+- ✅ **Consistent** - Same test infrastructure used across all components
+
+**Implementation Pattern**:
+1. **RED Phase**: Add failing HIG compliance checks to `testHIGComplianceFeatures()` function
+2. **GREEN Phase**: Implement HIG compliance features in `AutomaticComplianceModifier`
+3. **REFACTOR Phase**: Improve implementation while keeping tests passing
+
 ### Phase 1: Core Automatic Features (Priority 1) 🔴 HIGH
 
 These are the most critical HIG compliance features that should be implemented first.
@@ -40,6 +51,18 @@ These are the most critical HIG compliance features that should be implemented f
 - Skip on macOS (not applicable)
 
 **Test File**: `Development/Tests/SixLayerFrameworkTests/Features/Accessibility/HIGComplianceTouchTargetTests.swift`
+
+**Integration with Shared Test Function**:
+```swift
+// Tests can opt into HIG compliance testing:
+let passed = testAccessibilityIdentifiersSinglePlatform(
+    button,
+    expectedPattern: "SixLayer.*ui",
+    platform: .iOS,
+    componentName: "Button",
+    testHIGCompliance: true  // Enable HIG compliance checks
+)
+```
 
 ---
 
@@ -351,6 +374,27 @@ All HIG compliance features will be added to:
 - `Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift`
 - Specifically in the `AutomaticComplianceModifier.body()` method
 - Applied alongside accessibility identifier generation
+
+## Test Integration
+
+HIG compliance testing is integrated into the shared test functions:
+- `testAccessibilityIdentifiersSinglePlatform()` - Single platform testing with optional HIG compliance
+- `testAccessibilityIdentifiersCrossPlatform()` - Cross-platform testing with optional HIG compliance
+- `testCrossPlatformAccessibilityIdentifierGeneration()` - Centralized wrapper with optional HIG compliance
+
+**Usage**:
+```swift
+// Existing tests (backward compatible - no changes needed):
+testAccessibilityIdentifiersSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component")
+
+// New tests (opt into HIG compliance):
+testAccessibilityIdentifiersSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component", testHIGCompliance: true)
+```
+
+**HIG Compliance Test Function**:
+- `testHIGComplianceFeatures()` in `AccessibilityTestUtilities.swift`
+- This function will be implemented incrementally as we add each HIG feature
+- Each feature will add its checks to this function (RED phase tests first)
 
 ## Success Criteria
 
