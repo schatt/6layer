@@ -1381,7 +1381,9 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 **Priority**: 🔴 **HIGH**  
 **Estimated Effort**: 8-10 days
 
-**Vision**: Using SixLayer components automatically ensures HIG compliance. The framework components themselves enforce HIG guidelines - no auditing, reporting, or monitoring needed. Compliance is built into the components.
+**Vision**: Using SixLayer components (e.g., `platformImage`, `platformPresentItemCollection_L1`, etc.) automatically ensures HIG compliance. The framework components themselves enforce HIG guidelines - no auditing, reporting, or monitoring needed. Compliance is built into the components.
+
+**Note**: Custom views or raw SwiftUI code used outside the framework won't automatically have HIG compliance - only SixLayer components provide this guarantee.
 
 ##### **10.1 Automatic HIG Compliance in Components** ✅
 - [x] ✅ **COMPLETED**: All Layer 1 functions automatically apply HIG compliance modifiers
