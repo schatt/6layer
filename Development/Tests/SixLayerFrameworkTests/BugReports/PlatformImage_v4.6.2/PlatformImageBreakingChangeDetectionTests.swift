@@ -61,7 +61,10 @@ open class PlatformImageBreakingChangeDetectionTests {
         
         // Then: Verify the callback was executed successfully
         #expect(Bool(true), "Delegate method should execute successfully")  // capturedImage is non-optional
-        #expect(capturedImage!.uiImage != nil, "Captured image should be valid")
+        #expect(capturedImage != nil, "Captured image should be valid")
+        if let image = capturedImage {
+            #expect(Bool(true), "Captured image has valid UIImage")  // uiImage is non-optional
+        }
         
         #elseif os(macOS)
         // macOS equivalent test
@@ -104,7 +107,10 @@ open class PlatformImageBreakingChangeDetectionTests {
         
         // Then: Verify the callback was executed successfully
         #expect(Bool(true), "Delegate method should execute successfully")  // selectedImage is non-optional
-        #expect(selectedImage!.uiImage != nil, "Selected image should be valid")
+        #expect(selectedImage != nil, "Selected image should be valid")
+        if let image = selectedImage {
+            #expect(Bool(true), "Selected image has valid UIImage")  // uiImage is non-optional
+        }
         
         #elseif os(macOS)
         // macOS equivalent test

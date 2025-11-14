@@ -97,7 +97,7 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             return
         }
 
-        guard authorizationStatus == .authorized || authorizationStatus == .authorizedAlways else {
+        guard authorizationStatus == .authorizedAlways else {
             error = LocationServiceError.unauthorized
             return
         }
@@ -114,7 +114,7 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             throw LocationServiceError.servicesDisabled
         }
 
-        guard authorizationStatus == .authorized || authorizationStatus == .authorizedAlways else {
+        guard authorizationStatus == .authorizedAlways else {
             throw LocationServiceError.unauthorized
         }
 
@@ -148,8 +148,12 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             if let continuation = authorizationContinuation {
                 authorizationContinuation = nil
                 switch authorizationStatus {
-                case .authorized, .authorizedAlways:
+                case .authorizedAlways:
                     continuation.resume()
+                #if os(iOS)
+                case .authorizedWhenInUse:
+                    continuation.resume()
+                #endif
                 case .denied:
                     continuation.resume(throwing: LocationServiceError.denied)
                 case .restricted:
@@ -195,8 +199,13 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
     // MARK: - Private Methods
 
     private func updateLocationEnabledStatus() {
+        #if os(iOS)
         isLocationEnabled = CLLocationManager.locationServicesEnabled() &&
-                           (authorizationStatus == .authorized || authorizationStatus == .authorizedAlways)
+                           (authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse)
+        #else
+        isLocationEnabled = CLLocationManager.locationServicesEnabled() &&
+                           (authorizationStatus == .authorizedAlways)
+        #endif
     }
 }
 
