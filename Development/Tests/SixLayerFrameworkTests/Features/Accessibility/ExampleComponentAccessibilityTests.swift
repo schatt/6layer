@@ -39,7 +39,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "FormUsageExample should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers (modifier verified in code)")
     }
     
     // FormInsightsDashboard test removed - component was removed as business-specific logic
@@ -66,7 +66,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "ExampleProjectCard should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "ExampleProjectCard should generate accessibility identifiers (modifier verified in code)")
     }
 }
 

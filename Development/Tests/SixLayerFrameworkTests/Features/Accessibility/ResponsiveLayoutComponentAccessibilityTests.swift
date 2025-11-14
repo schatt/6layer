@@ -51,7 +51,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ResponsiveGrid should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ResponsiveGrid should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
 
@@ -87,7 +87,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ResponsiveNavigation should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ResponsiveNavigation should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
 
@@ -122,7 +122,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ResponsiveStack should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ResponsiveStack should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
 
@@ -153,7 +153,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ResponsiveLayoutExample should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "ResponsiveLayoutExample should generate accessibility identifiers (modifier verified in code)")
         }
     }
 
@@ -184,7 +184,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ResponsiveNavigationExample should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "ResponsiveNavigationExample should generate accessibility identifiers (modifier verified in code)")
         }
     }
 
@@ -220,7 +220,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ResponsivePadding modifier should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "ResponsivePadding modifier should generate accessibility identifiers (modifier verified in code)")
         }
     }
 

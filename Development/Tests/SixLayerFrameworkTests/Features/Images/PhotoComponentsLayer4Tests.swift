@@ -105,7 +105,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
                 expectedPattern: "SixLayer.main.ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "PlatformCameraInterface_L4"
-            ) || true, "Camera interface should have accessibility identifier (modifier verified in code)")
+            ) , "Camera interface should have accessibility identifier (modifier verified in code)")
             
             // 3. Platform-specific implementation verification (REQUIRED)
             #if os(macOS)

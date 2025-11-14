@@ -128,7 +128,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         // modifier applied in Framework/Sources/Components/Views/IntelligentDetailView.swift:466,475.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformAdaptiveDetailView (actual framework code) should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformAdaptiveDetailView (actual framework code) should generate accessibility identifiers (modifier verified in code)")
     }
 }
 

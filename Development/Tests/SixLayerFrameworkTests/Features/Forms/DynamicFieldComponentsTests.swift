@@ -92,7 +92,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
         // Should support multiple selections in formState
         formState.setValue(["Option 1", "Option 3"], for: "multiSelect")
@@ -162,7 +162,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
         // Should support single selection
         formState.setValue("Choice B", for: "radio")
@@ -231,7 +231,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Rich Text Field
@@ -292,7 +292,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - File Field
@@ -350,7 +350,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Image Field
@@ -408,7 +408,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Array Field
@@ -466,7 +466,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Data Field
@@ -524,7 +524,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Autocomplete Field
@@ -581,7 +581,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Enum Field
@@ -645,7 +645,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Custom Field
@@ -700,7 +700,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Color Field
@@ -755,7 +755,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
     }
 
     // MARK: - Text Area Field
@@ -810,7 +810,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+        #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
         // Should support multi-line text in formState
         formState.setValue("Line 1\nLine 2\nLine 3", for: "textarea")

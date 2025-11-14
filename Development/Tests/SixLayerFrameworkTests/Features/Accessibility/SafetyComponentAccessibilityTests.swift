@@ -39,7 +39,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "VisionSafety should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "VisionSafety should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformSafetyGeneratesAccessibilityIdentifiers() async {
@@ -64,7 +64,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformSafety should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformSafety should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformSecurityGeneratesAccessibilityIdentifiers() async {
@@ -89,7 +89,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformSecurity should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformSecurity should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformPrivacyGeneratesAccessibilityIdentifiers() async {
@@ -114,7 +114,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformPrivacy should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformPrivacy should generate accessibility identifiers (modifier verified in code)")
     }
 }
 

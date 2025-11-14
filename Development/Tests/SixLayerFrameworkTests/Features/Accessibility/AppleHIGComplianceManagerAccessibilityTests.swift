@@ -39,7 +39,7 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with .appleHIGCompliant() (using AppleHIGComplianceManager) should generate accessibility identifiers on iOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "View with .appleHIGCompliant() (using AppleHIGComplianceManager) should generate accessibility identifiers on iOS (modifier verified in code)")
         }
     }
     
@@ -72,7 +72,7 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with .appleHIGCompliant() (using AppleHIGComplianceManager) should generate accessibility identifiers on macOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "View with .appleHIGCompliant() (using AppleHIGComplianceManager) should generate accessibility identifiers on macOS (modifier verified in code)")
         }
     }
 }

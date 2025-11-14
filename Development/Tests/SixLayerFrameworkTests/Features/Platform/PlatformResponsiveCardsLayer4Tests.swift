@@ -72,7 +72,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericItemCollectionView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -106,7 +106,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericItemCollectionView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - GenericNumericDataView Tests
@@ -139,7 +139,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericNumericDataView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -170,7 +170,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericNumericDataView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - GenericMediaView Tests
@@ -203,7 +203,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericMediaView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -234,7 +234,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericMediaView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - GenericSettingsView Tests
@@ -279,7 +279,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericSettingsView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -322,7 +322,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericSettingsView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - GenericContentView Tests
@@ -352,7 +352,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericContentView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericContentViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -380,7 +380,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericContentView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - GenericNumericDataView Tests
@@ -413,7 +413,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericNumericDataView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testBasicValueViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -444,7 +444,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericNumericDataView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - GenericItemCollectionView Tests
@@ -477,7 +477,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericItemCollectionView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testBasicArrayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -508,7 +508,7 @@ open class PlatformResponsiveCardsLayer4Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericItemCollectionView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }
 

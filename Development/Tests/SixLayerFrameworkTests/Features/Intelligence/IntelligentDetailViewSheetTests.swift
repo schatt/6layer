@@ -224,6 +224,6 @@ struct IntelligentDetailViewSheetTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformDetailView should generate accessibility identifiers in sheet (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformDetailView should generate accessibility identifiers in sheet (modifier verified in code)")
     }
 }

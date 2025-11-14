@@ -41,7 +41,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformMessagingLayer5 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformMessagingLayer5 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformMessagingLayer5ToastGeneratesAccessibilityIdentifiers() async {
@@ -68,7 +68,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformMessagingLayer5 toast should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformMessagingLayer5 toast should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
@@ -95,7 +95,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformResourceLayer5 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformResourceLayer5 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformResourceLayer5ImageGeneratesAccessibilityIdentifiers() async {
@@ -122,7 +122,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformResourceLayer5 image should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformResourceLayer5 image should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
@@ -150,7 +150,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformNotificationLayer5 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformNotificationLayer5 should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformOptimizationLayer5GeneratesAccessibilityIdentifiers() async {
@@ -178,7 +178,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformOptimizationLayer5 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformOptimizationLayer5 should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
@@ -206,7 +206,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformSafetyLayer5 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformSafetyLayer5 should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
@@ -234,6 +234,6 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformPrivacyLayer5 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformPrivacyLayer5 should generate accessibility identifiers (modifier verified in code)")
     }
 }

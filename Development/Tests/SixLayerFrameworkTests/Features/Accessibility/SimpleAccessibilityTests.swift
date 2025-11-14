@@ -25,7 +25,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
             expectedPattern: "*.main.ui.test-component", 
             platform: SixLayerPlatform.iOS,
             componentName: "FrameworkComponentWithNamedModifier"
-        ) || true, "Framework component with .named() should generate correct ID")
+        ) , "Framework component with .named() should generate correct ID")
     }
     
     @Test func testAutomaticAccessibilityIdentifierModifierApplied() {
@@ -47,7 +47,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
             expectedPattern: "SixLayer.main.ui.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
-        ) || true, "Framework component should automatically generate accessibility identifiers")
+        ) , "Framework component should automatically generate accessibility identifiers")
         
         // Check if accessibility identifier is present
         // Using wrapper - when ViewInspector works on macOS, no changes needed here

@@ -45,7 +45,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ExpandableCardCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -96,7 +96,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ExpandableCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ExpandableCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -134,7 +134,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "CoverFlowCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -167,7 +167,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "CoverFlowCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "CoverFlowCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -199,7 +199,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "GridCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -231,7 +231,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ListCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ListCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -263,7 +263,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "MasonryCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -298,7 +298,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "AdaptiveCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -339,7 +339,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "SimpleCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -367,7 +367,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "ListCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -395,7 +395,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "MasonryCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -429,7 +429,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "NativeExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "NativeExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -461,7 +461,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "iOSExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "iOSExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -493,7 +493,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "macOSExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "macOSExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -525,7 +525,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "visionOSExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "visionOSExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -557,7 +557,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "PlatformAwareExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "PlatformAwareExpandableCardView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
 }

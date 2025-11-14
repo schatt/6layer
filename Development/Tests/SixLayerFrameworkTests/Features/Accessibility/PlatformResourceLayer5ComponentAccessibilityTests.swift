@@ -38,6 +38,6 @@ open class PlatformResourceLayer5ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformResourceLayer5 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformResourceLayer5 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }

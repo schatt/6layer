@@ -50,7 +50,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:75.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "AppleHIGComplianceModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "AppleHIGComplianceModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - SystemAccessibilityModifier Tests
@@ -87,7 +87,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:92.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "SystemAccessibilityModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - PlatformPatternModifier Tests
@@ -124,7 +124,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:108.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "PlatformPatternModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformPatternModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - VisualConsistencyModifier Tests
@@ -161,7 +161,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:124.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "VisualConsistencyModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "VisualConsistencyModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - InteractionPatternModifier Tests
@@ -198,7 +198,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:179.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "InteractionPatternModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "InteractionPatternModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - VoiceOverSupportModifier Tests
@@ -235,7 +235,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:196.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "VoiceOverSupportModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "VoiceOverSupportModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - KeyboardNavigationModifier Tests
@@ -272,7 +272,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:212.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "KeyboardNavigationModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "KeyboardNavigationModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - HighContrastModifier Tests
@@ -309,7 +309,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:225.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "HighContrastModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "HighContrastModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - ReducedMotionModifier Tests
@@ -346,7 +346,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:237.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "ReducedMotionModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "ReducedMotionModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - DynamicTypeModifier Tests
@@ -383,7 +383,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:257.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "DynamicTypeModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "DynamicTypeModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - PlatformNavigationModifier Tests
@@ -412,7 +412,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformNavigationModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformNavigationModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - PlatformStylingModifier Tests
@@ -449,7 +449,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:280.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "PlatformStylingModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformStylingModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - PlatformIconModifier Tests
@@ -486,7 +486,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:291.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "PlatformIconModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformIconModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - SystemColorModifier Tests
@@ -519,7 +519,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "SystemColorModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "SystemColorModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - SystemTypographyModifier Tests
@@ -560,7 +560,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "SystemTypographyModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "SystemTypographyModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - SpacingModifier Tests
@@ -605,7 +605,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "SpacingModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "SpacingModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - TouchTargetModifier Tests
@@ -642,7 +642,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:358.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "TouchTargetModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "TouchTargetModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - PlatformInteractionModifier Tests
@@ -679,7 +679,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:382.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "PlatformInteractionModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformInteractionModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - HapticFeedbackModifier Tests
@@ -712,7 +712,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "HapticFeedbackModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "HapticFeedbackModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - GestureRecognitionModifier Tests
@@ -745,7 +745,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GestureRecognitionModifier should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GestureRecognitionModifier should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - AppleHIGComplianceManager Tests
@@ -775,7 +775,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "AppleHIGComplianceManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "AppleHIGComplianceManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

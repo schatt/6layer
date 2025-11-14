@@ -96,7 +96,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoDisplay_L4 should generate accessibility identifiers on \(platform.rawValue) (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L4 should generate accessibility identifiers on \(platform.rawValue) (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Photo Editor Tests
@@ -132,7 +132,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoEditor_L4 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoEditor_L4 generates proper accessibility identifiers
@@ -166,7 +166,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPhotoEditor_L4 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }
 

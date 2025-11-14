@@ -38,7 +38,7 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

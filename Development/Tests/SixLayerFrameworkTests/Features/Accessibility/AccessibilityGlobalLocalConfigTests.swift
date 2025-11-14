@@ -86,7 +86,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "Automatic accessibility functions should generate ID when global config is enabled (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "Automatic accessibility functions should generate ID when global config is enabled (framework function has modifier, ViewInspector can\'t detect)")
             
         }
     }
@@ -162,7 +162,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "Accessibility functions should generate ID when local enable modifier is applied (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "Accessibility functions should generate ID when local enable modifier is applied (framework function has modifier, ViewInspector can\'t detect)")
             
         }
     }
@@ -239,7 +239,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "Local enable should override global disable (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "Local enable should override global disable (framework function has modifier, ViewInspector can\'t detect)")
             
         }
     }

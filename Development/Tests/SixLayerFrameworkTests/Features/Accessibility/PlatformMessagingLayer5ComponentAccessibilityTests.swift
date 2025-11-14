@@ -54,8 +54,8 @@ open class PlatformMessagingLayer5ComponentAccessibilityTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAlertAccessibilityID || true, "Alert button should generate accessibility identifiers (modifier verified in code)")
-        #expect(hasToastAccessibilityID || true, "Toast notification should generate accessibility identifiers (modifier verified in code)")
-        #expect(hasBannerAccessibilityID || true, "Banner notification should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAlertAccessibilityID, "Alert button should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasToastAccessibilityID, "Toast notification should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasBannerAccessibilityID, "Banner notification should generate accessibility identifiers (modifier verified in code)")
     }
 }

@@ -36,7 +36,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing implementation issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect((buttonID?.contains("submit") ?? false) || (buttonID?.contains("Submit") ?? false) || true, 
+            #expect((buttonID?.contains("submit") ?? false) || (buttonID?.contains("Submit") ?? false), 
                    "AdaptiveButton identifier should include label text 'Submit' (implementation verified in code)")
             
             print("✅ GREEN: AdaptiveButton ID: '\(buttonID)' - Implementation verified")
@@ -72,7 +72,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // Different labels produce different IDs via sanitized label text inclusion.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(submitID != cancelID || true, 
+            #expect(submitID != cancelID, 
                    "Buttons with different labels should have different identifiers (implementation verified in code)")
             
             print("✅ GREEN: Submit ID: '\(submitID)' - Implementation verified")
@@ -106,7 +106,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:114,118,122.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(viewID.contains("settings") || viewID.contains("Settings") || true, 
+            #expect(viewID.contains("settings") || viewID.contains("Settings"), 
                    "platformNavigationTitle identifier should include title text 'Settings' (implementation verified in code)")
             
             print("✅ GREEN: Navigation Title ID: '\(viewID)' - Implementation verified")
@@ -147,7 +147,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:205,214,225.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(viewID.contains("next") || viewID.contains("page") || viewID.contains("Next") || true, 
+            #expect(viewID.contains("next") || viewID.contains("page") || viewID.contains("Next"), 
                    "platformNavigationLink_L4 identifier should include title text 'Next Page' (implementation verified in code)")
             
             print("✅ GREEN: Navigation Link ID: '\(viewID)' - Implementation verified")
@@ -187,7 +187,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:106.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(buttonID.contains("save") || buttonID.contains("Save") || true, 
+            #expect(buttonID.contains("save") || buttonID.contains("Save"), 
                    "platformNavigationButton identifier should include title text 'Save' (implementation verified in code)")
             
             print("✅ GREEN: Navigation Button ID: '\(buttonID)' - Implementation verified")
@@ -218,8 +218,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // Spaces are converted to hyphens, special chars removed, lowercase applied.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect((!buttonID.contains("Add New Item") || true) && 
-                    (buttonID.contains("add-new-item") || buttonID.contains("add") && buttonID.contains("new") || true),
+            #expect((!buttonID.contains("Add New Item")) && 
+                    (buttonID.contains("add-new-item") || buttonID.contains("add") && buttonID.contains("new")),
                     "Identifier should contain sanitized label (implementation verified)")
             
             print("✅ GREEN: Sanitized ID: '\(buttonID)' - Implementation verified")
@@ -247,7 +247,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // Special chars are converted to hyphens via regex pattern [^a-z0-9-].
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect((!buttonID.contains("&") || true) && (!buttonID.contains("!") || true),
+            #expect((!buttonID.contains("&")) && (!buttonID.contains("!")),
                     "Identifier should not contain special chars (implementation verified)")
             
             print("✅ GREEN: Special chars ID: '\(buttonID)' - Implementation verified")
@@ -275,8 +275,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // Labels are lowercased via .lowercased() call.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect((!buttonID.contains("CamelCaseLabel") || true) && 
-                    (buttonID.contains("camelcaselabel") || buttonID.contains("camel") || true),
+            #expect((!buttonID.contains("CamelCaseLabel")) && 
+                    (buttonID.contains("camelcaselabel") || buttonID.contains("camel")),
                    "Identifier should contain lowercase version (implementation verified)")
             
             print("✅ GREEN: Case sanitized ID: '\(buttonID)' - Implementation verified")
@@ -319,7 +319,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:130.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email") || true,
+            #expect(fieldID.contains("email") || fieldID.contains("address") || fieldID.contains("Email"),
                     "DynamicTextField identifier should include field label 'Email Address' (implementation verified in code)")
             
             print("✅ GREEN: DynamicTextField ID: '\(fieldID)' - Implementation verified")
@@ -358,7 +358,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:163.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User") || true,
+            #expect(fieldID.contains("user") || fieldID.contains("email") || fieldID.contains("User"),
                     "DynamicEmailField identifier should include field label 'User Email' (implementation verified in code)")
             
             print("✅ GREEN: DynamicEmailField ID: '\(fieldID)' - Implementation verified")
@@ -397,7 +397,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:193.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure") || true,
+            #expect(fieldID.contains("secure") || fieldID.contains("password") || fieldID.contains("Secure"),
                    "DynamicPasswordField identifier should include field label 'Secure Password' (implementation verified in code)")
             
             print("✅ GREEN: DynamicPasswordField ID: '\(fieldID)' - Implementation verified")
@@ -433,7 +433,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFormView.swift:75.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(formID.contains("user") || formID.contains("profile") || formID.contains("User") || true, 
+            #expect(formID.contains("user") || formID.contains("profile") || formID.contains("User"), 
                    "DynamicFormView identifier should include configuration title 'User Profile' (implementation verified in code)")
             
             print("✅ GREEN: DynamicFormView ID: '\(formID)' - Implementation verified")
@@ -475,7 +475,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFormView.swift:116.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(sectionID.contains("personal") || sectionID.contains("information") || sectionID.contains("Personal") || true, 
+            #expect(sectionID.contains("personal") || sectionID.contains("information") || sectionID.contains("Personal"), 
                    "DynamicFormSectionView identifier should include section title 'Personal Information' (implementation verified in code)")
             
             print("✅ GREEN: DynamicFormSectionView ID: '\(sectionID)' - Implementation verified")
@@ -517,7 +517,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:226.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("mobile") || fieldID.contains("phone") || fieldID.contains("Mobile") || true, 
+            #expect(fieldID.contains("mobile") || fieldID.contains("phone") || fieldID.contains("Mobile"), 
                    "DynamicPhoneField identifier should include field label 'Mobile Phone' (implementation verified in code)")
             
             print("✅ GREEN: DynamicPhoneField ID: '\(fieldID)' - Implementation verified")
@@ -553,7 +553,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:259.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("website") || fieldID.contains("url") || fieldID.contains("Website") || true, 
+            #expect(fieldID.contains("website") || fieldID.contains("url") || fieldID.contains("Website"), 
                    "DynamicURLField identifier should include field label 'Website URL' (implementation verified in code)")
             
             print("✅ GREEN: DynamicURLField ID: '\(fieldID)' - Implementation verified")
@@ -589,7 +589,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:292.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("total") || fieldID.contains("amount") || fieldID.contains("Total") || true, 
+            #expect(fieldID.contains("total") || fieldID.contains("amount") || fieldID.contains("Total"), 
                    "DynamicNumberField identifier should include field label 'Total Amount' (implementation verified in code)")
             
             print("✅ GREEN: DynamicNumberField ID: '\(fieldID)' - Implementation verified")
@@ -625,7 +625,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:356.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("birth") || fieldID.contains("date") || fieldID.contains("Birth") || true, 
+            #expect(fieldID.contains("birth") || fieldID.contains("date") || fieldID.contains("Birth"), 
                    "DynamicDateField identifier should include field label 'Birth Date' (implementation verified in code)")
             
             print("✅ GREEN: DynamicDateField ID: '\(fieldID)' - Implementation verified")
@@ -661,7 +661,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:1069.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("enable") || fieldID.contains("notifications") || fieldID.contains("Enable") || true, 
+            #expect(fieldID.contains("enable") || fieldID.contains("notifications") || fieldID.contains("Enable"), 
                    "DynamicToggleField identifier should include field label 'Enable Notifications' (implementation verified in code)")
             
             print("✅ GREEN: DynamicToggleField ID: '\(fieldID)' - Implementation verified")
@@ -698,7 +698,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:466.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("favorite") || fieldID.contains("colors") || fieldID.contains("Favorite") || true, 
+            #expect(fieldID.contains("favorite") || fieldID.contains("colors") || fieldID.contains("Favorite"), 
                    "DynamicMultiSelectField identifier should include field label 'Favorite Colors' (implementation verified in code)")
             
             print("✅ GREEN: DynamicMultiSelectField ID: '\(fieldID)' - Implementation verified")
@@ -735,7 +735,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:574.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("agree") || fieldID.contains("terms") || fieldID.contains("Agree") || true, 
+            #expect(fieldID.contains("agree") || fieldID.contains("terms") || fieldID.contains("Agree"), 
                    "DynamicCheckboxField identifier should include field label 'Agree to Terms' (implementation verified in code)")
             
             print("✅ GREEN: DynamicCheckboxField ID: '\(fieldID)' - Implementation verified")
@@ -771,7 +771,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:666.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("upload") || fieldID.contains("document") || fieldID.contains("Upload") || true, 
+            #expect(fieldID.contains("upload") || fieldID.contains("document") || fieldID.contains("Upload"), 
                    "DynamicFileField identifier should include field label 'Upload Document' (implementation verified in code)")
             
             print("✅ GREEN: DynamicFileField ID: '\(fieldID)' - Implementation verified")
@@ -808,7 +808,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:967.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("priority") || fieldID.contains("level") || fieldID.contains("Priority") || true, 
+            #expect(fieldID.contains("priority") || fieldID.contains("level") || fieldID.contains("Priority"), 
                    "DynamicEnumField identifier should include field label 'Priority Level' (implementation verified in code)")
             
             print("✅ GREEN: DynamicEnumField ID: '\(fieldID)' - Implementation verified")
@@ -844,7 +844,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:325.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("quantity") || fieldID.contains("Quantity") || true, 
+            #expect(fieldID.contains("quantity") || fieldID.contains("Quantity"), 
                    "DynamicIntegerField identifier should include field label 'Quantity' (implementation verified in code)")
             
             print("✅ GREEN: DynamicIntegerField ID: '\(fieldID)' - Implementation verified")
@@ -880,7 +880,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:1113.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(fieldID.contains("comments") || fieldID.contains("Comments") || true, 
+            #expect(fieldID.contains("comments") || fieldID.contains("Comments"), 
                    "DynamicTextAreaField identifier should include field label 'Comments' (implementation verified in code)")
             
             print("✅ GREEN: DynamicTextAreaField ID: '\(fieldID)' - Implementation verified")
@@ -922,9 +922,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // Different items produce different IDs via sanitized label text inclusion.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect((card1ID != card2ID || true) && 
-                    (card1ID.contains("first") || card1ID.contains("item") || card1ID.contains("First") || true) &&
-                    (card2ID.contains("second") || card2ID.contains("item") || card2ID.contains("Second") || true),
+            #expect((card1ID != card2ID) && 
+                    (card1ID.contains("first") || card1ID.contains("item") || card1ID.contains("First")) &&
+                    (card2ID.contains("second") || card2ID.contains("item") || card2ID.contains("Second")),
                    "List items with different titles should have different identifiers (implementation verified in code)")
             
             print("✅ GREEN: ListCard 1 ID: '\(card1ID)' - Implementation verified")
@@ -1054,8 +1054,8 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // Different items produce different IDs via sanitized label text inclusion.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect((card1ID != card2ID || true) && 
-                    (card1ID.contains("important") || card1ID.contains("card") || card1ID.contains("Important") || true),
+            #expect((card1ID != card2ID) && 
+                    (card1ID.contains("important") || card1ID.contains("card") || card1ID.contains("Important")),
                    "ExpandableCardComponent items with different titles should have different identifiers (implementation verified in code)")
             
             print("✅ GREEN: ExpandableCard 1 ID: '\(card1ID)' - Implementation verified")
@@ -1140,13 +1140,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "CoverFlowCardComponent items with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: CoverFlowCardComponent DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:398.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(card1ID.contains("cover") || card1ID.contains("flow") || card1ID.contains("item") || card1ID.contains("Cover") || true, 
+            #expect(card1ID.contains("cover") || card1ID.contains("flow") || card1ID.contains("item") || card1ID.contains("Cover"), 
                    "CoverFlowCardComponent identifier should include item title (implementation verified in code)")
             
             print("✅ GREEN: CoverFlowCard 1 ID: '\(card1ID)' - Implementation verified")
@@ -1208,13 +1208,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "SimpleCardComponent items with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: SimpleCardComponent DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:797.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(card1ID.contains("simple") || card1ID.contains("card") || card1ID.contains("alpha") || card1ID.contains("Simple") || true, 
+            #expect(card1ID.contains("simple") || card1ID.contains("card") || card1ID.contains("alpha") || card1ID.contains("Simple"), 
                    "SimpleCardComponent identifier should include item title (implementation verified in code)")
             
             print("✅ GREEN: SimpleCard 1 ID: '\(card1ID)' - Implementation verified")
@@ -1251,13 +1251,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "MasonryCardComponent items with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: MasonryCardComponent DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:959.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(card1ID.contains("masonry") || card1ID.contains("item") || card1ID.contains("one") || card1ID.contains("Masonry") || true, 
+            #expect(card1ID.contains("masonry") || card1ID.contains("item") || card1ID.contains("one") || card1ID.contains("Masonry"), 
                    "MasonryCardComponent identifier should include item title (implementation verified in code)")
             
             print("✅ GREEN: MasonryCard 1 ID: '\(card1ID)' - Implementation verified")
@@ -1323,15 +1323,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "Grid items should have different identifiers based on their titles (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: SimpleCardComponent DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:797.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(card1ID.contains("1") || card1ID.contains("grid") || true, 
+            #expect(card1ID.contains("1") || card1ID.contains("grid"), 
                    "Grid item 1 identifier should include item name (implementation verified in code)")
-            #expect(card2ID.contains("2") || card2ID.contains("grid") || true, 
+            #expect(card2ID.contains("2") || card2ID.contains("grid"), 
                    "Grid item 2 identifier should include item name (implementation verified in code)")
             
             print("✅ GREEN: Grid Card 1 ID: '\(card1ID)' - Implementation verified")
@@ -1369,7 +1369,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "Cover flow items should have different identifiers (implementation verified in code)")
             
             print("✅ GREEN: CoverFlow Card 1 ID: '\(card1ID)' - Implementation verified")
@@ -1408,7 +1408,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "Masonry collection items should have different identifiers (implementation verified in code)")
             
             print("✅ GREEN: Masonry Card 1 ID: '\(card1ID)' - Implementation verified")
@@ -1499,19 +1499,19 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:398.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(expandableID.contains("test") || expandableID.contains("item") || expandableID.contains("Test") || true, 
+            #expect(expandableID.contains("test") || expandableID.contains("item") || expandableID.contains("Test"), 
                    "ExpandableCardComponent should include item title (implementation verified in code)")
-            #expect(listID.contains("test") || listID.contains("item") || listID.contains("Test") || true, 
+            #expect(listID.contains("test") || listID.contains("item") || listID.contains("Test"), 
                    "ListCardComponent should include item title (implementation verified in code)")
-            #expect(simpleID.contains("test") || simpleID.contains("item") || simpleID.contains("Test") || true, 
+            #expect(simpleID.contains("test") || simpleID.contains("item") || simpleID.contains("Test"), 
                    "SimpleCardComponent should include item title (implementation verified in code)")
-            #expect(coverFlowID.contains("test") || coverFlowID.contains("item") || coverFlowID.contains("Test") || true, 
+            #expect(coverFlowID.contains("test") || coverFlowID.contains("item") || coverFlowID.contains("Test"), 
                    "CoverFlowCardComponent should include item title (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: SimpleCardComponent DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift:797.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(masonryID.contains("test") || masonryID.contains("item") || masonryID.contains("Test") || true, 
+            #expect(masonryID.contains("test") || masonryID.contains("item") || masonryID.contains("Test"), 
                    "MasonryCardComponent should include item title (implementation verified in code)")
             
             print("✅ GREEN: ExpandableCard ID: '\(expandableID)' - Implementation verified")
@@ -1567,15 +1567,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
 
             // Cards with different titles should have different IDs
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "ResponsiveCardView items with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveCardView DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Components/Collections/ResponsiveCardsView.swift:421.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(card1ID.contains("dashboard") || card1ID.contains("Dashboard") || true, 
+            #expect(card1ID.contains("dashboard") || card1ID.contains("Dashboard"), 
                    "ResponsiveCardView identifier should include card title 'Dashboard' (implementation verified in code)")
-            #expect(card2ID.contains("vehicles") || card2ID.contains("Vehicles") || true, 
+            #expect(card2ID.contains("vehicles") || card2ID.contains("Vehicles"), 
                    "ResponsiveCardView identifier should include card title 'Vehicles' (implementation verified in code)")
             
             print("✅ GREEN: ResponsiveCard 1 ID: '\(card1ID)' - Implementation verified")
@@ -1626,15 +1626,15 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
            let inspected2 = card2.tryInspect(),
            let card2ID = try? inspected2.sixLayerAccessibilityIdentifier() {
             
-            #expect(card1ID != card2ID || true, 
+            #expect(card1ID != card2ID, 
                    "ResponsiveCardView items in collections should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: ResponsiveCardView DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Components/Collections/ResponsiveCardsView.swift:421.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(card1ID.contains("expenses") || card1ID.contains("Expenses") || true, 
+            #expect(card1ID.contains("expenses") || card1ID.contains("Expenses"), 
                    "ResponsiveCardView identifier should include card title (implementation verified in code)")
-            #expect(card2ID.contains("maintenance") || card2ID.contains("Maintenance") || true, 
+            #expect(card2ID.contains("maintenance") || card2ID.contains("Maintenance"), 
                    "ResponsiveCardView identifier should include card title (implementation verified in code)")
             
             print("✅ GREEN: ResponsiveCard Collection 1 ID: '\(card1ID)' - Implementation verified")
@@ -1717,17 +1717,17 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: PlatformTabStrip buttons DO pass label via .environment(\.accessibilityIdentifierLabel, title)
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(homeID != settingsID || true, 
+            #expect(homeID != settingsID, 
                    "PlatformTabStrip buttons with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: Component DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(homeID.contains("home") || homeID.contains("Home") || true, 
+            #expect(homeID.contains("home") || homeID.contains("Home"), 
                    "Home button identifier should include 'Home' (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: Component DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(settingsID.contains("settings") || settingsID.contains("Settings") || true, 
+            #expect(settingsID.contains("settings") || settingsID.contains("Settings"), 
                    "Settings button identifier should include 'Settings' (implementation verified in code)")
             
             print("✅ GREEN: Tab Button Home ID: '\(homeID)' - Implementation verified")
@@ -1869,9 +1869,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformListsLayer4.swift:31,48.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(row1ID != row2ID || true, 
+            #expect(row1ID != row2ID, 
                    "platformListRow items with different content should have different identifiers (implementation verified in code)")
-            #expect(row1ID.contains("first") || row1ID.contains("First") || row1ID.contains("item") || true, 
+            #expect(row1ID.contains("first") || row1ID.contains("First") || row1ID.contains("item"), 
                    "platformListRow identifier should include item content (implementation verified in code)")
             
             print("✅ GREEN: PlatformListRow 1 ID: '\(row1ID)' - Implementation verified")
@@ -1926,13 +1926,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: platformListSectionHeader DOES pass label via .environment(\.accessibilityIdentifierLabel, title)
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(header1ID != header2ID || true, 
+            #expect(header1ID != header2ID, 
                    "platformListSectionHeader with different titles should have different identifiers (implementation verified in code)")
             // TODO: ViewInspector Detection Issue - VERIFIED: platformListSectionHeader DOES pass label via .environment(\.accessibilityIdentifierLabel, ...)
             // in Framework/Sources/Layers/Layer4-Component/PlatformListsLayer4.swift:71.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(header1ID.contains("section") || header1ID.contains("one") || header1ID.contains("Section") || true, 
+            #expect(header1ID.contains("section") || header1ID.contains("one") || header1ID.contains("Section"), 
                    "platformListSectionHeader identifier should include title (implementation verified in code)")
             
             print("✅ GREEN: Section Header 1 ID: '\(header1ID)' - Implementation verified")
@@ -1974,9 +1974,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:29.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(field1ID != field2ID || true, 
+            #expect(field1ID != field2ID, 
                    "platformFormField with different labels should have different identifiers (implementation verified in code)")
-            #expect(field1ID.contains("email") || field1ID.contains("address") || field1ID.contains("Email") || true, 
+            #expect(field1ID.contains("email") || field1ID.contains("address") || field1ID.contains("Email"), 
                    "platformFormField identifier should include label (implementation verified in code)")
             
             print("✅ GREEN: Form Field 1 ID: '\(field1ID)' - Implementation verified")
@@ -2018,9 +2018,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:55.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(group1ID != group2ID || true, 
+            #expect(group1ID != group2ID, 
                    "platformFormFieldGroup with different titles should have different identifiers (implementation verified in code)")
-            #expect(group1ID.contains("personal") || group1ID.contains("information") || group1ID.contains("Personal") || true, 
+            #expect(group1ID.contains("personal") || group1ID.contains("information") || group1ID.contains("Personal"), 
                    "platformFormFieldGroup identifier should include title (implementation verified in code)")
             
             print("✅ GREEN: Form Field Group 1 ID: '\(group1ID)' - Implementation verified")
@@ -2058,9 +2058,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformListsLayer4.swift:113.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(state1ID != state2ID || true, 
+            #expect(state1ID != state2ID, 
                    "platformListEmptyState with different titles should have different identifiers (implementation verified in code)")
-            #expect(state1ID.contains("no") || state1ID.contains("items") || state1ID.contains("No") || true, 
+            #expect(state1ID.contains("no") || state1ID.contains("items") || state1ID.contains("No"), 
                    "platformListEmptyState identifier should include title (implementation verified in code)")
             
             print("✅ GREEN: Empty State 1 ID: '\(state1ID)' - Implementation verified")
@@ -2098,9 +2098,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformListsLayer4.swift:194.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(placeholder1ID != placeholder2ID || true, 
+            #expect(placeholder1ID != placeholder2ID, 
                    "platformDetailPlaceholder with different titles should have different identifiers (implementation verified in code)")
-            #expect(placeholder1ID.contains("select") || placeholder1ID.contains("item") || placeholder1ID.contains("Select") || true, 
+            #expect(placeholder1ID.contains("select") || placeholder1ID.contains("item") || placeholder1ID.contains("Select"), 
                    "platformDetailPlaceholder identifier should include title (implementation verified in code)")
             
             print("✅ GREEN: Detail Placeholder 1 ID: '\(placeholder1ID)' - Implementation verified")
@@ -2132,9 +2132,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Components/Forms/ActionButton.swift:20.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(button1ID != button2ID || true, 
+            #expect(button1ID != button2ID, 
                    "ActionButton with different titles should have different identifiers (implementation verified in code)")
-            #expect(button1ID.contains("save") || button1ID.contains("Save") || true, 
+            #expect(button1ID.contains("save") || button1ID.contains("Save"), 
                    "ActionButton identifier should include title (implementation verified in code)")
             
             print("✅ GREEN: ActionButton 1 ID: '\(button1ID)' - Implementation verified")
@@ -2173,9 +2173,9 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // in Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift:78.
             // Different labels produce different IDs via sanitized label text inclusion.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
-            #expect(message1ID != message2ID || true, 
+            #expect(message1ID != message2ID, 
                    "platformValidationMessage with different messages should have different identifiers (implementation verified in code)")
-            #expect(message1ID.contains("email") || message1ID.contains("required") || message1ID.contains("Email") || true, 
+            #expect(message1ID.contains("email") || message1ID.contains("required") || message1ID.contains("Email"), 
                    "platformValidationMessage identifier should include message text (implementation verified in code)")
             
             print("✅ GREEN: Validation Message 1 ID: '\(message1ID)' - Implementation verified")

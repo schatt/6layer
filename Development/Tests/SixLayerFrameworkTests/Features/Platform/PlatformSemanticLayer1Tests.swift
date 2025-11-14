@@ -61,7 +61,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentItemCollection_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -92,7 +92,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentItemCollection_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentNumericData_L1 Tests
@@ -122,7 +122,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentNumericData_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -150,7 +150,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentNumericData_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentFormData_L1 Tests
@@ -187,7 +187,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentFormData_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -222,7 +222,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentFormData_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentMediaData_L1 Tests
@@ -252,7 +252,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentMediaData_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -280,7 +280,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentMediaData_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentSettings_L1 Tests
@@ -322,7 +322,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentSettings_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -362,7 +362,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentSettings_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentContent_L1 Tests
@@ -392,7 +392,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -420,7 +420,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentBasicValue_L1 Tests
@@ -450,7 +450,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentBasicValue_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -478,7 +478,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentBasicValue_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentBasicValue_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentBasicArray_L1 Tests
@@ -508,7 +508,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentBasicArray_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -536,7 +536,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentBasicArray_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - platformPresentContent_L1 All Delegate Path Tests
@@ -562,7 +562,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to form function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to form function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to media function when content is [GenericMediaItem]
@@ -586,7 +586,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to media function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to media function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to numeric function when content is [GenericNumericData]
@@ -610,7 +610,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to numeric function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to numeric function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to hierarchical function when content is [GenericHierarchicalItem]
@@ -634,7 +634,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to hierarchical function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to hierarchical function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to temporal function when content is [GenericTemporalItem]
@@ -658,7 +658,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to temporal function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to temporal function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to item collection function when content is identifiable array
@@ -685,7 +685,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to item collection function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to item collection function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to basic value function when content is basic numeric type
@@ -705,7 +705,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic value function for numeric (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic value function for numeric (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to basic array function when content is basic array
@@ -725,7 +725,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic array function (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic array function (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to basic value function when content is String
@@ -745,7 +745,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic value function for string (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to basic value function for string (modifier verified in code)")
     }
     
     /// Test platformPresentContent_L1 delegates to GenericFallbackView for unknown types
@@ -769,7 +769,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentContent_L1 should generate accessibility identifiers when delegating to fallback view (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPresentContent_L1 should generate accessibility identifiers when delegating to fallback view (modifier verified in code)")
     }
     
     // MARK: - platformResponsiveCard_L1 Tests
@@ -800,7 +800,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformResponsiveCard_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -829,7 +829,7 @@ open class PlatformSemanticLayer1Tests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformResponsiveCard_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformResponsiveCard_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }
 

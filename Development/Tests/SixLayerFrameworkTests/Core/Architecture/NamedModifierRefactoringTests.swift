@@ -43,7 +43,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "HierarchyReplacement"
-            ) || true, "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID (modifier verified in code)")
+            ) , "RED PHASE: .named() should replace current hierarchy level and generate full path as accessibility ID (modifier verified in code)")
         }
     }
     
@@ -71,7 +71,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "FullHierarchyPath"
-            ) || true, "RED PHASE: .named() should generate full hierarchy path as accessibility identifier (modifier verified in code)")
+            ) , "RED PHASE: .named() should generate full hierarchy path as accessibility identifier (modifier verified in code)")
         }
     }
     
@@ -102,7 +102,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NestedHierarchy"
-            ) || true, "RED PHASE: Multiple .named() calls should build complete hierarchy path (modifier verified in code)")
+            ) , "RED PHASE: Multiple .named() calls should build complete hierarchy path (modifier verified in code)")
         }
     }
     
@@ -136,7 +136,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention1"
-            ) || true, "RED PHASE: First SaveButton should include UserProfile in path (modifier verified in code)")
+            ) , "RED PHASE: First SaveButton should include UserProfile in path (modifier verified in code)")
                 
             // TODO: ViewInspector Detection Issue - VERIFIED: NamedModifier DOES apply accessibility identifiers
             // via .accessibilityIdentifier() in Framework/Sources/Extensions/Accessibility/AutomaticAccessibilityIdentifiers.swift:432-434.
@@ -149,7 +149,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "CollisionPrevention2"
-            ) || true, "RED PHASE: Second SaveButton should include Settings in path (modifier verified in code)")
+            ) , "RED PHASE: Second SaveButton should include Settings in path (modifier verified in code)")
         }
     }
     
@@ -181,7 +181,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "IndependentNamedModifier"
-            ) || true, "RED PHASE: .named() should work independently of global automatic accessibility settings (modifier verified in code)")
+            ) , "RED PHASE: .named() should work independently of global automatic accessibility settings (modifier verified in code)")
         }
     }
     
@@ -211,7 +211,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "HierarchyInheritance"
-            ) || true, "RED PHASE: Subcomponents should inherit modified hierarchy context (modifier verified in code)")
+            ) , "RED PHASE: Subcomponents should inherit modified hierarchy context (modifier verified in code)")
         }
     }
     
@@ -236,7 +236,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: ".*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "EmptyStringTest"
-            ) || true, "RED PHASE: .named() with empty string should handle gracefully (modifier verified in code)")
+            ) , "RED PHASE: .named() with empty string should handle gracefully (modifier verified in code)")
         }
     }
     
@@ -268,7 +268,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NoGlobalChanges"
-            ) || true, "RED PHASE: .named() should not change global environment settings (modifier verified in code)")
+            ) , "RED PHASE: .named() should not change global environment settings (modifier verified in code)")
                 
             // And global settings should remain unchanged
             guard let config = testConfig else {
@@ -280,7 +280,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // The config.enableAutoIDs is being set to true somewhere in the test execution.
             // This may be a real issue or a test setup issue - needs investigation.
             // For now, applying workaround to allow tests to pass while behavior is verified.
-            #expect(!config.enableAutoIDs || true, 
+            #expect(!config.enableAutoIDs, 
                           "Global settings should remain unchanged after .named() (needs investigation)")
         }
     }
@@ -308,7 +308,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedModifier"
-            ) || true, "RED PHASE: .exactNamed() should apply exact name only, no hierarchy (modifier verified in code)")
+            ) , "RED PHASE: .exactNamed() should apply exact name only, no hierarchy (modifier verified in code)")
         }
     }
     
@@ -336,7 +336,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedHierarchyTest"
-            ) || true, "RED PHASE: .exactNamed() should not modify hierarchy for other components (modifier verified in code)")
+            ) , "RED PHASE: .exactNamed() should not modify hierarchy for other components (modifier verified in code)")
         }
     }
     
@@ -366,7 +366,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "^TestButton$", 
                 platform: SixLayerPlatform.iOS,
             componentName: "IndependentExactNamedModifier"
-            ) || true, "RED PHASE: .exactNamed() should work independently of global settings (modifier verified in code)")
+            ) , "RED PHASE: .exactNamed() should work independently of global settings (modifier verified in code)")
         }
     }
     
@@ -398,7 +398,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "CombinedModifiersTest"
-            ) || true, "RED PHASE: .named() and .exactNamed() should work together (modifiers verified in code)")
+            ) , "RED PHASE: .named() and .exactNamed() should work together (modifiers verified in code)")
         }
     }
     
@@ -426,14 +426,14 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedCollision1"
-            ) || true, "RED PHASE: First .exactNamed() should get exact name (modifier verified in code)")
+            ) , "RED PHASE: First .exactNamed() should get exact name (modifier verified in code)")
                 
             #expect(testAccessibilityIdentifiersSinglePlatform(
                 view2, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ExactNamedCollision2"
-            ) || true, "RED PHASE: Second .exactNamed() should get same exact name (collision) (modifier verified in code)")
+            ) , "RED PHASE: Second .exactNamed() should get same exact name (collision) (modifier verified in code)")
         }
     }
     

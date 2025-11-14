@@ -38,7 +38,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "CrossPlatformOptimizationLayer6 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "CrossPlatformOptimizationLayer6 should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testCrossPlatformOptimizationLayer6PlatformSpecificOptimizations() async {
@@ -66,7 +66,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform-specific optimizations should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "Platform-specific optimizations should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testCrossPlatformOptimizationLayer6PerformanceOptimizations() async {
@@ -95,7 +95,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Performance optimizations should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "Performance optimizations should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testCrossPlatformOptimizationLayer6UIPatternOptimizations() async {
@@ -124,7 +124,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "UI pattern optimizations should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "UI pattern optimizations should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testCrossPlatformOptimizationLayer6GetPlatformRecommendations() async {
@@ -165,7 +165,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformPerformanceLayer6 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformPerformanceLayer6 should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformPerformanceLayer6PerformanceMetrics() async {

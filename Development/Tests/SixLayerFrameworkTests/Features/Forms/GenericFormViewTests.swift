@@ -63,7 +63,7 @@ open class GenericFormViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericFormView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericFormView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -96,6 +96,6 @@ open class GenericFormViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericFormView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericFormView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }

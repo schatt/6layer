@@ -44,7 +44,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoCapture_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
@@ -80,7 +80,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoCapture_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Photo Selection Tests
@@ -119,7 +119,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoSelection_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoSelection_L1 generates proper accessibility identifiers
@@ -156,7 +156,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoSelection_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Photo Display Tests
@@ -195,7 +195,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoDisplay_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L1 generates proper accessibility identifiers
@@ -232,7 +232,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

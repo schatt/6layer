@@ -334,7 +334,7 @@ open class AssistiveTouchTests: BaseTestClass {
         
         // Then: View compliance checking works (framework assumes compliance by default)
         // TODO: Update test to verify actual non-compliance detection when view introspection is available
-        #expect(compliance.isCompliant || true, "Compliance checking works (framework assumes compliance by default)")
+        #expect(compliance.isCompliant, "Compliance checking works (framework assumes compliance by default)")
         #expect(compliance.issues.count >= 0, "Compliance issues count is valid")
     }
     

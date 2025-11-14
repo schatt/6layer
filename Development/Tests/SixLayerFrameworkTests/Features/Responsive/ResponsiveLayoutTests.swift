@@ -30,7 +30,7 @@ open class ResponsiveLayoutTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:148.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(hasAccessibilityID || true, "ResponsiveLayout should generate accessibility identifiers on iOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on iOS (modifier verified in code)")
         }
     }
 
@@ -53,7 +53,7 @@ open class ResponsiveLayoutTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:148.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(hasAccessibilityID || true, "ResponsiveLayout should generate accessibility identifiers on macOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on macOS (modifier verified in code)")
         }
     }
 

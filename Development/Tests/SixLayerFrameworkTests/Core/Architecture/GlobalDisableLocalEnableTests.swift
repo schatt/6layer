@@ -45,8 +45,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // modifier applied. The framework correctly generates IDs when local enable is used.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(!id.isEmpty || true, "Framework component with local enable should generate ID (modifier verified in code)")
-            #expect(id.contains("TestApp") || true, "ID should contain namespace (modifier verified in code)")
+            #expect(!id.isEmpty, "Framework component with local enable should generate ID (modifier verified in code)")
+            #expect(id.contains("TestApp"), "ID should contain namespace (modifier verified in code)")
             
             print("🔍 Framework Component Test: Generated ID='\(id)'")
         }
@@ -78,8 +78,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: .named() modifier DOES apply accessibility identifiers.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(!id.isEmpty || true, ".named() should always work regardless of global settings (modifier verified in code)")
-            #expect(id.contains("DisabledButton") || true, "Should contain the explicit name (modifier verified in code)")
+            #expect(!id.isEmpty, ".named() should always work regardless of global settings (modifier verified in code)")
+            #expect(id.contains("DisabledButton"), "Should contain the explicit name (modifier verified in code)")
             
             print("Testing .named() with global settings: Generated ID='\(id)'")
         }
@@ -110,8 +110,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: .named() modifier DOES apply accessibility identifiers.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(!id.isEmpty || true, ".named() should always work regardless of global config (modifier verified in code)")
-            #expect(id.contains("FrameworkButton") || true, "Should contain the explicit name (modifier verified in code)")
+            #expect(!id.isEmpty, ".named() should always work regardless of global config (modifier verified in code)")
+            #expect(id.contains("FrameworkButton"), "Should contain the explicit name (modifier verified in code)")
             
         }
     }
@@ -141,8 +141,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: .named() modifier DOES apply accessibility identifiers.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(!id.isEmpty || true, ".named() should always work regardless of global config (modifier verified in code)")
-            #expect(id.contains("PlainButton") || true, "Should contain the explicit name (modifier verified in code)")
+            #expect(!id.isEmpty, ".named() should always work regardless of global config (modifier verified in code)")
+            #expect(id.contains("PlainButton"), "Should contain the explicit name (modifier verified in code)")
             
         }
     }

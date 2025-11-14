@@ -565,8 +565,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // TODO: Thread/Actor Isolation Issue - getCardExpansionPlatformConfig() may not be accessing test defaults
         // due to thread/actor isolation with Thread.current.threadDictionary. The framework code correctly uses
         // RuntimeCapabilityDetection, but the test platform may not be accessible from the MainActor context.
-        #expect(config.supportsVoiceOver || true, "VoiceOver should be available on all platforms (thread/actor isolation issue)")
-        #expect(config.supportsSwitchControl || true, "Switch Control should be available on all platforms (thread/actor isolation issue)")
+        #expect(config.supportsVoiceOver, "VoiceOver should be available on all platforms (thread/actor isolation issue)")
+        #expect(config.supportsSwitchControl, "Switch Control should be available on all platforms (thread/actor isolation issue)")
         
         // AssistiveTouch is only available on iOS and watchOS
         #if os(iOS) || os(watchOS)
@@ -798,10 +798,10 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // TODO: Thread/Actor Isolation Issue - getCardExpansionPlatformConfig() may not be accessing test defaults
         // due to thread/actor isolation with Thread.current.threadDictionary. The framework code correctly uses
         // RuntimeCapabilityDetection, but the test platform may not be accessible from the MainActor context.
-        #expect(platformConfig.supportsVoiceOver || true, "VoiceOver should be available (thread/actor isolation issue)")
-        #expect(platformConfig.supportsSwitchControl || true, "Switch Control should be available (thread/actor isolation issue)")
+        #expect(platformConfig.supportsVoiceOver, "VoiceOver should be available (thread/actor isolation issue)")
+        #expect(platformConfig.supportsSwitchControl, "Switch Control should be available (thread/actor isolation issue)")
         // NOTE: AssistiveTouch support is working as expected on iOS
-        #expect(platformConfig.supportsAssistiveTouch || true, "AssistiveTouch support is working as expected on iOS (thread/actor isolation issue)")
+        #expect(platformConfig.supportsAssistiveTouch, "AssistiveTouch support is working as expected on iOS (thread/actor isolation issue)")
     }
     
     // MARK: - Edge Case Tests

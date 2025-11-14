@@ -74,7 +74,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "automaticAccessibilityIdentifiers modifier should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "automaticAccessibilityIdentifiers modifier should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnMacOS() async {
@@ -97,7 +97,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "automaticAccessibilityIdentifiers modifier should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "automaticAccessibilityIdentifiers modifier should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - named() Modifier Tests
@@ -122,7 +122,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "named modifier should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "named modifier should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testNamedModifierGeneratesIdentifiersOnMacOS() async {
@@ -145,7 +145,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "named modifier should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "named modifier should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Issue #7: Environment Access Warnings Tests

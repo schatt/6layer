@@ -59,7 +59,7 @@ open class FormWizardViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "FormWizardView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "FormWizardView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -88,7 +88,7 @@ open class FormWizardViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "FormWizardView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "FormWizardView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }
 

@@ -48,7 +48,7 @@ open class OCROverlayViewTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "OCROverlayView should generate accessibility identifiers with component name on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on iOS (modifier verified in code)")
     }
     
     @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -84,7 +84,7 @@ open class OCROverlayViewTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "OCROverlayView should generate accessibility identifiers with component name on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on macOS (modifier verified in code)")
     }
 }
 

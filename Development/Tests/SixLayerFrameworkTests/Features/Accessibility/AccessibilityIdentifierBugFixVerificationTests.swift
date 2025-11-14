@@ -112,7 +112,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with .named() should generate accessibility identifiers matching pattern 'SixLayer.main.element.*' (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'SixLayer.main.element.*' (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -180,7 +180,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*ui' (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*ui' (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -217,7 +217,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*' (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*' (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -253,7 +253,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 expectedPattern: "manual-add-fuel-button", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ManualAccessibilityIdentifier"
-            ) || true, "Manual accessibility identifier should work")
+            ) , "Manual accessibility identifier should work")
         }
     }
     
@@ -289,7 +289,7 @@ open class AccessibilityIdentifierBugFixVerificationTests {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityIdentifiers"
-            ) || true, "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
+            ) , "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
         }
     }
     

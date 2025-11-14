@@ -40,7 +40,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             // DO have .automaticAccessibilityIdentifiers() modifiers applied.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(testPassed || true, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers (modifier verified in code)")
+            #expect(testPassed, "AutomaticAccessibilityIdentifiers should generate accessibility identifiers (modifier verified in code)")
                 
             // Cleanup: Reset test environment
             cleanupTestEnvironment()
@@ -75,7 +75,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: .named() modifier DOES apply accessibility identifiers.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(testPassed || true, "NamedModifier should generate accessibility identifiers (modifier verified in code)")
+            #expect(testPassed, "NamedModifier should generate accessibility identifiers (modifier verified in code)")
                 
             // Cleanup: Reset test environment
             cleanupTestEnvironment()
@@ -122,7 +122,7 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
                 componentName: "CombinedBreadcrumbModifiers"
-            ) || true, "View should have an accessibility identifier assigned")
+            ) , "View should have an accessibility identifier assigned")
         }
     }
     

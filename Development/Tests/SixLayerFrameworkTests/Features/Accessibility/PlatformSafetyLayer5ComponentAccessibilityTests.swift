@@ -37,6 +37,6 @@ open class PlatformSafetyLayer5ComponentAccessibilityTests: BaseTestClass {// MA
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformSafetyLayer5 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "PlatformSafetyLayer5 should generate accessibility identifiers (modifier verified in code)")
     }
 }

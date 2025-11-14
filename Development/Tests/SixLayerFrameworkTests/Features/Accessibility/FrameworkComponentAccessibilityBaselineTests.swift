@@ -74,7 +74,7 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: name
-        ) || true, "\(name) should generate accessibility ID")
+        ) , "\(name) should generate accessibility ID")
     }
 }
 

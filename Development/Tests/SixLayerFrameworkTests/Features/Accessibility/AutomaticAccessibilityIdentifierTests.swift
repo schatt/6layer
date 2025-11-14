@@ -278,7 +278,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // TODO: ViewInspector Detection Issue - VERIFIED: Manual accessibility identifiers DO override automatic generation.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(hasManualID || true, "Manual identifier should override automatic generation (modifier verified in code)")
+            #expect(hasManualID, "Manual identifier should override automatic generation (modifier verified in code)")
         }
     }
     
@@ -387,7 +387,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 expectedPattern: "SixLayer.layer1.*element.*", 
                 platform: SixLayerPlatform.iOS,
             componentName: "Layer1Functions"
-            ) || true, "Layer 1 function should generate accessibility identifiers matching pattern 'SixLayer.layer1.*element.*'")
+            ) , "Layer 1 function should generate accessibility identifiers matching pattern 'SixLayer.layer1.*element.*'")
                 
             // Test that the view can be created with accessibility identifier configuration
             #expect(testAccessibilityIdentifierConfiguration(), "Accessibility identifier configuration should be valid")
@@ -804,7 +804,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
                 expectedPattern: "SixLayer.*AddFuelButton", 
                 platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
-            ) || true, "View with .named() should generate accessibility identifiers containing the explicit name")
+            ) , "View with .named() should generate accessibility identifiers containing the explicit name")
                 
             // Also verify configuration is correct
             #expect(config.enableAutoIDs, "Auto IDs should be enabled")

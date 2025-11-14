@@ -51,7 +51,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -72,7 +72,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     // MARK: - Test All Layout Strategies
@@ -102,7 +102,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView compact layout should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView compact layout should generate accessibility identifiers")
     }
     
     @Test func testIntelligentDetailViewStandardLayoutGeneratesAccessibilityIdentifiers() async {
@@ -130,7 +130,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView standard layout should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView standard layout should generate accessibility identifiers")
     }
     
     @Test func testIntelligentDetailViewDetailedLayoutGeneratesAccessibilityIdentifiers() async {
@@ -158,7 +158,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView detailed layout should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView detailed layout should generate accessibility identifiers")
     }
     
     @Test func testIntelligentDetailViewTabbedLayoutGeneratesAccessibilityIdentifiers() async {
@@ -200,7 +200,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView tabbed layout should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView tabbed layout should generate accessibility identifiers")
     }
     
     @Test func testIntelligentDetailViewAdaptiveLayoutGeneratesAccessibilityIdentifiers() async {
@@ -221,7 +221,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView adaptive layout should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView adaptive layout should generate accessibility identifiers")
     }
 
     // MARK: - Edit Button Tests
@@ -275,7 +275,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView with edit button should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView with edit button should generate accessibility identifiers")
     }
 
     @Test func testIntelligentDetailViewCompactLayoutWithEditButton() async {
@@ -307,7 +307,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView compact layout with edit button should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView compact layout with edit button should generate accessibility identifiers")
     }
 
     @Test func testIntelligentDetailViewStandardLayoutWithEditButton() async {
@@ -339,7 +339,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView standard layout with edit button should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView standard layout with edit button should generate accessibility identifiers")
     }
 
     @Test func testIntelligentDetailViewDetailedLayoutWithEditButton() async {
@@ -371,7 +371,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView detailed layout with edit button should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView detailed layout with edit button should generate accessibility identifiers")
     }
 
     @Test func testIntelligentDetailViewTabbedLayoutWithEditButton() async {
@@ -417,7 +417,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView tabbed layout with edit button should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView tabbed layout with edit button should generate accessibility identifiers")
     }
 
     @Test func testIntelligentDetailViewAdaptiveLayoutWithEditButton() async {
@@ -442,7 +442,7 @@ open class IntelligentDetailViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "IntelligentDetailView adaptive layout with edit button should generate accessibility identifiers")
+        #expect(hasAccessibilityID, "IntelligentDetailView adaptive layout with edit button should generate accessibility identifiers")
     }
 }
 

@@ -50,7 +50,7 @@ open class CrossPlatformNavigationTests {
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:29.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformNavigation should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigation should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -70,6 +70,6 @@ open class CrossPlatformNavigationTests {
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:29.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformNavigation should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigation should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }

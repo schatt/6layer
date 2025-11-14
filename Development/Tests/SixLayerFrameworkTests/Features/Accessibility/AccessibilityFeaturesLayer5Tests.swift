@@ -349,7 +349,7 @@ open class AccessibilityFeaturesLayer5Tests {
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedViewModifier"
-        ) || true, "Enhanced view should have accessibility identifier")
+        ) , "Enhanced view should have accessibility identifier")
     }
     
     /**
@@ -382,7 +382,7 @@ open class AccessibilityFeaturesLayer5Tests {
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
-        ) || true, "Enhanced view with default config should have accessibility identifier")
+        ) , "Enhanced view with default config should have accessibility identifier")
     }
     
     /**
@@ -482,7 +482,7 @@ open class AccessibilityFeaturesLayer5Tests {
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityViewModifiersIntegration"
-        ) || true, "Integrated accessibility view should have accessibility identifier")
+        ) , "Integrated accessibility view should have accessibility identifier")
     }
     
     // MARK: - Performance Tests

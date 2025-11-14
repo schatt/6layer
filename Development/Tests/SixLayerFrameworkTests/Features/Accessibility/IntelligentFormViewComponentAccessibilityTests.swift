@@ -49,7 +49,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "IntelligentFormView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -82,7 +82,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "IntelligentDetailView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
 }

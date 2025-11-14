@@ -68,7 +68,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentHierarchicalData_L1 generates proper accessibility identifiers
@@ -113,7 +113,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Temporal Data Presentation Tests
@@ -157,7 +157,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentTemporalData_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentTemporalData_L1 generates proper accessibility identifiers
@@ -199,7 +199,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentTemporalData_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Hierarchical Data Variant Tests
@@ -244,7 +244,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentHierarchicalData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentHierarchicalData_L1 with custom view variant
@@ -291,7 +291,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentHierarchicalData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentHierarchicalData_L1 with enhanced hints and custom view variant
@@ -339,7 +339,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentHierarchicalData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentHierarchicalData_L1 single-item variant (delegates to array version)
@@ -380,7 +380,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentHierarchicalData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - Temporal Data Variant Tests
@@ -422,7 +422,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentTemporalData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentTemporalData_L1 with custom view variant
@@ -467,7 +467,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentTemporalData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentTemporalData_L1 with enhanced hints and custom view variant
@@ -513,7 +513,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentTemporalData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentTemporalData_L1 single-item variant (delegates to array version)
@@ -552,6 +552,6 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentTemporalData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentTemporalData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }

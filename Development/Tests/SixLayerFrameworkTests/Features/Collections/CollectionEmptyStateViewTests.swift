@@ -37,7 +37,7 @@ open class CollectionEmptyStateViewTests {
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1271.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(testPassed || true, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue) in automatic mode (modifier verified in code)")
+            #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue) in automatic mode (modifier verified in code)")
             
             // Cleanup: Reset test environment
             cleanupTestEnvironment()
@@ -106,10 +106,10 @@ open class CollectionEmptyStateViewTests {
             // modifier applied in Framework/Sources/Layers/Layer1-Semantic/PlatformSemanticLayer1.swift:1271.
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #expect(automaticPassed || true, "CollectionEmptyStateView should work in automatic mode (modifier verified in code)")
-            #expect(manualPassed || true, "CollectionEmptyStateView should work in manual mode (modifier verified in code)")
-            #expect(semanticPassed || true, "CollectionEmptyStateView should work in semantic mode (modifier verified in code)")
-            #expect(disabledPassed || true, "CollectionEmptyStateView should work in disabled mode (modifier verified in code)")
+            #expect(automaticPassed, "CollectionEmptyStateView should work in automatic mode (modifier verified in code)")
+            #expect(manualPassed, "CollectionEmptyStateView should work in manual mode (modifier verified in code)")
+            #expect(semanticPassed, "CollectionEmptyStateView should work in semantic mode (modifier verified in code)")
+            #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode (modifier verified in code)")
         }
     }
     

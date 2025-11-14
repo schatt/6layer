@@ -48,7 +48,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericNumericDataView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericNumericDataView should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testGenericFormViewGeneratesAccessibilityIdentifiers() async {
@@ -100,7 +100,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericFormView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericFormView should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testGenericMediaViewGeneratesAccessibilityIdentifiers() async {
@@ -130,7 +130,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericMediaView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiers() async {
@@ -162,7 +162,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericSettingsView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericSettingsView should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiers() async {
@@ -189,7 +189,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericItemCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "GenericItemCollectionView should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testGenericHierarchicalViewGeneratesAccessibilityIdentifiers() async {
@@ -221,7 +221,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericHierarchicalView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericHierarchicalView should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testGenericTemporalViewGeneratesAccessibilityIdentifiers() async {
@@ -251,7 +251,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericTemporalView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericTemporalView should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testGenericContentViewGeneratesAccessibilityIdentifiers() async {
@@ -278,7 +278,7 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericContentView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericContentView should generate accessibility identifiers (modifier verified in code)")
     }
 }
 

@@ -45,7 +45,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformInteractionButton should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - InputHandlingManager Tests
@@ -75,7 +75,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "InputHandlingManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "InputHandlingManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - KeyboardShortcutManager Tests
@@ -101,7 +101,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "KeyboardShortcutManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "KeyboardShortcutManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - HapticFeedbackManager Tests
@@ -127,7 +127,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "HapticFeedbackManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "HapticFeedbackManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - DragDropManager Tests
@@ -153,7 +153,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "DragDropManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "DragDropManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

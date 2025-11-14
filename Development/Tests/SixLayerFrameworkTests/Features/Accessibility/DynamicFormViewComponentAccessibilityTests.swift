@@ -125,7 +125,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "DynamicFormView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - DynamicFormHeader Tests
@@ -150,7 +150,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "DynamicFormHeader should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "DynamicFormHeader should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - DynamicFormSectionView Tests
@@ -175,7 +175,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "DynamicFormSectionView should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "DynamicFormSectionView should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - DynamicFormActions Tests
@@ -200,7 +200,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "DynamicFormActions should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "DynamicFormActions should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - DynamicTextField Tests
@@ -255,7 +255,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             )
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+            #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should be properly bound
                 let fieldValue: String? = formState.getValue(for: "test-text-field")
@@ -329,7 +329,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 )
                 // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
                 // Remove this workaround once ViewInspector detection is fixed
-                #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+                #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the numeric value
                 let numberValue: String? = formState.getValue(for: "test-number-field")
@@ -392,7 +392,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 )
                 // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
                 // Remove this workaround once ViewInspector detection is fixed
-                #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+                #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the multiline text
                 let storedValue: String? = formState.getValue(for: "test-textarea-field")
@@ -456,7 +456,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             )
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+            #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the selected value
                 let selectValue: String? = formState.getValue(for: "test-select-field")
@@ -520,7 +520,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 )
                 // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
                 // Remove this workaround once ViewInspector detection is fixed
-                #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+                #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the selected values array
                 let storedValue: [String]? = formState.getValue(for: "test-multiselect-field")
@@ -584,7 +584,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 )
                 // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
                 // Remove this workaround once ViewInspector detection is fixed
-                #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+                #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the selected value
                 let radioValue: String? = formState.getValue(for: "test-radio-field")
@@ -647,7 +647,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 )
                 // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
                 // Remove this workaround once ViewInspector detection is fixed
-                #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+                #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the boolean value
                 let checkboxValue: Bool? = formState.getValue(for: "test-checkbox-field")
@@ -710,7 +710,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 )
                 // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
                 // Remove this workaround once ViewInspector detection is fixed
-                #expect(hasAccessibilityID || true, "Should generate accessibility identifier (modifier verified in code)")
+                #expect(hasAccessibilityID, "Should generate accessibility identifier (modifier verified in code)")
 
                 // Form state should contain the boolean value
                 let toggleValue: Bool? = formState.getValue(for: "test-toggle-field")

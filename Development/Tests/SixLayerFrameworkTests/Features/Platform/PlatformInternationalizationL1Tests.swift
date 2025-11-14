@@ -35,7 +35,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
         }
     }
 
@@ -63,7 +63,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
         }
     }
 
@@ -89,7 +89,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
         }
     }
 
@@ -113,7 +113,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
         }
     }
 

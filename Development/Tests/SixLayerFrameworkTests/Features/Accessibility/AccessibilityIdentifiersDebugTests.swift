@@ -25,7 +25,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "DirectAutomaticAccessibilityIdentifiers"
-        ) || true, "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
+        ) , "Direct .automaticAccessibilityIdentifiers() should generate button-specific accessibility ID")
         print("🔍 Testing direct .automaticAccessibilityIdentifiers()")
     }
     
@@ -49,7 +49,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             expectedPattern: "SixLayer.*TestButton", 
             platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
-        ) || true, ".named() + .automaticAccessibilityIdentifiers() should generate named button-specific accessibility ID")
+        ) , ".named() + .automaticAccessibilityIdentifiers() should generate named button-specific accessibility ID")
         print("🔍 Testing .named() + .automaticAccessibilityIdentifiers()")
     }
     
@@ -75,7 +75,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityModifier"
-        ) || true, "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
+        ) , "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
         print("🔍 Testing AutomaticAccessibilityModifier directly")
     }
     
@@ -98,7 +98,7 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityExtension"
-        ) || true, ".automaticAccessibility() should generate extension-specific accessibility ID")
+        ) , ".automaticAccessibility() should generate extension-specific accessibility ID")
         print("🔍 Testing .automaticAccessibility() extension")
     }
     

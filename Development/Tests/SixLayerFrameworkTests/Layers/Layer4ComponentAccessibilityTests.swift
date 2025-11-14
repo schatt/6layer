@@ -41,7 +41,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform primary button style should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "Platform primary button style should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformSecondaryButtonStyleGeneratesAccessibilityIdentifiers() async {
@@ -65,7 +65,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform secondary button style should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "Platform secondary button style should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformFormFieldGeneratesAccessibilityIdentifiers() async {
@@ -91,7 +91,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform form field should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform form field should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformListRowGeneratesAccessibilityIdentifiers() async {
@@ -117,7 +117,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform list row should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform list row should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformCardStyleGeneratesAccessibilityIdentifiers() async {
@@ -144,7 +144,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform card style should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform card style should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformSheetGeneratesAccessibilityIdentifiers() async {
@@ -176,7 +176,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform sheet should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform sheet should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformNavigationGeneratesAccessibilityIdentifiers() async {
@@ -203,7 +203,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform navigation should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform navigation should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformCardGridGeneratesAccessibilityIdentifiers() async {
@@ -235,7 +235,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform card grid should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform card grid should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testPlatformBackgroundGeneratesAccessibilityIdentifiers() async {
@@ -259,6 +259,6 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Platform background should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Platform background should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }

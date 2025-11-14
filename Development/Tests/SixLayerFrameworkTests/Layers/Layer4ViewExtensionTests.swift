@@ -29,7 +29,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFormField with label should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFormField with label should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformFormField_WithoutLabel() async {
@@ -51,7 +51,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFormField without label should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFormField without label should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformFormFieldGroup Tests
@@ -75,7 +75,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFormFieldGroup with title should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFormFieldGroup with title should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformFormFieldGroup_WithoutTitle() async {
@@ -97,7 +97,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFormFieldGroup without title should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFormFieldGroup without title should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformValidationMessage Tests
@@ -119,7 +119,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformValidationMessage error should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformValidationMessage error should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformValidationMessage_AllTypes() async {
@@ -142,7 +142,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformValidationMessage \(type) should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformValidationMessage \(type) should generate accessibility identifiers (modifier verified in code)")
         }
     }
     
@@ -165,7 +165,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFormDivider should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFormDivider should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformFormSpacing Tests
@@ -190,7 +190,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformFormSpacing \(size) should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformFormSpacing \(size) should generate accessibility identifiers (modifier verified in code)")
         }
     }
     
@@ -215,7 +215,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformNavigation should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigation should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformNavigationContainer Tests
@@ -239,7 +239,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformNavigationContainer should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigationContainer should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformNavigationDestination Tests
@@ -268,7 +268,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformNavigationDestination should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigationDestination should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformNavigationButton Tests
@@ -297,7 +297,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformNavigationButton should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigationButton should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformNavigationTitle Tests
@@ -319,7 +319,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformNavigationTitle should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformNavigationTitle should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformNavigationTitleDisplayMode Tests
@@ -344,7 +344,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformNavigationTitleDisplayMode \(mode) should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformNavigationTitleDisplayMode \(mode) should generate accessibility identifiers (modifier verified in code)")
         }
     }
     
@@ -370,7 +370,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformNavigationBarTitleDisplayMode \(mode) should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformNavigationBarTitleDisplayMode \(mode) should generate accessibility identifiers (modifier verified in code)")
         }
     }
     
@@ -393,7 +393,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformBackground default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformBackground default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformBackground_CustomColor() async {
@@ -413,7 +413,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformBackground custom color should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformBackground custom color should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformPadding Tests
@@ -435,7 +435,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPadding default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPadding default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformPadding_Edges() async {
@@ -455,7 +455,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPadding edges should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPadding edges should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformPadding_Value() async {
@@ -475,7 +475,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPadding value should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPadding value should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformReducedPadding() async {
@@ -495,7 +495,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformReducedPadding should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformReducedPadding should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformCornerRadius Tests
@@ -517,7 +517,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformCornerRadius default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformCornerRadius default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformCornerRadius_Custom() async {
@@ -537,7 +537,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformCornerRadius custom should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformCornerRadius custom should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformShadow Tests
@@ -559,7 +559,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformShadow default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformShadow default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformShadow_Custom() async {
@@ -579,7 +579,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformShadow custom should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformShadow custom should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformBorder Tests
@@ -601,7 +601,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformBorder default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformBorder default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformBorder_Custom() async {
@@ -621,7 +621,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformBorder custom should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformBorder custom should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformFont Tests
@@ -643,7 +643,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFont default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFont default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformFont_Custom() async {
@@ -663,7 +663,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFont custom should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFont custom should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformAnimation Tests
@@ -685,7 +685,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformAnimation default should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformAnimation default should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformAnimation_Custom() async {
@@ -705,7 +705,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformAnimation custom should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformAnimation custom should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformFrame Tests
@@ -727,7 +727,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformMinFrame should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformMinFrame should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformMaxFrame() async {
@@ -747,7 +747,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformMaxFrame should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformMaxFrame should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformIdealFrame() async {
@@ -767,7 +767,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformIdealFrame should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformIdealFrame should generate accessibility identifiers (modifier verified in code)")
     }
     
     @Test func testPlatformAdaptiveFrame() async {
@@ -787,7 +787,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformAdaptiveFrame should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformAdaptiveFrame should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformFormStyle Tests
@@ -809,7 +809,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformFormStyle should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformFormStyle should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformContentSpacing Tests
@@ -831,7 +831,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformContentSpacing should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformContentSpacing should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformPhotoPicker_L4 Tests
@@ -855,7 +855,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoPicker_L4 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformCameraInterface_L4 Tests
@@ -879,7 +879,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformCameraInterface_L4 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformPhotoDisplay_L4 Tests
@@ -904,7 +904,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "platformPhotoDisplay_L4 \(style) should generate accessibility identifiers (modifier verified in code)")
+            #expect(hasAccessibilityID, "platformPhotoDisplay_L4 \(style) should generate accessibility identifiers (modifier verified in code)")
         }
     }
     
@@ -924,7 +924,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPhotoDisplay_L4 with nil image should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L4 with nil image should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformOCRImplementation_L4 Tests (Deprecated but still needs tests)
@@ -965,7 +965,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformOCRImplementation_L4 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformTextExtraction_L4 Tests (Deprecated but still needs tests)
@@ -1019,7 +1019,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformTextExtraction_L4 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformTextExtraction_L4 should generate accessibility identifiers (modifier verified in code)")
     }
     
     // MARK: - platformTextRecognition_L4 Tests (Deprecated but still needs tests)
@@ -1054,7 +1054,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformTextRecognition_L4 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformTextRecognition_L4 should generate accessibility identifiers (modifier verified in code)")
     }
 }
 

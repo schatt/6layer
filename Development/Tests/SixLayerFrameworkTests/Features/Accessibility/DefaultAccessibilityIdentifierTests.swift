@@ -46,7 +46,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
                 componentName: "AutomaticIdentifiersWorkByDefault"
-            ) || true, "View should have accessibility identifier when explicitly enabled")
+            ) , "View should have accessibility identifier when explicitly enabled")
                 
             // Verify configuration was set correctly
             #expect(config.enableAutoIDs, "Auto IDs should be enabled (explicitly set)")
@@ -110,7 +110,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
                 expectedPattern: "manual-test-button", 
                 platform: SixLayerPlatform.iOS,
             componentName: "ManualIdentifiersWorkByDefault"
-            ) || true, "Manual accessibility identifier should work by default")
+            ) , "Manual accessibility identifier should work by default")
         }
     }
     

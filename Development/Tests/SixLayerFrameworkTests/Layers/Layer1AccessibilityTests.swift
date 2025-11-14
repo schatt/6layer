@@ -64,7 +64,7 @@ open class Layer1AccessibilityTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasSpecificAccessibilityID || true, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern (modifier verified in code)")
+        #expect(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern (modifier verified in code)")
         
         print("🔍 Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
@@ -101,7 +101,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentItemCollection_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentItemCollection_L1 with custom view variant
@@ -135,7 +135,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentItemCollection_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentItemCollection_L1 with enhanced hints and custom view variant
@@ -176,7 +176,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentItemCollection_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentItemCollection_L1 with all custom views variant
@@ -216,7 +216,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentItemCollection_L1 with all custom views should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with all custom views should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentFormData_L1 single-field variant (delegates to array version)
@@ -241,7 +241,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentFormData_L1 single-field variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 single-field variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// TDD RED PHASE: platformPresentFormData_L1 should generate accessibility identifiers
@@ -273,7 +273,7 @@ open class Layer1AccessibilityTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasSpecificAccessibilityID || true, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming (modifier verified in code)")
+        #expect(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming (modifier verified in code)")
         
         print("🔍 Testing platformPresentFormData_L1 accessibility identifier generation")
     }
@@ -307,7 +307,7 @@ open class Layer1AccessibilityTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasSpecificAccessibilityID || true, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern (modifier verified in code)")
+        #expect(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern (modifier verified in code)")
         
         print("🔍 Testing platformPresentNumericData_L1 accessibility identifier generation")
     }
@@ -343,7 +343,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentNumericData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentNumericData_L1 with custom view variant
@@ -374,7 +374,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentNumericData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentNumericData_L1 with enhanced hints and custom view variant
@@ -414,7 +414,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentNumericData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentNumericData_L1 single-item variant (delegates to array version)
@@ -439,7 +439,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentNumericData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentMediaData_L1 generates proper accessibility identifiers
@@ -472,7 +472,7 @@ open class Layer1AccessibilityTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasSpecificAccessibilityID || true, "platformPresentMediaData_L1 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers (modifier verified in code)")
         
     }
     
@@ -507,7 +507,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentMediaData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 with EnhancedPresentationHints should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentMediaData_L1 with custom view variant
@@ -538,7 +538,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentMediaData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentMediaData_L1 with enhanced hints and custom view variant
@@ -578,7 +578,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentMediaData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentMediaData_L1 single-item variant (delegates to array version)
@@ -603,7 +603,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentMediaData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 single-item variant should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentSettings_L1 generates proper accessibility identifiers
@@ -644,7 +644,7 @@ open class Layer1AccessibilityTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - implementation IS correct but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasSpecificAccessibilityID || true, "platformPresentSettings_L1 should generate accessibility identifiers (modifier verified in code)")
+        #expect(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers (modifier verified in code)")
         
     }
     
@@ -685,7 +685,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentSettings_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 with custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     /// Test platformPresentSettings_L1 with enhanced hints and custom view variant
@@ -734,7 +734,7 @@ open class Layer1AccessibilityTests {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "platformPresentSettings_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 with enhanced hints and custom view should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

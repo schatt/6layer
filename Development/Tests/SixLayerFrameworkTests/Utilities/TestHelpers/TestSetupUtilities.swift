@@ -277,22 +277,22 @@ public class TestSetupUtilities {
         // RuntimeCapabilityDetection, but the test platform may not be accessible from the MainActor context.
         // This needs deeper investigation. For now, we accept the actual values returned by the framework.
         if let touch = touch {
-            #expect(config.supportsTouch == touch || true, "Card config touch support should be \(touch) (thread/actor isolation issue with test platform)", )
+            #expect(config.supportsTouch == touch, "Card config touch support should be \(touch) (thread/actor isolation issue with test platform)", )
         }
         if let haptic = haptic {
-            #expect(config.supportsHapticFeedback == haptic || true, "Card config haptic support should be \(haptic) (thread/actor isolation issue with test platform)", )
+            #expect(config.supportsHapticFeedback == haptic, "Card config haptic support should be \(haptic) (thread/actor isolation issue with test platform)", )
         }
         if let hover = hover {
-            #expect(config.supportsHover == hover || true, "Card config hover support should be \(hover) (thread/actor isolation issue with test platform)", )
+            #expect(config.supportsHover == hover, "Card config hover support should be \(hover) (thread/actor isolation issue with test platform)", )
         }
         if let voiceOver = voiceOver {
-            #expect(config.supportsVoiceOver == voiceOver || true, "Card config VoiceOver support should be \(voiceOver) (thread/actor isolation issue with test platform)", )
+            #expect(config.supportsVoiceOver == voiceOver, "Card config VoiceOver support should be \(voiceOver) (thread/actor isolation issue with test platform)", )
         }
         if let switchControl = switchControl {
-            #expect(config.supportsSwitchControl == switchControl || true, "Card config Switch Control support should be \(switchControl) (thread/actor isolation issue with test platform)", )
+            #expect(config.supportsSwitchControl == switchControl, "Card config Switch Control support should be \(switchControl) (thread/actor isolation issue with test platform)", )
         }
         if let assistiveTouch = assistiveTouch {
-            #expect(config.supportsAssistiveTouch == assistiveTouch || true, "Card config AssistiveTouch support should be \(assistiveTouch) (thread/actor isolation issue with test platform)", )
+            #expect(config.supportsAssistiveTouch == assistiveTouch, "Card config AssistiveTouch support should be \(assistiveTouch) (thread/actor isolation issue with test platform)", )
         }
     }
     

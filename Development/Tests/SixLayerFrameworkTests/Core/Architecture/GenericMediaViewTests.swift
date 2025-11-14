@@ -57,7 +57,7 @@ open class GenericMediaViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericMediaView should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -84,6 +84,6 @@ open class GenericMediaViewTests {
         // This is a ViewInspector limitation, not a missing modifier issue.
         // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
         // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "GenericMediaView should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "GenericMediaView should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }

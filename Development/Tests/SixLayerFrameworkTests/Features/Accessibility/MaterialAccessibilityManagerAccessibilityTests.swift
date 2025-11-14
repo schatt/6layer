@@ -36,7 +36,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with MaterialAccessibilityManager should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "View with MaterialAccessibilityManager should generate accessibility identifiers on iOS (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -65,7 +65,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with MaterialAccessibilityManager should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "View with MaterialAccessibilityManager should generate accessibility identifiers on macOS (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
 }

@@ -43,7 +43,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-            #expect(hasAccessibilityID || true, "View with CrossPlatformOptimizationManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+            #expect(hasAccessibilityID, "View with CrossPlatformOptimizationManager should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
         }
     }
     
@@ -72,7 +72,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformOptimizationSettings should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformOptimizationSettings should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - CrossPlatformPerformanceMetrics Tests
@@ -101,7 +101,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "CrossPlatformPerformanceMetrics should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "CrossPlatformPerformanceMetrics should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - PlatformUIPatterns Tests
@@ -129,7 +129,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformUIPatterns should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformUIPatterns should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     // MARK: - PlatformRecommendationEngine Tests
@@ -159,7 +159,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "PlatformRecommendationEngine should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "PlatformRecommendationEngine should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     */
     
@@ -188,7 +188,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "CrossPlatformTesting should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "CrossPlatformTesting should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

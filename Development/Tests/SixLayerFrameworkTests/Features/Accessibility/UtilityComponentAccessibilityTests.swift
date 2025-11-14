@@ -39,7 +39,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Framework component should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Framework component should generate accessibility identifiers (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
@@ -64,7 +64,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier validation should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier validation should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierPatternMatchingGeneratesAccessibilityIdentifiers() async {
@@ -89,7 +89,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier pattern matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier pattern matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierExactMatchingGeneratesAccessibilityIdentifiers() async {
@@ -115,7 +115,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier exact matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier exact matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierWildcardMatchingGeneratesAccessibilityIdentifiers() async {
@@ -140,7 +140,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier wildcard matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier wildcard matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierComponentNameMatchingGeneratesAccessibilityIdentifiers() async {
@@ -165,7 +165,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier component name matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier component name matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierNamespaceMatchingGeneratesAccessibilityIdentifiers() async {
@@ -190,7 +190,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier namespace matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier namespace matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierScreenMatchingGeneratesAccessibilityIdentifiers() async {
@@ -215,7 +215,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier screen matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier screen matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierElementMatchingGeneratesAccessibilityIdentifiers() async {
@@ -241,7 +241,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier element matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier element matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierStateMatchingGeneratesAccessibilityIdentifiers() async {
@@ -266,7 +266,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier state matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier state matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierHierarchyMatchingGeneratesAccessibilityIdentifiers() async {
@@ -293,7 +293,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier hierarchy matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier hierarchy matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
@@ -319,7 +319,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier case insensitive matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier case insensitive matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
@@ -344,7 +344,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier partial matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier partial matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
@@ -370,7 +370,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier regex matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier regex matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
@@ -395,7 +395,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier performance matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier performance matching should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
@@ -475,7 +475,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         // modifier applied. The test is checking empty pattern handling, but the view still has an ID.
         // The test expectation may need review - empty pattern should not match, but view still has ID.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(!hasAccessibilityID || true, "Accessibility identifier empty handling should not generate invalid IDs (modifier verified in code, test logic may need review)")
+        #expect(!hasAccessibilityID, "Accessibility identifier empty handling should not generate invalid IDs (modifier verified in code, test logic may need review)")
     }
     
     @Test func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
@@ -501,7 +501,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier whitespace handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier whitespace handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
@@ -527,7 +527,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier special character handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier special character handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
@@ -553,7 +553,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier unicode handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier unicode handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
     
     @Test func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
@@ -580,7 +580,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #expect(hasAccessibilityID || true, "Accessibility identifier long string handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
+        #expect(hasAccessibilityID, "Accessibility identifier long string handling should work correctly (framework function has modifier, ViewInspector can\'t detect)")
     }
 }
 

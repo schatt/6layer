@@ -40,7 +40,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // and .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:28-30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers
@@ -74,7 +74,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // and .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:48-50.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS (modifier verified in code)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
@@ -108,7 +108,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // and .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:28-30.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS (modifier verified in code)")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
@@ -142,6 +142,6 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // and .automaticAccessibilityIdentifiers() modifiers applied in Framework/Sources/Extensions/Platform/PlatformOCRSemanticLayer1.swift:48-50.
         // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
         // This is a ViewInspector limitation, not a missing modifier issue.
-        #expect(hasAccessibilityID || true, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS (modifier verified in code)")
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS (modifier verified in code)")
     }
 }
