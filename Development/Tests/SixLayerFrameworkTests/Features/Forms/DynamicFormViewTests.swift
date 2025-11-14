@@ -975,7 +975,7 @@ open class DynamicFormViewTests: BaseTestClass {
         formState.setValue("47.93", for: "total_price")
         formState.setValue("3.091", for: "price_per_gallon")
 
-        let _ = formState.calculateMissingFieldFromOCR(
+        let result = formState.calculateMissingFieldFromOCR(
             availableFields: ["gallons", "total_price", "price_per_gallon"],
             possibleFormulas: [
                 "price_per_gallon": "total_price / gallons",
@@ -985,7 +985,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
 
         // Should return nil when all fields are present (nothing to calculate)
-        #expect(Bool(false), "Should not calculate when all fields are present")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should not calculate when all fields are present")
     }
 
     // MARK: - Calculation Groups Tests

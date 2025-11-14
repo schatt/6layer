@@ -207,10 +207,10 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Tapping outside any text region
         let tapPoint = CGPoint(x: 5, y: 5) // Outside all bounding boxes
-        let _ = overlayView.detectTappedTextRegion(at: tapPoint)
+        let result = overlayView.detectTappedTextRegion(at: tapPoint)
         
         // Then: Should return nil for tap outside bounds
-        #expect(Bool(false), "Should return nil for tap outside bounds")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil for tap outside bounds")
     }
     
     // MARK: - Text Editing Tests

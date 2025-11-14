@@ -76,8 +76,8 @@ struct FieldHintsLoaderTests {
             label: "Username"
         )
         
-        let _ = field.displayHints
-        #expect(Bool(false), "hints is non-optional")  // RED PHASE: Test intentionally fails
+        let hints = field.displayHints
+        #expect(hints == nil, "hints should be nil when no metadata")
     }
     
     @Test func testDynamicFormFieldDisplayHintsPartialMetadata() {

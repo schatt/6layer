@@ -22,19 +22,19 @@ struct CardDisplayHelperNilFallbackTests {
         }
     }
     
-    /// RED PHASE: Test that extractTitle returns nil when no meaningful content is found
+    /// Test that extractTitle returns nil when no meaningful content is found
     @Test func testExtractTitleReturnsNilWhenNoContent() async {
         // Given: Entity with nil values and no hints
         let entity = TestEntity(title: nil, subtitle: nil, description: nil)
         
         // When: Extract title using CardDisplayHelper
-        let _ = CardDisplayHelper.extractTitle(from: entity, hints: nil)
+        let result = CardDisplayHelper.extractTitle(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded "Untitled"
-        #expect(Bool(false), "Should return nil when no meaningful content is found")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil when no meaningful content is found")
     }
     
-    /// RED PHASE: Test that extractTitle returns nil when hints fail and no default
+    /// Test that extractTitle returns nil when hints fail and no default
     @Test func testExtractTitleReturnsNilWhenHintsFailNoDefault() async {
         // Given: Entity with nil values and hints that fail
         let entity = TestEntity(title: nil, subtitle: nil, description: nil)
@@ -46,13 +46,13 @@ struct CardDisplayHelperNilFallbackTests {
         )
         
         // When: Extract title using CardDisplayHelper
-        let _ = CardDisplayHelper.extractTitle(from: entity, hints: hints)
+        let result = CardDisplayHelper.extractTitle(from: entity, hints: hints)
         
         // Then: Should return nil instead of hardcoded fallback
-        #expect(Bool(false), "Should return nil when hints fail and no default provided")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil when hints fail and no default provided")
     }
     
-    /// RED PHASE: Test that extractTitle returns nil when hints extract empty string and no default
+    /// Test that extractTitle returns nil when hints extract empty string and no default
     @Test func testExtractTitleReturnsNilWhenEmptyStringNoDefault() async {
         // Given: Entity with empty string values and hints with no default
         let entity = TestEntity(title: "", subtitle: "", description: "")
@@ -64,46 +64,46 @@ struct CardDisplayHelperNilFallbackTests {
         )
         
         // When: Extract title using CardDisplayHelper
-        let _ = CardDisplayHelper.extractTitle(from: entity, hints: hints)
+        let result = CardDisplayHelper.extractTitle(from: entity, hints: hints)
         
         // Then: Should return nil instead of hardcoded fallback
-        #expect(Bool(false), "Should return nil when empty string and no default provided")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil when empty string and no default provided")
     }
     
-    /// RED PHASE: Test that extractSubtitle returns nil when no meaningful content
+    /// Test that extractSubtitle returns nil when no meaningful content
     @Test func testExtractSubtitleReturnsNilWhenNoContent() async {
         // Given: Entity with nil values and no hints
         let entity = TestEntity(title: nil, subtitle: nil, description: nil)
         
         // When: Extract subtitle using CardDisplayHelper
-        let _ = CardDisplayHelper.extractSubtitle(from: entity, hints: nil)
+        let result = CardDisplayHelper.extractSubtitle(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded fallback
-        #expect(Bool(false), "Should return nil when no meaningful content is found")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil when no meaningful content is found")
     }
     
-    /// RED PHASE: Test that extractIcon returns nil when no meaningful content
+    /// Test that extractIcon returns nil when no meaningful content
     @Test func testExtractIconReturnsNilWhenNoContent() async {
         // Given: Entity with nil values and no hints
         let entity = TestEntity(title: nil, subtitle: nil, description: nil)
         
         // When: Extract icon using CardDisplayHelper
-        let _ = CardDisplayHelper.extractIcon(from: entity, hints: nil)
+        let result = CardDisplayHelper.extractIcon(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded "star.fill"
-        #expect(Bool(false), "Should return nil when no meaningful content is found")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil when no meaningful content is found")
     }
     
-    /// RED PHASE: Test that extractColor returns nil when no meaningful content
+    /// Test that extractColor returns nil when no meaningful content
     @Test func testExtractColorReturnsNilWhenNoContent() async {
         // Given: Entity with nil values and no hints
         let entity = TestEntity(title: nil, subtitle: nil, description: nil)
         
         // When: Extract color using CardDisplayHelper
-        let _ = CardDisplayHelper.extractColor(from: entity, hints: nil)
+        let result = CardDisplayHelper.extractColor(from: entity, hints: nil)
         
         // Then: Should return nil instead of hardcoded .blue
-        #expect(Bool(false), "Should return nil when no meaningful content is found")  // RED PHASE: Test intentionally fails
+        #expect(result == nil, "Should return nil when no meaningful content is found")
     }
     
     /// RED PHASE: Test that meaningful content is still returned correctly
