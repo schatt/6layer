@@ -120,7 +120,7 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
             // GIVEN: Text using system colors (which should automatically meet contrast)
             let view = Text("System Color Text")
                 .foregroundColor(.primary)
-                .background(.systemBackground)
+                .background(Color.systemBackground)
                 .automaticCompliance()
             
             // WHEN: View is created on all platforms

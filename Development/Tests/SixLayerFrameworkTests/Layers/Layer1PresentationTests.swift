@@ -215,7 +215,7 @@ open class Layer1PresentationTests {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
-        #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>")
+        #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>")
     }
     
     @Test func testPlatformPresentModalForm_L1_HandlesDifferentFormTypes() {
@@ -234,7 +234,7 @@ open class Layer1PresentationTests {
             // view is non-optional, not used further
             
             let mirror = Mirror(reflecting: view)
-            #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>", "Should return ModalFormView with accessibility modifiers for type: \(formType)")
+            #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>", "Should return ModalFormView with accessibility modifiers for type: \(formType)")
         }
     }
     
@@ -254,7 +254,7 @@ open class Layer1PresentationTests {
             #expect(Bool(true), "Should handle context: \(context)")  // view is non-optional
             
             let mirror = Mirror(reflecting: view)
-            #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>", "Should return ModalFormView with accessibility modifiers for context: \(context)")
+            #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>", "Should return ModalFormView with accessibility modifiers for context: \(context)")
         }
     }
     
@@ -279,7 +279,7 @@ open class Layer1PresentationTests {
             #expect(Bool(true), "Should handle form type: \(formType)")  // view is non-optional
             
             let mirror = Mirror(reflecting: view)
-            #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>", "Should return ModalFormView with accessibility modifiers for type: \(formType)")
+            #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>", "Should return ModalFormView with accessibility modifiers for type: \(formType)")
             
             // Note: We can't easily test the internal field count without accessing private properties
             // The important thing is that the function returns the correct view type
@@ -357,7 +357,7 @@ open class Layer1PresentationTests {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
-        #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>")
+        #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>")
     }
     
     // MARK: - Integration Tests
@@ -400,7 +400,7 @@ open class Layer1PresentationTests {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
         
         let mirror = Mirror(reflecting: view)
-        #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticAccessibilityIdentifiersModifier>")
+        #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>")
     }
     
     // MARK: - Performance Tests
