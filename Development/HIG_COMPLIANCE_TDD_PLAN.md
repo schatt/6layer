@@ -28,6 +28,15 @@ This plan outlines the Test-Driven Development (TDD) approach for implementing H
 
 These are the most critical HIG compliance features that should be implemented first.
 
+**Total Features**: 7 core features
+1. Touch target sizing (iOS/watchOS)
+2. Color contrast (WCAG)
+3. Typography scaling (Dynamic Type)
+4. Focus indicators
+5. Motion preferences
+6. Tab order
+7. Light/dark mode support
+
 #### 1.1 Automatic Touch Target Sizing (iOS)
 
 **RED Phase Test:**
@@ -198,6 +207,31 @@ let passed = testComponentComplianceSinglePlatform(
 
 ---
 
+#### 1.7 Automatic Light/Dark Mode Support
+
+**RED Phase Test:**
+```swift
+@Test func testAutomaticComplianceRespectsSystemColorScheme() {
+    // Given: A view with automatic compliance
+    let view = Text("Test")
+        .automaticCompliance()
+    
+    // When: View is created
+    // Then: View should respect system color scheme (light/dark mode)
+    // Verify system colors are used that adapt automatically
+    #expect(true, "View should respect system color scheme")
+}
+```
+
+**GREEN Phase Implementation:**
+- Use system colors (`.primary`, `.secondary`, `.systemBackground`, etc.) that automatically adapt
+- Ensure color contrast is maintained in both light and dark modes
+- Apply `.preferredColorScheme(nil)` to respect system settings (or detect and apply appropriately)
+
+**Test File**: `Development/Tests/SixLayerFrameworkTests/Features/Accessibility/HIGComplianceLightDarkModeTests.swift`
+
+---
+
 ### Phase 2: Visual Design Categories (Priority 2) 🟡 MEDIUM
 
 #### 2.1 Animation Categories
@@ -328,9 +362,10 @@ let passed = testComponentComplianceSinglePlatform(
 ## Implementation Order
 
 ### Sprint 1: Core Features (Week 1-2)
-1. Touch target sizing (iOS)
+1. Touch target sizing (iOS/watchOS)
 2. Color contrast (WCAG)
 3. Typography scaling (Dynamic Type)
+4. Light/dark mode support
 
 ### Sprint 2: Accessibility Features (Week 3-4)
 4. Focus indicators
