@@ -46,13 +46,12 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Fields should have logical tab order (top to bottom)
             // RED PHASE: This will fail until tab order implementation is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "FormFieldsWithTabOrder"
             )
-            #expect(passed, "Form fields should have logical tab order")
+            #expect(passed, "Form fields should have logical tab order on all platforms")
         }
     }
     
@@ -72,13 +71,12 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Buttons should have logical tab order (left to right)
             // RED PHASE: This will fail until tab order implementation is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "ButtonsWithTabOrder"
             )
-            #expect(passed, "Buttons should have logical tab order")
+            #expect(passed, "Buttons should have logical tab order on all platforms")
         }
     }
     
@@ -103,13 +101,12 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Elements should have logical tab order (top to bottom, then left to right)
             // RED PHASE: This will fail until tab order implementation is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "ComplexLayoutWithTabOrder"
             )
-            #expect(passed, "Complex layout should have logical tab order")
+            #expect(passed, "Complex layout should have logical tab order on all platforms")
         }
     }
     
@@ -126,15 +123,15 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             }
             .automaticCompliance()
             
-            // WHEN: View is created on both platforms
-            // THEN: Tab order should be logical on both iOS and macOS
+            // WHEN: View is created on all platforms
+            // THEN: Tab order should be logical on all platforms
             // RED PHASE: This will fail until tab order implementation is implemented
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "CrossPlatformTabOrder"
             )
-            #expect(passed, "Tab order should be logical on both platforms")
+            #expect(passed, "Tab order should be logical on all platforms")
         }
     }
 }

@@ -39,13 +39,12 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Text should support Dynamic Type and accessibility sizes
             // RED PHASE: This will fail until Dynamic Type support is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "TextWithDynamicType"
             )
-            #expect(passed, "Text should support Dynamic Type scaling")
+            #expect(passed, "Text should support Dynamic Type scaling on all platforms")
         }
     }
     
@@ -58,13 +57,12 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Button text should support Dynamic Type
             // RED PHASE: This will fail until Dynamic Type support is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "ButtonWithDynamicType"
             )
-            #expect(passed, "Button text should support Dynamic Type scaling")
+            #expect(passed, "Button text should support Dynamic Type scaling on all platforms")
         }
     }
     
@@ -77,13 +75,12 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Label text should support Dynamic Type
             // RED PHASE: This will fail until Dynamic Type support is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 label,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "LabelWithDynamicType"
             )
-            #expect(passed, "Label text should support Dynamic Type scaling")
+            #expect(passed, "Label text should support Dynamic Type scaling on all platforms")
         }
     }
     
@@ -98,13 +95,12 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Text should support accessibility size range (up to .accessibility5)
             // RED PHASE: This will fail until accessibility size support is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "TextWithAccessibilitySizes"
             )
-            #expect(passed, "Text should support accessibility size range")
+            #expect(passed, "Text should support accessibility size range on all platforms")
         }
     }
     
@@ -116,15 +112,15 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             let view = Text("Cross-Platform Text")
                 .automaticCompliance()
             
-            // WHEN: View is created on both platforms
-            // THEN: Dynamic Type should be supported on both iOS and macOS
+            // WHEN: View is created on all platforms
+            // THEN: Dynamic Type should be supported on all platforms
             // RED PHASE: This will fail until Dynamic Type support is implemented
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "CrossPlatformDynamicType"
             )
-            #expect(passed, "Dynamic Type should be supported on both platforms")
+            #expect(passed, "Dynamic Type should be supported on all platforms")
         }
     }
 }

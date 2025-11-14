@@ -39,13 +39,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with reduced motion enabled
             // THEN: Animations should be disabled or simplified
             // RED PHASE: This will fail until motion preference handling is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "AnimatedViewWithReducedMotion"
             )
-            #expect(passed, "Animations should respect reduced motion preference")
+            #expect(passed, "Animations should respect reduced motion preference on all platforms")
         }
     }
     
@@ -59,13 +58,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with reduced motion enabled
             // THEN: Transitions should be disabled or simplified
             // RED PHASE: This will fail until motion preference handling is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "TransitioningViewWithReducedMotion"
             )
-            #expect(passed, "Transitions should respect reduced motion preference")
+            #expect(passed, "Transitions should respect reduced motion preference on all platforms")
         }
     }
     
@@ -78,13 +76,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with reduced motion enabled
             // THEN: Button animations should be disabled or simplified
             // RED PHASE: This will fail until motion preference handling is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "AnimatedButtonWithReducedMotion"
             )
-            #expect(passed, "Button animations should respect reduced motion preference")
+            #expect(passed, "Button animations should respect reduced motion preference on all platforms")
         }
     }
     
@@ -99,13 +96,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with normal motion (reduced motion disabled)
             // THEN: Animations should work normally
             // RED PHASE: This will fail until motion preference handling is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "AnimatedViewWithNormalMotion"
             )
-            #expect(passed, "Animations should work with normal motion preference")
+            #expect(passed, "Animations should work with normal motion preference on all platforms")
         }
     }
     
@@ -117,15 +113,15 @@ open class HIGComplianceMotionTests: BaseTestClass {
             let view = Text("Cross-Platform Animated Text")
                 .automaticCompliance()
             
-            // WHEN: View is created on both platforms
-            // THEN: Motion preferences should be respected on both iOS and macOS
+            // WHEN: View is created on all platforms
+            // THEN: Motion preferences should be respected on all platforms
             // RED PHASE: This will fail until motion preference handling is implemented
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "CrossPlatformMotion"
             )
-            #expect(passed, "Motion preferences should be respected on both platforms")
+            #expect(passed, "Motion preferences should be respected on all platforms")
         }
     }
 }

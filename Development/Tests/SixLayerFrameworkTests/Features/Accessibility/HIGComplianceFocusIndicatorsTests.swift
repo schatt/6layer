@@ -39,13 +39,12 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Button should have visible focus indicator
             // RED PHASE: This will fail until focus indicators are implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "ButtonWithFocus"
             )
-            #expect(passed, "Button should have visible focus indicator")
+            #expect(passed, "Button should have visible focus indicator on all platforms")
         }
     }
     
@@ -58,13 +57,12 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Link should have visible focus indicator
             // RED PHASE: This will fail until focus indicators are implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 link,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "LinkWithFocus"
             )
-            #expect(passed, "Link should have visible focus indicator")
+            #expect(passed, "Link should have visible focus indicator on all platforms")
         }
     }
     
@@ -79,13 +77,12 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Text field should have visible focus indicator
             // RED PHASE: This will fail until focus indicators are implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 textField,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "TextFieldWithFocus"
             )
-            #expect(passed, "Text field should have visible focus indicator")
+            #expect(passed, "Text field should have visible focus indicator on all platforms")
         }
     }
     
@@ -98,13 +95,12 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
             // WHEN: View is created
             // THEN: Secure field should have visible focus indicator
             // RED PHASE: This will fail until focus indicators are implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 secureField,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "SecureFieldWithFocus"
             )
-            #expect(passed, "Secure field should have visible focus indicator")
+            #expect(passed, "Secure field should have visible focus indicator on all platforms")
         }
     }
     
@@ -119,13 +115,12 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
             // WHEN: View is created in high contrast mode
             // THEN: Focus indicator should be visible and meet contrast requirements
             // RED PHASE: This will fail until focus indicators with high contrast support are implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "ButtonWithHighContrastFocus"
             )
-            #expect(passed, "Focus indicator should be visible in high contrast mode")
+            #expect(passed, "Focus indicator should be visible in high contrast mode on all platforms")
         }
     }
     
@@ -137,15 +132,15 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
             let button = Button("Test Button") { }
                 .automaticCompliance()
             
-            // WHEN: View is created on both platforms
-            // THEN: Focus indicators should be applied on both iOS and macOS
+            // WHEN: View is created on all platforms
+            // THEN: Focus indicators should be applied on all platforms
             // RED PHASE: This will fail until focus indicators are implemented
             let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "CrossPlatformFocus"
             )
-            #expect(passed, "Focus indicators should be applied on both platforms")
+            #expect(passed, "Focus indicators should be applied on all platforms")
         }
     }
 }

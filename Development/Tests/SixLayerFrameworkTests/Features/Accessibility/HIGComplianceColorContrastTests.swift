@@ -38,16 +38,15 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
                 .background(.white)
                 .automaticCompliance()
             
-            // WHEN: View is created
-            // THEN: Color combination should meet WCAG AA contrast ratio (4.5:1 for normal text)
+            // WHEN: View is created on all platforms
+            // THEN: Color combination should meet WCAG AA contrast ratio (4.5:1 for normal text) on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "TextWithContrast"
             )
-            #expect(passed, "Text should meet WCAG AA contrast ratio (4.5:1)")
+            #expect(passed, "Text should meet WCAG AA contrast ratio (4.5:1) on all platforms")
         }
     }
     
@@ -60,16 +59,15 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
                 .background(.white)
                 .automaticCompliance()
             
-            // WHEN: View is created
-            // THEN: Large text should meet WCAG AA contrast ratio (3:1 for large text)
+            // WHEN: View is created on all platforms
+            // THEN: Large text should meet WCAG AA contrast ratio (3:1 for large text) on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "LargeTextWithContrast"
             )
-            #expect(passed, "Large text should meet WCAG AA contrast ratio (3:1)")
+            #expect(passed, "Large text should meet WCAG AA contrast ratio (3:1) on all platforms")
         }
     }
     
@@ -81,16 +79,15 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
                 .background(.blue)
                 .automaticCompliance()
             
-            // WHEN: View is created
-            // THEN: Button text should meet WCAG AA contrast ratio
+            // WHEN: View is created on all platforms
+            // THEN: Button text should meet WCAG AA contrast ratio on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "ButtonWithContrast"
             )
-            #expect(passed, "Button text should meet WCAG AA contrast ratio")
+            #expect(passed, "Button text should meet WCAG AA contrast ratio on all platforms")
         }
     }
     
@@ -104,16 +101,15 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
                 .background(.white)
                 .automaticCompliance()
             
-            // WHEN: View is created
-            // THEN: Colors should be automatically adjusted to meet contrast requirements
+            // WHEN: View is created on all platforms
+            // THEN: Colors should be automatically adjusted to meet contrast requirements on all platforms
             // RED PHASE: This will fail until automatic color adjustment is implemented
-            let passed = testComponentComplianceSinglePlatform(
+            let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
                 componentName: "AutoAdjustedContrast"
             )
-            #expect(passed, "Low contrast colors should be automatically adjusted")
+            #expect(passed, "Low contrast colors should be automatically adjusted on all platforms")
         }
     }
     
@@ -127,38 +123,15 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
                 .background(.systemBackground)
                 .automaticCompliance()
             
-            // WHEN: View is created
-            // THEN: System colors should meet contrast requirements
-            // RED PHASE: This will fail until color contrast validation is implemented
-            let passed = testComponentComplianceSinglePlatform(
-                view,
-                expectedPattern: "SixLayer.*ui",
-                platform: .iOS,
-                componentName: "SystemColorContrast"
-            )
-            #expect(passed, "System colors should meet contrast requirements")
-        }
-    }
-    
-    // MARK: - Cross-Platform Tests
-    
-    @Test func testColorContrastOnBothPlatforms() async {
-        runWithTaskLocalConfig {
-            // GIVEN: Text with colors
-            let view = Text("Cross-Platform Text")
-                .foregroundColor(.black)
-                .background(.white)
-                .automaticCompliance()
-            
-            // WHEN: View is created on both platforms
-            // THEN: Color contrast should be validated on both iOS and macOS
+            // WHEN: View is created on all platforms
+            // THEN: System colors should meet contrast requirements on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
-                componentName: "CrossPlatformContrast"
+                componentName: "SystemColorContrast"
             )
-            #expect(passed, "Color contrast should be validated on both platforms")
+            #expect(passed, "System colors should meet contrast requirements on all platforms")
         }
     }
 }
