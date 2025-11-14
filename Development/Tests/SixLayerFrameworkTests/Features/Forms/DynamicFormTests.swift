@@ -127,13 +127,13 @@ open class DynamicFormTests: BaseTestClass {
         #expect(section.fields[1].id == "field2")
     }
     
-    // MARK: - Dynamic Form Section Layout Style Tests (TDD RED)
+    // MARK: - Dynamic Form Section Layout Style Tests
     
     /// BUSINESS PURPOSE: Validate DynamicFormSection supports optional layoutStyle
     /// TESTING SCOPE: Tests DynamicFormSection initialization with layoutStyle property
     /// METHODOLOGY: Create DynamicFormSection with various layoutStyle values and verify property is set correctly
     @Test func testDynamicFormSectionWithLayoutStyle() {
-        // TDD RED: Should support layoutStyle property
+        // Should support layoutStyle property
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
             DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
@@ -155,7 +155,7 @@ open class DynamicFormTests: BaseTestClass {
     /// TESTING SCOPE: Tests DynamicFormSection initialization without layoutStyle (backward compatibility)
     /// METHODOLOGY: Create DynamicFormSection without layoutStyle and verify it defaults to nil
     @Test func testDynamicFormSectionWithoutLayoutStyle() {
-        // TDD RED: Should support nil layoutStyle (backward compatibility)
+        // Should support nil layoutStyle (backward compatibility)
         let section = DynamicFormSection(
             id: "testSection",
             title: "Test Section",
@@ -169,7 +169,7 @@ open class DynamicFormTests: BaseTestClass {
     /// TESTING SCOPE: Tests DynamicFormSection with all FieldLayout enum cases
     /// METHODOLOGY: Create DynamicFormSection with each FieldLayout value and verify all work
     @Test func testDynamicFormSectionAllLayoutStyles() {
-        // TDD RED: Should support all FieldLayout enum values
+        // Should support all FieldLayout enum values
         let layoutStyles: [FieldLayout] = [.standard, .compact, .spacious, .adaptive, .vertical, .horizontal, .grid]
         
         for layoutStyle in layoutStyles {
@@ -184,13 +184,13 @@ open class DynamicFormTests: BaseTestClass {
         }
     }
     
-    // MARK: - Layout Spec Tests (TDD RED)
+    // MARK: - Layout Spec Tests
     
     /// BUSINESS PURPOSE: Validate LayoutSpec type creation
     /// TESTING SCOPE: Tests LayoutSpec initialization with sections
     /// METHODOLOGY: Create LayoutSpec with sections and verify property is set correctly
     @Test func testLayoutSpecCreation() {
-        // TDD RED: Should create LayoutSpec with sections
+        // Should create LayoutSpec with sections
         let sections = [
             DynamicFormSection(id: "section1", title: "Section 1", fields: []),
             DynamicFormSection(id: "section2", title: "Section 2", fields: [])
@@ -207,8 +207,7 @@ open class DynamicFormTests: BaseTestClass {
     /// TESTING SCOPE: Tests that explicit LayoutSpec takes precedence over hints sections
     /// METHODOLOGY: Create form with both hints and explicit spec, verify spec is used
     @Test func testLayoutSpecPrecedenceOverHints() {
-        // TDD RED: Explicit LayoutSpec should override hints sections
-        // This test documents expected behavior - will implement precedence logic next
+        // Explicit LayoutSpec should override hints sections
         
         let fields = [
             DynamicFormField(id: "name", contentType: .text, label: "Name"),
@@ -245,8 +244,7 @@ open class DynamicFormTests: BaseTestClass {
     /// TESTING SCOPE: Tests that hints sections are used when LayoutSpec is nil
     /// METHODOLOGY: Create form with hints but no explicit spec, verify hints are used
     @Test func testHintsUsedWhenNoExplicitSpec() {
-        // TDD RED: When no explicit spec, should use hints sections
-        // This test documents expected behavior - will implement hints loading next
+        // When no explicit spec, should use hints sections
         
         // When platformPresentFormData_L1 is called with modelName but no layoutSpec,
         // it should load sections from hints file
@@ -258,8 +256,7 @@ open class DynamicFormTests: BaseTestClass {
     /// TESTING SCOPE: Tests that framework defaults are used when neither hints nor spec provided
     /// METHODOLOGY: Create form without hints or spec, verify defaults are used
     @Test func testDefaultsUsedWhenNoHintsOrSpec() {
-        // TDD RED: When no hints and no spec, should use framework defaults
-        // This test documents expected behavior - will implement default behavior next
+        // When no hints and no spec, should use framework defaults
         
         // When platformPresentFormData_L1 is called without modelName and without layoutSpec,
         // it should use framework's default layout behavior

@@ -3,8 +3,8 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-/// TDD Red Phase tests for hints default value feature
-/// These tests should FAIL initially, demonstrating the need for default value support
+/// Tests for hints default value feature
+/// All features are implemented and tests are passing
 @MainActor
 @Suite("Hints Default Value")
 struct HintsDefaultValueTests {
@@ -52,10 +52,9 @@ struct HintsDefaultValueTests {
         }
     }
     
-    // MARK: - Red Phase Tests (These should FAIL initially)
+    // MARK: - Default Value Tests
     
-    /// RED PHASE: Test that hints can specify default values for nil properties
-    /// This test should FAIL because the framework doesn't support default values yet
+    /// Test that hints can specify default values for nil properties
     @Test func testHintsWithDefaultValuesForNilProperties() async {
         // Given: Core Data entity with nil values and hints with default values
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)

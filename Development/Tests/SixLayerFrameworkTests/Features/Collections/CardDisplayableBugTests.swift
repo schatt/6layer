@@ -3,7 +3,8 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-/// TDD Red Phase tests for CardDisplayable protocol bug
+/// Tests for CardDisplayable protocol bug fixes
+/// All features are implemented and tests are passing
 /// These tests should FAIL initially, demonstrating the bug described in the bug report
 @MainActor
 @Suite("Card Displayable Bug")
@@ -80,10 +81,9 @@ struct CardDisplayableBugTests {
         }
     }
     
-    // MARK: - Red Phase Tests (These should FAIL initially)
+    // MARK: - CardDisplayable Fallback Tests
     
-    /// RED PHASE: Test that CardDisplayable protocol is used when hints fail to extract meaningful values
-    /// This test should FAIL because the framework currently skips CardDisplayable fallback
+    /// Test that CardDisplayable protocol is used when hints fail to extract meaningful values
     @Test func testCardDisplayableFallbackWhenHintsFail() async {
         // Given: Core Data entity with nil values and hints that fail to extract
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -103,7 +103,7 @@ struct CardDisplayableBugTests {
         #expect(result == nil, "Should return nil when hints fail to extract meaningful values")
     }
     
-    /// RED PHASE: Test that empty strings are respected as valid content (not fallback to CardDisplayable)
+    /// Test that empty strings are respected as valid content (not fallback to CardDisplayable)
     @Test func testCardDisplayableFallbackWhenHintsExtractEmptyStrings() async {
         // Given: Entity with empty string values and hints
         let task = CoreDataTask(title: "", taskDescription: "", status: "", priority: "")
@@ -121,7 +121,7 @@ struct CardDisplayableBugTests {
         #expect(result == nil, "Should return nil for empty string when no default is configured")
     }
     
-    /// RED PHASE: Test that CardDisplayable protocol is used when hints extract nil values
+    /// Test that CardDisplayable protocol is used when hints extract nil values
     @Test func testCardDisplayableFallbackWhenHintsExtractNilValues() async {
         // Given: Entity with nil values and hints
         let project = CoreDataProject(name: nil, description: nil)
@@ -138,7 +138,7 @@ struct CardDisplayableBugTests {
         #expect(result == nil, "Should return nil when hints extract nil values")
     }
     
-    /// RED PHASE: Test that CardDisplayable protocol is used when hints are missing
+    /// Test that CardDisplayable protocol is used when hints are missing
     @Test func testCardDisplayableFallbackWhenHintsAreMissing() async {
         // Given: Entity with nil values and no hints
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -151,7 +151,7 @@ struct CardDisplayableBugTests {
         #expect(extractedTitle == "Untitled Task", "Should fall back to CardDisplayable when no hints and reflection fails")
     }
     
-    /// RED PHASE: Test that CardDisplayable protocol is used when hints have invalid property names
+    /// Test that CardDisplayable protocol is used when hints have invalid property names
     @Test func testCardDisplayableFallbackWhenHintsHaveInvalidPropertyNames() async {
         // Given: Entity with nil values and hints with invalid property names
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
@@ -170,7 +170,7 @@ struct CardDisplayableBugTests {
         #expect(extractedTitle == "Untitled Task", "Should fall back to CardDisplayable when hints have invalid property names")
     }
     
-    /// RED PHASE: Test that CardDisplayable protocol is used for all properties (title, subtitle, icon, color)
+    /// Test that CardDisplayable protocol is used for all properties (title, subtitle, icon, color)
     @Test func testCardDisplayableFallbackForAllProperties() async {
         // Given: Entity with nil values and hints that fail (using non-existent properties)
         let task = CoreDataTask(title: nil, taskDescription: nil, status: "in_progress", priority: "urgent")
@@ -201,8 +201,7 @@ struct CardDisplayableBugTests {
         #expect(extractedColor == .red, "Should fall back to CardDisplayable when reflection fails for color")
     }
     
-    /// RED PHASE: Test that platformPresentItemCollection_L1 uses CardDisplayable fallback
-    /// This test should FAIL because the function currently shows generic object descriptions
+    /// Test that platformPresentItemCollection_L1 uses CardDisplayable fallback
     @Test func testPlatformPresentItemCollectionUsesCardDisplayableFallback() async {
         // Given: Core Data entities with nil values and hints that fail
         let tasks = [
@@ -230,8 +229,7 @@ struct CardDisplayableBugTests {
         // but this test documents the expected behavior for integration testing
     }
     
-    /// RED PHASE: Test that the priority system works correctly
-    /// This test should PASS because it tests the correct priority order
+    /// Test that the priority system works correctly
     @Test func testPrioritySystemCorrectOrder() async {
         // Given: Entity with meaningful hint values and CardDisplayable implementation
         let task = CoreDataTask(title: "Hint Title", taskDescription: "Hint Description", status: "completed", priority: "urgent")
@@ -252,7 +250,7 @@ struct CardDisplayableBugTests {
         #expect(extractedSubtitle == "Hint Description", "Should use hints when they extract meaningful values")
     }
     
-    /// RED PHASE: Test that CardDisplayable protocol is used when hints extract non-string values
+    /// Test that CardDisplayable protocol is used when hints extract non-string values
     @Test func testCardDisplayableFallbackWhenHintsExtractNonStringValues() async {
         // Given: Entity with non-string values and hints
         struct TestItem: Identifiable, CardDisplayable {

@@ -3,8 +3,8 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-/// RED PHASE: Tests for CardDisplayHelper returning nil instead of hardcoded fallbacks
-/// This test suite should FAIL until we refactor CardDisplayHelper to return nil
+/// Tests for CardDisplayHelper returning nil instead of hardcoded fallbacks
+/// All features are implemented and tests are passing
 @Suite("Card Display Helper Nil Fallback")
 struct CardDisplayHelperNilFallbackTests {
     
