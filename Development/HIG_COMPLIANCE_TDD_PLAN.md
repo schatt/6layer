@@ -12,11 +12,12 @@ This plan outlines the Test-Driven Development (TDD) approach for implementing H
 
 ## Implementation Strategy
 
-**DRY Approach**: We're extending the existing shared test functions (`testAccessibilityIdentifiersSinglePlatform` and `testAccessibilityIdentifiersCrossPlatform`) to also test HIG compliance. This means:
+**DRY Approach**: We've renamed the shared test functions to reflect they test component compliance (accessibility identifiers + HIG compliance). This means:
 - ✅ **No duplication** - One test function for both accessibility identifiers AND HIG compliance
-- ✅ **Opt-in** - Tests can enable HIG compliance testing with `testHIGCompliance: true` parameter
-- ✅ **Backward compatible** - All 466+ existing test calls continue to work (default: false)
+- ✅ **Default enabled** - HIG compliance testing is ON by default (tests both accessibility identifiers and HIG compliance)
+- ✅ **Backward compatible** - All 466+ existing test calls continue to work via deprecated aliases
 - ✅ **Consistent** - Same test infrastructure used across all components
+- ✅ **Opt-out available** - Tests can disable HIG compliance testing with `testHIGCompliance: false` if needed
 
 **Implementation Pattern**:
 1. **RED Phase**: Add failing HIG compliance checks to `testHIGComplianceFeatures()` function
@@ -54,13 +55,13 @@ These are the most critical HIG compliance features that should be implemented f
 
 **Integration with Shared Test Function**:
 ```swift
-// Tests can opt into HIG compliance testing:
-let passed = testAccessibilityIdentifiersSinglePlatform(
+// HIG compliance is tested by default:
+let passed = testComponentComplianceSinglePlatform(
     button,
     expectedPattern: "SixLayer.*ui",
     platform: .iOS,
-    componentName: "Button",
-    testHIGCompliance: true  // Enable HIG compliance checks
+    componentName: "Button"
+    // testHIGCompliance defaults to true - tests both accessibility identifiers and HIG compliance
 )
 ```
 
@@ -377,18 +378,30 @@ All HIG compliance features will be added to:
 
 ## Test Integration
 
-HIG compliance testing is integrated into the shared test functions:
-- `testAccessibilityIdentifiersSinglePlatform()` - Single platform testing with optional HIG compliance
-- `testAccessibilityIdentifiersCrossPlatform()` - Cross-platform testing with optional HIG compliance
-- `testCrossPlatformAccessibilityIdentifierGeneration()` - Centralized wrapper with optional HIG compliance
+HIG compliance testing is integrated into the shared test functions (renamed to reflect compliance testing):
+- `testComponentComplianceSinglePlatform()` - Single platform testing (HIG compliance ON by default)
+- `testComponentComplianceCrossPlatform()` - Cross-platform testing (HIG compliance ON by default)
+- `testComponentCompliance()` - Centralized wrapper (HIG compliance ON by default)
+- `testCrossPlatformComponentCompliance()` - Cross-platform centralized wrapper (HIG compliance ON by default)
+
+**Deprecated aliases** (backward compatible, but will show deprecation warnings):
+- `testAccessibilityIdentifiersSinglePlatform()` → `testComponentComplianceSinglePlatform()`
+- `testAccessibilityIdentifiersCrossPlatform()` → `testComponentComplianceCrossPlatform()`
+- `testAccessibilityIdentifierGeneration()` → `testComponentCompliance()`
+- `testCrossPlatformAccessibilityIdentifierGeneration()` → `testCrossPlatformComponentCompliance()`
 
 **Usage**:
 ```swift
-// Existing tests (backward compatible - no changes needed):
-testAccessibilityIdentifiersSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component")
+// New tests (recommended - tests both accessibility identifiers and HIG compliance):
+testComponentComplianceSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component")
+// HIG compliance is tested by default (testHIGCompliance: true)
 
-// New tests (opt into HIG compliance):
-testAccessibilityIdentifiersSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component", testHIGCompliance: true)
+// Existing tests (backward compatible via deprecated aliases - still work, but will show deprecation warnings):
+testAccessibilityIdentifiersSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component")
+// Also tests HIG compliance by default now
+
+// Opt-out if needed (rare):
+testComponentComplianceSinglePlatform(view, expectedPattern: "...", platform: .iOS, componentName: "Component", testHIGCompliance: false)
 ```
 
 **HIG Compliance Test Function**:

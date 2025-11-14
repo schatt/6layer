@@ -788,22 +788,21 @@ public func hasAccessibilityIdentifierSimple<T: View>(
 
 // MARK: - Parameterized Cross-Platform Testing
 
-/// Test accessibility identifiers across both iOS and macOS platforms
-/// Also tests HIG compliance features when enabled
+/// Test component compliance (accessibility identifiers + HIG compliance) across both iOS and macOS platforms
 /// - Parameters:
 ///   - view: The SwiftUI view to test
 ///   - expectedPattern: The regex pattern to match against (use * for wildcards)
 ///   - componentName: Name of the component being tested (for debugging)
 ///   - testName: Name of the test for better error messages
-///   - testHIGCompliance: Whether to also test HIG compliance features (default: false for backward compatibility)
-/// - Returns: True if the view generates correct accessibility identifiers (and HIG compliance if enabled) on both platforms
+///   - testHIGCompliance: Whether to test HIG compliance features (default: true - tests both accessibility identifiers and HIG compliance)
+/// - Returns: True if the view generates correct accessibility identifiers and passes HIG compliance on both platforms
 @MainActor
-public func testAccessibilityIdentifiersCrossPlatform<T: View>(
+public func testComponentComplianceCrossPlatform<T: View>(
     _ view: T,
     expectedPattern: String,
     componentName: String,
-    testName: String = "CrossPlatformTest",
-    testHIGCompliance: Bool = false
+    testName: String = "CrossPlatformComplianceTest",
+    testHIGCompliance: Bool = true
 ) -> Bool {
     let platforms: [SixLayerPlatform] = [.iOS, .macOS]
     var allPlatformsPassed = true
@@ -813,7 +812,7 @@ public func testAccessibilityIdentifiersCrossPlatform<T: View>(
         RuntimeCapabilityDetection.setTestPlatform(platform)
         
         // Test accessibility identifiers and HIG compliance
-        let passed = testAccessibilityIdentifiersSinglePlatform(
+        let passed = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: expectedPattern,
             platform: platform,
@@ -834,22 +833,41 @@ public func testAccessibilityIdentifiersCrossPlatform<T: View>(
     return allPlatformsPassed
 }
 
-/// Test accessibility identifiers on a single platform (for representative sampling)
-/// Also tests HIG compliance features when enabled
+/// Test accessibility identifiers across both iOS and macOS platforms
+/// This is kept for backward compatibility - it now also tests HIG compliance by default
+@available(*, deprecated, renamed: "testComponentComplianceCrossPlatform", message: "Use testComponentComplianceCrossPlatform which tests both accessibility identifiers and HIG compliance")
+@MainActor
+public func testAccessibilityIdentifiersCrossPlatform<T: View>(
+    _ view: T,
+    expectedPattern: String,
+    componentName: String,
+    testName: String = "CrossPlatformTest",
+    testHIGCompliance: Bool = true
+) -> Bool {
+    return testComponentComplianceCrossPlatform(
+        view,
+        expectedPattern: expectedPattern,
+        componentName: componentName,
+        testName: testName,
+        testHIGCompliance: testHIGCompliance
+    )
+}
+
+/// Test component compliance (accessibility identifiers + HIG compliance) on a single platform
 /// - Parameters:
 ///   - view: The SwiftUI view to test
 ///   - expectedPattern: The regex pattern to match against (use * for wildcards)
 ///   - platform: The platform to test on
 ///   - componentName: Name of the component being tested (for debugging)
-///   - testHIGCompliance: Whether to also test HIG compliance features (default: false for backward compatibility)
-/// - Returns: True if the view generates correct accessibility identifiers (and HIG compliance if enabled) on the specified platform
+///   - testHIGCompliance: Whether to test HIG compliance features (default: true - tests both accessibility identifiers and HIG compliance)
+/// - Returns: True if the view generates correct accessibility identifiers and passes HIG compliance on the specified platform
 @MainActor
-public func testAccessibilityIdentifiersSinglePlatform<T: View>(
+public func testComponentComplianceSinglePlatform<T: View>(
     _ view: T,
     expectedPattern: String,
     platform: SixLayerPlatform,
     componentName: String,
-    testHIGCompliance: Bool = false
+    testHIGCompliance: Bool = true
 ) -> Bool {
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
     let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
@@ -879,7 +897,7 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
         componentName: componentName
     )
     
-    // Test HIG compliance if enabled
+    // Test HIG compliance (default: true - tests both accessibility identifiers and HIG compliance)
     var higComplianceResult = true
     if testHIGCompliance {
         higComplianceResult = testHIGComplianceFeatures(
@@ -893,6 +911,26 @@ public func testAccessibilityIdentifiersSinglePlatform<T: View>(
     RuntimeCapabilityDetection.setTestPlatform(nil)
     
     return accessibilityResult && higComplianceResult
+}
+
+/// Test accessibility identifiers on a single platform (for representative sampling)
+/// This is kept for backward compatibility - it now also tests HIG compliance by default
+@available(*, deprecated, renamed: "testComponentComplianceSinglePlatform", message: "Use testComponentComplianceSinglePlatform which tests both accessibility identifiers and HIG compliance")
+@MainActor
+public func testAccessibilityIdentifiersSinglePlatform<T: View>(
+    _ view: T,
+    expectedPattern: String,
+    platform: SixLayerPlatform,
+    componentName: String,
+    testHIGCompliance: Bool = true
+) -> Bool {
+    return testComponentComplianceSinglePlatform(
+        view,
+        expectedPattern: expectedPattern,
+        platform: platform,
+        componentName: componentName,
+        testHIGCompliance: testHIGCompliance
+    )
 }
 
 // MARK: - HIG Compliance Test Functions
