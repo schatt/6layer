@@ -216,13 +216,14 @@ public struct AutomaticComplianceModifier: ViewModifier {
         }
     }
     
-    @MainActor
-        private func generateIdentifier(
-            config: AccessibilityIdentifierConfig,
-            accessibilityIdentifierName: String?,
-            accessibilityIdentifierElementType: String?,
-            accessibilityIdentifierLabel: String?
-        ) -> String {
+    // Note: Not @MainActor - this function only does string manipulation and config access
+    // which are thread-safe. Calling from non-MainActor contexts (like view body) is safe.
+    private func generateIdentifier(
+        config: AccessibilityIdentifierConfig,
+        accessibilityIdentifierName: String?,
+        accessibilityIdentifierElementType: String?,
+        accessibilityIdentifierLabel: String?
+    ) -> String {
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
@@ -425,8 +426,9 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         }
     }
     
-    @MainActor
-        private static func generateIdentifier(config: AccessibilityIdentifierConfig, componentName: String) -> String {
+    // Note: Not @MainActor - this function only does string manipulation and config access
+    // which are thread-safe. Calling from non-MainActor contexts (like view body) is safe.
+    private static func generateIdentifier(config: AccessibilityIdentifierConfig, componentName: String) -> String {
         
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
