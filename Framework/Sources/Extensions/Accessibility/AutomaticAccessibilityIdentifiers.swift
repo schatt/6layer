@@ -761,8 +761,14 @@ struct AutomaticHIGFocusIndicatorModifier: ViewModifier {
         if isInteractive {
             // Make interactive elements focusable with visible focus indicators
             // SwiftUI automatically shows focus indicators for focusable elements
-            content
-                .focusable()
+            // Note: .focusable() requires iOS 17.0+, macOS 14.0+, tvOS 17.0+, watchOS 10.0+
+            if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                content.focusable()
+            } else {
+                // On older platforms, interactive elements are already focusable by default
+                // No explicit modifier needed
+                content
+            }
         } else {
             content
         }
