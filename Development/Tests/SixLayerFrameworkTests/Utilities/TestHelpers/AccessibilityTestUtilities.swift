@@ -947,18 +947,20 @@ public func testHIGComplianceFeatures<T: View>(
     platform: SixLayerPlatform,
     componentName: String
 ) -> Bool {
-    // TODO: TDD RED PHASE - Implement HIG compliance checks
-    // This will be implemented as we add HIG compliance features to AutomaticComplianceModifier
+    // TDD RED PHASE: This function should FAIL until HIG compliance features are implemented
+    // As we implement each HIG feature, we'll add checks here and return true only when all pass
     
-    // For now, return true (placeholder)
-    // As we implement each HIG feature, we'll add checks here:
-    // - Touch target sizing (iOS)
-    // - Color contrast (WCAG)
-    // - Typography scaling (Dynamic Type)
-    // - Focus indicators
-    // - Motion preferences
-    // - Tab order
+    // TODO: Implement actual HIG compliance checks:
+    // - Touch target sizing (iOS) - minimum 44pt
+    // - Color contrast (WCAG) - AA/AAA compliance
+    // - Typography scaling (Dynamic Type) - supports accessibility sizes
+    // - Focus indicators - visible and accessible
+    // - Motion preferences - respects reduced motion
+    // - Tab order - logical navigation order
     // etc.
     
-    return true
+    // RED PHASE: Return false until features are implemented
+    // This ensures tests fail until we actually implement HIG compliance
+    print("⚠️ HIG COMPLIANCE: \(componentName) on \(platform) - HIG compliance features not yet implemented (TDD RED phase)")
+    return false
 }
