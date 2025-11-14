@@ -123,6 +123,14 @@ let passed = testComponentComplianceSinglePlatform(
 **GREEN Phase Implementation:**
 - Add `.dynamicTypeSize(...)` modifier with accessibility size range
 - Ensure all text automatically scales with system settings
+- Enforce minimum font sizes per platform:
+  - iOS: Body text minimum 17pt (or use .body which scales)
+  - macOS: Body text minimum 13pt
+  - tvOS: Body text minimum 24pt (TV viewing distance)
+  - watchOS: Body text minimum 16pt
+  - visionOS: Body text minimum 18pt
+- Use HIG typography styles (.body, .headline, .caption, etc.) that automatically meet platform requirements
+- Ensure custom font sizes never go below minimum readable sizes
 
 **Test File**: `Development/Tests/SixLayerFrameworkTests/Features/Accessibility/HIGComplianceTypographyTests.swift`
 

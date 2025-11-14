@@ -13,12 +13,17 @@ import Testing
 //  - Accessibility text size range support
 //  - Automatic scaling with system settings
 //  - Platform-specific typography behavior
+//  - Minimum font size requirements per platform
+//  - HIG typography style usage (body, headline, caption, etc.)
+//  - Enforcement of minimum readable font sizes
 //
 //  METHODOLOGY:
-//  - TDD RED phase: Tests fail until Dynamic Type support is implemented
+//  - TDD RED phase: Tests fail until typography support is implemented
 //  - Test text elements with various font sizes
 //  - Verify .dynamicTypeSize modifier is applied
 //  - Test accessibility size range support
+//  - Verify minimum font size requirements are met
+//  - Test platform-specific typography size requirements
 //
 
 import SwiftUI
@@ -101,6 +106,110 @@ open class HIGComplianceTypographyTests: BaseTestClass {
                 componentName: "TextWithAccessibilitySizes"
             )
             #expect(passed, "Text should support accessibility size range on all platforms")
+        }
+    }
+    
+    // MARK: - Minimum Font Size Tests
+    
+    @Test func testBodyTextMeetsMinimumSizeRequirements() async {
+        runWithTaskLocalConfig {
+            // GIVEN: Body text with automatic compliance
+            let view = Text("Body Text")
+                .font(.body)
+                .automaticCompliance()
+            
+            // WHEN: View is created
+            // THEN: Body text should meet platform-specific minimum size requirements
+            // HIG Requirements:
+            // - iOS: Body should be at least 17pt (or use .body which scales)
+            // - macOS: Body should be at least 13pt
+            // - tvOS: Body should be at least 24pt (TV viewing distance)
+            // - watchOS: Body should be at least 16pt
+            // - visionOS: Body should be at least 18pt
+            // RED PHASE: This will fail until minimum font size enforcement is implemented
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "BodyTextWithMinimumSize"
+            )
+            #expect(passed, "Body text should meet platform-specific minimum size requirements on all platforms")
+        }
+    }
+    
+    @Test func testCaptionTextMeetsMinimumSizeRequirements() async {
+        runWithTaskLocalConfig {
+            // GIVEN: Caption text with automatic compliance
+            let view = Text("Caption Text")
+                .font(.caption)
+                .automaticCompliance()
+            
+            // WHEN: View is created
+            // THEN: Caption text should meet platform-specific minimum size requirements
+            // Even small text (captions) should be readable
+            // RED PHASE: This will fail until minimum font size enforcement is implemented
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "CaptionTextWithMinimumSize"
+            )
+            #expect(passed, "Caption text should meet platform-specific minimum size requirements on all platforms")
+        }
+    }
+    
+    @Test func testCustomFontSizeEnforcedMinimum() async {
+        runWithTaskLocalConfig {
+            // GIVEN: Text with custom font size that might be too small
+            let view = Text("Small Text")
+                .font(.system(size: 10)) // Potentially too small
+                .automaticCompliance()
+            
+            // WHEN: View is created
+            // THEN: Custom font sizes should be enforced to meet minimum requirements
+            // HIG compliance should ensure text never goes below minimum readable size
+            // RED PHASE: This will fail until minimum font size enforcement is implemented
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "CustomFontSizeWithMinimum"
+            )
+            #expect(passed, "Custom font sizes should be enforced to meet minimum requirements on all platforms")
+        }
+    }
+    
+    // MARK: - Platform-Specific Typography Size Tests
+    
+    @Test func testPlatformSpecificTypographySizes() async {
+        runWithTaskLocalConfig {
+            // GIVEN: Text using HIG typography styles with automatic compliance
+            let view = VStack {
+                Text("Large Title")
+                    .font(.largeTitle)
+                    .automaticCompliance()
+                Text("Title")
+                    .font(.title)
+                    .automaticCompliance()
+                Text("Headline")
+                    .font(.headline)
+                    .automaticCompliance()
+                Text("Body")
+                    .font(.body)
+                    .automaticCompliance()
+                Text("Caption")
+                    .font(.caption)
+                    .automaticCompliance()
+            }
+            .automaticCompliance()
+            
+            // WHEN: View is created
+            // THEN: Typography styles should use platform-appropriate sizes
+            // Each platform has different size requirements for the same style
+            // RED PHASE: This will fail until platform-specific typography sizes are implemented
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "PlatformSpecificTypographySizes"
+            )
+            #expect(passed, "Typography styles should use platform-appropriate sizes on all platforms")
         }
     }
     
