@@ -23,23 +23,20 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
         // Setup: Configure test environment with automatic mode (explicit)
         testConfig.mode = .automatic
         setupTestEnvironment()
-            
-            // Test: Use centralized accessibility testing function
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let testPassed = testAccessibilityIdentifierGeneration(
-                createCollectionEmptyStateView(),
-                componentName: "CollectionEmptyStateView",
-                expectedPattern: "SixLayer.*ui",
-                platform: platform
-            )
- #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue) in automatic mode ") 
-            #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
         
-        // Cleanup: Reset test environment
-        cleanupTestEnvironment()
+        // Test: Use centralized accessibility testing function
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let testPassed = testAccessibilityIdentifierGeneration(
+            createCollectionEmptyStateView(),
+            componentName: "CollectionEmptyStateView",
+            expectedPattern: "SixLayer.*ui",
+            platform: platform
+        )
+ #expect(testPassed, "CollectionEmptyStateView should generate accessibility identifiers on \(platform.rawValue) in automatic mode ") 
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+        #endif
     }
     
     @Test
@@ -47,21 +44,18 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
         // Setup: Configure test environment with auto IDs disabled
         testConfig.enableAutoIDs = false
         setupTestEnvironment()
-            
-            // Test: Use centralized accessibility disabled testing function
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let testPassed = testComponentAccessibilityDisabled(
-                componentName: "CollectionEmptyStateView",
-                createComponent: createCollectionEmptyStateView
-            )
+        
+        // Test: Use centralized accessibility disabled testing function
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let testPassed = testComponentAccessibilityDisabled(
+            componentName: "CollectionEmptyStateView",
+            createComponent: createCollectionEmptyStateView
+        )
  #expect(testPassed, "CollectionEmptyStateView should work when accessibility IDs are disabled")
         #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
-        
-        // Cleanup: Reset test environment
-        cleanupTestEnvironment()
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+        #endif
     }
     
     @Test
