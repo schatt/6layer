@@ -19,9 +19,10 @@ open class BaseTestClass {
     // MARK: - Test Setup
     
     @MainActor
-    public final init() {
+    public init() {
         // BaseTestClass handles all setup automatically
-        // Subclasses should NOT override init() - use helper methods to create test data instead
+        // NOTE: Subclasses should NOT override init() - use helper methods to create test data instead
+        // (Cannot be final because class is open, but subclasses should not override)
         setupTestEnvironment()
     }
     
@@ -114,15 +115,22 @@ open class BaseTestClass {
     }
     
     /// Creates test hints for presentation components
-    /// Override this method in subclasses to provide specific presentation hints
+    /// Each test should call this to create fresh hints (test isolation)
+    /// Parameters allow customization while maintaining sensible defaults
     @MainActor
-    open func createTestHints() -> PresentationHints {
+    open func createTestHints(
+        dataType: DataTypeHint = .generic,
+        presentationPreference: PresentationPreference = .automatic,
+        complexity: ContentComplexity = .moderate,
+        context: PresentationContext = .dashboard,
+        customPreferences: [String: String] = [:]
+    ) -> PresentationHints {
         return PresentationHints(
-            dataType: .generic,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .dashboard,
-            customPreferences: [:]
+            dataType: dataType,
+            presentationPreference: presentationPreference,
+            complexity: complexity,
+            context: context,
+            customPreferences: customPreferences
         )
     }
     

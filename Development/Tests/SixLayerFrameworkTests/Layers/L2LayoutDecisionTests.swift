@@ -94,7 +94,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             context: .dashboard
         )
         let simpleDecision = determineOptimalLayout_L2(
-            items: sampleItems,
+            items: createSampleItems(),
             hints: simpleHints,
             screenWidth: 375,
             deviceType: .phone
@@ -109,7 +109,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             context: .browse
         )
         let moderateDecision = determineOptimalLayout_L2(
-            items: sampleItems,
+            items: createSampleItems(),
             hints: moderateHints,
             screenWidth: 375,
             deviceType: .phone
@@ -124,7 +124,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             context: .detail
         )
         let complexDecision = determineOptimalLayout_L2(
-            items: sampleItems,
+            items: createSampleItems(),
             hints: complexHints,
             screenWidth: 375,
             deviceType: .phone
@@ -137,7 +137,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         
         // Test phone
         let phoneDecision = determineOptimalLayout_L2(
-            items: sampleItems,
+            items: createSampleItems(),
             hints: hints,
             screenWidth: 375,
             deviceType: .phone
@@ -146,7 +146,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         
         // Test pad
         let padDecision = determineOptimalLayout_L2(
-            items: sampleItems,
+            items: createSampleItems(),
             hints: hints,
             screenWidth: 768,
             deviceType: .pad
@@ -155,7 +155,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         
         // Test mac
         let macDecision = determineOptimalLayout_L2(
-            items: sampleItems,
+            items: createSampleItems(),
             hints: hints,
             screenWidth: 1024,
             deviceType: .mac
@@ -396,7 +396,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -409,7 +409,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -422,7 +422,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -435,7 +435,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -448,7 +448,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -461,7 +461,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -474,7 +474,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -487,7 +487,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDetermineOptimalPhotoLayout_L2_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let size = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
@@ -500,7 +500,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDeterminePhotoCaptureStrategy_L2_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
@@ -512,7 +512,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     @Test func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)

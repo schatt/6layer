@@ -21,15 +21,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         ]
     }
     
-    public func createTestHints() -> PresentationHints {
-        return PresentationHints(
-            dataType: .generic,
-            presentationPreference: .grid,
-            complexity: .moderate,
-            context: .list,
-            customPreferences: [:]
-        )
-    }    // MARK: - Layer 1 Function Tests
+    // MARK: - Layer 1 Function Tests
     
     /// TDD RED PHASE: platformPresentItemCollection_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
@@ -39,7 +31,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         
         // Create test data locally
         let testItems = createTestItems()
-        let testHints = createTestHints()
+        let testHints = createTestHints(presentationPreference: .grid, context: .list)
         
         // When: Creating view using platformPresentItemCollection_L1
         let view = platformPresentItemCollection_L1(
@@ -105,7 +97,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let testItems = createTestItems()
-        let testHints = createTestHints()
+        let testHints = createTestHints(presentationPreference: .grid, context: .list)
         
         let view = platformPresentItemCollection_L1(
             items: testItems,
@@ -176,7 +168,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let testItems = createTestItems()
-        let testHints = createTestHints()
+        let testHints = createTestHints(presentationPreference: .grid, context: .list)
         
         let view = platformPresentItemCollection_L1(
             items: testItems,

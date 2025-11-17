@@ -42,17 +42,6 @@ import SwiftUI
 @Suite("Platform Present Content L")
 open class PlatformPresentContentL1Tests: BaseTestClass {
     
-    // MARK: - Test Data Setup
-    
-    public func createTestHints() -> PresentationHints {
-        return PresentationHints(
-            dataType: .generic,
-            presentationPreference: .automatic,
-            complexity: .moderate,
-            context: .dashboard
-        )
-    }
-    
     // MARK: - Basic Functionality Tests
     
     @Test func testPlatformPresentContent_L1_WithString() {

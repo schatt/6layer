@@ -12,10 +12,10 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    /// Override BaseTestClass method to provide specific test hints for numeric data
+    /// Helper method to create test hints for numeric data
     @MainActor
-    public override func createTestHints() -> PresentationHints {
-        return PresentationHints(
+    private func createNumericTestHints() -> PresentationHints {
+        return createTestHints(
             dataType: .numeric,
             presentationPreference: .card,
             complexity: .simple,
@@ -28,7 +28,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     @Test func testPlatformPresentNumericData_L1_SingleInstance() {
         // GIVEN: A single GenericNumericData item
-        let testHints = createTestHints()
+        let testHints = createNumericTestHints()
         let singleNumericData = GenericNumericData(
             value: 42.0,
             label: "Test Value",
@@ -48,7 +48,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     @Test func testPlatformPresentNumericData_L1_SingleInstance_Consistency() {
         // GIVEN: A single GenericNumericData item
-        let testHints = createTestHints()
+        let testHints = createNumericTestHints()
         let singleNumericData = GenericNumericData(
             value: 42.0,
             label: "Test Value",
@@ -73,7 +73,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     @Test func testPlatformPresentMediaData_L1_SingleInstance() {
         // GIVEN: A single GenericMediaItem
-        let testHints = createTestHints()
+        let testHints = createNumericTestHints()
         let singleMediaItem = GenericMediaItem(
             title: "Test Media",
             url: "https://example.com/image.jpg",
@@ -95,7 +95,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     @Test func testPlatformPresentHierarchicalData_L1_SingleInstance() {
         // GIVEN: A single GenericHierarchicalItem
-        let testHints = createTestHints()
+        let testHints = createNumericTestHints()
         let singleHierarchicalItem = GenericHierarchicalItem(
             title: "Test Item",
             level: 0,
@@ -117,7 +117,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     @Test func testPlatformPresentTemporalData_L1_SingleInstance() {
         // GIVEN: A single GenericTemporalItem
-        let testHints = createTestHints()
+        let testHints = createNumericTestHints()
         let singleTemporalItem = GenericTemporalItem(
             title: "Test Event",
             date: Date(),
@@ -139,7 +139,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     @Test func testPlatformPresentFormData_L1_SingleInstance() {
         // GIVEN: A single DynamicFormField
-        let testHints = createTestHints()
+        let testHints = createNumericTestHints()
         let singleFormField = DynamicFormField(
             id: "test-field",
             contentType: .text,

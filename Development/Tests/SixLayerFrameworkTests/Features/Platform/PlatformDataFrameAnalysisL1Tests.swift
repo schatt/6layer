@@ -127,7 +127,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Assessing data quality
-        let view = platformAssessDataQuality_L1(dataFrame: testDataFrame, hints: hints)
+        let view = platformAssessDataQuality_L1(dataFrame: createTestDataFrame(), hints: hints)
         
         // Then: Should return a quality assessment view
         #expect(Bool(true), "view is non-optional")  // view is non-optional
