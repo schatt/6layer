@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v5.0.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.0.0)
+[![Version](https://img.shields.io/badge/version-v5.1.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.1.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -89,6 +89,31 @@ platformPresentFormData_L1(
 ```
 
 **📚 Full documentation**: [Field Hints Complete Guide](docs/FieldHintsCompleteGuide.md)
+
+## 🆕 What's New in v5.1.0
+
+### **PlatformImage EXIF GPS Location Extraction**
+📸 **Cross-Platform EXIF Access**: New `PlatformImageEXIF` struct provides clean API for accessing EXIF metadata  
+📍 **GPS Location Extraction**: `image.exif.gpsLocation` returns `CLLocation?` from image EXIF metadata  
+🔧 **Platform Abstraction**: Eliminates need for platform-specific code (`UIImage` on iOS, `NSImage` on macOS)  
+✅ **Comprehensive EXIF Parsing**: Supports decimal degrees and degrees/minutes/seconds coordinate formats  
+🛡️ **Error Handling**: Returns `nil` gracefully for images without GPS metadata or invalid data  
+
+**Use Cases:**
+- Fuel receipt OCR: Extract location from receipt photos to identify gas stations
+- Photo organization: Group photos by location
+- Travel logging: Track where photos were taken
+- Location-based features: Use photo location for context-aware functionality
+
+**Example Usage:**
+```swift
+let image = PlatformImage(data: imageData)
+if let location = image?.exif.gpsLocation {
+    print("Photo taken at: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+}
+```
+
+**Implementation**: Implements [GitHub Issue #21](https://github.com/schatt/6layer/issues/21)
 
 ## 🆕 What's New in v5.0.0
 

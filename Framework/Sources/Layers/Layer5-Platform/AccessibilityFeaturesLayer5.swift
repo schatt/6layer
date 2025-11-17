@@ -152,9 +152,8 @@ public class AccessibilityTestingManager: ObservableObject {
     func runAccessibilityTests() {
         isRunningTests = true
         
-        // Simulate running accessibility tests
+        // Generate test results immediately (no artificial delay needed)
         Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
             self.generateTestResults()
             self.isRunningTests = false
         }

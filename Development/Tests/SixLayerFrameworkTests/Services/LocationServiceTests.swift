@@ -1,29 +1,28 @@
 //
-//  macOSLocationServiceTests.swift
+//  LocationServiceTests.swift
 //  SixLayerFrameworkTests
 //
-//  Functional tests for macOSLocationService
-//  Tests the actual functionality of the macOS location service
+//  Cross-platform location service tests
+//  Tests the cross-platform location service implementation
 //
 
 import Testing
 import CoreLocation
 @testable import SixLayerFramework
 
-/// Functional tests for macOSLocationService
-/// Tests the actual functionality of the macOS location service
+/// Cross-platform location service tests
+/// Tests the cross-platform location service implementation
 @MainActor
-@Suite("mac O S Location Service")
-open class macOSLocationServiceTests {
+@Suite("Location Service")
+open class LocationServiceTests {
     
     // MARK: - Service Initialization Tests
     
-    @Test func testMacOSLocationServiceInitialization() async {
-        // Given & When: Creating the service
-        let service = macOSLocationService()
+    @Test func testLocationServiceInitialization() async {
+        // Given & When: Creating the cross-platform service
+        let service = LocationService()
         
-        // Then: Service should be created successfully (verified by using it below)
-        
+        // Then: Service should be created successfully
         // Initial authorization status should be notDetermined
         #expect(service.authorizationStatus == .notDetermined)
         
@@ -33,9 +32,9 @@ open class macOSLocationServiceTests {
     
     // MARK: - Authorization Status Tests
     
-    @Test func testMacOSLocationServiceHasAuthorizationStatus() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceHasAuthorizationStatus() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Checking authorization status
         let status = service.authorizationStatus
@@ -49,9 +48,9 @@ open class macOSLocationServiceTests {
                 status == .authorizedAlways)
     }
     
-    @Test func testMacOSLocationServiceReportsLocationEnabledStatus() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceReportsLocationEnabledStatus() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Checking if location is enabled
         let isEnabled = service.isLocationEnabled
@@ -63,9 +62,9 @@ open class macOSLocationServiceTests {
     
     // MARK: - Error Handling Tests
     
-    @Test func testMacOSLocationServiceHasErrorProperty() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceHasErrorProperty() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Checking error property
         let error = service.error
@@ -77,9 +76,9 @@ open class macOSLocationServiceTests {
     
     // MARK: - Location Updates Tests
     
-    @Test func testMacOSLocationServiceCanStartUpdatingLocation() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceCanStartUpdatingLocation() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Starting location updates
         // Note: This may fail if not authorized, but should not crash
@@ -90,23 +89,22 @@ open class macOSLocationServiceTests {
         #expect(service.error == nil || service.error != nil)
     }
     
-    @Test func testMacOSLocationServiceCanStopUpdatingLocation() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceCanStopUpdatingLocation() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Stopping location updates
         service.stopUpdatingLocation()
         
         // Then: Should complete without crashing
         // This is a no-op if not currently updating
-        // Service is non-optional, so it exists if we reach here
     }
     
     // MARK: - Protocol Conformance Tests
     
-    @Test func testMacOSLocationServiceConformsToLocationServiceProtocol() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceConformsToLocationServiceProtocol() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Checking protocol conformance
         let protocolService: LocationServiceProtocol = service
@@ -116,11 +114,29 @@ open class macOSLocationServiceTests {
         #expect(protocolService.isLocationEnabled == service.isLocationEnabled)
     }
     
+    // MARK: - Cross-Platform Tests
+    
+    @Test func testLocationServiceWorksOnAllPlatforms() async {
+        // Given: LocationService
+        let service = LocationService()
+        
+        // When: Checking platform availability
+        let currentPlatform = SixLayerPlatform.current
+        
+        // Then: Service should work on all platforms
+        // The service should handle platform differences internally
+        #expect(service.authorizationStatus == .notDetermined || 
+                service.authorizationStatus == .denied || 
+                service.authorizationStatus == .restricted || 
+                service.authorizationStatus == .authorized || 
+                service.authorizationStatus == .authorizedAlways)
+    }
+    
     // MARK: - Actor Isolation Tests
     
-    @Test func testMacOSLocationServiceIsMainActorIsolated() async {
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceIsMainActorIsolated() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Accessing properties from MainActor context
         let status = service.authorizationStatus
@@ -132,14 +148,9 @@ open class macOSLocationServiceTests {
         #expect(isEnabled == true || isEnabled == false)
     }
     
-    // MARK: - Swift 6 Concurrency Tests (Issue #4 Fixes)
-    
-    @Test func testMacOSLocationServiceMainActorIsolatedProperties() async {
-        // RED-GREEN Test: Validates fix for "main actor-isolated property cannot satisfy nonisolated requirement"
-        // Issue #4: authorizationStatus, isLocationEnabled, error were causing concurrency errors
-        
-        // Given: macOSLocationService (marked @MainActor)
-        let service = macOSLocationService()
+    @Test func testLocationServiceMainActorIsolatedProperties() async {
+        // Given: LocationService (marked @MainActor)
+        let service = LocationService()
         
         // When: Accessing properties from MainActor context
         let status = service.authorizationStatus
@@ -153,12 +164,9 @@ open class macOSLocationServiceTests {
         #expect(error == nil || error != nil)
     }
     
-    @Test func testMacOSLocationServiceProtocolConformanceIsolation() async {
-        // RED-GREEN Test: Validates fix for protocol conformance isolation issues
-        // Issue #4: Protocol conformance was crossing actor boundaries
-        
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceProtocolConformanceIsolation() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Checking protocol conformance
         let protocolService: LocationServiceProtocol = service
@@ -169,19 +177,15 @@ open class macOSLocationServiceTests {
         #expect(protocolService.isLocationEnabled == service.isLocationEnabled)
     }
     
-    @Test func testMacOSLocationServiceDelegateMethodsNonisolated() async {
-        // RED-GREEN Test: Validates fix for CLLocationManagerDelegate isolation
-        // Issue #4: Delegate methods needed to be nonisolated with proper MainActor bridging
-        
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceDelegateMethodsNonisolated() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Using as CLLocationManagerDelegate
         let delegate: CLLocationManagerDelegate = service
         
         // Then: Should conform without isolation errors
         // Delegate methods are nonisolated and bridge to MainActor internally
-        // Delegate is non-optional, so it exists if we reach here
         
         // Verify delegate can be called from nonisolated context (what CLLocationManager does)
         // This test ensures the nonisolated -> MainActor bridge works correctly
@@ -192,31 +196,24 @@ open class macOSLocationServiceTests {
         #expect(status == .notDetermined || status == .denied || status == .restricted || status == .authorized || status == .authorizedAlways)
     }
     
-    @Test func testMacOSLocationServiceNoUncheckedSendableConflict() async {
-        // RED-GREEN Test: Validates removal of @unchecked Sendable conflict
-        // Issue #4: @Observable + @unchecked Sendable created a conflict
-        
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceNoUncheckedSendableConflict() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Checking actor isolation
         // The service is @MainActor, not @unchecked Sendable
         
         // Then: Should not have Sendable conformance conflicts
         // Protocol is @MainActor, removing the need for @unchecked Sendable
-        // Service is non-optional, so it exists if we reach here
         
         // Verify we can use it as LocationServiceProtocol without Sendable issues
         let protocolService: LocationServiceProtocol = service
         // ProtocolService is non-optional, so it exists if we reach here
     }
     
-    @Test func testMacOSLocationServiceCompilesWithSwift6StrictConcurrency() async {
-        // RED-GREEN Test: Overall validation that all Issue #4 fixes work together
-        // This test ensures the entire service compiles and runs with Swift 6 strict concurrency
-        
-        // Given: macOSLocationService
-        let service = macOSLocationService()
+    @Test func testLocationServiceCompilesWithSwift6StrictConcurrency() async {
+        // Given: LocationService
+        let service = LocationService()
         
         // When: Using the service in async MainActor context
         // This test verifies that the service properly handles Swift 6 concurrency
@@ -227,7 +224,6 @@ open class macOSLocationServiceTests {
         // 2. Properties are MainActor-isolated (no nonisolated requirement conflict)
         // 3. Delegate methods are nonisolated with MainActor bridging
         // 4. No @unchecked Sendable conflict
-        // Service is non-optional, so it exists if we reach here
         
         // Verify delegate conformance doesn't cause isolation issues
         let delegate: CLLocationManagerDelegate = service

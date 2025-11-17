@@ -94,7 +94,6 @@ open class Layer4PlatformImageArchitectureTests {
         // Then: Delegate should convert UIImage to PlatformImage and call callback
         #expect(Bool(true), "Delegate should convert UIImage to PlatformImage and call callback")  // capturedImage is non-optional
         #expect(capturedImage!.size.width > 0, "PlatformImage should have valid properties")
-        
         #elseif os(macOS)
         // Given: macOS delegate method setup
         var capturedImage: PlatformImage?

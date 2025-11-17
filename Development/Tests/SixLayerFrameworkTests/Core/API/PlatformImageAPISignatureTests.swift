@@ -66,7 +66,6 @@ open class PlatformImageAPISignatureTests {
         // implicitInit is non-optional, so no nil check needed
         #expect(Bool(true), "Implicit parameter initializer should exist for backward compatibility")
         #expect(implicitInit.uiImage == uiImage, "Implicit parameter initializer should work correctly")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         let nsImageInit = PlatformImage(nsImage: nsImage)
@@ -101,7 +100,6 @@ open class PlatformImageAPISignatureTests {
         
         // Verify both produce equivalent results
         #expect(explicitInit.uiImage == implicitInit.uiImage, "Both initializers should produce equivalent results")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         
@@ -137,7 +135,6 @@ open class PlatformImageAPISignatureTests {
         // Test that both old and new patterns work
         let newPattern = PlatformImage(uiImage: uiImage)
         #expect(newPattern.uiImage == callbackPattern.uiImage, "Old and new patterns should be equivalent")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         
@@ -173,7 +170,6 @@ open class PlatformImageAPISignatureTests {
         let implicit = PlatformImage(uiImage)
         let explicit = PlatformImage(uiImage: uiImage)
         #expect(implicit.uiImage == explicit.uiImage, "iOS patterns should be equivalent")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         let implicit = PlatformImage(nsImage)
@@ -201,7 +197,6 @@ open class PlatformImageAPISignatureTests {
         // Test that the result is usable
         #expect(brokenPattern.uiImage == uiImage, "Broken pattern should produce correct result")
         #expect(brokenPattern.size == uiImage.size, "Broken pattern should preserve image properties")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         

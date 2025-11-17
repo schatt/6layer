@@ -112,7 +112,6 @@ open class PlatformImageImplicitConversionTests {
         // Then: Implicit conversion should work in callback context
         #expect(Bool(true), "Implicit conversion should work in Layer 4 callbacks")  // capturedImage is non-optional
         #expect(capturedImage!.uiImage == uiImage, "Callback should receive correctly converted PlatformImage")
-        
         #elseif os(macOS)
         // Given: NSImage and Layer 4 components
         let nsImage = createTestNSImage()

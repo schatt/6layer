@@ -360,10 +360,7 @@ struct FallbackOCRView: View {
     }
     
     private func performMockOCR() async throws -> OCRResult {
-        // Simulate processing time
-        try await Task.sleep(nanoseconds: 1_000_000_000) // 1 second
-        
-        // Create mock result based on context
+        // Create mock result immediately (no artificial delay needed for mock/stub code)
         let mockText = generateMockText(for: context)
         let mockBoundingBoxes = generateMockBoundingBoxes(for: mockText)
         let mockTextTypes = generateMockTextTypes(for: mockText, context: context)

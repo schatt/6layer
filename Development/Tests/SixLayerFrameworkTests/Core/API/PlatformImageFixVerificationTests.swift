@@ -34,7 +34,6 @@ open class PlatformImageFixVerificationTests {
         
         // Then: Verify it works (would have failed in 4.6.2)
         #expect(platformImage.uiImage == uiImage, "Broken pattern should now work")
-        
         #elseif os(macOS)
         // Given: The exact code that was broken in 4.6.2
         let nsImage = createTestNSImage()
@@ -60,7 +59,6 @@ open class PlatformImageFixVerificationTests {
         
         // Both should work and produce equivalent results
         #expect(oldPattern.uiImage == newPattern.uiImage, "Both patterns should work")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         
@@ -89,7 +87,6 @@ open class PlatformImageFixVerificationTests {
         // Both should work (would have failed in 4.6.2)
         #expect(capturedImage.uiImage == uiImage, "Camera callback should work")
         #expect(selectedImage.uiImage == uiImage, "Photo picker callback should work")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         

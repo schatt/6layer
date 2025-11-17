@@ -94,7 +94,6 @@ open class PlatformImageArchitectureTests {
         // Test reverse conversion (leaving the country)
         let convertedBack = platformImage.uiImage
         #expect(convertedBack == uiImage, "PlatformImage → UIImage conversion should work")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         

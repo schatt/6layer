@@ -1,12 +1,51 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.0.0 - Major Testing and Accessibility Release** 🎯
+## 📍 **Current Release: v5.1.0 - PlatformImage EXIF GPS Location Extraction** 🎯
 
 **Release Date**: January 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v4.9.1 - Field Ordering and Accessibility Improvements  
-**Note**: Major release focusing on comprehensive testing maturity and advanced accessibility compliance  
+**Previous Release**: v5.0.0 - Major Testing and Accessibility Release  
+**Note**: Minor release adding cross-platform EXIF GPS location extraction to PlatformImage (GitHub Issue #21)  
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.1.0 - PlatformImage EXIF GPS Location Extraction** (January 2025)
+
+### **What's New:**
+
+#### **📸 PlatformImage EXIF GPS Location Extraction (Issue #21)**
+- **Cross-Platform EXIF Access**: New `PlatformImageEXIF` struct provides clean API for accessing EXIF metadata
+- **GPS Location Extraction**: `image.exif.gpsLocation` returns `CLLocation?` from image EXIF metadata
+- **Quick GPS Check**: `image.exif.hasGPSLocation` provides boolean check for GPS metadata presence
+- **Platform Abstraction**: Eliminates need for platform-specific code (`UIImage` on iOS, `NSImage` on macOS)
+- **Comprehensive EXIF Parsing**: Supports decimal degrees and degrees/minutes/seconds coordinate formats
+- **Error Handling**: Returns `nil` gracefully for images without GPS metadata or invalid data
+- **Extensible Design**: API designed for future EXIF properties (dateTaken, cameraModel, etc.)
+
+### **Technical Changes:**
+- Added `PlatformImageEXIF` struct to `Framework/Sources/Core/Models/PlatformImageEXIF.swift`
+- Extended `PlatformImage` with `exif` property accessor
+- Cross-platform image data extraction preserving EXIF metadata
+- Comprehensive EXIF GPS parsing with support for altitude, accuracy, and timestamp
+
+### **Testing:**
+- **9 Comprehensive Tests**: All tests passing
+- **TDD Implementation**: Follows Test-Driven Development principles (RED → GREEN)
+- **Test Location**: `Development/Tests/SixLayerFrameworkTests/Core/Models/PlatformImageEXIFTests.swift`
+
+### **Use Cases:**
+- Fuel receipt OCR: Extract location from receipt photos to identify gas stations
+- Photo organization: Group photos by location
+- Travel logging: Track where photos were taken
+- Location-based features: Use photo location for context-aware functionality
+
+### **Migration Guide:**
+- **No Migration Required**: Pure addition feature with no breaking changes
+- **For Custom EXIF Code**: Migrate from platform-specific code to `image.exif.gpsLocation` API
+
+### **Release Notes Summary:**
+This minor release adds cross-platform EXIF GPS location extraction capabilities to `PlatformImage`, implementing GitHub Issue #21. The feature provides a clean, intuitive API for accessing GPS location data from image EXIF metadata without requiring platform-specific code.
 
 ---
 

@@ -144,7 +144,6 @@ open class PlatformImageBreakingChangeDetectionTests {
         // platformImage is non-optional, so no nil check needed
         #expect(Bool(true), "Implicit parameter pattern should work")
         #expect(platformImage.uiImage == uiImage, "Implicit parameter should produce correct result")
-        
         #elseif os(macOS)
         // Given: The exact API pattern that was broken
         let nsImage = createTestNSImage()
@@ -198,7 +197,6 @@ open class PlatformImageBreakingChangeDetectionTests {
         #expect(Bool(true), "Photo picker callback should work")  // selectedImage is non-optional
         #expect(capturedImage!.uiImage == testUIImage, "Camera callback should produce correct result")
         #expect(selectedImage!.uiImage == testUIImage, "Photo picker callback should produce correct result")
-        
         #elseif os(macOS)
         // macOS equivalent test
         var capturedImage: PlatformImage?

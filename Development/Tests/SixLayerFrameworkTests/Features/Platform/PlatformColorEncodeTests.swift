@@ -147,7 +147,7 @@ open class PlatformColorEncodeTests {
             // Verify platform-specific encoding
             #if os(iOS)
             #expect(encodedData.count > 0, "iOS encoding should produce data")
-            #elseif os(macOS)
+        #elseif os(macOS)
             #expect(encodedData.count > 0, "macOS encoding should produce data")
             #endif
             

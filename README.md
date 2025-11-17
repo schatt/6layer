@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.0.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.1.0")
 ]
 ```
 
@@ -41,9 +41,14 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.0.0
+## 🆕 Latest Release: v5.1.0
 
-### **Major Testing and Accessibility Release**
+### **PlatformImage EXIF GPS Location Extraction**
+📸 **Cross-Platform EXIF Access**: New `PlatformImageEXIF` struct provides clean API for accessing EXIF metadata
+📍 **GPS Location Extraction**: `image.exif.gpsLocation` returns `CLLocation?` from image EXIF metadata
+🔧 **Platform Abstraction**: Eliminates need for platform-specific code (`UIImage` on iOS, `NSImage` on macOS)
+
+### **Previous Release: v5.0.0 - Major Testing and Accessibility Release**
 🎯 **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
 ♿ **Advanced Accessibility Overhaul**: Complete accessibility system with automatic identifier generation
 🧪 **Testing Infrastructure Revolution**: Comprehensive testing with 800+ tests and full platform coverage

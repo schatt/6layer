@@ -1,13 +1,20 @@
 //
-//  macOSLocationService.swift
+//  LocationService.swift
 //  SixLayerFramework
 //
-//  macOS-specific location service implementation with proper Swift 6 actor isolation
+//  Cross-platform location service implementation
+//  Properly handles actor isolation for Swift 6 strict concurrency
 //
 
 import Foundation
 import CoreLocation
 import Combine
+
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 // MARK: - Location Service Protocol
 
@@ -36,12 +43,43 @@ public protocol LocationServiceProtocol {
     func getCurrentLocation() async throws -> CLLocation
 }
 
-// MARK: - macOS Location Service
+// MARK: - Location Service Errors
 
-/// macOS-specific location service implementation
+public enum LocationServiceError: LocalizedError {
+    case servicesDisabled
+    case unauthorized
+    case denied
+    case restricted
+    case authorizationTimeout
+    case locationTimeout
+    case unknown
+
+    public var errorDescription: String? {
+        switch self {
+        case .servicesDisabled:
+            return "Location services are disabled on this device"
+        case .unauthorized:
+            return "Location access is not authorized"
+        case .denied:
+            return "Location access was denied by the user"
+        case .restricted:
+            return "Location access is restricted"
+        case .authorizationTimeout:
+            return "Authorization request timed out"
+        case .locationTimeout:
+            return "Location request timed out"
+        case .unknown:
+            return "An unknown location error occurred"
+        }
+    }
+}
+
+// MARK: - Cross-Platform Location Service
+
+/// Cross-platform location service implementation
 /// Properly handles actor isolation for Swift 6 strict concurrency
 @MainActor
-public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate {
+public final class LocationService: NSObject, LocationServiceProtocol, CLLocationManagerDelegate {
 
     // MARK: - Public Properties
 
@@ -73,16 +111,26 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             throw LocationServiceError.servicesDisabled
         }
 
-        // On macOS, we need to request authorization
+        // Request authorization (platform-specific)
+        #if os(iOS)
+        locationManager.requestWhenInUseAuthorization()
+        #elseif os(macOS)
         locationManager.requestAlwaysAuthorization()
+        #else
+        // Other platforms may not support location services
+        throw LocationServiceError.servicesDisabled
+        #endif
 
         // Wait for authorization response
         try await withCheckedThrowingContinuation { continuation in
             self.authorizationContinuation = continuation
 
             // Set a timeout in case the user doesn't respond
+            // In test mode, use a shorter timeout to prevent test hangs
+            let timeoutNanoseconds: UInt64 = Self.isTestMode ? 1_000_000_000 : 30_000_000_000 // 1 second in tests, 30 seconds in production
+            
             Task {
-                try await Task.sleep(nanoseconds: 30_000_000_000) // 30 seconds
+                try await Task.sleep(nanoseconds: timeoutNanoseconds)
                 if let continuation = self.authorizationContinuation {
                     self.authorizationContinuation = nil
                     continuation.resume(throwing: LocationServiceError.authorizationTimeout)
@@ -97,10 +145,21 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             return
         }
 
+        // Check authorization status (platform-specific)
+        #if os(iOS)
+        guard authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse else {
+            error = LocationServiceError.unauthorized
+            return
+        }
+        #elseif os(macOS)
         guard authorizationStatus == .authorizedAlways else {
             error = LocationServiceError.unauthorized
             return
         }
+        #else
+        error = LocationServiceError.servicesDisabled
+        return
+        #endif
 
         locationManager.startUpdatingLocation()
     }
@@ -114,9 +173,18 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             throw LocationServiceError.servicesDisabled
         }
 
+        // Check authorization status (platform-specific)
+        #if os(iOS)
+        guard authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse else {
+            throw LocationServiceError.unauthorized
+        }
+        #elseif os(macOS)
         guard authorizationStatus == .authorizedAlways else {
             throw LocationServiceError.unauthorized
         }
+        #else
+        throw LocationServiceError.servicesDisabled
+        #endif
 
         // Start location updates temporarily
         locationManager.startUpdatingLocation()
@@ -126,8 +194,11 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
             self.locationContinuation = continuation
 
             // Set a timeout
+            // In test mode, use a shorter timeout to prevent test hangs
+            let timeoutNanoseconds: UInt64 = Self.isTestMode ? 1_000_000_000 : 10_000_000_000 // 1 second in tests, 10 seconds in production
+            
             Task {
-                try await Task.sleep(nanoseconds: 10_000_000_000) // 10 seconds
+                try await Task.sleep(nanoseconds: timeoutNanoseconds)
                 if let continuation = self.locationContinuation {
                     self.locationContinuation = nil
                     continuation.resume(throwing: LocationServiceError.locationTimeout)
@@ -198,49 +269,29 @@ public final class macOSLocationService: NSObject, LocationServiceProtocol, CLLo
 
     // MARK: - Private Methods
 
+    /// Check if we're running in test mode
+    private static var isTestMode: Bool {
+        let environment = ProcessInfo.processInfo.environment
+        return environment["XCTestConfigurationFilePath"] != nil ||
+               environment["XCTestSessionIdentifier"] != nil ||
+               NSClassFromString("XCTestCase") != nil
+    }
+
     private func updateLocationEnabledStatus() {
         #if os(iOS)
         isLocationEnabled = CLLocationManager.locationServicesEnabled() &&
                            (authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse)
-        #else
+        #elseif os(macOS)
         isLocationEnabled = CLLocationManager.locationServicesEnabled() &&
                            (authorizationStatus == .authorizedAlways)
+        #else
+        isLocationEnabled = false
         #endif
-    }
-}
-
-// MARK: - Location Service Errors
-
-public enum LocationServiceError: LocalizedError {
-    case servicesDisabled
-    case unauthorized
-    case denied
-    case restricted
-    case authorizationTimeout
-    case locationTimeout
-    case unknown
-
-    public var errorDescription: String? {
-        switch self {
-        case .servicesDisabled:
-            return "Location services are disabled on this device"
-        case .unauthorized:
-            return "Location access is not authorized"
-        case .denied:
-            return "Location access was denied by the user"
-        case .restricted:
-            return "Location access is restricted"
-        case .authorizationTimeout:
-            return "Authorization request timed out"
-        case .locationTimeout:
-            return "Location request timed out"
-        case .unknown:
-            return "An unknown location error occurred"
-        }
     }
 }
 
 // MARK: - Thread Safety
 
-// macOSLocationService is marked @MainActor and implements proper async/await patterns,
+// LocationService is marked @MainActor and implements proper async/await patterns,
 // making it safe to use within the main actor context
+

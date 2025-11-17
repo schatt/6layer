@@ -199,7 +199,6 @@ open class PlatformPhotoComponentsLayer4IntegrationTests {
         let callbackResult = PlatformImage(uiImage)
         // callbackResult is a non-optional PlatformImage, so it exists if we reach here
         #expect(callbackResult.uiImage == uiImage, "Callback pattern should produce correct result")
-        
         #elseif os(macOS)
         let nsImage = createTestNSImage()
         
