@@ -1,16 +1,18 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.1.0 - PlatformImage EXIF GPS Location Extraction** 🎯
+## 📍 **Current Release: v5.1.1 - PlatformImage EXIF GPS Location Extraction** 🎯
 
 **Release Date**: January 2025  
 **Status**: ✅ **COMPLETE**  
 **Previous Release**: v5.0.0 - Major Testing and Accessibility Release  
-**Note**: Minor release adding cross-platform EXIF GPS location extraction to PlatformImage (GitHub Issue #21)  
+**Note**: Minor release adding cross-platform EXIF GPS location extraction to PlatformImage (GitHub Issue #21) and test improvements  
 **Next Release**: TBD
 
 ---
 
-## 🎯 **v5.1.0 - PlatformImage EXIF GPS Location Extraction** (January 2025)
+## 🎯 **v5.1.1 - PlatformImage EXIF GPS Location Extraction** (January 2025)
+
+**Note**: v5.1.0 was retracted due to incomplete test fixes. v5.1.1 includes all fixes.
 
 ### **What's New:**
 
@@ -29,8 +31,14 @@
 - Cross-platform image data extraction preserving EXIF metadata
 - Comprehensive EXIF GPS parsing with support for altitude, accuracy, and timestamp
 
+### **Test Improvements:**
+- **Fixed PlatformMessagingLayer5ComponentAccessibilityTests**: Added missing banner ID definition
+- **Split Platform Config Tests**: Separated into individual tests per platform (single responsibility)
+- **Improved Test Organization**: Better test structure following single responsibility principle
+- **All 2695 Tests Passing**: Complete test suite verification
+
 ### **Testing:**
-- **9 Comprehensive Tests**: All tests passing
+- **9 Comprehensive EXIF Tests**: All tests passing
 - **TDD Implementation**: Follows Test-Driven Development principles (RED → GREEN)
 - **Test Location**: `Development/Tests/SixLayerFrameworkTests/Core/Models/PlatformImageEXIFTests.swift`
 
