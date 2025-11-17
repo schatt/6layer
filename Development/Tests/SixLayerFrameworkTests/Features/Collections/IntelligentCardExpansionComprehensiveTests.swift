@@ -450,7 +450,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     @Test func testGetCardExpansionPlatformConfig() async {
         await MainActor.run {
             // Test iOS platform configuration
-            RuntimeCapabilityDetection.setTestPlatform(.iOS)
+            TestSetupUtilities.shared.simulatePlatform(.iOS)
             // Verify test platform is set correctly
             let currentPlatform = RuntimeCapabilityDetection.currentPlatform
             #expect(currentPlatform == .iOS, "Test platform should be iOS, got \(currentPlatform)")
@@ -473,7 +473,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
             // Test macOS platform configuration
-            RuntimeCapabilityDetection.setTestPlatform(.macOS)
+            TestSetupUtilities.shared.simulatePlatform(.macOS)
             config = getCardExpansionPlatformConfig()
             // Platform config creation succeeded (non-optional result)
             TestSetupUtilities.shared.assertCardExpansionConfig(
@@ -487,7 +487,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             // Test watchOS platform configuration
-            RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+            TestSetupUtilities.shared.simulatePlatform(.watchOS)
             config = getCardExpansionPlatformConfig()
             // Platform config creation succeeded (non-optional result)
             TestSetupUtilities.shared.assertCardExpansionConfig(
@@ -501,7 +501,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             // Test tvOS platform configuration
-            RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+            TestSetupUtilities.shared.simulatePlatform(.tvOS)
             config = getCardExpansionPlatformConfig()
             // Platform config creation succeeded (non-optional result)
             TestSetupUtilities.shared.assertCardExpansionConfig(
