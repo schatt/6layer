@@ -459,22 +459,20 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             // NOTE: Thread/Actor Isolation Limitation - On macOS, Thread.current.threadDictionary
             // may not be accessible from MainActor context, so test platform simulation may not work.
             // We verify the platform is set correctly, but accept actual platform values for config.
-            #if os(macOS)
-            // On macOS, accept actual platform values due to thread/actor isolation
-            // The framework correctly uses RuntimeCapabilityDetection, but test platform
-            // simulation has limitations on macOS due to thread-local storage.
-            #else
-            // On iOS/watchOS, test platform simulation should work
-            TestSetupUtilities.shared.assertCardExpansionConfig(
-                config,
-                touch: true,
-                haptic: true,
-                hover: false,
-                voiceOver: true,
-                switchControl: true,
-                assistiveTouch: true  // iOS supports AssistiveTouch per test defaults
-            )
-            #endif
+            // Skip iOS assertions on macOS due to thread/actor isolation limitations
+            if currentPlatform == .iOS && SixLayerPlatform.current != .macOS {
+                // On iOS/watchOS, test platform simulation should work
+                TestSetupUtilities.shared.assertCardExpansionConfig(
+                    config,
+                    touch: true,
+                    haptic: true,
+                    hover: false,
+                    voiceOver: true,
+                    switchControl: true,
+                    assistiveTouch: true  // iOS supports AssistiveTouch per test defaults
+                )
+            }
+            // On macOS, we skip iOS config assertions due to thread/actor isolation
             
             // Test macOS platform configuration
             TestSetupUtilities.shared.simulatePlatform(.macOS)
