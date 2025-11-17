@@ -41,18 +41,15 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
     
     // MARK: - Test Data Setup
     
-    private var testImage: PlatformImage!
-    
+    // Helper method - creates fresh test image for each test (test isolation)
     @MainActor
-    public override init() {
-        super.init()
-        // Create a test image (placeholder for now)
+    private func createTestImage() -> PlatformImage {
         #if os(iOS)
-        testImage = PlatformImage(uiImage: UIImage(systemName: "photo") ?? UIImage())
+        return PlatformImage(uiImage: UIImage(systemName: "photo") ?? UIImage())
         #elseif os(macOS)
-        testImage = PlatformImage(nsImage: NSImage(systemSymbolName: "photo", accessibilityDescription: "Test photo") ?? NSImage())
+        return PlatformImage(nsImage: NSImage(systemSymbolName: "photo", accessibilityDescription: "Test photo") ?? NSImage())
         #else
-        testImage = PlatformImage()
+        return PlatformImage()
         #endif
     }
     

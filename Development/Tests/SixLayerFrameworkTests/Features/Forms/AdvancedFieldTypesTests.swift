@@ -23,12 +23,9 @@ import UniformTypeIdentifiers
 open class AdvancedFieldTypesTests: BaseTestClass {
 
     // MARK: - Test Setup/Teardown
-
-    override init() {
-        super.init()
-        // NOTE: CustomFieldRegistry.shared.reset() should be called in test methods, not init()
-        // BaseTestClass handles setup automatically - no singleton access in init()
-    }
+    
+    // BaseTestClass.init() is final - no override needed
+    // CustomFieldRegistry.shared.reset() should be called in test methods, not init()
     
     // MARK: - Test Data Setup
     

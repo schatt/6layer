@@ -43,18 +43,9 @@ import TabularData
 open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // Helper method - creates fresh data for each test (test isolation)
-
-    
-    private func createTestDataFrame() -> DataFrame = DataFrame() {
-
-    
-        return createTestDataFrame()
-
-    
+    private func createTestDataFrame() -> DataFrame {
+        return DataFrame()
     }
-
-    
-    // BaseTestClass handles setup automatically - no init() needed
     
     // MARK: - Basic DataFrame Analysis Tests
     
@@ -63,7 +54,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Analyzing the DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: testDataFrame, hints: hints)
+        let view = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
         
         // Then: Should return a view
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -78,7 +69,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         )
         
         // When: Analyzing the DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: testDataFrame, hints: hints)
+        let view = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
         
         // Then: Should return a view
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -100,7 +91,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     @Test func testPlatformCompareDataFrames_L1_Basic() {
         // Given: Multiple test DataFrames
-        let dataFrames = [testDataFrame, createTestDataFrame2()]
+        let dataFrames = [createTestDataFrame(), createTestDataFrame2()]
         let hints = DataFrameAnalysisHints()
         
         // When: Comparing DataFrames
@@ -112,7 +103,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     @Test func testPlatformCompareDataFrames_L1_SingleDataFrame() {
         // Given: Single DataFrame
-        let dataFrames = [testDataFrame]
+        let dataFrames = [createTestDataFrame()]
         let hints = DataFrameAnalysisHints()
         
         // When: Comparing single DataFrame
@@ -233,7 +224,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Analyzing the DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: testDataFrame, hints: hints)
+        let view = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
         
         // Then: Should integrate with existing systems
         #expect(Bool(true), "view is non-optional")  // view is non-optional

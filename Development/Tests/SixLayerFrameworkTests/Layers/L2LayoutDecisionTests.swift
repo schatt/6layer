@@ -15,33 +15,25 @@ import SwiftUI
 @Suite("L Layout Decision")
 open class L2LayoutDecisionTests: BaseTestClass {
     
-    // MARK: - Test Data
+    // MARK: - Test Data Helpers (test isolation - each test creates fresh data)
     
-    private var sampleItems: [GenericDataItem] = []
-    private var sampleHints: PresentationHints = PresentationHints()
-    private var sampleOCRContext: OCRContext = OCRContext()
-    private var samplePhotoContext: PhotoContext = PhotoContext(
-        screenSize: CGSize(width: 375, height: 667),
-        availableSpace: CGSize(width: 375, height: 667),
-        userPreferences: PhotoPreferences(),
-        deviceCapabilities: PhotoDeviceCapabilities()
-    )
+    // Note: createSampleItems() method already exists below - no need to duplicate
     
-    init() async throws {
-        sampleItems = createSampleItems()
-        sampleHints = PresentationHints()
-        sampleOCRContext = OCRContext()
-        samplePhotoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 667),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
+    private func createSampleHints() -> PresentationHints {
+        return PresentationHints()
+    }
+    
+    private func createSampleOCRContext() -> OCRContext {
+        return OCRContext()
+    }
+    
+    private func createSamplePhotoContext() -> PhotoContext {
+        return createPhotoContext() // Use BaseTestClass helper
     }    // MARK: - Generic Layout Decision Tests
     
     @Test func testDetermineOptimalLayout_L2_WithSmallItemCount() {
         // Given
-        let items = Array(sampleItems.prefix(3))
+        let items = Array(createSampleItems().prefix(3))
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .compact,

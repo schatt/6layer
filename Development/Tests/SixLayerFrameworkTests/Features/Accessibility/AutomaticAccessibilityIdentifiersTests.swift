@@ -13,12 +13,9 @@ import SwiftUI
 open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     // MARK: - Test Setup
-
-    override init() {
-        super.init()
-        // BaseTestClass already sets up testConfig - no need to access .shared
-        // Tests will use runWithTaskLocalConfig() to automatically use isolated config
-    }
+    
+    // BaseTestClass.init() is final - no override needed
+    // BaseTestClass already sets up testConfig - use runWithTaskLocalConfig() for isolated config
 
     // MARK: - Namespace Detection Tests
     

@@ -15,12 +15,11 @@ import SwiftUI
 @Suite("Modal Form L")
 open class ModalFormL1Tests: BaseTestClass {
     
-    // MARK: - Test Data
+    // MARK: - Test Data Helpers (test isolation - each test creates fresh data)
     
-    private var sampleHints: PresentationHints = PresentationHints()
-    
-    override init() {
-        sampleHints = PresentationHints()
+    // Helper method - creates fresh hints for each test (test isolation)
+    private func createSampleHints() -> PresentationHints {
+        return PresentationHints()
     }    // MARK: - Modal Form Tests
     
     @Test func testPlatformPresentModalForm_L1() {

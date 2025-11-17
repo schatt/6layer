@@ -19,8 +19,9 @@ open class BaseTestClass {
     // MARK: - Test Setup
     
     @MainActor
-    public init() {
-        // Ensure default accessibility test configuration is applied for all tests
+    public final init() {
+        // BaseTestClass handles all setup automatically
+        // Subclasses should NOT override init() - use helper methods to create test data instead
         setupTestEnvironment()
     }
     
