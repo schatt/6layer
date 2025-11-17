@@ -447,13 +447,14 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Layer 5 Tests: Platform Optimization
     
-    @Test func testGetCardExpansionPlatformConfig() {
-        // Test iOS platform configuration
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
-        // Verify test platform is set correctly
-        let currentPlatform = RuntimeCapabilityDetection.currentPlatform
-        #expect(currentPlatform == .iOS, "Test platform should be iOS, got \(currentPlatform)")
-        var config = getCardExpansionPlatformConfig()
+    @Test func testGetCardExpansionPlatformConfig() async {
+        await MainActor.run {
+            // Test iOS platform configuration
+            RuntimeCapabilityDetection.setTestPlatform(.iOS)
+            // Verify test platform is set correctly
+            let currentPlatform = RuntimeCapabilityDetection.currentPlatform
+            #expect(currentPlatform == .iOS, "Test platform should be iOS, got \(currentPlatform)")
+            var config = getCardExpansionPlatformConfig()
         // Platform config creation succeeded (non-optional result)
         // TODO: Thread/Actor Isolation Issue - The test platform is set correctly (currentPlatform == .iOS),
         // but getCardExpansionPlatformConfig() may not be accessing test defaults due to thread/actor isolation
@@ -471,64 +472,65 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             assistiveTouch: true  // iOS supports AssistiveTouch per test defaults
         )
         
-        // Test macOS platform configuration
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
-        config = getCardExpansionPlatformConfig()
-        // Platform config creation succeeded (non-optional result)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: false,
-            haptic: false,
-            hover: true,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: false
-        )
-        
-        // Test watchOS platform configuration
-        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
-        config = getCardExpansionPlatformConfig()
-        // Platform config creation succeeded (non-optional result)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: true,
-            haptic: true,
-            hover: false,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: true
-        )
-        
-        // Test tvOS platform configuration
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
-        config = getCardExpansionPlatformConfig()
-        // Platform config creation succeeded (non-optional result)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: false,
-            haptic: false,
-            hover: false,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: false
-        )
-        
-        // Test visionOS platform configuration
-        TestSetupUtilities.shared.simulatePlatform(.visionOS)
-        config = getCardExpansionPlatformConfig()
-        // Platform config creation succeeded (non-optional result)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: true,
-            haptic: true,
-            hover: true,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: true
-        )
-        
-        // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
-        #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
+            // Test macOS platform configuration
+            RuntimeCapabilityDetection.setTestPlatform(.macOS)
+            config = getCardExpansionPlatformConfig()
+            // Platform config creation succeeded (non-optional result)
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: false,
+                haptic: false,
+                hover: true,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: false
+            )
+            
+            // Test watchOS platform configuration
+            RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+            config = getCardExpansionPlatformConfig()
+            // Platform config creation succeeded (non-optional result)
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: false,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true
+            )
+            
+            // Test tvOS platform configuration
+            RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+            config = getCardExpansionPlatformConfig()
+            // Platform config creation succeeded (non-optional result)
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: false,
+                haptic: false,
+                hover: false,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: false
+            )
+            
+            // Test visionOS platform configuration
+            TestSetupUtilities.shared.simulatePlatform(.visionOS)
+            config = getCardExpansionPlatformConfig()
+            // Platform config creation succeeded (non-optional result)
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: true,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true
+            )
+            
+            // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
+            #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
+        }
     }
     
     @Test func testGetCardExpansionPerformanceConfig() {
