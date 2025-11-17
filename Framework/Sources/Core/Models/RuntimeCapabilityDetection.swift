@@ -551,8 +551,8 @@ public struct RuntimeCapabilityDetection {
     // MARK: - Vision Framework Detection
     
     /// Detects if Vision framework is actually available
-    @MainActor
-    public static var supportsVision: Bool {
+    /// Note: nonisolated - only returns compile-time constants or test defaults (no MainActor needed)
+    nonisolated public static var supportsVision: Bool {
         // Use testing defaults if test platform is set OR if in testing mode
         if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsVision
@@ -588,8 +588,8 @@ public struct RuntimeCapabilityDetection {
     // MARK: - OCR Detection
     
     /// Detects if OCR capabilities are actually available
-    @MainActor
-    public static var supportsOCR: Bool {
+    /// Note: nonisolated - only returns compile-time constants or test defaults (no MainActor needed)
+    nonisolated public static var supportsOCR: Bool {
         // Use testing defaults if test platform is set OR if in testing mode
         if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
             return getTestDefaults().supportsOCR
