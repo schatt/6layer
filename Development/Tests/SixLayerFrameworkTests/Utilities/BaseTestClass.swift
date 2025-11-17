@@ -26,7 +26,8 @@ open class BaseTestClass {
     
     @MainActor
     open func setupTestEnvironment() {
-        TestSetupUtilities.shared.setupTestingEnvironment()
+        // NOTE: No need to clear capability overrides - each test runs in its own thread
+        // Thread-local storage (Thread.current.threadDictionary) is already empty per thread
         
         // CRITICAL: Create isolated config instance for this test (per-test isolation)
         // Each test runs in its own task, so @TaskLocal provides automatic isolation

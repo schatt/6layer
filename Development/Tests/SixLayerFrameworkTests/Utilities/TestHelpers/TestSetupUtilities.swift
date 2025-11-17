@@ -24,19 +24,19 @@ public class TestSetupUtilities {
     
     /// Sets up the testing environment with predictable platform capabilities
     /// Call this in setUp() methods of test classes
-    @MainActor
-    public func setupTestingEnvironment() {
+    /// Note: nonisolated - only accesses thread-local storage (no MainActor needed)
+    nonisolated public func setupTestingEnvironment() {
         // TestingCapabilityDetection.isTestingMode is automatically enabled in test environment
-        // Reset any existing overrides
-        clearAllCapabilityOverrides()
+        // Reset any existing overrides (thread-local storage, no MainActor needed)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     /// Cleans up the testing environment
     /// Call this in tearDown() methods of test classes
-    @MainActor
-    public func cleanupTestingEnvironment() {
-        // Clear all overrides
-        clearAllCapabilityOverrides()
+    /// Note: nonisolated - only accesses thread-local storage (no MainActor needed)
+    nonisolated public func cleanupTestingEnvironment() {
+        // Clear all overrides (thread-local storage, no MainActor needed)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Platform Simulation
@@ -111,7 +111,8 @@ public class TestSetupUtilities {
     }
     
     /// Clears all capability overrides
-    public func clearAllCapabilityOverrides() {
+    /// Note: nonisolated - only accesses thread-local storage (no MainActor needed)
+    nonisolated public func clearAllCapabilityOverrides() {
         RuntimeCapabilityDetection.setTestTouchSupport(nil)
         RuntimeCapabilityDetection.setTestHapticFeedback(nil)
         RuntimeCapabilityDetection.setTestHover(nil)
