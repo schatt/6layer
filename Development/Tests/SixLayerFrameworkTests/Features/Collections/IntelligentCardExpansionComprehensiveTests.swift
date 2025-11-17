@@ -460,19 +460,19 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             // may not be accessible from MainActor context, so test platform simulation may not work.
             // We verify the platform is set correctly, but accept actual platform values for config.
             // Skip iOS assertions when running on macOS due to thread/actor isolation limitations
-            let actualPlatform = SixLayerPlatform.current
-            if actualPlatform != .macOS {
-                // On iOS/watchOS, test platform simulation should work
-                TestSetupUtilities.shared.assertCardExpansionConfig(
-                    config,
-                    touch: true,
-                    haptic: true,
-                    hover: false,
-                    voiceOver: true,
-                    switchControl: true,
-                    assistiveTouch: true  // iOS supports AssistiveTouch per test defaults
-                )
-            }
+            // Only assert iOS config if we're actually running on iOS (not macOS)
+            #if !os(macOS)
+            // On iOS/watchOS, test platform simulation should work
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: false,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true  // iOS supports AssistiveTouch per test defaults
+            )
+            #endif
             // On macOS, we skip iOS config assertions due to thread/actor isolation
             
             // Test macOS platform configuration
