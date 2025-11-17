@@ -21,11 +21,19 @@ import Metal
 enum LiquidGlassRuntimeDetection {
     // Optional override for tests/integration: set to true/false to force support
     // Use via LiquidGlassRuntimeDetection.overrideSupport in tests.
-    @MainActor
-    static var overrideSupport: Bool? = nil
+    // Note: Thread-local storage to avoid MainActor blocking
+    static var overrideSupport: Bool? {
+        get {
+            return Thread.current.threadDictionary["LiquidGlassOverrideSupport"] as? Bool
+        }
+        set {
+            Thread.current.threadDictionary["LiquidGlassOverrideSupport"] = newValue
+        }
+    }
 
-    @MainActor
-    static func detectSupport() -> Bool {
+    /// Detect Liquid Glass support
+    /// Note: nonisolated - only accesses thread-local storage (no MainActor needed)
+    nonisolated static func detectSupport() -> Bool {
         // Test override takes precedence
         if let forced = overrideSupport { return forced }
 
@@ -42,21 +50,21 @@ enum LiquidGlassRuntimeDetection {
 public struct LiquidGlassCapabilityDetection {
     
     /// Check if Liquid Glass is supported on the current platform
-    @MainActor
-    public static var isSupported: Bool {
+    /// Note: nonisolated - only accesses thread-local storage (no MainActor needed)
+    nonisolated public static var isSupported: Bool {
         return LiquidGlassRuntimeDetection.detectSupport()
     }
     
     /// Get the current platform's Liquid Glass support level
-    @MainActor
-    public static var supportLevel: LiquidGlassSupportLevel {
+    /// Note: nonisolated - only accesses nonisolated property (no MainActor needed)
+    nonisolated public static var supportLevel: LiquidGlassSupportLevel {
         // Current platforms should use fallback support level
         return isSupported ? .full : .fallback
     }
     
     /// Check if specific Liquid Glass features are available
-    @MainActor
-    public static func isFeatureAvailable(_ feature: LiquidGlassFeature) -> Bool {
+    /// Note: nonisolated - only accesses nonisolated property (no MainActor needed)
+    nonisolated public static func isFeatureAvailable(_ feature: LiquidGlassFeature) -> Bool {
         // Features are only available when Liquid Glass is supported
         guard isSupported else { return false }
         // If supported in the future, feature gating can be refined per-case.
@@ -116,8 +124,9 @@ public struct LiquidGlassCapabilityInfo {
     public let availableFeatures: [LiquidGlassFeature]
     public let fallbackBehaviors: [LiquidGlassFeature: LiquidGlassFallbackBehavior]
     
-    @MainActor
-    public init() {
+    /// Initialize capability info
+    /// Note: nonisolated - only accesses nonisolated properties (no MainActor needed)
+    nonisolated public init() {
         self.isSupported = LiquidGlassCapabilityDetection.isSupported
         self.supportLevel = LiquidGlassCapabilityDetection.supportLevel
         self.availableFeatures = LiquidGlassFeature.allCases.filter { 
@@ -136,13 +145,14 @@ public struct LiquidGlassCapabilityInfo {
 extension LiquidGlassCapabilityDetection {
     
     /// Get platform-specific capability information
-    @MainActor
-    public static func getPlatformCapabilities() -> LiquidGlassCapabilityInfo {
+    /// Note: nonisolated - only accesses nonisolated initializer (no MainActor needed)
+    nonisolated public static func getPlatformCapabilities() -> LiquidGlassCapabilityInfo {
         return LiquidGlassCapabilityInfo()
     }
     
     /// Check if the current device supports Liquid Glass hardware requirements
-    public static var supportsHardwareRequirements: Bool {
+    /// Note: nonisolated - only returns compile-time constants (no MainActor needed)
+    nonisolated public static var supportsHardwareRequirements: Bool {
         #if os(iOS)
         // Check for Metal support and sufficient GPU capabilities
         return true // Simplified for now
@@ -155,8 +165,8 @@ extension LiquidGlassCapabilityDetection {
     }
     
     /// Get recommended fallback UI approach
-    @MainActor
-    public static var recommendedFallbackApproach: String {
+    /// Note: nonisolated - only accesses nonisolated property (no MainActor needed)
+    nonisolated public static var recommendedFallbackApproach: String {
         // Tests expect mention of standard UI components on unsupported platforms
         if isSupported {
             return "Use full Liquid Glass features"
