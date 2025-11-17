@@ -15,22 +15,11 @@ import SwiftUI
 @Suite("L Strategy Selection")
 open class L3StrategySelectionTests: BaseTestClass {
     
-    // MARK: - Test Data
+    // MARK: - Test Data Helpers (test isolation - each test creates fresh data)
     
-    private var samplePhotoContext: PhotoContext = PhotoContext(
-        screenSize: CGSize(width: 375, height: 667),
-        availableSpace: CGSize(width: 375, height: 667),
-        userPreferences: PhotoPreferences(),
-        deviceCapabilities: PhotoDeviceCapabilities()
-    )
-    
-    init() async throws {
-        samplePhotoContext = PhotoContext(
-            screenSize: CGSize(width: 375, height: 667),
-            availableSpace: CGSize(width: 375, height: 667),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
+    // Helper method - creates fresh PhotoContext for each test (test isolation)
+    private func createSamplePhotoContext() -> PhotoContext {
+        return createPhotoContext() // Use BaseTestClass helper
     }    // MARK: - Card Layout Strategy Tests
     
     @Test func testSelectCardLayoutStrategy_L3_WithSmallContent() {
@@ -693,7 +682,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -709,7 +698,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -725,7 +714,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -741,7 +730,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -757,7 +746,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -773,7 +762,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -789,7 +778,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -805,7 +794,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoCaptureStrategy_L3_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoCaptureStrategy_L3(
@@ -821,7 +810,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -837,7 +826,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -853,7 +842,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -869,7 +858,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -885,7 +874,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -901,7 +890,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -917,7 +906,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(
@@ -933,7 +922,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test func testSelectPhotoDisplayStrategy_L3_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
-        let context = samplePhotoContext
+        let context = createSamplePhotoContext()
         
         // When
         let strategy = selectPhotoDisplayStrategy_L3(

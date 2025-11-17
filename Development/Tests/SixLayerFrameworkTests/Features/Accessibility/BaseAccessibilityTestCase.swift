@@ -4,9 +4,10 @@ import Testing
 
 // Shared base class for accessibility-related tests using the `Testing` framework.
 // Provides common helpers and typealiases to bridge test-local types to framework types.
+// NOTE: This class is currently unused - all tests should inherit from BaseTestClass instead.
 @MainActor
-open class BaseAccessibilityTestCase {
-    public init() async throws {}
+open class BaseAccessibilityTestCase: BaseTestClass {
+    // BaseTestClass.init() is final - no override needed
 
     // Verifies that a SwiftUI view generates accessibility identifiers that match an expected pattern.
     // This is a best-effort helper for unit tests that render lightweight views.

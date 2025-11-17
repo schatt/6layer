@@ -12,36 +12,46 @@ import SwiftUI
 
 class L6PlatformSystemTests: BaseTestClass {
     
-    // MARK: - Test Data
+    // MARK: - Test Data Helpers (test isolation - each test creates fresh data)
     
-    private var samplePlatform: Platform = .iOS
-    private var samplePlatformOptimizationSettings: PlatformOptimizationSettings = PlatformOptimizationSettings(for: .iOS)
-    private var sampleCrossPlatformPerformanceMetrics: CrossPlatformPerformanceMetrics = CrossPlatformPerformanceMetrics()
-    private var samplePlatformUIPatterns: PlatformUIPatterns = PlatformUIPatterns(for: .iOS)
-    // NOTE: PlatformRecommendation moved to possible-features/ - removed from framework tests
-    // private var samplePlatformRecommendation: PlatformRecommendation = ...
-    // private var sampleRecommendationCategory: RecommendationCategory = .performance
-    private var samplePerformanceLevel: PerformanceLevel = .balanced
-    private var sampleMemoryStrategy: MemoryStrategy = .adaptive
-    private var sampleRenderingOptimizations: RenderingOptimizations = RenderingOptimizations(for: .iOS)
-    private var sampleNavigationPatterns: NavigationPatterns = NavigationPatterns(for: .iOS)
-    private var sampleInteractionPatterns: InteractionPatterns = InteractionPatterns(for: .iOS)
-    private var sampleLayoutPatterns: LayoutPatterns = LayoutPatterns(for: .iOS)
+    private func createSamplePlatform() -> Platform {
+        return L6TestDataFactory.createSamplePlatform()
+    }
     
-    init() async throws {
-        samplePlatform = L6TestDataFactory.createSamplePlatform()
-        samplePlatformOptimizationSettings = L6TestDataFactory.createSamplePlatformOptimizationSettings()
-        sampleCrossPlatformPerformanceMetrics = L6TestDataFactory.createSampleCrossPlatformPerformanceMetrics()
-        samplePlatformUIPatterns = L6TestDataFactory.createSamplePlatformUIPatterns()
-        // NOTE: PlatformRecommendation moved to possible-features/
-        // samplePlatformRecommendation = L6TestDataFactory.createSamplePlatformRecommendation()
-        // sampleRecommendationCategory = L6TestDataFactory.createSampleRecommendationCategory()
-        samplePerformanceLevel = L6TestDataFactory.createSamplePerformanceLevel()
-        sampleMemoryStrategy = L6TestDataFactory.createSampleMemoryStrategy()
-        sampleRenderingOptimizations = L6TestDataFactory.createSampleRenderingOptimizations()
-        sampleNavigationPatterns = L6TestDataFactory.createSampleNavigationPatterns()
-        sampleInteractionPatterns = L6TestDataFactory.createSampleInteractionPatterns()
-        sampleLayoutPatterns = L6TestDataFactory.createSampleLayoutPatterns()
+    private func createSamplePlatformOptimizationSettings() -> PlatformOptimizationSettings {
+        return L6TestDataFactory.createSamplePlatformOptimizationSettings()
+    }
+    
+    private func createSampleCrossPlatformPerformanceMetrics() -> CrossPlatformPerformanceMetrics {
+        return L6TestDataFactory.createSampleCrossPlatformPerformanceMetrics()
+    }
+    
+    private func createSamplePlatformUIPatterns() -> PlatformUIPatterns {
+        return L6TestDataFactory.createSamplePlatformUIPatterns()
+    }
+    
+    private func createSamplePerformanceLevel() -> PerformanceLevel {
+        return L6TestDataFactory.createSamplePerformanceLevel()
+    }
+    
+    private func createSampleMemoryStrategy() -> MemoryStrategy {
+        return L6TestDataFactory.createSampleMemoryStrategy()
+    }
+    
+    private func createSampleRenderingOptimizations() -> RenderingOptimizations {
+        return L6TestDataFactory.createSampleRenderingOptimizations()
+    }
+    
+    private func createSampleNavigationPatterns() -> NavigationPatterns {
+        return L6TestDataFactory.createSampleNavigationPatterns()
+    }
+    
+    private func createSampleInteractionPatterns() -> InteractionPatterns {
+        return L6TestDataFactory.createSampleInteractionPatterns()
+    }
+    
+    private func createSampleLayoutPatterns() -> LayoutPatterns {
+        return L6TestDataFactory.createSampleLayoutPatterns()
     }
     
     deinit {
@@ -54,7 +64,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testCrossPlatformOptimizationManager() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let manager = CrossPlatformOptimizationManager(platform: platform)
@@ -68,7 +78,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testCrossPlatformOptimizationManagerOptimizeView() {
         // Given
-        let manager = CrossPlatformOptimizationManager(platform: samplePlatform)
+        let manager = CrossPlatformOptimizationManager(platform: createSamplePlatform())
         let testView = Text("Test View")
         
         // When
@@ -82,7 +92,7 @@ class L6PlatformSystemTests: BaseTestClass {
     /*
     @Test func testCrossPlatformOptimizationManagerGetPlatformRecommendations() {
         // Given
-        let manager = CrossPlatformOptimizationManager(platform: samplePlatform)
+        let manager = CrossPlatformOptimizationManager(platform: createSamplePlatform())
         
         // When
         let recommendations = manager.getPlatformRecommendations()
@@ -97,7 +107,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testPlatformOptimizationSettings() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let settings = PlatformOptimizationSettings(for: platform)
@@ -111,7 +121,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testPlatformOptimizationSettingsFeatureFlags() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let settings = PlatformOptimizationSettings(for: platform)
@@ -229,7 +239,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testRenderingOptimizations() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let optimizations = RenderingOptimizations(for: platform)
@@ -242,7 +252,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testPlatformUIPatterns() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let patterns = PlatformUIPatterns(for: platform)
@@ -255,7 +265,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testNavigationPatterns() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let patterns = NavigationPatterns(for: platform)
@@ -268,7 +278,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testInteractionPatterns() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let patterns = InteractionPatterns(for: platform)
@@ -281,7 +291,7 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testLayoutPatterns() {
         // Given
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let patterns = LayoutPatterns(for: platform)
@@ -308,7 +318,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testPlatformSpecificOptimizations() {
         // Given
         let testView = Text("Test View")
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let optimizedView = testView.platformSpecificOptimizations(for: platform)
@@ -346,7 +356,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testPlatformSystemIntegration() {
         // Given
         let testView = Text("Test View")
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         let settings = samplePlatformOptimizationSettings
         let patterns = samplePlatformUIPatterns
         
@@ -363,7 +373,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testPlatformSystemConsistency() {
         // Given
         let testView = Text("Test View")
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let view1 = testView.platformSpecificOptimizations(for: platform)
@@ -378,7 +388,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testPlatformSystemPerformance() {
         // Given
         let testView = Text("Test View")
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let optimizedView = testView.platformSpecificOptimizations(for: platform)
@@ -392,7 +402,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testPlatformSystemWithEmptyView() {
         // Given
         let emptyView = EmptyView()
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let optimizedView = emptyView.platformSpecificOptimizations(for: platform)
@@ -416,7 +426,7 @@ class L6PlatformSystemTests: BaseTestClass {
                 }
             }
         }
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         
         // When
         let optimizedView = complexView.platformSpecificOptimizations(for: platform)
@@ -482,7 +492,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testSystemIntegrationWithAllLayers() {
         // Given
         let testView = Text("Test View")
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         let settings = samplePlatformOptimizationSettings
         let patterns = samplePlatformUIPatterns
         
@@ -500,7 +510,7 @@ class L6PlatformSystemTests: BaseTestClass {
     @Test func testSystemIntegrationPerformance() {
         // Given
         let testView = Text("Test View")
-        let platform = samplePlatform
+        let platform = createSamplePlatform()
         let settings = samplePlatformOptimizationSettings
         let patterns = samplePlatformUIPatterns
         
