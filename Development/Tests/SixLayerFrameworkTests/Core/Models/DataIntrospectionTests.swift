@@ -9,7 +9,7 @@ import SwiftData
 /// Tests for DataIntrospectionEngine functionality
 @MainActor
 @Suite("Data Introspection")
-open class DataIntrospectionTests {
+open class DataIntrospectionTests: BaseTestClass {
     
     @Test func testDataIntrospectionBasicAnalysis() {
         // Given: A simple test struct

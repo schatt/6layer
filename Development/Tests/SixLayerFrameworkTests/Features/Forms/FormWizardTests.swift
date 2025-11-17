@@ -37,7 +37,7 @@ import Testing
 
 @MainActor
 @Suite("Form Wizard")
-open class FormWizardTests {
+open class FormWizardTests: BaseTestClass {
     
     // MARK: - Form Wizard Step Tests
     

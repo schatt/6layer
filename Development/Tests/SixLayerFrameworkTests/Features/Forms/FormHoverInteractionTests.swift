@@ -12,7 +12,7 @@ import SwiftUI
 /// - Cross-platform: Consistent behavior where possible
 /// - Accessibility: Screen readers should announce help text
 @Suite("Form Hover Interaction")
-open class FormHoverInteractionTests {
+open class FormHoverInteractionTests: BaseTestClass {
     
     // MARK: - Test Data
     

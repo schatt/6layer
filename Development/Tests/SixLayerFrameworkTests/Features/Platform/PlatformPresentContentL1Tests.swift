@@ -40,7 +40,7 @@ import SwiftUI
 @testable import SixLayerFramework
 @MainActor
 @Suite("Platform Present Content L")
-open class PlatformPresentContentL1Tests {
+open class PlatformPresentContentL1Tests: BaseTestClass {
     
     // MARK: - Test Data Setup
     

@@ -6,7 +6,7 @@ import SwiftUI
 /// Tests the actual functionality of the accessibility management service
 @MainActor
 @Suite("Accessibility Manager")
-open class AccessibilityManagerTests {
+open class AccessibilityManagerTests: BaseTestClass {
     
     // MARK: - Service Initialization Tests
     

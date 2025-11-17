@@ -38,7 +38,7 @@ import AppKit
 
 
 @MainActor
-open class PlatformImageImplicitConversionTests {
+open class PlatformImageImplicitConversionTests: BaseTestClass {
     
     // MARK: - Implicit Conversion Tests
     

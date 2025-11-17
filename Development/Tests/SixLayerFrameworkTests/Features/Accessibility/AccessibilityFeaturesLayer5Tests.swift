@@ -37,7 +37,7 @@ import Combine
 /// Tests keyboard navigation algorithms, color calculation, and accessibility label application
 @Suite("Accessibility Features Layer")
 @MainActor
-open class AccessibilityFeaturesLayer5Tests {
+open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
     
     // MARK: - Test Data Setup
     

@@ -10,23 +10,13 @@ import SwiftUI
 /// Implements Issue #19: Split View Platform-Specific Optimizations (Layer 5)
 @Suite("Platform Split View Optimizations Layer 5")
 @MainActor
-open class PlatformSplitViewOptimizationsLayer5Tests {
+open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
+    // BaseTestClass handles setup automatically - no custom init needed
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

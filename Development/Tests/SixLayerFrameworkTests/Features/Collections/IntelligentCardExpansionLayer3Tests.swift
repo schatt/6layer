@@ -20,9 +20,7 @@ open class IntelligentCardExpansionLayer3Tests: BaseTestClass {
     // MARK: - selectCardExpansionStrategy_L3 Tests
     
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

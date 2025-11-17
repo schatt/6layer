@@ -28,7 +28,7 @@ import Testing
 /// Tests for MockOCRService functionality
 /// TODO: Implement real tests that test actual mock service behavior
 @Suite("Mock OCR Service")
-open class MockOCRServiceTests {
+open class MockOCRServiceTests: BaseTestClass {
     
     // MARK: - Test Setup
     

@@ -32,7 +32,7 @@ import AppKit
 @testable import SixLayerFramework
 
 @MainActor
-open class PlatformImageBreakingChangeDetectionTests {
+open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     
     // MARK: - Tests That Would Have Failed With Breaking Change
     

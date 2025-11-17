@@ -38,7 +38,7 @@ import SwiftUI
 
 @MainActor
 @Suite("Data Binding")
-open class DataBindingTests {
+open class DataBindingTests: BaseTestClass {
     
     // MARK: - DataBinder Tests
     

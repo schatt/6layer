@@ -9,7 +9,7 @@ import SwiftUI
 /// METHODOLOGY: Test hint-based extraction with different item types and hint configurations
 @Suite("Card Display Helper Hint")
 @MainActor
-open class CardDisplayHelperHintTests {
+open class CardDisplayHelperHintTests: BaseTestClass {
     
     // MARK: - Test Data Structures
     

@@ -39,7 +39,7 @@ import SwiftUI
 
 @MainActor
 @Suite("Image Metadata Intelligence")
-open class ImageMetadataIntelligenceTests {
+open class ImageMetadataIntelligenceTests: BaseTestClass {
     
     // MARK: - Test Data
     

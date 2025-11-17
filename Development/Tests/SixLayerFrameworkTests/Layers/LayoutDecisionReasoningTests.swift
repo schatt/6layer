@@ -11,7 +11,7 @@ import Testing
 @testable import SixLayerFramework
 
 @Suite("Layout Decision Reasoning")
-open class LayoutDecisionReasoningTests {
+open class LayoutDecisionReasoningTests: BaseTestClass {
     
     // MARK: - GenericLayoutDecision Reasoning Tests
     

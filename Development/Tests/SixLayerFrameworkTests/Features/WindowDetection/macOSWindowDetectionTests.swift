@@ -23,7 +23,7 @@ import Testing
  */
 
 @Suite("mac O S Window Detection")
-open class macOSWindowDetectionTests {
+open class macOSWindowDetectionTests: BaseTestClass {
     
     @Test func testmacOSWindowDetectionInitialization() {
         // TODO: Implement test

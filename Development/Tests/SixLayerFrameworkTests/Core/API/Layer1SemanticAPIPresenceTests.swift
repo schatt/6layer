@@ -4,7 +4,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class Layer1SemanticAPIPresenceTests {
+open class Layer1SemanticAPIPresenceTests: BaseTestClass {
     @Test func testPlatformPresentItemCollectionL1Exists() {
         struct Item: Identifiable { let id = UUID() }
         let items = [Item(), Item()]

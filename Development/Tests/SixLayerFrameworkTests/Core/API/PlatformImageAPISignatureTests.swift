@@ -35,7 +35,7 @@ import AppKit
 
 
 @MainActor
-open class PlatformImageAPISignatureTests {
+open class PlatformImageAPISignatureTests: BaseTestClass {
     
     // MARK: - API Signature Tests
     

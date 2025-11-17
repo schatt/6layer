@@ -12,7 +12,7 @@ import ViewInspector
 /// METHODOLOGY: Uses centralized test functions following DRY principles
 @Suite("Collection Empty State View")
 @MainActor
-open class CollectionEmptyStateViewTests {
+open class CollectionEmptyStateViewTests: BaseTestClass {
     
     // MARK: - CollectionEmptyStateView Tests
     

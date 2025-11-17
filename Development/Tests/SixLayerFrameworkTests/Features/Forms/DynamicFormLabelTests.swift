@@ -37,7 +37,7 @@ import SwiftUI
 /// Ensures single visible label per field, preventing duplication
 @MainActor
 @Suite("Dynamic Form Label")
-open class DynamicFormLabelTests {
+open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Test Data
     

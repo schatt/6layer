@@ -36,7 +36,7 @@ import SwiftUI
 /// Ensures fields with gridColumn metadata render in horizontal grid
 @MainActor
 @Suite("Dynamic Form Grid Layout")
-open class DynamicFormGridLayoutTests {
+open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Test Data
     

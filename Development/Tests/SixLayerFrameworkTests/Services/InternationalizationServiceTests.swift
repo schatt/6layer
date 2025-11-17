@@ -7,7 +7,7 @@ import Foundation
 /// Consolidates API tests and business logic tests
 @MainActor
 @Suite("Internationalization Service")
-open class InternationalizationServiceTests {
+open class InternationalizationServiceTests: BaseTestClass {
     
     // MARK: - Service Initialization Tests
     

@@ -10,13 +10,11 @@ import SwiftUI
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Generic Numeric Data View")
 @MainActor
-open class GenericNumericDataViewTests {
+open class GenericNumericDataViewTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func configureAccessibilityIdentifiers() {
         let config = AccessibilityIdentifierConfig.shared

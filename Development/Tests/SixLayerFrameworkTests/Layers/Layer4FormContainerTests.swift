@@ -17,7 +17,7 @@ import ViewInspector
 
 @MainActor
 @Suite("Layer Form Container")
-open class Layer4FormContainerTests {
+open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Test Data
     

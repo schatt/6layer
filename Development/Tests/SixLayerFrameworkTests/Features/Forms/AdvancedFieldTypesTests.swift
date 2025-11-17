@@ -20,13 +20,14 @@ import UniformTypeIdentifiers
  * using RuntimeCapabilityDetection mock framework.
  */
 @Suite("Advanced Field Types")
-open class AdvancedFieldTypesTests {
+open class AdvancedFieldTypesTests: BaseTestClass {
 
     // MARK: - Test Setup/Teardown
 
-    init() async throws {
-        // Reset registry before each test to ensure isolation
-        CustomFieldRegistry.shared.reset()
+    override init() {
+        super.init()
+        // NOTE: CustomFieldRegistry.shared.reset() should be called in test methods, not init()
+        // BaseTestClass handles setup automatically - no singleton access in init()
     }
     
     // MARK: - Test Data Setup

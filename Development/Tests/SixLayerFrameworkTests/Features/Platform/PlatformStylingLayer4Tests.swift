@@ -10,24 +10,14 @@ import SwiftUI
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform Styling Layer")
 @MainActor
-open class PlatformStylingLayer4Tests {
+open class PlatformStylingLayer4Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - platformStyledContainer_L4 Tests
+    // BaseTestClass handles setup automatically - no custom init needed    // MARK: - platformStyledContainer_L4 Tests
     
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

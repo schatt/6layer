@@ -10,7 +10,7 @@ import ViewInspector
 /// Form Callback Functional Tests
 /// Tests that forms with callbacks ACTUALLY INVOKE them when buttons are tapped (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
-open class FormCallbackFunctionalTests {
+open class FormCallbackFunctionalTests: BaseTestClass {
     
     // MARK: - IntelligentFormView Callback Tests
     

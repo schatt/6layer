@@ -9,7 +9,7 @@ import SwiftUI
 /// These tests focus on the logic that determines platform-specific behavior
 @MainActor
 @Suite("Platform Logic")
-open class PlatformLogicTests {
+open class PlatformLogicTests: BaseTestClass {
     
     // Local, general-purpose capability snapshot for tests (do not use card-specific config)
     public struct PlatformCapabilities: Sendable {

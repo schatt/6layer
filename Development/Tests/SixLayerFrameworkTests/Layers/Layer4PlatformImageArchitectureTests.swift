@@ -33,7 +33,7 @@ import AppKit
 
 @MainActor
 @Suite("Layer Platform Image Architecture")
-open class Layer4PlatformImageArchitectureTests {
+open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     
     // MARK: - Layer 4 Architecture Tests
     

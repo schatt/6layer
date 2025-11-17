@@ -36,7 +36,7 @@ import Testing
 
 @MainActor
 @Suite("Platform Present Form Data L Comprehensive")
-open class PlatformPresentFormDataL1ComprehensiveTests {
+open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
 
     // MARK: - Test Helpers
     

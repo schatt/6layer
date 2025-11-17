@@ -14,7 +14,7 @@ import SwiftUI
 
 @MainActor
 @Suite("Layer Platform Optimization")
-open class Layer6PlatformOptimizationTests {
+open class Layer6PlatformOptimizationTests: BaseTestClass {
     
     // MARK: - Cross-Platform Platform Detection Tests
     

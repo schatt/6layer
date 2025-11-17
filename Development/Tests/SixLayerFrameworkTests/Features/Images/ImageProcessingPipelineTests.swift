@@ -37,7 +37,7 @@ import SwiftUI
 
 @MainActor
 @Suite("Image Processing Pipeline")
-open class ImageProcessingPipelineTests {
+open class ImageProcessingPipelineTests: BaseTestClass {
     
     // MARK: - Test Data
     

@@ -40,7 +40,7 @@ import TabularData
 
 @MainActor
 @Suite("Platform Data Frame Analysis L")
-open class PlatformDataFrameAnalysisL1Tests {
+open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     var testDataFrame: DataFrame = DataFrame()
     

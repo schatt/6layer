@@ -9,7 +9,7 @@ import SwiftUI
 /// METHODOLOGY: Test OCR service on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("OCR Service")
 @MainActor
-open class OCRServiceTests {
+open class OCRServiceTests: BaseTestClass {
     
     // MARK: - Test Setup
     
@@ -17,9 +17,7 @@ open class OCRServiceTests {
         await setupTestEnvironment()
     }
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

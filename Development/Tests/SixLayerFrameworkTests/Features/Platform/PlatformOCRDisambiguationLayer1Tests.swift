@@ -10,24 +10,14 @@ import SwiftUI
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform OCR Disambiguation Layer")
 @MainActor
-open class PlatformOCRDisambiguationLayer1Tests {
+open class PlatformOCRDisambiguationLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }    // MARK: - platformOCRDisambiguation_L1 Tests
+    // BaseTestClass handles setup automatically - no custom init needed    // MARK: - platformOCRDisambiguation_L1 Tests
     
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

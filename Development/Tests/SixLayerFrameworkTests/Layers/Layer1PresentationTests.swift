@@ -12,7 +12,7 @@ import Testing
 
 @MainActor
 @Suite("Layer Presentation")
-open class Layer1PresentationTests {
+open class Layer1PresentationTests: BaseTestClass {
     
     // MARK: - Test Helpers
     

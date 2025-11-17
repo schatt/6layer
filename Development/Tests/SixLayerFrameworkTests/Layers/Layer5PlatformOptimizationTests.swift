@@ -6,7 +6,7 @@ import SwiftUI
 /// Ensures all Layer 5 functions are tested
 @MainActor
 @Suite("Layer Platform Optimization")
-open class Layer5PlatformOptimizationTests {
+open class Layer5PlatformOptimizationTests: BaseTestClass {
     
     // MARK: - getCardExpansionPlatformConfig Tests
     

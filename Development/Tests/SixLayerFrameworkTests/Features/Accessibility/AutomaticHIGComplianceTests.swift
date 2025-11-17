@@ -33,7 +33,7 @@ struct AutomaticHIGComplianceTestItem: Identifiable {
  * without requiring manual modifier application.
  */
 @Suite("Automatic H I G Compliance")
-open class AutomaticHIGComplianceTests {
+open class AutomaticHIGComplianceTests: BaseTestClass {
     
     // MARK: - Test Data Setup
     

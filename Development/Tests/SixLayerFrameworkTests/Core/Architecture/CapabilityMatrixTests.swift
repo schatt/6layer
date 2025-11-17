@@ -33,7 +33,7 @@ import SwiftUI
 /// Comprehensive capability matrix testing
 /// Tests that the framework correctly responds to capability detection results
 /// We trust what RuntimeCapabilityDetection returns from the OS - we test what we DO with those results
-open class CapabilityMatrixTests {
+open class CapabilityMatrixTests: BaseTestClass {
     
     // MARK: - Capability Behavior Test Matrix
     

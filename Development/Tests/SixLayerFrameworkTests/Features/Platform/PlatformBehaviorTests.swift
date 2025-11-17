@@ -89,7 +89,7 @@ enum PlatformAccessibilityFeature: String, CaseIterable {
 /// Tests that every function behaves correctly based on platform capabilities
 @Suite("Platform Behavior")
 @MainActor
-open class PlatformBehaviorTests {
+open class PlatformBehaviorTests: BaseTestClass {
     
     // MARK: - Platform Behavior Testing Functions
     

@@ -31,7 +31,7 @@ import AppKit
 
 
 @MainActor
-open class TestingFailureDemonstrationTests {
+open class TestingFailureDemonstrationTests: BaseTestClass {
     
     // MARK: - Demonstration of Testing Failure
     

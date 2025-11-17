@@ -18,7 +18,7 @@ import AppKit
 #endif
 
 @MainActor
-open class PlatformImageFixVerificationTests {
+open class PlatformImageFixVerificationTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Verify the exact broken code now works
     /// TESTING SCOPE: Tests the exact PlatformImage(image) pattern that was broken

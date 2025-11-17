@@ -47,7 +47,7 @@ typealias TestDataItem = TestPatterns.TestDataItem
 /// Demonstrates how to eliminate duplication using reusable patterns
 @MainActor
 @Suite("Core View Function")
-open class CoreViewFunctionTests {
+open class CoreViewFunctionTests: BaseTestClass {
     
     // MARK: - Test Data Types
     // TestDataItem is now imported from TestPatterns

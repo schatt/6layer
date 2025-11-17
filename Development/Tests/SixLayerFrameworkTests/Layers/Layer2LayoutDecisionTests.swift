@@ -27,7 +27,7 @@ import Foundation
 
 @MainActor
 @Suite("Layer Layout Decision")
-open class Layer2LayoutDecisionTests {
+open class Layer2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineOptimalLayout_L2 Tests
     

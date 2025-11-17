@@ -10,23 +10,13 @@ import SwiftUI
 /// Implements Issue #14: Add Split View Helpers to Six-Layer Architecture (Layer 4)
 @Suite("Platform Split View Layer 4")
 @MainActor
-open class PlatformSplitViewLayer4Tests {
+open class PlatformSplitViewLayer4Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.enableAutoIDs = true
-        config.namespace = "SixLayer"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-    }
+    // BaseTestClass handles setup automatically - no custom init needed
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

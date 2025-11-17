@@ -19,9 +19,7 @@ open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
     
     // MARK: - determineOptimalCardLayout_L2 Tests
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
         _ = determineOptimalCardLayout_L2(

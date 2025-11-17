@@ -41,7 +41,7 @@ import CoreGraphics
 
 @MainActor
 @Suite("Core Architecture")
-open class CoreArchitectureTests {
+open class CoreArchitectureTests: BaseTestClass {
     
     // MARK: - Test Helpers
     

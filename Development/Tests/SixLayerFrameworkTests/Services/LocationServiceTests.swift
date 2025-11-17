@@ -14,7 +14,7 @@ import CoreLocation
 /// Tests the cross-platform location service implementation
 @MainActor
 @Suite("Location Service")
-open class LocationServiceTests {
+open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Service Initialization Tests
     

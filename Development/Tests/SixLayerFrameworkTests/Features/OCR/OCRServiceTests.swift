@@ -28,7 +28,7 @@ import Testing
 /// Tests for OCR service functionality
 /// TODO: Implement real tests that test actual OCR service behavior
 @Suite("OCR Service Functional")
-open class OCRServiceFunctionalTests {
+open class OCRServiceFunctionalTests: BaseTestClass {
     
     // MARK: - Test Setup
     

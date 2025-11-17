@@ -10,7 +10,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-class L4ComponentTests {
+class L4ComponentTests: BaseTestClass {
     
     // MARK: - Test Data
     

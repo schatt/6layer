@@ -7,7 +7,7 @@ import SwiftUI
 /// Comprehensive test suite for ShapeStyle System
 /// Tests all ShapeStyle types: Color, Gradient, Material, HierarchicalShapeStyle
 @Suite("Shape Style System")
-open class ShapeStyleSystemTests {
+open class ShapeStyleSystemTests: BaseTestClass {
     
     // MARK: - Color Support Tests
     

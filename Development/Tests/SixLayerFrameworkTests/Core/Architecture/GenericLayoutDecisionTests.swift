@@ -30,7 +30,7 @@ import SwiftUI
 
 @MainActor
 @Suite("Generic Layout Decision")
-open class GenericLayoutDecisionTests {
+open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - Test Data
     

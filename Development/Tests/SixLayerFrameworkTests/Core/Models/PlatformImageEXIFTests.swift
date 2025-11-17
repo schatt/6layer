@@ -18,7 +18,7 @@ import ImageIO
 /// Implements GitHub Issue #21
 @MainActor
 @Suite("Platform Image EXIF")
-open class PlatformImageEXIFTests {
+open class PlatformImageEXIFTests: BaseTestClass {
     
     // MARK: - EXIF Accessor Tests
     

@@ -18,11 +18,9 @@ import SwiftUI
  * environment variable.
  */
 @Suite("Accessibility Identifier Logic Verification")
-open class AccessibilityIdentifierLogicVerificationTests {
+open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     
-    init() async throws {
-                await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }    /// BUSINESS PURPOSE: Verify that the identifier generation logic correctly evaluates conditions
+    // BaseTestClass handles setup automatically - no singleton access needed    /// BUSINESS PURPOSE: Verify that the identifier generation logic correctly evaluates conditions
     /// TESTING SCOPE: Tests that the AccessibilityIdentifierAssignmentModifier logic works correctly
     /// METHODOLOGY: Tests the actual logic that determines whether identifiers should be generated
     @Test func testIdentifierGenerationLogicEvaluatesConditionsCorrectly() async {

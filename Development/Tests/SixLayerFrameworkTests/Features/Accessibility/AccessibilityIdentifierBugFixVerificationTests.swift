@@ -17,11 +17,9 @@ import SwiftUI
  * and verifies that accessibility identifiers are now generated correctly.
  */
 @Suite("Accessibility Identifier Bug Fix Verification")
-open class AccessibilityIdentifierBugFixVerificationTests {
+open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     
-    init() async throws {
-                await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically - no singleton access needed
     
     /// BUSINESS PURPOSE: Verify the exact bug scenario from the user's report is now fixed
     /// TESTING SCOPE: Tests the specific configuration and usage pattern that was failing

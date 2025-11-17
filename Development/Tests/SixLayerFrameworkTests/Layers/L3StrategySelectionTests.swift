@@ -13,7 +13,7 @@ import SwiftUI
 
 @MainActor
 @Suite("L Strategy Selection")
-open class L3StrategySelectionTests {
+open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - Test Data
     

@@ -10,7 +10,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-class L2LayoutDecisionTests {
+class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Test Data
     

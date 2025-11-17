@@ -8,7 +8,7 @@ import SwiftUI
 /// Tests all 6 layers of the expandable card functionality
 @MainActor
 @Suite("Intelligent Card Expansion")
-open class IntelligentCardExpansionTests {
+open class IntelligentCardExpansionTests: BaseTestClass {
     
     // MARK: - Test Data
     

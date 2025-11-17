@@ -21,9 +21,7 @@ open class DynamicFormViewTests: BaseTestClass {
     // MARK: - DynamicFormView Tests
     
     
-    private func setupTestEnvironment() async {
-        await AccessibilityTestUtilities.setupAccessibilityTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically
     
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()

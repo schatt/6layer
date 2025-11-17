@@ -38,7 +38,7 @@ import Foundation
 /// without requiring actual hardware for each platform
 @MainActor
 @Suite("Platform Simulation")
-open class PlatformSimulationTests {
+open class PlatformSimulationTests: BaseTestClass {
     
     // MARK: - Platform Testing
     

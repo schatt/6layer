@@ -7,16 +7,9 @@ import SwiftUI
 /// Tests that components can be created and work in real view hierarchies
 @MainActor
 @Suite("Framework Component Integration")
-open class FrameworkComponentIntegrationTests {
+open class FrameworkComponentIntegrationTests: BaseTestClass {
     
-    init() async throws {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "IntegrationTest"
-        config.mode = .automatic
-        config.enableDebugLogging = true
-        config.enableAutoIDs = true
-    }    // MARK: - Components That Work (Have .automaticAccessibility())
+    // BaseTestClass handles setup automatically - no singleton access needed    // MARK: - Components That Work (Have .automaticAccessibility())
     
     @Test func testPlatformPresentContentL1CanBeCreated() {
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()

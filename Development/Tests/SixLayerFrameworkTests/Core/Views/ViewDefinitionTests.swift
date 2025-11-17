@@ -9,7 +9,7 @@ import SwiftUI
 /// We test the view structure/properties, not runtime behavior
 @MainActor
 @Suite("View Definition")
-open class ViewDefinitionTests {
+open class ViewDefinitionTests: BaseTestClass {
     
     // MARK: - Test Data
     

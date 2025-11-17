@@ -13,7 +13,7 @@ import SwiftUI
 
 @MainActor
 @Suite("L Layout Decision")
-open class L2LayoutDecisionTests {
+open class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Test Data
     

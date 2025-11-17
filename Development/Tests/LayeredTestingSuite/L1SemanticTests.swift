@@ -10,7 +10,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-class L1SemanticTests {
+class L1SemanticTests: BaseTestClass {
     
     // MARK: - Test Data
     

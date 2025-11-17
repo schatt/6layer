@@ -9,16 +9,9 @@ import SwiftUI
 /// UPDATE: Performance layer has been removed entirely, eliminating the Metal crash bug
 @MainActor
 @Suite("Metal Rendering Crash")
-open class MetalRenderingCrashTDDTests {
+open class MetalRenderingCrashTDDTests: BaseTestClass {
     
-    init() async throws {
-        let config = AccessibilityIdentifierConfig.shared
-        config.resetToDefaults()
-        config.namespace = "MetalTest"
-        config.mode = .automatic
-        config.enableDebugLogging = false
-        config.enableAutoIDs = true
-    }    // MARK: - TDD Green Phase: Tests That Now Pass After Performance Layer Removal
+    // BaseTestClass handles setup automatically - no singleton access needed    // MARK: - TDD Green Phase: Tests That Now Pass After Performance Layer Removal
     
     @Test func testPlatformPresentItemCollectionL1DoesNotCrash() {
         // TDD Green Phase: Performance layer removed, so no Metal crash

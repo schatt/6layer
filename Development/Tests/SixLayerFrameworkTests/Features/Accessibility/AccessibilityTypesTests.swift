@@ -39,7 +39,7 @@ import SwiftUI
 /// Comprehensive tests for all accessibility types and enums
 @MainActor
 @Suite("Accessibility Types")
-open class AccessibilityTypesTests {
+open class AccessibilityTypesTests: BaseTestClass {
     
     // MARK: - Platform-Specific Business Logic Tests
     

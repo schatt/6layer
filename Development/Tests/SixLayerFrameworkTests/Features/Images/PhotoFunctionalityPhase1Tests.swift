@@ -25,7 +25,7 @@ import AppKit
 
 
 @Suite("Photo Functionality Phase")
-open class PhotoFunctionalityPhase1Tests {
+open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Enhanced PlatformImage Tests
     

@@ -20,7 +20,7 @@ import SwiftUI
 /// Platform mocking via `RuntimeCapabilityDetection.setTestPlatform()` affects runtime capability detection
 /// but cannot overcome compile-time platform availability restrictions for UIKit vs AppKit types.
 @MainActor
-open class PhotoCallbackFunctionalTests {
+open class PhotoCallbackFunctionalTests: BaseTestClass {
     
     // MARK: - PhotoPicker Callback Tests
     

@@ -33,7 +33,7 @@ import Testing
 @testable import SixLayerFramework
 
 @Suite("Form Wizard State")
-open class FormWizardStateTests {
+open class FormWizardStateTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validate FormWizardState initialization functionality
     /// TESTING SCOPE: Tests FormWizardState initialization and setup

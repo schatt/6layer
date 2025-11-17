@@ -40,7 +40,7 @@ import SwiftUI
 /// Tests all platform combinations, device types, and capability matrices
 @MainActor
 @Suite("Platform Matrix")
-open class PlatformMatrixTests {
+open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Platform Detection Tests
     

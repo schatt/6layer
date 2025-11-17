@@ -7,7 +7,7 @@ import SwiftUI
 /// Component Callback Functional Tests
 /// Tests that components with callbacks ACTUALLY INVOKE them when expected (Rules 6.1, 6.2, 7.3, 7.4)
 @MainActor
-open class CallbackFunctionalTests {
+open class CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - OCROverlayView Callback Tests
     

@@ -33,7 +33,7 @@ import Testing
 @testable import SixLayerFramework
 
 @Suite("Extensible Hints")
-open class ExtensibleHintsTests {
+open class ExtensibleHintsTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validate ExtensibleHints initialization functionality
     /// TESTING SCOPE: Tests ExtensibleHints system initialization and setup

@@ -10,7 +10,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-class L3StrategyTests {
+class L3StrategyTests: BaseTestClass {
     
     // MARK: - Test Data
     

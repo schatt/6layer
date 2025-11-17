@@ -40,7 +40,7 @@ import SwiftUI
 /// Tests that every function behaves correctly based on accessibility preferences
 @MainActor
 @Suite("Accessibility Preference")
-open class AccessibilityPreferenceTests {
+open class AccessibilityPreferenceTests: BaseTestClass {
     
     // MARK: - Test Data Setup
     

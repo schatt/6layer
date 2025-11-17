@@ -4,7 +4,7 @@ import Testing
 
 @MainActor
 @Suite("Data Presentation Intelligence")
-open class DataPresentationIntelligenceTests {
+open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Helper Methods
     

@@ -14,7 +14,7 @@ import SwiftUI
 @testable import SixLayerFramework
 @MainActor
 @Suite("Cross Platform Optimization Layer")
-open class CrossPlatformOptimizationLayer6Tests {
+open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - CrossPlatformOptimizationManager Tests
     

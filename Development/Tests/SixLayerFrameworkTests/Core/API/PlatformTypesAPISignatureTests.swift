@@ -5,7 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @MainActor
-open class PlatformTypesAPISignatureTests {
+open class PlatformTypesAPISignatureTests: BaseTestClass {
     // MARK: - SixLayerPlatform API
     @Test func testSixLayerPlatformCasesExist() {
         let all = SixLayerPlatform.allCases

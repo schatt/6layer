@@ -10,7 +10,7 @@ import SwiftUI
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @Suite("Layer Accessibility")
 @MainActor
-open class Layer1AccessibilityTests {
+open class Layer1AccessibilityTests: BaseTestClass {
     
     // MARK: - Helper Methods
     

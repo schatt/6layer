@@ -8,7 +8,7 @@ import SwiftUI
 /// Tests that select fields are properly implemented with interactive Picker components
 @MainActor
 @Suite("Select Field Implementation")
-open class SelectFieldImplementationTests {
+open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Test Data
     

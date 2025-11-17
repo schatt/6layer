@@ -9,7 +9,7 @@ import SwiftUI
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 @MainActor
 @Suite("Window Detection")
-open class WindowDetectionTests {
+open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
