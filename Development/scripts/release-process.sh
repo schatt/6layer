@@ -25,18 +25,44 @@ if ! swift test; then
 fi
 echo "✅ Tests passed"
 
-# Step 2: Check if RELEASES.md needs updating
-echo "📋 Step 2: Checking RELEASES.md..."
-if grep -q "v$VERSION" Development/RELEASES.md; then
-    echo "✅ RELEASES.md already contains v$VERSION"
-else
+# Step 2: Check git is clean (no uncommitted changes)
+echo "📋 Step 2: Checking git repository status..."
+if [ -n "$(git status --porcelain)" ]; then
+    echo "❌ Git repository has uncommitted changes!"
+    echo "Please commit or stash all changes before creating a release."
+    echo ""
+    echo "Uncommitted changes:"
+    git status --short
+    exit 1
+fi
+echo "✅ Git repository is clean"
+
+# Step 3: Check if RELEASES.md needs updating
+echo "📋 Step 3: Checking RELEASES.md..."
+if ! grep -q "v$VERSION" Development/RELEASES.md; then
     echo "❌ RELEASES.md missing v$VERSION entry!"
     echo "Please update Development/RELEASES.md with the new release information"
     exit 1
 fi
 
-# Step 3: Check for individual release file
-echo "📋 Step 3: Checking for individual release file..."
+# Check that RELEASES.md has the version as the current release at the top
+if ! grep -A 5 "^## 📍 \*\*Current Release:" Development/RELEASES.md | grep -q "v$VERSION"; then
+    echo "❌ RELEASES.md does not list v$VERSION as the Current Release!"
+    echo "Please update the 'Current Release' section at the top of Development/RELEASES.md"
+    exit 1
+fi
+
+# Check that the version section exists and is properly formatted
+if ! grep -q "^## 🎯 \*\*v$VERSION" Development/RELEASES.md; then
+    echo "❌ RELEASES.md missing proper v$VERSION section header!"
+    echo "Expected format: ## 🎯 **v$VERSION - ..."
+    exit 1
+fi
+
+echo "✅ RELEASES.md correctly updated with v$VERSION"
+
+# Step 4: Check for individual release file
+echo "📋 Step 4: Checking for individual release file..."
 if [ -f "Development/RELEASE_v$VERSION.md" ]; then
     echo "✅ Individual release file exists"
 else
@@ -45,9 +71,9 @@ else
     exit 1
 fi
 
-# Step 4: Check for AI_AGENT file (for significant releases)
+# Step 5: Check for AI_AGENT file (for significant releases)
 if [[ "$RELEASE_TYPE" == "major" || "$RELEASE_TYPE" == "minor" ]]; then
-    echo "📋 Step 4: Checking for AI_AGENT file..."
+    echo "📋 Step 5: Checking for AI_AGENT file..."
     if [ -f "Development/AI_AGENT_v$VERSION.md" ]; then
         echo "✅ AI_AGENT file exists"
     else
@@ -57,8 +83,8 @@ if [[ "$RELEASE_TYPE" == "major" || "$RELEASE_TYPE" == "minor" ]]; then
     fi
 fi
 
-# Step 5: Check README files
-echo "📋 Step 5: Checking README files..."
+# Step 6: Check README files
+echo "📋 Step 6: Checking README files..."
 if grep -q "v$VERSION" README.md; then
     echo "✅ Main README updated"
 else
@@ -80,8 +106,8 @@ else
     exit 1
 fi
 
-# Step 6: Check project status files
-echo "📋 Step 6: Checking project status files..."
+# Step 7: Check project status files
+echo "📋 Step 7: Checking project status files..."
 if grep -q "v$VERSION" Development/PROJECT_STATUS.md; then
     echo "✅ PROJECT_STATUS.md updated"
 else
@@ -96,8 +122,8 @@ else
     exit 1
 fi
 
-# Step 7: Check main AI_AGENT.md file
-echo "📋 Step 7: Checking main AI_AGENT.md file..."
+# Step 8: Check main AI_AGENT.md file
+echo "📋 Step 8: Checking main AI_AGENT.md file..."
 if [ -f "Development/AI_AGENT.md" ]; then
     echo "✅ Main AI_AGENT.md file exists"
 else
@@ -106,8 +132,8 @@ else
     exit 1
 fi
 
-# Step 8: Check documentation files (only if features changed)
-echo "📋 Step 8: Checking documentation files..."
+# Step 9: Check documentation files (only if features changed)
+echo "📋 Step 9: Checking documentation files..."
 echo "ℹ️  Feature documentation only needs updating if features changed"
 if [ -f "Framework/docs/AutomaticAccessibilityIdentifiers.md" ]; then
     echo "✅ AutomaticAccessibilityIdentifiers.md exists"
@@ -115,8 +141,8 @@ else
     echo "⚠️  Missing Framework/docs/AutomaticAccessibilityIdentifiers.md (only needed if accessibility features changed)"
 fi
 
-# Step 9: Check example files (only if features changed)
-echo "📋 Step 9: Checking example files..."
+# Step 10: Check example files (only if features changed)
+echo "📋 Step 10: Checking example files..."
 echo "ℹ️  Example files only need updating if features changed"
 if [ -f "Framework/Examples/AutomaticAccessibilityIdentifiersExample.swift" ]; then
     echo "✅ AutomaticAccessibilityIdentifiersExample.swift exists"
@@ -141,7 +167,8 @@ echo "🎉 All release documentation checks passed!"
 echo ""
 echo "📋 Release Checklist Complete:"
 echo "✅ Tests passed"
-echo "✅ RELEASES.md updated"
+echo "✅ Git repository is clean"
+echo "✅ RELEASES.md updated correctly"
 echo "✅ Individual release file exists"
 echo "✅ AI_AGENT file exists (for major/minor releases)"
 echo "✅ All README files updated"
@@ -153,9 +180,8 @@ echo ""
 echo "🚀 Ready to create release tag v$VERSION"
 echo ""
 echo "Next steps:"
-echo "1. git add ."
-echo "2. git commit -m \"Release v$VERSION\""
-echo "3. git tag v$VERSION"
-echo "4. git push origin main --tags"
+echo "1. git tag -a v$VERSION -m \"Release v$VERSION\""
+echo "2. git push all --tags"
+echo "3. git push all && git push codeberg && git push gitlab"
 echo ""
 echo "Release process validation complete! ✅"
