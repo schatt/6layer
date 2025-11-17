@@ -24,8 +24,9 @@ public class iOSWindowDetection: ObservableObject {
     // MARK: - Initialization
     
     public init() {
-        // Lightweight initialization - no polling
-        updateFromCurrentWindow()
+        // Lightweight initialization - use default values
+        // Don't access UIApplication.shared in init() to avoid blocking
+        // Call updateWindowInfo() explicitly when you need actual window data
     }
     
     // MARK: - Convenience Methods
