@@ -123,8 +123,8 @@ public struct RuntimeCapabilityDetection {
     // MARK: - Touch Capability Detection
     
     /// Detects if touch input is actually supported by querying the OS
-    @MainActor
-    public static var supportsTouch: Bool {
+    /// Note: nonisolated - detection functions don't access MainActor APIs
+    nonisolated public static var supportsTouch: Bool {
         // Check for capability override first
         if let testValue = testTouchSupport {
             return testValue
@@ -236,8 +236,8 @@ public struct RuntimeCapabilityDetection {
     // MARK: - Haptic Feedback Detection
     
     /// Detects if haptic feedback is actually supported
-    @MainActor
-    public static var supportsHapticFeedback: Bool {
+    /// Note: nonisolated - detection functions only use UserDefaults (thread-safe) or return constants
+    nonisolated public static var supportsHapticFeedback: Bool {
         // Check for capability override first
         if let testValue = testHapticFeedback {
             return testValue
@@ -302,9 +302,10 @@ public struct RuntimeCapabilityDetection {
     // MARK: - Hover Detection
     
     /// Detects if hover events are actually supported
-    @MainActor
-    public static var supportsHover: Bool {
-        // Check for capability override first
+    /// Note: nonisolated - early returns use thread-local storage (no MainActor needed)
+    /// Only accesses MainActor APIs when actually querying OS (rare in tests)
+    nonisolated public static var supportsHover: Bool {
+        // Check for capability override first (thread-local, no MainActor needed)
         if let testValue = testHover {
             return testValue
         }
@@ -319,13 +320,16 @@ public struct RuntimeCapabilityDetection {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return detectiOSHoverSupport()
+            // Access MainActor API only when actually on iOS and not in test mode
+            return MainActor.assumeIsolated {
+                detectiOSHoverSupport()
+            }
             #else
             return getTestDefaults().supportsHover
             #endif
         case .macOS:
             #if os(macOS)
-            return detectmacOSHoverSupport()
+            return detectmacOSHoverSupport()  // Doesn't need MainActor
             #else
             return getTestDefaults().supportsHover
             #endif
@@ -351,14 +355,19 @@ public struct RuntimeCapabilityDetection {
     }
     
     #if os(iOS)
-    @MainActor
+    /// iOS hover detection - checks for iPad with Apple Pencil
+    /// Note: Must be called from MainActor context (uses MainActor.assumeIsolated)
     private static func detectiOSHoverSupport() -> Bool {
         // Check if we're on iPad with Apple Pencil or hover-capable device
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            // iPad with Apple Pencil 2 or later supports hover
-            return true
+        // UIDevice.current requires MainActor, but we use assumeIsolated since
+        // this is only called from nonisolated context when we know we need OS API
+        return MainActor.assumeIsolated {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                // iPad with Apple Pencil 2 or later supports hover
+                return true
+            }
+            return false
         }
-        return false
     }
     #endif
     
@@ -372,9 +381,10 @@ public struct RuntimeCapabilityDetection {
     // MARK: - Accessibility Support Detection
     
     /// Detects if VoiceOver is actually available
-    @MainActor
-    public static var supportsVoiceOver: Bool {
-        // Check for capability override first
+    /// Note: nonisolated - early returns use thread-local storage (no MainActor needed)
+    /// Only accesses MainActor APIs when actually querying OS (rare in tests)
+    nonisolated public static var supportsVoiceOver: Bool {
+        // Check for capability override first (thread-local, no MainActor needed)
         if let testValue = testVoiceOver {
             return testValue
         }
@@ -389,13 +399,19 @@ public struct RuntimeCapabilityDetection {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return UIAccessibility.isVoiceOverRunning
+            // Access MainActor API only when actually on iOS and not in test mode
+            return MainActor.assumeIsolated {
+                UIAccessibility.isVoiceOverRunning
+            }
             #else
             return getTestDefaults().supportsVoiceOver
             #endif
         case .macOS:
             #if os(macOS)
-            return NSWorkspace.shared.isVoiceOverEnabled
+            // NSWorkspace.shared requires MainActor
+            return MainActor.assumeIsolated {
+                NSWorkspace.shared.isVoiceOverEnabled
+            }
             #else
             return getTestDefaults().supportsVoiceOver
             #endif
@@ -421,9 +437,10 @@ public struct RuntimeCapabilityDetection {
     }
     
     /// Detects if Switch Control is actually available
-    @MainActor
-    public static var supportsSwitchControl: Bool {
-        // Check for capability override first
+    /// Note: nonisolated - early returns use thread-local storage (no MainActor needed)
+    /// Only accesses MainActor APIs when actually querying OS (rare in tests)
+    nonisolated public static var supportsSwitchControl: Bool {
+        // Check for capability override first (thread-local, no MainActor needed)
         if let testValue = testSwitchControl {
             return testValue
         }
@@ -438,13 +455,19 @@ public struct RuntimeCapabilityDetection {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return UIAccessibility.isSwitchControlRunning
+            // Access MainActor API only when actually on iOS and not in test mode
+            return MainActor.assumeIsolated {
+                UIAccessibility.isSwitchControlRunning
+            }
             #else
             return getTestDefaults().supportsSwitchControl
             #endif
         case .macOS:
             #if os(macOS)
-            return NSWorkspace.shared.isSwitchControlEnabled
+            // NSWorkspace.shared requires MainActor
+            return MainActor.assumeIsolated {
+                NSWorkspace.shared.isSwitchControlEnabled
+            }
             #else
             return getTestDefaults().supportsSwitchControl
             #endif
@@ -470,9 +493,10 @@ public struct RuntimeCapabilityDetection {
     }
     
     /// Detects if AssistiveTouch is actually available
-    @MainActor
-    public static var supportsAssistiveTouch: Bool {
-        // Check for capability override first
+    /// Note: nonisolated - early returns use thread-local storage (no MainActor needed)
+    /// Only accesses MainActor APIs when actually querying OS (rare in tests)
+    nonisolated public static var supportsAssistiveTouch: Bool {
+        // Check for capability override first (thread-local, no MainActor needed)
         if let testValue = testAssistiveTouch {
             return testValue
         }
@@ -487,7 +511,10 @@ public struct RuntimeCapabilityDetection {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return UIAccessibility.isAssistiveTouchRunning
+            // Access MainActor API only when actually on iOS and not in test mode
+            return MainActor.assumeIsolated {
+                UIAccessibility.isAssistiveTouchRunning
+            }
             #else
             // When not on iOS, use test defaults if available, otherwise return true (iOS supports AssistiveTouch)
             return getTestDefaults().supportsAssistiveTouch
@@ -774,9 +801,10 @@ public extension RuntimeCapabilityDetection {
     /// Minimum touch target size for accessibility compliance
     /// Respects test platform override - returns platform-correct value based on mocked platform
     /// Platform-native values: iOS/watchOS = 44.0, macOS/tvOS/visionOS = 0.0
-    @MainActor
-    static var minTouchTarget: CGFloat {
+    /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
+    nonisolated static var minTouchTarget: CGFloat {
         // Use test platform if set, otherwise use current platform
+        // Both are thread-safe (thread-local storage and compile-time constant)
         let platform = testPlatform ?? currentPlatform
         
         // Return platform-native value regardless of touch support state
@@ -790,9 +818,10 @@ public extension RuntimeCapabilityDetection {
     
     /// Hover delay for platforms that support hover
     /// Respects test platform override - returns platform-correct value based on mocked platform
-    @MainActor
-    static var hoverDelay: TimeInterval {
+    /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
+    nonisolated static var hoverDelay: TimeInterval {
         // Use test platform if set, otherwise use current platform
+        // Both are thread-safe (thread-local storage and compile-time constant)
         let platform = testPlatform ?? currentPlatform
         
         switch platform {

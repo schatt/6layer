@@ -698,8 +698,8 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         case "hover": return config.supportsHover
         case "haptic": return config.supportsHapticFeedback
         case "assistivetouch": return config.supportsAssistiveTouch
-        case "voiceover": return config.supportsVoiceOver ?? false
-        case "switchcontrol": return config.supportsSwitchControl ?? false
+        case "voiceover": return config.supportsVoiceOver
+        case "switchcontrol": return config.supportsSwitchControl
         case "vision": return RuntimeCapabilityDetection.supportsVision
         case "ocr": return RuntimeCapabilityDetection.supportsOCR
         case "gesture": return platform == .visionOS && RuntimeCapabilityDetection.supportsVision

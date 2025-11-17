@@ -500,7 +500,7 @@ open class AdvancedFieldTypesTests {
         let testFormState = createTestFormState()
         
         // When
-        let customFieldView = CustomFieldView(field: testField, formState: testFormState)
+        let _ = CustomFieldView(field: testField, formState: testFormState)
         
         // Then - view should render (test that it doesn't crash and uses registered component)
         // Note: Full rendering test would require ViewInspector

@@ -1103,7 +1103,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
             // This is a simplified test - full test would verify all items are unique
             let viewID = try? inspected.sixLayerAccessibilityIdentifier()
             
-            print("🔴 RED: ForEach List View ID: '\(viewID)'")
+            print("🔴 RED: ForEach List View ID: '\(viewID ?? "nil")'")
             print("🔴 RED: Note - Need to verify each item in ForEach gets unique identifier")
             
             // TDD RED: Should verify each item has unique identifier with item name

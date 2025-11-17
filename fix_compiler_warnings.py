@@ -211,15 +211,23 @@ def fix_nil_coalescing_non_optional(content: str) -> Tuple[str, int]:
     """Fix nil coalescing on non-optional types."""
     fixes = 0
     
-    # Pattern: nonOptionalValue ?? defaultValue
-    # The compiler warns about this
+    # Pattern: config.supportsVoiceOver ?? false where supportsVoiceOver is Bool (non-optional)
+    # Pattern: config.supportsSwitchControl ?? false where supportsSwitchControl is Bool (non-optional)
+    # These are common in CardExpansionPlatformConfig where properties are non-optional Bool
     
-    # Common patterns:
-    # - String ?? "default" where String is non-optional
-    # - Bool ?? false where Bool is non-optional
+    def remove_nil_coalescing(match):
+        nonlocal fixes
+        var_expr = match.group(1)
+        default_value = match.group(2)
+        fixes += 1
+        return var_expr  # Remove ?? defaultValue
     
-    # We need to be careful - only fix if we're sure it's non-optional
-    # For now, leave for manual review
+    # Pattern: variable.property ?? false or variable.property ?? true
+    content = re.sub(
+        r'(\w+\.supports(?:VoiceOver|SwitchControl))\s*\?\?\s*(false|true)',
+        remove_nil_coalescing,
+        content
+    )
     
     return content, fixes
 
@@ -235,6 +243,10 @@ def process_file(file_path: Path, dry_run: bool = False) -> dict:
         # Apply fixes
         content, fixes1 = fix_nil_comparisons(content)
         total_fixes += fixes1
+        
+        # Fix nil coalescing on non-optional types
+        content, fixes_nil_coalescing = fix_nil_coalescing_non_optional(content)
+        total_fixes += fixes_nil_coalescing
         
         # Fix #expect(true, ...) warnings - replace with Bool(true)
         fixes2 = 0
