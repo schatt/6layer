@@ -380,7 +380,8 @@ public struct RuntimeCapabilityDetection {
         }
         
         // Use testing defaults if test platform is set OR if in testing mode
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
+        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
             return getTestDefaults().supportsVoiceOver
         }
         
@@ -428,7 +429,8 @@ public struct RuntimeCapabilityDetection {
         }
         
         // Use testing defaults if test platform is set OR if in testing mode
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
+        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
+        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
             return getTestDefaults().supportsSwitchControl
         }
         
