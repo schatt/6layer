@@ -459,8 +459,9 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             // NOTE: Thread/Actor Isolation Limitation - On macOS, Thread.current.threadDictionary
             // may not be accessible from MainActor context, so test platform simulation may not work.
             // We verify the platform is set correctly, but accept actual platform values for config.
-            // Skip iOS assertions on macOS due to thread/actor isolation limitations
-            if currentPlatform == .iOS && SixLayerPlatform.current != .macOS {
+            // Skip iOS assertions when running on macOS due to thread/actor isolation limitations
+            let actualPlatform = SixLayerPlatform.current
+            if actualPlatform != .macOS {
                 // On iOS/watchOS, test platform simulation should work
                 TestSetupUtilities.shared.assertCardExpansionConfig(
                     config,
