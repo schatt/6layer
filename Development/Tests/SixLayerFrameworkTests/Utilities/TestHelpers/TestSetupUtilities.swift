@@ -272,10 +272,10 @@ public class TestSetupUtilities {
         file: StaticString = #file,
         line: UInt = #line
     ) {
-        // TODO: Thread/Actor Isolation Issue - getCardExpansionPlatformConfig() may not be accessing test defaults
+        // NOTE: Thread/Actor Isolation Issue - getCardExpansionPlatformConfig() may not be accessing test defaults
         // due to thread/actor isolation with Thread.current.threadDictionary. The framework code correctly uses
         // RuntimeCapabilityDetection, but the test platform may not be accessible from the MainActor context.
-        // This needs deeper investigation. For now, we accept the actual values returned by the framework.
+        // Tests should handle platform-specific behavior in the test itself, not in this assertion helper.
         if let touch = touch {
             #expect(config.supportsTouch == touch, "Card config touch support should be \(touch) (thread/actor isolation issue with test platform)", )
         }
