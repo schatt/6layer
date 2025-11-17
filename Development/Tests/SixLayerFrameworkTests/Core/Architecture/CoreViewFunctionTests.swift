@@ -56,14 +56,15 @@ open class CoreViewFunctionTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    var sampleData: [TestDataItem] = []
-    
-    init() async throws {
-        sampleData = [
-            TestPatterns.createTestItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
-            TestPatterns.createTestItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
-            TestPatterns.createTestItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
-        ]
+    // Helper method - creates fresh test data (test isolation)
+    private func createTestItem() -> TestDataItem {
+        return TestPatterns.createTestItem(
+            title: "Item 1",
+            subtitle: "Subtitle 1",
+            description: "Description 1",
+            value: 42,
+            isActive: true
+        )
     }
     
     // MARK: - IntelligentDetailView Tests (DRY Version)
@@ -92,7 +93,7 @@ open class CoreViewFunctionTests: BaseTestClass {
         accessibilityType: AccessibilityType
     ) async {
         // GIVEN: Specific capability and accessibility combination
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // Set test platform based on capability type - no mock checkers needed!
         switch capabilityType {
@@ -185,7 +186,7 @@ open class CoreViewFunctionTests: BaseTestClass {
         accessibilityType: AccessibilityType
     ) async {
         // GIVEN: Specific capability and accessibility combination
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // Set platform based on capability type using RuntimeCapabilityDetection
         DefensiveTestPatterns.setPlatformForCapabilityType(capabilityType)

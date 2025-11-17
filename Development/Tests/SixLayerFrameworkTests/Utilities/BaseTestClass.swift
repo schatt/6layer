@@ -138,5 +138,70 @@ open class BaseTestClass {
         )
     }
     
+    // MARK: - Common Test Data Item Creation
+    
+    /// Creates a test data item for testing using TestPatterns
+    /// Each test should call this to create fresh data (test isolation)
+    @MainActor
+    open func createTestDataItem(
+        title: String = "Item 1",
+        subtitle: String? = "Subtitle 1",
+        description: String? = "Description 1",
+        value: Int = 42,
+        isActive: Bool = true
+    ) -> TestPatterns.TestDataItem {
+        return TestPatterns.createTestItem(
+            title: title,
+            subtitle: subtitle,
+            description: description,
+            value: value,
+            isActive: isActive
+        )
+    }
+    
+    /// Creates multiple test data items
+    /// Each test should call this to create fresh data (test isolation)
+    @MainActor
+    open func createTestDataItems() -> [TestPatterns.TestDataItem] {
+        return [
+            createTestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
+            createTestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
+            createTestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
+        ]
+    }
+    
+    // MARK: - Common Context Creation
+    
+    /// Creates a PhotoContext for testing
+    /// Each test should call this to create fresh context (test isolation)
+    @MainActor
+    open func createPhotoContext(
+        screenSize: CGSize = CGSize(width: 375, height: 667),
+        availableSpace: CGSize? = nil,
+        userPreferences: PhotoPreferences = PhotoPreferences(),
+        deviceCapabilities: PhotoDeviceCapabilities = PhotoDeviceCapabilities()
+    ) -> PhotoContext {
+        return PhotoContext(
+            screenSize: screenSize,
+            availableSpace: availableSpace ?? screenSize,
+            userPreferences: userPreferences,
+            deviceCapabilities: deviceCapabilities
+        )
+    }
+    
+    /// Creates an OCRContext for testing
+    /// Each test should call this to create fresh context (test isolation)
+    @MainActor
+    open func createOCRContext() -> OCRContext {
+        return OCRContext()
+    }
+    
+    /// Creates PresentationHints for testing
+    /// Each test should call this to create fresh hints (test isolation)
+    @MainActor
+    open func createPresentationHints() -> PresentationHints {
+        return PresentationHints()
+    }
+    
 }
 

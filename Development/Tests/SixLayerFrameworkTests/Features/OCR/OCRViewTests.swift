@@ -13,9 +13,7 @@ open class OCRServiceTests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        await setupTestEnvironment()
-    }
+    // BaseTestClass handles setup automatically - no init() needed
     
     // BaseTestClass handles setup automatically
     

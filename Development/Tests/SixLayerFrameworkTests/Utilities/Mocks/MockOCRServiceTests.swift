@@ -32,9 +32,7 @@ open class MockOCRServiceTests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        // TODO: Set up real mock service tests
-    }    // MARK: - Real Mock Service Tests (To Be Implemented)
+    // BaseTestClass handles setup automatically - no init() needed    // MARK: - Real Mock Service Tests (To Be Implemented)
     
     // TODO: Implement tests that actually test mock service functionality:
     // - Mock service initialization and configuration

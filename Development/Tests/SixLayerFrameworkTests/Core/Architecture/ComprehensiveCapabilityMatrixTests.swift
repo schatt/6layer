@@ -53,15 +53,15 @@ open class ComprehensiveCapabilityMatrixTests: BaseTestClass {
         let isActive: Bool
     }
     
-    var sampleData: [TestDataItem] = []
-    
-    init() async throws {
-        
-        sampleData = [
-            TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
-            TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
-            TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
-        ]
+    // Helper method - creates fresh test data (test isolation)
+    private func createTestItem() -> TestDataItem {
+        return TestDataItem(
+            title: "Item 1",
+            subtitle: "Subtitle 1",
+            description: "Description 1",
+            value: 42,
+            isActive: true
+        )
     }
     
     // MARK: - Capability Definitions
@@ -327,8 +327,8 @@ open class ComprehensiveCapabilityMatrixTests: BaseTestClass {
     private func testCapabilityCombination(_ config: TestConfiguration) {
         print("🧪 Testing: \(config.description)")
         
-        // GIVEN: A test data item
-        let item = sampleData[0]
+        // GIVEN: A test data item (created fresh for this test)
+        let item = createTestItem()
         
         // WHEN: Generating a view with the specific capability/accessibility combination
         let viewDefinition = generateViewDefinition(

@@ -24,17 +24,88 @@ class L5PlatformOptimizationTests: BaseTestClass {
     private var sampleIOSHapticStyle: IOSHapticStyle = .medium
     private var sampleMacOSPerformanceStrategy: MacOSPerformanceStrategy = .optimized
     
-    init() async throws {
-        samplePlatform = L5TestDataFactory.createSamplePlatform()
-        samplePerformanceLevel = L5TestDataFactory.createSamplePerformanceOptimizationLevel()
-        sampleCachingStrategy = L5TestDataFactory.createSampleCachingStrategy()
-        sampleRenderingStrategy = L5TestDataFactory.createSampleRenderingStrategy()
-        sampleMemoryConfig = L5TestDataFactory.createSampleMemoryConfig()
-        sampleLazyLoadingConfig = L5TestDataFactory.createSampleLazyLoadingConfig()
-        samplePerformanceMetrics = L5TestDataFactory.createSamplePerformanceMetrics()
-        sampleIOSHapticStyle = L5TestDataFactory.createSampleIOSHapticStyle()
-        sampleMacOSPerformanceStrategy = L5TestDataFactory.createSampleMacOSPerformanceStrategy()
+    private func createSamplePlatform() {
+
+    
+        return L5TestDataFactory.createSamplePlatform()
+
+    
     }
+
+    
+    private func createSamplePerformanceLevel() {
+
+    
+        return L5TestDataFactory.createSamplePerformanceOptimizationLevel()
+
+    
+    }
+
+    
+    private func createSampleCachingStrategy() {
+
+    
+        return L5TestDataFactory.createSampleCachingStrategy()
+
+    
+    }
+
+    
+    private func createSampleRenderingStrategy() {
+
+    
+        return L5TestDataFactory.createSampleRenderingStrategy()
+
+    
+    }
+
+    
+    private func createSampleMemoryConfig() {
+
+    
+        return L5TestDataFactory.createSampleMemoryConfig()
+
+    
+    }
+
+    
+    private func createSampleLazyLoadingConfig() {
+
+    
+        return L5TestDataFactory.createSampleLazyLoadingConfig()
+
+    
+    }
+
+    
+    private func createSamplePerformanceMetrics() {
+
+    
+        return L5TestDataFactory.createSamplePerformanceMetrics()
+
+    
+    }
+
+    
+    private func createSampleIOSHapticStyle() {
+
+    
+        return L5TestDataFactory.createSampleIOSHapticStyle()
+
+    
+    }
+
+    
+    private func createSampleMacOSPerformanceStrategy() {
+
+    
+        return L5TestDataFactory.createSampleMacOSPerformanceStrategy()
+
+    
+    }
+
+    
+    // BaseTestClass handles setup automatically - no init() needed
     
     deinit {
         Task { [weak self] in

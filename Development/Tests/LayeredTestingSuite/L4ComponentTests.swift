@@ -21,14 +21,61 @@ class L4ComponentTests: BaseTestClass {
     private var samplePhotoDisplayStyle: PhotoDisplayStyle = .aspectFit
     private var sampleTextRecognitionOptions: TextRecognitionOptions = TextRecognitionOptions()
     
-    init() async throws {
-        sampleOCRContext = L4TestDataFactory.createSampleOCRContext()
-        sampleOCRStrategy = L4TestDataFactory.createSampleOCRStrategy()
-        sampleOCRLayout = L4TestDataFactory.createSampleOCRLayout()
-        samplePlatformImage = L4TestDataFactory.createSamplePlatformImage()
-        samplePhotoDisplayStyle = L4TestDataFactory.createSamplePhotoDisplayStyle()
-        sampleTextRecognitionOptions = L4TestDataFactory.createSampleTextRecognitionOptions()
+    private func createSampleOCRContext() {
+
+    
+        return L4TestDataFactory.createSampleOCRContext()
+
+    
     }
+
+    
+    private func createSampleOCRStrategy() {
+
+    
+        return L4TestDataFactory.createSampleOCRStrategy()
+
+    
+    }
+
+    
+    private func createSampleOCRLayout() {
+
+    
+        return L4TestDataFactory.createSampleOCRLayout()
+
+    
+    }
+
+    
+    private func createSamplePlatformImage() {
+
+    
+        return L4TestDataFactory.createSamplePlatformImage()
+
+    
+    }
+
+    
+    private func createSamplePhotoDisplayStyle() {
+
+    
+        return L4TestDataFactory.createSamplePhotoDisplayStyle()
+
+    
+    }
+
+    
+    private func createSampleTextRecognitionOptions() {
+
+    
+        return L4TestDataFactory.createSampleTextRecognitionOptions()
+
+    
+    }
+
+    
+    // BaseTestClass handles setup automatically - no init() needed
     
     deinit {
         Task { [weak self] in

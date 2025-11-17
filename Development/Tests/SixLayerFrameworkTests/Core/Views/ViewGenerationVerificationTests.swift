@@ -25,11 +25,19 @@ struct ViewGenerationVerificationTests {
         let isActive: Bool
     }
     
-    var sampleData: [TestDataItem] = []
+    // Helper method - creates fresh test data for each test (test isolation)
+    private func createTestItem() -> TestDataItem {
+        return TestDataItem(
+            title: "Item 1",
+            subtitle: "Subtitle 1",
+            description: "Description 1",
+            value: 42,
+            isActive: true
+        )
+    }
     
-    init() async throws {
-        
-        sampleData = [
+    private func createTestItems() -> [TestDataItem] {
+        return [
             TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
             TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
             TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
@@ -43,7 +51,7 @@ struct ViewGenerationVerificationTests {
     /// METHODOLOGY: Uses ViewInspector to verify actual view structure and content
     @Test @MainActor func testIntelligentDetailViewGeneratesProperStructure() {
         // GIVEN: Test data
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating an intelligent detail view
         let detailView = IntelligentDetailView.platformDetailView(for: item)
@@ -99,7 +107,7 @@ struct ViewGenerationVerificationTests {
     /// METHODOLOGY: Tests actual framework behavior with different hints
     @Test @MainActor func testIntelligentDetailViewWithDifferentHints() {
         // GIVEN: Test data and different presentation hints
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // Test compact layout
         let compactHints = PresentationHints(
@@ -178,7 +186,7 @@ struct ViewGenerationVerificationTests {
     /// METHODOLOGY: Tests that custom content appears in the final view
     @Test @MainActor func testIntelligentDetailViewWithCustomFieldView() {
         // GIVEN: Test data and custom field view
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view with custom field view
         let detailView = IntelligentDetailView.platformDetailView(
@@ -225,7 +233,7 @@ struct ViewGenerationVerificationTests {
     /// METHODOLOGY: Tests actual framework behavior with nil data
     @Test @MainActor func testIntelligentDetailViewWithNilValues() {
         // GIVEN: Test data with nil values
-        let item = sampleData[1] // This has nil subtitle
+        let item = createTestItems()[1] // This has nil subtitle
         
         // WHEN: Generating an intelligent detail view
         let detailView = IntelligentDetailView.platformDetailView(for: item)
@@ -278,7 +286,7 @@ struct ViewGenerationVerificationTests {
     /// METHODOLOGY: Tests actual analysis results, not just that analysis runs
     @Test func testDataIntrospectionEngineAnalyzesDataCorrectly() {
         // GIVEN: Test data
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Analyzing the data
         let analysis = DataIntrospectionEngine.analyze(item)

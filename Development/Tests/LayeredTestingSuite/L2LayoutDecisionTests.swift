@@ -21,14 +21,61 @@ class L2LayoutDecisionTests: BaseTestClass {
     private var sampleContentComplexity: ContentComplexity = .moderate
     private var sampleDeviceType: DeviceType = .phone
     
-    init() async throws {
-        sampleContent = L2TestDataFactory.createSampleContent()
-        sampleHints = L2TestDataFactory.createSampleHints()
-        sampleOCRContext = L2TestDataFactory.createSampleOCRContext()
-        samplePhotoContext = L2TestDataFactory.createSamplePhotoContext()
-        sampleContentComplexity = L2TestDataFactory.createSampleContentComplexity()
-        sampleDeviceType = L2TestDataFactory.createSampleDeviceType()
+    private func createSampleContent() {
+
+    
+        return L2TestDataFactory.createSampleContent()
+
+    
     }
+
+    
+    private func createSampleHints() {
+
+    
+        return L2TestDataFactory.createSampleHints()
+
+    
+    }
+
+    
+    private func createSampleOCRContext() {
+
+    
+        return L2TestDataFactory.createSampleOCRContext()
+
+    
+    }
+
+    
+    private func createSamplePhotoContext() {
+
+    
+        return L2TestDataFactory.createSamplePhotoContext()
+
+    
+    }
+
+    
+    private func createSampleContentComplexity() {
+
+    
+        return L2TestDataFactory.createSampleContentComplexity()
+
+    
+    }
+
+    
+    private func createSampleDeviceType() {
+
+    
+        return L2TestDataFactory.createSampleDeviceType()
+
+    
+    }
+
+    
+    // BaseTestClass handles setup automatically - no init() needed
     
     deinit {
         Task { [weak self] in

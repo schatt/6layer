@@ -40,8 +40,7 @@ import SwiftUI
 @Suite("Platform Colors")
 open class PlatformColorsTests: BaseTestClass {
     
-    init() async throws {
-    }
+    // BaseTestClass handles setup automatically - no init() needed
     
     // MARK: - Platform-Specific Business Logic Tests
     

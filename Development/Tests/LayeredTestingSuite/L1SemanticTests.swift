@@ -24,17 +24,88 @@ class L1SemanticTests: BaseTestClass {
     private var samplePhotoPurpose: PhotoPurpose = .general
     private var samplePhotoContext: PhotoContext = PhotoContext()
     
-    init() async throws {
-        sampleNumericData = createSampleNumericData()
-        sampleHints = createSampleHints()
-        sampleFormFields = createSampleFormFields()
-        sampleMediaItems = createSampleMediaItems()
-        sampleHierarchicalItems = createSampleHierarchicalItems()
-        sampleTemporalItems = createSampleTemporalItems()
-        sampleOCRContext = createSampleOCRContext()
-        samplePhotoPurpose = .general
-        samplePhotoContext = createSamplePhotoContext()
+    private func createSampleNumericData() {
+
+    
+        return createSampleNumericData()
+
+    
     }
+
+    
+    private func createSampleHints() {
+
+    
+        return createSampleHints()
+
+    
+    }
+
+    
+    private func createSampleFormFields() {
+
+    
+        return createSampleFormFields()
+
+    
+    }
+
+    
+    private func createSampleMediaItems() {
+
+    
+        return createSampleMediaItems()
+
+    
+    }
+
+    
+    private func createSampleHierarchicalItems() {
+
+    
+        return createSampleHierarchicalItems()
+
+    
+    }
+
+    
+    private func createSampleTemporalItems() {
+
+    
+        return createSampleTemporalItems()
+
+    
+    }
+
+    
+    private func createSampleOCRContext() {
+
+    
+        return createSampleOCRContext()
+
+    
+    }
+
+    
+    private func createSamplePhotoPurpose() {
+
+    
+        return .general
+
+    
+    }
+
+    
+    private func createSamplePhotoContext() {
+
+    
+        return createSamplePhotoContext()
+
+    
+    }
+
+    
+    // BaseTestClass handles setup automatically - no init() needed
     
     deinit {
         Task { [weak self] in

@@ -32,9 +32,7 @@ open class OCRServiceFunctionalTests: BaseTestClass {
     
     // MARK: - Test Setup
     
-    init() async throws {
-        // TODO: Set up real OCR service tests
-    }
+    // BaseTestClass handles setup automatically - no init() needed
     
     // Cleanup handled by BaseTestClass
     

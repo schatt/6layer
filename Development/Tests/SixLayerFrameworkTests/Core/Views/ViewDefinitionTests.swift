@@ -22,15 +22,15 @@ open class ViewDefinitionTests: BaseTestClass {
         let isActive: Bool
     }
     
-    var sampleData: [TestDataItem] = []
-    
-    init() async throws {
-        
-        sampleData = [
-            TestDataItem(title: "Item 1", subtitle: "Subtitle 1", description: "Description 1", value: 42, isActive: true),
-            TestDataItem(title: "Item 2", subtitle: nil, description: "Description 2", value: 84, isActive: false),
-            TestDataItem(title: "Item 3", subtitle: "Subtitle 3", description: nil, value: 126, isActive: true)
-        ]
+    // Helper method - creates fresh test data for each test (test isolation)
+    private func createTestItem() -> TestDataItem {
+        return TestDataItem(
+            title: "Item 1",
+            subtitle: "Subtitle 1",
+            description: "Description 1",
+            value: 42,
+            isActive: true
+        )
     }
     
     // MARK: - Capability Matrix Tests
@@ -48,7 +48,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.cardExpansion, .animation, .accessibility] // Specific features for ExpandableCardComponent
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -78,7 +78,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.cardExpansion, .animation, .accessibility] // Specific features for ExpandableCardComponent
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -108,7 +108,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.cardExpansion, .contextMenu, .dragDrop, .keyboardNavigation, .animation, .accessibility] // Specific features for ExpandableCardComponent
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -140,7 +140,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.keyboardNavigation, .accessibility] // Specific features for SimpleCardComponent
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -170,7 +170,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: true
         )
         let features: [Feature] = [.cardExpansion, .animation, .accessibility] // Specific features for ExpandableCardComponent
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -204,7 +204,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.contextMenu, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -230,7 +230,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.dragDrop, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -258,7 +258,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: true
         )
         let features: [Feature] = [.telekinesis, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -284,7 +284,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features: [Feature] = [.telekinesis, .animation, .accessibility] // Specific features for SimpleCardComponent (no cardExpansion)
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -312,7 +312,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: false
         )
         let features = [Feature.accessibility]
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)
@@ -341,7 +341,7 @@ open class ViewDefinitionTests: BaseTestClass {
             supportsOCR: true
         )
         let features = Feature.allCases
-        let item = sampleData[0]
+        let item = createTestItem()
         
         // WHEN: Generating view definition
         let viewDefinition = generateViewDefinition(item: item, capabilities: capabilities, features: features)

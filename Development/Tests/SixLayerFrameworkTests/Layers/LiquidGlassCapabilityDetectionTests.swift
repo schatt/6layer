@@ -39,8 +39,7 @@ import Foundation
 @Suite("Liquid Glass Capability Detection")
 open class LiquidGlassCapabilityDetectionTests: BaseTestClass {
     
-    init() async throws {
-    }
+    // BaseTestClass handles setup automatically - no init() needed
     
     // MARK: - Basic Capability Tests
     

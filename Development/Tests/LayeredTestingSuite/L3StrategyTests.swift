@@ -23,16 +23,79 @@ class L3StrategyTests: BaseTestClass {
     private var sampleInteractionStyle: InteractionStyle = .interactive
     private var sampleContentDensity: ContentDensity = .balanced
     
-    init() async throws {
-        sampleTextTypes = L3TestDataFactory.createSampleTextTypes()
-        sampleDocumentType = L3TestDataFactory.createSampleDocumentType()
-        samplePlatform = L3TestDataFactory.createSamplePlatform()
-        samplePhotoPurpose = L3TestDataFactory.createSamplePhotoPurpose()
-        samplePhotoContext = L3TestDataFactory.createSamplePhotoContext()
-        sampleDeviceType = L3TestDataFactory.createSampleDeviceType()
-        sampleInteractionStyle = L3TestDataFactory.createSampleInteractionStyle()
-        sampleContentDensity = L3TestDataFactory.createSampleContentDensity()
+    private func createSampleTextTypes() {
+
+    
+        return L3TestDataFactory.createSampleTextTypes()
+
+    
     }
+
+    
+    private func createSampleDocumentType() {
+
+    
+        return L3TestDataFactory.createSampleDocumentType()
+
+    
+    }
+
+    
+    private func createSamplePlatform() {
+
+    
+        return L3TestDataFactory.createSamplePlatform()
+
+    
+    }
+
+    
+    private func createSamplePhotoPurpose() {
+
+    
+        return L3TestDataFactory.createSamplePhotoPurpose()
+
+    
+    }
+
+    
+    private func createSamplePhotoContext() {
+
+    
+        return L3TestDataFactory.createSamplePhotoContext()
+
+    
+    }
+
+    
+    private func createSampleDeviceType() {
+
+    
+        return L3TestDataFactory.createSampleDeviceType()
+
+    
+    }
+
+    
+    private func createSampleInteractionStyle() {
+
+    
+        return L3TestDataFactory.createSampleInteractionStyle()
+
+    
+    }
+
+    
+    private func createSampleContentDensity() {
+
+    
+        return L3TestDataFactory.createSampleContentDensity()
+
+    
+    }
+
+    
+    // BaseTestClass handles setup automatically - no init() needed
     
     deinit {
         Task { [weak self] in
