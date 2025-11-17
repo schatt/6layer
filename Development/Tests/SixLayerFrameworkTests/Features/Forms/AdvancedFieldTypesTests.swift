@@ -846,158 +846,148 @@ open class AdvancedFieldTypesTests: BaseTestClass {
     /// TESTING SCOPE: Tests that advanced field types adapt their behavior based on VoiceOver, Switch Control, AssistiveTouch, and keyboard navigation capabilities
     /// METHODOLOGY: Uses mock framework to test both enabled and disabled states, verifying that field types provide appropriate accessibility features
     @Test func testAdvancedFieldTypesAccessibilityBehavior() async {
-        await MainActor.run {
-            // Test VoiceOver behavior
-            RuntimeCapabilityDetection.setTestVoiceOver(true)
-            let voiceOverEnabled = RuntimeCapabilityDetection.supportsVoiceOver
-            #expect(voiceOverEnabled, "VoiceOver should be enabled for testing")
-            
-            RuntimeCapabilityDetection.setTestVoiceOver(false)
-            let voiceOverDisabled = RuntimeCapabilityDetection.supportsVoiceOver
-            #expect(!voiceOverDisabled, "VoiceOver should be disabled for testing")
-            
-            // Test Switch Control behavior
-            RuntimeCapabilityDetection.setTestSwitchControl(true)
-            let switchControlEnabled = RuntimeCapabilityDetection.supportsSwitchControl
-            #expect(switchControlEnabled, "Switch Control should be enabled for testing")
-            
-            RuntimeCapabilityDetection.setTestSwitchControl(false)
-            let switchControlDisabled = RuntimeCapabilityDetection.supportsSwitchControl
-            #expect(!switchControlDisabled, "Switch Control should be disabled for testing")
-            
-            // Test AssistiveTouch behavior
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            let assistiveTouchEnabled = RuntimeCapabilityDetection.supportsAssistiveTouch
-            #expect(assistiveTouchEnabled, "AssistiveTouch should be enabled for testing")
-            
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-            let assistiveTouchDisabled = RuntimeCapabilityDetection.supportsAssistiveTouch
-            #expect(!assistiveTouchDisabled, "AssistiveTouch should be disabled for testing")
-        }
+        // Test VoiceOver behavior
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        let voiceOverEnabled = RuntimeCapabilityDetection.supportsVoiceOver
+        #expect(voiceOverEnabled, "VoiceOver should be enabled for testing")
+
+        RuntimeCapabilityDetection.setTestVoiceOver(false)
+        let voiceOverDisabled = RuntimeCapabilityDetection.supportsVoiceOver
+        #expect(!voiceOverDisabled, "VoiceOver should be disabled for testing")
+
+        // Test Switch Control behavior
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        let switchControlEnabled = RuntimeCapabilityDetection.supportsSwitchControl
+        #expect(switchControlEnabled, "Switch Control should be enabled for testing")
+
+        RuntimeCapabilityDetection.setTestSwitchControl(false)
+        let switchControlDisabled = RuntimeCapabilityDetection.supportsSwitchControl
+        #expect(!switchControlDisabled, "Switch Control should be disabled for testing")
+
+        // Test AssistiveTouch behavior
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        let assistiveTouchEnabled = RuntimeCapabilityDetection.supportsAssistiveTouch
+        #expect(assistiveTouchEnabled, "AssistiveTouch should be enabled for testing")
+
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        let assistiveTouchDisabled = RuntimeCapabilityDetection.supportsAssistiveTouch
+        #expect(!assistiveTouchDisabled, "AssistiveTouch should be disabled for testing")
     }
     
     /// BUSINESS PURPOSE: Advanced field types should provide enhanced accessibility labels when VoiceOver is enabled
     /// TESTING SCOPE: Tests that field types provide appropriate accessibility labels for VoiceOver users
     /// METHODOLOGY: Creates field types and verifies they have accessibility labels when VoiceOver is enabled
     @Test func testAdvancedFieldTypesVoiceOverLabels() async {
-        await MainActor.run {
-            // Enable VoiceOver
-            RuntimeCapabilityDetection.setTestVoiceOver(true)
-            
-            // Create test field
-            let field = DynamicFormField(
-                id: "testField",
-                contentType: .text,
-                label: "Test Field",
-                placeholder: "Enter text"
-            )
-            
-            let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
-            
-            // Test that field types provide accessibility labels
-            // Verify the field has proper configuration for VoiceOver
-            #expect(field.id == "testField", "Field should have correct ID")
-            #expect(field.label == "Test Field", "Field should have correct label")
-            #expect(field.contentType == .text, "Field should have correct content type")
-            #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
-            
-            // Test that form state is properly configured
-            // formState is a non-optional class instance, so it exists if we reach here
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestVoiceOver(false)
-        }
+        // Enable VoiceOver
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+
+        // Create test field
+        let field = DynamicFormField(
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text"
+        )
+
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+
+        // Test that field types provide accessibility labels
+        // Verify the field has proper configuration for VoiceOver
+        #expect(field.id == "testField", "Field should have correct ID")
+        #expect(field.label == "Test Field", "Field should have correct label")
+        #expect(field.contentType == .text, "Field should have correct content type")
+        #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
+
+        // Test that form state is properly configured
+        // formState is a non-optional class instance, so it exists if we reach here
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestVoiceOver(false)
     }
     
     /// BUSINESS PURPOSE: Advanced field types should provide keyboard navigation support when Switch Control is enabled
     /// TESTING SCOPE: Tests that field types support keyboard navigation for Switch Control users
     /// METHODOLOGY: Enables Switch Control and verifies field types provide appropriate keyboard navigation
     @Test func testAdvancedFieldTypesSwitchControlNavigation() async {
-        await MainActor.run {
-            // Enable Switch Control
-            RuntimeCapabilityDetection.setTestSwitchControl(true)
-            
-            // Create test field
-            let field = DynamicFormField(
-                id: "testField",
-                contentType: .text,
-                label: "Test Field",
-                placeholder: "Enter text"
-            )
-            
-            let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
-            
-            // Test that field types support keyboard navigation
-            // Verify the field has proper configuration for Switch Control
-            #expect(field.id == "testField", "Field should have correct ID")
-            #expect(field.label == "Test Field", "Field should have correct label")
-            #expect(field.contentType == .text, "Field should have correct content type")
-            #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
-            
-            // Test that form state is properly configured
-            // formState is a non-optional class instance, so it exists if we reach here
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestSwitchControl(false)
-        }
+        // Enable Switch Control
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+
+        // Create test field
+        let field = DynamicFormField(
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text"
+        )
+
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+
+        // Test that field types support keyboard navigation
+        // Verify the field has proper configuration for Switch Control
+        #expect(field.id == "testField", "Field should have correct ID")
+        #expect(field.label == "Test Field", "Field should have correct label")
+        #expect(field.contentType == .text, "Field should have correct content type")
+        #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
+
+        // Test that form state is properly configured
+        // formState is a non-optional class instance, so it exists if we reach here
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestSwitchControl(false)
     }
     
     /// BUSINESS PURPOSE: Advanced field types should provide gesture recognition when AssistiveTouch is enabled
     /// TESTING SCOPE: Tests that field types support gesture recognition for AssistiveTouch users
     /// METHODOLOGY: Enables AssistiveTouch and verifies field types provide appropriate gesture support
     @Test func testAdvancedFieldTypesAssistiveTouchGestures() async {
-        await MainActor.run {
-            // Enable AssistiveTouch
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            
-            // Create test field
-            let field = DynamicFormField(
-                id: "testField",
-                contentType: .text,
-                label: "Test Field",
-                placeholder: "Enter text"
-            )
-            
-            let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
-            
-            // Test that field types support gesture recognition
-            // Verify the field has proper configuration for AssistiveTouch
-            #expect(field.id == "testField", "Field should have correct ID")
-            #expect(field.label == "Test Field", "Field should have correct label")
-            #expect(field.contentType == .text, "Field should have correct content type")
-            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
-            
-            // Test that form state is properly configured
-            // formState is a non-optional class instance, so it exists if we reach here
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-        }
+        // Enable AssistiveTouch
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+
+        // Create test field
+        let field = DynamicFormField(
+            id: "testField",
+            contentType: .text,
+            label: "Test Field",
+            placeholder: "Enter text"
+        )
+
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+
+        // Test that field types support gesture recognition
+        // Verify the field has proper configuration for AssistiveTouch
+        #expect(field.id == "testField", "Field should have correct ID")
+        #expect(field.label == "Test Field", "Field should have correct label")
+        #expect(field.contentType == .text, "Field should have correct content type")
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+
+        // Test that form state is properly configured
+        // formState is a non-optional class instance, so it exists if we reach here
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
     }
     
     /// BUSINESS PURPOSE: Advanced field types should provide different behavior when multiple accessibility capabilities are enabled simultaneously
     /// TESTING SCOPE: Tests that field types handle multiple accessibility capabilities correctly
     /// METHODOLOGY: Enables multiple capabilities and verifies field types provide appropriate combined behavior
     @Test func testAdvancedFieldTypesMultipleAccessibilityCapabilities() async {
-        await MainActor.run {
-            // Enable multiple capabilities
-            RuntimeCapabilityDetection.setTestVoiceOver(true)
-            RuntimeCapabilityDetection.setTestSwitchControl(true)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            
-            // Verify all capabilities are enabled
-            #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
-            #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
-            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
-            
-            // Test that field types handle multiple capabilities
-            // Note: In a real implementation, these would check actual combined behavior
-            // For now, we verify the capability detection works correctly for all capabilities
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestVoiceOver(false)
-            RuntimeCapabilityDetection.setTestSwitchControl(false)
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-        }
+        // Enable multiple capabilities
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+
+        // Verify all capabilities are enabled
+        #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
+        #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+
+        // Test that field types handle multiple capabilities
+        // Note: In a real implementation, these would check actual combined behavior
+        // For now, we verify the capability detection works correctly for all capabilities
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestVoiceOver(false)
+        RuntimeCapabilityDetection.setTestSwitchControl(false)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
     }
 }

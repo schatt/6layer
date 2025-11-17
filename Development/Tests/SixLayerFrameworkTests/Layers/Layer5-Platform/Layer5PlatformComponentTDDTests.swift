@@ -387,14 +387,12 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-                let hasAccessibilityID = await MainActor.run {
-                    testAccessibilityIdentifiersSinglePlatform(
-                        view,
-                        expectedPattern: "SixLayer.main.ui.*PlatformOrganizationLayer5.*",
-                        platform: .iOS,
-                        componentName: "PlatformOrganizationLayer5"
-                    )
-                }
+                let hasAccessibilityID =                 testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformOrganizationLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformOrganizationLayer5"
+                )
  #expect(hasAccessibilityID, "Should generate accessibility identifier")
         #else
 
@@ -437,14 +435,12 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-                let hasAccessibilityID = await MainActor.run {
-                    testAccessibilityIdentifiersSinglePlatform(
-                        view,
-                        expectedPattern: "SixLayer.main.ui.*PlatformNotificationLayer5.*",
-                        platform: .iOS,
-                        componentName: "PlatformNotificationLayer5"
-                    )
-                }
+                let hasAccessibilityID =                 testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformNotificationLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformNotificationLayer5"
+                )
  #expect(hasAccessibilityID, "Should generate accessibility identifier")
         #else
 
@@ -487,14 +483,12 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-                let hasAccessibilityID = await MainActor.run {
-                    testAccessibilityIdentifiersSinglePlatform(
-                        view,
-                        expectedPattern: "SixLayer.main.ui.*PlatformInterpretationLayer5.*",
-                        platform: .iOS,
-                        componentName: "PlatformInterpretationLayer5"
-                    )
-                }
+                let hasAccessibilityID =                 testAccessibilityIdentifiersSinglePlatform(
+                    view,
+                    expectedPattern: "SixLayer.main.ui.*PlatformInterpretationLayer5.*",
+                    platform: .iOS,
+                    componentName: "PlatformInterpretationLayer5"
+                )
  #expect(hasAccessibilityID, "Should generate accessibility identifier")
         #else
 

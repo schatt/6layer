@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.1.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.1.1")
 ]
 ```
 
@@ -41,7 +41,7 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.1.0
+## 🆕 Latest Release: v5.1.1
 
 ### **PlatformImage EXIF GPS Location Extraction**
 📸 **Cross-Platform EXIF Access**: New `PlatformImageEXIF` struct provides clean API for accessing EXIF metadata
@@ -97,8 +97,8 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.0.0 (Major Testing and Accessibility Release)
-**Phase**: Major Release
+**Version**: v5.1.1 (PlatformImage EXIF GPS Location Extraction)
+**Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
 ## 🤝 Contributing

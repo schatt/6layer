@@ -29,14 +29,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
+        )
  #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -68,14 +66,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
+        )
  #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS ")
         #else
 
@@ -107,14 +103,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
+        )
  #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS ")
         #else
 
@@ -146,14 +140,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformOCRWithVisualCorrection_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformOCRWithVisualCorrection_L1"
+        )
  #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS ")
         #else
 

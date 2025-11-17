@@ -42,18 +42,16 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPresentModalForm_L1(
-                formType: .form,
-                context: .modal
-            )
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPresentModalForm_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPresentModalForm_L1(
+            formType: .form,
+            context: .modal
+        )
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPresentModalForm_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -88,18 +86,16 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPresentModalForm_L1(
-                formType: .form,
-                context: .modal
-            )
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPresentModalForm_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPresentModalForm_L1(
+            formType: .form,
+            context: .modal
+        )
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPresentModalForm_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentModalForm_L1 should generate accessibility identifiers on macOS ")
         #else
 

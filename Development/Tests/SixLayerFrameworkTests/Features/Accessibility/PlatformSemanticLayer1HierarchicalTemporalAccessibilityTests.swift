@@ -55,14 +55,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPresentHierarchicalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPresentHierarchicalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -103,14 +101,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPresentHierarchicalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPresentHierarchicalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 should generate accessibility identifiers on macOS ")
         #else
 
@@ -150,14 +146,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPresentTemporalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPresentTemporalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -195,14 +189,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPresentTemporalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPresentTemporalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentTemporalData_L1 should generate accessibility identifiers on macOS ")
         #else
 
@@ -243,14 +235,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentHierarchicalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentHierarchicalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
         #else
 
@@ -293,14 +283,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentHierarchicalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentHierarchicalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with custom view should generate accessibility identifiers ")
         #else
 
@@ -344,14 +332,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentHierarchicalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentHierarchicalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 with enhanced hints and custom view should generate accessibility identifiers ")
         #else
 
@@ -388,14 +374,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentHierarchicalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentHierarchicalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentHierarchicalData_L1 single-item variant should generate accessibility identifiers ")
         #else
 
@@ -433,14 +417,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentTemporalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentTemporalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
         #else
 
@@ -481,14 +463,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentTemporalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentTemporalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with custom view should generate accessibility identifiers ")
         #else
 
@@ -530,14 +510,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentTemporalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentTemporalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentTemporalData_L1 with enhanced hints and custom view should generate accessibility identifiers ")
         #else
 
@@ -572,14 +550,12 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPresentTemporalData_L1"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentTemporalData_L1"
+        )
  #expect(hasAccessibilityID, "platformPresentTemporalData_L1 single-item variant should generate accessibility identifiers ")
         #else
 

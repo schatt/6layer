@@ -452,104 +452,94 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     // or when testing the actual platform.
     
     @Test func testGetCardExpansionPlatformConfig_iOS() async {
-        await MainActor.run {
-            TestSetupUtilities.shared.simulatePlatform(.iOS)
-            let config = getCardExpansionPlatformConfig()
-            
-            // Only test iOS simulation when actually on iOS (simulation doesn't work on macOS)
-            #if os(iOS)
-            TestSetupUtilities.shared.assertCardExpansionConfig(
-                config,
-                touch: true,
-                haptic: true,
-                hover: false,
-                voiceOver: true,
-                switchControl: true,
-                assistiveTouch: true
-            )
-            #else
-            // On macOS, simulation doesn't work due to thread/actor isolation
-            // Skip assertions - this is expected behavior
-            #endif
-        }
+        TestSetupUtilities.shared.simulatePlatform(.iOS)
+        let config = getCardExpansionPlatformConfig()
+
+        // Only test iOS simulation when actually on iOS (simulation doesn't work on macOS)
+        #if os(iOS)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: true,
+            haptic: true,
+            hover: false,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: true
+        )
+        #else
+        // On macOS, simulation doesn't work due to thread/actor isolation
+        // Skip assertions - this is expected behavior
+        #endif
     }
     
     @Test func testGetCardExpansionPlatformConfig_macOS() async {
-        await MainActor.run {
-            TestSetupUtilities.shared.simulatePlatform(.macOS)
-            let config = getCardExpansionPlatformConfig()
-            
-            TestSetupUtilities.shared.assertCardExpansionConfig(
-                config,
-                touch: false,
-                haptic: false,
-                hover: true,
-                voiceOver: true,
-                switchControl: true,
-                assistiveTouch: false
-            )
-        }
+        TestSetupUtilities.shared.simulatePlatform(.macOS)
+        let config = getCardExpansionPlatformConfig()
+
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: false,
+            haptic: false,
+            hover: true,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: false
+        )
     }
     
     @Test func testGetCardExpansionPlatformConfig_watchOS() async {
-        await MainActor.run {
-            TestSetupUtilities.shared.simulatePlatform(.watchOS)
-            let config = getCardExpansionPlatformConfig()
-            
-            TestSetupUtilities.shared.assertCardExpansionConfig(
-                config,
-                touch: true,
-                haptic: true,
-                hover: false,
-                voiceOver: true,
-                switchControl: true,
-                assistiveTouch: true
-            )
-        }
+        TestSetupUtilities.shared.simulatePlatform(.watchOS)
+        let config = getCardExpansionPlatformConfig()
+
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: true,
+            haptic: true,
+            hover: false,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: true
+        )
     }
     
     @Test func testGetCardExpansionPlatformConfig_tvOS() async {
-        await MainActor.run {
-            TestSetupUtilities.shared.simulatePlatform(.tvOS)
-            let config = getCardExpansionPlatformConfig()
-            
-            TestSetupUtilities.shared.assertCardExpansionConfig(
-                config,
-                touch: false,
-                haptic: false,
-                hover: false,
-                voiceOver: true,
-                switchControl: true,
-                assistiveTouch: false
-            )
-        }
+        TestSetupUtilities.shared.simulatePlatform(.tvOS)
+        let config = getCardExpansionPlatformConfig()
+
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: false,
+            haptic: false,
+            hover: false,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: false
+        )
     }
     
     @Test func testGetCardExpansionPlatformConfig_visionOS() async {
-        await MainActor.run {
-            TestSetupUtilities.shared.simulatePlatform(.visionOS)
-            let config = getCardExpansionPlatformConfig()
-            
-            // Only test visionOS simulation when actually on visionOS (simulation doesn't work on macOS)
-            #if os(visionOS)
-            TestSetupUtilities.shared.assertCardExpansionConfig(
-                config,
-                touch: true,
-                haptic: true,
-                hover: true,
-                voiceOver: true,
-                switchControl: true,
-                assistiveTouch: true
-            )
-            
-            // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
-            #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
-            #else
-            // On macOS, simulation doesn't work due to thread/actor isolation
-            // Skip assertions - this is expected behavior
-            // Still verify minTouchTarget is set (may be macOS value)
-            #endif
-        }
+        TestSetupUtilities.shared.simulatePlatform(.visionOS)
+        let config = getCardExpansionPlatformConfig()
+
+        // Only test visionOS simulation when actually on visionOS (simulation doesn't work on macOS)
+        #if os(visionOS)
+        TestSetupUtilities.shared.assertCardExpansionConfig(
+            config,
+            touch: true,
+            haptic: true,
+            hover: true,
+            voiceOver: true,
+            switchControl: true,
+            assistiveTouch: true
+        )
+
+        // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
+        #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
+        #else
+        // On macOS, simulation doesn't work due to thread/actor isolation
+        // Skip assertions - this is expected behavior
+        // Still verify minTouchTarget is set (may be macOS value)
+        #endif
     }
     
     @Test func testGetCardExpansionPerformanceConfig() {

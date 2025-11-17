@@ -470,133 +470,125 @@ extension Optional: AnyOptional {
  
  // In CollectionEmptyStateViewTests.swift:
  @Test func testCollectionEmptyStateViewAccessibility() async {
-     await MainActor.run {
-         // Setup
-         setupTestEnvironment()
-         
-         // Test using centralized function
-         let view = CollectionEmptyStateView(
-             title: "Test Title",
-             message: "Test Message",
-             onCreateItem: {},
-             customCreateView: nil
-         )
-         
-         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-         let testPassed = testComponentAccessibility(
-             componentName: "CollectionEmptyStateView",
-             createComponent: { view }
-         )
+     // Setup
+     setupTestEnvironment()
+
+     // Test using centralized function
+     let view = CollectionEmptyStateView(
+         title: "Test Title",
+         message: "Test Message",
+         onCreateItem: {},
+         customCreateView: nil
+     )
+
+     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+     let testPassed = testComponentAccessibility(
+         componentName: "CollectionEmptyStateView",
+         createComponent: { view }
+     )
  #expect(testPassed, "CollectionEmptyStateView should pass accessibility tests")
         #else
-         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-         // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-         #endif
-         
-         // Cleanup
-         cleanupTestEnvironment()
-     }
+     // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+     // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+     #endif
+
+     // Cleanup
+     cleanupTestEnvironment()
  }
  
  // Test when accessibility IDs are disabled:
  @Test func testCollectionEmptyStateViewAccessibilityDisabled() async {
-     await MainActor.run {
-         // Setup with auto IDs disabled
-         setupTestEnvironment(enableAutoIDs: false)
-         
-         let view = CollectionEmptyStateView(
-             title: "Test Title",
-             message: "Test Message",
-             onCreateItem: {},
-             customCreateView: nil
-         )
-         
-         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-         let testPassed = testComponentAccessibilityDisabled(
-             componentName: "CollectionEmptyStateView",
-             createComponent: { view }
-         )
+     // Setup with auto IDs disabled
+     setupTestEnvironment(enableAutoIDs: false)
+
+     let view = CollectionEmptyStateView(
+         title: "Test Title",
+         message: "Test Message",
+         onCreateItem: {},
+         customCreateView: nil
+     )
+
+     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+     let testPassed = testComponentAccessibilityDisabled(
+         componentName: "CollectionEmptyStateView",
+         createComponent: { view }
+     )
  #expect(testPassed, "CollectionEmptyStateView should work when accessibility IDs are disabled")
         #else
-         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-         // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-         #endif
-         
-         // Cleanup
-         cleanupTestEnvironment()
-     }
+     // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+     // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+     #endif
+
+     // Cleanup
+     cleanupTestEnvironment()
  }
  
  // Test different accessibility modes:
  @Test func testCollectionEmptyStateViewAccessibilityModes() async {
-     await MainActor.run {
-         let view = CollectionEmptyStateView(
-             title: "Test Title",
-             message: "Test Message",
-             onCreateItem: {},
-             customCreateView: nil
-         )
-         
-         // Test automatic mode (default)
-         setupTestEnvironment(mode: .automatic)
-         let automaticPassed = testComponentAccessibility(
-             componentName: "CollectionEmptyStateView-Automatic",
-             createComponent: { view }
-         )
-         cleanupTestEnvironment()
-         
-         // Test manual mode
-         setupTestEnvironment(mode: .manual)
-         let manualPassed = testComponentAccessibilityManual(
-             componentName: "CollectionEmptyStateView-Manual",
-             createComponent: { view }
-         )
-         cleanupTestEnvironment()
-         
-         // Test semantic mode
-         setupTestEnvironment(mode: .semantic)
-         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-         let semanticPassed = testComponentAccessibilitySemantic(
-             componentName: "CollectionEmptyStateView-Semantic",
-             createComponent: { view }
-         )
+     let view = CollectionEmptyStateView(
+         title: "Test Title",
+         message: "Test Message",
+         onCreateItem: {},
+         customCreateView: nil
+     )
+
+     // Test automatic mode (default)
+     setupTestEnvironment(mode: .automatic)
+     let automaticPassed = testComponentAccessibility(
+         componentName: "CollectionEmptyStateView-Automatic",
+         createComponent: { view }
+     )
+     cleanupTestEnvironment()
+
+     // Test manual mode
+     setupTestEnvironment(mode: .manual)
+     let manualPassed = testComponentAccessibilityManual(
+         componentName: "CollectionEmptyStateView-Manual",
+         createComponent: { view }
+     )
+     cleanupTestEnvironment()
+
+     // Test semantic mode
+     setupTestEnvironment(mode: .semantic)
+     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+     let semanticPassed = testComponentAccessibilitySemantic(
+         componentName: "CollectionEmptyStateView-Semantic",
+         createComponent: { view }
+     )
  #expect(semanticPassed, "CollectionEmptyStateView should work in semantic mode")
         #else
-         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-         // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-         #endif
-         #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
-     }
+     // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+     // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+     #endif
+     #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
  }
  
  // In PlatformLogicTests.swift:
  @Test func testPlatformCapabilityDetection() async {
-     await MainActor.run {
-         // Setup
-         setupTestEnvironment()
-         
-         // Test using centralized function
-         let expectedCapabilities = PlatformCapabilitiesTestSnapshot(
-             supportsHapticFeedback: false,
-             supportsHover: false,
-             supportsTouch: true,
-             supportsVoiceOver: true,
-             supportsSwitchControl: true,
-             supportsAssistiveTouch: true,
-             minTouchTarget: 44.0,
-             hoverDelay: 0.0
-         )
-         
-         let testPassed = testPlatformCapabilityDetection(
-             platform: .iOS,
-             expectedCapabilities: expectedCapabilities
-         )
-         
-         #expect(testPassed, "iOS platform capability detection should work correctly")
-         
-         // Cleanup
-         cleanupTestEnvironment()
-     }
+     // Setup
+     setupTestEnvironment()
+
+     // Test using centralized function
+     let expectedCapabilities = PlatformCapabilitiesTestSnapshot(
+         supportsHapticFeedback: false,
+         supportsHover: false,
+         supportsTouch: true,
+         supportsVoiceOver: true,
+         supportsSwitchControl: true,
+         supportsAssistiveTouch: true,
+         minTouchTarget: 44.0,
+         hoverDelay: 0.0
+     )
+
+     let testPassed = testPlatformCapabilityDetection(
+         platform: .iOS,
+         expectedCapabilities: expectedCapabilities
+     )
+
+     #expect(testPassed, "iOS platform capability detection should work correctly")
+
+     // Cleanup
+     cleanupTestEnvironment()
  }
  
  */

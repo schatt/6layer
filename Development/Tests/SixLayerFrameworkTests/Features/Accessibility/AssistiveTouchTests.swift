@@ -49,28 +49,26 @@ open class AssistiveTouchTests: BaseTestClass {
     /// TESTING SCOPE: Tests integration support across different platforms and mock capability states
     /// METHODOLOGY: Uses mock framework to test both enabled and disabled AssistiveTouch states across platforms
     @Test func testAssistiveTouchIntegrationSupport() async {
-        await MainActor.run {
-            // Test with AssistiveTouch enabled
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
-            
-            // Test with AssistiveTouch disabled
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-            #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be disabled")
-            
-            // Test platform-specific behavior
-            for platform in SixLayerPlatform.allCases {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
-                let config = AssistiveTouchConfig(enableIntegration: true)
-                let manager = AssistiveTouchManager(config: config)
-                
-                // Integration should be supported when enabled
-                #expect(manager.supportsIntegration(), "Integration should be supported on \(platform)")
-            }
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        // Test with AssistiveTouch enabled
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+
+        // Test with AssistiveTouch disabled
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be disabled")
+
+        // Test platform-specific behavior
+        for platform in SixLayerPlatform.allCases {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            let config = AssistiveTouchConfig(enableIntegration: true)
+            let manager = AssistiveTouchManager(config: config)
+
+            // Integration should be supported when enabled
+            #expect(manager.supportsIntegration(), "Integration should be supported on \(platform)")
         }
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
     }
     
     /// BUSINESS PURPOSE: AssistiveTouchManager handles custom action registration and management for gesture-based interactions
@@ -106,64 +104,60 @@ open class AssistiveTouchTests: BaseTestClass {
     /// TESTING SCOPE: Tests menu operations across platforms and mock capability states
     /// METHODOLOGY: Uses mock framework to test menu management with different AssistiveTouch states
     @Test func testAssistiveTouchMenuSupport() async {
-        await MainActor.run {
-            // Test with AssistiveTouch enabled
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            
-            // Given: AssistiveTouch Manager with menu support
-            let config = AssistiveTouchConfig(enableMenuSupport: true)
-            let manager = AssistiveTouchManager(config: config)
-            
-            // When: Managing menu
-            let menuResult = manager.manageMenu(for: .show)
-            
-            // Then: Menu should be managed appropriately
-            #expect(menuResult.success)
-            #expect(menuResult.menuElement != nil)
-            
-            // Test platform-specific behavior
-            for platform in SixLayerPlatform.allCases {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
-                let platformResult = manager.manageMenu(for: .toggle)
-                #expect(platformResult.success, "Menu should work on \(platform)")
-            }
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        // Test with AssistiveTouch enabled
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+
+        // Given: AssistiveTouch Manager with menu support
+        let config = AssistiveTouchConfig(enableMenuSupport: true)
+        let manager = AssistiveTouchManager(config: config)
+
+        // When: Managing menu
+        let menuResult = manager.manageMenu(for: .show)
+
+        // Then: Menu should be managed appropriately
+        #expect(menuResult.success)
+        #expect(menuResult.menuElement != nil)
+
+        // Test platform-specific behavior
+        for platform in SixLayerPlatform.allCases {
+            RuntimeCapabilityDetection.setTestPlatform(platform)
+            let platformResult = manager.manageMenu(for: .toggle)
+            #expect(platformResult.success, "Menu should work on \(platform)")
         }
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
     }
     
     /// BUSINESS PURPOSE: AssistiveTouchManager processes gesture recognition for motor-impaired users
     /// TESTING SCOPE: Tests gesture processing with different gesture types and intensity levels
     /// METHODOLOGY: Creates various gestures and verifies they are processed correctly with proper results
     @Test func testAssistiveTouchGestureRecognition() async {
-        await MainActor.run {
-            // Test with AssistiveTouch enabled
-            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-            
-            // Given: AssistiveTouch Manager with gesture recognition
-            let config = AssistiveTouchConfig(enableGestureRecognition: true)
-            let manager = AssistiveTouchManager(config: config)
-            
-            // When: Processing gestures
-            let gesture = AssistiveTouchGesture(type: .swipeLeft, intensity: .medium)
-            let result = manager.processGesture(gesture)
-            
-            // Then: Gesture should be processed
-            #expect(result.success)
-            #expect(result.action != nil)
-            
-            // Test different gesture types
-            let gestureTypes: [AssistiveTouchGestureType] = [.singleTap, .doubleTap, .swipeRight, .swipeUp, .swipeDown, .longPress]
-            for gestureType in gestureTypes {
-                let testGesture = AssistiveTouchGesture(type: gestureType, intensity: .light)
-                let testResult = manager.processGesture(testGesture)
-                #expect(testResult.success, "Gesture \(gestureType) should be processed")
-            }
-            
-            // Reset for next test
-            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        // Test with AssistiveTouch enabled
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+
+        // Given: AssistiveTouch Manager with gesture recognition
+        let config = AssistiveTouchConfig(enableGestureRecognition: true)
+        let manager = AssistiveTouchManager(config: config)
+
+        // When: Processing gestures
+        let gesture = AssistiveTouchGesture(type: .swipeLeft, intensity: .medium)
+        let result = manager.processGesture(gesture)
+
+        // Then: Gesture should be processed
+        #expect(result.success)
+        #expect(result.action != nil)
+
+        // Test different gesture types
+        let gestureTypes: [AssistiveTouchGestureType] = [.singleTap, .doubleTap, .swipeRight, .swipeUp, .swipeDown, .longPress]
+        for gestureType in gestureTypes {
+            let testGesture = AssistiveTouchGesture(type: gestureType, intensity: .light)
+            let testResult = manager.processGesture(testGesture)
+            #expect(testResult.success, "Gesture \(gestureType) should be processed")
         }
+
+        // Reset for next test
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
     }
     
     // MARK: - AssistiveTouch Configuration Tests

@@ -52,14 +52,12 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
         // Test accessibility identifier generation
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersCrossPlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                componentName: "platformPhotoDisplay_L1",
-                testName: "PlatformTest"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersCrossPlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            componentName: "platformPhotoDisplay_L1",
+            testName: "PlatformTest"
+        )
  #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on iOS ")
         #else
 
@@ -107,14 +105,12 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
         // Test accessibility identifier generation
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            testAccessibilityIdentifiersCrossPlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                componentName: "platformPhotoDisplay_L1",
-                testName: "PlatformTest"
-            )
-        }
+        let hasAccessibilityID =         testAccessibilityIdentifiersCrossPlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            componentName: "platformPhotoDisplay_L1",
+            testName: "PlatformTest"
+        )
  #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifier on macOS ")
         #else
 

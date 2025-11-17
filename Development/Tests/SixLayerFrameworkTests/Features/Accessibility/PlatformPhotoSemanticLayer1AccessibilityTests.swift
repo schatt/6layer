@@ -25,19 +25,17 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPhotoCapture_L1(
-                purpose: purpose,
-                context: context,
-                onImageCaptured: { _ in }
-            )
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui",
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoCapture_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPhotoCapture_L1(
+            purpose: purpose,
+            context: context,
+            onImageCaptured: { _ in }
+        )
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPhotoCapture_L1"
+        )
  #expect(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -64,19 +62,17 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPhotoCapture_L1(
-                purpose: purpose,
-                context: context,
-                onImageCaptured: { _ in }
-            )
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui",
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoCapture_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPhotoCapture_L1(
+            purpose: purpose,
+            context: context,
+            onImageCaptured: { _ in }
+        )
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPhotoCapture_L1"
+        )
  #expect(hasAccessibilityID, "platformPhotoCapture_L1 should generate accessibility identifiers on macOS ")
         #else
 
@@ -105,20 +101,18 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPhotoSelection_L1(
-                purpose: purpose,
-                context: context,
-                onImageSelected: { _ in }
-            )
-            // TDD RED: element-level IDs not yet implemented for selection flow
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPhotoSelection_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPhotoSelection_L1(
+            purpose: purpose,
+            context: context,
+            onImageSelected: { _ in }
+        )
+        // TDD RED: element-level IDs not yet implemented for selection flow
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPhotoSelection_L1"
+        )
  #expect(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -145,20 +139,18 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPhotoSelection_L1(
-                purpose: purpose,
-                context: context,
-                onImageSelected: { _ in }
-            )
-            // TDD RED: element-level IDs not yet implemented for selection flow
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
-                platform: SixLayerPlatform.iOS,
-                componentName: "platformPhotoSelection_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPhotoSelection_L1(
+            purpose: purpose,
+            context: context,
+            onImageSelected: { _ in }
+        )
+        // TDD RED: element-level IDs not yet implemented for selection flow
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui", 
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPhotoSelection_L1"
+        )
  #expect(hasAccessibilityID, "platformPhotoSelection_L1 should generate accessibility identifiers on macOS ")
         #else
 
@@ -188,19 +180,17 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPhotoDisplay_L1(
-                purpose: purpose,
-                context: context,
-                image: testImage
-            )
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui",
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoDisplay_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPhotoDisplay_L1(
+            purpose: purpose,
+            context: context,
+            image: testImage
+        )
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPhotoDisplay_L1"
+        )
  #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on iOS ")
         #else
 
@@ -228,19 +218,17 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID = await MainActor.run {
-            let view = platformPhotoDisplay_L1(
-                purpose: purpose,
-                context: context,
-                image: testImage
-            )
-            return testAccessibilityIdentifiersSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui",
-                platform: SixLayerPlatform.iOS,
-            componentName: "platformPhotoDisplay_L1"
-            )
-        }
+        let hasAccessibilityID =         let view = platformPhotoDisplay_L1(
+            purpose: purpose,
+            context: context,
+            image: testImage
+        )
+        return testAccessibilityIdentifiersSinglePlatform(
+            view, 
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+        componentName: "platformPhotoDisplay_L1"
+        )
  #expect(hasAccessibilityID, "platformPhotoDisplay_L1 should generate accessibility identifiers on macOS ")
         #else
 

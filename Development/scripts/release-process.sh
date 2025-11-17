@@ -85,12 +85,35 @@ fi
 
 # Step 6: Check README files
 echo "📋 Step 6: Checking README files..."
-if grep -q "v$VERSION" README.md; then
-    echo "✅ Main README updated"
-else
+
+# Check main README.md - verify version appears in key locations
+if ! grep -q "v$VERSION" README.md; then
     echo "❌ Main README missing v$VERSION!"
     exit 1
 fi
+
+# Check that README.md has the version as the Latest Release
+if ! grep -q "^## 🆕 Latest Release: v$VERSION" README.md; then
+    echo "❌ README.md does not list v$VERSION as the Latest Release!"
+    echo "Please update the 'Latest Release' section in README.md"
+    exit 1
+fi
+
+# Check that README.md has the version in the package dependency example
+if ! grep -q "from: \"$VERSION\"" README.md; then
+    echo "❌ README.md package dependency example does not use v$VERSION!"
+    echo "Please update the package dependency example in README.md"
+    exit 1
+fi
+
+# Check that README.md has the version in the Current Status section
+if ! grep -A 2 "^## 📋 Current Status" README.md | grep -q "v$VERSION"; then
+    echo "❌ README.md Current Status section does not list v$VERSION!"
+    echo "Please update the 'Current Status' section in README.md"
+    exit 1
+fi
+
+echo "✅ Main README correctly updated with v$VERSION"
 
 if grep -q "v$VERSION" Framework/README.md; then
     echo "✅ Framework README updated"

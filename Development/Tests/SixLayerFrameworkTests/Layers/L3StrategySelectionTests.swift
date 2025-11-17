@@ -945,32 +945,30 @@ open class L3StrategySelectionTests: BaseTestClass {
     /// TESTING SCOPE: Tests that selectCardExpansionStrategy_L3 returns correct data structure
     /// METHODOLOGY: Tests Layer 3 functionality (data functions don't need accessibility identifiers)
     @Test func testSelectCardExpansionStrategy_L3_ReturnsCorrectDataStructure() async {
-        await MainActor.run {
-            // Given: Layer 3 function with test data
-            let contentCount = 10
-            let screenWidth: CGFloat = 375.0
-            let deviceType = DeviceType.phone
-            let interactionStyle = InteractionStyle.interactive
-            let contentDensity = ContentDensity.balanced
-            
-            // When: Call Layer 3 function
-            let result = selectCardExpansionStrategy_L3(
-                contentCount: contentCount,
-                screenWidth: screenWidth,
-                deviceType: deviceType,
-                interactionStyle: interactionStyle,
-                contentDensity: contentDensity
-            )
-            
-            // Then: Should return correct data structure
-            #expect(Bool(true), "Layer 3 function should return a result")  // result is non-optional
-            #expect(result.primaryStrategy != nil, "Should have expansion strategy")
-            #expect(result.animationDuration >= 0, "Should have non-negative duration")
-            #expect(result.expansionScale > 0, "Should have positive expansion scale")
-            
-            // NOTE: Layer 3 functions return data structures, not views
-            // They don't need automatic accessibility identifiers because they're not UI elements
-        }
+        // Given: Layer 3 function with test data
+        let contentCount = 10
+        let screenWidth: CGFloat = 375.0
+        let deviceType = DeviceType.phone
+        let interactionStyle = InteractionStyle.interactive
+        let contentDensity = ContentDensity.balanced
+
+        // When: Call Layer 3 function
+        let result = selectCardExpansionStrategy_L3(
+            contentCount: contentCount,
+            screenWidth: screenWidth,
+            deviceType: deviceType,
+            interactionStyle: interactionStyle,
+            contentDensity: contentDensity
+        )
+
+        // Then: Should return correct data structure
+        #expect(Bool(true), "Layer 3 function should return a result")  // result is non-optional
+        #expect(result.primaryStrategy != nil, "Should have expansion strategy")
+        #expect(result.animationDuration >= 0, "Should have non-negative duration")
+        #expect(result.expansionScale > 0, "Should have positive expansion scale")
+
+        // NOTE: Layer 3 functions return data structures, not views
+        // They don't need automatic accessibility identifiers because they're not UI elements
     }
     
     // MARK: - Helper Functions
