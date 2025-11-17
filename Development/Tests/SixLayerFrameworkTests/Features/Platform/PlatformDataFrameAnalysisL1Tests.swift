@@ -42,11 +42,6 @@ import TabularData
 @Suite("Platform Data Frame Analysis L")
 open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
-    // Helper method - creates fresh data for each test (test isolation)
-    private func createTestDataFrame() -> DataFrame {
-        return DataFrame()
-    }
-    
     // MARK: - Basic DataFrame Analysis Tests
     
     @Test func testPlatformAnalyzeDataFrame_L1_Basic() {

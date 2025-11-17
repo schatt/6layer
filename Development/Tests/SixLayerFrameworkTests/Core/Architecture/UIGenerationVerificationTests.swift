@@ -9,8 +9,6 @@ import SwiftUI
 @Suite("UIGeneration Verification")
 open class UIGenerationVerificationTests: BaseTestClass {
     
-    public init() {}
-    
     // MARK: - Test Configuration
     
     /// UI generation test configuration
