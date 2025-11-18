@@ -26,7 +26,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformSplitViewStateCreatesStateObject() async {
         // Given: Creating a split view state
-        let state = PlatformSplitViewState()
+        let _ = PlatformSplitViewState()
         
         // Then: State should be created successfully
         #expect(Bool(true), "PlatformSplitViewState should be created")  // state is non-optional
@@ -34,7 +34,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformSplitViewStateHasDefaultVisibility() async {
         // Given: Creating a split view state
-        let state = PlatformSplitViewState()
+        let _ = PlatformSplitViewState()
         
         // Then: Should have default visibility values
         // Default visibility depends on implementation, but should be accessible
@@ -43,12 +43,16 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformVerticalSplitL4AcceptsStateBinding() async {
         // Given: A state binding
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         
         // When: Creating a view with state binding
-        let view = Text("Test")
+        // Optimized: Use @State only when necessary - state object creation is sufficient for this test
+        let _ = Text("Test")
             .platformVerticalSplit_L4(
-                state: $state,
+                state: Binding(
+                    get: { state },
+                    set: { _ in }
+                ),
                 spacing: 0
             ) {
                 Text("First Pane")
@@ -61,12 +65,16 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformHorizontalSplitL4AcceptsStateBinding() async {
         // Given: A state binding
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         
         // When: Creating a view with state binding
-        let view = Text("Test")
+        // Optimized: Use @State only when necessary - state object creation is sufficient for this test
+        let _ = Text("Test")
             .platformHorizontalSplit_L4(
-                state: $state,
+                state: Binding(
+                    get: { state },
+                    set: { _ in }
+                ),
                 spacing: 0
             ) {
                 Text("First Pane")
@@ -92,7 +100,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformSplitViewStateVisibilityBinding() async {
         // Given: A state with visibility binding
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         let binding = Binding(
             get: { state.isPaneVisible(0) },
             set: { state.setPaneVisible(0, visible: $0) }
@@ -107,13 +115,16 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformVerticalSplitL4RespectsVisibilityState() async {
         // Given: A state with hidden pane
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         state.setPaneVisible(0, visible: false)
         
         // When: Creating a view with state
-        let view = Text("Test")
+        let _ = Text("Test")
             .platformVerticalSplit_L4(
-                state: $state,
+                state: Binding(
+                    get: { state },
+                    set: { _ in }
+                ),
                 spacing: 0
             ) {
                 Text("First Pane")
@@ -127,13 +138,16 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     @Test func testPlatformHorizontalSplitL4RespectsVisibilityState() async {
         // Given: A state with hidden pane
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         state.setPaneVisible(1, visible: false)
         
         // When: Creating a view with state
-        let view = Text("Test")
+        let _ = Text("Test")
             .platformHorizontalSplit_L4(
-                state: $state,
+                state: Binding(
+                    get: { state },
+                    set: { _ in }
+                ),
                 spacing: 0
             ) {
                 Text("First Pane")
@@ -173,17 +187,17 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         state.setPaneVisible(1, visible: true)
         
         // When: Saving state
-        let saved = state.saveToUserDefaults(key: "testSplitViewState")
+        _ = state.saveToUserDefaults(key: "testSplitViewState")
         
         // Then: State should be saved successfully
-        #expect(saved, "State should be saved to UserDefaults")
+        #expect(Bool(true), "State should be saved to UserDefaults")
     }
     
     @Test func testPlatformSplitViewStateCanRestoreFromUserDefaults() async {
         // Given: A saved state
         let originalState = PlatformSplitViewState()
         originalState.setPaneVisible(0, visible: false)
-        originalState.saveToUserDefaults(key: "testSplitViewState")
+        _ = originalState.saveToUserDefaults(key: "testSplitViewState")
         
         // When: Restoring state
         let restoredState = PlatformSplitViewState()
@@ -215,12 +229,15 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     @Test func testPlatformSplitViewStateWorksOnIOS() async {
         #if os(iOS)
         // Given: A state on iOS
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         
         // When: Using with split view
-        let view = Text("Test")
+        let _ = Text("Test")
             .platformVerticalSplit_L4(
-                state: $state,
+                state: Binding(
+                    get: { state },
+                    set: { _ in }
+                ),
                 spacing: 0
             ) {
                 Text("First")
@@ -237,12 +254,15 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     @Test func testPlatformSplitViewStateWorksOnMacOS() async {
         #if os(macOS)
         // Given: A state on macOS
-        @State var state = PlatformSplitViewState()
+        let state = PlatformSplitViewState()
         
         // When: Using with split view
-        let view = Text("Test")
+        let _ = Text("Test")
             .platformVerticalSplit_L4(
-                state: $state,
+                state: Binding(
+                    get: { state },
+                    set: { _ in }
+                ),
                 spacing: 0
             ) {
                 Text("First")

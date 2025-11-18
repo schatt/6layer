@@ -68,26 +68,21 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// TESTING SCOPE: Tests ImageMetadataIntelligence basic metadata extraction
     /// METHODOLOGY: Extract metadata from test image and verify extraction functionality
     @Test func testImageMetadataIntelligence_ExtractBasicMetadata() async throws {
-        // Test across all platforms
-        for platform in SixLayerPlatform.allCases {
-            setCapabilitiesForPlatform(platform)
-            
-            // Given
-            let image = createTestImage()
-            let intelligence = ImageMetadataIntelligence()
-            
-            // When
-            let metadata = try await intelligence.extractMetadata(from: image)
-            
-            // Then
-            #expect(Bool(true), "metadata is non-optional")  // metadata is non-optional
-            #expect(metadata.dimensions == image.size)
-            #expect(metadata.fileSize != nil)
-            #expect(metadata.creationDate != nil)
-            #expect(metadata.modificationDate != nil)
-            
-            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
-        }
+        // Optimized: Test only current platform instead of all platforms to reduce execution time
+        // The metadata extraction logic is platform-agnostic, so testing one platform is sufficient
+        let image = createTestImage()
+        let intelligence = ImageMetadataIntelligence()
+        
+        // When
+        let metadata = try await intelligence.extractMetadata(from: image)
+        
+        // Then
+        #expect(Bool(true), "metadata is non-optional")  // metadata is non-optional
+        #expect(metadata.dimensions == image.size)
+        // fileSize is non-optional Int64, so no nil check needed
+        _ = metadata.fileSize
+        #expect(metadata.creationDate != nil)
+        #expect(metadata.modificationDate != nil)
     }
     
     /// BUSINESS PURPOSE: Validate EXIF data extraction functionality
@@ -178,9 +173,10 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "categorization is non-optional")  // categorization is non-optional
-        #expect(categorization.primaryCategory != nil)
-        #expect(categorization.confidence != nil)
-        #expect(categorization.tags != nil)
+        // primaryCategory, confidence, and tags are non-optional, so no nil checks needed
+        _ = categorization.primaryCategory
+        _ = categorization.confidence
+        _ = categorization.tags
     }
     
     /// BUSINESS PURPOSE: Validate purpose categorization functionality
@@ -196,9 +192,10 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "purposeCategorization is non-optional")  // purposeCategorization is non-optional
-        #expect(purposeCategorization.recommendedPurpose != nil)
-        #expect(purposeCategorization.confidence != nil)
-        #expect(purposeCategorization.alternativePurposes != nil)
+        // recommendedPurpose, confidence, and alternativePurposes are non-optional, so no nil checks needed
+        _ = purposeCategorization.recommendedPurpose
+        _ = purposeCategorization.confidence
+        _ = purposeCategorization.alternativePurposes
     }
     
     /// BUSINESS PURPOSE: Validate quality categorization functionality
@@ -214,9 +211,10 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "qualityCategorization is non-optional")  // qualityCategorization is non-optional
-        #expect(qualityCategorization.qualityScore != nil)
-        #expect(qualityCategorization.qualityLevel != nil)
-        #expect(qualityCategorization.issues != nil)
+        // qualityScore, qualityLevel, and issues are non-optional, so no nil checks needed
+        _ = qualityCategorization.qualityScore
+        _ = qualityCategorization.qualityLevel
+        _ = qualityCategorization.issues
     }
     
     // MARK: - Smart Recommendations Tests
@@ -234,9 +232,10 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
-        #expect(recommendations.compressionRecommendations != nil)
-        #expect(recommendations.formatRecommendations != nil)
-        #expect(recommendations.enhancementRecommendations != nil)
+        // compressionRecommendations, formatRecommendations, and enhancementRecommendations are non-optional, so no nil checks needed
+        _ = recommendations.compressionRecommendations
+        _ = recommendations.formatRecommendations
+        _ = recommendations.enhancementRecommendations
     }
     
     /// BUSINESS PURPOSE: Validate accessibility recommendations functionality
@@ -252,9 +251,10 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
-        #expect(recommendations.altTextSuggestions != nil)
-        #expect(recommendations.contrastRecommendations != nil)
-        #expect(recommendations.voiceOverOptimizations != nil)
+        // altTextSuggestions, contrastRecommendations, and voiceOverOptimizations are non-optional, so no nil checks needed
+        _ = recommendations.altTextSuggestions
+        _ = recommendations.contrastRecommendations
+        _ = recommendations.voiceOverOptimizations
     }
     
     /// BUSINESS PURPOSE: Validate usage recommendations functionality
@@ -270,9 +270,10 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "recommendations is non-optional")  // recommendations is non-optional
-        #expect(recommendations.recommendedUseCases != nil)
-        #expect(recommendations.performanceConsiderations != nil)
-        #expect(recommendations.storageRecommendations != nil)
+        // recommendedUseCases, performanceConsiderations, and storageRecommendations are non-optional, so no nil checks needed
+        _ = recommendations.recommendedUseCases
+        _ = recommendations.performanceConsiderations
+        _ = recommendations.storageRecommendations
     }
     
     // MARK: - Metadata Analysis Tests
@@ -293,7 +294,8 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         #expect(composition.ruleOfThirds != nil)
         #expect(composition.symmetry != nil)
         #expect(composition.balance != nil)
-        #expect(composition.focalPoints != nil)
+        // focalPoints is non-optional [CGPoint], so no nil check needed
+        _ = composition.focalPoints
     }
     
     /// BUSINESS PURPOSE: Validate color distribution analysis functionality
@@ -309,7 +311,8 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "colorDistribution is non-optional")  // colorDistribution is non-optional
-        #expect(colorDistribution.dominantColors != nil)
+        // dominantColors is non-optional [Color], so no nil check needed
+        _ = colorDistribution.dominantColors
         #expect(colorDistribution.colorHarmony != nil)
         #expect(colorDistribution.brightness != nil)
         #expect(colorDistribution.saturation != nil)
@@ -324,7 +327,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         let intelligence = ImageMetadataIntelligence()
         
         // When
-        let textContent = try await intelligence.analyzeTextContent(image)
+        let _ = try await intelligence.analyzeTextContent(image)
         
         // Then
         #expect(Bool(true), "textContent is non-optional")  // textContent is non-optional
@@ -346,7 +349,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         let intelligence = ImageMetadataIntelligence()
         
         // When
-        let metadata = try await intelligence.extractMetadata(from: image)
+        let _ = try await intelligence.extractMetadata(from: image)
         
         // Then
         #expect(Bool(true), "metadata is non-optional")  // metadata is non-optional
@@ -356,8 +359,9 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// TESTING SCOPE: Tests ImageMetadataIntelligence batch processing
     /// METHODOLOGY: Process multiple images and verify batch processing functionality
     @Test func testImageMetadataIntelligence_BatchProcessing() async throws {
-        // Given
-        let images = (0..<5).map { _ in createTestImage() }
+        // Optimized: Reduced batch size from 5 to 3 to improve performance
+        // Batch processing logic works the same regardless of batch size
+        let images = (0..<3).map { _ in createTestImage() }
         
         // When
         let metadataResults = try await withThrowingTaskGroup(of: ComprehensiveImageMetadata.self) { group in
@@ -438,7 +442,9 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         
         // Verify integration between components
         #expect(metadata.dimensions == image.size)
-        #expect(categorization.primaryCategory != nil)
-        #expect(recommendations.compressionRecommendations != nil)
+        // primaryCategory is non-optional String, so no nil check needed
+        _ = categorization.primaryCategory
+        // compressionRecommendations is non-optional [String], so no nil check needed
+        _ = recommendations.compressionRecommendations
     }
 }

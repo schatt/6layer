@@ -80,11 +80,8 @@ public class LiquidGlassDesignSystem: ObservableObject {
     
     private static func detectLiquidGlassSupport() -> Bool {
         #if os(iOS)
-        // iOS 26.0+ support check
-        if #available(iOS 26.0, *) {
-            return true
-        }
-        return false
+        // iOS 26.0+ support check (availability check handled at class level)
+        return true
         #elseif os(macOS)
         // macOS 26.0+ support (availability check handled at class level)
         return true
