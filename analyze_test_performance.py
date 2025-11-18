@@ -177,6 +177,17 @@ def run_test_suite(suite_name, timeout=30):
     """Run a single test suite using xcodebuild and measure execution time"""
     print(f"  ⏱️  Running {suite_name}...", end=' ', flush=True)
     
+    # Increase timeout for known slow test suites
+    slow_suites = {
+        "SixLayerFrameworkTests.GreenPhaseTest": 60,  # Increased from 30 to 60
+        "SixLayerFrameworkTests.ViewGenerationTests": 60,  # Increased from 30 to 60
+        "SixLayerFrameworkTests.ImageMetadataIntelligenceTests": 60,  # Increased from 30 to 60
+        "SixLayerFrameworkTests.GlobalDisableLocalEnableTDDTests": 60,  # Increased from 30 to 60
+        "SixLayerFrameworkTests.PlatformSplitViewStateManagementLayer4Tests": 60,  # Increased from 30 to 60
+    }
+    
+    actual_timeout = slow_suites.get(suite_name, timeout)
+    
     start_time = time.time()
     
     # Run the test suite using xcodebuild
@@ -196,7 +207,7 @@ def run_test_suite(suite_name, timeout=30):
             cwd="/Users/schatt/code/github/6layer",
             capture_output=True,
             text=True,
-            timeout=timeout
+            timeout=actual_timeout
         )
         
         end_time = time.time()

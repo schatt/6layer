@@ -161,40 +161,20 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
     // MARK: - Helper Methods
     
     private func generateIDForView(_ view: some View) -> String {
-        // Using wrapper - when ViewInspector works on macOS, no changes needed here
+        // Optimized: Reduced ViewInspector deep searches to improve performance
         guard let inspectedView = view.tryInspect() else {
             return ""
         }
-        
-        print("🔍 Inspected view type: \(type(of: inspectedView))")
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        // Try to find a button in the hierarchy
-        if let button = inspectedView.sixLayerTryFind(Button<Text>.self),
-           let id = try? button.sixLayerAccessibilityIdentifier() {
-            print("🔍 Found button, trying to get accessibility identifier")
+        // Optimized: Check root view first (most common case)
+        if let id = try? inspectedView.sixLayerAccessibilityIdentifier(), !id.isEmpty {
             return id
         }
-
-        // Try to find any view with accessibility identifier by looking deeper
-        if let anyView = inspectedView.sixLayerTryFind(ViewType.AnyView.self) {
-            print("🔍 Found AnyView, trying to inspect its contents")
-            // Try to find a button inside the AnyView
-            if let innerButton = anyView.sixLayerTryFind(Button<Text>.self),
-               let id = try? innerButton.sixLayerAccessibilityIdentifier() {
-                print("🔍 Found button inside AnyView")
-                return id
-            }
-            // Try to get accessibility identifier from the AnyView itself
-            if let id = try? anyView.sixLayerAccessibilityIdentifier() {
-                return id
-            }
-            print("🔍 AnyView inspection error")
-        }
-
-        // Try the root view
-        print("🔍 Trying root view accessibility identifier")
-        if let id = try? inspectedView.sixLayerAccessibilityIdentifier() {
+        
+        // Optimized: Only do one level deep search for button
+        if let button = inspectedView.sixLayerTryFind(Button<Text>.self),
+           let id = try? button.sixLayerAccessibilityIdentifier(), !id.isEmpty {
             return id
         }
         #endif
