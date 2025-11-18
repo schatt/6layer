@@ -36,8 +36,7 @@ let package = Package(
                 "Components",
                 "Platform",
                 "Extensions",
-                "Services",
-                "Shared"
+                "Services"
             ],
             swiftSettings: [
                 // Enable previews only when building in Xcode (where PreviewsMacros plugin is available)

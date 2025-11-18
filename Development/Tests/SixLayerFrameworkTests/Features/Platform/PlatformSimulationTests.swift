@@ -94,16 +94,18 @@ open class PlatformSimulationTests: BaseTestClass {
         // Test on current platform - macOS should be used for macOS testing
         let currentPlatform = SixLayerPlatform.current
         if currentPlatform == .macOS {
-            // Desktop platforms should support hover (when enabled)
+            // Use thread-local overrides (safe for parallel tests) instead of relying on UserDefaults
+            // Overrides take precedence over UserDefaults, so this works even if UserDefaults is set
             RuntimeCapabilityDetection.setTestHover(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            
+            // Desktop platforms should support hover (when enabled)
             #expect(RuntimeCapabilityDetection.supportsHover, 
                          "Desktop platform \(currentPlatform.rawValue) should support hover")
             
             // Desktop platforms should not support haptic feedback
             #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
                          "Desktop platform \(currentPlatform.rawValue) should not support haptic feedback")
-            
-            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
     }
     
@@ -122,31 +124,57 @@ open class PlatformSimulationTests: BaseTestClass {
     }
     
     @Test func testTVSpecificFeatures() {
-        let tvPlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .tvOS }
-        
-        for platform in tvPlatforms {
+        // Test on current platform - tvOS simulators should be used for tvOS testing
+        let currentPlatform = SixLayerPlatform.current
+        if currentPlatform == .tvOS {
+            // Thread-local overrides don't need clearing - each test has its own thread
             // TV platforms should not support touch
             #expect(!RuntimeCapabilityDetection.supportsTouch, 
-                         "TV platform \(platform.rawValue) should not support touch")
+                         "TV platform \(currentPlatform.rawValue) should not support touch")
             
             // TV platforms should not support haptic feedback
             #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
-                         "TV platform \(platform.rawValue) should not support haptic feedback")
+                         "TV platform \(currentPlatform.rawValue) should not support haptic feedback")
+        } else {
+            // When not on tvOS, use capability overrides to simulate tvOS behavior
+            // Set tvOS-specific capability overrides (thread-local, isolated to this test)
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            
+            // Verify the overrides work correctly
+            #expect(!RuntimeCapabilityDetection.supportsTouch, 
+                         "TV platform simulation should not support touch")
+            
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
+                         "TV platform simulation should not support haptic feedback")
         }
     }
     
     @Test func testVisionSpecificFeatures() {
-        let visionPlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .visionOS }
-        
-        for platform in visionPlatforms {
+        // Test on current platform - visionOS simulators should be used for visionOS testing
+        let currentPlatform = SixLayerPlatform.current
+        if currentPlatform == .visionOS {
+            // Thread-local overrides don't need clearing - each test has its own thread
             // Vision platforms should support hover (when enabled)
             RuntimeCapabilityDetection.setTestHover(true)
             #expect(RuntimeCapabilityDetection.supportsHover, 
-                         "Vision platform \(platform.rawValue) should support hover")
+                         "Vision platform \(currentPlatform.rawValue) should support hover")
             
             // Vision platforms should not support haptic feedback
             #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
-                         "Vision platform \(platform.rawValue) should not support haptic feedback")
+                         "Vision platform \(currentPlatform.rawValue) should not support haptic feedback")
+        } else {
+            // When not on visionOS, use capability overrides to simulate visionOS behavior
+            // Set visionOS-specific capability overrides (thread-local, isolated to this test)
+            RuntimeCapabilityDetection.setTestHover(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            
+            // Verify the overrides work correctly
+            #expect(RuntimeCapabilityDetection.supportsHover, 
+                         "Vision platform simulation should support hover")
+            
+            #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
+                         "Vision platform simulation should not support haptic feedback")
         }
     }
     

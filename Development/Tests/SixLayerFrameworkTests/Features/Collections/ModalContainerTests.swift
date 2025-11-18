@@ -399,8 +399,9 @@ open class ModalContainerTests: BaseTestClass {
     // MARK: - Integration Tests
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_IntegrationWithFormStrategy() {
-        // Given: Modal strategy that would work with form strategy
-        let modalStrategy = createTestModalStrategy(
+        // Given: Modal strategy with platform optimizations (required for integration testing)
+        // Inline constraint creation for speed (no intermediate variables, no preferredSize)
+        let strategy = createTestModalStrategy(
             platformOptimizations: [
                 .iOS: createTestModalConstraint(maxWidth: 400, maxHeight: 600),
                 .macOS: createTestModalConstraint(maxWidth: 600, maxHeight: 800)
@@ -408,30 +409,26 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: modalStrategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
-        // Then: Should create container that can work with forms
-        #expect(Bool(true), "Modal container should integrate with form strategy")  // container is non-optional
+        // Then: Container created successfully (non-optional, so existence is verified)
+        _ = container
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_CrossPlatformCompatibility() {
-        // Given: Cross-platform compatible strategy
-        let iOSConstraint = createTestModalConstraint(maxWidth: 400, maxHeight: 600)
-        let macOSConstraint = createTestModalConstraint(maxWidth: 600, maxHeight: 800)
-        
+        // Given: Cross-platform compatible strategy (minimal setup for speed)
         let strategy = createTestModalStrategy(
             platformOptimizations: [
-                ModalPlatform.iOS: iOSConstraint,
-                ModalPlatform.macOS: macOSConstraint
+                .iOS: createTestModalConstraint(maxWidth: 400, maxHeight: 600),
+                .macOS: createTestModalConstraint(maxWidth: 600, maxHeight: 800)
             ]
         )
         
         // When: Creating modal container
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
-        // Then: Should create cross-platform compatible container
-        #expect(Bool(true), "Modal container should be cross-platform compatible")  // container is non-optional
-        // Performance test removed - performance monitoring was removed from framework
+        // Then: Container created successfully (non-optional, so existence is verified)
+        _ = container
     }
     
     // MARK: - Test Helper Functions

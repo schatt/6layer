@@ -33,7 +33,7 @@ open class PlatformWisdomLayer5ComponentAccessibilityTests: BaseTestClass {
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformWisdomLayer5"
         )
- #expect(hasAccessibilityID, "PlatformWisdomLayer5 should generate accessibility identifiers ")
+        #expect(hasAccessibilityID, "PlatformWisdomLayer5 should generate accessibility identifiers")
         #else
         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         // The modifier IS present in the code, but ViewInspector can't detect it on macOS
