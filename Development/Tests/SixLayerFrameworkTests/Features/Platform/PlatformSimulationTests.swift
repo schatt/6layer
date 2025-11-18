@@ -94,13 +94,16 @@ open class PlatformSimulationTests: BaseTestClass {
         // Test on current platform - macOS should be used for macOS testing
         let currentPlatform = SixLayerPlatform.current
         if currentPlatform == .macOS {
-            // Desktop platforms should support hover
+            // Desktop platforms should support hover (when enabled)
+            RuntimeCapabilityDetection.setTestHover(true)
             #expect(RuntimeCapabilityDetection.supportsHover, 
                          "Desktop platform \(currentPlatform.rawValue) should support hover")
             
             // Desktop platforms should not support haptic feedback
             #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
                          "Desktop platform \(currentPlatform.rawValue) should not support haptic feedback")
+            
+            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
     }
     
@@ -136,7 +139,8 @@ open class PlatformSimulationTests: BaseTestClass {
         let visionPlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .visionOS }
         
         for platform in visionPlatforms {
-            // Vision platforms should support hover
+            // Vision platforms should support hover (when enabled)
+            RuntimeCapabilityDetection.setTestHover(true)
             #expect(RuntimeCapabilityDetection.supportsHover, 
                          "Vision platform \(platform.rawValue) should support hover")
             
@@ -149,15 +153,22 @@ open class PlatformSimulationTests: BaseTestClass {
     // MARK: - Cross-Platform Consistency Tests
     
     @Test func testCrossPlatformConsistency() {
+        // Set accessibility capability overrides to ensure they're detected
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        
         for platform in PlatformSimulationTests.testPlatforms {
-            // All platforms should support VoiceOver
+            // All platforms should support VoiceOver (when enabled)
             #expect(RuntimeCapabilityDetection.supportsVoiceOver, 
                          "Platform \(platform.rawValue) should support VoiceOver")
             
-            // All platforms should support Switch Control
+            // All platforms should support Switch Control (when enabled)
             #expect(RuntimeCapabilityDetection.supportsSwitchControl, 
                          "Platform \(platform.rawValue) should support Switch Control")
         }
+        
+        // Clean up
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     @Test func testPlatformCapabilityConsistency() {

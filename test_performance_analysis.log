@@ -1,0 +1,566 @@
+🚀 Starting test performance analysis...
+
+📋 Listing all test suites...
+Found 275 test suites
+
+[1/275]   ⏱️  Running SixLayerFrameworkExternalIntegrationTests.ExternalModuleIntegrationTests... ✅ 4.735s
+[2/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityFeaturesLayer5ComponentAccessibilityTests... ✅ 3.860s
+[3/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityFeaturesLayer5Tests... ✅ 3.696s
+[4/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityGlobalLocalConfigTests... ✅ 3.775s
+[5/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierBugFixVerificationTests... ✅ 4.885s
+[6/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierDisabledTests... ✅ 3.592s
+[7/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierEdgeCaseTests... ✅ 3.593s
+[8/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierGenerationTests... ✅ 3.756s
+[9/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierGenerationVerificationTests... ✅ 3.686s
+[10/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierLogicVerificationTests... ✅ 4.062s
+[11/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifierPersistenceTests... ❌ 3.427s
+[12/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityIdentifiersDebugTests... ❌ 3.720s
+[13/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityManagerComponentAccessibilityTests... ❌ 3.774s
+[14/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityManagerTDDTests... ❌ 3.642s
+[15/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityManagerTests... ❌ 4.534s
+[16/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityPreferenceTests... ❌ 4.867s
+[17/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityStateSimulationTests... ❌ 3.400s
+[18/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityTestingSuiteComponentAccessibilityTests... ❌ 5.127s
+[19/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityTestingSuiteTests... ❌ 4.114s
+[20/275]   ⏱️  Running SixLayerFrameworkTests.AccessibilityTypesTests... ❌ 3.801s
+[21/275]   ⏱️  Running SixLayerFrameworkTests.AdaptiveDetailStrategyTests... ❌ 5.304s
+[22/275]   ⏱️  Running SixLayerFrameworkTests.AdaptiveDetailViewRenderingTests... ❌ 4.899s
+[23/275]   ⏱️  Running SixLayerFrameworkTests.AdvancedFieldTypesTests... ❌ 4.178s
+[24/275]   ⏱️  Running SixLayerFrameworkTests.AppleHIGComplianceComponentAccessibilityTests... ❌ 3.830s
+[25/275]   ⏱️  Running SixLayerFrameworkTests.AppleHIGComplianceManagerAccessibilityTests... ❌ 3.655s
+[26/275]   ⏱️  Running SixLayerFrameworkTests.AppleHIGComplianceTests... ❌ 3.651s
+[27/275]   ⏱️  Running SixLayerFrameworkTests.AssistiveTouchManagerAccessibilityTests... ❌ 3.840s
+[28/275]   ⏱️  Running SixLayerFrameworkTests.AssistiveTouchTests... ❌ 3.611s
+[29/275]   ⏱️  Running SixLayerFrameworkTests.AutomaticAccessibilityComponentAccessibilityTests... ❌ 3.656s
+[30/275]   ⏱️  Running SixLayerFrameworkTests.AutomaticAccessibilityIdentifierTests... ❌ 3.853s
+[31/275]   ⏱️  Running SixLayerFrameworkTests.AutomaticAccessibilityIdentifiersComponentAccessibilityTests... ❌ 3.506s
+[32/275]   ⏱️  Running SixLayerFrameworkTests.AutomaticAccessibilityIdentifiersTests... ❌ 3.810s
+[33/275]   ⏱️  Running SixLayerFrameworkTests.AutomaticHIGComplianceDemonstrationTests... ❌ 3.307s
+[34/275]   ⏱️  Running SixLayerFrameworkTests.AutomaticHIGComplianceTests... ❌ 3.843s
+[35/275]   ⏱️  Running SixLayerFrameworkTests.ButtonStyleCompatibilityTests... ❌ 3.872s
+[36/275]   ⏱️  Running SixLayerFrameworkTests.CallbackFunctionalTests... ❌ 3.927s
+[37/275]   ⏱️  Running SixLayerFrameworkTests.CapabilityAwareFunctionTests... ❌ 3.276s
+[38/275]   ⏱️  Running SixLayerFrameworkTests.CapabilityCombinationTests... ❌ 3.338s
+[39/275]   ⏱️  Running SixLayerFrameworkTests.CapabilityCombinationValidationTests... ❌ 3.628s
+[40/275]   ⏱️  Running SixLayerFrameworkTests.CapabilityMatrixTests... ❌ 3.346s
+[41/275]   ⏱️  Running SixLayerFrameworkTests.CardActionButtonTests... ❌ 3.219s
+[42/275]   ⏱️  Running SixLayerFrameworkTests.CardContentDisplayTests... ❌ 4.980s
+[43/275]   ⏱️  Running SixLayerFrameworkTests.CardDisplayHelperHintTests... ❌ 3.395s
+[44/275]   ⏱️  Running SixLayerFrameworkTests.CardDisplayHelperNilFallbackTests... ❌ 3.483s
+[45/275]   ⏱️  Running SixLayerFrameworkTests.CardDisplayableBugTests... ❌ 5.929s
+[46/275]   ⏱️  Running SixLayerFrameworkTests.CollectionEmptyStateViewTests... ❌ 3.717s
+[47/275]   ⏱️  Running SixLayerFrameworkTests.CollectionViewCallbackTests... ❌ 3.491s
+[48/275]   ⏱️  Running SixLayerFrameworkTests.ComponentLabelTextAccessibilityTests... ❌ 4.478s
+[49/275]   ⏱️  Running SixLayerFrameworkTests.ComprehensiveCapabilityMatrixTests... ❌ 3.262s
+[50/275]   ⏱️  Running SixLayerFrameworkTests.ComprehensiveCapabilityTestRunner... ❌ 3.130s
+[51/275]   ⏱️  Running SixLayerFrameworkTests.CoreArchitectureTests... ❌ 3.371s
+[52/275]   ⏱️  Running SixLayerFrameworkTests.CoreFrameworkComponentAccessibilityTests... ❌ 3.702s
+[53/275]   ⏱️  Running SixLayerFrameworkTests.CoreViewFunctionTests... ❌ 3.633s
+[54/275]   ⏱️  Running SixLayerFrameworkTests.CrossPlatformColorTests... ❌ 3.233s
+[55/275]   ⏱️  Running SixLayerFrameworkTests.CrossPlatformComponentAccessibilityTests... ❌ 6.218s
+[56/275]   ⏱️  Running SixLayerFrameworkTests.CrossPlatformNavigationTests... ⏱️  TIMEOUT (30.059s)
+[57/275]   ⏱️  Running SixLayerFrameworkTests.CrossPlatformOptimizationLayer6ComponentAccessibilityTests... ❌ 8.405s
+[58/275]   ⏱️  Running SixLayerFrameworkTests.CrossPlatformOptimizationLayer6Tests... ❌ 7.817s
+[59/275]   ⏱️  Running SixLayerFrameworkTests.CustomItemCollectionViewTests... ❌ 26.146s
+[60/275]   ⏱️  Running SixLayerFrameworkTests.DataBindingTests... ❌ 7.583s
+[61/275]   ⏱️  Running SixLayerFrameworkTests.DataFrameAnalysisEngineTests... ❌ 7.183s
+[62/275]   ⏱️  Running SixLayerFrameworkTests.DataIntrospectionCoreDataTests... ❌ 20.129s
+[63/275]   ⏱️  Running SixLayerFrameworkTests.DataIntrospectionTests... ❌ 7.064s
+[64/275]   ⏱️  Running SixLayerFrameworkTests.DataPresentationIntelligenceTests... ❌ 6.979s
+[65/275]   ⏱️  Running SixLayerFrameworkTests.DebugLoggingTDDTests... ❌ 6.988s
+[66/275]   ⏱️  Running SixLayerFrameworkTests.DefaultAccessibilityIdentifierTests... ❌ 6.957s
+[67/275]   ⏱️  Running SixLayerFrameworkTests.DynamicFieldComponentsTests... ❌ 7.183s
+[68/275]   ⏱️  Running SixLayerFrameworkTests.DynamicFormGridLayoutTests... ❌ 7.543s
+[69/275]   ⏱️  Running SixLayerFrameworkTests.DynamicFormLabelTests... ❌ 18.800s
+[70/275]   ⏱️  Running SixLayerFrameworkTests.DynamicFormTests... ❌ 7.063s
+[71/275]   ⏱️  Running SixLayerFrameworkTests.DynamicFormViewComponentAccessibilityTests... ❌ 7.012s
+[72/275]   ⏱️  Running SixLayerFrameworkTests.DynamicFormViewTests... ❌ 17.747s
+[73/275]   ⏱️  Running SixLayerFrameworkTests.EnhancedDeviceDetectionTests... ❌ 7.363s
+[74/275]   ⏱️  Running SixLayerFrameworkTests.EnvironmentVariableDebugTests... ❌ 7.089s
+[75/275]   ⏱️  Running SixLayerFrameworkTests.ExampleComponentAccessibilityTests... ❌ 7.011s
+[76/275]   ⏱️  Running SixLayerFrameworkTests.ExtensibleHintsTests... ❌ 7.226s
+[77/275]   ⏱️  Running SixLayerFrameworkTests.EyeTrackingManagerAccessibilityTests... ⏱️  TIMEOUT (30.053s)
+[78/275]   ⏱️  Running SixLayerFrameworkTests.EyeTrackingTests... ✅ 7.431s
+[79/275]   ⏱️  Running SixLayerFrameworkTests.FieldDisplayHintsTests... ✅ 6.140s
+[80/275]   ⏱️  Running SixLayerFrameworkTests.FieldHintsDRYTests... ✅ 4.885s
+[81/275]   ⏱️  Running SixLayerFrameworkTests.FieldHintsIntegrationTests... ✅ 4.479s
+[82/275]   ⏱️  Running SixLayerFrameworkTests.FieldHintsLoaderTests... ✅ 5.358s
+[83/275]   ⏱️  Running SixLayerFrameworkTests.FieldOrderResolverTests... ❌ 7.004s
+[84/275]   ⏱️  Running SixLayerFrameworkTests.FieldViewTypeDeterminerTests... ❌ 7.197s
+[85/275]   ⏱️  Running SixLayerFrameworkTests.FormCallbackFunctionalTests... ✅ 4.825s
+[86/275]   ⏱️  Running SixLayerFrameworkTests.FormFieldInteractionTests... ✅ 3.945s
+[87/275]   ⏱️  Running SixLayerFrameworkTests.FormHoverInteractionTests... ✅ 3.523s
+[88/275]   ⏱️  Running SixLayerFrameworkTests.FormUsageExampleComponentAccessibilityTests... ✅ 3.394s
+[89/275]   ⏱️  Running SixLayerFrameworkTests.FormWizardStateTests... ✅ 3.441s
+[90/275]   ⏱️  Running SixLayerFrameworkTests.FormWizardTests... ✅ 3.995s
+[91/275]   ⏱️  Running SixLayerFrameworkTests.FormWizardViewTDDTests... ✅ 3.589s
+[92/275]   ⏱️  Running SixLayerFrameworkTests.FormWizardViewTests... ✅ 3.456s
+[93/275]   ⏱️  Running SixLayerFrameworkTests.FrameworkComponentAccessibilityBaselineTests... ✅ 3.581s
+[94/275]   ⏱️  Running SixLayerFrameworkTests.FrameworkComponentGlobalConfigTests... ✅ 3.471s
+[95/275]   ⏱️  Running SixLayerFrameworkTests.FrameworkComponentIntegrationTests... ✅ 3.581s
+[96/275]   ⏱️  Running SixLayerFrameworkTests.GenericFormViewTests... ✅ 3.745s
+[97/275]   ⏱️  Running SixLayerFrameworkTests.GenericItemCollectionViewRealAccessibilityTDDTests... ✅ 3.332s
+[98/275]   ⏱️  Running SixLayerFrameworkTests.GenericItemCollectionViewTests... ✅ 3.405s
+[99/275]   ⏱️  Running SixLayerFrameworkTests.GenericLayoutDecisionTests... ✅ 3.553s
+[100/275]   ⏱️  Running SixLayerFrameworkTests.GenericMediaViewTests... ✅ 3.654s
+[101/275]   ⏱️  Running SixLayerFrameworkTests.GenericNumericDataViewTests... ✅ 3.307s
+[102/275]   ⏱️  Running SixLayerFrameworkTests.GlobalDisableLocalEnableTDDTests... ✅ 3.470s
+[103/275]   ⏱️  Running SixLayerFrameworkTests.GreenPhaseTest... ✅ 3.474s
+[104/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceCaptionsTests... ✅ 3.368s
+[105/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceColorContrastTests... ✅ 3.294s
+[106/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceFocusIndicatorsTests... ✅ 3.328s
+[107/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceHoverTests... ✅ 3.716s
+[108/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceLightDarkModeTests... ✅ 3.494s
+[109/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceMotionTests... ✅ 3.207s
+[110/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceTabOrderTests... ✅ 3.535s
+[111/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceTouchTargetTests... ✅ 3.392s
+[112/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceTypographyTests... ✅ 3.360s
+[113/275]   ⏱️  Running SixLayerFrameworkTests.HIGComplianceZoomTests... ✅ 3.371s
+[114/275]   ⏱️  Running SixLayerFrameworkTests.HintsDefaultValueTests... ✅ 3.334s
+[115/275]   ⏱️  Running SixLayerFrameworkTests.ImageMetadataIntelligenceTests... ✅ 3.302s
+[116/275]   ⏱️  Running SixLayerFrameworkTests.ImageProcessingPipelineAccessibilityTests... ✅ 3.423s
+[117/275]   ⏱️  Running SixLayerFrameworkTests.ImageProcessingPipelineTests... ✅ 3.399s
+[118/275]   ⏱️  Running SixLayerFrameworkTests.InputHandlingInteractionsComponentAccessibilityTests... ✅ 3.459s
+[119/275]   ⏱️  Running SixLayerFrameworkTests.InputHandlingInteractionsTests... ✅ 3.299s
+[120/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionComponentAccessibilityTests... ✅ 3.392s
+[121/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionComprehensiveTests... ✅ 3.665s
+[122/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionLayer2Tests... ✅ 3.307s
+[123/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionLayer3Tests... ✅ 3.246s
+[124/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionLayer4Tests... ✅ 3.258s
+[125/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionLayer6Tests... ✅ 3.794s
+[126/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentCardExpansionTests... ✅ 3.265s
+[127/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentDetailViewSheetIntegrationTests_macOS... ✅ 4.091s
+[128/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentDetailViewSheetTests... ✅ 3.193s
+[129/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentDetailViewTests... ✅ 3.159s
+[130/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentFormViewComponentAccessibilityTests... ✅ 3.482s
+[131/275]   ⏱️  Running SixLayerFrameworkTests.IntelligentFormViewTests... ✅ 3.356s
+[132/275]   ⏱️  Running SixLayerFrameworkTests.InternationalizationServiceAccessibilityTests... ✅ 3.343s
+[133/275]   ⏱️  Running SixLayerFrameworkTests.InternationalizationServiceComponentAccessibilityTests... ✅ 3.252s
+[134/275]   ⏱️  Running SixLayerFrameworkTests.InternationalizationServiceTests... ✅ 3.222s
+[135/275]   ⏱️  Running SixLayerFrameworkTests.InternationalizationTests... ✅ 3.323s
+[136/275]   ⏱️  Running SixLayerFrameworkTests.ItemCollectionL1Tests... ✅ 3.451s
+[137/275]   ⏱️  Running SixLayerFrameworkTests.L2LayoutDecisionTests... ✅ 3.488s
+[138/275]   ⏱️  Running SixLayerFrameworkTests.L3StrategySelectionTests... ✅ 3.433s
+[139/275]   ⏱️  Running SixLayerFrameworkTests.Layer1AccessibilityTests... ✅ 3.377s
+[140/275]   ⏱️  Running SixLayerFrameworkTests.Layer1CallbackFunctionalTests... ✅ 3.421s
+[141/275]   ⏱️  Running SixLayerFrameworkTests.Layer1PresentationTests... ✅ 3.345s
+[142/275]   ⏱️  Running SixLayerFrameworkTests.Layer1SemanticAPIPresenceTests... ✅ 3.281s
+[143/275]   ⏱️  Running SixLayerFrameworkTests.Layer2ComponentAccessibilityTests... ✅ 3.291s
+[144/275]   ⏱️  Running SixLayerFrameworkTests.Layer2LayoutDecisionTests... ✅ 3.197s
+[145/275]   ⏱️  Running SixLayerFrameworkTests.Layer3ComponentAccessibilityTests... ✅ 3.202s
+[146/275]   ⏱️  Running SixLayerFrameworkTests.Layer4ComponentAccessibilityTests... ✅ 3.201s
+[147/275]   ⏱️  Running SixLayerFrameworkTests.Layer4FormContainerTests... ✅ 3.306s
+[148/275]   ⏱️  Running SixLayerFrameworkTests.Layer4PlatformImageArchitectureTests... ✅ 3.421s
+[149/275]   ⏱️  Running SixLayerFrameworkTests.Layer4ViewExtensionTests... ✅ 3.581s
+[150/275]   ⏱️  Running SixLayerFrameworkTests.Layer5ComponentAccessibilityTests... ✅ 3.345s
+[151/275]   ⏱️  Running SixLayerFrameworkTests.Layer5PlatformComponentTDDTests... ✅ 3.205s
+[152/275]   ⏱️  Running SixLayerFrameworkTests.Layer5PlatformOptimizationTests... ✅ 3.357s
+[153/275]   ⏱️  Running SixLayerFrameworkTests.Layer6ComponentAccessibilityTests... ✅ 3.383s
+[154/275]   ⏱️  Running SixLayerFrameworkTests.Layer6PlatformOptimizationTests... ✅ 3.198s
+[155/275]   ⏱️  Running SixLayerFrameworkTests.LayoutDecisionReasoningTests... ✅ 3.296s
+[156/275]   ⏱️  Running SixLayerFrameworkTests.LiquidGlassCapabilityDetectionTests... ✅ 3.311s
+[157/275]   ⏱️  Running SixLayerFrameworkTests.LiquidGlassDesignSystemTests... ✅ 3.476s
+[158/275]   ⏱️  Running SixLayerFrameworkTests.LocalEnableOverrideTests... ✅ 3.281s
+[159/275]   ⏱️  Running SixLayerFrameworkTests.LocationServiceTests... ✅ 3.439s
+[160/275]   ⏱️  Running SixLayerFrameworkTests.MaterialAccessibilityManagerAccessibilityTests... ✅ 3.530s
+[161/275]   ⏱️  Running SixLayerFrameworkTests.MaterialAccessibilityTests... ✅ 3.495s
+[162/275]   ⏱️  Running SixLayerFrameworkTests.MetalRenderingCrashTDDTests... ✅ 3.426s
+[163/275]   ⏱️  Running SixLayerFrameworkTests.MinimalAccessibilityTest... ✅ 3.323s
+[164/275]   ⏱️  Running SixLayerFrameworkTests.ModalContainerTests... ✅ 3.370s
+[165/275]   ⏱️  Running SixLayerFrameworkTests.ModalFormL1Tests... ✅ 3.450s
+[166/275]   ⏱️  Running SixLayerFrameworkTests.ModalFormViewTests... ✅ 3.277s
+[167/275]   ⏱️  Running SixLayerFrameworkTests.NamedModifierRefactoringTDDTests... ✅ 3.390s
+[168/275]   ⏱️  Running SixLayerFrameworkTests.NativeTypesTests... ✅ 3.215s
+[169/275]   ⏱️  Running SixLayerFrameworkTests.NavigationLayer4Tests... ✅ 3.394s
+[170/275]   ⏱️  Running SixLayerFrameworkTests.OCRComponentsTDDTests... ✅ 3.346s
+[171/275]   ⏱️  Running SixLayerFrameworkTests.OCRDisambiguationTDDTests... ✅ 3.281s
+[172/275]   ⏱️  Running SixLayerFrameworkTests.OCRDisambiguationViewTests... ✅ 3.345s
+[173/275]   ⏱️  Running SixLayerFrameworkTests.OCROverlayTests... ✅ 3.399s
+[174/275]   ⏱️  Running SixLayerFrameworkTests.OCROverlayViewRealAccessibilityTDDTests... ✅ 3.271s
+[175/275]   ⏱️  Running SixLayerFrameworkTests.OCROverlayViewTests... ✅ 3.385s
+[176/275]   ⏱️  Running SixLayerFrameworkTests.OCRServiceAccessibilityTests... ✅ 3.320s
+[177/275]   ⏱️  Running SixLayerFrameworkTests.OCRServiceTests... ✅ 3.480s
+[178/275]   ⏱️  Running SixLayerFrameworkTests.PhotoCallbackFunctionalTests... ✅ 3.547s
+[179/275]   ⏱️  Running SixLayerFrameworkTests.PhotoComponentsLayer4Tests... ✅ 3.353s
+[180/275]   ⏱️  Running SixLayerFrameworkTests.PhotoFunctionalityPhase1Tests... ✅ 3.348s
+[181/275]   ⏱️  Running SixLayerFrameworkTests.PhotoSelectionL1Tests... ✅ 3.441s
+[182/275]   ⏱️  Running SixLayerFrameworkTests.PhotoSemanticLayerTests... ✅ 3.249s
+[183/275]   ⏱️  Running SixLayerFrameworkTests.PlatformBehaviorTests... ✅ 3.400s
+[184/275]   ⏱️  Running SixLayerFrameworkTests.PlatformColorEncodeTests... ✅ 3.313s
+[185/275]   ⏱️  Running SixLayerFrameworkTests.PlatformColorsTests... ✅ 3.662s
+[186/275]   ⏱️  Running SixLayerFrameworkTests.PlatformDataFrameAnalysisL1Tests... ✅ 3.403s
+[187/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageAPISignatureTests... ✅ 4.144s
+[188/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageArchitectureTests... ✅ 3.592s
+[189/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageBreakingChangeDetectionTests... ✅ 3.491s
+[190/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageBugFixVerificationTests... ✅ 3.470s
+[191/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageEXIFTests... ✅ 3.364s
+[192/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageFixVerificationTests... ✅ 3.215s
+[193/275]   ⏱️  Running SixLayerFrameworkTests.PlatformImageImplicitConversionTests... ✅ 3.387s
+[194/275]   ⏱️  Running SixLayerFrameworkTests.PlatformInternationalizationL1Tests... ✅ 3.507s
+[195/275]   ⏱️  Running SixLayerFrameworkTests.PlatformInterpretationLayer5ComponentAccessibilityTests... ✅ 3.353s
+[196/275]   ⏱️  Running SixLayerFrameworkTests.PlatformKnowledgeLayer5ComponentAccessibilityTests... ✅ 3.445s
+[197/275]   ⏱️  Running SixLayerFrameworkTests.PlatformLoggingLayer5ComponentAccessibilityTests... ✅ 3.250s
+[198/275]   ⏱️  Running SixLayerFrameworkTests.PlatformLogicTests... ✅ 3.328s
+[199/275]   ⏱️  Running SixLayerFrameworkTests.PlatformMaintenanceLayer5ComponentAccessibilityTests... ✅ 3.405s
+[200/275]   ⏱️  Running SixLayerFrameworkTests.PlatformMatrixTests... ✅ 3.352s
+[201/275]   ⏱️  Running SixLayerFrameworkTests.PlatformMessagingLayer5ComponentAccessibilityTests... ✅ 3.246s
+[202/275]   ⏱️  Running SixLayerFrameworkTests.PlatformNotificationLayer5ComponentAccessibilityTests... ✅ 3.662s
+[203/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOCRComponentsLayer4ComponentAccessibilityTests... ✅ 3.375s
+[204/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOCRDisambiguationLayer1Tests... ✅ 3.290s
+[205/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOCRLayoutDecisionLayer2AccessibilityTests... ✅ 3.349s
+[206/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOCRSemanticLayer1AccessibilityTests... ✅ 3.198s
+[207/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOCRSemanticLayer1Tests... ✅ 3.316s
+[208/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOCRStrategySelectionLayer3AccessibilityTests... ✅ 3.335s
+[209/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOptimizationLayer5ComponentAccessibilityTests... ✅ 3.273s
+[210/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOrchestrationLayer5ComponentAccessibilityTests... ✅ 3.665s
+[211/275]   ⏱️  Running SixLayerFrameworkTests.PlatformOrganizationLayer5ComponentAccessibilityTests... ✅ 3.445s
+[212/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPerformanceLayer6ComponentAccessibilityTests... ✅ 3.384s
+[213/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoComponentsLayer4AccessibilityTests... ✅ 3.465s
+[214/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoComponentsLayer4ComponentAccessibilityTests... ✅ 3.505s
+[215/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoComponentsLayer4IntegrationTests... ✅ 3.457s
+[216/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoComponentsLayer4Tests... ✅ 3.398s
+[217/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoLayoutDecisionLayer2AccessibilityTests... ✅ 3.311s
+[218/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoPickerGlobalAccessTests... ✅ 3.248s
+[219/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoSemanticLayer1AccessibilityTests... ✅ 3.397s
+[220/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoSemanticLayer1Tests... ✅ 3.573s
+[221/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPhotoStrategySelectionLayer3AccessibilityTests... ✅ 3.390s
+[222/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPresentContentL1Tests... ✅ 3.385s
+[223/275]   ⏱️  Running SixLayerFrameworkTests.PlatformPrivacyLayer5ComponentAccessibilityTests... ✅ 3.430s
+[224/275]   ⏱️  Running SixLayerFrameworkTests.PlatformProfilingLayer5ComponentAccessibilityTests... ✅ 3.415s
+[225/275]   ⏱️  Running SixLayerFrameworkTests.PlatformRecognitionLayer5ComponentAccessibilityTests... ✅ 3.343s
+[226/275]   ⏱️  Running SixLayerFrameworkTests.PlatformResourceLayer5ComponentAccessibilityTests... ✅ 3.387s
+[227/275]   ⏱️  Running SixLayerFrameworkTests.PlatformResponsiveCardsLayer4Tests... ✅ 3.377s
+[228/275]   ⏱️  Running SixLayerFrameworkTests.PlatformRoutingLayer5ComponentAccessibilityTests... ✅ 3.326s
+[229/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSafetyLayer5ComponentAccessibilityTests... ✅ 3.448s
+[230/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests... ✅ 3.360s
+[231/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSemanticLayer1ModalFormAccessibilityTests... ✅ 3.626s
+[232/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSemanticLayer1Tests... ✅ 3.279s
+[233/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSimulationTests... ✅ 3.219s
+[234/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSplitViewAdvancedLayer4Tests... ✅ 3.233s
+[235/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSplitViewLayer4Tests... ✅ 3.234s
+[236/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSplitViewOptimizationsLayer5Tests... ✅ 3.309s
+[237/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSplitViewSizingLayer4Tests... ✅ 3.098s
+[238/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSplitViewStateManagementLayer4Tests... ✅ 18.249s
+[239/275]   ⏱️  Running SixLayerFrameworkTests.PlatformSplitViewStylesLayer4Tests... ✅ 3.533s
+[240/275]   ⏱️  Running SixLayerFrameworkTests.PlatformStylingLayer4Tests... ✅ 3.379s
+[241/275]   ⏱️  Running SixLayerFrameworkTests.PlatformTestUtilities... ✅ 3.513s
+[242/275]   ⏱️  Running SixLayerFrameworkTests.PlatformTypesAPISignatureTests... ✅ 3.354s
+[243/275]   ⏱️  Running SixLayerFrameworkTests.PlatformTypesCompilationTests... ✅ 3.309s
+[244/275]   ⏱️  Running SixLayerFrameworkTests.PlatformWisdomLayer5ComponentAccessibilityTests... ✅ 3.385s
+[245/275]   ⏱️  Running SixLayerFrameworkTests.RemainingComponentsAccessibilityTests... ✅ 3.584s
+[246/275]   ⏱️  Running SixLayerFrameworkTests.ResponsiveCardsViewTests... ✅ 3.366s
+[247/275]   ⏱️  Running SixLayerFrameworkTests.ResponsiveContainerTests... ✅ 3.363s
+[248/275]   ⏱️  Running SixLayerFrameworkTests.ResponsiveLayoutComponentAccessibilityTests... ✅ 3.466s
+[249/275]   ⏱️  Running SixLayerFrameworkTests.ResponsiveLayoutTests... ✅ 3.355s
+[250/275]   ⏱️  Running SixLayerFrameworkTests.RuntimeCapabilityDetectionComponentAccessibilityTests... ✅ 3.152s
+[251/275]   ⏱️  Running SixLayerFrameworkTests.RuntimeCapabilityDetectionTDDTests... ✅ 3.334s
+[252/275]   ⏱️  Running SixLayerFrameworkTests.SafetyComponentAccessibilityTests... ✅ 3.185s
+[253/275]   ⏱️  Running SixLayerFrameworkTests.SelectFieldImplementationTests... ✅ 3.358s
+[254/275]   ⏱️  Running SixLayerFrameworkTests.ShapeStyleSystemTests... ✅ 3.316s
+[255/275]   ⏱️  Running SixLayerFrameworkTests.SharedComponentAccessibilityTests... ✅ 3.248s
+[256/275]   ⏱️  Running SixLayerFrameworkTests.SimpleAccessibilityTest... ✅ 3.329s
+[257/275]   ⏱️  Running SixLayerFrameworkTests.SingleInstanceLayer1Tests... ✅ 3.203s
+[258/275]   ⏱️  Running SixLayerFrameworkTests.SixLayerFrameworkTests... ✅ 3.206s
+[259/275]   ⏱️  Running SixLayerFrameworkTests.SwitchControlManagerAccessibilityTests... ✅ 3.197s
+[260/275]   ⏱️  Running SixLayerFrameworkTests.SwitchControlTests... ✅ 3.398s
+[261/275]   ⏱️  Running SixLayerFrameworkTests.TabularDataAPITest... ✅ 3.203s
+[262/275]   ⏱️  Running SixLayerFrameworkTests.TestingFailureDemonstrationTests... ✅ 3.222s
+[263/275]   ⏱️  Running SixLayerFrameworkTests.TextContentTypeCompletenessTests... ✅ 3.416s
+[264/275]   ⏱️  Running SixLayerFrameworkTests.TextContentTypeTests... ✅ 3.345s
+[265/275]   ⏱️  Running SixLayerFrameworkTests.UIGenerationVerificationTests... ✅ 3.370s
+[266/275]   ⏱️  Running SixLayerFrameworkTests.UtilityComponentAccessibilityTests... ✅ 3.198s
+[267/275]   ⏱️  Running SixLayerFrameworkTests.ViewDefinitionTests... ✅ 3.200s
+[268/275]   ⏱️  Running SixLayerFrameworkTests.ViewGenerationIntegrationTests... ✅ 3.176s
+[269/275]   ⏱️  Running SixLayerFrameworkTests.ViewGenerationTests... ✅ 3.388s
+[270/275]   ⏱️  Running SixLayerFrameworkTests.ViewGenerationVerificationTests... ✅ 3.334s
+[271/275]   ⏱️  Running SixLayerFrameworkTests.VisionSafetyComponentAccessibilityTests... ✅ 3.210s
+[272/275]   ⏱️  Running SixLayerFrameworkTests.VisionSafetyTests... ✅ 3.182s
+[273/275]   ⏱️  Running SixLayerFrameworkTests.WindowDetectionTests... ✅ 3.446s
+[274/275]   ⏱️  Running SixLayerFrameworkTests.iOSWindowDetectionTests... ✅ 3.221s
+[275/275]   ⏱️  Running SixLayerFrameworkTests.macOSWindowDetectionTests... ✅ 3.385s
+
+📊 Performance Summary:
+  Total suites: 275
+  Slow suites (>1s): 273
+  Timeout suites (>30s): 2
+
+⏱️  Test Suites That Timed Out (>30 seconds):
+  SixLayerFrameworkTests.CrossPlatformNavigationTests: TIMEOUT
+  SixLayerFrameworkTests.EyeTrackingManagerAccessibilityTests: TIMEOUT
+
+🐌 Slow Test Suites (>1 second):
+  SixLayerFrameworkTests.CustomItemCollectionViewTests: 26.146s
+  SixLayerFrameworkTests.DataIntrospectionCoreDataTests: 20.129s
+  SixLayerFrameworkTests.DynamicFormLabelTests: 18.800s
+  SixLayerFrameworkTests.PlatformSplitViewStateManagementLayer4Tests: 18.249s
+  SixLayerFrameworkTests.DynamicFormViewTests: 17.747s
+  SixLayerFrameworkTests.CrossPlatformOptimizationLayer6ComponentAccessibilityTests: 8.405s
+  SixLayerFrameworkTests.CrossPlatformOptimizationLayer6Tests: 7.817s
+  SixLayerFrameworkTests.DataBindingTests: 7.583s
+  SixLayerFrameworkTests.DynamicFormGridLayoutTests: 7.543s
+  SixLayerFrameworkTests.EyeTrackingTests: 7.431s
+  SixLayerFrameworkTests.EnhancedDeviceDetectionTests: 7.363s
+  SixLayerFrameworkTests.ExtensibleHintsTests: 7.226s
+  SixLayerFrameworkTests.FieldViewTypeDeterminerTests: 7.197s
+  SixLayerFrameworkTests.DynamicFieldComponentsTests: 7.183s
+  SixLayerFrameworkTests.DataFrameAnalysisEngineTests: 7.183s
+  SixLayerFrameworkTests.EnvironmentVariableDebugTests: 7.089s
+  SixLayerFrameworkTests.DataIntrospectionTests: 7.064s
+  SixLayerFrameworkTests.DynamicFormTests: 7.063s
+  SixLayerFrameworkTests.DynamicFormViewComponentAccessibilityTests: 7.012s
+  SixLayerFrameworkTests.ExampleComponentAccessibilityTests: 7.011s
+  SixLayerFrameworkTests.FieldOrderResolverTests: 7.004s
+  SixLayerFrameworkTests.DebugLoggingTDDTests: 6.988s
+  SixLayerFrameworkTests.DataPresentationIntelligenceTests: 6.979s
+  SixLayerFrameworkTests.DefaultAccessibilityIdentifierTests: 6.957s
+  SixLayerFrameworkTests.CrossPlatformComponentAccessibilityTests: 6.218s
+  SixLayerFrameworkTests.FieldDisplayHintsTests: 6.140s
+  SixLayerFrameworkTests.CardDisplayableBugTests: 5.929s
+  SixLayerFrameworkTests.FieldHintsLoaderTests: 5.358s
+  SixLayerFrameworkTests.AdaptiveDetailStrategyTests: 5.304s
+  SixLayerFrameworkTests.AccessibilityTestingSuiteComponentAccessibilityTests: 5.127s
+  SixLayerFrameworkTests.CardContentDisplayTests: 4.980s
+  SixLayerFrameworkTests.AdaptiveDetailViewRenderingTests: 4.899s
+  SixLayerFrameworkTests.FieldHintsDRYTests: 4.885s
+  SixLayerFrameworkTests.AccessibilityIdentifierBugFixVerificationTests: 4.885s
+  SixLayerFrameworkTests.AccessibilityPreferenceTests: 4.867s
+  SixLayerFrameworkTests.FormCallbackFunctionalTests: 4.825s
+  SixLayerFrameworkExternalIntegrationTests.ExternalModuleIntegrationTests: 4.735s
+  SixLayerFrameworkTests.AccessibilityManagerTests: 4.534s
+  SixLayerFrameworkTests.FieldHintsIntegrationTests: 4.479s
+  SixLayerFrameworkTests.ComponentLabelTextAccessibilityTests: 4.478s
+  SixLayerFrameworkTests.AdvancedFieldTypesTests: 4.178s
+  SixLayerFrameworkTests.PlatformImageAPISignatureTests: 4.144s
+  SixLayerFrameworkTests.AccessibilityTestingSuiteTests: 4.114s
+  SixLayerFrameworkTests.IntelligentDetailViewSheetIntegrationTests_macOS: 4.091s
+  SixLayerFrameworkTests.AccessibilityIdentifierLogicVerificationTests: 4.062s
+  SixLayerFrameworkTests.FormWizardTests: 3.995s
+  SixLayerFrameworkTests.FormFieldInteractionTests: 3.945s
+  SixLayerFrameworkTests.CallbackFunctionalTests: 3.927s
+  SixLayerFrameworkTests.ButtonStyleCompatibilityTests: 3.872s
+  SixLayerFrameworkTests.AccessibilityFeaturesLayer5ComponentAccessibilityTests: 3.860s
+  SixLayerFrameworkTests.AutomaticAccessibilityIdentifierTests: 3.853s
+  SixLayerFrameworkTests.AutomaticHIGComplianceTests: 3.843s
+  SixLayerFrameworkTests.AssistiveTouchManagerAccessibilityTests: 3.840s
+  SixLayerFrameworkTests.AppleHIGComplianceComponentAccessibilityTests: 3.830s
+  SixLayerFrameworkTests.AutomaticAccessibilityIdentifiersTests: 3.810s
+  SixLayerFrameworkTests.AccessibilityTypesTests: 3.801s
+  SixLayerFrameworkTests.IntelligentCardExpansionLayer6Tests: 3.794s
+  SixLayerFrameworkTests.AccessibilityGlobalLocalConfigTests: 3.775s
+  SixLayerFrameworkTests.AccessibilityManagerComponentAccessibilityTests: 3.774s
+  SixLayerFrameworkTests.AccessibilityIdentifierGenerationTests: 3.756s
+  SixLayerFrameworkTests.GenericFormViewTests: 3.745s
+  SixLayerFrameworkTests.AccessibilityIdentifiersDebugTests: 3.720s
+  SixLayerFrameworkTests.CollectionEmptyStateViewTests: 3.717s
+  SixLayerFrameworkTests.HIGComplianceHoverTests: 3.716s
+  SixLayerFrameworkTests.CoreFrameworkComponentAccessibilityTests: 3.702s
+  SixLayerFrameworkTests.AccessibilityFeaturesLayer5Tests: 3.696s
+  SixLayerFrameworkTests.AccessibilityIdentifierGenerationVerificationTests: 3.686s
+  SixLayerFrameworkTests.PlatformOrchestrationLayer5ComponentAccessibilityTests: 3.665s
+  SixLayerFrameworkTests.IntelligentCardExpansionComprehensiveTests: 3.665s
+  SixLayerFrameworkTests.PlatformNotificationLayer5ComponentAccessibilityTests: 3.662s
+  SixLayerFrameworkTests.PlatformColorsTests: 3.662s
+  SixLayerFrameworkTests.AutomaticAccessibilityComponentAccessibilityTests: 3.656s
+  SixLayerFrameworkTests.AppleHIGComplianceManagerAccessibilityTests: 3.655s
+  SixLayerFrameworkTests.GenericMediaViewTests: 3.654s
+  SixLayerFrameworkTests.AppleHIGComplianceTests: 3.651s
+  SixLayerFrameworkTests.AccessibilityManagerTDDTests: 3.642s
+  SixLayerFrameworkTests.CoreViewFunctionTests: 3.633s
+  SixLayerFrameworkTests.CapabilityCombinationValidationTests: 3.628s
+  SixLayerFrameworkTests.PlatformSemanticLayer1ModalFormAccessibilityTests: 3.626s
+  SixLayerFrameworkTests.AssistiveTouchTests: 3.611s
+  SixLayerFrameworkTests.AccessibilityIdentifierEdgeCaseTests: 3.593s
+  SixLayerFrameworkTests.AccessibilityIdentifierDisabledTests: 3.592s
+  SixLayerFrameworkTests.PlatformImageArchitectureTests: 3.592s
+  SixLayerFrameworkTests.FormWizardViewTDDTests: 3.589s
+  SixLayerFrameworkTests.RemainingComponentsAccessibilityTests: 3.584s
+  SixLayerFrameworkTests.Layer4ViewExtensionTests: 3.581s
+  SixLayerFrameworkTests.FrameworkComponentAccessibilityBaselineTests: 3.581s
+  SixLayerFrameworkTests.FrameworkComponentIntegrationTests: 3.581s
+  SixLayerFrameworkTests.PlatformPhotoSemanticLayer1Tests: 3.573s
+  SixLayerFrameworkTests.GenericLayoutDecisionTests: 3.553s
+  SixLayerFrameworkTests.PhotoCallbackFunctionalTests: 3.547s
+  SixLayerFrameworkTests.HIGComplianceTabOrderTests: 3.535s
+  SixLayerFrameworkTests.PlatformSplitViewStylesLayer4Tests: 3.533s
+  SixLayerFrameworkTests.MaterialAccessibilityManagerAccessibilityTests: 3.530s
+  SixLayerFrameworkTests.FormHoverInteractionTests: 3.523s
+  SixLayerFrameworkTests.PlatformTestUtilities: 3.513s
+  SixLayerFrameworkTests.PlatformInternationalizationL1Tests: 3.507s
+  SixLayerFrameworkTests.AutomaticAccessibilityIdentifiersComponentAccessibilityTests: 3.506s
+  SixLayerFrameworkTests.PlatformPhotoComponentsLayer4ComponentAccessibilityTests: 3.505s
+  SixLayerFrameworkTests.MaterialAccessibilityTests: 3.495s
+  SixLayerFrameworkTests.HIGComplianceLightDarkModeTests: 3.494s
+  SixLayerFrameworkTests.PlatformImageBreakingChangeDetectionTests: 3.491s
+  SixLayerFrameworkTests.CollectionViewCallbackTests: 3.491s
+  SixLayerFrameworkTests.L2LayoutDecisionTests: 3.488s
+  SixLayerFrameworkTests.CardDisplayHelperNilFallbackTests: 3.483s
+  SixLayerFrameworkTests.IntelligentFormViewComponentAccessibilityTests: 3.482s
+  SixLayerFrameworkTests.OCRServiceTests: 3.480s
+  SixLayerFrameworkTests.LiquidGlassDesignSystemTests: 3.476s
+  SixLayerFrameworkTests.GreenPhaseTest: 3.474s
+  SixLayerFrameworkTests.FrameworkComponentGlobalConfigTests: 3.471s
+  SixLayerFrameworkTests.GlobalDisableLocalEnableTDDTests: 3.470s
+  SixLayerFrameworkTests.PlatformImageBugFixVerificationTests: 3.470s
+  SixLayerFrameworkTests.ResponsiveLayoutComponentAccessibilityTests: 3.466s
+  SixLayerFrameworkTests.PlatformPhotoComponentsLayer4AccessibilityTests: 3.465s
+  SixLayerFrameworkTests.InputHandlingInteractionsComponentAccessibilityTests: 3.459s
+  SixLayerFrameworkTests.PlatformPhotoComponentsLayer4IntegrationTests: 3.457s
+  SixLayerFrameworkTests.FormWizardViewTests: 3.456s
+  SixLayerFrameworkTests.ItemCollectionL1Tests: 3.451s
+  SixLayerFrameworkTests.ModalFormL1Tests: 3.450s
+  SixLayerFrameworkTests.PlatformSafetyLayer5ComponentAccessibilityTests: 3.448s
+  SixLayerFrameworkTests.WindowDetectionTests: 3.446s
+  SixLayerFrameworkTests.PlatformKnowledgeLayer5ComponentAccessibilityTests: 3.445s
+  SixLayerFrameworkTests.PlatformOrganizationLayer5ComponentAccessibilityTests: 3.445s
+  SixLayerFrameworkTests.PhotoSelectionL1Tests: 3.441s
+  SixLayerFrameworkTests.FormWizardStateTests: 3.441s
+  SixLayerFrameworkTests.LocationServiceTests: 3.439s
+  SixLayerFrameworkTests.L3StrategySelectionTests: 3.433s
+  SixLayerFrameworkTests.PlatformPrivacyLayer5ComponentAccessibilityTests: 3.430s
+  SixLayerFrameworkTests.AccessibilityIdentifierPersistenceTests: 3.427s
+  SixLayerFrameworkTests.MetalRenderingCrashTDDTests: 3.426s
+  SixLayerFrameworkTests.ImageProcessingPipelineAccessibilityTests: 3.423s
+  SixLayerFrameworkTests.Layer4PlatformImageArchitectureTests: 3.421s
+  SixLayerFrameworkTests.Layer1CallbackFunctionalTests: 3.421s
+  SixLayerFrameworkTests.TextContentTypeCompletenessTests: 3.416s
+  SixLayerFrameworkTests.PlatformProfilingLayer5ComponentAccessibilityTests: 3.415s
+  SixLayerFrameworkTests.PlatformMaintenanceLayer5ComponentAccessibilityTests: 3.405s
+  SixLayerFrameworkTests.GenericItemCollectionViewTests: 3.405s
+  SixLayerFrameworkTests.PlatformDataFrameAnalysisL1Tests: 3.403s
+  SixLayerFrameworkTests.PlatformBehaviorTests: 3.400s
+  SixLayerFrameworkTests.AccessibilityStateSimulationTests: 3.400s
+  SixLayerFrameworkTests.ImageProcessingPipelineTests: 3.399s
+  SixLayerFrameworkTests.OCROverlayTests: 3.399s
+  SixLayerFrameworkTests.SwitchControlTests: 3.398s
+  SixLayerFrameworkTests.PlatformPhotoComponentsLayer4Tests: 3.398s
+  SixLayerFrameworkTests.PlatformPhotoSemanticLayer1AccessibilityTests: 3.397s
+  SixLayerFrameworkTests.CardDisplayHelperHintTests: 3.395s
+  SixLayerFrameworkTests.FormUsageExampleComponentAccessibilityTests: 3.394s
+  SixLayerFrameworkTests.NavigationLayer4Tests: 3.394s
+  SixLayerFrameworkTests.HIGComplianceTouchTargetTests: 3.392s
+  SixLayerFrameworkTests.IntelligentCardExpansionComponentAccessibilityTests: 3.392s
+  SixLayerFrameworkTests.PlatformPhotoStrategySelectionLayer3AccessibilityTests: 3.390s
+  SixLayerFrameworkTests.NamedModifierRefactoringTDDTests: 3.390s
+  SixLayerFrameworkTests.ViewGenerationTests: 3.388s
+  SixLayerFrameworkTests.PlatformResourceLayer5ComponentAccessibilityTests: 3.387s
+  SixLayerFrameworkTests.PlatformImageImplicitConversionTests: 3.387s
+  SixLayerFrameworkTests.OCROverlayViewTests: 3.385s
+  SixLayerFrameworkTests.PlatformWisdomLayer5ComponentAccessibilityTests: 3.385s
+  SixLayerFrameworkTests.PlatformPresentContentL1Tests: 3.385s
+  SixLayerFrameworkTests.macOSWindowDetectionTests: 3.385s
+  SixLayerFrameworkTests.PlatformPerformanceLayer6ComponentAccessibilityTests: 3.384s
+  SixLayerFrameworkTests.Layer6ComponentAccessibilityTests: 3.383s
+  SixLayerFrameworkTests.PlatformStylingLayer4Tests: 3.379s
+  SixLayerFrameworkTests.PlatformResponsiveCardsLayer4Tests: 3.377s
+  SixLayerFrameworkTests.Layer1AccessibilityTests: 3.377s
+  SixLayerFrameworkTests.PlatformOCRComponentsLayer4ComponentAccessibilityTests: 3.375s
+  SixLayerFrameworkTests.CoreArchitectureTests: 3.371s
+  SixLayerFrameworkTests.HIGComplianceZoomTests: 3.371s
+  SixLayerFrameworkTests.ModalContainerTests: 3.370s
+  SixLayerFrameworkTests.UIGenerationVerificationTests: 3.370s
+  SixLayerFrameworkTests.HIGComplianceCaptionsTests: 3.368s
+  SixLayerFrameworkTests.ResponsiveCardsViewTests: 3.366s
+  SixLayerFrameworkTests.PlatformImageEXIFTests: 3.364s
+  SixLayerFrameworkTests.ResponsiveContainerTests: 3.363s
+  SixLayerFrameworkTests.HIGComplianceTypographyTests: 3.360s
+  SixLayerFrameworkTests.PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: 3.360s
+  SixLayerFrameworkTests.SelectFieldImplementationTests: 3.358s
+  SixLayerFrameworkTests.Layer5PlatformOptimizationTests: 3.357s
+  SixLayerFrameworkTests.IntelligentFormViewTests: 3.356s
+  SixLayerFrameworkTests.ResponsiveLayoutTests: 3.355s
+  SixLayerFrameworkTests.PlatformTypesAPISignatureTests: 3.354s
+  SixLayerFrameworkTests.PhotoComponentsLayer4Tests: 3.353s
+  SixLayerFrameworkTests.PlatformInterpretationLayer5ComponentAccessibilityTests: 3.353s
+  SixLayerFrameworkTests.PlatformMatrixTests: 3.352s
+  SixLayerFrameworkTests.PlatformOCRLayoutDecisionLayer2AccessibilityTests: 3.349s
+  SixLayerFrameworkTests.PhotoFunctionalityPhase1Tests: 3.348s
+  SixLayerFrameworkTests.CapabilityMatrixTests: 3.346s
+  SixLayerFrameworkTests.OCRComponentsTDDTests: 3.346s
+  SixLayerFrameworkTests.OCRDisambiguationViewTests: 3.345s
+  SixLayerFrameworkTests.Layer5ComponentAccessibilityTests: 3.345s
+  SixLayerFrameworkTests.TextContentTypeTests: 3.345s
+  SixLayerFrameworkTests.Layer1PresentationTests: 3.345s
+  SixLayerFrameworkTests.InternationalizationServiceAccessibilityTests: 3.343s
+  SixLayerFrameworkTests.PlatformRecognitionLayer5ComponentAccessibilityTests: 3.343s
+  SixLayerFrameworkTests.CapabilityCombinationTests: 3.338s
+  SixLayerFrameworkTests.PlatformOCRStrategySelectionLayer3AccessibilityTests: 3.335s
+  SixLayerFrameworkTests.RuntimeCapabilityDetectionTDDTests: 3.334s
+  SixLayerFrameworkTests.HintsDefaultValueTests: 3.334s
+  SixLayerFrameworkTests.ViewGenerationVerificationTests: 3.334s
+  SixLayerFrameworkTests.GenericItemCollectionViewRealAccessibilityTDDTests: 3.332s
+  SixLayerFrameworkTests.SimpleAccessibilityTest: 3.329s
+  SixLayerFrameworkTests.PlatformLogicTests: 3.328s
+  SixLayerFrameworkTests.HIGComplianceFocusIndicatorsTests: 3.328s
+  SixLayerFrameworkTests.PlatformRoutingLayer5ComponentAccessibilityTests: 3.326s
+  SixLayerFrameworkTests.InternationalizationTests: 3.323s
+  SixLayerFrameworkTests.MinimalAccessibilityTest: 3.323s
+  SixLayerFrameworkTests.OCRServiceAccessibilityTests: 3.320s
+  SixLayerFrameworkTests.PlatformOCRSemanticLayer1Tests: 3.316s
+  SixLayerFrameworkTests.ShapeStyleSystemTests: 3.316s
+  SixLayerFrameworkTests.PlatformColorEncodeTests: 3.313s
+  SixLayerFrameworkTests.PlatformPhotoLayoutDecisionLayer2AccessibilityTests: 3.311s
+  SixLayerFrameworkTests.LiquidGlassCapabilityDetectionTests: 3.311s
+  SixLayerFrameworkTests.PlatformTypesCompilationTests: 3.309s
+  SixLayerFrameworkTests.PlatformSplitViewOptimizationsLayer5Tests: 3.309s
+  SixLayerFrameworkTests.IntelligentCardExpansionLayer2Tests: 3.307s
+  SixLayerFrameworkTests.GenericNumericDataViewTests: 3.307s
+  SixLayerFrameworkTests.AutomaticHIGComplianceDemonstrationTests: 3.307s
+  SixLayerFrameworkTests.Layer4FormContainerTests: 3.306s
+  SixLayerFrameworkTests.ImageMetadataIntelligenceTests: 3.302s
+  SixLayerFrameworkTests.InputHandlingInteractionsTests: 3.299s
+  SixLayerFrameworkTests.LayoutDecisionReasoningTests: 3.296s
+  SixLayerFrameworkTests.HIGComplianceColorContrastTests: 3.294s
+  SixLayerFrameworkTests.Layer2ComponentAccessibilityTests: 3.291s
+  SixLayerFrameworkTests.PlatformOCRDisambiguationLayer1Tests: 3.290s
+  SixLayerFrameworkTests.LocalEnableOverrideTests: 3.281s
+  SixLayerFrameworkTests.Layer1SemanticAPIPresenceTests: 3.281s
+  SixLayerFrameworkTests.OCRDisambiguationTDDTests: 3.281s
+  SixLayerFrameworkTests.PlatformSemanticLayer1Tests: 3.279s
+  SixLayerFrameworkTests.ModalFormViewTests: 3.277s
+  SixLayerFrameworkTests.CapabilityAwareFunctionTests: 3.276s
+  SixLayerFrameworkTests.PlatformOptimizationLayer5ComponentAccessibilityTests: 3.273s
+  SixLayerFrameworkTests.OCROverlayViewRealAccessibilityTDDTests: 3.271s
+  SixLayerFrameworkTests.IntelligentCardExpansionTests: 3.265s
+  SixLayerFrameworkTests.ComprehensiveCapabilityMatrixTests: 3.262s
+  SixLayerFrameworkTests.IntelligentCardExpansionLayer4Tests: 3.258s
+  SixLayerFrameworkTests.InternationalizationServiceComponentAccessibilityTests: 3.252s
+  SixLayerFrameworkTests.PlatformLoggingLayer5ComponentAccessibilityTests: 3.250s
+  SixLayerFrameworkTests.PhotoSemanticLayerTests: 3.249s
+  SixLayerFrameworkTests.SharedComponentAccessibilityTests: 3.248s
+  SixLayerFrameworkTests.PlatformPhotoPickerGlobalAccessTests: 3.248s
+  SixLayerFrameworkTests.IntelligentCardExpansionLayer3Tests: 3.246s
+  SixLayerFrameworkTests.PlatformMessagingLayer5ComponentAccessibilityTests: 3.246s
+  SixLayerFrameworkTests.PlatformSplitViewLayer4Tests: 3.234s
+  SixLayerFrameworkTests.CrossPlatformColorTests: 3.233s
+  SixLayerFrameworkTests.PlatformSplitViewAdvancedLayer4Tests: 3.233s
+  SixLayerFrameworkTests.InternationalizationServiceTests: 3.222s
+  SixLayerFrameworkTests.TestingFailureDemonstrationTests: 3.222s
+  SixLayerFrameworkTests.iOSWindowDetectionTests: 3.221s
+  SixLayerFrameworkTests.CardActionButtonTests: 3.219s
+  SixLayerFrameworkTests.PlatformSimulationTests: 3.219s
+  SixLayerFrameworkTests.PlatformImageFixVerificationTests: 3.215s
+  SixLayerFrameworkTests.NativeTypesTests: 3.215s
+  SixLayerFrameworkTests.VisionSafetyComponentAccessibilityTests: 3.210s
+  SixLayerFrameworkTests.HIGComplianceMotionTests: 3.207s
+  SixLayerFrameworkTests.SixLayerFrameworkTests: 3.206s
+  SixLayerFrameworkTests.Layer5PlatformComponentTDDTests: 3.205s
+  SixLayerFrameworkTests.SingleInstanceLayer1Tests: 3.203s
+  SixLayerFrameworkTests.TabularDataAPITest: 3.203s
+  SixLayerFrameworkTests.Layer3ComponentAccessibilityTests: 3.202s
+  SixLayerFrameworkTests.Layer4ComponentAccessibilityTests: 3.201s
+  SixLayerFrameworkTests.ViewDefinitionTests: 3.200s
+  SixLayerFrameworkTests.PlatformOCRSemanticLayer1AccessibilityTests: 3.198s
+  SixLayerFrameworkTests.UtilityComponentAccessibilityTests: 3.198s
+  SixLayerFrameworkTests.Layer6PlatformOptimizationTests: 3.198s
+  SixLayerFrameworkTests.Layer2LayoutDecisionTests: 3.197s
+  SixLayerFrameworkTests.SwitchControlManagerAccessibilityTests: 3.197s
+  SixLayerFrameworkTests.IntelligentDetailViewSheetTests: 3.193s
+  SixLayerFrameworkTests.SafetyComponentAccessibilityTests: 3.185s
+  SixLayerFrameworkTests.VisionSafetyTests: 3.182s
+  SixLayerFrameworkTests.ViewGenerationIntegrationTests: 3.176s
+  SixLayerFrameworkTests.IntelligentDetailViewTests: 3.159s
+  SixLayerFrameworkTests.RuntimeCapabilityDetectionComponentAccessibilityTests: 3.152s
+  SixLayerFrameworkTests.ComprehensiveCapabilityTestRunner: 3.130s
+  SixLayerFrameworkTests.PlatformSplitViewSizingLayer4Tests: 3.098s
+
+💾 Results saved to /Users/schatt/code/github/6layer/slow_test_suites.json

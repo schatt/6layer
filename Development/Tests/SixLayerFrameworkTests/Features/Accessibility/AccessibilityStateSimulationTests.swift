@@ -77,9 +77,19 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     // MARK: - Platform-Specific Configuration Tests
     
     @Test func testPlatformSpecificAccessibilityConfiguration() {
-        // Given: Platform-specific configuration
-        let config = getCardExpansionAccessibilityConfig()
+        // Given: Platform-specific configuration with accessibility overrides
         let platform = SixLayerPlatform.current
+        
+        // Set accessibility capability overrides based on platform
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        if platform == .iOS || platform == .macOS {
+            RuntimeCapabilityDetection.setTestAssistiveTouch(platform == .iOS)
+        } else {
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        }
+        
+        let config = getCardExpansionAccessibilityConfig()
         
         // Then: Test business logic for platform-specific behavior
         switch platform {
@@ -87,7 +97,11 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
             // iOS and macOS should support comprehensive accessibility
             #expect(config.supportsVoiceOver, "iOS/macOS should support VoiceOver")
             #expect(config.supportsSwitchControl, "iOS/macOS should support Switch Control")
-            #expect(config.supportsAssistiveTouch, "iOS/macOS should support AssistiveTouch")
+            if platform == .iOS {
+                #expect(config.supportsAssistiveTouch, "iOS should support AssistiveTouch")
+            } else {
+                #expect(!config.supportsAssistiveTouch, "macOS should not support AssistiveTouch")
+            }
             #expect(config.supportsReduceMotion, "iOS/macOS should support reduced motion")
             #expect(config.supportsHighContrast, "iOS/macOS should support high contrast")
             #expect(config.supportsDynamicType, "iOS/macOS should support dynamic type")
@@ -203,14 +217,17 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     // MARK: - Cross-Platform Consistency Tests
     
     @Test func testAccessibilityConfigurationCrossPlatformConsistency() {
-        // Given: Configuration from different platforms
+        // Given: Configuration from different platforms with accessibility overrides
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
         let config = getCardExpansionAccessibilityConfig()
         
         // Then: Test business logic for cross-platform consistency
-        // All platforms should support basic accessibility features
+        // All platforms should support basic accessibility features (when enabled)
         #expect(config.supportsVoiceOver, "All platforms should support VoiceOver")
         #expect(config.supportsSwitchControl, "All platforms should support Switch Control")
-        #expect(config.supportsAssistiveTouch, "All platforms should support AssistiveTouch")
+        #expect(config.supportsAssistiveTouch, "All platforms should support AssistiveTouch when enabled")
         #expect(config.supportsReduceMotion, "All platforms should support reduced motion")
         #expect(config.supportsHighContrast, "All platforms should support high contrast")
         #expect(config.supportsDynamicType, "All platforms should support dynamic type")

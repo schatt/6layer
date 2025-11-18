@@ -558,8 +558,8 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
     // This allows tests to use runWithTaskLocalConfig() for automatic isolation
     let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     
-    // Set up platform mocking as required by mandatory testing guidelines
-    TestSetupUtilities.shared.simulatePlatform(platform)
+    // Set up capability overrides to match platform
+    setCapabilitiesForPlatform(platform)
     
     // ENHANCED: Search for all identifiers in the hierarchy and find one that matches the pattern
     let allIdentifiers = findAllAccessibilityIdentifiers(from: view, config: config)
@@ -615,8 +615,8 @@ public func hasAccessibilityIdentifierExact<T: View>(
     // Automatically use task-local config if available (set by BaseTestClass), otherwise fall back to shared
     let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
     
-    // Set up platform mocking as required by mandatory testing guidelines
-    TestSetupUtilities.shared.simulatePlatform(platform)
+    // Set up capability overrides to match platform
+    setCapabilitiesForPlatform(platform)
     
     // Get the actual accessibility identifier directly from the SwiftUI view
     guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config) else {        return false

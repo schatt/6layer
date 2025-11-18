@@ -306,42 +306,33 @@ public struct CardExpansionAccessibilityConfig {
 /// Get accessibility configuration for current platform
 @MainActor
 public func getCardExpansionAccessibilityConfig() -> CardExpansionAccessibilityConfig {
-    // Use RuntimeCapabilityDetection.currentPlatform to respect test platform settings
+    // Use RuntimeCapabilityDetection to respect capability overrides and runtime detection
     let platform = RuntimeCapabilityDetection.currentPlatform
     
+    // Use runtime detection for accessibility features (respects capability overrides)
+    let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
+    let supportsSwitchControl = RuntimeCapabilityDetection.supportsSwitchControl
+    let supportsAssistiveTouch = RuntimeCapabilityDetection.supportsAssistiveTouch
+    
+    // Platform-specific announcement delays
+    let announcementDelay: TimeInterval
     switch platform {
-    case .iOS, .macOS:
-        return CardExpansionAccessibilityConfig(
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: true,
-            supportsReduceMotion: true,
-            supportsHighContrast: true,
-            supportsDynamicType: true,
-            announcementDelay: 0.5,
-            focusManagement: true
-        )
     case .visionOS:
-        return CardExpansionAccessibilityConfig(
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            supportsReduceMotion: true,
-            supportsHighContrast: true,
-            supportsDynamicType: true,
-            announcementDelay: 0.7, // Longer delay for spatial interface
-            focusManagement: true
-        )
+        announcementDelay = 0.7 // Longer delay for spatial interface
     case .watchOS, .tvOS:
-        return CardExpansionAccessibilityConfig(
-            supportsVoiceOver: true,
-            supportsSwitchControl: true,
-            supportsAssistiveTouch: false,
-            supportsReduceMotion: true,
-            supportsHighContrast: true,
-            supportsDynamicType: true,
-            announcementDelay: 0.3, // Shorter delay for constrained interfaces
-            focusManagement: true
-        )
+        announcementDelay = 0.3 // Shorter delay for constrained interfaces
+    default:
+        announcementDelay = 0.5
     }
+    
+    return CardExpansionAccessibilityConfig(
+        supportsVoiceOver: supportsVoiceOver,
+        supportsSwitchControl: supportsSwitchControl,
+        supportsAssistiveTouch: supportsAssistiveTouch,
+        supportsReduceMotion: true,
+        supportsHighContrast: true,
+        supportsDynamicType: true,
+        announcementDelay: announcementDelay,
+        focusManagement: true
+    )
 }

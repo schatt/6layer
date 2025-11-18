@@ -44,31 +44,31 @@ public class TestSetupUtilities {
     /// Sets up capabilities to match iOS-like platform (touch and haptic support)
     /// Note: Tests should run on actual iOS simulators for iOS-specific behavior
     public func simulateiOSCapabilities() {
-        overrideCapabilities(touch: true, haptic: true, hover: false)
+        overrideCapabilities(touch: true, haptic: true, hover: false, voiceOver: true, switchControl: true, assistiveTouch: true)
     }
     
     /// Sets up capabilities to match macOS-like platform (hover support, no touch/haptic)
     /// Note: Tests should run on actual macOS for macOS-specific behavior
     public func simulateMacOSCapabilities() {
-        overrideCapabilities(touch: false, haptic: false, hover: true)
+        overrideCapabilities(touch: false, haptic: false, hover: true, voiceOver: true, switchControl: true, assistiveTouch: false)
     }
     
     /// Sets up capabilities to match watchOS-like platform (touch and haptic support)
     /// Note: Tests should run on actual watchOS simulators for watchOS-specific behavior
     public func simulateWatchOSCapabilities() {
-        overrideCapabilities(touch: true, haptic: true, hover: false)
+        overrideCapabilities(touch: true, haptic: true, hover: false, voiceOver: true, switchControl: true, assistiveTouch: true)
     }
     
     /// Sets up capabilities to match tvOS-like platform (accessibility only, no touch/hover/haptic)
     /// Note: Tests should run on actual tvOS simulators for tvOS-specific behavior
     public func simulateTVOSCapabilities() {
-        overrideCapabilities(touch: false, haptic: false, hover: false, voiceOver: true, switchControl: true)
+        overrideCapabilities(touch: false, haptic: false, hover: false, voiceOver: true, switchControl: true, assistiveTouch: false)
     }
     
     /// Sets up capabilities to match visionOS-like platform (hover support)
     /// Note: Tests should run on actual visionOS simulators for visionOS-specific behavior
     public func simulateVisionOSCapabilities() {
-        overrideCapabilities(touch: false, haptic: false, hover: true, voiceOver: true, switchControl: true)
+        overrideCapabilities(touch: false, haptic: false, hover: true, voiceOver: true, switchControl: true, assistiveTouch: false)
     }
     
     // MARK: - Capability Override

@@ -181,17 +181,27 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     
     /// Tests accessibility features using RuntimeCapabilityDetection
     @Test func testAccessibilityFeatures_UsingRuntimeDetection() {
-        // Test accessibility features using RuntimeCapabilityDetection platform setting
+        // Test accessibility features using capability overrides
         
         // Test tvOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch not)
-        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestTouchSupport(false)
+        RuntimeCapabilityDetection.setTestHapticFeedback(false)
+        RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "tvOS should support VoiceOver")
         #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
         
         // Test iOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch supported)
-        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestTouchSupport(true)
+        RuntimeCapabilityDetection.setTestHapticFeedback(true)
+        RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "iOS should support VoiceOver")
-        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS testing default should be true for AssistiveTouch")
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS should support AssistiveTouch")
         
         // Clean up
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
@@ -227,7 +237,12 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     /// Tests that the framework works correctly when all accessibility features are disabled
     @Test func testAllAccessibilityFeaturesDisabled() {
         // Given: No accessibility features enabled (simulated using tvOS)
-        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestTouchSupport(false)
+        RuntimeCapabilityDetection.setTestHapticFeedback(false)
+        RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
         
         // When: Check accessibility state
         let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
@@ -247,7 +262,12 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     /// Tests that the framework works correctly when all accessibility features are enabled
     @Test func testAllAccessibilityFeaturesEnabled() {
         // Given: All accessibility features enabled (simulated using iOS)
-        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestTouchSupport(true)
+        RuntimeCapabilityDetection.setTestHapticFeedback(true)
+        RuntimeCapabilityDetection.setTestHover(false)
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
         
         // When: Check accessibility state
         let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
@@ -289,8 +309,10 @@ open class AccessibilityPreferenceTests: BaseTestClass {
             #expect(config.supportsSwitchControl != nil, "Switch Control should be detectable on \(platform)")
             
             // Verify platform-correct minTouchTarget value
-            let expectedMinTouchTarget: CGFloat = (platform == .iOS || platform == .watchOS) ? 44.0 : 0.0
-            #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for \(platform)")
+            // Note: minTouchTarget is based on compile-time platform, not capability overrides
+            let currentPlatform = SixLayerPlatform.current
+            let expectedMinTouchTarget: CGFloat = (currentPlatform == .iOS || currentPlatform == .watchOS) ? 44.0 : 0.0
+            #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-correct (\(expectedMinTouchTarget)) for current platform \(currentPlatform)")
         }
     }
 }

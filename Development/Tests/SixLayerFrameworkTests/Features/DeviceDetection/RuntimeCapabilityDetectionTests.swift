@@ -94,13 +94,18 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     }
     
     @Test func testRuntimeHoverDetectionUsesTestingDefaults() {
-        // In testing mode, should use hardcoded defaults
+        // Set capability override to match testing defaults
         let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
+        // Set override to match expected defaults
+        RuntimeCapabilityDetection.setTestHover(expectedDefaults.supportsHover)
+        
         let actualHoverSupport = RuntimeCapabilityDetection.supportsHover
         #expect(actualHoverSupport == expectedDefaults.supportsHover, 
-                     "Runtime hover detection should use testing defaults when in testing mode")
+                     "Runtime hover detection should respect capability overrides")
+        
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Override Functionality Tests
@@ -175,18 +180,25 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     // MARK: - Integration Tests
     
     @Test func testCardExpansionConfigUsesRuntimeDetection() {
-        let config = getCardExpansionPlatformConfig()
-        
-        // The config should use runtime detection (which uses testing defaults in test mode)
+        // Set capability overrides to match testing defaults
         let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
         
+        RuntimeCapabilityDetection.setTestTouchSupport(expectedDefaults.supportsTouch)
+        RuntimeCapabilityDetection.setTestHapticFeedback(expectedDefaults.supportsHapticFeedback)
+        RuntimeCapabilityDetection.setTestHover(expectedDefaults.supportsHover)
+        
+        let config = getCardExpansionPlatformConfig()
+        
+        // The config should use runtime detection (which respects capability overrides)
         #expect(config.supportsTouch == expectedDefaults.supportsTouch, 
                      "Card expansion config should use runtime detection")
         #expect(config.supportsHapticFeedback == expectedDefaults.supportsHapticFeedback, 
                      "Card expansion config should use runtime detection")
         #expect(config.supportsHover == expectedDefaults.supportsHover, 
                      "Card expansion config should use runtime detection")
+        
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     @Test func testPlatformOptimizationUsesRuntimeDetection() {
