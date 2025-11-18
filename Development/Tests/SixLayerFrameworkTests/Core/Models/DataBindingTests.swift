@@ -48,7 +48,7 @@ open class DataBindingTests: BaseTestClass {
     @Test func testDataBinderInitialization() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             let testModel = TestModel(name: "John", age: 30, isActive: true)
             let binder = DataBinder(testModel)
@@ -83,7 +83,7 @@ open class DataBindingTests: BaseTestClass {
     @Test func testDataBinderUpdateField() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             let testModel = TestModel(name: "John", age: 30, isActive: true)
             let binder = DataBinder(testModel)

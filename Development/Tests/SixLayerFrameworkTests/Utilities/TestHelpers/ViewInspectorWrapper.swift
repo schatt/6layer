@@ -18,19 +18,17 @@
 //  - Test files use the wrapper APIs, not ViewInspector directly
 //
 //  MIGRATION PATH:
-//  When ViewInspector works on macOS:
-//  1. Change viewInspectorMacFixed = true
-//  2. All test files will automatically work without changes
+//  ✅ RESOLVED: ViewInspector now works on macOS via github.com/schatt/ViewInspector
+//  macOS support is enabled via VIEW_INSPECTOR_MAC_FIXED flag in Package.swift
 
 import SwiftUI
 @testable import SixLayerFramework
 
 /// Flag to control ViewInspector availability on macOS
-/// When ViewInspector fixes GitHub issue #405, uncomment .define("VIEW_INSPECTOR_MAC_FIXED") in Package.swift
-/// All conditional logic in this file is controlled by this compile-time flag
+/// ✅ RESOLVED: ViewInspector macOS support is now available via github.com/schatt/ViewInspector
 /// The flag is defined in Package.swift as a swiftSettings define
 /// When flag is defined, VIEW_INSPECTOR_MAC_FIXED is true
-/// When flag is not defined, VIEW_INSPECTOR_MAC_FIXED is false (current state)
+/// macOS support is now permanently enabled
 #if VIEW_INSPECTOR_MAC_FIXED
 let viewInspectorMacFixed = true
 #else
@@ -401,3 +399,4 @@ public func withInspectedViewThrowing<V: View, R>(
     let inspected = try view.inspectView()
     return try perform(inspected)
 }
+

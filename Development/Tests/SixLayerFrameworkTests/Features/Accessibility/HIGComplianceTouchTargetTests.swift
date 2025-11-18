@@ -45,7 +45,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
             
             for platform in platforms {
                 // Set test platform to get correct runtime detection values
-                RuntimeCapabilityDetection.setTestPlatform(platform)
+                setCapabilitiesForPlatform(platform)
                 
                 // Get the expected minimum touch target from runtime detection
                 let expectedMinTouchTarget = RuntimeCapabilityDetection.minTouchTarget
@@ -71,7 +71,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
                 #endif
                 
                 // Clean up
-                RuntimeCapabilityDetection.setTestPlatform(nil)
+                RuntimeCapabilityDetection.clearAllCapabilityOverrides()
             }
         }
     }
@@ -89,7 +89,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
             let touchPlatforms: [SixLayerPlatform] = [.iOS, .watchOS]
             
             for platform in touchPlatforms {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
+                setCapabilitiesForPlatform(platform)
                 let expectedMinTouchTarget = RuntimeCapabilityDetection.minTouchTarget
                 
                 // RED PHASE: This will fail until touch target sizing is implemented
@@ -106,7 +106,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
                 // The modifier IS present in the code, but ViewInspector can't detect it on macOS
                 #endif
                 
-                RuntimeCapabilityDetection.setTestPlatform(nil)
+                RuntimeCapabilityDetection.clearAllCapabilityOverrides()
             }
         }
     }
@@ -125,7 +125,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
             let touchPlatforms: [SixLayerPlatform] = [.iOS, .watchOS]
             
             for platform in touchPlatforms {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
+                setCapabilitiesForPlatform(platform)
                 let expectedMinTouchTarget = RuntimeCapabilityDetection.minTouchTarget
                 
                 // RED PHASE: This will fail until touch target sizing is implemented
@@ -142,7 +142,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
                 // The modifier IS present in the code, but ViewInspector can't detect it on macOS
                 #endif
                 
-                RuntimeCapabilityDetection.setTestPlatform(nil)
+                RuntimeCapabilityDetection.clearAllCapabilityOverrides()
             }
         }
     }
@@ -160,7 +160,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
             let nonTouchPlatforms: [SixLayerPlatform] = [.macOS, .tvOS, .visionOS]
             
             for platform in nonTouchPlatforms {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
+                setCapabilitiesForPlatform(platform)
                 let expectedMinTouchTarget = RuntimeCapabilityDetection.minTouchTarget
                 
                 // Verify runtime detection says no touch target required
@@ -181,7 +181,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
                 // The modifier IS present in the code, but ViewInspector can't detect it on macOS
                 #endif
                 
-                RuntimeCapabilityDetection.setTestPlatform(nil)
+                RuntimeCapabilityDetection.clearAllCapabilityOverrides()
             }
         }
     }

@@ -10,15 +10,15 @@ struct DefensiveTestImplementation {
         capabilityType: CapabilityType,
         accessibilityType: AccessibilityType
     ) async {
-        // Set platform based on capability type using RuntimeCapabilityDetection
-        DefensiveTestPatterns.setPlatformForCapabilityType(capabilityType)
+        // Set capabilities based on capability type using RuntimeCapabilityDetection
+        DefensiveTestPatterns.setCapabilitiesForType(capabilityType)
         
         await performTest(
             testName: "SimpleCard \(capabilityType.rawValue) + \(accessibilityType.rawValue)"
         )
         
         // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     /// Common test logic extracted to avoid duplication

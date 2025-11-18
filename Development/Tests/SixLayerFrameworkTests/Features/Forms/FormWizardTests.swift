@@ -47,7 +47,7 @@ open class FormWizardTests: BaseTestClass {
     @Test func testFormWizardStepCreation() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             let step = FormWizardStep(
                 id: "personal",

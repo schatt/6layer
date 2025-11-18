@@ -37,13 +37,13 @@ struct DefensiveValidation {
         return validateCapabilityName(name).map { validatedName in
             switch validatedName {
             case "Touch Only":
-                RuntimeCapabilityDetection.setTestPlatform(.iOS)
+                RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
             case "Hover Only":
-                RuntimeCapabilityDetection.setTestPlatform(.macOS)
+                RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
             case "All Capabilities":
-                RuntimeCapabilityDetection.setTestPlatform(.iOS)
+                RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
             case "No Capabilities":
-                RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+                RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
             default:
                 // Should never happen due to validation; no-op defensively
                 print("Warning: Unhandled validated capability name: \(validatedName)")
@@ -56,9 +56,9 @@ struct DefensiveValidation {
         return validateAccessibilityName(name).map { validatedName in
             switch validatedName {
             case "No Accessibility":
-                RuntimeCapabilityDetection.setTestPlatform(.tvOS) // Minimal accessibility
+                RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false) // Minimal accessibility
             case "All Accessibility":
-                RuntimeCapabilityDetection.setTestPlatform(.iOS) // Full accessibility
+                RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false) // Full accessibility
             default:
                 // Should never happen due to validation; no-op defensively
                 print("Warning: Unhandled validated accessibility name: \(validatedName)")

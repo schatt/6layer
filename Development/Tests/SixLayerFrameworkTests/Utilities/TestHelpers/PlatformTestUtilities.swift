@@ -215,7 +215,7 @@ final class PlatformTestUtilities {
     /// Test the behavioral implications of non-touch platform capabilities
     @Test @MainActor static func testNonTouchPlatformBehavior() {
         // Set test platform to tvOS (non-touch platform)
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         
         // Test actual platform detection
         let platform = SixLayerPlatform.currentPlatform
@@ -247,13 +247,13 @@ final class PlatformTestUtilities {
                       "\(platformName) should have zero touch target requirement")
         
         // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     /// Test the behavioral implications of hover platform capabilities
     @Test @MainActor static func testHoverPlatformBehavior() {
         // Set test platform to macOS (hover platform)
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         
         // Test actual platform detection
         let platform = SixLayerPlatform.currentPlatform
@@ -281,7 +281,7 @@ final class PlatformTestUtilities {
         // No mutual exclusivity check needed
         
         // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     /// Test the behavioral implications of non-hover platform capabilities
@@ -348,7 +348,7 @@ final class PlatformTestUtilities {
     /// Test the behavioral implications of Vision framework unavailability
     @Test @MainActor static func testVisionUnavailableBehavior() {
         // Set test platform to watchOS (which doesn't support Vision framework)
-        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         
         // Test actual Vision/OCR detection
         let visionAvailable = RuntimeCapabilityDetection.supportsVision
@@ -364,7 +364,7 @@ final class PlatformTestUtilities {
                       "\(platformName) should not have OCR available")
         
         // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Platform Configuration Helpers
@@ -374,7 +374,7 @@ final class PlatformTestUtilities {
     @MainActor
     static func getPlatformConfig(for platform: SixLayerPlatform) -> PlatformCapabilitiesTestSnapshot {
         // Set the test platform so RuntimeCapabilityDetection returns capabilities for the requested platform
-        RuntimeCapabilityDetection.setTestPlatform(platform)
+        setCapabilitiesForPlatform(platform)
         return buildPlatformCapabilitiesSnapshot()
     }
     

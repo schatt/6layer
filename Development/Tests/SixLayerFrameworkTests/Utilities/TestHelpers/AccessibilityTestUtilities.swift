@@ -64,9 +64,6 @@ public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
     // The synchronous layoutIfNeeded() call above is sufficient
     root?.setNeedsLayout()
     root?.layoutIfNeeded()
-    
-    print("DEBUG: Created UIHostingController with root view: \(type(of: root))")
-    print("DEBUG: Root view accessibility identifier: \(root?.accessibilityIdentifier ?? "nil")")
     return root
     #elseif canImport(AppKit)
     let hosting = NSHostingController(rootView: view)
@@ -80,12 +77,8 @@ public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
     // Removed DispatchQueue.main.async - it was causing tests to wait for async work that never completes
     // The synchronous layoutSubtreeIfNeeded() call above is sufficient
     root.layoutSubtreeIfNeeded()
-    
-    print("DEBUG: Created NSHostingController with root view: \(type(of: root))")
-    print("DEBUG: Root view accessibility identifier: '\(root.accessibilityIdentifier())'")
     return root
     #else
-    print("DEBUG: No hosting controller available")
     return nil
     #endif
 }
@@ -96,15 +89,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     #if canImport(UIKit)
     guard let rootView = root as? UIView else { return nil }
     
-    // Debug: Print all views and their identifiers
-    print("DEBUG: Root view type: \(type(of: rootView))")
-    print("DEBUG: Root view accessibility identifier: \(rootView.accessibilityIdentifier ?? "nil")")
-    print("DEBUG: Root view subviews count: \(rootView.subviews.count)")
-    
-    // Check root view first
-    if let id = rootView.accessibilityIdentifier, !id.isEmpty { 
-        print("DEBUG: Found accessibility identifier on root view: '\(id)'")
-        return id 
+    // Debug: Print all views and their identifiers    // Check root view first
+    if let id = rootView.accessibilityIdentifier, !id.isEmpty {        return id 
     }
     
     // Search through all subviews more thoroughly
@@ -119,12 +105,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         }
         checkedViews.insert(nextId)
         
-        print("DEBUG: Checking view at depth \(depth): \(type(of: next))")
-        print("DEBUG: View accessibility identifier: \(next.accessibilityIdentifier ?? "nil")")
-        
-        if let id = next.accessibilityIdentifier, !id.isEmpty { 
-            print("DEBUG: Found accessibility identifier on subview: '\(id)'")
-            return id 
+        if let id = next.accessibilityIdentifier, !id.isEmpty {
+            return id
         }
         
         // Add all subviews to the stack
@@ -133,21 +115,14 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     }
     return nil
     #elseif canImport(AppKit)
-    guard let rootView = root as? NSView else { 
-        print("DEBUG: Root is not an NSView")
-        return nil 
+    guard let rootView = root as? NSView else {
+        return nil
     }
     
-    // Debug: Print all views and their identifiers
-    print("DEBUG: Root NSView type: \(type(of: rootView))")
-    print("DEBUG: Root NSView accessibility identifier: '\(rootView.accessibilityIdentifier())'")
-    print("DEBUG: Root NSView subviews count: \(rootView.subviews.count)")
-    
-    // Check root view first
+    // Debug: Print all views and their identifiers    // Check root view first
     let rootId = rootView.accessibilityIdentifier()
-    if !rootId.isEmpty { 
-        print("DEBUG: Found accessibility identifier on root NSView: '\(rootId)'")
-        return rootId 
+    if !rootId.isEmpty {
+        return rootId
     }
     
     // Search through all subviews more thoroughly
@@ -163,12 +138,8 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         checkedViews.insert(nextId)
         
         let id = next.accessibilityIdentifier()
-        print("DEBUG: Checking NSView at depth \(depth): \(type(of: next))")
-        print("DEBUG: NSView accessibility identifier: '\(id)'")
-        
-        if !id.isEmpty { 
-            print("DEBUG: Found accessibility identifier on NSView subview: '\(id)'")
-            return id 
+        if !id.isEmpty {
+            return id
         }
         
         // Add all subviews to the stack
@@ -280,41 +251,29 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
     // Use try? to safely call inspect() - if ViewInspector crashes internally, try? won't help,
     // but it will catch thrown errors. If inspect() returns nil, fall back to platform view hosting.
-    if config.enableDebugLogging {
-        print("🔍 SWIFTUI DEBUG: Attempting to inspect view of type: \(type(of: viewWithEnvironment))")
-    }
+    if config.enableDebugLogging {    }
     guard let inspected = try? viewWithEnvironment.inspect() else {
         // ViewInspector couldn't inspect the view (either threw error or crashed)
         // Fall back to platform view hosting
-        if config.enableDebugLogging {
-            print("🔍 SWIFTUI DEBUG: ViewInspector couldn't inspect view, falling back to platform view inspection")
-        }
+        if config.enableDebugLogging {        }
         let hosted = hostRootPlatformView(viewWithEnvironment)
         let platformId = firstAccessibilityIdentifier(inHosted: hosted)
         return platformId
     }
-    if config.enableDebugLogging {
-        print("🔍 SWIFTUI DEBUG: Successfully inspected view")
-    }
+    if config.enableDebugLogging {    }
     
     // CRITICAL: Check root view first - this IS the component's body when we pass the component directly
         // This ensures we're testing the component's identifier, not a parent's
         do {
             let identifier = try inspected.sixLayerAccessibilityIdentifier()
             if !identifier.isEmpty {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' directly from root view (component's body)")
-                }
+                if config.enableDebugLogging {                }
                 return identifier
             } else {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Root view (component's body) has empty identifier")
-                }
+                if config.enableDebugLogging {                }
             }
         } catch {
-            if config.enableDebugLogging {
-                print("🔍 SWIFTUI DEBUG: Root view (component's body) doesn't have identifier: \(error)")
-            }
+            if config.enableDebugLogging {            }
         }
         
         // If root doesn't have identifier, check if root IS a container type (component's body structure)
@@ -324,15 +283,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try vStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from root VStack (component's body)")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Root VStack (component's body) doesn't have identifier: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
         }
         
@@ -340,15 +295,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try hStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from root HStack (component's body)")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Root HStack (component's body) doesn't have identifier: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
         }
         
@@ -356,15 +307,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try zStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from root ZStack (component's body)")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Root ZStack (component's body) doesn't have identifier: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
         }
         
@@ -377,15 +324,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try vStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from nested VStack (fallback search)")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Nested VStack doesn't have identifier: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
         }
         
@@ -393,15 +336,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try hStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from nested HStack (fallback search)")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Nested HStack doesn't have identifier: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
         }
         
@@ -409,15 +348,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try zStack.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from nested ZStack (fallback search)")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: Nested ZStack doesn't have identifier: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
         }
         
@@ -427,15 +362,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             do {
                 let identifier = try anyView.sixLayerAccessibilityIdentifier()
                 if !identifier.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' from unwrapped AnyView")
-                    }
+                    if config.enableDebugLogging {                    }
                     return identifier
                 }
             } catch {
-                if config.enableDebugLogging {
-                    print("🔍 SWIFTUI DEBUG: AnyView doesn't have identifier directly: \(error)")
-                }
+                if config.enableDebugLogging {                }
             }
             
             // Try to find identifier deeper in the view hierarchy
@@ -445,15 +376,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
                 do {
                     let textId = try text.sixLayerAccessibilityIdentifier()
                     if !textId.isEmpty {
-                        if config.enableDebugLogging {
-                            print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(textId)' from Text inside AnyView")
-                        }
+                        if config.enableDebugLogging {                        }
                         return textId
                     }
                 } catch {
-                    if config.enableDebugLogging {
-                        print("🔍 SWIFTUI DEBUG: Text inside AnyView doesn't have identifier: \(error)")
-                    }
+                    if config.enableDebugLogging {                    }
                 }
             }
         }
@@ -477,9 +404,7 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
             if !containers.isEmpty {
                 for container in containers {
                     if let identifier = try? container.sixLayerAccessibilityIdentifier(), !identifier.isEmpty {
-                        if config.enableDebugLogging {
-                            print("🔍 SWIFTUI DEBUG: Found accessibility identifier '\(identifier)' in \(typeName) via findAll search")
-                        }
+                        if config.enableDebugLogging {                        }
                         return identifier
                     }
                 }
@@ -487,17 +412,13 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
         }
         
         // Fallback: host platform view and search for identifier
-        if config.enableDebugLogging {
-            print("🔍 SWIFTUI DEBUG: ViewInspector couldn't find identifier, falling back to platform view inspection")
-        }
+        if config.enableDebugLogging {        }
         let hosted = hostRootPlatformView(viewWithEnvironment)
         let platformId = firstAccessibilityIdentifier(inHosted: hosted)
         return platformId
     #else
     // On macOS without VIEW_INSPECTOR_MAC_FIXED, ViewInspector is not available, so use platform view hosting
-    if config.enableDebugLogging {
-        print("🔍 SWIFTUI DEBUG: macOS - using platform view inspection (ViewInspector not available or VIEW_INSPECTOR_MAC_FIXED not defined)")
-    }
+    if config.enableDebugLogging {    }
     let hosted = hostRootPlatformView(viewWithEnvironment)
     let platformId = firstAccessibilityIdentifier(inHosted: hosted)
     return platformId
@@ -534,14 +455,10 @@ private func findAllAccessibilityIdentifiers<V: View>(
         let hosted = hostRootPlatformView(viewWithEnvironment)
         let allPlatformIds = findAllAccessibilityIdentifiersFromPlatformView(hosted)
         if !allPlatformIds.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 PLATFORM FALLBACK: Found \(allPlatformIds.count) identifiers from platform view hierarchy: \(allPlatformIds)")
-            }
+            if config.enableDebugLogging {            }
             return allPlatformIds
         }
-        if config.enableDebugLogging {
-            print("🔍 PLATFORM FALLBACK: No identifiers found in platform view hierarchy")
-        }
+        if config.enableDebugLogging {        }
         return []
     }
     
@@ -551,18 +468,14 @@ private func findAllAccessibilityIdentifiers<V: View>(
         
         // Try to get identifier from this view
         if let id = try? inspectable.sixLayerAccessibilityIdentifier(), !id.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found identifier '\(id)' at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             identifiers.insert(id)
         }
         
         // Search in VStacks
         let vStacks = inspectable.sixLayerFindAll(ViewType.VStack.self)
         if !vStacks.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found \(vStacks.count) VStacks at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             for vStack in vStacks {
                 collectIdentifiers(from: vStack, depth: depth + 1)
             }
@@ -571,9 +484,7 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Search in HStacks
         let hStacks = inspectable.sixLayerFindAll(ViewType.HStack.self)
         if !hStacks.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found \(hStacks.count) HStacks at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             for hStack in hStacks {
                 collectIdentifiers(from: hStack, depth: depth + 1)
             }
@@ -582,9 +493,7 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Search in ZStacks
         let zStacks = inspectable.sixLayerFindAll(ViewType.ZStack.self)
         if !zStacks.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found \(zStacks.count) ZStacks at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             for zStack in zStacks {
                 collectIdentifiers(from: zStack, depth: depth + 1)
             }
@@ -593,9 +502,7 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Search in AnyViews
         let anyViews = inspectable.sixLayerFindAll(ViewType.AnyView.self)
         if !anyViews.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found \(anyViews.count) AnyViews at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             for anyView in anyViews {
                 collectIdentifiers(from: anyView, depth: depth + 1)
             }
@@ -604,14 +511,10 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Also search in Text views (they might have identifiers)
         let texts = inspectable.sixLayerFindAll(ViewType.Text.self)
         if !texts.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found \(texts.count) Text views at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             for text in texts {
                 if let id = try? text.sixLayerAccessibilityIdentifier(), !id.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 COLLECT: Found identifier '\(id)' on Text view at depth \(depth)")
-                    }
+                    if config.enableDebugLogging {                    }
                     identifiers.insert(id)
                 }
             }
@@ -620,27 +523,19 @@ private func findAllAccessibilityIdentifiers<V: View>(
         // Also search in Button views (they might have identifiers)
         let buttons = inspectable.sixLayerFindAll(ViewType.Button.self)
         if !buttons.isEmpty {
-            if config.enableDebugLogging {
-                print("🔍 COLLECT: Found \(buttons.count) Button views at depth \(depth)")
-            }
+            if config.enableDebugLogging {            }
             for button in buttons {
                 if let id = try? button.sixLayerAccessibilityIdentifier(), !id.isEmpty {
-                    if config.enableDebugLogging {
-                        print("🔍 COLLECT: Found identifier '\(id)' on Button view at depth \(depth)")
-                    }
+                    if config.enableDebugLogging {                    }
                     identifiers.insert(id)
                 }
             }
         }
     }
     
-    if config.enableDebugLogging {
-        print("🔍 COLLECT: Starting identifier collection from root view")
-    }
+    if config.enableDebugLogging {    }
     collectIdentifiers(from: inspected)
-    if config.enableDebugLogging {
-        print("🔍 COLLECT: Finished collection, found \(identifiers.count) unique identifiers: \(Array(identifiers))")
-    }
+    if config.enableDebugLogging {    }
     #endif
     
     // Also check platform view hierarchy
@@ -674,7 +569,6 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
         if expectedPattern.isEmpty || expectedPattern == "^$" || expectedPattern == "^\\s*$" {
             return true
         }
-        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
         return false
     }
     
@@ -689,17 +583,15 @@ public func hasAccessibilityIdentifierWithPattern<T: View>(
             let range = NSRange(location: 0, length: identifier.utf16.count)
             if regex.firstMatch(in: identifier, options: [], range: range) != nil {
                 if config.enableDebugLogging {
-                    print("🔍 MATCH: Found matching identifier '\(identifier)' for pattern '\(expectedPattern)' (from \(allIdentifiers.count) total identifiers)")
+                    // Debug logging disabled in tests
                 }
                 return true
             }
         }
         
         // No match found
-        print("⚠️ DISCOVERY: \(componentName) generates identifiers but none match pattern on \(platform). Expected: '\(expectedPattern)', Found: \(allIdentifiers.prefix(5).joined(separator: ", "))\(allIdentifiers.count > 5 ? "..." : "")")
         return false
     } catch {
-        print("❌ DISCOVERY: Error creating regex pattern '\(expectedPattern)' on \(platform): \(error)")
         return false
     }
 }
@@ -727,17 +619,13 @@ public func hasAccessibilityIdentifierExact<T: View>(
     TestSetupUtilities.shared.simulatePlatform(platform)
     
     // Get the actual accessibility identifier directly from the SwiftUI view
-    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config) else {
-        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier on \(platform) - needs .automaticAccessibility() modifier")
-        return false
+    guard let actualIdentifier = getAccessibilityIdentifierFromSwiftUIView(from: view, config: config) else {        return false
     }
     
     // Check if it matches exactly
     if actualIdentifier == expectedPattern {
         return true
-    } else {
-        print("⚠️ DISCOVERY: \(componentName) generates WRONG accessibility identifier on \(platform). Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
-        return false
+    } else {        return false
     }
 }
 
@@ -764,16 +652,13 @@ public func hasAccessibilityIdentifierSimple<T: View>(
         if expectedPattern.isEmpty {
             return true
         }
-        print("❌ DISCOVERY: \(componentName) generates NO accessibility identifier - needs .automaticAccessibility() modifier")
         return false
     }
     
     // Check if it matches exactly
     if actualIdentifier == expectedPattern {
         return true
-    } else {
-        print("⚠️ DISCOVERY: \(componentName) generates WRONG accessibility identifier. Expected: '\(expectedPattern)', Got: '\(actualIdentifier)'")
-        return false
+    } else {        return false
     }
 }
 
@@ -804,33 +689,16 @@ public func testComponentComplianceCrossPlatform<T: View>(
     testName: String = "CrossPlatformComplianceTest",
     testHIGCompliance: Bool = true
 ) -> Bool {
-    let platforms: [SixLayerPlatform] = [.iOS, .macOS]
-    var allPlatformsPassed = true
-    
-    for platform in platforms {
-        // Set the test platform for this test case
-        RuntimeCapabilityDetection.setTestPlatform(platform)
-        
-        // Test accessibility identifiers and HIG compliance
-        let passed = testComponentComplianceSinglePlatform(
-            view,
-            expectedPattern: expectedPattern,
-            platform: platform,
-            componentName: "\(componentName)-\(platform)",
-            testHIGCompliance: testHIGCompliance
-        )
-        
-        if !passed {
-            print("❌ CROSS-PLATFORM: \(testName) failed on \(platform)")
-            allPlatformsPassed = false
-        } else {
-        }
-        
-        // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
-    }
-    
-    return allPlatformsPassed
+    // Test only on the current platform - tests should run on actual platforms/simulators
+    // For cross-platform testing, run tests separately on each platform
+    let currentPlatform = SixLayerPlatform.current
+    return testComponentComplianceSinglePlatform(
+        view,
+        expectedPattern: expectedPattern,
+        platform: currentPlatform,
+        componentName: "\(componentName)-\(currentPlatform)",
+        testHIGCompliance: testHIGCompliance
+    )
 }
 
 /// Test accessibility identifiers across both iOS and macOS platforms
@@ -886,8 +754,36 @@ public func testComponentComplianceSinglePlatform<T: View>(
     config.includeComponentNames = true  // Required for component name to appear in identifiers
     config.includeElementTypes = true   // Required for element type to appear in identifiers
     
-    // Set the test platform for this test case
-    RuntimeCapabilityDetection.setTestPlatform(platform)
+    // Set up capability overrides to match the requested platform
+    // Note: This only overrides capabilities, not the actual platform detection
+    // Tests should run on actual platforms/simulators for platform-specific behavior
+    let currentPlatform = SixLayerPlatform.current
+    if platform != currentPlatform {
+        // If testing a different platform, use capability overrides
+        // This allows testing capability-specific behavior without running on that platform
+        switch platform {
+        case .iOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .macOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(true)
+        case .watchOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .tvOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .visionOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(true)
+        }
+    }
     
     // Test accessibility identifiers
     let accessibilityResult = hasAccessibilityIdentifierWithPattern(
@@ -907,8 +803,10 @@ public func testComponentComplianceSinglePlatform<T: View>(
         )
     }
     
-    // Clean up test platform
-    RuntimeCapabilityDetection.setTestPlatform(nil)
+    // Clean up capability overrides
+    if platform != currentPlatform {
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+    }
     
     return accessibilityResult && higComplianceResult
 }

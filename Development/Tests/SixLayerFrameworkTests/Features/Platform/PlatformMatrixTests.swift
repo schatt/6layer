@@ -136,7 +136,7 @@ open class PlatformMatrixTests: BaseTestClass {
     @Test func testScreenSizeCapabilityMatrix() {
         // Test with each platform to verify platform-correct values
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionPlatformConfig()
             
             // Verify platform-correct minTouchTarget value
@@ -146,7 +146,7 @@ open class PlatformMatrixTests: BaseTestClass {
         }
         
         // Clean up
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Vision Framework Availability Matrix

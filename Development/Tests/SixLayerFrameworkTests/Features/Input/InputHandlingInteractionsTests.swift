@@ -52,7 +52,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         runWithTaskLocalConfig {
             // Test across all platforms
             for platform in SixLayerPlatform.allCases {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
+                setCapabilitiesForPlatform(platform)
                 
                 // Given
                 let testPlatform = platform

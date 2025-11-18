@@ -42,11 +42,11 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPresentModalForm_L1(
+        let view = platformPresentModalForm_L1(
             formType: .form,
             context: .modal
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -86,11 +86,11 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPresentModalForm_L1(
+        let view = platformPresentModalForm_L1(
             formType: .form,
             context: .modal
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,

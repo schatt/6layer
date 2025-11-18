@@ -59,7 +59,7 @@ open class AssistiveTouchTests: BaseTestClass {
 
         // Test platform-specific behavior
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = AssistiveTouchConfig(enableIntegration: true)
             let manager = AssistiveTouchManager(config: config)
 
@@ -120,7 +120,7 @@ open class AssistiveTouchTests: BaseTestClass {
 
         // Test platform-specific behavior
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let platformResult = manager.manageMenu(for: .toggle)
             #expect(platformResult.success, "Menu should work on \(platform)")
         }

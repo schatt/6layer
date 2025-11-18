@@ -1053,11 +1053,11 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
         // by ensuring different platforms generate different underlying view types
         
         // Simulate iOS platform (touch-enabled)
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let iOSConfig = getCardExpansionPlatformConfig()
         
         // Simulate macOS platform (hover-enabled)
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let macOSConfig = getCardExpansionPlatformConfig()
         
         // Generate views for different platforms
@@ -1104,6 +1104,6 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
         }
         
         // Clean up
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
 }

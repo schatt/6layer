@@ -77,11 +77,11 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         // When & Then
         // VERIFIED: Framework function has .automaticCompliance() modifier applied
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID =         let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: testImage,
             style: .thumbnail
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -105,12 +105,12 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: testPhoto,
             style: .thumbnail
         )
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -136,12 +136,12 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        let view = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: testPhoto,
             style: .thumbnail
         )
         // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformPhotoComponentsLayer4.swift:63.
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,

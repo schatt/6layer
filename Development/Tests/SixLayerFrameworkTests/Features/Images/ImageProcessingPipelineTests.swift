@@ -77,7 +77,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     @Test func testImageProcessingPipeline_ProcessForOCR() async throws {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             // Given
             let image = createTestImage()

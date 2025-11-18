@@ -45,7 +45,7 @@ struct ComprehensiveCapabilityTestRunner {
     /// Setup test environment before each test
     @MainActor
     func setupTestEnvironment() async {
-        RuntimeCapabilityDetection.setTestPlatform(SixLayerPlatform.current)
+        // Use real platform detection - no override needed
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
     }
@@ -53,7 +53,7 @@ struct ComprehensiveCapabilityTestRunner {
     /// Cleanup test environment after each test
     @MainActor
     func cleanupTestEnvironment() async {
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestVoiceOver(nil)
         RuntimeCapabilityDetection.setTestSwitchControl(nil)
     }
@@ -306,7 +306,7 @@ struct ComprehensiveCapabilityTestRunner {
     /// Test cross-platform consistency
     func testCrossPlatformConsistency(_ platform: SixLayerPlatform, capability: TestRunnerConfig.CapabilityType) {
         // Set test platform before getting config
-        RuntimeCapabilityDetection.setTestPlatform(platform)
+        setCapabilitiesForPlatform(platform)
         
         let platformConfig = createPlatformConfig(platform: platform)
         
@@ -376,7 +376,7 @@ struct ComprehensiveCapabilityTestRunner {
         print("     🔗 Testing view generation integration for \(platform)...")
         
         // Set test platform and accessibility capabilities before getting config
-        RuntimeCapabilityDetection.setTestPlatform(platform)
+        setCapabilitiesForPlatform(platform)
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
         

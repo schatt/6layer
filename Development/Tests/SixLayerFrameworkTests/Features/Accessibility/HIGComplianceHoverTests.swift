@@ -143,7 +143,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
             let hoverPlatforms: [SixLayerPlatform] = [.macOS, .visionOS]
             
             for platform in hoverPlatforms {
-                RuntimeCapabilityDetection.setTestPlatform(platform)
+                setCapabilitiesForPlatform(platform)
                 let supportsHover = RuntimeCapabilityDetection.supportsHover
                 
                 if supportsHover {
@@ -161,7 +161,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
                     #endif
                 }
                 
-                RuntimeCapabilityDetection.setTestPlatform(nil)
+                RuntimeCapabilityDetection.clearAllCapabilityOverrides()
             }
         }
     }

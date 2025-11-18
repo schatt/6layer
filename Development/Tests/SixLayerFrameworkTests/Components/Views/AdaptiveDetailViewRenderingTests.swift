@@ -18,7 +18,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
     
     @Test func testAdaptiveViewUsesDecisionFunction() async {
         // Given: Phone device type
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         
         let testData = TestDataModel(name: "Test", value: 42)
         let analysis = DataIntrospectionEngine.analyze(testData)
@@ -51,7 +51,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
     
     @Test func testPhoneRendersStandardView() async {
         // Given: Phone device (should render standard view)
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let deviceType = SixLayerPlatform.deviceType
         
         // Verify decision logic
@@ -102,7 +102,7 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
     
     @Test func testAdaptiveViewGeneratesAccessibilityIdentifiers() async {
         // Given: Adaptive view (ACTUAL framework code that users call)
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         
         let testData = TestDataModel(name: "Test", value: 42)
         let analysis = DataIntrospectionEngine.analyze(testData)

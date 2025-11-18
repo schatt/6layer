@@ -184,17 +184,17 @@ open class AccessibilityPreferenceTests: BaseTestClass {
         // Test accessibility features using RuntimeCapabilityDetection platform setting
         
         // Test tvOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch not)
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "tvOS should support VoiceOver")
         #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "tvOS should not support AssistiveTouch")
         
         // Test iOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch supported)
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "iOS should support VoiceOver")
         #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "iOS testing default should be true for AssistiveTouch")
         
         // Clean up
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     
@@ -227,7 +227,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     /// Tests that the framework works correctly when all accessibility features are disabled
     @Test func testAllAccessibilityFeaturesDisabled() {
         // Given: No accessibility features enabled (simulated using tvOS)
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         
         // When: Check accessibility state
         let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
@@ -241,13 +241,13 @@ open class AccessibilityPreferenceTests: BaseTestClass {
         #expect(supportsSwitchControl, "Switch Control should be enabled on tvOS")
         
         // Clean up
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     /// Tests that the framework works correctly when all accessibility features are enabled
     @Test func testAllAccessibilityFeaturesEnabled() {
         // Given: All accessibility features enabled (simulated using iOS)
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         
         // When: Check accessibility state
         let supportsVoiceOver = RuntimeCapabilityDetection.supportsVoiceOver
@@ -261,7 +261,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
         #expect(supportsSwitchControl, "Switch Control should be enabled on iOS")
         
         // Clean up
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Performance Tests
@@ -277,8 +277,8 @@ open class AccessibilityPreferenceTests: BaseTestClass {
         // When: Check accessibility features for each platform
         for platform in simulatedPlatforms {
             // Set the test platform before getting the config
-            RuntimeCapabilityDetection.setTestPlatform(platform)
-            defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            setCapabilitiesForPlatform(platform)
+            defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
             
             // Get platform capabilities using the framework's capability detection
             let config = getCardExpansionPlatformConfig()

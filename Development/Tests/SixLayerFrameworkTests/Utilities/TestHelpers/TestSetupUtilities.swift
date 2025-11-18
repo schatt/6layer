@@ -39,37 +39,36 @@ public class TestSetupUtilities {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
-    // MARK: - Platform Simulation
+    // MARK: - Platform Capability Simulation
     
-    /// Simulates a specific platform with its expected capabilities
-    /// - Parameter platform: The platform to simulate
-    public func simulatePlatform(_ platform: SixLayerPlatform) {
-        RuntimeCapabilityDetection.setTestPlatform(platform)
+    /// Sets up capabilities to match iOS-like platform (touch and haptic support)
+    /// Note: Tests should run on actual iOS simulators for iOS-specific behavior
+    public func simulateiOSCapabilities() {
+        overrideCapabilities(touch: true, haptic: true, hover: false)
     }
     
-    /// Simulates iOS platform with touch and haptic support
-    public func simulateiOS() {
-        simulatePlatform(.iOS)
+    /// Sets up capabilities to match macOS-like platform (hover support, no touch/haptic)
+    /// Note: Tests should run on actual macOS for macOS-specific behavior
+    public func simulateMacOSCapabilities() {
+        overrideCapabilities(touch: false, haptic: false, hover: true)
     }
     
-    /// Simulates macOS platform with hover support (no touch/haptic)
-    public func simulateMacOS() {
-        simulatePlatform(.macOS)
+    /// Sets up capabilities to match watchOS-like platform (touch and haptic support)
+    /// Note: Tests should run on actual watchOS simulators for watchOS-specific behavior
+    public func simulateWatchOSCapabilities() {
+        overrideCapabilities(touch: true, haptic: true, hover: false)
     }
     
-    /// Simulates watchOS platform with touch and haptic support
-    public func simulateWatchOS() {
-        simulatePlatform(.watchOS)
+    /// Sets up capabilities to match tvOS-like platform (accessibility only, no touch/hover/haptic)
+    /// Note: Tests should run on actual tvOS simulators for tvOS-specific behavior
+    public func simulateTVOSCapabilities() {
+        overrideCapabilities(touch: false, haptic: false, hover: false, voiceOver: true, switchControl: true)
     }
     
-    /// Simulates tvOS platform with accessibility only (no touch/hover/haptic)
-    public func simulateTVOS() {
-        simulatePlatform(.tvOS)
-    }
-    
-    /// Simulates visionOS platform with touch, haptic, and hover support
-    public func simulateVisionOS() {
-        simulatePlatform(.visionOS)
+    /// Sets up capabilities to match visionOS-like platform (hover support)
+    /// Note: Tests should run on actual visionOS simulators for visionOS-specific behavior
+    public func simulateVisionOSCapabilities() {
+        overrideCapabilities(touch: false, haptic: false, hover: true, voiceOver: true, switchControl: true)
     }
     
     // MARK: - Capability Override
@@ -113,39 +112,29 @@ public class TestSetupUtilities {
     /// Clears all capability overrides
     /// Note: nonisolated - only accesses thread-local storage (no MainActor needed)
     nonisolated public func clearAllCapabilityOverrides() {
-        RuntimeCapabilityDetection.setTestTouchSupport(nil)
-        RuntimeCapabilityDetection.setTestHapticFeedback(nil)
-        RuntimeCapabilityDetection.setTestHover(nil)
-        RuntimeCapabilityDetection.setTestVoiceOver(nil)
-        RuntimeCapabilityDetection.setTestSwitchControl(nil)
-        RuntimeCapabilityDetection.setTestAssistiveTouch(nil)
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Common Test Scenarios
     
     /// Sets up a touch-enabled platform (iOS/watchOS)
     public func setupTouchEnabledPlatform() {
-        simulateiOS()
-        overrideCapabilities(touch: true, haptic: true, hover: false)
+        simulateiOSCapabilities()
     }
     
     /// Sets up a hover-enabled platform (macOS)
     public func setupHoverEnabledPlatform() {
-        simulateMacOS()
-        overrideCapabilities(touch: false, haptic: false, hover: true)
+        simulateMacOSCapabilities()
     }
     
     /// Sets up an accessibility-only platform (tvOS)
     public func setupAccessibilityOnlyPlatform() {
-        simulateTVOS()
-        overrideCapabilities(touch: false, haptic: false, hover: false, voiceOver: true, switchControl: true)
+        simulateTVOSCapabilities()
     }
     
     /// Sets up a vision-enabled platform (visionOS)
     public func setupVisionEnabledPlatform() {
-        simulateVisionOS()
-        overrideCapabilities(touch: true, haptic: true, hover: true, voiceOver: true, switchControl: true)
+        simulateVisionOSCapabilities()
     }
     
     // MARK: - Test Assertion Helpers

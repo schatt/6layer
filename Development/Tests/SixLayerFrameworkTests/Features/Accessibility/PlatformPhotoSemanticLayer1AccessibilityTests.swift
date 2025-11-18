@@ -25,12 +25,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPhotoCapture_L1(
+        let view = platformPhotoCapture_L1(
             purpose: purpose,
             context: context,
             onImageCaptured: { _ in }
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -62,12 +62,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPhotoCapture_L1(
+        let view = platformPhotoCapture_L1(
             purpose: purpose,
             context: context,
             onImageCaptured: { _ in }
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -101,13 +101,13 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
         )
         // TDD RED: element-level IDs not yet implemented for selection flow
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -139,13 +139,13 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
         )
         // TDD RED: element-level IDs not yet implemented for selection flow
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -180,12 +180,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPhotoDisplay_L1(
+        let view = platformPhotoDisplay_L1(
             purpose: purpose,
             context: context,
             image: testImage
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -218,12 +218,12 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
         // When & Then
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         let view = platformPhotoDisplay_L1(
+        let view = platformPhotoDisplay_L1(
             purpose: purpose,
             context: context,
             image: testImage
         )
-        return testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,

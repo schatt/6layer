@@ -65,7 +65,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             // Test the capabilities directly
             #expect(RuntimeCapabilityDetection.supportsTouch, "Touch should be supported when enabled on \(platform)")
@@ -97,7 +97,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionPlatformConfig()
             
             // Test that touch-related functions handle disabled state gracefully
@@ -119,7 +119,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// METHODOLOGY: Use real system capability detection to test enabled touch state
     @Test func testTouchFunctionsEnabled() {
         // Set platform to iOS (which natively supports touch) to test touch-enabled state
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
         
         // Test that touch-related functions work correctly when touch is supported
@@ -190,7 +190,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionPlatformConfig()
             
             // Test that hover-related functions work when hover is supported
@@ -216,7 +216,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
         
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionPlatformConfig()
             
             // Test that hover-related functions handle disabled state gracefully
@@ -408,7 +408,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     @Test func testCapabilityStateConsistency() {
         // Test capability state consistency across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             let config = getCardExpansionPlatformConfig()
             

@@ -41,7 +41,7 @@ open class FormWizardStateTests: BaseTestClass {
     @Test func testFormWizardStateInitialization() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             // TODO: Implement test
             

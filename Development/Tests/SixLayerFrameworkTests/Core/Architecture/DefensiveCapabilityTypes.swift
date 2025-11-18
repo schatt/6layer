@@ -37,42 +37,54 @@ enum AccessibilityType: String, CaseIterable {
 /// Defensive test pattern that prevents crashes
 struct DefensiveTestPatterns {
     
-    /// Safe platform setting for capability types using RuntimeCapabilityDetection
-    static func setPlatformForCapabilityType(_ type: CapabilityType) {
+    /// Safe capability override for capability types using RuntimeCapabilityDetection
+    static func setCapabilitiesForType(_ type: CapabilityType) {
         switch type {
         case .touchOnly:
-            RuntimeCapabilityDetection.setTestPlatform(.iOS)
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(false)
         case .hoverOnly:
-            RuntimeCapabilityDetection.setTestPlatform(.macOS)
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(true)
         case .allCapabilities:
-            RuntimeCapabilityDetection.setTestPlatform(.iOS)
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(true)
         case .noCapabilities:
-            RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(false)
         }
     }
     
-    /// Safe platform setting for accessibility types using RuntimeCapabilityDetection
-    static func setPlatformForAccessibilityType(_ type: AccessibilityType) {
-        // For accessibility testing, we can use any platform that supports accessibility
+    /// Safe capability override for accessibility types using RuntimeCapabilityDetection
+    static func setCapabilitiesForAccessibilityType(_ type: AccessibilityType) {
+        // For accessibility testing, override accessibility capabilities
         switch type {
         case .noAccessibility:
-            RuntimeCapabilityDetection.setTestPlatform(.tvOS) // Minimal accessibility
+            RuntimeCapabilityDetection.setTestVoiceOver(false)
+            RuntimeCapabilityDetection.setTestSwitchControl(false)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
         case .allAccessibility:
-            RuntimeCapabilityDetection.setTestPlatform(.iOS) // Full accessibility
+            RuntimeCapabilityDetection.setTestVoiceOver(true)
+            RuntimeCapabilityDetection.setTestSwitchControl(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
         }
     }
     
     /// Defensive test case creation with compile-time safety
     static func createDefensiveCapabilityTestCases() -> [(CapabilityType, () -> Void)] {
         return CapabilityType.allCases.map { type in
-            (type, { setPlatformForCapabilityType(type) })
+            (type, { setCapabilitiesForType(type) })
         }
     }
     
     /// Defensive test case creation with compile-time safety
     static func createDefensiveAccessibilityTestCases() -> [(AccessibilityType, () -> Void)] {
         return AccessibilityType.allCases.map { type in
-            (type, { setPlatformForAccessibilityType(type) })
+            (type, { setCapabilitiesForAccessibilityType(type) })
         }
     }
 }

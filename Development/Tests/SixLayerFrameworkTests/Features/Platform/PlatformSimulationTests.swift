@@ -77,50 +77,44 @@ open class PlatformSimulationTests: BaseTestClass {
     // MARK: - Device Type Specific Testing
     
     @Test func testPhoneSpecificFeatures() {
-        let phonePlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .iOS }
-        
-        for platform in phonePlatforms {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
-            defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
-            
-            // Phone platforms should support touch
+        // Test on current platform - iOS simulators should be used for iOS testing
+        let currentPlatform = SixLayerPlatform.current
+        if currentPlatform == .iOS {
+            // iOS platforms should support touch
             #expect(RuntimeCapabilityDetection.supportsTouch, 
-                         "Phone platform \(platform.rawValue) should support touch")
+                         "Phone platform \(currentPlatform.rawValue) should support touch")
             
             // Phone platforms should support haptic feedback
             #expect(RuntimeCapabilityDetection.supportsHapticFeedback, 
-                         "Phone platform \(platform.rawValue) should support haptic feedback")
+                         "Phone platform \(currentPlatform.rawValue) should support haptic feedback")
         }
     }
     
     @Test func testDesktopSpecificFeatures() {
-        let desktopPlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .macOS }
-        
-        for platform in desktopPlatforms {
+        // Test on current platform - macOS should be used for macOS testing
+        let currentPlatform = SixLayerPlatform.current
+        if currentPlatform == .macOS {
             // Desktop platforms should support hover
             #expect(RuntimeCapabilityDetection.supportsHover, 
-                         "Desktop platform \(platform.rawValue) should support hover")
+                         "Desktop platform \(currentPlatform.rawValue) should support hover")
             
             // Desktop platforms should not support haptic feedback
             #expect(!RuntimeCapabilityDetection.supportsHapticFeedback, 
-                         "Desktop platform \(platform.rawValue) should not support haptic feedback")
+                         "Desktop platform \(currentPlatform.rawValue) should not support haptic feedback")
         }
     }
     
     @Test func testWatchSpecificFeatures() {
-        let watchPlatforms = PlatformSimulationTests.testPlatforms.filter { $0 == .watchOS }
-        
-        for platform in watchPlatforms {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
-            defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
-            
+        // Test on current platform - watchOS simulators should be used for watchOS testing
+        let currentPlatform = SixLayerPlatform.current
+        if currentPlatform == .watchOS {
             // Watch platforms should support touch
             #expect(RuntimeCapabilityDetection.supportsTouch, 
-                         "Watch platform \(platform.rawValue) should support touch")
+                         "Watch platform \(currentPlatform.rawValue) should support touch")
             
             // Watch platforms should support haptic feedback
             #expect(RuntimeCapabilityDetection.supportsHapticFeedback, 
-                         "Watch platform \(platform.rawValue) should support haptic feedback")
+                         "Watch platform \(currentPlatform.rawValue) should support haptic feedback")
         }
     }
     

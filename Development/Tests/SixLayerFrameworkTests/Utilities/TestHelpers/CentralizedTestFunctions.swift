@@ -55,9 +55,34 @@ public func testComponentCompliance<T: View>(
     config.namespace = "SixLayer"
     config.mode = .automatic
     
-    // Set platform if specified
+    // Set capability overrides if platform is specified and different from current
     if let platform = platform {
-        RuntimeCapabilityDetection.setTestPlatform(platform)
+        let currentPlatform = SixLayerPlatform.current
+        if platform != currentPlatform {
+            // Use capability overrides to simulate platform capabilities
+            switch platform {
+            case .iOS:
+                RuntimeCapabilityDetection.setTestTouchSupport(true)
+                RuntimeCapabilityDetection.setTestHapticFeedback(true)
+                RuntimeCapabilityDetection.setTestHover(false)
+            case .macOS:
+                RuntimeCapabilityDetection.setTestTouchSupport(false)
+                RuntimeCapabilityDetection.setTestHapticFeedback(false)
+                RuntimeCapabilityDetection.setTestHover(true)
+            case .watchOS:
+                RuntimeCapabilityDetection.setTestTouchSupport(true)
+                RuntimeCapabilityDetection.setTestHapticFeedback(true)
+                RuntimeCapabilityDetection.setTestHover(false)
+            case .tvOS:
+                RuntimeCapabilityDetection.setTestTouchSupport(false)
+                RuntimeCapabilityDetection.setTestHapticFeedback(false)
+                RuntimeCapabilityDetection.setTestHover(false)
+            case .visionOS:
+                RuntimeCapabilityDetection.setTestTouchSupport(false)
+                RuntimeCapabilityDetection.setTestHapticFeedback(false)
+                RuntimeCapabilityDetection.setTestHover(true)
+            }
+        }
     }
     
     // Test: Use centralized component compliance testing
@@ -69,9 +94,9 @@ public func testComponentCompliance<T: View>(
         testHIGCompliance: testHIGCompliance
     )
     
-    // Cleanup: Reset platform
+    // Cleanup: Reset capability overrides
     if platform != nil {
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     return result
@@ -175,16 +200,36 @@ internal func testPlatformCapabilityDetection(
     expectedCapabilities: PlatformCapabilitiesTestSnapshot,
     testName: String = "PlatformCapabilityTest"
 ) -> Bool {
-    // Setup: Set test platform
-    RuntimeCapabilityDetection.setTestPlatform(platform)
-    
-    // Test: Verify platform detection
-    let actualPlatform = SixLayerPlatform.currentPlatform
-    guard actualPlatform == platform else {
-        print("❌ PLATFORM TEST: Expected \(platform), got \(actualPlatform)")
-        RuntimeCapabilityDetection.setTestPlatform(nil)
-        return false
+    // Setup: Set capability overrides to match platform
+    let currentPlatform = SixLayerPlatform.current
+    if platform != currentPlatform {
+        // Use capability overrides to simulate platform capabilities
+        switch platform {
+        case .iOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .macOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(true)
+        case .watchOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .tvOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(false)
+        case .visionOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(true)
+        }
     }
+    
+    // Test: Verify we're testing on the current platform or using overrides
+    // Note: Platform detection is compile-time, so we verify capabilities instead
     
     // Test: Verify capabilities match expected values
     let actualCapabilities = PlatformCapabilitiesTestSnapshot(
@@ -214,8 +259,8 @@ internal func testPlatformCapabilityDetection(
         print("Actual: \(actualCapabilities)")
     }
     
-    // Cleanup: Reset platform
-    RuntimeCapabilityDetection.setTestPlatform(nil)
+    // Cleanup: Reset capability overrides
+    RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     
     return capabilitiesMatch
 }
@@ -446,9 +491,6 @@ public func cleanupTestEnvironment() {
     
     // Cleanup: Reset test utilities
     TestSetupUtilities.shared.cleanupTestingEnvironment()
-    
-    // Cleanup: Reset platform detection
-    RuntimeCapabilityDetection.setTestPlatform(nil)
 }
 
 // MARK: - Helper Types

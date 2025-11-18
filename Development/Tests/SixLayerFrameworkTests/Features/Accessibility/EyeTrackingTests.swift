@@ -70,7 +70,7 @@ open class EyeTrackingTests: BaseTestClass {
     @Test func testEyeTrackingConfigInitialization() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             let config = EyeTrackingConfig()
             
@@ -439,7 +439,7 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eye tracking integration functionality
     /// TESTING SCOPE: Tests eye tracking end-to-end integration
     /// METHODOLOGY: Test complete eye tracking workflow from initialization to event processing
-    @Test func testEyeTrackingIntegration() async {
+    @Test @MainActor func testEyeTrackingIntegration() async {
         // Test the complete eye tracking workflow
         let config = EyeTrackingConfig(
             sensitivity: .medium,
@@ -469,7 +469,7 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eye tracking sensitivity variations functionality
     /// TESTING SCOPE: Tests eye tracking behavior with different sensitivity levels
     /// METHODOLOGY: Test eye tracking with various sensitivity settings and verify behavior
-    @Test func testEyeTrackingWithDifferentSensitivities() async {
+    @Test @MainActor func testEyeTrackingWithDifferentSensitivities() async {
         let sensitivities: [EyeTrackingSensitivity] = Array(EyeTrackingSensitivity.allCases) // Use real enum
         
         for i in 0..<sensitivities.count {
@@ -486,7 +486,7 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eye tracking dwell time variations functionality
     /// TESTING SCOPE: Tests eye tracking behavior with different dwell time settings
     /// METHODOLOGY: Test eye tracking with various dwell time settings and verify behavior
-    @Test func testEyeTrackingWithDifferentDwellTimes() async {
+    @Test @MainActor func testEyeTrackingWithDifferentDwellTimes() async {
         let dwellTimes: [TimeInterval] = [0.5, 1.0, 1.5, 2.0]
         
         for dwellTime in dwellTimes {

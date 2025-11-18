@@ -133,7 +133,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
 
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
 
             let view = platformPresentItemCollection_L1(
                 items: testItems,

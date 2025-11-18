@@ -107,7 +107,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             // Given: Platform set
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
 
             // When: Creating view using Layer 1 function
             let view = platformPresentItemCollection_L1(

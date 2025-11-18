@@ -157,8 +157,8 @@ open class CapabilityMatrixTests: BaseTestClass {
         
         for platform in allPlatforms {
             // Set the test platform to simulate different OS environments
-            RuntimeCapabilityDetection.setTestPlatform(platform)
-            defer { RuntimeCapabilityDetection.setTestPlatform(nil) }
+            setCapabilitiesForPlatform(platform)
+            defer { RuntimeCapabilityDetection.clearAllCapabilityOverrides() }
             
             // Test behaviors for this platform
             // The framework should respond correctly to whatever the OS reports

@@ -414,7 +414,7 @@ open class TextContentTypeTests: BaseTestClass {
     @Test func testCrossPlatformTextContentTypes() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             
             // Test that text content types are supported on all platforms
             let field = DynamicFormField(

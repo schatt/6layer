@@ -26,6 +26,7 @@ import SixLayerFramework
 /// - External modules couldn't access it (compilation error)
 /// - These tests would have caught that bug
 @Suite("External Module Integration Tests")
+@MainActor
 struct ExternalModuleIntegrationTests {
     
     /// Tests that global photo picker function is accessible from external modules

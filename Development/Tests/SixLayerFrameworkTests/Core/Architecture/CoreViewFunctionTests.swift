@@ -95,16 +95,24 @@ open class CoreViewFunctionTests: BaseTestClass {
         // GIVEN: Specific capability and accessibility combination
         let item = createTestItem()
         
-        // Set test platform based on capability type - no mock checkers needed!
+        // Set capability overrides based on capability type
         switch capabilityType {
         case .touchOnly:
-            RuntimeCapabilityDetection.setTestPlatform(.iOS) // Touch platform
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(false)
         case .hoverOnly:
-            RuntimeCapabilityDetection.setTestPlatform(.macOS) // Hover platform
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(true)
         case .allCapabilities:
-            RuntimeCapabilityDetection.setTestPlatform(.iOS) // Platform with all capabilities
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+            RuntimeCapabilityDetection.setTestHover(true)
         case .noCapabilities:
-            RuntimeCapabilityDetection.setTestPlatform(.tvOS) // Platform with minimal capabilities
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+            RuntimeCapabilityDetection.setTestHover(false)
         }
         
         let testName = "\(capabilityType.displayName) + \(accessibilityType.displayName)"
@@ -124,7 +132,7 @@ open class CoreViewFunctionTests: BaseTestClass {
         TestPatterns.verifyAccessibilityProperties(viewInfo: viewInfo, testName: testName)
         
         // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Parameterized Tests (DRY Version)
@@ -188,8 +196,8 @@ open class CoreViewFunctionTests: BaseTestClass {
         // GIVEN: Specific capability and accessibility combination
         let item = createTestItem()
         
-        // Set platform based on capability type using RuntimeCapabilityDetection
-        DefensiveTestPatterns.setPlatformForCapabilityType(capabilityType)
+        // Set capabilities based on capability type using RuntimeCapabilityDetection
+        DefensiveTestPatterns.setCapabilitiesForType(capabilityType)
         
         let testName = "SimpleCard \(capabilityType.displayName) + \(accessibilityType.displayName)"
         
@@ -208,7 +216,7 @@ open class CoreViewFunctionTests: BaseTestClass {
         TestPatterns.verifyAccessibilityProperties(viewInfo: viewInfo, testName: testName)
         
         // Clean up test platform
-        RuntimeCapabilityDetection.setTestPlatform(nil)
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
     // MARK: - Helper Methods

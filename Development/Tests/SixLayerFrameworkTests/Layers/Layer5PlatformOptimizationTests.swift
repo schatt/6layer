@@ -11,7 +11,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     // MARK: - getCardExpansionPlatformConfig Tests
     
     @Test func testGetCardExpansionPlatformConfig_iOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.supportsTouch == true, "iOS should support touch")
@@ -20,7 +20,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPlatformConfig_macOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.supportsHover == true, "macOS should support hover")
@@ -29,7 +29,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPlatformConfig_visionOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.visionOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
@@ -37,7 +37,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPlatformConfig_watchOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.minTouchTarget == 44.0, "watchOS should have 44.0 touch target (platform-native)")
@@ -45,7 +45,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPlatformConfig_tvOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.minTouchTarget == 0.0, "tvOS should have 0.0 touch target (platform-native)")
@@ -56,7 +56,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
         for platform in platforms {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionPlatformConfig()
             
             // Verify platform-correct values
@@ -71,7 +71,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     // MARK: - getCardExpansionPerformanceConfig Tests
     
     @Test func testGetCardExpansionPerformanceConfig_iOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPerformanceConfig()
         
         #expect(config.targetFrameRate > 0, "iOS should have positive target frame rate")
@@ -80,7 +80,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPerformanceConfig_macOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionPerformanceConfig()
         
         #expect(config.targetFrameRate > 0, "macOS should have positive target frame rate")
@@ -89,7 +89,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPerformanceConfig_visionOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.visionOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionPerformanceConfig()
         
         #expect(config.targetFrameRate >= 90, "visionOS should have higher frame rate for spatial interface")
@@ -97,7 +97,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPerformanceConfig_watchOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPerformanceConfig()
         
         #expect(config.targetFrameRate > 0, "watchOS should have positive target frame rate")
@@ -105,7 +105,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionPerformanceConfig_tvOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPerformanceConfig()
         
         #expect(config.targetFrameRate > 0, "tvOS should have positive target frame rate")
@@ -116,7 +116,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
         for platform in platforms {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionPerformanceConfig()
             
             #expect(config.targetFrameRate > 0, "Platform \(platform) should have positive target frame rate")
@@ -129,7 +129,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     // MARK: - getCardExpansionAccessibilityConfig Tests
     
     @Test func testGetCardExpansionAccessibilityConfig_iOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionAccessibilityConfig()
         
         #expect(config.supportsVoiceOver == true, "iOS should support VoiceOver")
@@ -139,7 +139,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionAccessibilityConfig_macOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.macOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionAccessibilityConfig()
         
         #expect(config.supportsVoiceOver == true, "macOS should support VoiceOver")
@@ -149,7 +149,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionAccessibilityConfig_visionOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.visionOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionAccessibilityConfig()
         
         #expect(config.supportsVoiceOver == true, "visionOS should support VoiceOver")
@@ -158,7 +158,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionAccessibilityConfig_watchOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.watchOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionAccessibilityConfig()
         
         #expect(config.supportsVoiceOver == true, "watchOS should support VoiceOver")
@@ -167,7 +167,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     }
     
     @Test func testGetCardExpansionAccessibilityConfig_tvOS() async {
-        RuntimeCapabilityDetection.setTestPlatform(.tvOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionAccessibilityConfig()
         
         #expect(config.supportsVoiceOver == true, "tvOS should support VoiceOver")
@@ -179,7 +179,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
         for platform in platforms {
-            RuntimeCapabilityDetection.setTestPlatform(platform)
+            setCapabilitiesForPlatform(platform)
             let config = getCardExpansionAccessibilityConfig()
             
             #expect(config.supportsVoiceOver == true, "Platform \(platform) should support VoiceOver")

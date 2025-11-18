@@ -790,7 +790,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testAccessibilitySupport() {
         // Test accessibility support on iOS (which supports AssistiveTouch)
-        RuntimeCapabilityDetection.setTestPlatform(.iOS)
+        RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
