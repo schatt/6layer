@@ -11,9 +11,11 @@ import AppKit
 /// This verifies that the PlatformImage breaking change is fixed
 final class PlatformImageBugFixVerificationTests: XCTestCase {
     
-    func testExactBugScenario_iOS() throws {
-        #if os(iOS)
+    func testExactBugScenario() throws {
         // This is the exact code that was broken in 4.6.2
+        // Tests both implicit and explicit conversion patterns on the current platform
+        
+        #if os(iOS)
         let uiImage = UIImage()
         
         // Test implicit conversion (the broken pattern)
@@ -27,15 +29,7 @@ final class PlatformImageBugFixVerificationTests: XCTestCase {
         // Both should be equivalent
         XCTAssertEqual(platformImageImplicit.size, platformImageExplicit.size)
         
-        #else
-        // Skip on non-iOS platforms
-        throw XCTSkip("iOS-specific test")
-        #endif
-    }
-    
-    func testExactBugScenario_macOS() throws {
-        #if os(macOS)
-        // This is the macOS equivalent of the broken pattern
+        #elseif os(macOS)
         let nsImage = NSImage()
         
         // Test implicit conversion (the broken pattern)
@@ -50,14 +44,15 @@ final class PlatformImageBugFixVerificationTests: XCTestCase {
         XCTAssertEqual(platformImageImplicit.size, platformImageExplicit.size)
         
         #else
-        // Skip on non-macOS platforms
-        throw XCTSkip("macOS-specific test")
+        throw XCTSkip("Platform-specific test - only runs on iOS or macOS")
         #endif
     }
     
-    func testLayer4CallbackCode_iOS() throws {
-        #if os(iOS)
+    func testLayer4CallbackCode() throws {
         // Simulate the exact Layer 4 callback code that was broken
+        // Tests the implicit conversion pattern on the current platform
+        
+        #if os(iOS)
         let uiImage = UIImage()
         
         // This is the exact pattern from PlatformPhotoComponentsLayer4.swift line 90
@@ -66,15 +61,7 @@ final class PlatformImageBugFixVerificationTests: XCTestCase {
         XCTAssertNotNil(platformImage)
         XCTAssertEqual(platformImage.size, uiImage.size)
         
-        #else
-        // Skip on non-iOS platforms
-        throw XCTSkip("iOS-specific test")
-        #endif
-    }
-    
-    func testLayer4CallbackCode_macOS() throws {
-        #if os(macOS)
-        // Simulate the exact Layer 4 callback code that was broken
+        #elseif os(macOS)
         let nsImage = NSImage()
         
         // This is the exact pattern from PlatformPhotoComponentsLayer4.swift (macOS equivalent)
@@ -84,8 +71,7 @@ final class PlatformImageBugFixVerificationTests: XCTestCase {
         XCTAssertEqual(platformImage.size, nsImage.size)
         
         #else
-        // Skip on non-macOS platforms
-        throw XCTSkip("macOS-specific test")
+        throw XCTSkip("Platform-specific test - only runs on iOS or macOS")
         #endif
     }
     
