@@ -18,7 +18,7 @@ let package = Package(
         )
     ],
         dependencies: [
-            .package(url: "https://github.com/nalexn/ViewInspector", branch: "0.10.4")
+            .package(url: "https://github.com/schatt/ViewInspector", branch: "0.10.4")
         ],
     targets: [
         // Main framework target - organized into logical structure
@@ -69,12 +69,9 @@ let package = Package(
                 "Utilities/TestHelpers/CoreDataTestingGuide.md"
             ],
             swiftSettings: [
-                // Compile-time flag to control ViewInspector macOS support
-                // When ViewInspector fixes GitHub issue #405, remove this line
-                // This allows us to update all #if directives by removing one line
+                // ✅ RESOLVED: ViewInspector macOS support is now available via github.com/schatt/ViewInspector
+                // macOS support is permanently enabled - this flag enables ViewInspector on macOS
                 // When flag is present, VIEW_INSPECTOR_MAC_FIXED is defined (true)
-                // When flag is absent, VIEW_INSPECTOR_MAC_FIXED is undefined (false)
-                // TEMPORARILY ENABLED FOR TESTING - will disable if it causes compilation errors
                 .define("VIEW_INSPECTOR_MAC_FIXED")
             ]
         ),

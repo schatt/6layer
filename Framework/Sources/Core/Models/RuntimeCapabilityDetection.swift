@@ -22,33 +22,12 @@ import AppKit
 /// instead of making assumptions based on platform
 public struct RuntimeCapabilityDetection {
     
-    // MARK: - Thread-Local Testing Support
+    // MARK: - Platform Detection
     
-    /// Thread-local test platform for simulating cross-platform behavior
-    /// When set, all capability detection functions will return values for the simulated platform
-    public static func setTestPlatform(_ platform: SixLayerPlatform?) {
-        Thread.current.threadDictionary["testPlatform"] = platform
-    }
-    
-    /// Get the current test platform for this thread
-    internal static var testPlatform: SixLayerPlatform? {
-        return Thread.current.threadDictionary["testPlatform"] as? SixLayerPlatform
-    }
-    
-    /// Get the current platform (test platform if set, otherwise actual platform)
+    /// Get the current platform (always uses real compile-time platform detection)
+    /// Tests should run on actual platforms/simulators to test platform-specific behavior
     public static var currentPlatform: SixLayerPlatform {
-        return testPlatform ?? SixLayerPlatform.currentPlatform
-    }
-    
-    /// Get platform-specific defaults for the current test platform
-    private static func getTestDefaults() -> TestingCapabilityDefaults {
-        // If test platform is explicitly set, use it
-        if let platform = testPlatform {
-            return TestingCapabilityDetection.getTestingDefaults(for: platform)
-        }
-        // Otherwise, use currentPlatform (which may be a test platform or the actual platform)
-        // This handles cases where testPlatform is set but not accessible due to thread/actor isolation
-        return TestingCapabilityDetection.getTestingDefaults(for: currentPlatform)
+        return SixLayerPlatform.current
     }
     
     // MARK: - Capability-Level Override Support
@@ -91,7 +70,6 @@ public struct RuntimeCapabilityDetection {
         setTestVoiceOver(nil)
         setTestSwitchControl(nil)
         setTestAssistiveTouch(nil)
-        setTestPlatform(nil)
     }
     
     // MARK: - Private Capability Override Getters
@@ -130,52 +108,32 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if test platform is set OR if in testing mode
-        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
-            return getTestDefaults().supportsTouch
-        }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            return detectiOSTouchSupport()
-            #else
-            return getTestDefaults().supportsTouch
-            #endif
-        case .macOS:
-            #if os(macOS)
-            return detectmacOSTouchSupport()
-            #else
-            return getTestDefaults().supportsTouch
-            #endif
-        case .watchOS:
-            #if os(watchOS)
-            return true // Apple Watch always supports touch
-            #else
-            return getTestDefaults().supportsTouch
-            #endif
-        case .tvOS:
-            #if os(tvOS)
-            return false // Apple TV doesn't support touch
-            #else
-            return getTestDefaults().supportsTouch
-            #endif
-        case .visionOS:
-            #if os(visionOS)
-            return false // Vision Pro is spatial computing, not touchscreen
-            #else
-            return getTestDefaults().supportsTouch
-            #endif
-        }
+        // Use real runtime detection - tests should run on actual platforms/simulators
+        #if os(iOS)
+        return detectiOSTouchSupport()
+        #elseif os(macOS)
+        return detectmacOSTouchSupport()
+        #elseif os(watchOS)
+        return detectwatchOSTouchSupport()
+        #elseif os(tvOS)
+        return detecttvOSTouchSupport()
+        #elseif os(visionOS)
+        return detectvisionOSTouchSupport()
+        #else
+        return false
+        #endif
     }
     
     #if os(iOS)
     /// iOS touch detection - checks for actual touch capability
     private static func detectiOSTouchSupport() -> Bool {
-        // iOS always supports touch, but we can check for specific capabilities
-        return true
+        // Check if touch events are available by checking if we can detect touch input
+        // All iOS devices support touch, but we verify at runtime
+        return MainActor.assumeIsolated {
+            // iOS devices always have touch capability
+            // We can verify by checking if touch events are possible
+            return UIDevice.current.userInterfaceIdiom != .unspecified
+        }
     }
     #endif
     
@@ -243,45 +201,21 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if test platform is set OR if in testing mode
-        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
-            return getTestDefaults().supportsHapticFeedback
-        }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            return detectiOSHapticSupport()
-            #else
-            return getTestDefaults().supportsHapticFeedback
-            #endif
-        case .macOS:
-            #if os(macOS)
-            return detectmacOSHapticSupport()
-            #else
-            return getTestDefaults().supportsHapticFeedback
-            #endif
-        case .watchOS:
-            #if os(watchOS)
-            return true // Apple Watch supports haptics
-            #else
-            return getTestDefaults().supportsHapticFeedback
-            #endif
-        case .tvOS:
-            #if os(tvOS)
-            return false // Apple TV doesn't support haptics
-            #else
-            return getTestDefaults().supportsHapticFeedback
-            #endif
-        case .visionOS:
-            #if os(visionOS)
-            return false // Vision Pro doesn't have native haptic feedback
-            #else
-            return getTestDefaults().supportsHapticFeedback
-            #endif
-        }
+        // Use real runtime detection - simulators correctly report their platform
+        // Tests should run on actual platforms/simulators to test platform-specific behavior
+        #if os(iOS)
+        return detectiOSHapticSupport()
+        #elseif os(macOS)
+        return detectmacOSHapticSupport()
+        #elseif os(watchOS)
+        return detectwatchOSHapticSupport()
+        #elseif os(tvOS)
+        return detecttvOSHapticSupport()
+        #elseif os(visionOS)
+        return detectvisionOSHapticSupport()
+        #else
+        return false
+        #endif
     }
     
     #if os(iOS)
@@ -294,7 +228,9 @@ public struct RuntimeCapabilityDetection {
     #if os(macOS)
     private static func detectmacOSHapticSupport() -> Bool {
         // macOS doesn't natively support haptic feedback
-        // But could be enabled through third-party solutions
+        // But could be enabled through third-party solutions or user preferences
+        // UserDefaults.bool(forKey:) returns false if the key doesn't exist, which is correct
+        // Only return true if explicitly enabled by the user/application
         return UserDefaults.standard.bool(forKey: "SixLayerFramework.HapticEnabled")
     }
     #endif
@@ -310,48 +246,24 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if test platform is set OR if in testing mode
-        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
-            return getTestDefaults().supportsHover
+        // Use real runtime detection - simulators correctly report their platform
+        // Tests should run on actual platforms/simulators to test platform-specific behavior
+        #if os(iOS)
+        // Access MainActor API only when actually on iOS and not in test mode
+        return MainActor.assumeIsolated {
+            detectiOSHoverSupport()
         }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            // Access MainActor API only when actually on iOS and not in test mode
-            return MainActor.assumeIsolated {
-                detectiOSHoverSupport()
-            }
-            #else
-            return getTestDefaults().supportsHover
-            #endif
-        case .macOS:
-            #if os(macOS)
-            return detectmacOSHoverSupport()  // Doesn't need MainActor
-            #else
-            return getTestDefaults().supportsHover
-            #endif
-        case .watchOS:
-            #if os(watchOS)
-            return false // Apple Watch doesn't support hover
-            #else
-            return getTestDefaults().supportsHover
-            #endif
-        case .tvOS:
-            #if os(tvOS)
-            return false // Apple TV doesn't support hover
-            #else
-            return getTestDefaults().supportsHover
-            #endif
-        case .visionOS:
-            #if os(visionOS)
-            return true // Vision Pro supports hover
-            #else
-            return getTestDefaults().supportsHover
-            #endif
-        }
+        #elseif os(macOS)
+        return detectmacOSHoverSupport()  // Doesn't need MainActor
+        #elseif os(watchOS)
+        return detectwatchOSHoverSupport()
+        #elseif os(tvOS)
+        return detecttvOSHoverSupport()
+        #elseif os(visionOS)
+        return detectvisionOSHoverSupport()
+        #else
+        return false
+        #endif
     }
     
     #if os(iOS)
@@ -374,7 +286,155 @@ public struct RuntimeCapabilityDetection {
     #if os(macOS)
     private static func detectmacOSHoverSupport() -> Bool {
         // macOS supports hover through mouse/trackpad
-        return true
+        // Check if we can detect hover events
+        return NSEvent.pressedMouseButtons == 0 // If no mouse buttons pressed, hover is possible
+    }
+    
+    private static func detectmacOSAssistiveTouchSupport() -> Bool {
+        // macOS doesn't have AssistiveTouch (it's iOS/watchOS specific)
+        // Check if there's any equivalent accessibility feature
+        return false
+    }
+    #endif
+    
+    #if os(watchOS)
+    private static func detectwatchOSTouchSupport() -> Bool {
+        // Apple Watch always supports touch
+        // Check if touch events are available
+        return true // watchOS devices always have touch capability
+    }
+    
+    private static func detectwatchOSHapticSupport() -> Bool {
+        // Apple Watch supports haptic feedback
+        // Check if haptic engine is available
+        return true // All Apple Watch models support haptics
+    }
+    
+    private static func detectwatchOSHoverSupport() -> Bool {
+        // Apple Watch doesn't support hover
+        return false
+    }
+    
+    private static func detectwatchOSVoiceOverSupport() -> Bool {
+        // Check if VoiceOver is available on watchOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isVoiceOverRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    
+    private static func detectwatchOSSwitchControlSupport() -> Bool {
+        // Check if Switch Control is available on watchOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isSwitchControlRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    
+    private static func detectwatchOSAssistiveTouchSupport() -> Bool {
+        // Check if AssistiveTouch is available on watchOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isAssistiveTouchRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    #endif
+    
+    #if os(tvOS)
+    private static func detecttvOSTouchSupport() -> Bool {
+        // Apple TV doesn't support touch
+        return false
+    }
+    
+    private static func detecttvOSHapticSupport() -> Bool {
+        // Apple TV doesn't support haptics
+        return false
+    }
+    
+    private static func detecttvOSHoverSupport() -> Bool {
+        // Apple TV doesn't support hover
+        return false
+    }
+    
+    private static func detecttvOSVoiceOverSupport() -> Bool {
+        // Check if VoiceOver is available on tvOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isVoiceOverRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    
+    private static func detecttvOSSwitchControlSupport() -> Bool {
+        // Check if Switch Control is available on tvOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isSwitchControlRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    
+    private static func detecttvOSAssistiveTouchSupport() -> Bool {
+        // Apple TV doesn't have AssistiveTouch
+        return false
+    }
+    #endif
+    
+    #if os(visionOS)
+    private static func detectvisionOSTouchSupport() -> Bool {
+        // Vision Pro is spatial computing, not touchscreen
+        return false
+    }
+    
+    private static func detectvisionOSHapticSupport() -> Bool {
+        // Vision Pro doesn't have native haptic feedback
+        return false
+    }
+    
+    private static func detectvisionOSHoverSupport() -> Bool {
+        // Vision Pro supports hover through hand tracking
+        // Check if hand tracking is available
+        return true // Vision Pro supports hover via hand tracking
+    }
+    
+    private static func detectvisionOSVoiceOverSupport() -> Bool {
+        // Check if VoiceOver is available on visionOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isVoiceOverRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    
+    private static func detectvisionOSSwitchControlSupport() -> Bool {
+        // Check if Switch Control is available on visionOS
+        #if canImport(UIKit)
+        return MainActor.assumeIsolated {
+            UIAccessibility.isSwitchControlRunning
+        }
+        #else
+        return false
+        #endif
+    }
+    
+    private static func detectvisionOSAssistiveTouchSupport() -> Bool {
+        // AssistiveTouch is iOS/watchOS specific, not available on visionOS
+        return false
     }
     #endif
     
@@ -389,51 +449,26 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if test platform is set OR if in testing mode
-        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
-            return getTestDefaults().supportsVoiceOver
+        // Use real runtime detection - tests should run on actual platforms/simulators
+        #if os(iOS)
+        // Access MainActor API only when actually on iOS and not in test mode
+        return MainActor.assumeIsolated {
+            UIAccessibility.isVoiceOverRunning
         }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            // Access MainActor API only when actually on iOS and not in test mode
-            return MainActor.assumeIsolated {
-                UIAccessibility.isVoiceOverRunning
-            }
-            #else
-            return getTestDefaults().supportsVoiceOver
-            #endif
-        case .macOS:
-            #if os(macOS)
-            // NSWorkspace.shared requires MainActor
-            return MainActor.assumeIsolated {
-                NSWorkspace.shared.isVoiceOverEnabled
-            }
-            #else
-            return getTestDefaults().supportsVoiceOver
-            #endif
-        case .watchOS:
-            #if os(watchOS)
-            return true // Apple Watch supports VoiceOver
-            #else
-            return getTestDefaults().supportsVoiceOver
-            #endif
-        case .tvOS:
-            #if os(tvOS)
-            return true // Apple TV supports VoiceOver
-            #else
-            return getTestDefaults().supportsVoiceOver
-            #endif
-        case .visionOS:
-            #if os(visionOS)
-            return true // Vision Pro supports VoiceOver
-            #else
-            return getTestDefaults().supportsVoiceOver
-            #endif
+        #elseif os(macOS)
+        // NSWorkspace.shared requires MainActor
+        return MainActor.assumeIsolated {
+            NSWorkspace.shared.isVoiceOverEnabled
         }
+        #elseif os(watchOS)
+        return detectwatchOSVoiceOverSupport()
+        #elseif os(tvOS)
+        return detecttvOSVoiceOverSupport()
+        #elseif os(visionOS)
+        return detectvisionOSVoiceOverSupport()
+        #else
+        return false
+        #endif
     }
     
     /// Detects if Switch Control is actually available
@@ -445,51 +480,26 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if test platform is set OR if in testing mode
-        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
-            return getTestDefaults().supportsSwitchControl
+        // Use real runtime detection - tests should run on actual platforms/simulators
+        #if os(iOS)
+        // Access MainActor API only when actually on iOS and not in test mode
+        return MainActor.assumeIsolated {
+            UIAccessibility.isSwitchControlRunning
         }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            // Access MainActor API only when actually on iOS and not in test mode
-            return MainActor.assumeIsolated {
-                UIAccessibility.isSwitchControlRunning
-            }
-            #else
-            return getTestDefaults().supportsSwitchControl
-            #endif
-        case .macOS:
-            #if os(macOS)
-            // NSWorkspace.shared requires MainActor
-            return MainActor.assumeIsolated {
-                NSWorkspace.shared.isSwitchControlEnabled
-            }
-            #else
-            return getTestDefaults().supportsSwitchControl
-            #endif
-        case .watchOS:
-            #if os(watchOS)
-            return true // Apple Watch supports Switch Control
-            #else
-            return getTestDefaults().supportsSwitchControl
-            #endif
-        case .tvOS:
-            #if os(tvOS)
-            return true // Apple TV supports Switch Control
-            #else
-            return getTestDefaults().supportsSwitchControl
-            #endif
-        case .visionOS:
-            #if os(visionOS)
-            return true // Vision Pro supports Switch Control
-            #else
-            return getTestDefaults().supportsSwitchControl
-            #endif
+        #elseif os(macOS)
+        // NSWorkspace.shared requires MainActor
+        return MainActor.assumeIsolated {
+            NSWorkspace.shared.isSwitchControlEnabled
         }
+        #elseif os(watchOS)
+        return detectwatchOSSwitchControlSupport()
+        #elseif os(tvOS)
+        return detecttvOSSwitchControlSupport()
+        #elseif os(visionOS)
+        return detectvisionOSSwitchControlSupport()
+        #else
+        return false
+        #endif
     }
     
     /// Detects if AssistiveTouch is actually available
@@ -501,125 +511,74 @@ public struct RuntimeCapabilityDetection {
             return testValue
         }
         
-        // Use testing defaults if test platform is set OR if in testing mode
-        // Also check currentPlatform to handle cases where testPlatform is set but not accessible
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode || currentPlatform != SixLayerPlatform.currentPlatform {
-            return getTestDefaults().supportsAssistiveTouch
+        // Use real runtime detection - tests should run on actual platforms/simulators
+        #if os(iOS)
+        // Access MainActor API only when actually on iOS and not in test mode
+        return MainActor.assumeIsolated {
+            UIAccessibility.isAssistiveTouchRunning
         }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            // Access MainActor API only when actually on iOS and not in test mode
-            return MainActor.assumeIsolated {
-                UIAccessibility.isAssistiveTouchRunning
-            }
-            #else
-            // When not on iOS, use test defaults if available, otherwise return true (iOS supports AssistiveTouch)
-            return getTestDefaults().supportsAssistiveTouch
-            #endif
-        case .macOS:
-            // When not on macOS, use test defaults if available, otherwise return false
-            if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
-                return getTestDefaults().supportsAssistiveTouch
-            }
-            return false // macOS doesn't have AssistiveTouch
-        case .watchOS:
-            #if os(watchOS)
-            return true // Apple Watch supports AssistiveTouch
-            #else
-            // When not on watchOS, use test defaults if available, otherwise return true (watchOS supports AssistiveTouch)
-            return getTestDefaults().supportsAssistiveTouch
-            #endif
-        case .tvOS:
-            // When not on tvOS, use test defaults if available, otherwise return false
-            if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
-                return getTestDefaults().supportsAssistiveTouch
-            }
-            return false // Apple TV doesn't have AssistiveTouch
-        case .visionOS:
-            #if os(visionOS)
-            return false // AssistiveTouch is iOS-specific, not available on visionOS
-            #else
-            // When not on visionOS, use test defaults if available, otherwise return false (visionOS doesn't support AssistiveTouch)
-            return getTestDefaults().supportsAssistiveTouch
-            #endif
-        }
+        #elseif os(macOS)
+        return detectmacOSAssistiveTouchSupport()
+        #elseif os(watchOS)
+        return detectwatchOSAssistiveTouchSupport()
+        #elseif os(tvOS)
+        return detecttvOSAssistiveTouchSupport()
+        #elseif os(visionOS)
+        return detectvisionOSAssistiveTouchSupport()
+        #else
+        return false
+        #endif
     }
     
     // MARK: - Vision Framework Detection
     
     /// Detects if Vision framework is actually available
-    /// Note: nonisolated - only returns compile-time constants or test defaults (no MainActor needed)
+    /// Uses the same detection method across all platforms
+    /// Note: nonisolated - only checks framework availability (no MainActor needed)
     nonisolated public static var supportsVision: Bool {
-        // Use testing defaults if test platform is set OR if in testing mode
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
-            return getTestDefaults().supportsVision
+        return detectVisionFrameworkAvailability()
+    }
+    
+    /// Detect Vision framework availability using runtime checks
+    private static func detectVisionFrameworkAvailability() -> Bool {
+        #if canImport(Vision)
+        #if os(iOS)
+        if #available(iOS 11.0, *) {
+            return true
         }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            return true // Vision framework available on iOS 11+
-            #else
-            return getTestDefaults().supportsVision
-            #endif
-        case .macOS:
-            #if os(macOS)
-            return true // Vision framework available on macOS 10.13+
-            #else
-            return getTestDefaults().supportsVision
-            #endif
-        case .watchOS:
-            return false // Vision framework not available on watchOS
-        case .tvOS:
-            return false // Vision framework not available on tvOS
-        case .visionOS:
-            #if os(visionOS)
-            return true // Vision framework available on visionOS
-            #else
-            return getTestDefaults().supportsVision
-            #endif
+        return false
+        #elseif os(macOS)
+        if #available(macOS 10.15, *) {
+            return true
         }
+        return false
+        #elseif os(watchOS)
+        // Vision framework not available on watchOS
+        return false
+        #elseif os(tvOS)
+        // Vision framework not available on tvOS
+        return false
+        #elseif os(visionOS)
+        if #available(visionOS 1.0, *) {
+            return true
+        }
+        return false
+        #else
+        return false
+        #endif
+        #else
+        return false
+        #endif
     }
     
     // MARK: - OCR Detection
     
     /// Detects if OCR capabilities are actually available
-    /// Note: nonisolated - only returns compile-time constants or test defaults (no MainActor needed)
+    /// OCR depends on Vision framework, so uses the same detection method across all platforms
+    /// Note: nonisolated - only checks framework availability (no MainActor needed)
     nonisolated public static var supportsOCR: Bool {
-        // Use testing defaults if test platform is set OR if in testing mode
-        if testPlatform != nil || TestingCapabilityDetection.isTestingMode {
-            return getTestDefaults().supportsOCR
-        }
-        
-        let platform = currentPlatform
-        switch platform {
-        case .iOS:
-            #if os(iOS)
-            return true // OCR available through Vision framework on iOS
-            #else
-            return getTestDefaults().supportsOCR
-            #endif
-        case .macOS:
-            #if os(macOS)
-            return true // OCR available through Vision framework on macOS
-            #else
-            return getTestDefaults().supportsOCR
-            #endif
-        case .watchOS:
-            return false // OCR not available on watchOS
-        case .tvOS:
-            return false // OCR not available on tvOS
-        case .visionOS:
-            #if os(visionOS)
-            return true // OCR available through Vision framework on visionOS
-            #else
-            return getTestDefaults().supportsOCR
-            #endif
-        }
+        // OCR is available through Vision framework, so check Vision availability
+        return detectVisionFrameworkAvailability()
     }
 }
 
@@ -803,9 +762,8 @@ public extension RuntimeCapabilityDetection {
     /// Platform-native values: iOS/watchOS = 44.0, macOS/tvOS/visionOS = 0.0
     /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
     nonisolated static var minTouchTarget: CGFloat {
-        // Use test platform if set, otherwise use current platform
-        // Both are thread-safe (thread-local storage and compile-time constant)
-        let platform = testPlatform ?? currentPlatform
+        // Use real platform detection - tests should run on actual platforms/simulators
+        let platform = currentPlatform
         
         // Return platform-native value regardless of touch support state
         switch platform {
@@ -820,9 +778,8 @@ public extension RuntimeCapabilityDetection {
     /// Respects test platform override - returns platform-correct value based on mocked platform
     /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
     nonisolated static var hoverDelay: TimeInterval {
-        // Use test platform if set, otherwise use current platform
-        // Both are thread-safe (thread-local storage and compile-time constant)
-        let platform = testPlatform ?? currentPlatform
+        // Use real platform detection - tests should run on actual platforms/simulators
+        let platform = currentPlatform
         
         switch platform {
         case .macOS:

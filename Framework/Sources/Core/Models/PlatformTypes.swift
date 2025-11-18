@@ -35,26 +35,16 @@ public enum SixLayerPlatform: String, CaseIterable, Sendable {
         #endif
     }
     
-    /// Current platform detection (runtime-aware for testing)
+    /// Current platform detection (uses compile-time platform detection)
+    /// Tests should run on actual platforms/simulators to test platform-specific behavior
     public static var currentPlatform: SixLayerPlatform {
-        // Check if test platform is set in RuntimeCapabilityDetection
-        if let testPlatform = RuntimeCapabilityDetection.testPlatform {
-            return testPlatform
-        }
-        
-        // Otherwise fall back to compile-time platform detection
         return current
     }
     
-    /// Current device type detection (runtime-aware for testing)
+    /// Current device type detection (uses compile-time device type detection)
+    /// Tests should run on actual platforms/simulators to test platform-specific behavior
     @MainActor
     public static var deviceType: DeviceType {
-        // If test platform is set, derive device type from test platform
-        if let testPlatform = RuntimeCapabilityDetection.testPlatform {
-            return deriveDeviceTypeFromPlatform(testPlatform)
-        }
-        
-        // Otherwise fall back to compile-time device type detection
         return DeviceType.current
     }
     
