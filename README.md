@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.1.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.2.0")
 ]
 ```
 
@@ -41,12 +41,13 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.1.1
+## 🆕 Latest Release: v5.2.0
 
-### **PlatformImage EXIF GPS Location Extraction**
-📸 **Cross-Platform EXIF Access**: New `PlatformImageEXIF` struct provides clean API for accessing EXIF metadata
-📍 **GPS Location Extraction**: `image.exif.gpsLocation` returns `CLLocation?` from image EXIF metadata
-🔧 **Platform Abstraction**: Eliminates need for platform-specific code (`UIImage` on iOS, `NSImage` on macOS)
+### **Runtime Capability Detection Refactoring**
+🔧 **Real OS API Detection**: All capability detection now uses actual OS APIs (UIAccessibility, NSWorkspace, etc.)
+🚫 **Removed testPlatform**: Eliminated test platform simulation mechanism - simulators provide accurate values
+✨ **No Hardcoded Values**: All capabilities detected via runtime OS queries
+🧪 **Better Testing**: Capability-specific overrides for precise test control
 
 ### **Previous Release: v5.0.0 - Major Testing and Accessibility Release**
 🎯 **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
@@ -97,7 +98,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.1.1 (PlatformImage EXIF GPS Location Extraction)
+**Version**: v5.2.0 (Runtime Capability Detection Refactoring)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
