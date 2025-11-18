@@ -1,6 +1,6 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.2.0 - Runtime Capability Detection Refactoring** 🎯
+## 📍 **Current Release: v5.2.1 - Runtime Capability Detection Refactoring** 🎯
 
 **Release Date**: November 2025  
 **Status**: ✅ **COMPLETE**  
@@ -10,7 +10,20 @@
 
 ---
 
-## 🎯 **v5.2.0 - Runtime Capability Detection Refactoring** (November 2025)
+## 🎯 **v5.2.1 - Runtime Capability Detection Refactoring** (November 2025)
+
+**Note**: v5.2.0 was retracted due to broken Package.swift (empty Shared folder reference). v5.2.1 includes all fixes.
+
+### **Bug Fixes:**
+- **Fixed Package.swift**: Removed empty `Shared` folder reference that caused build failures
+- **Fixed SwiftData Tests**: Removed auto-save tests that required unavailable @Model macro in test targets
+- **Fixed Test Compilation**: Fixed indentation and compilation errors in test files
+
+---
+
+## 🎯 **v5.2.0 - Runtime Capability Detection Refactoring** (November 2025) - **RETRACTED**
+
+**Note**: This release was retracted due to broken Package.swift (empty Shared folder reference). Please use v5.2.1 instead.
 
 ### **What's New:**
 

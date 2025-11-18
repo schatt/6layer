@@ -1,11 +1,11 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v5.2.0 - Runtime Capability Detection Refactoring** 🎯
+## 📍 **Current Status: v5.2.1 - Runtime Capability Detection Refactoring** 🎯
 
-**Last Release**: v5.2.0 - Runtime Capability Detection Refactoring
+**Last Release**: v5.2.1 - Runtime Capability Detection Refactoring
 **Current Phase**: Minor Release (Runtime Capability Detection Refactoring)
 **Next Phase**: Continue framework evolution and feature development
-**Note**: v5.2.0 refactors runtime capability detection to use real OS API detection, removing the testPlatform mechanism. Previous release v5.1.1 added cross-platform EXIF GPS location extraction to PlatformImage (GitHub Issue #21).
+**Note**: v5.2.1 refactors runtime capability detection to use real OS API detection, removing the testPlatform mechanism, and fixes broken Package.swift from v5.2.0. Previous release v5.1.1 added cross-platform EXIF GPS location extraction to PlatformImage (GitHub Issue #21).
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
