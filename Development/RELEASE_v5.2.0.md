@@ -1,5 +1,7 @@
 # SixLayer v5.2.0 Release Notes
 
+**⚠️ WARNING: This release was RETRACTED and the tag has been DELETED due to broken Package.swift (empty Shared folder reference). Please use v5.2.1 instead.**
+
 ## Runtime Capability Detection Refactoring
 
 This minor release refactors the runtime capability detection system to use real OS API detection instead of a test platform simulation mechanism. All capability detection now queries actual OS APIs (UIAccessibility, NSWorkspace, UserDefaults, etc.) for accurate runtime values.

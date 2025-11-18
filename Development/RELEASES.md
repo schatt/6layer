@@ -12,7 +12,7 @@
 
 ## 🎯 **v5.2.1 - Runtime Capability Detection Refactoring** (November 2025)
 
-**Note**: v5.2.0 was retracted due to broken Package.swift (empty Shared folder reference). v5.2.1 includes all fixes.
+**Note**: v5.2.0 was retracted and the tag has been deleted due to broken Package.swift (empty Shared folder reference). v5.2.1 includes all fixes.
 
 ### **Bug Fixes:**
 - **Fixed Package.swift**: Removed empty `Shared` folder reference that caused build failures
@@ -21,9 +21,9 @@
 
 ---
 
-## 🎯 **v5.2.0 - Runtime Capability Detection Refactoring** (November 2025) - **RETRACTED**
+## 🎯 **v5.2.0 - Runtime Capability Detection Refactoring** (November 2025) - **RETRACTED & DELETED**
 
-**Note**: This release was retracted due to broken Package.swift (empty Shared folder reference). Please use v5.2.1 instead.
+**Note**: This release was retracted and the tag has been deleted due to broken Package.swift (empty Shared folder reference). Please use v5.2.1 instead.
 
 ### **What's New:**
 

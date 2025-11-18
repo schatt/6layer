@@ -263,159 +263,62 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     if config.enableDebugLogging {    }
     
     // CRITICAL: Check root view first - this IS the component's body when we pass the component directly
-        // This ensures we're testing the component's identifier, not a parent's
-        do {
-            let identifier = try inspected.sixLayerAccessibilityIdentifier()
-            if !identifier.isEmpty {
-                if config.enableDebugLogging {                }
+    // This ensures we're testing the component's identifier, not a parent's
+    // OPTIMIZATION: Early return after finding first identifier to avoid expensive deep searches
+    do {
+        let identifier = try inspected.sixLayerAccessibilityIdentifier()
+        if !identifier.isEmpty {
+            return identifier
+        }
+    } catch {
+        // Root view doesn't have identifier, continue searching
+    }
+    
+    // If root doesn't have identifier, check if root IS a container type (component's body structure)
+    // This ensures we're checking the component's direct body, not searching for nested containers
+    // OPTIMIZATION: Check direct children first before expensive deep searches
+    let directContainers: [(() throws -> Inspectable?)] = [
+        { try? inspected.sixLayerVStack() },
+        { try? inspected.sixLayerHStack() },
+        { try? inspected.sixLayerZStack() },
+        { try? inspected.sixLayerAnyView() }
+    ]
+    
+    for containerGetter in directContainers {
+        if let container = try? containerGetter() {
+            if let identifier = try? container.sixLayerAccessibilityIdentifier(), !identifier.isEmpty {
                 return identifier
-            } else {
-                if config.enableDebugLogging {                }
-            }
-        } catch {
-            if config.enableDebugLogging {            }
-        }
-        
-        // If root doesn't have identifier, check if root IS a container type (component's body structure)
-        // This ensures we're checking the component's direct body, not searching for nested containers
-        // Try to directly cast root to container types before searching deeper
-        if let vStack = try? inspected.sixLayerVStack() {
-            do {
-                let identifier = try vStack.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
             }
         }
-        
-        if let hStack = try? inspected.sixLayerHStack() {
-            do {
-                let identifier = try hStack.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
+    }
+    
+    // OPTIMIZATION: Only do expensive deep search if direct checks failed
+    // Stop after finding first identifier to avoid unnecessary work
+    // Use findAll but return immediately when we find a match
+    #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+    let containerTypes: [(String, Any.Type)] = [
+        ("VStack", ViewType.VStack.self),
+        ("HStack", ViewType.HStack.self),
+        ("ZStack", ViewType.ZStack.self),
+        ("AnyView", ViewType.AnyView.self)
+    ]
+    
+    // Search containers in order of likelihood (VStack most common)
+    for (_, viewType) in containerTypes {
+        let containers = inspected.sixLayerFindAll(viewType)
+        // OPTIMIZATION: Stop after finding first identifier
+        for container in containers {
+            if let identifier = try? container.sixLayerAccessibilityIdentifier(), !identifier.isEmpty {
+                return identifier
             }
         }
-        
-        if let zStack = try? inspected.sixLayerZStack() {
-            do {
-                let identifier = try zStack.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
-            }
-        }
-        
-        // Only if root isn't a container, search deeper for containers
-        // This is a fallback for components that wrap their body in another view
-        // But we still prefer direct body access above
-        // OPTIMIZATION: Use direct methods instead of sixLayerFind() to avoid slow recursive searches
-        // sixLayerFind() uses find(where: { _ in true }) which searches everything and can be very slow
-        if let vStack = try? inspected.sixLayerVStack() {
-            do {
-                let identifier = try vStack.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
-            }
-        }
-        
-        if let hStack = try? inspected.sixLayerHStack() {
-            do {
-                let identifier = try hStack.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
-            }
-        }
-        
-        if let zStack = try? inspected.sixLayerZStack() {
-            do {
-                let identifier = try zStack.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
-            }
-        }
-        
-        // If root is AnyView, try to unwrap it and find identifier in content
-        // First try to get the identifier from the AnyView itself
-        if let anyView = try? inspected.sixLayerAnyView() {
-            do {
-                let identifier = try anyView.sixLayerAccessibilityIdentifier()
-                if !identifier.isEmpty {
-                    if config.enableDebugLogging {                    }
-                    return identifier
-                }
-            } catch {
-                if config.enableDebugLogging {                }
-            }
-            
-            // Try to find identifier deeper in the view hierarchy
-            // The identifier might be on a modifier applied to the AnyView
-            // Try to find Text or other views that might have the identifier
-            if let text = try? anyView.sixLayerFind(ViewType.Text.self) {
-                do {
-                    let textId = try text.sixLayerAccessibilityIdentifier()
-                    if !textId.isEmpty {
-                        if config.enableDebugLogging {                        }
-                        return textId
-                    }
-                } catch {
-                    if config.enableDebugLogging {                    }
-                }
-            }
-        }
-        
-        // ENHANCED: Search through all VStacks, HStacks, ZStacks, and AnyViews in the hierarchy
-        // This finds identifiers that might be on nested views or modified views
-        // Use findAll to get all instances of each container type and check their identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let containerTypes: [(String, Any.Type)] = [
-            ("VStack", ViewType.VStack.self),
-            ("HStack", ViewType.HStack.self),
-            ("ZStack", ViewType.ZStack.self),
-            ("AnyView", ViewType.AnyView.self)
-        ]
-        #else
-        let containerTypes: [(String, Any.Type)] = []
-        #endif
-        
-        for (typeName, viewType) in containerTypes {
-            let containers = inspected.sixLayerFindAll(viewType)
-            if !containers.isEmpty {
-                for container in containers {
-                    if let identifier = try? container.sixLayerAccessibilityIdentifier(), !identifier.isEmpty {
-                        if config.enableDebugLogging {                        }
-                        return identifier
-                    }
-                }
-            }
-        }
-        
-        // Fallback: host platform view and search for identifier
-        if config.enableDebugLogging {        }
-        let hosted = hostRootPlatformView(viewWithEnvironment)
-        let platformId = firstAccessibilityIdentifier(inHosted: hosted)
-        return platformId
+    }
+    #endif
+    
+    // Fallback: host platform view and search for identifier
+    let hosted = hostRootPlatformView(viewWithEnvironment)
+    let platformId = firstAccessibilityIdentifier(inHosted: hosted)
+    return platformId
     #else
     // On macOS without VIEW_INSPECTOR_MAC_FIXED, ViewInspector is not available, so use platform view hosting
     if config.enableDebugLogging {    }
@@ -856,8 +759,9 @@ public func testHIGComplianceFeatures<T: View>(
     // 7. ✅ Light/dark mode - System colors automatically adapt via AutomaticHIGLightDarkModeModifier
     
     // Verify that RuntimeCapabilityDetection is available (required for HIG compliance)
-    let minTouchTarget = RuntimeCapabilityDetection.minTouchTarget
-    let currentPlatform = RuntimeCapabilityDetection.currentPlatform
+    // Access properties to ensure infrastructure is available (values intentionally unused)
+    _ = RuntimeCapabilityDetection.minTouchTarget
+    _ = RuntimeCapabilityDetection.currentPlatform
     
     // Basic verification: Ensure runtime detection is working
     // The actual modifiers are applied automatically by AutomaticComplianceModifier

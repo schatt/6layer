@@ -62,46 +62,53 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     func testCollectionEmptyStateViewAllAccessibilityModes() {
         let view = createCollectionEmptyStateView()
         
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         // Test automatic mode
         testConfig.mode = .automatic
         setupTestEnvironment()
-            let automaticPassed = testComponentAccessibility(
-                componentName: "CollectionEmptyStateView-Automatic",
-                createComponent: { view }
-            )
+        let automaticPassed = testComponentAccessibility(
+            componentName: "CollectionEmptyStateView-Automatic",
+            createComponent: { view }
+        )
         cleanupTestEnvironment()
         
         // Test manual mode
         testConfig.mode = .manual
         setupTestEnvironment()
-            let manualPassed = testComponentAccessibilityManual(
-                componentName: "CollectionEmptyStateView-Manual",
-                createComponent: { view }
-            )
+        let manualPassed = testComponentAccessibilityManual(
+            componentName: "CollectionEmptyStateView-Manual",
+            createComponent: { view }
+        )
         cleanupTestEnvironment()
         
         // Test semantic mode
         testConfig.mode = .semantic
         setupTestEnvironment()
-            let semanticPassed = testComponentAccessibilitySemantic(
-                componentName: "CollectionEmptyStateView-Semantic",
-                createComponent: { view }
-            )
+        let semanticPassed = testComponentAccessibilitySemantic(
+            componentName: "CollectionEmptyStateView-Semantic",
+            createComponent: { view }
+        )
         cleanupTestEnvironment()
         
         // Test disabled mode
         testConfig.mode = .disabled
         setupTestEnvironment()
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let disabledPassed = testComponentAccessibilityDisabled(
-                componentName: "CollectionEmptyStateView-Disabled",
-                createComponent: { view }
-            )
- #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode ")
+        let disabledPassed = testComponentAccessibilityDisabled(
+            componentName: "CollectionEmptyStateView-Disabled",
+            createComponent: { view }
+        )
+        cleanupTestEnvironment()
+        
+        // Assert all results
+        #expect(automaticPassed, "CollectionEmptyStateView should work in automatic mode")
+        #expect(manualPassed, "CollectionEmptyStateView should work in manual mode")
+        #expect(semanticPassed, "CollectionEmptyStateView should work in semantic mode")
+        #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
         #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+        #expect(Bool(true), "ViewInspector not available on this platform")
+        #endif
     }
     
     // MARK: - Empty State Bug Fix Tests (TDD Red Phase)

@@ -112,36 +112,17 @@ private func sanitizeLabelText(_ label: String) -> String {
         .trimmingCharacters(in: CharacterSet(charactersIn: "-")) // Remove leading/trailing hyphens
 }
 
-// MARK: - Config Observer Helper
-
-/// Helper class to observe AccessibilityIdentifierConfig changes so modifiers re-execute
-@MainActor
-private class ConfigObserver: ObservableObject {
-    static let shared = ConfigObserver()
-    
-    private init() {
-        // Observe the shared config's enableDebugLogging changes
-        AccessibilityIdentifierConfig.shared.$enableDebugLogging
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
-            .store(in: &cancellables)
-    }
-    
-    private var cancellables = Set<AnyCancellable>()
-}
-
-import Combine
-
 // MARK: - Automatic Accessibility Identifier Modifier
 
 /// Modifier that automatically generates accessibility identifiers for views
 /// This is the core modifier that all framework components should use
 /// Applies both automatic accessibility identifiers and HIG compliance
+/// 
+/// NOTE: No singleton observer needed - modifier reads config directly from task-local/injected/shared
+/// This eliminates singleton access overhead and improves test isolation
 public struct AutomaticComplianceModifier: ViewModifier {
     // NOTE: Environment properties moved to EnvironmentAccessor helper view
     // to avoid SwiftUI warnings about accessing environment outside of view context
-    @ObservedObject private var configObserver = ConfigObserver.shared
 
     public func body(content: Content) -> some View {
         // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
@@ -369,10 +350,12 @@ public struct AutomaticComplianceModifier: ViewModifier {
 
 /// Modifier that applies automatic accessibility identifiers with a specific component name
 /// This is used by the .automaticCompliance(named:) helper
+/// 
+/// NOTE: No singleton observer needed - modifier reads config directly from task-local/injected/shared
+/// This eliminates singleton access overhead and improves test isolation
 public struct NamedAutomaticComplianceModifier: ViewModifier {
     let componentName: String
     // NOTE: Environment properties moved to helper view to avoid SwiftUI warnings
-    @ObservedObject private var configObserver = ConfigObserver.shared
     
     public func body(content: Content) -> some View {
         // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings

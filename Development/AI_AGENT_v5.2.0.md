@@ -1,5 +1,7 @@
 # AI Agent Guide for SixLayer Framework v5.2.0
 
+**⚠️ WARNING: v5.2.0 was RETRACTED and the tag has been DELETED due to broken Package.swift (empty Shared folder reference). Please use v5.2.1 instead. This document is kept for historical reference only.**
+
 This document provides guidance for AI assistants working with the SixLayer Framework v5.2.0. **Always read this version-specific guide first** before attempting to help with this framework.
 
 **Note**: This guide is for AI agents helping developers USE the framework, not for AI agents working ON the framework itself.

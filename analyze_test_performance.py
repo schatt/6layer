@@ -11,20 +11,69 @@ import time
 import json
 import sys
 from pathlib import Path
+from datetime import datetime
 
 def has_compilation_errors(output):
-    """Check if output contains compilation errors"""
-    # Look for common compilation error patterns
+    """Check if output contains compilation errors (excluding warnings)"""
+    # First, check for explicit error patterns that indicate actual compilation failures
+    # These patterns indicate real errors, not warnings
     error_patterns = [
-        r'error:',
         r'BUILD FAILED',
         r'CompileSwiftSources failed',
         r'xcodebuild: error:',
+        r'error:.*cannot find',
+        r'error:.*has no member',
+        r'error:.*is not a member type',
+        r'error:.*expected',
+        r'error:.*missing',
+        r'error:.*invalid',
+        r'error:.*type.*has no member',
+        r'error:.*value of type.*has no member',
+        r'error:.*cannot infer',
+        r'error:.*ambiguous',
+        r'error:.*conformance',
+        r'error:.*protocol',
+        r'error:.*syntax',
+        r'error:.*compilation',
     ]
-    for pattern in error_patterns:
-        if re.search(pattern, output, re.IGNORECASE):
-            return True
-    return False
+    
+    # Check if build actually failed - if "Build complete!" appears, it succeeded
+    if re.search(r'Build complete!', output, re.IGNORECASE):
+        return False
+    
+    # Check for error: but exclude deprecation-related messages and warnings
+    # Warnings are NOT errors - only actual compilation errors should block
+    lines = output.split('\n')
+    has_real_error = False
+    
+    for line in lines:
+        # Skip all warnings - warnings don't prevent compilation
+        if re.search(r'warning:', line, re.IGNORECASE):
+            continue
+        # Skip deprecation notes
+        if re.search(r'note:.*deprecated', line, re.IGNORECASE):
+            continue
+        if re.search(r'note:.*obsoleted', line, re.IGNORECASE):
+            continue
+        if re.search(r'\[#DeprecatedDeclaration\]', line, re.IGNORECASE):
+            continue
+        
+        # Check for actual error patterns (not warnings)
+        if re.search(r'error:', line, re.IGNORECASE):
+            # Make sure it's not a deprecation-related error
+            if not re.search(r'deprecated|obsoleted', line, re.IGNORECASE):
+                has_real_error = True
+                break
+        
+        # Check for other error patterns
+        for pattern in error_patterns:
+            if re.search(pattern, line, re.IGNORECASE):
+                has_real_error = True
+                break
+        if has_real_error:
+            break
+    
+    return has_real_error
 
 def has_fatal_errors(output):
     """Check if output contains fatal errors"""
@@ -85,6 +134,44 @@ def get_test_suites():
                 suites.add(suite)
     
     return sorted(suites)
+
+def write_log_file(log_file, timestamp, suites, results, slow_suites, timeout_suites, 
+                   compilation_error_suites, fatal_error_suites, failed_suites, completed=False):
+    """Write or update the log file with current results"""
+    # Create summary results
+    summary_results = []
+    for result in results:
+        summary = {
+            'suite': result['suite'],
+            'time': result['time'],
+            'passed': result.get('passed', False),
+            'timeout': result.get('timeout', False),
+            'compilation_error': result.get('compilation_error', False),
+            'fatal_error': result.get('fatal_error', False),
+            'returncode': result.get('returncode')
+        }
+        # Only include output if there was an error (to keep file size reasonable)
+        if not result.get('passed', False):
+            summary['output'] = result.get('output', '')[:1000]  # First 1000 chars of output
+        summary_results.append(summary)
+    
+    log_data = {
+        'timestamp': timestamp,
+        'total_suites': len(suites),
+        'completed': completed,
+        'progress': f"{len(results)}/{len(suites)}" if suites else "0/0",
+        'passed': len([r for r in results if r.get('passed', False)]),
+        'failed': len(failed_suites),
+        'compilation_errors': len(compilation_error_suites),
+        'fatal_errors': len(fatal_error_suites),
+        'timeouts': len(timeout_suites),
+        'slow_suites': len(slow_suites),
+        'note': 'Times include ~3s overhead per suite (xcodebuild startup/workspace loading). Actual test execution is typically much faster.',
+        'results': summary_results
+    }
+    
+    with open(log_file, 'w') as f:
+        json.dump(log_data, f, indent=2)
 
 def run_test_suite(suite_name, timeout=30):
     """Run a single test suite using xcodebuild and measure execution time"""
@@ -170,6 +257,10 @@ def main():
     """Main function to analyze test performance"""
     print("🚀 Starting test performance analysis...\n")
     
+    # Create timestamped log file at the start
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    log_file = Path(f"/Users/schatt/code/github/6layer/test_performance_{timestamp}.json")
+    
     suites = get_test_suites()
     
     # If get_test_suites returns None, there were compilation/fatal errors
@@ -196,8 +287,14 @@ def main():
             print("ℹ️  No compilation errors, but no test suites found. Proceeding with empty analysis.")
     
     print(f"Found {len(suites)} test suites\n")
+    print(f"📝 Logging results to {log_file.name} (updating as tests complete)")
+    print(f"ℹ️  Note: Times include ~3s overhead per suite (xcodebuild startup/workspace loading).")
+    print(f"    Actual test execution is typically much faster.\n")
     
+    # Initialize log file with empty results
     results = []
+    write_log_file(log_file, timestamp, suites, results, [], [], [], [], [], completed=False)
+    
     slow_suites = []
     timeout_suites = []
     compilation_error_suites = []
@@ -219,6 +316,10 @@ def main():
             failed_suites.append(result)
         elif result['time'] > 1.0:
             slow_suites.append(result)
+        
+        # Update log file after each test completes
+        write_log_file(log_file, timestamp, suites, results, slow_suites, timeout_suites,
+                      compilation_error_suites, fatal_error_suites, failed_suites, completed=False)
     
     # Summary
     print(f"\n📊 Performance Summary:")
@@ -266,6 +367,11 @@ def main():
         print(f"\n💾 Results saved to {output_file}")
     else:
         print("\n✅ All test suites passed and run in under 1 second!")
+    
+    # Finalize log file with completed status
+    write_log_file(log_file, timestamp, suites, results, slow_suites, timeout_suites,
+                  compilation_error_suites, fatal_error_suites, failed_suites, completed=True)
+    print(f"📝 Final results logged to {log_file.name}")
     
     # Return non-zero exit code if there are any failures
     has_failures = (len(fatal_error_suites) > 0 or 
