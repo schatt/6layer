@@ -18,21 +18,25 @@ struct FieldHintsOCRExtensionTests {
     }
     
     /// Helper to write a hints file to documents directory where loader can find it
-    private func writeHintsFile(modelName: String, json: [String: Any]) throws -> URL {
+    /// Uses unique filenames to ensure test isolation during parallel execution
+    /// Returns both the file URL and the unique model name to use with loadHintsResult
+    private func writeHintsFile(modelName: String, json: [String: Any]) throws -> (fileURL: URL, uniqueModelName: String) {
         let fileManager = FileManager.default
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not find documents directory"])
         }
         let hintsDir = documentsURL.appendingPathComponent("Hints")
         try fileManager.createDirectory(at: hintsDir, withIntermediateDirectories: true)
-        let testFile = hintsDir.appendingPathComponent("\(modelName).hints")
+        // Use unique filename to prevent conflicts during parallel test execution
+        let uniqueModelName = "\(modelName)_\(UUID().uuidString.prefix(8))"
+        let testFile = hintsDir.appendingPathComponent("\(uniqueModelName).hints")
         let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
         try data.write(to: testFile, options: .atomic)
         // Verify file exists
         guard fileManager.fileExists(atPath: testFile.path) else {
             throw NSError(domain: "TestError", code: 2, userInfo: [NSLocalizedDescriptionKey: "File was not created"])
         }
-        return testFile
+        return (testFile, uniqueModelName)
     }
     
     // MARK: - OCR Hints Parsing Tests
@@ -48,14 +52,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
-        // When: Parsing the hints
+        // When: Parsing the hints (use unique model name from file)
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName)
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: OCR hints should be parsed
         let hints = result.fieldHints["gallons"]
@@ -75,14 +79,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName)
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: Should parse as array
         let hints = result.fieldHints["price"]
@@ -91,20 +95,21 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseOCRHintsAsCommaSeparatedString() async throws {
         // Given: OCR hints as comma-separated string (alternative format)
+        let modelName = "Receipt_testParseOCRHintsAsCommaSeparatedString"
         let json: [String: Any] = [
             "total": [
                 "ocrHints": "total,amount due,grand total"
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: "Receipt", json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: "Receipt")
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: Should parse and split by comma
         let hints = result.fieldHints["total"]
@@ -116,20 +121,21 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseOCRHintsMissing() async throws {
         // Given: Field without OCR hints
+        let modelName = "User_testParseOCRHintsMissing"
         let json: [String: Any] = [
             "username": [
                 "expectedLength": "20"
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: "User", json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: "User")
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: OCR hints should be nil
         let hints = result.fieldHints["username"]
@@ -140,6 +146,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseCalculationGroupsFromHintsFile() async throws {
         // Given: A hints file with calculation groups
+        let modelName = "Order_testParseCalculationGroupsFromHintsFile"
         let json: [String: Any] = [
             "total": [
                 "calculationGroups": [
@@ -153,14 +160,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: "Order", json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: "Order")
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: Calculation groups should be parsed
         let hints = result.fieldHints["total"]
@@ -194,14 +201,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName)
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: Both groups should be parsed
         let hints = result.fieldHints["total"]
@@ -212,20 +219,21 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseCalculationGroupsMissing() async throws {
         // Given: Field without calculation groups
+        let modelName = "User_testParseCalculationGroupsMissing"
         let json: [String: Any] = [
             "username": [
                 "expectedLength": "20"
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: "User", json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: "User")
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: Calculation groups should be nil
         let hints = result.fieldHints["username"]
@@ -252,14 +260,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName)
+        let result = loader.loadHintsResult(for: uniqueModelName)
         
         // Then: Both should be parsed
         let hints = result.fieldHints["gallons"]
@@ -361,14 +369,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with Spanish locale
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "es"))
+        let result = loader.loadHintsResult(for: uniqueModelName, locale: Locale(identifier: "es"))
         
         // Then: Should use Spanish OCR hints
         let hints = result.fieldHints["gallons"]
@@ -389,14 +397,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with French locale (not in file)
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "fr"))
+        let result = loader.loadHintsResult(for: uniqueModelName, locale: Locale(identifier: "fr"))
         
         // Then: Should fallback to default OCR hints
         let hints = result.fieldHints["gallons"]
@@ -419,14 +427,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with English locale
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
+        let result = loader.loadHintsResult(for: uniqueModelName, locale: Locale(identifier: "en"))
         
         // Then: Should use English OCR hints
         let hints = result.fieldHints["gallons"]
@@ -446,14 +454,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with any locale
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "es"))
+        let result = loader.loadHintsResult(for: uniqueModelName, locale: Locale(identifier: "es"))
         
         // Then: Should use default OCR hints (backward compatible)
         let hints = result.fieldHints["gallons"]
@@ -482,14 +490,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let testFile = try writeHintsFile(modelName: modelName, json: json)
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with Spanish locale
         let loader = createTestLoader()
-        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "es"))
+        let result = loader.loadHintsResult(for: uniqueModelName, locale: Locale(identifier: "es"))
         
         // Then: Should have both Spanish OCR hints and calculation groups
         let hints = result.fieldHints["gallons"]
