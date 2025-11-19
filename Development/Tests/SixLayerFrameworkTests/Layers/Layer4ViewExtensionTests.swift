@@ -10,7 +10,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFormField Tests
     
-    @Test func testPlatformFormField_WithLabel() async {
+    @Test @MainActor func testPlatformFormField_WithLabel() async {
+        initializeTestConfig()
         let view = Text("Field Content")
             .platformFormField(label: "Test Label") {
                 Text("Field Content")
@@ -30,7 +31,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFormField_WithoutLabel() async {
+    @Test @MainActor func testPlatformFormField_WithoutLabel() async {
+        initializeTestConfig()
         let view = Text("Field Content")
             .platformFormField {
                 Text("Field Content")
@@ -342,7 +344,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformBackground Tests
     
-    @Test func testPlatformBackground_Default() async {
+    @Test @MainActor func testPlatformBackground_Default() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformBackground()
         
@@ -360,7 +363,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformBackground_CustomColor() async {
+    @Test @MainActor func testPlatformBackground_CustomColor() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformBackground(.blue)
         
@@ -380,7 +384,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformPadding Tests
     
-    @Test func testPlatformPadding_Default() async {
+    @Test @MainActor func testPlatformPadding_Default() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformPadding()
         
@@ -398,7 +403,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPadding_Edges() async {
+    @Test @MainActor func testPlatformPadding_Edges() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformPadding(.horizontal, 16)
         
@@ -416,7 +422,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPadding_Value() async {
+    @Test @MainActor func testPlatformPadding_Value() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformPadding(20)
         
@@ -434,7 +441,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformReducedPadding() async {
+    @Test @MainActor func testPlatformReducedPadding() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformReducedPadding()
         
@@ -454,7 +462,8 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformCornerRadius Tests
     
-    @Test func testPlatformCornerRadius_Default() async {
+    @Test @MainActor func testPlatformCornerRadius_Default() async {
+        initializeTestConfig()
         let view = Text("Content")
             .platformCornerRadius()
         
@@ -472,7 +481,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformCornerRadius_Custom() async {
+    @Test @MainActor func testPlatformCornerRadius_Custom() async {
         let view = Text("Content")
             .platformCornerRadius(16)
         
@@ -492,7 +501,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformShadow Tests
     
-    @Test func testPlatformShadow_Default() async {
+    @Test @MainActor func testPlatformShadow_Default() async {
         let view = Text("Content")
             .platformShadow()
         
@@ -510,7 +519,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformShadow_Custom() async {
+    @Test @MainActor func testPlatformShadow_Custom() async {
         let view = Text("Content")
             .platformShadow(color: .gray, radius: 8, x: 2, y: 2)
         
@@ -530,7 +539,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformBorder Tests
     
-    @Test func testPlatformBorder_Default() async {
+    @Test @MainActor func testPlatformBorder_Default() async {
         let view = Text("Content")
             .platformBorder()
         
@@ -548,7 +557,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformBorder_Custom() async {
+    @Test @MainActor func testPlatformBorder_Custom() async {
         let view = Text("Content")
             .platformBorder(color: .blue, width: 2)
         
@@ -568,7 +577,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFont Tests
     
-    @Test func testPlatformFont_Default() async {
+    @Test @MainActor func testPlatformFont_Default() async {
         let view = Text("Content")
             .platformFont()
         
@@ -586,7 +595,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFont_Custom() async {
+    @Test @MainActor func testPlatformFont_Custom() async {
         let view = Text("Content")
             .platformFont(.headline)
         
@@ -606,7 +615,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformAnimation Tests
     
-    @Test func testPlatformAnimation_Default() async {
+    @Test @MainActor func testPlatformAnimation_Default() async {
         let view = Text("Content")
             .platformAnimation()
         
@@ -624,7 +633,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformAnimation_Custom() async {
+    @Test @MainActor func testPlatformAnimation_Custom() async {
         let view = Text("Content")
             .platformAnimation(.easeInOut, value: true)
         
@@ -823,7 +832,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformPhotoDisplay_L4_NilImage() async {
+    @Test @MainActor func testPlatformPhotoDisplay_L4_NilImage() async {
         let view = platformPhotoDisplay_L4(image: nil, style: .thumbnail)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -842,7 +851,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformOCRImplementation_L4 Tests (Deprecated but still needs tests)
     
-    @Test func testPlatformOCRImplementation_L4() async {
+    @Test @MainActor func testPlatformOCRImplementation_L4() async {
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -881,7 +890,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformTextExtraction_L4 Tests (Deprecated but still needs tests)
     
-    @Test func testPlatformTextExtraction_L4() async {
+    @Test @MainActor func testPlatformTextExtraction_L4() async {
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -933,7 +942,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformTextRecognition_L4 Tests (Deprecated but still needs tests)
     
-    @Test func testPlatformTextRecognition_L4() async {
+    @Test @MainActor func testPlatformTextRecognition_L4() async {
         let testImage = PlatformImage()
         let options = TextRecognitionOptions(
             language: .english,

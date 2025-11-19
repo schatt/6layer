@@ -17,7 +17,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 3 Strategy Component Tests
     
-    @Test func testSelectCardLayoutStrategyL3CreatesLayoutStrategy() async {
+    @Test @MainActor func testSelectCardLayoutStrategyL3CreatesLayoutStrategy() async {
         // Given: Layer 3 card layout strategy function
         let contentCount = 5
         let screenWidth: CGFloat = 400
@@ -39,7 +39,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         #expect(!layoutStrategy.reasoning.isEmpty, "Layout strategy should have reasoning")
     }
     
-    @Test func testChooseGridStrategyCreatesGridStrategy() async {
+    @Test @MainActor func testChooseGridStrategyCreatesGridStrategy() async {
         // Given: Layer 3 grid strategy function
         let screenWidth: CGFloat = 400
         let deviceType = DeviceType.current
@@ -58,7 +58,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         #expect(!gridStrategy.breakpoints.isEmpty, "Grid strategy should have breakpoints")
     }
     
-    @Test func testSelectFormStrategyAddFuelViewL3CreatesFormStrategy() async {
+    @Test @MainActor func testSelectFormStrategyAddFuelViewL3CreatesFormStrategy() async {
         // Given: Layer 3 form strategy function
         let formLayoutDecision = FormLayoutDecision(
             containerType: .standard,
@@ -76,7 +76,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         // All properties are non-optional, so they exist if we reach here
     }
     
-    @Test func testSelectModalStrategyFormL3CreatesModalStrategy() async {
+    @Test @MainActor func testSelectModalStrategyFormL3CreatesModalStrategy() async {
         // Given: Layer 3 modal strategy function
         let modalLayoutDecision = ModalLayoutDecision(
             presentationType: .sheet,
@@ -94,7 +94,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         // All properties are non-optional, so they exist if we reach here
     }
     
-    @Test func testSelectCardExpansionStrategyL3CreatesExpansionStrategy() async {
+    @Test @MainActor func testSelectCardExpansionStrategyL3CreatesExpansionStrategy() async {
         // Given: Layer 3 card expansion strategy function
         let contentCount = 5
         let screenWidth: CGFloat = 400

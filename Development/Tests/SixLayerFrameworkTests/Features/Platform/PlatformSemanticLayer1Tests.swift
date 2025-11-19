@@ -85,7 +85,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentNumericData_L1 Tests
     
-    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testData = GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
         let hints = PresentationHints(
             dataType: .numeric,
@@ -111,7 +112,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testData = GenericNumericData(value: 123.45, label: "Test Value", unit: "units")
         let hints = PresentationHints(
             dataType: .numeric,
@@ -139,7 +141,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentFormData_L1 Tests
     
-    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -172,7 +175,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testField = DynamicFormField(
             id: "testField",
             contentType: .text,
@@ -207,7 +211,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentMediaData_L1 Tests
     
-    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testMedia = GenericMediaItem(title: "Test Media", url: "https://example.com")
         let hints = PresentationHints(
             dataType: .media,
@@ -728,7 +733,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformResponsiveCard_L1 Tests
     
-    @Test func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .card,
@@ -755,7 +761,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformResponsiveCardL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let hints = PresentationHints(
             dataType: .generic,
             presentationPreference: .card,

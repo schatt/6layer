@@ -24,7 +24,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     // MARK: - State Management Tests
     
-    @Test func testPlatformSplitViewStateCreatesStateObject() async {
+    @Test @MainActor func testPlatformSplitViewStateCreatesStateObject() async {
         // Given: Creating a split view state
         let _ = PlatformSplitViewState()
         
@@ -32,7 +32,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(Bool(true), "PlatformSplitViewState should be created")  // state is non-optional
     }
     
-    @Test func testPlatformSplitViewStateHasDefaultVisibility() async {
+    @Test @MainActor func testPlatformSplitViewStateHasDefaultVisibility() async {
         // Given: Creating a split view state
         let _ = PlatformSplitViewState()
         
@@ -41,7 +41,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(Bool(true), "PlatformSplitViewState should have default visibility")
     }
     
-    @Test func testPlatformVerticalSplitL4AcceptsStateBinding() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AcceptsStateBinding() async {
         // Given: A state binding
         let state = PlatformSplitViewState()
         
@@ -63,7 +63,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should accept state binding")
     }
     
-    @Test func testPlatformHorizontalSplitL4AcceptsStateBinding() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4AcceptsStateBinding() async {
         // Given: A state binding
         let state = PlatformSplitViewState()
         
@@ -87,7 +87,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     // MARK: - Visibility Control Tests
     
-    @Test func testPlatformSplitViewStateCanShowHidePanes() async {
+    @Test @MainActor func testPlatformSplitViewStateCanShowHidePanes() async {
         // Given: A split view state
         let state = PlatformSplitViewState()
         
@@ -98,7 +98,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(!state.isPaneVisible(0), "Pane 0 should be hidden")
     }
     
-    @Test func testPlatformSplitViewStateVisibilityBinding() async {
+    @Test @MainActor func testPlatformSplitViewStateVisibilityBinding() async {
         // Given: A state with visibility binding
         let state = PlatformSplitViewState()
         let binding = Binding(
@@ -113,7 +113,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(!state.isPaneVisible(0), "Pane visibility should be updated via binding")
     }
     
-    @Test func testPlatformVerticalSplitL4RespectsVisibilityState() async {
+    @Test @MainActor func testPlatformVerticalSplitL4RespectsVisibilityState() async {
         // Given: A state with hidden pane
         let state = PlatformSplitViewState()
         state.setPaneVisible(0, visible: false)
@@ -136,7 +136,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should respect visibility state")
     }
     
-    @Test func testPlatformHorizontalSplitL4RespectsVisibilityState() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4RespectsVisibilityState() async {
         // Given: A state with hidden pane
         let state = PlatformSplitViewState()
         state.setPaneVisible(1, visible: false)
@@ -160,7 +160,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     // MARK: - State Change Callbacks Tests
     
-    @Test func testPlatformSplitViewStateCallsVisibilityChangeCallback() async {
+    @Test @MainActor func testPlatformSplitViewStateCallsVisibilityChangeCallback() async {
         // Given: A state with callback
         var callbackCalled = false
         var callbackValue: Bool?
@@ -180,7 +180,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     // MARK: - State Persistence Tests
     
-    @Test func testPlatformSplitViewStateCanSaveToUserDefaults() async {
+    @Test @MainActor func testPlatformSplitViewStateCanSaveToUserDefaults() async {
         // Given: A state with visibility settings
         let state = PlatformSplitViewState()
         state.setPaneVisible(0, visible: false)
@@ -193,7 +193,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #expect(Bool(true), "State should be saved to UserDefaults")
     }
     
-    @Test func testPlatformSplitViewStateCanRestoreFromUserDefaults() async {
+    @Test @MainActor func testPlatformSplitViewStateCanRestoreFromUserDefaults() async {
         // Given: A saved state
         let originalState = PlatformSplitViewState()
         originalState.setPaneVisible(0, visible: false)
@@ -211,7 +211,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformSplitViewStateCanSaveToAppStorage() async {
+    @Test @MainActor func testPlatformSplitViewStateCanSaveToAppStorage() async {
         // Given: A state with visibility settings
         @AppStorage("testSplitViewState") var storedState: Data?
         let state = PlatformSplitViewState()
@@ -226,7 +226,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
     
     // MARK: - Cross-Platform Behavior Tests
     
-    @Test func testPlatformSplitViewStateWorksOnIOS() async {
+    @Test @MainActor func testPlatformSplitViewStateWorksOnIOS() async {
         #if os(iOS)
         // Given: A state on iOS
         let state = PlatformSplitViewState()
@@ -251,7 +251,7 @@ open class PlatformSplitViewStateManagementLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewStateWorksOnMacOS() async {
+    @Test @MainActor func testPlatformSplitViewStateWorksOnMacOS() async {
         #if os(macOS)
         // Given: A state on macOS
         let state = PlatformSplitViewState()

@@ -31,7 +31,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             PlatformResponsiveCardsLayer4TestItem(id: "item1", title: "Test Item 1"),
             PlatformResponsiveCardsLayer4TestItem(id: "item2", title: "Test Item 2")
@@ -63,7 +64,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             PlatformResponsiveCardsLayer4TestItem(id: "item1", title: "Test Item 1"),
             PlatformResponsiveCardsLayer4TestItem(id: "item2", title: "Test Item 2")
@@ -97,7 +99,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
     
     // MARK: - GenericNumericDataView Tests
     
-    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testData = [
             GenericNumericData(value: 123.45, label: "Test Value 1", unit: "units"),
             GenericNumericData(value: 67.89, label: "Test Value 2", unit: "items")
@@ -126,7 +129,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testData = [
             GenericNumericData(value: 123.45, label: "Test Value 1", unit: "units"),
             GenericNumericData(value: 67.89, label: "Test Value 2", unit: "items")
@@ -157,7 +161,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
     
     // MARK: - GenericMediaView Tests
     
-    @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testMedia = [
             GenericMediaItem(title: "Test Media 1", url: "https://example.com/1"),
             GenericMediaItem(title: "Test Media 2", url: "https://example.com/2")
@@ -186,7 +191,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testMedia = [
             GenericMediaItem(title: "Test Media 1", url: "https://example.com/1"),
             GenericMediaItem(title: "Test Media 2", url: "https://example.com/2")
@@ -217,7 +223,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
     
     // MARK: - GenericSettingsView Tests
     
-    @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -258,7 +265,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericSettingsViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -301,7 +309,8 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
     
     // MARK: - GenericContentView Tests
     
-    @Test func testGenericContentViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testGenericContentViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -327,7 +336,7 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericContentViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericContentViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -355,7 +364,7 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
     
     // MARK: - GenericNumericDataView Tests
     
-    @Test func testBasicValueViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testBasicValueViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -384,7 +393,7 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testBasicValueViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testBasicValueViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -415,7 +424,7 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
     
     // MARK: - GenericItemCollectionView Tests
     
-    @Test func testBasicArrayViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testBasicArrayViewGeneratesAccessibilityIdentifiersOnIOS() async {
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -444,7 +453,7 @@ open class PlatformResponsiveCardsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testBasicArrayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testBasicArrayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,

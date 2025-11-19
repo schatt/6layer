@@ -20,7 +20,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
     
     /// Test that cross-platform manager correctly detects the current platform
     /// Cross-platform test - works on both iOS and macOS
-    @Test func testCrossPlatformManagerDetectsCurrentPlatform() async {
+    @Test @MainActor func testCrossPlatformManagerDetectsCurrentPlatform() async {
         // Given: Cross-platform optimization manager
         let manager = CrossPlatformOptimizationManager()
         
@@ -50,7 +50,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
     
     /// TDD RED PHASE: Accessibility testing should perform actual checks
     /// This test should FAIL initially because checks are mocked
-    @Test func testAccessibilityTestingPerformsActualChecks() async {
+    @Test @MainActor func testAccessibilityTestingPerformsActualChecks() async {
         // Given: A view with known accessibility issues
         let problematicView = VStack {
             Image(systemName: "photo") // No accessibility label
@@ -79,7 +79,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
     
     /// TDD RED PHASE: Accessibility testing should validate tab order
     /// This test should FAIL initially because tab order checking is not implemented
-    @Test func testAccessibilityTestingValidatesTabOrder() async {
+    @Test @MainActor func testAccessibilityTestingValidatesTabOrder() async {
         // Given: A view with poor tab order
         let poorTabOrderView = VStack {
             Button("Last Button") { }
@@ -109,7 +109,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
     
     /// TDD RED PHASE: Platform features should be detected at runtime
     /// This test should FAIL initially because feature detection is not implemented
-    @Test func testPlatformFeatureDetectionAtRuntime() async {
+    @Test @MainActor func testPlatformFeatureDetectionAtRuntime() async {
         // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
         // Test disabled - functionality removed from framework
         // When: Getting platform recommendations
@@ -181,6 +181,7 @@ extension AccessibilityTestingSuite {
 extension CrossPlatformOptimizationManager {
     /// Get platform recommendations
     func getPlatformRecommendations() -> [PlatformRecommendation] {
+        initializeTestConfig()
         // This should be implemented to generate real recommendations
         return PlatformRecommendationEngine.generateRecommendations(
             for: currentPlatform,

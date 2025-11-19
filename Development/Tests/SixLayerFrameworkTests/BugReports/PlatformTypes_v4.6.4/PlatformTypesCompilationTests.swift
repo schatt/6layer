@@ -19,7 +19,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Core Platform Types Tests
     
-    @Test func testSixLayerPlatformCompilation() {
+    @Test @MainActor func testSixLayerPlatformCompilation() {
         // Verify SixLayerPlatform enum compiles and is accessible
         let platform = SixLayerPlatform.current
         // Platform is non-optional, so just verify it exists
@@ -35,7 +35,7 @@ struct PlatformTypesCompilationTests {
         #expect(allPlatforms.contains(.visionOS))
     }
     
-    @Test func testDeviceTypeCompilation() {
+    @Test @MainActor func testDeviceTypeCompilation() {
         // Verify DeviceType enum compiles and is accessible
         let deviceType = DeviceType.current
         // DeviceType is non-optional, so just verify it exists
@@ -53,7 +53,7 @@ struct PlatformTypesCompilationTests {
         #expect(allDeviceTypes.contains(.vision))
     }
     
-    @Test func testDeviceContextCompilation() {
+    @Test @MainActor func testDeviceContextCompilation() {
         // Verify DeviceContext enum compiles and is accessible
         let deviceContext = DeviceContext.current
         // DeviceContext is non-optional, so just verify it exists
@@ -71,7 +71,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - CarPlay Types Tests
     
-    @Test func testCarPlayCapabilityDetectionCompilation() {
+    @Test @MainActor func testCarPlayCapabilityDetectionCompilation() {
         // Verify CarPlayCapabilityDetection compiles and is accessible
         let isCarPlayActive = CarPlayCapabilityDetection.isCarPlayActive
         #expect(!isCarPlayActive) // Should be false in test environment
@@ -89,7 +89,7 @@ struct PlatformTypesCompilationTests {
         #expect(layoutPreferences.prefersMinimalUI)
     }
     
-    @Test func testCarPlayLayoutPreferencesCompilation() {
+    @Test @MainActor func testCarPlayLayoutPreferencesCompilation() {
         // Verify CarPlayLayoutPreferences compiles and can be instantiated
         let preferences = CarPlayLayoutPreferences()
         #expect(preferences.prefersLargeText)
@@ -116,7 +116,7 @@ struct PlatformTypesCompilationTests {
         #expect(!customPreferences.supportsKnobControl)
     }
     
-    @Test func testCarPlayFeatureCompilation() {
+    @Test @MainActor func testCarPlayFeatureCompilation() {
         // Verify CarPlayFeature enum compiles and is accessible
         let allFeatures = CarPlayFeature.allCases
         #expect(!allFeatures.isEmpty)
@@ -131,7 +131,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Keyboard Types Tests
     
-    @Test func testKeyboardTypeCompilation() {
+    @Test @MainActor func testKeyboardTypeCompilation() {
         // Verify KeyboardType enum compiles and is accessible
         let allKeyboardTypes = KeyboardType.allCases
         #expect(!allKeyboardTypes.isEmpty)
@@ -152,7 +152,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Form Types Tests
     
-    @Test func testFormContentMetricsCompilation() {
+    @Test @MainActor func testFormContentMetricsCompilation() {
         // Verify FormContentMetrics compiles and can be instantiated
         let metrics = FormContentMetrics(
             fieldCount: 5,
@@ -176,7 +176,7 @@ struct PlatformTypesCompilationTests {
         #expect(!defaultMetrics.hasComplexContent)
     }
     
-    @Test func testFormContentKeyCompilation() {
+    @Test @MainActor func testFormContentKeyCompilation() {
         // Verify FormContentKey compiles and has proper PreferenceKey conformance
         let defaultValue = FormContentKey.defaultValue
         #expect(defaultValue.fieldCount == 0)
@@ -193,7 +193,7 @@ struct PlatformTypesCompilationTests {
         #expect(value.estimatedComplexity == .complex)
     }
     
-    @Test func testLayoutPreferenceCompilation() {
+    @Test @MainActor func testLayoutPreferenceCompilation() {
         // Verify LayoutPreference enum compiles and is accessible
         let allLayoutPreferences = LayoutPreference.allCases
         #expect(!allLayoutPreferences.isEmpty)
@@ -207,7 +207,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Platform Device Capabilities Tests
     
-    @Test func testPlatformDeviceCapabilitiesCompilation() {
+    @Test @MainActor func testPlatformDeviceCapabilitiesCompilation() {
         // Verify PlatformDeviceCapabilities compiles and is accessible
         let deviceType = PlatformDeviceCapabilities.deviceType
         let _ = deviceType
@@ -233,7 +233,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Modal Types Tests
     
-    @Test func testModalPlatformCompilation() {
+    @Test @MainActor func testModalPlatformCompilation() {
         // Verify ModalPlatform enum compiles and is accessible
         let allModalPlatforms = ModalPlatform.allCases
         #expect(!allModalPlatforms.isEmpty)
@@ -241,7 +241,7 @@ struct PlatformTypesCompilationTests {
         #expect(allModalPlatforms.contains(.macOS))
     }
     
-    @Test func testModalPresentationTypeCompilation() {
+    @Test @MainActor func testModalPresentationTypeCompilation() {
         // Verify ModalPresentationType enum compiles and is accessible
         let allPresentationTypes = ModalPresentationType.allCases
         #expect(!allPresentationTypes.isEmpty)
@@ -251,7 +251,7 @@ struct PlatformTypesCompilationTests {
         #expect(allPresentationTypes.contains(.custom))
     }
     
-    @Test func testModalSizingCompilation() {
+    @Test @MainActor func testModalSizingCompilation() {
         // Verify ModalSizing enum compiles and is accessible
         let allSizingOptions = ModalSizing.allCases
         #expect(!allSizingOptions.isEmpty)
@@ -261,7 +261,7 @@ struct PlatformTypesCompilationTests {
         #expect(allSizingOptions.contains(.custom))
     }
     
-    @Test func testModalConstraintCompilation() {
+    @Test @MainActor func testModalConstraintCompilation() {
         // Verify ModalConstraint compiles and can be instantiated
         let constraint = ModalConstraint(
             maxWidth: 300,
@@ -280,7 +280,7 @@ struct PlatformTypesCompilationTests {
         #expect(defaultConstraint.preferredSize == nil)
     }
     
-    @Test func testPlatformAdaptationCompilation() {
+    @Test @MainActor func testPlatformAdaptationCompilation() {
         // Verify PlatformAdaptation enum compiles and is accessible
         let allAdaptations = PlatformAdaptation.allCases
         #expect(!allAdaptations.isEmpty)
@@ -291,7 +291,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Form Layout Types Tests
     
-    @Test func testFormLayoutDecisionCompilation() {
+    @Test @MainActor func testFormLayoutDecisionCompilation() {
         // Verify FormLayoutDecision compiles and can be instantiated
         let decision = FormLayoutDecision(
             containerType: .form,
@@ -305,7 +305,7 @@ struct PlatformTypesCompilationTests {
         #expect(decision.validation == .realTime)
     }
     
-    @Test func testFormContainerTypeCompilation() {
+    @Test @MainActor func testFormContainerTypeCompilation() {
         // Verify FormContainerType enum compiles and is accessible
         let allContainerTypes = FormContainerType.allCases
         #expect(!allContainerTypes.isEmpty)
@@ -316,7 +316,7 @@ struct PlatformTypesCompilationTests {
         #expect(allContainerTypes.contains(.standard))
     }
     
-    @Test func testValidationStrategyCompilation() {
+    @Test @MainActor func testValidationStrategyCompilation() {
         // Verify ValidationStrategy enum compiles and is accessible
         let allStrategies = ValidationStrategy.allCases
         #expect(!allStrategies.isEmpty)
@@ -328,7 +328,7 @@ struct PlatformTypesCompilationTests {
         #expect(allStrategies.contains(.deferred))
     }
     
-    @Test func testSpacingPreferenceCompilation() {
+    @Test @MainActor func testSpacingPreferenceCompilation() {
         // Verify SpacingPreference enum compiles and is accessible
         let allSpacingPreferences = SpacingPreference.allCases
         #expect(!allSpacingPreferences.isEmpty)
@@ -339,7 +339,7 @@ struct PlatformTypesCompilationTests {
         #expect(allSpacingPreferences.contains(.spacious))
     }
     
-    @Test func testFieldLayoutCompilation() {
+    @Test @MainActor func testFieldLayoutCompilation() {
         // Verify FieldLayout enum compiles and is accessible
         let allFieldLayouts = FieldLayout.allCases
         #expect(!allFieldLayouts.isEmpty)
@@ -354,7 +354,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Modal Layout Types Tests
     
-    @Test func testModalLayoutDecisionCompilation() {
+    @Test @MainActor func testModalLayoutDecisionCompilation() {
         // Verify ModalLayoutDecision compiles and can be instantiated
         let decision = ModalLayoutDecision(
             presentationType: .sheet,
@@ -369,7 +369,7 @@ struct PlatformTypesCompilationTests {
         #expect(decision.platformConstraints.isEmpty)
     }
     
-    @Test func testSheetDetentCompilation() {
+    @Test @MainActor func testSheetDetentCompilation() {
         // Verify SheetDetent enum compiles and is accessible
         let allDetents = SheetDetent.allCases
         #expect(!allDetents.isEmpty)
@@ -385,7 +385,7 @@ struct PlatformTypesCompilationTests {
         }
     }
     
-    @Test func testFormStrategyCompilation() {
+    @Test @MainActor func testFormStrategyCompilation() {
         // Verify FormStrategy compiles and can be instantiated
         let strategy = FormStrategy(
             containerType: .form,
@@ -401,7 +401,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Card Layout Types Tests
     
-    @Test func testCardLayoutDecisionCompilation() {
+    @Test @MainActor func testCardLayoutDecisionCompilation() {
         // Verify CardLayoutDecision compiles and can be instantiated
         // Use the most conservative/safe values to avoid framework preconditions
         let safeResponsive = ResponsiveBehavior(type: .adaptive)
@@ -431,7 +431,7 @@ struct PlatformTypesCompilationTests {
         }
     }
     
-    @Test func testCardLayoutTypeCompilation() {
+    @Test @MainActor func testCardLayoutTypeCompilation() {
         // Verify CardLayoutType enum compiles and is accessible
         let allLayoutTypes = CardLayoutType.allCases
         #expect(!allLayoutTypes.isEmpty)
@@ -441,7 +441,7 @@ struct PlatformTypesCompilationTests {
         #expect(allLayoutTypes.contains(.dynamic))
     }
     
-    @Test func testCardSizingCompilation() {
+    @Test @MainActor func testCardSizingCompilation() {
         // Verify CardSizing enum compiles and is accessible
         let allSizingTypes = CardSizing.allCases
         #expect(!allSizingTypes.isEmpty)
@@ -451,7 +451,7 @@ struct PlatformTypesCompilationTests {
         #expect(allSizingTypes.contains(.contentBased))
     }
     
-    @Test func testCardInteractionCompilation() {
+    @Test @MainActor func testCardInteractionCompilation() {
         // Verify CardInteraction enum compiles and is accessible
         let allInteractionTypes = CardInteraction.allCases
         #expect(!allInteractionTypes.isEmpty)
@@ -462,7 +462,7 @@ struct PlatformTypesCompilationTests {
         #expect(allInteractionTypes.contains(.none))
     }
     
-    @Test func testResponsiveBehaviorCompilation() {
+    @Test @MainActor func testResponsiveBehaviorCompilation() {
         // Verify ResponsiveBehavior compiles and can be instantiated
         let behavior = ResponsiveBehavior(
             type: .adaptive,
@@ -483,7 +483,7 @@ struct PlatformTypesCompilationTests {
         #expect(!defaultBehavior.adaptive)
     }
     
-    @Test func testResponsiveTypeCompilation() {
+    @Test @MainActor func testResponsiveTypeCompilation() {
         // Verify ResponsiveType enum compiles and is accessible
         let allResponsiveTypes = ResponsiveType.allCases
         #expect(!allResponsiveTypes.isEmpty)
@@ -496,7 +496,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Cross-Platform Image Types Tests
     
-    @Test func testPlatformSizeCompilation() {
+    @Test @MainActor func testPlatformSizeCompilation() {
         // Verify PlatformSize compiles and can be instantiated
         let size = PlatformSize(width: 100, height: 200)
         #expect(size.width == 100)
@@ -521,7 +521,7 @@ struct PlatformTypesCompilationTests {
         #endif
     }
     
-    @Test func testPlatformImageCompilation() {
+    @Test @MainActor func testPlatformImageCompilation() {
         // Verify PlatformImage compiles and can be instantiated
         let emptyImage = PlatformImage()
         #expect(emptyImage.isEmpty)
@@ -541,7 +541,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Content Analysis Types Tests
     
-    @Test func testContentAnalysisCompilation() {
+    @Test @MainActor func testContentAnalysisCompilation() {
         // Verify ContentAnalysis compiles and can be instantiated
         let analysis = ContentAnalysis(
             recommendedApproach: .adaptive,
@@ -564,7 +564,7 @@ struct PlatformTypesCompilationTests {
         #expect(defaultAnalysis.performanceConsiderations.isEmpty)
     }
     
-    @Test func testLayoutApproachCompilation() {
+    @Test @MainActor func testLayoutApproachCompilation() {
         // Verify LayoutApproach enum compiles and is accessible
         let allApproaches = LayoutApproach.allCases
         #expect(!allApproaches.isEmpty)
@@ -582,7 +582,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Presentation Hints Tests
     
-    @Test func testDataTypeHintCompilation() {
+    @Test @MainActor func testDataTypeHintCompilation() {
         // Verify DataTypeHint enum compiles and is accessible
         let allDataTypeHints = DataTypeHint.allCases
         #expect(!allDataTypeHints.isEmpty)
@@ -615,7 +615,7 @@ struct PlatformTypesCompilationTests {
         #expect(allDataTypeHints.contains(.sheet))
     }
     
-    @Test func testPresentationPreferenceCompilation() {
+    @Test @MainActor func testPresentationPreferenceCompilation() {
         // Verify PresentationPreference enum compiles and is accessible
         let allPreferences = PresentationPreference.allCases
         #expect(!allPreferences.isEmpty)
@@ -639,7 +639,7 @@ struct PlatformTypesCompilationTests {
         #expect(allPreferences.contains(.coverFlow))
     }
     
-    @Test func testPresentationContextCompilation() {
+    @Test @MainActor func testPresentationContextCompilation() {
         // Verify PresentationContext enum compiles and is accessible
         let allContexts = PresentationContext.allCases
         #expect(!allContexts.isEmpty)
@@ -660,7 +660,7 @@ struct PlatformTypesCompilationTests {
         #expect(allContexts.contains(.gallery))
     }
     
-    @Test func testContentComplexityCompilation() {
+    @Test @MainActor func testContentComplexityCompilation() {
         // Verify ContentComplexity enum compiles and is accessible
         let allComplexities = ContentComplexity.allCases
         #expect(!allComplexities.isEmpty)
@@ -671,7 +671,7 @@ struct PlatformTypesCompilationTests {
         #expect(allComplexities.contains(.advanced))
     }
     
-    @Test func testPresentationHintsCompilation() {
+    @Test @MainActor func testPresentationHintsCompilation() {
         // Verify PresentationHints compiles and can be instantiated
         let hints = PresentationHints(
             dataType: .text,
@@ -699,7 +699,7 @@ struct PlatformTypesCompilationTests {
     
     // MARK: - Integration Tests
     
-    @Test func testPlatformTypesIntegration() {
+    @Test @MainActor func testPlatformTypesIntegration() {
         // Test that all types work together without compilation issues
         let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current
@@ -752,7 +752,7 @@ struct PlatformTypesCompilationTests {
         #expect(presentationHints.dataType == .form)
     }
     
-    @Test func testPlatformTypesSendableCompliance() {
+    @Test @MainActor func testPlatformTypesSendableCompliance() {
         // Test that Sendable types can be used in concurrent contexts
         let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current

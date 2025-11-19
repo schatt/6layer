@@ -24,7 +24,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
     
     // MARK: - platformVerticalSplit_L4 Tests
     
-    @Test func testPlatformVerticalSplitL4CreatesView() async {
+    @Test @MainActor func testPlatformVerticalSplitL4CreatesView() async {
+        initializeTestConfig()
         // Given: A view with vertical split
         let view = Text("Top")
             .platformVerticalSplit_L4(spacing: 0) {
@@ -37,7 +38,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should create a valid view")
     }
     
-    @Test func testPlatformVerticalSplitL4WithSpacing() async {
+    @Test @MainActor func testPlatformVerticalSplitL4WithSpacing() async {
+        initializeTestConfig()
         // Given: A view with vertical split and spacing
         let view = Text("Top")
             .platformVerticalSplit_L4(spacing: 16) {
@@ -50,7 +52,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should accept spacing parameter")
     }
     
-    @Test func testPlatformVerticalSplitL4WithMultipleChildren() async {
+    @Test @MainActor func testPlatformVerticalSplitL4WithMultipleChildren() async {
+        initializeTestConfig()
         // Given: A view with multiple child views
         let view = Text("Top")
             .platformVerticalSplit_L4(spacing: 0) {
@@ -63,7 +66,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should support multiple child views")
     }
     
-    @Test func testPlatformVerticalSplitL4GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformVerticalSplitL4GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: A view with vertical split
         let view = Text("Top")
             .platformVerticalSplit_L4(spacing: 0) {
@@ -88,7 +92,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformVerticalSplitL4UsesVSplitViewOnMacOS() async {
+    @Test @MainActor func testPlatformVerticalSplitL4UsesVSplitViewOnMacOS() async {
+        initializeTestConfig()
         #if os(macOS)
         // Given: A view with vertical split on macOS
         let view = Text("Top")
@@ -105,7 +110,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformVerticalSplitL4UsesVStackOnIOS() async {
+    @Test @MainActor func testPlatformVerticalSplitL4UsesVStackOnIOS() async {
+        initializeTestConfig()
         #if os(iOS)
         // Given: A view with vertical split on iOS
         let view = Text("Top")
@@ -124,7 +130,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
     
     // MARK: - platformHorizontalSplit_L4 Tests
     
-    @Test func testPlatformHorizontalSplitL4CreatesView() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4CreatesView() async {
+        initializeTestConfig()
         // Given: A view with horizontal split
         let view = Text("Left")
             .platformHorizontalSplit_L4(spacing: 0) {
@@ -136,7 +143,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformHorizontalSplit_L4 should create a valid view")
     }
     
-    @Test func testPlatformHorizontalSplitL4WithSpacing() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4WithSpacing() async {
+        initializeTestConfig()
         // Given: A view with horizontal split and spacing
         let view = Text("Left")
             .platformHorizontalSplit_L4(spacing: 16) {
@@ -149,7 +157,8 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformHorizontalSplit_L4 should accept spacing parameter")
     }
     
-    @Test func testPlatformHorizontalSplitL4WithMultipleChildren() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4WithMultipleChildren() async {
+        initializeTestConfig()
         // Given: A view with multiple child views
         let view = Text("Left")
             .platformHorizontalSplit_L4(spacing: 0) {
@@ -162,7 +171,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformHorizontalSplit_L4 should support multiple child views")
     }
     
-    @Test func testPlatformHorizontalSplitL4GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4GeneratesAccessibilityIdentifiers() async {
         // Given: A view with horizontal split
         let view = Text("Left")
             .platformHorizontalSplit_L4(spacing: 0) {
@@ -187,7 +196,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformHorizontalSplitL4UsesHSplitViewOnMacOS() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4UsesHSplitViewOnMacOS() async {
         #if os(macOS)
         // Given: A view with horizontal split on macOS
         let view = Text("Left")
@@ -204,7 +213,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformHorizontalSplitL4UsesHStackOnIOS() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4UsesHStackOnIOS() async {
         #if os(iOS)
         // Given: A view with horizontal split on iOS
         let view = Text("Left")
@@ -223,7 +232,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
     
     // MARK: - Cross-Platform Behavior Tests
     
-    @Test func testPlatformVerticalSplitL4SpacingIgnoredOnMacOS() async {
+    @Test @MainActor func testPlatformVerticalSplitL4SpacingIgnoredOnMacOS() async {
         #if os(macOS)
         // Given: A view with vertical split and spacing on macOS
         let view = Text("Top")
@@ -240,7 +249,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformHorizontalSplitL4SpacingIgnoredOnMacOS() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4SpacingIgnoredOnMacOS() async {
         #if os(macOS)
         // Given: A view with horizontal split and spacing on macOS
         let view = Text("Left")
@@ -257,7 +266,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformVerticalSplitL4SpacingAppliedOnIOS() async {
+    @Test @MainActor func testPlatformVerticalSplitL4SpacingAppliedOnIOS() async {
         #if os(iOS)
         // Given: A view with vertical split and spacing on iOS
         let view = Text("Top")
@@ -274,7 +283,7 @@ open class PlatformSplitViewLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformHorizontalSplitL4SpacingAppliedOnIOS() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4SpacingAppliedOnIOS() async {
         #if os(iOS)
         // Given: A view with horizontal split and spacing on iOS
         let view = Text("Left")

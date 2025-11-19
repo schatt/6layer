@@ -18,7 +18,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Service Initialization Tests
     
-    @Test func testLocationServiceInitialization() async {
+    @Test @MainActor func testLocationServiceInitialization() async {
         // Given & When: Creating the cross-platform service
         let service = LocationService()
         
@@ -32,7 +32,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Authorization Status Tests
     
-    @Test func testLocationServiceHasAuthorizationStatus() async {
+    @Test @MainActor func testLocationServiceHasAuthorizationStatus() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -48,7 +48,7 @@ open class LocationServiceTests: BaseTestClass {
                 status == .authorizedAlways)
     }
     
-    @Test func testLocationServiceReportsLocationEnabledStatus() async {
+    @Test @MainActor func testLocationServiceReportsLocationEnabledStatus() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -62,7 +62,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Error Handling Tests
     
-    @Test func testLocationServiceHasErrorProperty() async {
+    @Test @MainActor func testLocationServiceHasErrorProperty() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -76,7 +76,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Location Updates Tests
     
-    @Test func testLocationServiceCanStartUpdatingLocation() async {
+    @Test @MainActor func testLocationServiceCanStartUpdatingLocation() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -89,7 +89,7 @@ open class LocationServiceTests: BaseTestClass {
         #expect(service.error == nil || service.error != nil)
     }
     
-    @Test func testLocationServiceCanStopUpdatingLocation() async {
+    @Test @MainActor func testLocationServiceCanStopUpdatingLocation() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -102,7 +102,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Protocol Conformance Tests
     
-    @Test func testLocationServiceConformsToLocationServiceProtocol() async {
+    @Test @MainActor func testLocationServiceConformsToLocationServiceProtocol() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -116,7 +116,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testLocationServiceWorksOnAllPlatforms() async {
+    @Test @MainActor func testLocationServiceWorksOnAllPlatforms() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -134,7 +134,7 @@ open class LocationServiceTests: BaseTestClass {
     
     // MARK: - Actor Isolation Tests
     
-    @Test func testLocationServiceIsMainActorIsolated() async {
+    @Test @MainActor func testLocationServiceIsMainActorIsolated() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -148,7 +148,7 @@ open class LocationServiceTests: BaseTestClass {
         #expect(isEnabled == true || isEnabled == false)
     }
     
-    @Test func testLocationServiceMainActorIsolatedProperties() async {
+    @Test @MainActor func testLocationServiceMainActorIsolatedProperties() async {
         // Given: LocationService (marked @MainActor)
         let service = LocationService()
         
@@ -164,7 +164,7 @@ open class LocationServiceTests: BaseTestClass {
         #expect(error == nil || error != nil)
     }
     
-    @Test func testLocationServiceProtocolConformanceIsolation() async {
+    @Test @MainActor func testLocationServiceProtocolConformanceIsolation() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -177,7 +177,7 @@ open class LocationServiceTests: BaseTestClass {
         #expect(protocolService.isLocationEnabled == service.isLocationEnabled)
     }
     
-    @Test func testLocationServiceDelegateMethodsNonisolated() async {
+    @Test @MainActor func testLocationServiceDelegateMethodsNonisolated() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -196,7 +196,7 @@ open class LocationServiceTests: BaseTestClass {
         #expect(status == .notDetermined || status == .denied || status == .restricted || status == .authorized || status == .authorizedAlways)
     }
     
-    @Test func testLocationServiceNoUncheckedSendableConflict() async {
+    @Test @MainActor func testLocationServiceNoUncheckedSendableConflict() async {
         // Given: LocationService
         let service = LocationService()
         
@@ -211,7 +211,7 @@ open class LocationServiceTests: BaseTestClass {
         // ProtocolService is non-optional, so it exists if we reach here
     }
     
-    @Test func testLocationServiceCompilesWithSwift6StrictConcurrency() async {
+    @Test @MainActor func testLocationServiceCompilesWithSwift6StrictConcurrency() async {
         // Given: LocationService
         let service = LocationService()
         

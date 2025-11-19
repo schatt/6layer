@@ -216,7 +216,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Test touch, haptic feedback, and AssistiveTouch capability combination
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate iOS phone capabilities
-    @Test func testTouchHapticAssistiveTouchCombination() {
+    @Test @MainActor func testTouchHapticAssistiveTouchCombination() {
         // Set mock capabilities for iOS phone combination
         RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         RuntimeCapabilityDetection.setTestTouchSupport(true)
@@ -251,7 +251,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Test logical relationships between touch, haptic feedback, and AssistiveTouch capabilities
     /// TESTING SCOPE: Capability dependency logic, mutual exclusivity, platform consistency
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test capability relationships
-    @Test func testTouchHapticAssistiveTouchLogic() {
+    @Test @MainActor func testTouchHapticAssistiveTouchLogic() {
         // Test the logical relationships between capabilities
         if RuntimeCapabilityDetection.supportsTouch {
             // Touch should enable haptic feedback
@@ -273,7 +273,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate iPad-specific capability combination functionality for touch, hover, haptic, and AssistiveTouch
     /// TESTING SCOPE: iPad capability detection, touch+hover coexistence, haptic feedback, AssistiveTouch
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate iPad capabilities
-    @Test func testTouchHoverHapticAssistiveTouchCombination() {
+    @Test @MainActor func testTouchHoverHapticAssistiveTouchCombination() {
         // Test iPad combination
         let iPadConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.iOS,
@@ -326,7 +326,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate macOS-specific capability combination functionality for hover, vision, and OCR
     /// TESTING SCOPE: macOS capability detection, hover support, vision framework, OCR functionality
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate macOS capabilities
-    @Test func testHoverVisionOCRCombination() {
+    @Test @MainActor func testHoverVisionOCRCombination() {
         // Test macOS combination (hover + vision + OCR, no touch)
         let macOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.macOS,
@@ -382,7 +382,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate watchOS-specific capability combination functionality for touch, haptic, and AssistiveTouch
     /// TESTING SCOPE: watchOS capability detection, touch support, haptic feedback, AssistiveTouch, limited capabilities
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate watchOS capabilities
-    @Test func testWatchOSCombination() {
+    @Test @MainActor func testWatchOSCombination() {
         // Test watchOS combination (touch + haptic + AssistiveTouch, no hover/vision/OCR)
         let watchOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.watchOS,
@@ -442,7 +442,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate tvOS-specific capability combination functionality with accessibility-only features
     /// TESTING SCOPE: tvOS capability detection, accessibility support, limited interaction capabilities
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate tvOS capabilities
-    @Test func testTVOSCombination() {
+    @Test @MainActor func testTVOSCombination() {
         // Test tvOS combination (accessibility only, no touch/hover/haptic/vision/OCR)
         let tvOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.tvOS,
@@ -481,7 +481,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate visionOS-specific capability combination functionality for Vision framework and OCR
     /// TESTING SCOPE: visionOS capability detection, Vision framework support, OCR functionality, accessibility
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate visionOS capabilities
-    @Test func testVisionOSCombination() {
+    @Test @MainActor func testVisionOSCombination() {
         // Test visionOS combination (Vision + OCR + accessibility, no touch/hover/haptic/AssistiveTouch)
         let visionOSConfig = simulatePlatformCapabilities(
             platform: SixLayerPlatform.visionOS,
@@ -527,6 +527,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
     func testCapabilityCombination(_ combination: CapabilityCombination) {
+        initializeTestConfig()
         let platform = SixLayerPlatform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
         
@@ -555,6 +556,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
     func testCombinationBehavior(_ combination: CapabilityCombination) {
+        initializeTestConfig()
         // Use enum-based approach instead of string matching
         guard let combinationType = combination.combinationType else {
             Issue.record("Unknown capability combination: \(combination.name)")
@@ -594,6 +596,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
     func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
+        initializeTestConfig()
         // Set up test platform and capabilities based on the combination
         // Use the first expected platform for testing
         guard let testPlatform = combination.expectedPlatforms.first else {
@@ -658,6 +661,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
     func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
+        initializeTestConfig()
         // Set up a platform that doesn't match the combination
         // Use a platform that's not in the expected platforms list
         let allPlatforms = SixLayerPlatform.allCases
@@ -898,7 +902,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate capability combination performance optimization functionality
     /// TESTING SCOPE: Performance optimization for capability combinations, animation settings, hover delay configuration
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test performance with combinations
-    @Test func testPerformanceWithCombinations() {
+    @Test @MainActor func testPerformanceWithCombinations() {
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
         

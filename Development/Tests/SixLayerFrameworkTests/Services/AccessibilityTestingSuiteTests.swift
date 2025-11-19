@@ -11,7 +11,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     // MARK: - Suite Initialization Tests
     
-    @Test func testAccessibilityTestingSuiteInitialization() async {
+    @Test @MainActor func testAccessibilityTestingSuiteInitialization() async {
         // Given & When: Creating the testing suite
         let suite = AccessibilityTestingSuite()
         
@@ -20,7 +20,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     // MARK: - Accessibility Testing Tests
     
-    @Test func testAccessibilityTestingSuiteRunsBasicTests() async {
+    @Test @MainActor func testAccessibilityTestingSuiteRunsBasicTests() async {
         // Given: AccessibilityTestingSuite
         let suite = AccessibilityTestingSuite()
         
@@ -31,7 +31,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(Bool(true), "testResults is non-optional")  // testResults is non-optional
     }
     
-    @Test func testAccessibilityTestingSuiteRunsComprehensiveTests() async {
+    @Test @MainActor func testAccessibilityTestingSuiteRunsComprehensiveTests() async {
         // Given: AccessibilityTestingSuite
         let suite = AccessibilityTestingSuite()
         
@@ -42,7 +42,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(Bool(true), "testResults is non-optional")  // testResults is non-optional
     }
     
-    @Test func testAccessibilityTestingSuiteValidatesUIComponent() async {
+    @Test @MainActor func testAccessibilityTestingSuiteValidatesUIComponent() async {
         // Given: AccessibilityTestingSuite and a test view
         let suite = AccessibilityTestingSuite()
         let testView = Text("Test Component")
@@ -56,7 +56,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     // MARK: - Test Reporting Tests
     
-    @Test func testAccessibilityTestingSuiteGeneratesReport() async {
+    @Test @MainActor func testAccessibilityTestingSuiteGeneratesReport() async {
         // Given: AccessibilityTestingSuite
         let suite = AccessibilityTestingSuite()
         
@@ -68,7 +68,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(!report.isEmpty)
     }
     
-    @Test func testAccessibilityTestingSuiteReportsViolations() async {
+    @Test @MainActor func testAccessibilityTestingSuiteReportsViolations() async {
         // Given: AccessibilityTestingSuite
         let suite = AccessibilityTestingSuite()
         
@@ -79,7 +79,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         #expect(Bool(true), "violations is non-optional")  // violations is non-optional
     }
     
-    @Test func testAccessibilityTestingSuiteReportsCompliance() async {
+    @Test @MainActor func testAccessibilityTestingSuiteReportsCompliance() async {
         // Given: AccessibilityTestingSuite
         let suite = AccessibilityTestingSuite()
         
@@ -92,7 +92,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     // MARK: - Test Configuration Tests
     
-    @Test func testAccessibilityTestingSuiteCanConfigureTests() async {
+    @Test @MainActor func testAccessibilityTestingSuiteCanConfigureTests() async {
         // Given: AccessibilityTestingSuite
         let suite = AccessibilityTestingSuite()
         
@@ -112,7 +112,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     // MARK: - Comprehensive Business Logic Tests
     
-    @Test func testAccessibilityTestingSuiteInitialization_Comprehensive() {
+    @Test @MainActor func testAccessibilityTestingSuiteInitialization_Comprehensive() {
         // Given: Testing suite initialization
         let suite = AccessibilityTestingSuite()
         
@@ -123,7 +123,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         // accessibilityManager is non-optional, so it exists if we reach here
     }
     
-    @Test func testAccessibilityTestExecution_Comprehensive() async {
+    @Test @MainActor func testAccessibilityTestExecution_Comprehensive() async {
         // Given: Testing suite
         let suite = AccessibilityTestingSuite()
         
@@ -144,7 +144,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityTestCategoryExecution_Comprehensive() async {
+    @Test @MainActor func testAccessibilityTestCategoryExecution_Comprehensive() async {
         // Given: Testing suite and specific category
         let suite = AccessibilityTestingSuite()
         let category = AccessibilityTestCategory.voiceOver
@@ -163,7 +163,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityTestResultValidation_Comprehensive() async {
+    @Test @MainActor func testAccessibilityTestResultValidation_Comprehensive() async {
         // Given: Testing suite
         let suite = AccessibilityTestingSuite()
         
@@ -185,7 +185,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityComplianceMetricsCalculation_Comprehensive() async {
+    @Test @MainActor func testAccessibilityComplianceMetricsCalculation_Comprehensive() async {
         // Given: Testing suite
         let suite = AccessibilityTestingSuite()
         
@@ -208,7 +208,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityTestingSuiteStateManagement_Comprehensive() {
+    @Test @MainActor func testAccessibilityTestingSuiteStateManagement_Comprehensive() {
         // Given: Testing suite
         let suite = AccessibilityTestingSuite()
         
@@ -221,7 +221,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         // accessibilityManager is non-optional, so it exists if we reach here
     }
     
-    @Test func testAccessibilityTestingSuiteProgressTracking_Comprehensive() async {
+    @Test @MainActor func testAccessibilityTestingSuiteProgressTracking_Comprehensive() async {
         // Given: Testing suite
         let suite = AccessibilityTestingSuite()
         

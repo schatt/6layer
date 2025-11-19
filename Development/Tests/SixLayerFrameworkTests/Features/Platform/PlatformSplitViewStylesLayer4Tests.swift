@@ -24,7 +24,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
     
     // MARK: - PlatformSplitViewStyle Tests
     
-    @Test func testPlatformSplitViewStyleEnumExists() async {
+    @Test @MainActor func testPlatformSplitViewStyleEnumExists() async {
         // Given: PlatformSplitViewStyle enum should exist
         // Then: Should be able to reference styles
         let balanced = PlatformSplitViewStyle.balanced
@@ -33,7 +33,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
         #expect(prominentDetail == .prominentDetail, "prominentDetail style should exist")
     }
     
-    @Test func testPlatformSplitViewDividerConfigurationCreates() async {
+    @Test @MainActor func testPlatformSplitViewDividerConfigurationCreates() async {
         // Given: Creating a divider configuration
         let divider = PlatformSplitViewDivider(
             color: .separator,
@@ -49,7 +49,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
     
     // MARK: - Split View with Styles Tests
     
-    @Test func testPlatformVerticalSplitL4AcceptsStyle() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AcceptsStyle() async {
         // Given: A style configuration
         let style = PlatformSplitViewStyle.balanced
         
@@ -67,7 +67,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should accept style configuration")
     }
     
-    @Test func testPlatformHorizontalSplitL4AcceptsStyle() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4AcceptsStyle() async {
         // Given: A style configuration
         let style = PlatformSplitViewStyle.prominentDetail
         
@@ -85,7 +85,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformHorizontalSplit_L4 should accept style configuration")
     }
     
-    @Test func testPlatformVerticalSplitL4AcceptsDividerConfiguration() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AcceptsDividerConfiguration() async {
         // Given: A divider configuration
         let divider = PlatformSplitViewDivider(
             color: .blue,
@@ -107,7 +107,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should accept divider configuration")
     }
     
-    @Test func testPlatformVerticalSplitL4AcceptsStyleAndDivider() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AcceptsStyleAndDivider() async {
         // Given: Style and divider configurations
         let style = PlatformSplitViewStyle.balanced
         let divider = PlatformSplitViewDivider(
@@ -133,7 +133,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
     
     // MARK: - Appearance Customization Tests
     
-    @Test func testPlatformSplitViewAppearanceConfiguration() async {
+    @Test @MainActor func testPlatformSplitViewAppearanceConfiguration() async {
         // Given: Creating an appearance configuration
         let appearance = PlatformSplitViewAppearance(
             backgroundColor: .platformBackground,
@@ -146,7 +146,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
         #expect(appearance.shadow != nil, "Shadow should be set")
     }
     
-    @Test func testPlatformVerticalSplitL4AcceptsAppearance() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AcceptsAppearance() async {
         // Given: An appearance configuration
         let appearance = PlatformSplitViewAppearance(
             backgroundColor: .platformBackground,
@@ -169,7 +169,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
     
     // MARK: - Cross-Platform Behavior Tests
     
-    @Test func testPlatformSplitViewStylesWorkOnIOS() async {
+    @Test @MainActor func testPlatformSplitViewStylesWorkOnIOS() async {
         #if os(iOS)
         // Given: A style on iOS
         let style = PlatformSplitViewStyle.balanced
@@ -191,7 +191,7 @@ open class PlatformSplitViewStylesLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewStylesWorkOnMacOS() async {
+    @Test @MainActor func testPlatformSplitViewStylesWorkOnMacOS() async {
         #if os(macOS)
         // Given: A style on macOS
         let style = PlatformSplitViewStyle.prominentDetail

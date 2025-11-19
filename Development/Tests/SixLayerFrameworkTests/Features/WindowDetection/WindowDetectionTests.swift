@@ -19,7 +19,8 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Basic Functionality Tests (Positive Cases)
     
-    @Test func testWindowDetectionInitialization() {
+    @Test @MainActor func testWindowDetectionInitialization() {
+        initializeTestConfig()
         // GIVEN: A new window detection instance
         let windowDetection = UnifiedWindowDetection()
         
@@ -36,7 +37,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(windowDetection.orientation == .portrait)
     }
     
-    @Test func testWindowDetectionUpdateFromGeometry() {
+    @Test @MainActor func testWindowDetectionUpdateFromGeometry() {
+        initializeTestConfig()
         // GIVEN: A window detection instance with test geometry provider
         // WHEN: Update from geometry is called with a specific size
         // THEN: Should update window size correctly
@@ -66,7 +68,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(windowDetection.geometryProvider is TestGeometryProvider)
     }
     
-    @Test func testWindowDetectionUpdateFromEnvironment() {
+    @Test @MainActor func testWindowDetectionUpdateFromEnvironment() {
+        initializeTestConfig()
         // GIVEN: A window detection instance
         let windowDetection = UnifiedWindowDetection()
         
@@ -83,7 +86,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(windowDetection.safeAreaInsets == safeAreaInsets)
     }
     
-    @Test func testWindowDetectionSizeClassConversion() {
+    @Test @MainActor func testWindowDetectionSizeClassConversion() {
+        initializeTestConfig()
         // GIVEN: A window detection instance
         // WHEN: Testing size class conversion
         // THEN: Should convert sizes correctly to size classes
@@ -283,14 +287,16 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - SwiftUI Integration Tests
     
-    @Test func testUnifiedWindowSizeModifierCreation() {
+    @Test @MainActor func testUnifiedWindowSizeModifierCreation() {
+        initializeTestConfig()
         // GIVEN: SwiftUI modifier
         // WHEN: Created
         // THEN: Should not crash
         #expect(throws: Never.self) { UnifiedWindowSizeModifier() }
     }
     
-    @Test func testDetectWindowSizeViewExtension() {
+    @Test @MainActor func testDetectWindowSizeViewExtension() {
+        initializeTestConfig()
         // GIVEN: A SwiftUI view
         let view = Text("Test")
         
@@ -300,7 +306,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(Bool(true), "modifiedView is non-optional")  // modifiedView is non-optional
     }
     
-    @Test func testDetectWindowSizeOnDifferentViewTypes() {
+    @Test @MainActor func testDetectWindowSizeOnDifferentViewTypes() {
+        initializeTestConfig()
         // GIVEN: Different SwiftUI view types
         let views: [AnyView] = [
             AnyView(Text("Text")),
@@ -330,7 +337,8 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Thread Safety Tests
     
-    @Test func testWindowDetectionThreadSafety() async {
+    @Test @MainActor func testWindowDetectionThreadSafety() async {
+        initializeTestConfig()
         // GIVEN: A window detection instance
         let windowDetection = UnifiedWindowDetection()
         
@@ -356,7 +364,8 @@ open class WindowDetectionTests: BaseTestClass {
     // MARK: - Platform-Specific Tests (iOS)
     
     #if os(iOS)
-    @Test func testiOSWindowDetectionInitialization() {
+    @Test @MainActor func testiOSWindowDetectionInitialization() {
+        initializeTestConfig()
         // GIVEN: iOS window detection
         // WHEN: Initialized
         // THEN: Should have iOS-specific defaults
@@ -366,7 +375,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(iOSDetection.screenSize == CGSize(width: 375, height: 667))
     }
     
-    @Test func testiOSWindowDetectionLifecycle() {
+    @Test @MainActor func testiOSWindowDetectionLifecycle() {
+        initializeTestConfig()
         // GIVEN: iOS window detection
         let iOSDetection = iOSWindowDetection()
         
@@ -377,7 +387,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(throws: Never.self) { iOSDetection.stopMonitoring() }
     }
     
-    @Test func testiOSScreenSizeClassFromWindowSize() {
+    @Test @MainActor func testiOSScreenSizeClassFromWindowSize() {
+        initializeTestConfig()
         // GIVEN: iOS window sizes
         let testCases = [
             (CGSize(width: 320, height: 568), ScreenSizeClass.compact),
@@ -397,7 +408,8 @@ open class WindowDetectionTests: BaseTestClass {
     // MARK: - Platform-Specific Tests (macOS)
     
     #if os(macOS)
-    @Test func testmacOSWindowDetectionInitialization() {
+    @Test @MainActor func testmacOSWindowDetectionInitialization() {
+        initializeTestConfig()
         // GIVEN: macOS window detection
         // WHEN: Initialized
         // THEN: Should have macOS-specific defaults
@@ -407,7 +419,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(macOSDetection.screenSize == CGSize(width: 1024, height: 768))
     }
     
-    @Test func testmacOSWindowDetectionLifecycle() {
+    @Test @MainActor func testmacOSWindowDetectionLifecycle() {
+        initializeTestConfig()
         // GIVEN: macOS window detection
         let macOSDetection = macOSWindowDetection()
         
@@ -418,7 +431,8 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(throws: Never.self) { macOSDetection.stopMonitoring() }
     }
     
-    @Test func testmacOSScreenSizeClassFromWindowSize() {
+    @Test @MainActor func testmacOSScreenSizeClassFromWindowSize() {
+        initializeTestConfig()
         // GIVEN: macOS window sizes
         let testCases = [
             (CGSize(width: 800, height: 600), ScreenSizeClass.regular),

@@ -23,7 +23,7 @@ open class PlatformStylingLayer4Tests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnIOS() async {
         let view = Text("Test Content")
             .platformStyledContainer_L4(
                 content: {
@@ -45,7 +45,7 @@ open class PlatformStylingLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformStyledContainerL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = Text("Test Content")
             .platformStyledContainer_L4(
                 content: {

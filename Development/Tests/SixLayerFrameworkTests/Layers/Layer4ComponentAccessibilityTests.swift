@@ -16,7 +16,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 4 Component Tests
     
-    @Test func testPlatformPrimaryButtonStyleGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPrimaryButtonStyleGeneratesAccessibilityIdentifiers() async {
         // Given: A test button
         let testButton = Button("Test Button") { }
         
@@ -42,7 +42,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSecondaryButtonStyleGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformSecondaryButtonStyleGeneratesAccessibilityIdentifiers() async {
         // Given: A test button
         let testButton = Button("Test Button") { }
         
@@ -64,7 +64,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFormFieldGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformFormFieldGeneratesAccessibilityIdentifiers() async {
         // Given: A test text field
         let testTextField = TextField("Placeholder", text: .constant(""))
         
@@ -192,7 +192,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformCardGridGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformCardGridGeneratesAccessibilityIdentifiers() async {
         // Given: Test card items
         let testItems = ["Item 1", "Item 2", "Item 3"]
         
@@ -222,7 +222,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformBackgroundGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformBackgroundGeneratesAccessibilityIdentifiers() async {
         // Given: A test text view
         let testText = Text("Test Text")
         

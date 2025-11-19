@@ -20,7 +20,7 @@ import SwiftUI
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 open class AccessibilityManagerTDDTests: BaseTestClass {
 
-    @Test func testAccessibilityManagerDetectsVoiceOverStatus() async {
+    @Test @MainActor func testAccessibilityManagerDetectsVoiceOverStatus() async {
         // TDD: AccessibilityManager.isVoiceOverEnabled() should:
         // 1. Return true when VoiceOver is active on the device
         // 2. Return false when VoiceOver is disabled
@@ -37,7 +37,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // #expect(voiceOverEnabled == actualVoiceOverStatus, "Should detect actual VoiceOver status")
     }
 
-    @Test func testAccessibilityManagerDetectsReduceMotionPreference() async {
+    @Test @MainActor func testAccessibilityManagerDetectsReduceMotionPreference() async {
         // TDD: AccessibilityManager.isReduceMotionEnabled() should:
         // 1. Return true when reduce motion is enabled in accessibility settings
         // 2. Return false when reduce motion is disabled
@@ -54,7 +54,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // #expect(reduceMotionEnabled == actualReduceMotionStatus, "Should detect actual reduce motion setting")
     }
 
-    @Test func testAccessibilityManagerProvidesHighContrastColors() async {
+    @Test @MainActor func testAccessibilityManagerProvidesHighContrastColors() async {
         // TDD: AccessibilityManager.getHighContrastColor() should:
         // 1. Return modified colors when high contrast mode is enabled
         // 2. Return original colors when high contrast mode is disabled
@@ -77,7 +77,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // }
     }
 
-    @Test func testAccessibilityManagerValidatesUIElements() async {
+    @Test @MainActor func testAccessibilityManagerValidatesUIElements() async {
         // TDD: AccessibilityManager.validateAccessibility() should:
         // 1. Analyze UI elements for accessibility compliance
         // 2. Check for proper labels, hints, and traits
@@ -101,7 +101,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // #expect(result.isValid == actualValidationStatus, "Should validate actual accessibility")
     }
 
-    @Test func testAccessibilityManagerManagesConfiguration() async {
+    @Test @MainActor func testAccessibilityManagerManagesConfiguration() async {
         // TDD: AccessibilityManager configuration methods should:
         // 1. getAccessibilityConfiguration() returns current settings
         // 2. updateConfiguration() applies new settings
@@ -124,7 +124,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // and updateConfiguration should apply changes
     }
 
-    @Test func testAccessibilityManagerHandlesColorContrastCalculation() async {
+    @Test @MainActor func testAccessibilityManagerHandlesColorContrastCalculation() async {
         // TDD: AccessibilityManager color contrast functionality should:
         // 1. Calculate contrast ratios between foreground/background colors
         // 2. Determine if color combinations meet WCAG guidelines
@@ -142,7 +142,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // TODO: Implement calculateContrastRatio method
     }
 
-    @Test func testAccessibilityManagerProvidesTouchTargetGuidance() async {
+    @Test @MainActor func testAccessibilityManagerProvidesTouchTargetGuidance() async {
         // TDD: AccessibilityManager touch target functionality should:
         // 1. Validate touch target sizes meet minimum requirements
         // 2. Provide minimum touch target dimensions for current platform

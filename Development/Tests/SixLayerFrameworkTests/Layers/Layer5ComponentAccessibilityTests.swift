@@ -67,7 +67,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 resource component
         let resourceLayer = PlatformResourceLayer5()
         
@@ -92,7 +92,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformResourceLayer5ImageGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformResourceLayer5ImageGeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 resource component
         let resourceLayer = PlatformResourceLayer5()
         
@@ -117,7 +117,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 notification component (stub)
         let notificationLayer = PlatformNotificationLayer5()
         
@@ -143,7 +143,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformOptimizationLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformOptimizationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 optimization component (stub)
         let optimizationLayer = PlatformOptimizationLayer5()
         
@@ -169,7 +169,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 safety component (stub)
         let safetyLayer = PlatformSafetyLayer5()
         
@@ -195,7 +195,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 privacy component (stub)
         let privacyLayer = PlatformPrivacyLayer5()
         

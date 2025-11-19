@@ -10,7 +10,7 @@ open class AccessibilityManagerTests: BaseTestClass {
     
     // MARK: - Service Initialization Tests
     
-    @Test func testAccessibilityManagerInitialization() async {
+    @Test @MainActor func testAccessibilityManagerInitialization() async {
         // Given & When: Creating the manager
         let manager = AccessibilityManager()
         
@@ -20,7 +20,7 @@ open class AccessibilityManagerTests: BaseTestClass {
     
     // MARK: - Accessibility Detection Tests
     
-    @Test func testAccessibilityManagerDetectsVoiceOverStatus() async {
+    @Test @MainActor func testAccessibilityManagerDetectsVoiceOverStatus() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         
@@ -31,7 +31,7 @@ open class AccessibilityManagerTests: BaseTestClass {
         #expect(isVoiceOverEnabled == true || isVoiceOverEnabled == false)
     }
     
-    @Test func testAccessibilityManagerDetectsReduceMotionStatus() async {
+    @Test @MainActor func testAccessibilityManagerDetectsReduceMotionStatus() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         
@@ -42,7 +42,7 @@ open class AccessibilityManagerTests: BaseTestClass {
         #expect(isReduceMotionEnabled == true || isReduceMotionEnabled == false)
     }
     
-    @Test func testAccessibilityManagerDetectsHighContrastStatus() async {
+    @Test @MainActor func testAccessibilityManagerDetectsHighContrastStatus() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         
@@ -55,7 +55,7 @@ open class AccessibilityManagerTests: BaseTestClass {
     
     // MARK: - Accessibility Configuration Tests
     
-    @Test func testAccessibilityManagerProvidesConfiguration() async {
+    @Test @MainActor func testAccessibilityManagerProvidesConfiguration() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         
@@ -66,7 +66,7 @@ open class AccessibilityManagerTests: BaseTestClass {
         #expect(Bool(true), "config is non-optional")  // config is non-optional
     }
     
-    @Test func testAccessibilityManagerCanUpdateConfiguration() async {
+    @Test @MainActor func testAccessibilityManagerCanUpdateConfiguration() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         
@@ -85,7 +85,7 @@ open class AccessibilityManagerTests: BaseTestClass {
     
     // MARK: - Accessibility Validation Tests
     
-    @Test func testAccessibilityManagerValidatesUIElement() async {
+    @Test @MainActor func testAccessibilityManagerValidatesUIElement() async {
         // Given: AccessibilityManager and a test view
         let manager = AccessibilityManager()
         let testView = Text("Test")
@@ -97,7 +97,7 @@ open class AccessibilityManagerTests: BaseTestClass {
         #expect(Bool(true), "validationResult is non-optional")  // validationResult is non-optional
     }
     
-    @Test func testAccessibilityManagerReportsAccessibilityIssues() async {
+    @Test @MainActor func testAccessibilityManagerReportsAccessibilityIssues() async {
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         

@@ -24,7 +24,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     
     // MARK: - Animation & Transition Tests
     
-    @Test func testPlatformSplitViewAnimationConfigurationExists() async {
+    @Test @MainActor func testPlatformSplitViewAnimationConfigurationExists() async {
         // Given: PlatformSplitViewAnimationConfiguration should exist
         let animation = PlatformSplitViewAnimationConfiguration(
             duration: 0.3,
@@ -36,7 +36,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
         #expect(animation.curveType == .easeInOut, "Animation curve should be set")
     }
     
-    @Test func testPlatformSplitViewStateSupportsAnimation() async {
+    @Test @MainActor func testPlatformSplitViewStateSupportsAnimation() async {
         // Given: A state object with animation configuration
         let state = PlatformSplitViewState()
         state.animationConfiguration = PlatformSplitViewAnimationConfiguration(
@@ -51,7 +51,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     
     // MARK: - Keyboard Shortcut Tests
     
-    @Test func testPlatformSplitViewKeyboardShortcutConfigurationExists() async {
+    @Test @MainActor func testPlatformSplitViewKeyboardShortcutConfigurationExists() async {
         // Given: PlatformSplitViewKeyboardShortcut should exist
         #if os(macOS)
         let shortcut = PlatformSplitViewKeyboardShortcut(
@@ -69,7 +69,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewStateSupportsKeyboardShortcuts() async {
+    @Test @MainActor func testPlatformSplitViewStateSupportsKeyboardShortcuts() async {
         // Given: A state object with keyboard shortcuts
         #if os(macOS)
         let state = PlatformSplitViewState()
@@ -90,7 +90,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     
     // MARK: - Pane Locking Tests
     
-    @Test func testPlatformSplitViewStateSupportsPaneLocking() async {
+    @Test @MainActor func testPlatformSplitViewStateSupportsPaneLocking() async {
         // Given: A state object
         let state = PlatformSplitViewState()
         
@@ -107,7 +107,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
         #expect(state.isPaneLocked(0) == false, "Pane 0 should be unlocked")
     }
     
-    @Test func testPlatformSplitViewLockedPanesCannotResize() async {
+    @Test @MainActor func testPlatformSplitViewLockedPanesCannotResize() async {
         // Given: A state object with locked panes
         let state = PlatformSplitViewState()
         state.setPaneLocked(0, locked: true)
@@ -118,7 +118,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     
     // MARK: - Divider Interaction Tests
     
-    @Test func testPlatformSplitViewDividerCallbacksConfigurationExists() async {
+    @Test @MainActor func testPlatformSplitViewDividerCallbacksConfigurationExists() async {
         // Given: Divider callback configuration should exist
         var callbackFired = false
         let onDividerDrag: (Int, CGFloat) -> Void = { _, _ in callbackFired = true }
@@ -127,7 +127,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Divider callbacks should be configurable")
     }
     
-    @Test func testPlatformSplitViewStateSupportsDividerCallbacks() async {
+    @Test @MainActor func testPlatformSplitViewStateSupportsDividerCallbacks() async {
         // Given: A state object with divider callbacks
         let state = PlatformSplitViewState()
         var callbackFired = false
@@ -144,7 +144,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     
     // MARK: - Cross-Platform Behavior Tests
     
-    @Test func testPlatformSplitViewAdvancedFeaturesWorkOnIOS() async {
+    @Test @MainActor func testPlatformSplitViewAdvancedFeaturesWorkOnIOS() async {
         #if os(iOS)
         // Given: Advanced features on iOS
         // Then: Should work appropriately (may have platform-specific behavior)
@@ -154,7 +154,7 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewAdvancedFeaturesWorkOnMacOS() async {
+    @Test @MainActor func testPlatformSplitViewAdvancedFeaturesWorkOnMacOS() async {
         #if os(macOS)
         // Given: Advanced features on macOS
         // Then: Should work appropriately (may have platform-specific behavior)

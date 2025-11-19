@@ -24,7 +24,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
     
     // MARK: - PlatformSplitViewSizing Configuration Tests
     
-    @Test func testPlatformSplitViewSizingCreatesConfiguration() async {
+    @Test @MainActor func testPlatformSplitViewSizingCreatesConfiguration() async {
         // Given: Creating a sizing configuration
         let sizing = PlatformSplitViewSizing(
             firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
@@ -37,7 +37,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #expect(sizing.firstPane?.maxWidth == 350, "First pane maxWidth should be set")
     }
     
-    @Test func testPlatformSplitViewSizingWithContainerConstraints() async {
+    @Test @MainActor func testPlatformSplitViewSizingWithContainerConstraints() async {
         // Given: Creating sizing with container constraints
         let sizing = PlatformSplitViewSizing(
             firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
@@ -51,7 +51,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #expect(sizing.container?.maxWidth == 1200, "Container maxWidth should be set")
     }
     
-    @Test func testPlatformSplitViewPaneSizingWithHeightConstraints() async {
+    @Test @MainActor func testPlatformSplitViewPaneSizingWithHeightConstraints() async {
         // Given: Creating pane sizing with height constraints
         let paneSizing = PlatformSplitViewPaneSizing(
             minWidth: 250,
@@ -70,7 +70,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
     
     // MARK: - Split View with Sizing Tests
     
-    @Test func testPlatformVerticalSplitL4AcceptsSizingConfiguration() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AcceptsSizingConfiguration() async {
         // Given: A sizing configuration
         let sizing = PlatformSplitViewSizing(
             firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
@@ -91,7 +91,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should accept sizing configuration")
     }
     
-    @Test func testPlatformHorizontalSplitL4AcceptsSizingConfiguration() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4AcceptsSizingConfiguration() async {
         // Given: A sizing configuration
         let sizing = PlatformSplitViewSizing(
             firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
@@ -112,7 +112,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformHorizontalSplit_L4 should accept sizing configuration")
     }
     
-    @Test func testPlatformVerticalSplitL4AppliesSizingConstraintsOnMacOS() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AppliesSizingConstraintsOnMacOS() async {
         #if os(macOS)
         // Given: A sizing configuration on macOS
         let sizing = PlatformSplitViewSizing(
@@ -137,7 +137,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformHorizontalSplitL4AppliesSizingConstraintsOnMacOS() async {
+    @Test @MainActor func testPlatformHorizontalSplitL4AppliesSizingConstraintsOnMacOS() async {
         #if os(macOS)
         // Given: A sizing configuration on macOS
         let sizing = PlatformSplitViewSizing(
@@ -162,7 +162,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformVerticalSplitL4AppliesContainerConstraints() async {
+    @Test @MainActor func testPlatformVerticalSplitL4AppliesContainerConstraints() async {
         // Given: A sizing configuration with container constraints
         let sizing = PlatformSplitViewSizing(
             firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
@@ -184,7 +184,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #expect(Bool(true), "platformVerticalSplit_L4 should apply container constraints")
     }
     
-    @Test func testPlatformSplitViewSizingWithMultiplePanes() async {
+    @Test @MainActor func testPlatformSplitViewSizingWithMultiplePanes() async {
         // Given: A sizing configuration with multiple panes
         let sizing = PlatformSplitViewSizing(
             panes: [
@@ -203,7 +203,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
     
     // MARK: - Responsive Sizing Tests
     
-    @Test func testPlatformSplitViewSizingWithResponsiveBehavior() async {
+    @Test @MainActor func testPlatformSplitViewSizingWithResponsiveBehavior() async {
         // Given: A sizing configuration with responsive behavior
         let sizing = PlatformSplitViewSizing(
             firstPane: PlatformSplitViewPaneSizing(minWidth: 250, idealWidth: 280, maxWidth: 350),
@@ -217,7 +217,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
     
     // MARK: - Cross-Platform Behavior Tests
     
-    @Test func testPlatformSplitViewSizingWorksOnIOS() async {
+    @Test @MainActor func testPlatformSplitViewSizingWorksOnIOS() async {
         #if os(iOS)
         // Given: A sizing configuration on iOS
         let sizing = PlatformSplitViewSizing(
@@ -242,7 +242,7 @@ open class PlatformSplitViewSizingLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewSizingWorksOnMacOS() async {
+    @Test @MainActor func testPlatformSplitViewSizingWorksOnMacOS() async {
         #if os(macOS)
         // Given: A sizing configuration on macOS
         let sizing = PlatformSplitViewSizing(

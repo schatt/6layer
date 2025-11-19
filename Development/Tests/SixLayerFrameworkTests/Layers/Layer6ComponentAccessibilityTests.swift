@@ -16,7 +16,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 6 Optimization Component Tests
     
-    @Test func testCrossPlatformOptimizationLayer6GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testCrossPlatformOptimizationLayer6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 cross-platform optimization component
         let crossPlatformOptimization = CrossPlatformOptimizationManager()
         
@@ -39,7 +39,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCrossPlatformOptimizationLayer6PlatformSpecificOptimizations() async {
+    @Test @MainActor func testCrossPlatformOptimizationLayer6PlatformSpecificOptimizations() async {
         // Given: A test view
         let testView = Text("Test Content")
         
@@ -65,7 +65,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCrossPlatformOptimizationLayer6PerformanceOptimizations() async {
+    @Test @MainActor func testCrossPlatformOptimizationLayer6PerformanceOptimizations() async {
         // Given: A test view and optimization settings
         let testView = Text("Test Content")
         let settings = PlatformOptimizationSettings(for: SixLayerPlatform.current)
@@ -92,7 +92,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCrossPlatformOptimizationLayer6UIPatternOptimizations() async {
+    @Test @MainActor func testCrossPlatformOptimizationLayer6UIPatternOptimizations() async {
         // Given: A test view and UI patterns
         let testView = Text("Test Content")
         let patterns = PlatformUIPatterns(for: SixLayerPlatform.current)
@@ -119,7 +119,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCrossPlatformOptimizationLayer6GetPlatformRecommendations() async {
+    @Test @MainActor func testCrossPlatformOptimizationLayer6GetPlatformRecommendations() async {
         // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
         // Given: Layer 6 cross-platform optimization component
         let crossPlatformOptimization = CrossPlatformOptimizationManager()
@@ -132,7 +132,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         #expect(Bool(true), "PlatformRecommendationEngine moved to possible-features/ - test disabled")
     }
     
-    @Test func testPlatformPerformanceLayer6GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPerformanceLayer6GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 6 platform performance component (stub)
         let performanceLayer = PlatformPerformanceLayer6()
         
@@ -158,7 +158,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPerformanceLayer6PerformanceMetrics() async {
+    @Test @MainActor func testPlatformPerformanceLayer6PerformanceMetrics() async {
         // Given: Layer 6 platform performance component (stub)
         let performanceLayer = PlatformPerformanceLayer6()
         
@@ -168,7 +168,7 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         // Then: Should return valid view (body always returns a non-optional View)
     }
     
-    @Test func testPlatformPerformanceLayer6OptimizationSuggestions() async {
+    @Test @MainActor func testPlatformPerformanceLayer6OptimizationSuggestions() async {
         // Given: Layer 6 platform performance component (stub)
         let performanceLayer = PlatformPerformanceLayer6()
         

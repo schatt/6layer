@@ -16,6 +16,7 @@ open class CustomItemCollectionViewTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically
     
+    @MainActor
     private func configureAccessibilityIdentifiers() {
         let config = AccessibilityIdentifierConfig.shared
         config.resetToDefaults()

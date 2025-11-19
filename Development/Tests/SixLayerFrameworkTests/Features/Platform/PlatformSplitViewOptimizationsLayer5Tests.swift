@@ -24,7 +24,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     // MARK: - iOS-Specific Optimization Tests
     
-    @Test func testPlatformSplitViewIOSOptimizationsExist() async {
+    @Test @MainActor func testPlatformSplitViewIOSOptimizationsExist() async {
         // Given: iOS-specific optimizations should exist
         #if os(iOS)
         // Then: Should be able to apply iOS optimizations
@@ -34,7 +34,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewIOSOptimizationsApply() async {
+    @Test @MainActor func testPlatformSplitViewIOSOptimizationsApply() async {
         // Given: A split view
         #if os(iOS)
         let view = Text("Test")
@@ -53,7 +53,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     // MARK: - macOS-Specific Optimization Tests
     
-    @Test func testPlatformSplitViewMacOSOptimizationsExist() async {
+    @Test @MainActor func testPlatformSplitViewMacOSOptimizationsExist() async {
         // Given: macOS-specific optimizations should exist
         #if os(macOS)
         // Then: Should be able to apply macOS optimizations
@@ -63,7 +63,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSplitViewMacOSOptimizationsApply() async {
+    @Test @MainActor func testPlatformSplitViewMacOSOptimizationsApply() async {
         // Given: A split view
         #if os(macOS)
         let view = Text("Test")
@@ -82,7 +82,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     // MARK: - Cross-Platform Optimization Tests
     
-    @Test func testPlatformSplitViewOptimizationsWorkCrossPlatform() async {
+    @Test @MainActor func testPlatformSplitViewOptimizationsWorkCrossPlatform() async {
         // Given: A split view with cross-platform optimizations
         let view = Text("Test")
             .platformVerticalSplit_L4(spacing: 0) {
@@ -95,7 +95,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
         #expect(Bool(true), "Cross-platform optimizations should work")
     }
     
-    @Test func testPlatformSplitViewOptimizationsWithState() async {
+    @Test @MainActor func testPlatformSplitViewOptimizationsWithState() async {
         // Given: A split view with state and optimizations
         let state = PlatformSplitViewState()
         let view = Text("Test")
@@ -111,7 +111,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     // MARK: - Performance Optimization Tests
     
-    @Test func testPlatformSplitViewOptimizationsImprovePerformance() async {
+    @Test @MainActor func testPlatformSplitViewOptimizationsImprovePerformance() async {
         // Given: A split view with optimizations
         let view = Text("Test")
             .platformVerticalSplit_L4(spacing: 0) {
@@ -126,7 +126,7 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     // MARK: - Memory Optimization Tests
     
-    @Test func testPlatformSplitViewOptimizationsIncludeMemoryManagement() async {
+    @Test @MainActor func testPlatformSplitViewOptimizationsIncludeMemoryManagement() async {
         // Given: A split view with optimizations
         let view = Text("Test")
             .platformVerticalSplit_L4(spacing: 0) {

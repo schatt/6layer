@@ -207,7 +207,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentFormData_L1 single-field variant (delegates to array version)
-    @Test func testPlatformPresentFormDataL1SingleFieldGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentFormDataL1SingleFieldGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let view = platformPresentFormData_L1(
@@ -231,7 +232,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     
     /// TDD RED PHASE: platformPresentFormData_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    @Test func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentFormDataL1GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -263,7 +265,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     
     /// TDD RED PHASE: platformPresentNumericData_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    @Test func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -294,7 +297,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentNumericData_L1 with EnhancedPresentationHints variant
-    @Test func testPlatformPresentNumericDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let enhancedHints = EnhancedPresentationHints(
@@ -326,7 +330,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentNumericData_L1 with custom view variant
-    @Test func testPlatformPresentNumericDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let view = platformPresentNumericData_L1(
@@ -355,7 +360,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentNumericData_L1 with enhanced hints and custom view variant
-    @Test func testPlatformPresentNumericDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let enhancedHints = EnhancedPresentationHints(
@@ -393,7 +399,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentNumericData_L1 single-item variant (delegates to array version)
-    @Test func testPlatformPresentNumericDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentNumericDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let view = platformPresentNumericData_L1(
@@ -418,7 +425,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that platformPresentMediaData_L1 generates proper accessibility identifiers
     /// TESTING SCOPE: Verify accessibility identifier generation
     /// METHODOLOGY: Test that accessibility identifiers are properly generated
-    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -448,7 +456,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentMediaData_L1 with EnhancedPresentationHints variant
-    @Test func testPlatformPresentMediaDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let enhancedHints = EnhancedPresentationHints(
@@ -480,7 +489,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentMediaData_L1 with custom view variant
-    @Test func testPlatformPresentMediaDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let view = platformPresentMediaData_L1(
@@ -509,7 +519,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentMediaData_L1 with enhanced hints and custom view variant
-    @Test func testPlatformPresentMediaDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let enhancedHints = EnhancedPresentationHints(
@@ -547,7 +558,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentMediaData_L1 single-item variant (delegates to array version)
-    @Test func testPlatformPresentMediaDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let view = platformPresentMediaData_L1(
@@ -572,7 +584,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validates that platformPresentSettings_L1 generates proper accessibility identifiers
     /// TESTING SCOPE: Verify accessibility identifier generation
     /// METHODOLOGY: Test that accessibility identifiers are properly generated
-    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -610,7 +623,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentSettings_L1 with custom view variant
-    @Test func testPlatformPresentSettingsL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentSettingsL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let view = platformPresentSettings_L1(
@@ -648,7 +662,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentSettings_L1 with enhanced hints and custom view variant
-    @Test func testPlatformPresentSettingsL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentSettingsL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let enhancedHints = EnhancedPresentationHints(
