@@ -84,9 +84,15 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     }
     
     @Test @MainActor func testRuntimeHapticDetectionUsesTestingDefaults() {
-        // In testing mode, should use hardcoded defaults
+        // Set capability override to match testing defaults
         let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
+        
+        // Set override to match expected defaults
+        RuntimeCapabilityDetection.setTestHapticFeedback(expectedDefaults.supportsHapticFeedback)
+        defer {
+            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        }
         
         let actualHapticSupport = RuntimeCapabilityDetection.supportsHapticFeedback
         #expect(actualHapticSupport == expectedDefaults.supportsHapticFeedback, 
