@@ -485,7 +485,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testOCRWorkflowCanPopulateFormField() async {
+    @Test @MainActor func testOCRWorkflowCanPopulateFormField() async {
+        initializeTestConfig()
         // TDD: OCR workflow should be able to populate form fields
         // 1. OCR results should be able to update form state
         // 2. OCR disambiguation should work with form fields
@@ -518,7 +519,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(storedValue == ocrText, "Form field should accept OCR-populated value")
     }
 
-    @Test func testOCRValidationTypesAreUsedForFieldValidation() async {
+    @Test @MainActor func testOCRValidationTypesAreUsedForFieldValidation() async {
+        initializeTestConfig()
         // TDD: OCR validation types should influence field validation
         // 1. OCR-enabled fields should validate OCR results against expected types
         // 2. Invalid OCR types should be rejected or flagged
@@ -560,7 +562,8 @@ open class DynamicFormViewTests: BaseTestClass {
 
     // MARK: - Batch OCR Tests
 
-    @Test func testDynamicFormConfigurationCanGetOCREnabledFields() async {
+    @Test @MainActor func testDynamicFormConfigurationCanGetOCREnabledFields() async {
+        initializeTestConfig()
         // TDD: DynamicFormConfiguration should provide access to OCR-enabled fields
         // 1. Configuration should return all fields that support OCR
         // 2. Should return empty array when no fields support OCR
@@ -604,7 +607,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(noOCRFields.isEmpty, "Should return empty array when no OCR fields")
     }
 
-    @Test func testDynamicFormStateCanProcessBatchOCRResults() async {
+    @Test @MainActor func testDynamicFormStateCanProcessBatchOCRResults() async {
+        initializeTestConfig()
         // TDD: DynamicFormState should intelligently map OCR results to fields
         // 1. Should match OCR results to fields by text type
         // 2. Should assign highest confidence results first
@@ -680,7 +684,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(priceValue == "$45.99", "Form state should contain price value")
     }
 
-    @Test func testDynamicFormViewShowsBatchOCRButtonWhenFieldsSupportOCR() async {
+    @Test @MainActor func testDynamicFormViewShowsBatchOCRButtonWhenFieldsSupportOCR() async {
+        initializeTestConfig()
         // TDD: DynamicFormView should show batch OCR button when form has OCR fields
         // 1. Should show "Scan Document" button when any field supports OCR
         // 2. Should not show button when no fields support OCR
@@ -741,7 +746,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testBatchOCRResultsHandleMultipleValuesOfSameType() async {
+    @Test @MainActor func testBatchOCRResultsHandleMultipleValuesOfSameType() async {
+        initializeTestConfig()
         // TDD: Batch OCR should handle multiple values of the same type intelligently
         // 1. Should assign highest confidence result first
         // 2. Should not assign same result to multiple fields
@@ -794,7 +800,8 @@ open class DynamicFormViewTests: BaseTestClass {
 
     // MARK: - Calculated Fields Tests
 
-    @Test func testDynamicFormFieldCanBeConfiguredAsCalculated() async {
+    @Test @MainActor func testDynamicFormFieldCanBeConfiguredAsCalculated() async {
+        initializeTestConfig()
         // TDD: DynamicFormField should support calculated fields
         // 1. Field should accept isCalculated, calculationFormula, calculationDependencies
         // 2. Field should store these values correctly
@@ -815,7 +822,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(calculatedField.calculationDependencies == ["total_price", "gallons"], "Field should store calculation dependencies")
     }
 
-    @Test func testCalculatedFieldDefaultsToNotCalculated() async {
+    @Test @MainActor func testCalculatedFieldDefaultsToNotCalculated() async {
+        initializeTestConfig()
         // TDD: DynamicFormField should default to not calculated
         // 1. Regular fields should not be calculated by default
         // 2. Calculation properties should be nil by default
@@ -832,7 +840,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(regularField.calculationDependencies == nil, "Calculation dependencies should be nil by default")
     }
 
-    @Test func testFormStateCanCalculateFieldFromOtherFields() async {
+    @Test @MainActor func testFormStateCanCalculateFieldFromOtherFields() async {
+        initializeTestConfig()
         // TDD: DynamicFormState should calculate field values from other fields
         // 1. Should evaluate calculation formulas using other field values
         // 2. Should set calculated field values automatically
@@ -863,7 +872,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
     }
 
-    @Test func testFormStateCanAutoCalculateFieldsWhenDependenciesChange() async {
+    @Test @MainActor func testFormStateCanAutoCalculateFieldsWhenDependenciesChange() async {
+        initializeTestConfig()
         // TDD: DynamicFormState should auto-calculate fields when dependencies change
         // 1. When dependency fields are set, calculated fields should update automatically
         // 2. Multiple calculations should work together
@@ -906,7 +916,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
     }
 
-    @Test func testOCRSystemCanDetermineMissingFieldAndCalculateIt() async {
+    @Test @MainActor func testOCRSystemCanDetermineMissingFieldAndCalculateIt() async {
+        initializeTestConfig()
         // TDD: OCR system should identify missing fields and calculate them from available data
         // 1. Given 2 of 3 related values, should calculate the third
         // 2. Should handle different combinations (gallons+price→total, gallons+total→price, price+total→gallons)
@@ -978,7 +989,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
     }
 
-    @Test func testOCRCalculationHandlesAllThreeFieldsPresent() async {
+    @Test @MainActor func testOCRCalculationHandlesAllThreeFieldsPresent() async {
+        initializeTestConfig()
         // TDD: OCR system should handle when all three fields are present
         // 1. Should not calculate when all fields are available
         // 2. Could optionally validate consistency between calculated and OCR values
@@ -1011,7 +1023,8 @@ open class DynamicFormViewTests: BaseTestClass {
 
     // MARK: - Calculation Groups Tests
 
-    @Test func testDynamicFormFieldCanBelongToMultipleCalculationGroups() async {
+    @Test @MainActor func testDynamicFormFieldCanBelongToMultipleCalculationGroups() async {
+        initializeTestConfig()
         // TDD: DynamicFormField should support belonging to multiple calculation groups
         // 1. Field should store multiple calculation groups
         // 2. Groups should have priorities for calculation order
@@ -1051,7 +1064,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(field.calculationGroups?[0].dependentFields == ["price", "quantity"], "Group 1 should have correct dependencies")
     }
 
-    @Test func testCalculationGroupsCanCalculateFieldWithNoConflicts() async {
+    @Test @MainActor func testCalculationGroupsCanCalculateFieldWithNoConflicts() async {
+        initializeTestConfig()
         // TDD: Calculation groups should calculate field values without conflicts
         // 1. When multiple groups can calculate the same field and agree, use high confidence
         // 2. When only one group can calculate the field, use that result
@@ -1099,7 +1113,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
     }
 
-    @Test func testCalculationGroupsDetectConflictsAndMarkLowConfidence() async {
+    @Test @MainActor func testCalculationGroupsDetectConflictsAndMarkLowConfidence() async {
+        initializeTestConfig()
         // TDD: Calculation groups should detect conflicting calculations and mark low confidence
         // 1. When multiple groups calculate different values for the same field, mark as very low confidence
         // 2. Should still provide the first (highest priority) calculated value
@@ -1148,7 +1163,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
     }
 
-    @Test func testCalculationGroupsRespectPriorityOrder() async {
+    @Test @MainActor func testCalculationGroupsRespectPriorityOrder() async {
+        initializeTestConfig()
         // TDD: Calculation groups should calculate in priority order
         // 1. Higher priority groups (lower number) should be calculated first
         // 2. If multiple groups can calculate, use the highest priority result
@@ -1196,7 +1212,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
     }
 
-    @Test func testCalculationGroupsHandlePartialDataAvailability() async {
+    @Test @MainActor func testCalculationGroupsHandlePartialDataAvailability() async {
+        initializeTestConfig()
         // TDD: Calculation groups should only calculate when all dependent fields are available
         // 1. If a group is missing required fields, skip that group
         // 2. If no groups can calculate, return nil
@@ -1243,7 +1260,8 @@ open class DynamicFormViewTests: BaseTestClass {
 
     // MARK: - OCR Field Hints Tests
 
-    @Test func testDynamicFormFieldCanHaveOCRFieldHints() async {
+    @Test @MainActor func testDynamicFormFieldCanHaveOCRFieldHints() async {
+        initializeTestConfig()
         // TDD: DynamicFormField should support OCR field hints for better OCR mapping
         // 1. Field should store OCR hints array
         // 2. Hints should be used to identify fields in OCR text
@@ -1268,7 +1286,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(field.ocrHints?.contains("litres") ?? false, "Should contain 'litres' hint")
     }
 
-    @Test func testOCRFieldHintsDefaultToNil() async {
+    @Test @MainActor func testOCRFieldHintsDefaultToNil() async {
+        initializeTestConfig()
         // TDD: OCR hints should default to nil when not specified
         // 1. Fields without OCR hints should have nil ocrHints
         // 2. This ensures backward compatibility
