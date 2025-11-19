@@ -23,7 +23,8 @@ open class PlatformTypesAPISignatureTests: BaseTestClass {
         let _ = platform
     }
 
-    @Test func testSixLayerPlatformCurrentPlatformAvailable() {
+    @Test @MainActor func testSixLayerPlatformCurrentPlatformAvailable() {
+        initializeTestConfig()
         // runtime-aware accessor
         let platform = SixLayerPlatform.currentPlatform
         let _ = platform
@@ -42,7 +43,8 @@ open class PlatformTypesAPISignatureTests: BaseTestClass {
         #expect(all.contains(.vision))
     }
 
-    @Test func testDeviceTypeCurrentAvailable() {
+    @Test @MainActor func testDeviceTypeCurrentAvailable() {
+        initializeTestConfig()
         let deviceType = DeviceType.current
         let _ = deviceType
     }

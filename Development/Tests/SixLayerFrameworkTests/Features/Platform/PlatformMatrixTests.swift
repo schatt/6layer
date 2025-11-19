@@ -190,7 +190,8 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Performance Configuration Matrix
     
-    @Test func testPerformanceConfigurationMatrix() {
+    @Test @MainActor func testPerformanceConfigurationMatrix() {
+        initializeTestConfig()
         let config = getCardExpansionPerformanceConfig()
         
         // Test performance settings are appropriate for platform
@@ -220,7 +221,8 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Color Encoding Matrix
     
-    @Test func testColorEncodingCapabilityMatrix() {
+    @Test @MainActor func testColorEncodingCapabilityMatrix() {
+        initializeTestConfig()
         // Test color encoding works on all platforms
         let testColor = Color.blue
         
@@ -237,7 +239,8 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - OCR Capability Matrix
     
-    @Test func testOCRCapabilityMatrix() {
+    @Test @MainActor func testOCRCapabilityMatrix() {
+        initializeTestConfig()
         let isOCRAvailable = isVisionOCRAvailable()
         
         // OCR availability should match Vision framework availability
@@ -248,7 +251,8 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - CarPlay Capability Matrix
     
-    @Test func testCarPlayCapabilityMatrix() {
+    @Test @MainActor func testCarPlayCapabilityMatrix() {
+        initializeTestConfig()
         // Test CarPlay support detection
         let supportsCarPlay = CarPlayCapabilityDetection.supportsCarPlay
         let isCarPlayActive = CarPlayCapabilityDetection.isCarPlayActive

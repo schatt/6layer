@@ -179,7 +179,8 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testCardExpansionConfigUsesRuntimeDetection() {
+    @Test @MainActor func testCardExpansionConfigUsesRuntimeDetection() {
+        initializeTestConfig()
         // Set capability overrides to match testing defaults
         let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
@@ -201,7 +202,8 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
-    @Test func testPlatformOptimizationUsesRuntimeDetection() {
+    @Test @MainActor func testPlatformOptimizationUsesRuntimeDetection() {
+        initializeTestConfig()
         // Setup test environment
         setupTestEnvironment()
         

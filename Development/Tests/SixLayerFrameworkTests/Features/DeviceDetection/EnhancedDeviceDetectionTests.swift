@@ -155,7 +155,8 @@ open class EnhancedDeviceDetectionTests: BaseTestClass {
         #expect(capabilities.memoryAvailable == memoryAvailable)
     }
     
-    @Test func testPlatformDeviceCapabilitiesStaticProperties() {
+    @Test @MainActor func testPlatformDeviceCapabilitiesStaticProperties() {
+        initializeTestConfig()
         // Given & When & Then
         // Test that static properties are accessible
         let deviceType = PlatformDeviceCapabilities.deviceType
