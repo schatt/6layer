@@ -119,7 +119,8 @@ open class PhotoCallbackFunctionalTests: BaseTestClass {
         #expect(Bool(true), "Callback can be provided by external modules")
     }
     
-    @Test func testCameraCallbacksExternallyAccessible() async throws {
+    @Test @MainActor func testCameraCallbacksExternallyAccessible() async throws {
+        initializeTestConfig()
         // Rule 8: External module integration
         
         let _ = platformCameraInterface_L4(

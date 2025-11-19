@@ -8,13 +8,15 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
+    @MainActor
     public func createIntelligence() -> DataPresentationIntelligence {
         return DataPresentationIntelligence.shared
     }
     
     // MARK: - TDD: Red Phase - Failing Tests
     
-@Test func testDataPresentationIntelligenceExists() {
+@Test @MainActor func testDataPresentationIntelligenceExists() {
+        initializeTestConfig()
         // Given & When
         let intelligence = DataPresentationIntelligence.shared
         
@@ -22,7 +24,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         // intelligence is a non-optional singleton instance, so it exists if we reach here
     }
     
-    @Test func testAnalyzeDataWithEmptyArray() {
+    @Test @MainActor func testAnalyzeDataWithEmptyArray() {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let emptyData: [String] = []
@@ -35,7 +38,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.complexity == .simple)
     }
     
-    @Test func testAnalyzeDataWithSimpleData() {
+    @Test @MainActor func testAnalyzeDataWithSimpleData() {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let simpleData = ["A", "B", "C", "D", "E"]
@@ -49,7 +53,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.visualizationType == .categorical)
     }
     
-    @Test func testAnalyzeDataWithModerateData() {
+    @Test @MainActor func testAnalyzeDataWithModerateData() {
+        initializeTestConfig()
         // Given
         let moderateData = Array(1...15).map { "Item \($0)" }
         
@@ -62,7 +67,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.complexity == .moderate)
     }
     
-    @Test func testAnalyzeDataWithComplexData() {
+    @Test @MainActor func testAnalyzeDataWithComplexData() {
+        initializeTestConfig()
         // Given
         let complexData = Array(1...50).map { "Item \($0)" }
         
@@ -75,7 +81,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.complexity == .complex)
     }
     
-    @Test func testAnalyzeDataWithVeryComplexData() {
+    @Test @MainActor func testAnalyzeDataWithVeryComplexData() {
+        initializeTestConfig()
         // Given
         let veryComplexData = Array(1...150).map { "Item \($0)" }
         
@@ -90,7 +97,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Numerical Data Analysis Tests
     
-    @Test func testAnalyzeNumericalDataWithSimpleValues() {
+    @Test @MainActor func testAnalyzeNumericalDataWithSimpleValues() {
+        initializeTestConfig()
         // Given
         let values: [Double] = [10, 20, 30, 40, 50]
         
@@ -104,7 +112,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.visualizationType == .numerical)
     }
     
-    @Test func testAnalyzeNumericalDataWithTimeSeriesPattern() {
+    @Test @MainActor func testAnalyzeNumericalDataWithTimeSeriesPattern() {
+        initializeTestConfig()
         // Given
         let values: [Double] = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
         
@@ -119,7 +128,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.visualizationType == .temporal)
     }
     
-    @Test func testAnalyzeNumericalDataWithCategoricalPattern() {
+    @Test @MainActor func testAnalyzeNumericalDataWithCategoricalPattern() {
+        initializeTestConfig()
         // Given
         let values: [Double] = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
         
@@ -135,7 +145,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Categorical Data Analysis Tests
     
-    @Test func testAnalyzeCategoricalDataWithSimpleCategories() {
+    @Test @MainActor func testAnalyzeCategoricalDataWithSimpleCategories() {
+        initializeTestConfig()
         // Given
         let categories = ["A": 3, "B": 2, "C": 1]
         
@@ -151,7 +162,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.hasCategories)
     }
     
-    @Test func testAnalyzeCategoricalDataWithManyCategories() {
+    @Test @MainActor func testAnalyzeCategoricalDataWithManyCategories() {
+        initializeTestConfig()
         // Given
         let categories = Dictionary(uniqueKeysWithValues: (1...10).map { ("Category \($0)", $0) })
         
@@ -166,7 +178,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.recommendedChartType == .bar)
     }
     
-    @Test func testAnalyzeCategoricalDataWithComplexCategories() {
+    @Test @MainActor func testAnalyzeCategoricalDataWithComplexCategories() {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let categories = Dictionary(uniqueKeysWithValues: (1...25).map { ("Category \($0)", $0) })
@@ -181,7 +194,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Chart Type Recommendation Tests
     
-    @Test func testChartTypeRecommendationForSimpleNumericalData() {
+    @Test @MainActor func testChartTypeRecommendationForSimpleNumericalData() {
+        initializeTestConfig()
         // Given
         let values: [Double] = [10, 20, 30, 40, 50]
         
@@ -193,7 +207,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.recommendedChartType == .bar)
     }
     
-    @Test func testChartTypeRecommendationForTimeSeriesData() {
+    @Test @MainActor func testChartTypeRecommendationForTimeSeriesData() {
+        initializeTestConfig()
         // Given
         let values: [Double] = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
         
@@ -205,7 +220,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.recommendedChartType == .line)
     }
     
-    @Test func testChartTypeRecommendationForSimpleCategoricalData() {
+    @Test @MainActor func testChartTypeRecommendationForSimpleCategoricalData() {
+        initializeTestConfig()
         // Given
         let categories = ["A": 3, "B": 2, "C": 1]
         
@@ -217,7 +233,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.recommendedChartType == .pie)
     }
     
-    @Test func testChartTypeRecommendationForComplexCategoricalData() async {
+    @Test @MainActor func testChartTypeRecommendationForComplexCategoricalData() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let categories = Dictionary(uniqueKeysWithValues: (1...25).map { ("Category \($0)", $0) })
@@ -231,7 +248,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Confidence Calculation Tests
     
-    @Test func testConfidenceCalculationForSimpleData() {
+    @Test @MainActor func testConfidenceCalculationForSimpleData() {
+        initializeTestConfig()
         // Given
         let simpleData = ["A", "B", "C", "D", "E"]
         
@@ -243,7 +261,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.confidence == 1.0)
     }
     
-    @Test func testConfidenceCalculationForModerateData() {
+    @Test @MainActor func testConfidenceCalculationForModerateData() {
+        initializeTestConfig()
         // Given
         let moderateData = Array(1...15).map { "Item \($0)" }
         
@@ -255,7 +274,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.confidence == 0.9)
     }
     
-    @Test func testConfidenceCalculationForComplexData() async {
+    @Test @MainActor func testConfidenceCalculationForComplexData() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let complexData = Array(1...50).map { "Item \($0)" }
@@ -267,7 +287,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.confidence == 0.8)
     }
     
-    @Test func testConfidenceCalculationForVeryComplexData() {
+    @Test @MainActor func testConfidenceCalculationForVeryComplexData() {
+        initializeTestConfig()
         // Given
         let veryComplexData = Array(1...150).map { "Item \($0)" }
         
@@ -281,7 +302,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Data Visualization Type Detection Tests
     
-    @Test func testVisualizationTypeDetectionForNumericalData() {
+    @Test @MainActor func testVisualizationTypeDetectionForNumericalData() {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let numericalData = [1.0, 2.0, 3.0, 4.0, 5.0]
@@ -293,7 +315,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.visualizationType == .numerical)
     }
     
-    @Test func testVisualizationTypeDetectionForTemporalData() {
+    @Test @MainActor func testVisualizationTypeDetectionForTemporalData() {
+        initializeTestConfig()
         // Given
         let temporalData = [10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0]
         
@@ -305,7 +328,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.visualizationType == .temporal)
     }
     
-    @Test func testVisualizationTypeDetectionForCategoricalData() {
+    @Test @MainActor func testVisualizationTypeDetectionForCategoricalData() {
+        initializeTestConfig()
         // Given
         let categories = ["A": 3, "B": 2, "C": 1]
         
@@ -320,7 +344,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Edge Cases Tests
     
-    @Test func testAnalysisWithSingleDataPoint() async {
+    @Test @MainActor func testAnalysisWithSingleDataPoint() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let singleData = ["Single Item"]
@@ -333,7 +358,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.complexity == .simple)
     }
     
-    @Test func testAnalysisWithIdenticalValues() async {
+    @Test @MainActor func testAnalysisWithIdenticalValues() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let identicalValues = Array(repeating: 42.0, count: 10)
@@ -347,7 +373,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.hasCategories)
     }
     
-    @Test func testAnalysisWithZeroValues() async {
+    @Test @MainActor func testAnalysisWithZeroValues() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let zeroValues: [Double] = [0, 0, 0, 0, 0]
@@ -361,7 +388,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.hasCategories)
     }
     
-    @Test func testAnalysisWithNegativeValues() async {
+    @Test @MainActor func testAnalysisWithNegativeValues() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let negativeValues: [Double] = [-10, -5, 0, 5, 10]
@@ -374,7 +402,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result.complexity == .simple)
     }
     
-    @Test func testAnalysisWithVeryLargeValues() async {
+    @Test @MainActor func testAnalysisWithVeryLargeValues() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let largeValues: [Double] = [1e6, 2e6, 3e6, 4e6, 5e6]
@@ -389,7 +418,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     
     // MARK: - Consistency Tests
     
-    @Test func testAnalysisConsistencyForSameData() async {
+    @Test @MainActor func testAnalysisConsistencyForSameData() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let data = ["A", "B", "C", "D", "E"]
@@ -405,7 +435,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         #expect(result1.recommendedChartType == result2.recommendedChartType)
     }
     
-    @Test func testAnalysisConsistencyForSimilarData() async {
+    @Test @MainActor func testAnalysisConsistencyForSimilarData() async {
+        initializeTestConfig()
         // Given
         let intelligence = createIntelligence()
         let data1 = ["A", "B", "C", "D", "E"]

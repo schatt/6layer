@@ -16,7 +16,8 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
     
     // MARK: - Test that decision logic is actually used
     
-    @Test func testAdaptiveViewUsesDecisionFunction() async {
+    @Test @MainActor func testAdaptiveViewUsesDecisionFunction() async {
+        initializeTestConfig()
         // Given: Phone device type
         RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         
@@ -49,7 +50,8 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
     
     // MARK: - Test that correct view is rendered based on device type
     
-    @Test func testPhoneRendersStandardView() async {
+    @Test @MainActor func testPhoneRendersStandardView() async {
+        initializeTestConfig()
         // Given: Phone device (should render standard view)
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
@@ -89,7 +91,8 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
         }
     }
     
-    @Test func testPadRendersDetailedView() async {
+    @Test @MainActor func testPadRendersDetailedView() async {
+        initializeTestConfig()
         // Given: iPad device (should render detailed view)
         // Note: We can't easily simulate iPad in tests, but we can verify the logic path
         // In a real app, this would render platformDetailedDetailView
@@ -105,7 +108,8 @@ open class AdaptiveDetailViewRenderingTests: BaseTestClass {
     
     // MARK: - Test accessibility identifiers (the actual requirement!)
     
-    @Test func testAdaptiveViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAdaptiveViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Adaptive view (ACTUAL framework code that users call)
         RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         
