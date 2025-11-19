@@ -1,0 +1,474 @@
+#!/usr/bin/env python3
+"""
+Detects incorrect or non-existent usage of 6-layer types in app code.
+
+Scans source code for:
+1. Platform-specific types (NSColor, UIColor, NSFont, UIFont, NSImage, UIImage) - PRIORITY 1
+2. Incorrect SwiftUI view usage (TextField in forms, raw VStack/HStack) - PRIORITY 2
+
+Usage:
+    python scripts/detect_6layer_violations.py [directory]
+    python scripts/detect_6layer_violations.py --json output.json
+    python scripts/detect_6layer_violations.py --exclude-framework
+"""
+
+import re
+import sys
+import os
+import json
+from pathlib import Path
+from typing import List, Dict, Optional, Tuple
+from dataclasses import dataclass, asdict
+from datetime import datetime
+import argparse
+
+# ============================================================================
+# PRIORITY 1: Platform-Specific Types (Pure Swift types that differ)
+# ============================================================================
+
+PLATFORM_TYPE_VIOLATIONS = {
+    # Color types
+    'NSColor': {
+        'replacement': 'Color.platform*',
+        'hint': 'Use Color.platformBackground, Color.platformLabel, etc. instead of NSColor',
+        'priority': 1,
+        'pattern': r'\bNSColor\b'
+    },
+    'UIColor': {
+        'replacement': 'Color.platform*',
+        'hint': 'Use Color.platformBackground, Color.platformLabel, etc. instead of UIColor',
+        'priority': 1,
+        'pattern': r'\bUIColor\b'
+    },
+    
+    # Font types
+    'NSFont': {
+        'replacement': 'Font.platform* or Font.system()',
+        'hint': 'Use Font.system() or platform-specific font extensions instead of NSFont',
+        'priority': 1,
+        'pattern': r'\bNSFont\b'
+    },
+    'UIFont': {
+        'replacement': 'Font.platform* or Font.system()',
+        'hint': 'Use Font.system() or platform-specific font extensions instead of UIFont',
+        'priority': 1,
+        'pattern': r'\bUIFont\b'
+    },
+    
+    # Image types
+    'NSImage': {
+        'replacement': 'PlatformImage',
+        'hint': 'Use PlatformImage instead of NSImage for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bNSImage\b'
+    },
+    'UIImage': {
+        'replacement': 'PlatformImage',
+        'hint': 'Use PlatformImage instead of UIImage for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bUIImage\b'
+    },
+    
+    # Other platform-specific types
+    'NSPasteboard': {
+        'replacement': 'PlatformClipboard',
+        'hint': 'Use PlatformClipboard.copyToClipboard() instead of NSPasteboard',
+        'priority': 1,
+        'pattern': r'\bNSPasteboard\b'
+    },
+    'UIPasteboard': {
+        'replacement': 'PlatformClipboard',
+        'hint': 'Use PlatformClipboard.copyToClipboard() instead of UIPasteboard',
+        'priority': 1,
+        'pattern': r'\bUIPasteboard\b'
+    },
+}
+
+# ============================================================================
+# PRIORITY 2: Incorrect SwiftUI View Usage
+# ============================================================================
+
+VIEW_VIOLATIONS = {
+    'TextField in form context': {
+        'replacement': 'platformPresentFormData_L1()',
+        'hint': 'Use platformPresentFormData_L1() instead of TextField directly in forms',
+        'priority': 2,
+        'pattern': r'TextField\s*\([^)]+\)',
+        'context_pattern': r'(?:platformFormSection|Form\s*\{|platformPresentFormData_L1)',
+        'requires_context': True
+    },
+    'VStack without semantic intent': {
+        'replacement': 'platformPresentItemCollection_L1() or platformResponsiveCard_L1()',
+        'hint': 'Consider using Layer 1 semantic functions instead of raw VStack',
+        'priority': 2,
+        'pattern': r'\bVStack\s*\{',
+        'context_pattern': r'(?:platformFormSection|platformPresentFormData_L1|platformPresentItemCollection_L1)',
+        'requires_context': False,
+        'exclude_in_framework': True
+    },
+    'HStack without semantic intent': {
+        'replacement': 'platformPresentItemCollection_L1() or platformResponsiveCard_L1()',
+        'hint': 'Consider using Layer 1 semantic functions instead of raw HStack',
+        'priority': 2,
+        'pattern': r'\bHStack\s*\{',
+        'context_pattern': r'(?:platformFormSection|platformPresentFormData_L1|platformPresentItemCollection_L1)',
+        'requires_context': False,
+        'exclude_in_framework': True
+    },
+}
+
+# ============================================================================
+# Data Structures
+# ============================================================================
+
+@dataclass
+class Violation:
+    file_path: str
+    line_number: int
+    line_content: str
+    violation_type: str
+    replacement: str
+    hint: str
+    priority: int
+    column: int = 0
+
+    def to_dict(self):
+        return asdict(self)
+
+# ============================================================================
+# Comment Stripping
+# ============================================================================
+
+def strip_comments_from_line(line: str, in_multiline_comment: bool = False) -> Tuple[str, bool]:
+    """
+    Strip comments from a single line of Swift code.
+    
+    Returns:
+        Tuple of (line_without_comments, new_in_multiline_comment_state)
+    """
+    result = []
+    i = 0
+    in_string = False
+    string_char = None
+    in_multiline = in_multiline_comment
+    
+    while i < len(line):
+        char = line[i]
+        next_char = line[i + 1] if i + 1 < len(line) else None
+        prev_char = line[i - 1] if i > 0 else None
+        
+        # Handle string literals (don't process comments inside strings)
+        if not in_string and (char == '"' or char == "'"):
+            in_string = True
+            string_char = char
+            result.append(char)
+            i += 1
+            continue
+        elif in_string:
+            # Check for escaped characters in strings
+            if char == '\\' and next_char:
+                # Escaped character, keep both
+                result.append(char)
+                result.append(next_char)
+                i += 2
+                continue
+            elif char == string_char:
+                # End of string
+                in_string = False
+                string_char = None
+                result.append(char)
+                i += 1
+                continue
+            else:
+                # Regular character in string
+                result.append(char)
+                i += 1
+                continue
+        
+        # Handle multi-line comment start (only if not in string)
+        if not in_multiline and not in_string and char == '/' and next_char == '*':
+            in_multiline = True
+            i += 2
+            continue
+        
+        # Handle multi-line comment end
+        if in_multiline and char == '*' and next_char == '/':
+            in_multiline = False
+            i += 2
+            continue
+        
+        # Handle single-line comment (only if not in multi-line or string)
+        if not in_multiline and not in_string and char == '/' and next_char == '/':
+            # Everything after // is a comment, stop processing
+            break
+        
+        # If we're in a multi-line comment, skip this character
+        if in_multiline:
+            i += 1
+            continue
+        
+        # Regular character, keep it
+        result.append(char)
+        i += 1
+    
+    return (''.join(result), in_multiline)
+
+def strip_comments_from_lines(lines: List[str]) -> List[str]:
+    """
+    Strip comments from all lines, handling multi-line comments.
+    
+    Returns:
+        List of lines with comments stripped
+    """
+    result = []
+    in_multiline = False
+    
+    for line in lines:
+        stripped, in_multiline = strip_comments_from_line(line, in_multiline)
+        result.append(stripped)
+    
+    return result
+
+# ============================================================================
+# Detection Logic
+# ============================================================================
+
+def is_app_code(file_path: Path, exclude_framework: bool = True) -> bool:
+    """Check if file is app code (not framework/test code)."""
+    path_str = str(file_path)
+    
+    # Exclude build directories and dependencies
+    if '.build' in path_str or '.build-clean' in path_str:
+        return False
+    if 'DerivedData' in path_str:
+        return False
+    if 'Pods/' in path_str:
+        return False
+    if 'Carthage/' in path_str:
+        return False
+    if '.swiftpm/' in path_str:
+        return False
+    
+    # Exclude framework code
+    if exclude_framework:
+        if 'Framework/' in path_str:
+            return False
+        if 'Development/Tests/' in path_str:
+            return False
+        if 'Development/scripts/' in path_str:
+            return False
+        if 'scripts/' in path_str:
+            return False
+    
+    # Only process Swift files
+    if not file_path.suffix == '.swift':
+        return False
+    
+    return True
+
+def find_violations_in_file(file_path: Path, exclude_framework: bool = True) -> List[Violation]:
+    """Scan a single file for violations."""
+    violations = []
+    
+    if not is_app_code(file_path, exclude_framework):
+        return violations
+    
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+            content = ''.join(lines)
+    except Exception as e:
+        print(f"Warning: Could not read {file_path}: {e}", file=sys.stderr)
+        return violations
+    
+    # Strip comments from lines for violation detection
+    # Keep original lines for display in violation reports
+    lines_without_comments = strip_comments_from_lines(lines)
+    
+    # Check for platform-specific type violations (PRIORITY 1)
+    for violation_name, violation_info in PLATFORM_TYPE_VIOLATIONS.items():
+        pattern = violation_info['pattern']
+        for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_comments), start=1):
+            matches = list(re.finditer(pattern, stripped_line))
+            for match in matches:
+                violations.append(Violation(
+                    file_path=str(file_path),
+                    line_number=line_num,
+                    line_content=original_line.rstrip(),
+                    violation_type=violation_name,
+                    replacement=violation_info['replacement'],
+                    hint=violation_info['hint'],
+                    priority=violation_info['priority'],
+                    column=match.start() + 1
+                ))
+    
+    # Check for view violations (PRIORITY 2)
+    for violation_name, violation_info in VIEW_VIOLATIONS.items():
+        pattern = violation_info['pattern']
+        context_pattern = violation_info.get('context_pattern')
+        requires_context = violation_info.get('requires_context', False)
+        
+        # Check if we should exclude framework code for this violation
+        if violation_info.get('exclude_in_framework', False) and 'Framework/' in str(file_path):
+            continue
+        
+        for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_comments), start=1):
+            if re.search(pattern, stripped_line):
+                # If context is required, check if it exists nearby
+                if requires_context and context_pattern:
+                    # Check surrounding lines for context (use stripped lines for context check)
+                    context_found = False
+                    start = max(0, line_num - 10)
+                    end = min(len(lines_without_comments), line_num + 10)
+                    context_lines = ''.join(lines_without_comments[start:end])
+                    if re.search(context_pattern, context_lines):
+                        context_found = True
+                    
+                    if not context_found:
+                        continue
+                
+                # Found a violation
+                match = re.search(pattern, stripped_line)
+                if match:
+                    violations.append(Violation(
+                        file_path=str(file_path),
+                        line_number=line_num,
+                        line_content=original_line.rstrip(),
+                        violation_type=violation_name,
+                        replacement=violation_info['replacement'],
+                        hint=violation_info['hint'],
+                        priority=violation_info['priority'],
+                        column=match.start() + 1
+                    ))
+    
+    return violations
+
+def scan_directory(directory: Path, exclude_framework: bool = True) -> List[Violation]:
+    """Scan a directory tree for violations."""
+    all_violations = []
+    
+    if not directory.exists():
+        print(f"Error: Directory {directory} does not exist", file=sys.stderr)
+        return all_violations
+    
+    swift_files = list(directory.rglob('*.swift'))
+    
+    print(f"Scanning {len(swift_files)} Swift files...", file=sys.stderr)
+    
+    for swift_file in swift_files:
+        violations = find_violations_in_file(swift_file, exclude_framework)
+        all_violations.extend(violations)
+    
+    return all_violations
+
+# ============================================================================
+# Output Formatting
+# ============================================================================
+
+def print_console_report(violations: List[Violation]):
+    """Print violations to console."""
+    if not violations:
+        print("✅ No violations found!")
+        return
+    
+    # Group by priority
+    priority_1 = [v for v in violations if v.priority == 1]
+    priority_2 = [v for v in violations if v.priority == 2]
+    
+    print(f"\n{'='*80}")
+    print(f"6-Layer Type Violations Report")
+    print(f"{'='*80}")
+    print(f"Total violations: {len(violations)}")
+    print(f"  Priority 1 (Platform-specific types): {len(priority_1)}")
+    print(f"  Priority 2 (View usage): {len(priority_2)}")
+    print(f"{'='*80}\n")
+    
+    # Print Priority 1 violations
+    if priority_1:
+        print("\n🔴 PRIORITY 1: Platform-Specific Types")
+        print("-" * 80)
+        for violation in priority_1:
+            print(f"\nFile: {violation.file_path}:{violation.line_number}:{violation.column}")
+            print(f"Type: {violation.violation_type}")
+            print(f"Line: {violation.line_content}")
+            print(f"💡 Hint: {violation.hint}")
+            print(f"✅ Use: {violation.replacement}")
+    
+    # Print Priority 2 violations
+    if priority_2:
+        print("\n🟡 PRIORITY 2: View Usage")
+        print("-" * 80)
+        for violation in priority_2:
+            print(f"\nFile: {violation.file_path}:{violation.line_number}:{violation.column}")
+            print(f"Type: {violation.violation_type}")
+            print(f"Line: {violation.line_content}")
+            print(f"💡 Hint: {violation.hint}")
+            print(f"✅ Use: {violation.replacement}")
+
+def generate_json_report(violations: List[Violation]) -> Dict:
+    """Generate JSON report."""
+    return {
+        'timestamp': datetime.now().isoformat(),
+        'total_violations': len(violations),
+        'priority_1_count': len([v for v in violations if v.priority == 1]),
+        'priority_2_count': len([v for v in violations if v.priority == 2]),
+        'violations': [v.to_dict() for v in violations]
+    }
+
+# ============================================================================
+# Main
+# ============================================================================
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Detect 6-layer type violations in app code'
+    )
+    parser.add_argument(
+        'directory',
+        nargs='?',
+        default='.',
+        help='Directory to scan (default: current directory)'
+    )
+    parser.add_argument(
+        '--json',
+        type=str,
+        help='Output JSON report to file'
+    )
+    parser.add_argument(
+        '--exclude-framework',
+        action='store_true',
+        default=True,
+        help='Exclude framework code from scanning (default: True)'
+    )
+    parser.add_argument(
+        '--include-framework',
+        action='store_false',
+        dest='exclude_framework',
+        help='Include framework code in scanning'
+    )
+    
+    args = parser.parse_args()
+    
+    # Scan directory
+    directory = Path(args.directory).resolve()
+    violations = scan_directory(directory, exclude_framework=args.exclude_framework)
+    
+    # Sort violations by priority, then by file
+    violations.sort(key=lambda v: (v.priority, v.file_path, v.line_number))
+    
+    # Print console report
+    print_console_report(violations)
+    
+    # Generate JSON report if requested
+    if args.json:
+        json_report = generate_json_report(violations)
+        with open(args.json, 'w') as f:
+            json.dump(json_report, f, indent=2)
+        print(f"\n📄 JSON report written to: {args.json}", file=sys.stderr)
+    
+    # Exit with error code if violations found
+    sys.exit(1 if violations else 0)
+
+if __name__ == '__main__':
+    main()
+
