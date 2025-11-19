@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v5.2.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.2.1)
+[![Version](https://img.shields.io/badge/version-v5.4.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.4.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -89,6 +89,16 @@ platformPresentFormData_L1(
 ```
 
 **📚 Full documentation**: [Field Hints Complete Guide](docs/FieldHintsCompleteGuide.md)
+
+## 🆕 What's New in v5.4.0
+
+### OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets
+
+- **OCR Hints in Hints Files**: Define OCR hints directly in `.hints` files for intelligent form-filling
+- **Calculation Groups in Hints Files**: Declarative calculation groups for automatic field computation
+- **Internationalization Support**: Language-specific OCR hints with automatic fallback
+- **OCR Overlay Sheet Modifier**: Convenient `ocrOverlaySheet()` view modifier for presenting OCR results in a sheet (Issue #22)
+- **100% Backward Compatible**: Existing hints files continue to work without modification
 
 ## 🆕 What's New in v5.1.0
 
