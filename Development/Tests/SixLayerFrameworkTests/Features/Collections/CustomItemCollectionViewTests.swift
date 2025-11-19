@@ -31,7 +31,8 @@ open class CustomItemCollectionViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testCustomItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testCustomItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             CustomItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
             CustomItemCollectionViewTestItem(id: "item2", title: "Test Item 2")
@@ -59,7 +60,8 @@ open class CustomItemCollectionViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCustomItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testCustomItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             CustomItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
             CustomItemCollectionViewTestItem(id: "item2", title: "Test Item 2")

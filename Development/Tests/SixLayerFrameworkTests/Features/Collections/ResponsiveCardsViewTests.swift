@@ -23,7 +23,8 @@ open class ResponsiveCardsViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testData = ResponsiveCardData(
             title: "Test Card",
             subtitle: "Test Subtitle",
@@ -48,7 +49,8 @@ open class ResponsiveCardsViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testResponsiveCardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testData = ResponsiveCardData(
             title: "Test Card",
             subtitle: "Test Subtitle",

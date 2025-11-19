@@ -27,7 +27,8 @@ open class DynamicFormViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-    @Test func testDynamicFormViewRendersTitleAndSectionsAndSubmitButton() async {
+    @Test @MainActor func testDynamicFormViewRendersTitleAndSectionsAndSubmitButton() async {
+        initializeTestConfig()
         // TDD: DynamicFormView should render:
         // 1. Form title from configuration
         // 2. All sections using DynamicFormSectionView
@@ -99,7 +100,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testDynamicFormSectionViewRendersSectionTitleAndFields() async {
+    @Test @MainActor func testDynamicFormSectionViewRendersSectionTitleAndFields() async {
+        initializeTestConfig()
         // TDD: DynamicFormSectionView should render:
         // 1. Section title from section configuration
         // 2. All fields in the section using DynamicFormFieldView
@@ -159,7 +161,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testDynamicFormFieldViewRendersFieldUsingCustomFieldView() async {
+    @Test @MainActor func testDynamicFormFieldViewRendersFieldUsingCustomFieldView() async {
+        initializeTestConfig()
         // TDD: DynamicFormFieldView should render:
         // 1. Field label from field configuration
         // 2. Use CustomFieldView to render the actual field control
@@ -218,7 +221,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testFormWizardViewRendersStepsAndNavigation() async {
+    @Test @MainActor func testFormWizardViewRendersStepsAndNavigation() async {
+        initializeTestConfig()
         // TDD: FormWizardView should render:
         // 1. Current step content using the content closure
         // 2. Navigation controls using the navigation closure
@@ -278,7 +282,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
 
-@Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testDynamicFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         // Given: A DynamicFormView with configuration
         let configuration = DynamicFormConfiguration(
             id: "testForm",
@@ -321,7 +326,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testDynamicFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         // Given: A DynamicFormView with configuration
         let configuration = DynamicFormConfiguration(
             id: "testForm",
@@ -367,7 +373,8 @@ open class DynamicFormViewTests: BaseTestClass {
 
     // MARK: - OCR Integration Tests
 
-    @Test func testDynamicFormFieldCanBeConfiguredWithOCRSupport() async {
+    @Test @MainActor func testDynamicFormFieldCanBeConfiguredWithOCRSupport() async {
+        initializeTestConfig()
         // TDD: DynamicFormField should support OCR configuration
         // 1. Field should accept supportsOCR, ocrHint, and ocrValidationTypes
         // 2. Field should store these values correctly
@@ -392,7 +399,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(field.ocrValidationTypes == expectedTypes, "Field should store OCR validation types")
     }
 
-    @Test func testDynamicFormFieldDefaultsToNoOCRSupport() async {
+    @Test @MainActor func testDynamicFormFieldDefaultsToNoOCRSupport() async {
+        initializeTestConfig()
         // TDD: DynamicFormField should default to no OCR support
         // 1. Fields without OCR config should default to false
         // 2. OCR-related properties should be nil by default
@@ -409,7 +417,8 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(field.ocrValidationTypes == nil, "OCR validation types should be nil by default")
     }
 
-    @Test func testDynamicFormViewRendersOCRButtonForOCREnabledFields() async {
+    @Test @MainActor func testDynamicFormViewRendersOCRButtonForOCREnabledFields() async {
+        initializeTestConfig()
         // TDD: DynamicFormView should show OCR UI for OCR-enabled fields
         // 1. OCR-enabled fields should show an OCR trigger button/icon
         // 2. OCR button should be accessible

@@ -23,7 +23,8 @@ open class GenericFormViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testGenericFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testGenericFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testFields = [
             DynamicFormField(
                 id: "field1",
@@ -54,7 +55,8 @@ open class GenericFormViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testFields = [
             DynamicFormField(
                 id: "field1",

@@ -21,7 +21,8 @@ open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
     
     // BaseTestClass handles setup automatically
     
-    @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         _ = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 375,
@@ -33,7 +34,8 @@ open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
         // So we test that the functions execute without crashing
     }
     
-    @Test func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testDetermineOptimalCardLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         _ = determineOptimalCardLayout_L2(
             contentCount: 5,
             screenWidth: 1920,
