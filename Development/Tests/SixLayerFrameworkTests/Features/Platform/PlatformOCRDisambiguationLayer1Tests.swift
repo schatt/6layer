@@ -23,7 +23,8 @@ open class PlatformOCRDisambiguationLayer1Tests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
         // Verify alternatives are properly configured
@@ -57,7 +58,8 @@ open class PlatformOCRDisambiguationLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformOCRDisambiguationL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let alternatives = ["Option 1", "Option 2", "Option 3"]
         
         // Verify alternatives are properly configured

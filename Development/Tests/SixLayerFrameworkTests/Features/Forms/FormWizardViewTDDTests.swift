@@ -17,7 +17,8 @@ import SwiftUI
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 open class FormWizardViewTDDTests: BaseTestClass {
 
-    @Test func testFormWizardViewRendersStepNavigation() async {
+    @Test @MainActor func testFormWizardViewRendersStepNavigation() async {
+        initializeTestConfig()
         // TDD: FormWizardView should:
         // 1. Render step navigation interface (progress indicator, step list, etc.)
         // 2. Display current step content via content builder
@@ -90,7 +91,8 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #endif
     }
 
-    @Test func testFormWizardViewManagesStepState() async {
+    @Test @MainActor func testFormWizardViewManagesStepState() async {
+        initializeTestConfig()
         // TDD: FormWizardView should:
         // 1. Initialize at first step
         // 2. Allow navigation between steps via FormWizardState
@@ -117,7 +119,8 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #expect(wizardState.isLastStep, "Should be on last step after advancing")
     }
 
-    @Test func testFormWizardViewProvidesNavigationControls() async {
+    @Test @MainActor func testFormWizardViewProvidesNavigationControls() async {
+        initializeTestConfig()
         // TDD: FormWizardView should:
         // 1. Show "Previous" button when not on first step
         // 2. Show "Next" button when not on last step
@@ -193,7 +196,8 @@ open class FormWizardViewTDDTests: BaseTestClass {
         #endif
     }
 
-    @Test func testFormWizardViewDisplaysAllSteps() async {
+    @Test @MainActor func testFormWizardViewDisplaysAllSteps() async {
+        initializeTestConfig()
         // TDD: FormWizardView should:
         // 1. Display step titles/names in navigation
         // 2. Show progress indicator with all steps

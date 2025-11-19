@@ -23,7 +23,8 @@ open class GenericMediaViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testGenericMediaViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let view = GenericMediaView(
             media: [GenericMediaItem(title: "Test Media", url: "https://example.com")],
             hints: PresentationHints(
@@ -49,7 +50,8 @@ open class GenericMediaViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericMediaViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let view = GenericMediaView(
             media: [GenericMediaItem(title: "Test Media", url: "https://example.com")],
             hints: PresentationHints(

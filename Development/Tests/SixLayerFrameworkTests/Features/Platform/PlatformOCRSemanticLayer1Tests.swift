@@ -85,7 +85,8 @@ open class PlatformOCRSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformExtractStructuredData_L1 Tests
     
-    @Test func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -114,7 +115,8 @@ open class PlatformOCRSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformExtractStructuredDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],

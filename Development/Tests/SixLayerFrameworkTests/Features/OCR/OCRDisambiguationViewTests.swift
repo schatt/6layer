@@ -23,7 +23,8 @@ open class OCRDisambiguationViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let candidates = [
             OCRDataCandidate(
                 text: "Test Text",
@@ -59,7 +60,8 @@ open class OCRDisambiguationViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testOCRDisambiguationViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let candidates = [
             OCRDataCandidate(
                 text: "Test Text",

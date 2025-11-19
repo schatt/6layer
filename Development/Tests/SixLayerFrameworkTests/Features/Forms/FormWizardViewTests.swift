@@ -23,7 +23,8 @@ open class FormWizardViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testFormWizardViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
         let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         
@@ -50,7 +51,8 @@ open class FormWizardViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testFormWizardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testFormWizardViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let step1 = FormWizardStep(id: "step1", title: "Step 1", stepOrder: 0)
         let step2 = FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         

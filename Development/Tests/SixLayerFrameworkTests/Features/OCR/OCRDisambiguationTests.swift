@@ -32,7 +32,8 @@ import Testing
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCRDisambiguationTDDTests: BaseTestClass {
 
-    @Test func testOCRDisambiguationViewRendersAlternativesAndHandlesSelection() async {
+    @Test @MainActor func testOCRDisambiguationViewRendersAlternativesAndHandlesSelection() async {
+        initializeTestConfig()
         // TDD: OCRDisambiguationView should render:
         // 1. Original ambiguous text
         // 2. Multiple alternative interpretations
@@ -96,7 +97,8 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
         }
     }
 
-    @Test func testOCRDisambiguationViewShowsConfidenceLevels() async {
+    @Test @MainActor func testOCRDisambiguationViewShowsConfidenceLevels() async {
+        initializeTestConfig()
         // TDD: OCRDisambiguationView should display:
         // 1. Confidence percentages for each alternative
         // 2. Visual indicators of confidence levels

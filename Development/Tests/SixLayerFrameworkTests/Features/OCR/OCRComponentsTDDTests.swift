@@ -128,7 +128,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
 
     // MARK: - OCR Disambiguation View
 
-    @Test func testOCRDisambiguationViewRendersDisambiguationUI() async {
+    @Test @MainActor func testOCRDisambiguationViewRendersDisambiguationUI() async {
+        initializeTestConfig()
         // TDD: OCRDisambiguationView should:
         // 1. Display ambiguous OCR results with alternatives
         // 2. Allow user to select correct interpretation
@@ -204,7 +205,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         #endif
     }
 
-    @Test func testOCRDisambiguationViewDisplaysAllAlternatives() async {
+    @Test @MainActor func testOCRDisambiguationViewDisplaysAllAlternatives() async {
+        initializeTestConfig()
         // TDD: OCRDisambiguationView should:
         // 1. Display all candidate alternatives from result
         // 2. Show confidence scores for each
@@ -266,7 +268,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         #endif
     }
 
-    @Test func testOCRDisambiguationViewHandlesNoDisambiguationNeeded() async {
+    @Test @MainActor func testOCRDisambiguationViewHandlesNoDisambiguationNeeded() async {
+        initializeTestConfig()
         // TDD: OCRDisambiguationView should:
         // 1. Handle cases where requiresUserSelection is false
         // 2. Show confirmation UI when not needed
