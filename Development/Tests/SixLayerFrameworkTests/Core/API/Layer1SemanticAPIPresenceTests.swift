@@ -3,9 +3,10 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer1SemanticAPIPresenceTests: BaseTestClass {
-    @Test func testPlatformPresentItemCollectionL1Exists() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1Exists() {
+            initializeTestConfig()
         struct Item: Identifiable { let id = UUID() }
         let items = [Item(), Item()]
         let hints = PresentationHints(dataType: .collection, presentationPreference: .automatic, complexity: .moderate, context: .dashboard)

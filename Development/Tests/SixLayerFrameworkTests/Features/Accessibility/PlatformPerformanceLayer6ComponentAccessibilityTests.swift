@@ -11,7 +11,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Performance Layer Component Accessibility")
 open class PlatformPerformanceLayer6ComponentAccessibilityTests: BaseTestClass {
     

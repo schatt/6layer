@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All functions in AutomaticAccessibilityIdentifiers.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Automatic Accessibility Identifiers")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -19,8 +19,9 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
 
     // MARK: - Namespace Detection Tests
     
-    @Test func testAutomaticNamespaceDetectionForTests() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAutomaticNamespaceDetectionForTests() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: We're running in a test environment
             // WHEN: Using test config (isolated per test)
             // THEN: Should use configured namespace from BaseTestClass
@@ -33,8 +34,9 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         }
     }
     
-    @Test func testAutomaticNamespaceDetectionForRealApps() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAutomaticNamespaceDetectionForRealApps() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: We're simulating a real app environment (not in tests)
             // WHEN: Using test config
             // THEN: Should use configured namespace
@@ -51,7 +53,8 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     // MARK: - automaticAccessibilityIdentifiers() Modifier Tests
     
-    @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnIOS() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnIOS() async {
+        initializeTestConfig()
         let view = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -72,7 +75,8 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnMacOS() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersModifierGeneratesIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let view = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -95,7 +99,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     // MARK: - named() Modifier Tests
     
-    @Test func testNamedModifierGeneratesIdentifiersOnIOS() async {
+    @Test @MainActor func testNamedModifierGeneratesIdentifiersOnIOS() async {
         let view = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -116,7 +120,8 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
         #endif
     }
     
-    @Test func testNamedModifierGeneratesIdentifiersOnMacOS() async {
+    @Test @MainActor func testNamedModifierGeneratesIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let view = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -142,8 +147,9 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     /// Test that automaticAccessibilityIdentifiers() can be applied to root views
     /// without accessing environment values outside of view context
     /// This test verifies Issue #7: No SwiftUI warnings about environment access
-    @Test func testAutomaticAccessibilityIdentifiersOnRootViewNoEnvironmentWarnings() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersOnRootViewNoEnvironmentWarnings() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Create a simple root view with the modifier applied
@@ -179,8 +185,9 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     
     /// Test that modifier defers environment access until view is installed
     /// This verifies the helper view pattern works correctly
-    @Test func testModifierDefersEnvironmentAccessUntilViewInstalled() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testModifierDefersEnvironmentAccessUntilViewInstalled() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
             
             // Create a view with environment values set
@@ -217,8 +224,9 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
     /// Test that all modifier variants use helper view pattern
     /// This ensures NamedAutomaticAccessibilityIdentifiersModifier, ForcedAutomaticAccessibilityIdentifiersModifier, etc.
     /// all defer environment access correctly
-    @Test func testAllModifierVariantsDeferEnvironmentAccess() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAllModifierVariantsDeferEnvironmentAccess() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
             
             let testConfig = AccessibilityIdentifierConfig.shared

@@ -9,7 +9,7 @@ import ViewInspector
 #endif
 /// Tests for Collection View Callback Functionality
 /// Tests that collection views properly handle item selection, deletion, and editing callbacks
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Collection View Callback")
 open class CollectionViewCallbackTests: BaseTestClass {
     
@@ -59,7 +59,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Layer 1 Function Tests
     
-    @Test func testPlatformPresentItemCollectionL1WithCallbacks() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithCallbacks() {
+                initializeTestConfig()
         // Given: Collection view with callbacks
         resetCallbacks()
         
@@ -102,7 +103,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformPresentItemCollectionL1WithoutCallbacks() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithoutCallbacks() {
+            initializeTestConfig()
         // Given: Collection view without callbacks
         resetCallbacks()
         
@@ -141,7 +143,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformPresentItemCollectionL1WithEnhancedHints() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithEnhancedHints() {
+                initializeTestConfig()
         // Given: Collection view with enhanced hints and callbacks
         resetCallbacks()
         
@@ -161,7 +164,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Collection View Component Tests
     
-    @Test func testExpandableCardCollectionViewWithCallbacks() {
+    @Test @MainActor func testExpandableCardCollectionViewWithCallbacks() {
+                initializeTestConfig()
         // Given: Expandable card collection view with callbacks
         resetCallbacks()
         
@@ -179,7 +183,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testGridCollectionViewWithCallbacks() {
+    @Test @MainActor func testGridCollectionViewWithCallbacks() {
+                initializeTestConfig()
         // Given: Grid collection view with callbacks
         resetCallbacks()
         
@@ -197,7 +202,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testListCollectionViewWithCallbacks() {
+    @Test @MainActor func testListCollectionViewWithCallbacks() {
+                initializeTestConfig()
         // Given: List collection view with callbacks
         resetCallbacks()
         
@@ -215,7 +221,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testListCollectionViewOnItemSelectedCallback() async throws {
+    @Test @MainActor func testListCollectionViewOnItemSelectedCallback() async throws {
+                initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing - Tests must validate actual behavior
         // CRITICAL: This test verifies that ListCollectionView ACTUALLY INVOKES callbacks when tapped
         
@@ -273,7 +280,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         }
     }
     
-    @Test func testCoverFlowCollectionViewWithCallbacks() {
+    @Test @MainActor func testCoverFlowCollectionViewWithCallbacks() {
+                initializeTestConfig()
         // Given: Cover flow collection view with callbacks
         resetCallbacks()
         
@@ -291,7 +299,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testMasonryCollectionViewWithCallbacks() {
+    @Test @MainActor func testMasonryCollectionViewWithCallbacks() {
+                initializeTestConfig()
         // Given: Masonry collection view with callbacks
         resetCallbacks()
         
@@ -309,7 +318,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testListCollectionViewOnItemDeletedCallback() async throws {
+    @Test @MainActor func testListCollectionViewOnItemDeletedCallback() async throws {
+                initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
         var callbackInvoked = false
@@ -332,7 +342,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // Delete callback test completed - actual callback verification needs implementation
     }
     
-    @Test func testListCollectionViewOnItemEditedCallback() async throws {
+    @Test @MainActor func testListCollectionViewOnItemEditedCallback() async throws {
+        initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing
         
         var callbackInvoked = false
@@ -356,7 +367,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         #expect(Bool(true), "View renders without errors")
     }
     
-    @Test func testAdaptiveCollectionViewWithCallbacks() {
+    @Test @MainActor func testAdaptiveCollectionViewWithCallbacks() {
+        initializeTestConfig()
         // Given: Adaptive collection view with callbacks
         resetCallbacks()
         
@@ -376,7 +388,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Card Component Tests
     
-    @Test func testExpandableCardComponentWithCallbacks() {
+    @Test @MainActor func testExpandableCardComponentWithCallbacks() {
+                initializeTestConfig()
         // Given: Expandable card component with callbacks
         resetCallbacks()
         let item = sampleItems[0]
@@ -415,7 +428,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testSimpleCardComponentWithCallbacks() {
+    @Test @MainActor func testSimpleCardComponentWithCallbacks() {
+                initializeTestConfig()
         // Given: Simple card component with callbacks
         resetCallbacks()
         let item = sampleItems[0]
@@ -441,7 +455,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testCoverFlowCardComponentWithCallbacks() {
+    @Test @MainActor func testCoverFlowCardComponentWithCallbacks() {
+                initializeTestConfig()
         // Given: Cover flow card component with callbacks
         resetCallbacks()
         let item = sampleItems[0]
@@ -460,7 +475,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Empty State Tests
     
-    @Test func testEmptyCollectionWithCreateCallback() {
+    @Test @MainActor func testEmptyCollectionWithCreateCallback() {
+                initializeTestConfig()
         // Given: Empty collection with create callback
         resetCallbacks()
         
@@ -475,7 +491,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testEmptyCollectionWithoutCreateCallback() {
+    @Test @MainActor func testEmptyCollectionWithoutCreateCallback() {
+        initializeTestConfig()
         // Given: Empty collection without create callback
         resetCallbacks()
         
@@ -491,7 +508,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Backward Compatibility Tests
     
-    @Test func testBackwardCompatibilityWithoutNewCallbacks() {
+    @Test @MainActor func testBackwardCompatibilityWithoutNewCallbacks() {
+                initializeTestConfig()
         // Given: Existing code without new callback parameters
         resetCallbacks()
         
@@ -506,7 +524,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testBackwardCompatibilityWithEnhancedHints() {
+    @Test @MainActor func testBackwardCompatibilityWithEnhancedHints() {
+                initializeTestConfig()
         // Given: Existing code with enhanced hints but no new callbacks
         resetCallbacks()
         
@@ -523,7 +542,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
     
     // MARK: - Edge Case Tests
     
-    @Test func testNilCallbacks() {
+    @Test @MainActor func testNilCallbacks() {
+        initializeTestConfig()
         // Given: Collection view with nil callbacks
         resetCallbacks()
         
@@ -541,7 +561,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testSingleItemCollection() {
+    @Test @MainActor func testSingleItemCollection() {
+                initializeTestConfig()
         // Given: Collection with single item
         resetCallbacks()
         let singleItem = [sampleItems[0]]
@@ -560,7 +581,8 @@ open class CollectionViewCallbackTests: BaseTestClass {
         // view is a non-optional View struct, so it exists if we reach here
     }
     
-    @Test func testLargeCollection() {
+    @Test @MainActor func testLargeCollection() {
+            initializeTestConfig()
         // Given: Collection with many items
         resetCallbacks()
         let largeCollection = (1...100).map { i in

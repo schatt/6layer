@@ -11,7 +11,7 @@ import Testing
 
 import SwiftUI
 @testable import SixLayerFramework
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Intelligent Card Expansion Layer")
 open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
@@ -21,7 +21,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - NativeExpandableCardView Tests
     
-    @Test func testNativeExpandableCardView_Creation() {
+    @Test @MainActor func testNativeExpandableCardView_Creation() {
         // Given: Configuration for native expandable card
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -60,7 +60,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         #expect(Bool(true), "Accessibility config should be created")  // accessibilityConfig is non-optional
     }
     
-    @Test func testNativeExpandableCardView_WithDifferentStrategies() {
+    @Test @MainActor func testNativeExpandableCardView_WithDifferentStrategies() {
         // Given: Different expansion strategies
         let strategies: [ExpansionStrategy] = [.hoverExpand, .contentReveal, .gridReorganize, .focusMode]
         let platformConfig = getCardExpansionPlatformConfig()
@@ -178,7 +178,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testvisionOSExpandableCardView_Creation() {
+    @Test @MainActor func testvisionOSExpandableCardView_Creation() {
         // Given: visionOS-specific card view
         let cardView = visionOSExpandableCardView(
             item: testItem,
@@ -214,7 +214,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Platform-Aware Card View Tests
     
-    @Test func testPlatformAwareExpandableCardView_Creation() {
+    @Test @MainActor func testPlatformAwareExpandableCardView_Creation() {
         // Given: Platform-aware card view
         let cardView = PlatformAwareExpandableCardView(
             item: testItem,
@@ -248,7 +248,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformAwareExpandableCardView_PlatformAdaptation() {
+    @Test @MainActor func testPlatformAwareExpandableCardView_PlatformAdaptation() {
         // Given: Platform-aware card view
         let cardView = PlatformAwareExpandableCardView(
             item: testItem,
@@ -270,7 +270,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Configuration Tests
     
-    @Test func testCardExpansionPlatformConfig_Creation() {
+    @Test @MainActor func testCardExpansionPlatformConfig_Creation() {
         // Given: Platform configuration
         let config = getCardExpansionPlatformConfig()
         
@@ -291,7 +291,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         #expect(config.hoverDelay >= 0, "Should have non-negative hover delay")
     }
     
-    @Test func testCardExpansionPerformanceConfig_Creation() {
+    @Test @MainActor func testCardExpansionPerformanceConfig_Creation() {
         // Given: Performance configuration
         let config = getCardExpansionPerformanceConfig()
         
@@ -304,7 +304,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         #expect(config.lazyLoading != nil, "Should have lazy loading setting")
     }
     
-    @Test func testCardExpansionAccessibilityConfig_Creation() {
+    @Test @MainActor func testCardExpansionAccessibilityConfig_Creation() {
         // Given: Accessibility configuration
         let config = getCardExpansionAccessibilityConfig()
         

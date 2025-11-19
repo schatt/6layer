@@ -4,13 +4,13 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Automatic Accessibility Identifiers Component Accessibility")
 open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Automatic Accessibility Identifier Component Tests
     
-    @Test func testAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -31,7 +31,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicValue_L1(
             value: 42,
@@ -52,7 +53,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testGlobalAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGlobalAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicArray_L1(
             array: [1, 2, 3],
@@ -73,7 +75,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testDisableAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDisableAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should automatically generate accessibility identifiers
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -95,7 +98,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should automatically generate accessibility identifiers
         let testView = platformPresentBasicValue_L1(
             value: "Test Content",
@@ -126,7 +130,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
     
     // MARK: - Framework Component Tests
     
-    @Test func testViewHierarchyTrackingModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testViewHierarchyTrackingModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test")],
@@ -147,7 +152,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentNumericData_L1(
             data: [GenericNumericData(value: 42, label: "Test")],
@@ -168,7 +173,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testWorkingAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testWorkingAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Framework component that should automatically generate accessibility identifiers
         let testView = platformPresentBasicValue_L1(
             value: 42,
@@ -190,7 +195,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testExactAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testExactAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentContent_L1(
             content: "Test Value",
@@ -211,7 +217,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testHierarchicalNamedModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHierarchicalNamedModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should automatically generate accessibility identifiers
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -233,7 +240,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testAccessibilityLabelAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityLabelAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicValue_L1(
             value: "Custom Label",
@@ -254,7 +262,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testAccessibilityHintAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityHintAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicArray_L1(
             array: ["Custom", "Hint"],
@@ -275,7 +284,8 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testAccessibilityTraitsAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityTraitsAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component that should automatically generate accessibility identifiers
         let testView = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test")],
@@ -297,7 +307,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         #endif
     }
     
-    @Test func testAccessibilityValueAssignmentModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityValueAssignmentModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Framework component that should apply .automaticCompliance() itself
         let testView = platformPresentBasicValue_L1(
             value: "Custom Value",

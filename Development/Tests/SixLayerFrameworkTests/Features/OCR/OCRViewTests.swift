@@ -8,7 +8,7 @@ import SwiftUI
 /// TESTING SCOPE: OCR service capabilities, error handling, and result processing
 /// METHODOLOGY: Test OCR service on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("OCR Service")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCRServiceTests: BaseTestClass {
     
     // MARK: - Test Setup

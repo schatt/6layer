@@ -37,7 +37,7 @@ import AppKit
 
 /// Tests for OCR semantic layer functionality
 /// TODO: Implement real tests that test actual OCR functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("OCR Semantic Layer")
 open class OCRSemanticLayerTests: BaseTestClass {
         

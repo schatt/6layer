@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Runtime Capability Detection Component Accessibility")
 open class RuntimeCapabilityDetectionComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Runtime Capability Detection Component Tests
     
-    @Test func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testRuntimeCapabilityDetectionGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: RuntimeCapabilityDetection
         let testView = RuntimeCapabilityDetectionView()
         

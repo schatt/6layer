@@ -11,11 +11,12 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Manager Component Accessibility")
 open class AccessibilityManagerComponentAccessibilityTests: BaseTestClass {// MARK: - AccessibilityManager Tests
     
-    @Test func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: AccessibilityManager
         let manager = AccessibilityManager()
         

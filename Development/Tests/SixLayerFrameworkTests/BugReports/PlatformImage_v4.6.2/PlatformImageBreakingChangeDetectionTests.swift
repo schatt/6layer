@@ -31,7 +31,7 @@ import AppKit
 #endif
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     
     // MARK: - Tests That Would Have Failed With Breaking Change
@@ -131,7 +131,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test the exact API pattern that was broken
     /// TESTING SCOPE: Tests the specific PlatformImage(image) pattern that was broken
     /// METHODOLOGY: Test the exact API usage that was broken in 4.6.2
-    @Test func testPlatformImageImplicitParameter_ExactBrokenPattern() {
+    @Test @MainActor func testPlatformImageImplicitParameter_ExactBrokenPattern() {
         #if os(iOS)
         // Given: The exact API pattern that was broken
         let uiImage = createTestUIImage()
@@ -176,7 +176,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test the exact callback execution that was broken
     /// TESTING SCOPE: Tests the actual callback execution in Layer 4 components
     /// METHODOLOGY: Execute the actual callback code that was broken
-    @Test func testLayer4CallbackExecution_ExactBrokenCode() {
+    @Test @MainActor func testLayer4CallbackExecution_ExactBrokenCode() {
         #if os(iOS)
         // Given: The exact callback execution that was broken
         var capturedImage: PlatformImage?
@@ -217,7 +217,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test the exact production code path that was broken
     /// TESTING SCOPE: Tests the actual production code execution
     /// METHODOLOGY: Execute the exact production code that was broken
-    @Test func testProductionCodePath_ExactBrokenExecution() {
+    @Test @MainActor func testProductionCodePath_ExactBrokenExecution() {
         #if os(iOS)
         // Given: The exact production code path that was broken
         

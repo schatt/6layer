@@ -13,12 +13,12 @@ import ViewInspector
 /// TESTING SCOPE: All framework components that accept String labels/titles
 /// METHODOLOGY: Test each component type, verify label text is included and sanitized
 @Suite("Component Label Text Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class ComponentLabelTextAccessibilityTests: BaseTestClass {
     
     // MARK: - AdaptiveButton Tests
     
-    @Test func testAdaptiveButtonIncludesLabelText() {
+    @Test @MainActor func testAdaptiveButtonIncludesLabelText() {
         setupTestEnvironment()
         
         // AdaptiveButton should include "Submit" in identifier

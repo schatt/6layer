@@ -27,7 +27,7 @@ import SwiftUI
 
 /// Text content type testing
 /// Tests that all field types have proper text content type support
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Text Content Type")
 open class TextContentTypeTests: BaseTestClass {
     

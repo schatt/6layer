@@ -5,7 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 /// UI Generation Verification Tests
 /// Tests that the correct UI components are generated based on capabilities
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("UIGeneration Verification")
 open class UIGenerationVerificationTests: BaseTestClass {
     

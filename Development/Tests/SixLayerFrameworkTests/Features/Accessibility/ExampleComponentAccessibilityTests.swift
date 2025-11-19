@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Example Component Accessibility")
 open class ExampleComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Example Component Tests
     
-    @Test func testFormUsageExampleGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testFormUsageExampleGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: FormUsageExample
         let testView = FormUsageExample()
         
@@ -42,7 +43,8 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
     
     // FormInsightsDashboard test removed - component was removed as business-specific logic
     
-    @Test func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: ExampleHelpers
         let testView = ExampleHelpers()
         

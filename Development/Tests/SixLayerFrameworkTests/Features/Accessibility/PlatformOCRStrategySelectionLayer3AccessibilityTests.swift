@@ -5,7 +5,7 @@ import SwiftUI
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRStrategySelectionLayer3.swift functions
 /// Ensures OCR strategy selection Layer 3 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform OCR Strategy Selection Layer Accessibility")
 open class PlatformOCRStrategySelectionLayer3AccessibilityTests: BaseTestClass {// MARK: - OCR Strategy Selection Tests
     

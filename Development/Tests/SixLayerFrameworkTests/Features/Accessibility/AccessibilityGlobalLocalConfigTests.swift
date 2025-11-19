@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Test that accessibility functions respect both global and local configuration options
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Global Local Config")
 open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
@@ -18,7 +18,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
         // Test that automatic accessibility functions don't generate IDs when global config is disabled
         
         // Disable global config - use testConfig from BaseTestClass
-        runWithTaskLocalConfig {
+        await runWithTaskLocalConfig {
             guard let config = testConfig else {
                 Issue.record("testConfig is nil")
                 return
@@ -54,7 +54,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
+    @Test @MainActor func testAccessibilityFunctionsRespectGlobalConfigEnabled() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that automatic accessibility functions DO generate IDs when global config is enabled
             
@@ -90,7 +91,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // MARK: - Local Config Tests
     
-    @Test func testAccessibilityFunctionsRespectLocalDisableModifier() {
+    @Test @MainActor func testAccessibilityFunctionsRespectLocalDisableModifier() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that accessibility functions respect local disable modifier
             
@@ -127,7 +129,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityFunctionsRespectLocalEnableModifier() {
+    @Test @MainActor func testAccessibilityFunctionsRespectLocalEnableModifier() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that accessibility functions respect local enable modifier
             
@@ -163,7 +166,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // MARK: - Priority Tests
     
-    @Test func testLocalDisableOverridesGlobalEnable() {
+    @Test @MainActor func testLocalDisableOverridesGlobalEnable() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that local disable takes precedence over global enable
             
@@ -201,7 +205,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
         }
     }
     
-    @Test func testLocalEnableOverridesGlobalDisable() {
+    @Test @MainActor func testLocalEnableOverridesGlobalDisable() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that local enable takes precedence over global disable
             
@@ -237,7 +242,8 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // MARK: - Environment Variable Tests
     
-    @Test func testEnvironmentVariablesAreRespected() {
+    @Test @MainActor func testEnvironmentVariablesAreRespected() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that environment variables are properly respected
             

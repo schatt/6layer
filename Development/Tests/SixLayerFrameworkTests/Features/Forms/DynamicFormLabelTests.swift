@@ -35,7 +35,7 @@ import SwiftUI
 
 /// Tests for DynamicFormView label behavior
 /// Ensures single visible label per field, preventing duplication
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Dynamic Form Label")
 open class DynamicFormLabelTests: BaseTestClass {
     

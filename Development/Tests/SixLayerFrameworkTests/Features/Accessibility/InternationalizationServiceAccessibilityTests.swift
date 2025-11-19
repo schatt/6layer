@@ -13,7 +13,8 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using InternationalizationService generate proper accessibility identifiers
     /// Tests PlatformInternationalizationL1 functions which use InternationalizationService
-    @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnIOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view using platformPresentLocalizedContent_L1 (which uses InternationalizationService)
             let view = platformPresentLocalizedContent_L1(
@@ -38,7 +39,8 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using InternationalizationService generate proper accessibility identifiers
     /// Tests PlatformInternationalizationL1 functions which use InternationalizationService
-    @Test func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiersOnMacOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view using platformPresentLocalizedContent_L1 (which uses InternationalizationService)
             let view = platformPresentLocalizedContent_L1(

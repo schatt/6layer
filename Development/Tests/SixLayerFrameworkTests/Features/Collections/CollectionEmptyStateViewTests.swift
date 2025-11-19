@@ -10,17 +10,19 @@ import ViewInspector
 /// BUSINESS PURPOSE: Ensure CollectionEmptyStateView generates proper accessibility identifiers
 /// TESTING SCOPE: CollectionEmptyStateView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Uses centralized test functions following DRY principles
+/// NOTE: Not marked @MainActor on class to allow parallel execution
+/// Individual test functions that need UI access are marked @MainActor
 @Suite("Collection Empty State View")
-@MainActor
 open class CollectionEmptyStateViewTests: BaseTestClass {
     
     // MARK: - CollectionEmptyStateView Tests
     
-    @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
+    @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS]) @MainActor
     func testCollectionEmptyStateViewGeneratesAccessibilityIdentifiers(
         platform: SixLayerPlatform
     ) {
         // Setup: Configure test environment with automatic mode (explicit)
+        initializeTestConfig()
         testConfig.mode = .automatic
         setupTestEnvironment()
         
@@ -39,9 +41,10 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
         #endif
     }
     
-    @Test
+    @Test @MainActor
     func testCollectionEmptyStateViewAccessibilityDisabled() {
         // Setup: Configure test environment with auto IDs disabled
+        initializeTestConfig()
         testConfig.enableAutoIDs = false
         setupTestEnvironment()
         
@@ -58,8 +61,9 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
         #endif
     }
     
-    @Test
+    @Test @MainActor
     func testCollectionEmptyStateViewAllAccessibilityModes() {
+        initializeTestConfig()
         let view = createCollectionEmptyStateView()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -115,8 +119,9 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that custom message from customPreferences is displayed
     /// This test SHOULD FAIL until custom message support is implemented
-    @Test
+    @Test @MainActor
     func testEmptyStateDisplaysCustomMessage() {
+            initializeTestConfig()
             setupTestEnvironment()
             
             let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."

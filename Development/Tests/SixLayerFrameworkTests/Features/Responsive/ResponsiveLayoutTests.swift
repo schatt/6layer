@@ -9,11 +9,12 @@ import SwiftUI
 /// TESTING SCOPE: All components in ResponsiveLayout.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Responsive Layout")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class ResponsiveLayoutTests: BaseTestClass {
     
-@Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+@Test @MainActor func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnIOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let view = ResponsiveLayout.adaptiveGrid {
                 platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
@@ -35,8 +36,9 @@ open class ResponsiveLayoutTests: BaseTestClass {
     }
 
     
-    @Test func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testResponsiveLayoutGeneratesAccessibilityIdentifiersOnMacOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let view = ResponsiveLayout.adaptiveGrid {
                 platformPresentContent_L1(content: "Test Content", hints: PresentationHints())

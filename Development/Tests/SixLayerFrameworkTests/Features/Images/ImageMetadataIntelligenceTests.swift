@@ -37,7 +37,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Image Metadata Intelligence")
 open class ImageMetadataIntelligenceTests: BaseTestClass {
     

@@ -38,13 +38,13 @@ import SwiftUI
 
 /// Comprehensive platform matrix testing for cross-platform framework
 /// Tests all platform combinations, device types, and capability matrices
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Matrix")
 open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Platform Detection Tests
     
-    @Test func testPlatformDetectionMatrix() {
+    @Test @MainActor func testPlatformDetectionMatrix() {
         // Test that platform detection works correctly
         let platform = SixLayerPlatform.current
         let deviceType = DeviceType.current
@@ -75,7 +75,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Touch Capability Matrix
     
-    @Test func testTouchCapabilityMatrix() {
+    @Test @MainActor func testTouchCapabilityMatrix() {
         let config = getCardExpansionPlatformConfig()
         
         // Test touch support matrix
@@ -95,7 +95,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Hover Capability Matrix
     
-    @Test func testHoverCapabilityMatrix() {
+    @Test @MainActor func testHoverCapabilityMatrix() {
         // Set hover capability override for macOS
         let currentPlatform = SixLayerPlatform.current
         if currentPlatform == .macOS {
@@ -120,7 +120,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Accessibility Capability Matrix
     
-    @Test func testAccessibilityCapabilityMatrix() {
+    @Test @MainActor func testAccessibilityCapabilityMatrix() {
         // Set accessibility capability overrides to ensure they're detected
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -154,7 +154,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Screen Size and Device Type Matrix
     
-    @Test func testScreenSizeCapabilityMatrix() {
+    @Test @MainActor func testScreenSizeCapabilityMatrix() {
         // Test with each platform to verify platform-correct values
         // Verify platform-appropriate minTouchTarget value for current platform
         let currentPlatform = SixLayerPlatform.current
@@ -175,7 +175,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Vision Framework Availability Matrix
     
-    @Test func testVisionFrameworkAvailabilityMatrix() {
+    @Test @MainActor func testVisionFrameworkAvailabilityMatrix() {
         // Test that we can detect the current platform
         let currentPlatform = SixLayerPlatform.current
         
@@ -277,7 +277,7 @@ open class PlatformMatrixTests: BaseTestClass {
         #expect(preferences.supportsKnobControl, "CarPlay should support knob control")
     }
     
-    @Test func testCarPlayFeatureAvailabilityMatrix() {
+    @Test @MainActor func testCarPlayFeatureAvailabilityMatrix() {
         // Test all CarPlay features
         let features: [CarPlayFeature] = Array(CarPlayFeature.allCases) // Use real enum
         
@@ -292,7 +292,7 @@ open class PlatformMatrixTests: BaseTestClass {
         }
     }
     
-    @Test func testDeviceContextDetectionMatrix() {
+    @Test @MainActor func testDeviceContextDetectionMatrix() {
         let deviceContext = DeviceContext.current
         
         // Verify we get a valid device context
@@ -316,7 +316,7 @@ open class PlatformMatrixTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCarPlayDeviceTypeDetectionMatrix() {
+    @Test @MainActor func testCarPlayDeviceTypeDetectionMatrix() {
         let deviceType = DeviceType.current
         let deviceContext = DeviceContext.current
         
@@ -331,7 +331,7 @@ open class PlatformMatrixTests: BaseTestClass {
         }
     }
     
-    @Test func testCarPlayPlatformCapabilitiesMatrix() {
+    @Test @MainActor func testCarPlayPlatformCapabilitiesMatrix() {
         let platformCapabilities = PlatformDeviceCapabilities.self
         
         // Test CarPlay support in platform capabilities
@@ -350,7 +350,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     // MARK: - Comprehensive Platform Feature Matrix
     
-    @Test func testComprehensivePlatformFeatureMatrix() {
+    @Test @MainActor func testComprehensivePlatformFeatureMatrix() {
         // Set platform-appropriate capabilities to ensure constraints are satisfied
         let platform = SixLayerPlatform.current
         if platform == .macOS {

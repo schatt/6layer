@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Motion Preferences")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceMotionTests: BaseTestClass {
     
     // MARK: - Reduced Motion Tests
     
-    @Test func testAnimationRespectsReducedMotion() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAnimationRespectsReducedMotion() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with animation and automatic compliance
             let view = Text("Animated Text")
                 .automaticCompliance()
@@ -53,8 +54,9 @@ open class HIGComplianceMotionTests: BaseTestClass {
         }
     }
     
-    @Test func testTransitionRespectsReducedMotion() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTransitionRespectsReducedMotion() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with transition and automatic compliance
             let view = Text("Transitioning Text")
                 .transition(.opacity)
@@ -77,8 +79,9 @@ open class HIGComplianceMotionTests: BaseTestClass {
         }
     }
     
-    @Test func testButtonAnimationRespectsReducedMotion() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonAnimationRespectsReducedMotion() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A button with animation and automatic compliance
             let button = Button("Animated Button") { }
                 .automaticCompliance()
@@ -102,8 +105,9 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     // MARK: - Normal Motion Tests
     
-    @Test func testAnimationWorksWithNormalMotion() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAnimationWorksWithNormalMotion() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with animation and automatic compliance
             let view = Text("Animated Text")
                 .automaticCompliance()
@@ -127,8 +131,9 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testMotionPreferencesOnBothPlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testMotionPreferencesOnBothPlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with animation and automatic compliance
             let view = Text("Cross-Platform Animated Text")
                 .automaticCompliance()

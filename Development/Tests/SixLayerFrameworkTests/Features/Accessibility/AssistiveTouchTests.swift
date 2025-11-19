@@ -18,7 +18,7 @@ import SwiftUI
  * using RuntimeCapabilityDetection mock framework.
  */
 @Suite("Assistive Touch")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class AssistiveTouchTests: BaseTestClass {
     
     // MARK: - AssistiveTouch Manager Tests
@@ -165,7 +165,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchConfig provides configuration options for customizing AssistiveTouch behavior
     /// TESTING SCOPE: Tests configuration creation with various options and verifies all properties are set correctly
     /// METHODOLOGY: Creates configurations with different options and asserts all properties match expected values
-    @Test func testAssistiveTouchConfiguration() {
+    @Test @MainActor func testAssistiveTouchConfiguration() {
         // Given: AssistiveTouch configuration
         let config = AssistiveTouchConfig(
             enableIntegration: true,
@@ -190,7 +190,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchAction represents a custom action that can be triggered by specific gestures
     /// TESTING SCOPE: Tests action creation with different gesture types and verifies properties are set correctly
     /// METHODOLOGY: Creates actions with various gestures and asserts all properties match expected values
-    @Test func testAssistiveTouchActionCreation() {
+    @Test @MainActor func testAssistiveTouchActionCreation() {
         // Given: AssistiveTouch action parameters
         let action = AssistiveTouchAction(
             name: "Test Action",
@@ -207,7 +207,8 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchGesture represents different types of gestures that can be recognized
     /// TESTING SCOPE: Tests gesture creation with different types and intensity levels
     /// METHODOLOGY: Creates gestures with various types and intensities and verifies properties are correct
-    @Test func testAssistiveTouchGestureTypes() {
+    @Test @MainActor func testAssistiveTouchGestureTypes() {
+        initializeTestConfig()
         // Given: Different gesture types
         let singleTap = AssistiveTouchGesture(type: .singleTap, intensity: .light)
         let doubleTap = AssistiveTouchGesture(type: .doubleTap, intensity: .medium)
@@ -226,7 +227,8 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchMenuAction defines different operations that can be performed on AssistiveTouch menus
     /// TESTING SCOPE: Tests menu action enumeration and verifies all actions are properly defined
     /// METHODOLOGY: Creates instances of different menu actions and verifies they match expected values
-    @Test func testAssistiveTouchMenuAction() {
+    @Test @MainActor func testAssistiveTouchMenuAction() {
+        initializeTestConfig()
         // Given: Different menu actions
         let showMenu = AssistiveTouchMenuAction.show
         let hideMenu = AssistiveTouchMenuAction.hide
@@ -241,7 +243,8 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchMenuStyle defines different visual styles for AssistiveTouch menus
     /// TESTING SCOPE: Tests menu style enumeration and verifies all styles are properly defined
     /// METHODOLOGY: Creates instances of different menu styles and verifies they match expected values
-    @Test func testAssistiveTouchMenuStyle() {
+    @Test @MainActor func testAssistiveTouchMenuStyle() {
+        initializeTestConfig()
         // Given: Different menu styles
         let floating = AssistiveTouchMenuStyle.floating
         let docked = AssistiveTouchMenuStyle.docked
@@ -258,7 +261,8 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouch view modifiers enable AssistiveTouch support for SwiftUI views
     /// TESTING SCOPE: Tests view modifier application and verifies AssistiveTouch support is enabled
     /// METHODOLOGY: Applies modifiers to test views and verifies they return valid view instances
-    @Test func testAssistiveTouchViewModifier() {
+    @Test @MainActor func testAssistiveTouchViewModifier() {
+        initializeTestConfig()
         // Given: A view with AssistiveTouch support
         let view = platformPresentContent_L1(
             content: "Test",
@@ -273,7 +277,8 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouch view modifiers with configuration allow customizing AssistiveTouch behavior
     /// TESTING SCOPE: Tests view modifier application with custom configuration
     /// METHODOLOGY: Applies modifiers with configuration to test views and verifies they work correctly
-    @Test func testAssistiveTouchViewModifierWithConfiguration() {
+    @Test @MainActor func testAssistiveTouchViewModifierWithConfiguration() {
+        initializeTestConfig()
         // Given: A view with AssistiveTouch configuration
         let config = AssistiveTouchConfig(enableIntegration: true)
         let view = platformPresentContent_L1(
@@ -291,7 +296,8 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager provides compliance checking to ensure views meet accessibility standards
     /// TESTING SCOPE: Tests compliance checking for views with and without proper AssistiveTouch support
     /// METHODOLOGY: Creates compliant and non-compliant views and verifies compliance results are accurate
-    @Test func testAssistiveTouchCompliance() {
+    @Test @MainActor func testAssistiveTouchCompliance() {
+            initializeTestConfig()
         // Given: A view with AssistiveTouch support
         let view = VStack {
             platformPresentContent_L1(content: "Title", hints: PresentationHints())

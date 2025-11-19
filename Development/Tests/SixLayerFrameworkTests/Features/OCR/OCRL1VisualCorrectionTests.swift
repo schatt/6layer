@@ -30,7 +30,7 @@ import SwiftUI
 @Suite("OCR L Visual Correction")
 /// Tests for Layer 1 OCR visual correction functionality
 /// TODO: Implement real tests that test actual Layer 1 OCR visual correction functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCRL1VisualCorrectionTests: BaseTestClass {
     
     // MARK: - Test Setup

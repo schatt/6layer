@@ -13,7 +13,8 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
 
     /// BUSINESS PURPOSE: Validates that views using ImageProcessor generate proper accessibility identifiers
     /// ImageProcessor is a service class - tests that views displaying processed images generate identifiers
-    @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testImageProcessorGeneratesAccessibilityIdentifiersOnIOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view that displays an image (ImageProcessor processes images, views display them)
             // Since ImageProcessor doesn't generate views directly, we test that image views generate identifiers
@@ -37,7 +38,8 @@ open class ImageProcessingPipelineAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using ImageProcessor generate proper accessibility identifiers
     /// ImageProcessor is a service class - tests that views displaying processed images generate identifiers
-    @Test func testImageProcessorGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testImageProcessorGeneratesAccessibilityIdentifiersOnMacOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view that displays an image (ImageProcessor processes images, views display them)
             // Since ImageProcessor doesn't generate views directly, we test that image views generate identifiers

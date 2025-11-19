@@ -13,7 +13,7 @@ import CoreData
 /// EXPECTED: Should detect Core Data entity properties using NSEntityDescription
 
 @Suite("Data Introspection Core Data")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct DataIntrospectionCoreDataTests {
     
     /// Test that Core Data entities are detected and properly introspected

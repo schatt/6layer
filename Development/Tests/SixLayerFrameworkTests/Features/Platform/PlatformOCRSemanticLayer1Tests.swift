@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All functions in PlatformOCRSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform OCR Semantic Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformOCRSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -23,7 +23,8 @@ open class PlatformOCRSemanticLayer1Tests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+                initializeTestConfig()
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],
@@ -52,7 +53,8 @@ open class PlatformOCRSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+                initializeTestConfig()
         let testImage = PlatformImage()
         let context = OCRContext(
             textTypes: [.general],

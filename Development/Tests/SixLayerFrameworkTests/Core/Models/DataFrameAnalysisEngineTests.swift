@@ -12,7 +12,7 @@ import Foundation
 @testable import SixLayerFramework
 import TabularData
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Data Frame Analysis Engine")
 open class DataFrameAnalysisEngineTests: BaseTestClass {
     

@@ -12,7 +12,7 @@ import CoreLocation
 
 /// Cross-platform location service tests
 /// Tests the cross-platform location service implementation
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Location Service")
 open class LocationServiceTests: BaseTestClass {
     

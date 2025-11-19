@@ -9,10 +9,11 @@ import SwiftUI
 /// TESTING SCOPE: Layer 4 components and other remaining components in the framework
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Remaining Components Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - ExpandableCardComponent Tests
     
-    @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -62,7 +63,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testExpandableCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -114,7 +116,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - CoverFlowCollectionView Tests
     
-    @Test func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -145,7 +148,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -178,7 +182,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - CoverFlowCardComponent Tests
     
-    @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = CoverFlowCardComponent(
@@ -202,7 +207,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testCoverFlowCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = CoverFlowCardComponent(
@@ -228,7 +234,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - GridCollectionView Tests
     
-    @Test func testGridCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testGridCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -259,7 +266,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testGridCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGridCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -292,7 +300,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - ListCollectionView Tests
     
-    @Test func testListCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testListCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -323,7 +332,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testListCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testListCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -356,7 +366,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - MasonryCollectionView Tests
     
-    @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -387,7 +398,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -420,7 +432,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - AdaptiveCollectionView Tests
     
-    @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -451,7 +464,7 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
         let testItems = [
             RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
             RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
@@ -484,7 +497,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - SimpleCardComponent Tests
     
-    @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -520,7 +534,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let layoutDecision = IntelligentCardLayoutDecision(
@@ -558,7 +573,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - ListCardComponent Tests
     
-    @Test func testListCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testListCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = ListCardComponent(
@@ -583,7 +599,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testListCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testListCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = ListCardComponent(
@@ -610,7 +627,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
     
     // MARK: - MasonryCardComponent Tests
     
-    @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
@@ -629,7 +647,8 @@ open class RemainingComponentsAccessibilityTests: BaseTestClass {// MARK: - Expa
         #endif
     }
     
-    @Test func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+    initializeTestConfig()
         let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
         
         let view = MasonryCardComponent(item: testItem, hints: PresentationHints())

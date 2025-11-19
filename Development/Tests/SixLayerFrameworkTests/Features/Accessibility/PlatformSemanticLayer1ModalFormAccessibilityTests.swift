@@ -5,7 +5,7 @@ import SwiftUI
 /// BUSINESS PURPOSE: Accessibility tests for PlatformSemanticLayer1.swift modal form functions
 /// Ensures modal form presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Semantic Layer Modal Form Accessibility")
 open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
     

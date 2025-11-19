@@ -6,7 +6,7 @@ import SwiftUI
 
 /// Tests for the Intelligent Card Expansion System
 /// Tests all 6 layers of the expandable card functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Intelligent Card Expansion")
 open class IntelligentCardExpansionTests: BaseTestClass {
     
@@ -42,7 +42,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
     
     // MARK: - Layer 1 Tests: Semantic Intent Functions
     
-    @Test func testPlatformPresentItemCollectionL1WithExpandableHints() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithExpandableHints() {
+        initializeTestConfig()
         // Test that the Layer 1 function accepts expandable hints
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
@@ -180,7 +181,7 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(strategy.supportedStrategies.contains(.gridReorganize))
     }
     
-    @Test func testFocusModeStrategy() {
+    @Test @MainActor func testFocusModeStrategy() {
         // Test focus mode strategy
         let strategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -195,7 +196,7 @@ open class IntelligentCardExpansionTests: BaseTestClass {
     
     // MARK: - Layer 4 Tests: Component Implementation
     
-    @Test func testSmartGridContainer() {
+    @Test @MainActor func testSmartGridContainer() {
         // Test that the smart grid container works
         let container = SmartGridContainer(
             items: sampleMenuItems,
@@ -205,7 +206,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(Bool(true), "container is non-optional")  // container is non-optional
     }
     
-    @Test func testExpandableCardComponent() {
+    @Test @MainActor func testExpandableCardComponent() {
+                initializeTestConfig()
         // Test that expandable card components work
         let card = ExpandableCardComponent(
             item: sampleMenuItems[0],
@@ -236,7 +238,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(!card.isExpanded)
     }
     
-    @Test func testResponsiveBreakpoints() {
+    @Test @MainActor func testResponsiveBreakpoints() {
+        initializeTestConfig()
         // Test that responsive breakpoints work correctly
         let breakpoints = ResponsiveBreakpoints()
         
@@ -246,7 +249,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
     
     // MARK: - Layer 5 Tests: Platform Optimization
     
-    @Test func testTouchOptimizedExpansion() {
+    @Test @MainActor func testTouchOptimizedExpansion() {
+        initializeTestConfig()
         // Test iOS touch-optimized expansion
         let touchConfig = TouchExpansionConfig()
         
@@ -254,7 +258,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(touchConfig.minTouchTarget >= 44) // 44pt minimum
     }
     
-    @Test func testHoverBasedExpansion() {
+    @Test @MainActor func testHoverBasedExpansion() {
+        initializeTestConfig()
         // Test macOS hover-based expansion
         let hoverConfig = HoverExpansionConfig()
         
@@ -262,7 +267,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(hoverConfig.hoverDelay > 0)
     }
     
-    @Test func testAccessibilitySupport() {
+    @Test @MainActor func testAccessibilitySupport() {
+        initializeTestConfig()
         // Test accessibility support for expanded states
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
@@ -273,7 +279,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
     
     // MARK: - Layer 6 Tests: Platform System
     
-    @Test func testNativeSwiftUIComponents() {
+    @Test @MainActor func testNativeSwiftUIComponents() {
+        initializeTestConfig()
         // Test that native SwiftUI components are used
         let nativeView = NativeExpandableCardView(
             item: sampleMenuItems[0],
@@ -286,7 +293,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(Bool(true), "nativeView is non-optional")  // nativeView is non-optional
     }
     
-    @Test func testPlatformSpecificOptimizations() {
+    @Test @MainActor func testPlatformSpecificOptimizations() {
+        initializeTestConfig()
         // Test platform-specific optimizations
         #if os(iOS)
         let platformConfig = iOSCardExpansionConfig()
@@ -299,7 +307,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testEndToEndCardExpansion() {
+    @Test @MainActor func testEndToEndCardExpansion() {
+        initializeTestConfig()
         // Test complete end-to-end card expansion functionality
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
@@ -328,7 +337,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
     }
     
-    @Test func testPerformanceRequirements() {
+    @Test @MainActor func testPerformanceRequirements() {
+        initializeTestConfig()
         // Test that performance requirements are met
         let performanceConfig = CardExpansionPerformanceConfig()
         
@@ -337,7 +347,8 @@ open class IntelligentCardExpansionTests: BaseTestClass {
         #expect(performanceConfig.supportsSmoothAnimations)
     }
     
-    @Test func testBackwardCompatibility() {
+    @Test @MainActor func testBackwardCompatibility() {
+            initializeTestConfig()
         // Test that the system works with existing MenuItem structure
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,

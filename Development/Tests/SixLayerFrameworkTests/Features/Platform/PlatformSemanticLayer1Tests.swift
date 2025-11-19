@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All functions in PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform Semantic Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -23,7 +23,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testItems = [
             PlatformSemanticLayer1TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
             PlatformSemanticLayer1TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
@@ -52,7 +53,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testItems = [
             PlatformSemanticLayer1TestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
             PlatformSemanticLayer1TestItem(id: "2", title: "Test Item 2", subtitle: "Subtitle 2")
@@ -231,7 +233,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentMediaDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testMedia = GenericMediaItem(title: "Test Media", url: "https://example.com")
         let hints = PresentationHints(
             dataType: .media,
@@ -259,7 +262,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentSettings_L1 Tests
     
-    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -297,7 +301,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentSettingsL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testSettings = [
             SettingsSectionData(
                 title: "Test Section",
@@ -337,7 +341,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentContent_L1 Tests
     
-    @Test func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -363,7 +367,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testContent = "Test Content"
         let hints = PresentationHints(
             dataType: .generic,
@@ -391,7 +395,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentBasicValue_L1 Tests
     
-    @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnIOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -417,7 +421,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentBasicValueL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         let testValue = 42
         let hints = PresentationHints(
             dataType: .numeric,
@@ -445,7 +449,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - platformPresentBasicArray_L1 Tests
     
-    @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -471,7 +476,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentBasicArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testArray = [1, 2, 3, 4, 5]
         let hints = PresentationHints(
             dataType: .generic,
@@ -500,7 +506,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     // MARK: - platformPresentContent_L1 All Delegate Path Tests
     
     /// Test platformPresentContent_L1 delegates to form function when content is [DynamicFormField]
-    @Test func testPlatformPresentContentL1DelegatesToFormFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToFormFunction() async {
+        initializeTestConfig()
         let formFields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
         ]
@@ -522,7 +529,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to media function when content is [GenericMediaItem]
-    @Test func testPlatformPresentContentL1DelegatesToMediaFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToMediaFunction() async {
+        initializeTestConfig()
         let mediaItems = [
             GenericMediaItem(title: "Test Media", url: "https://example.com")
         ]
@@ -544,7 +552,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to numeric function when content is [GenericNumericData]
-    @Test func testPlatformPresentContentL1DelegatesToNumericFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToNumericFunction() async {
+        initializeTestConfig()
         let numericData = [
             GenericNumericData(value: 123.45, label: "Test", unit: "units")
         ]
@@ -566,7 +575,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to hierarchical function when content is [GenericHierarchicalItem]
-    @Test func testPlatformPresentContentL1DelegatesToHierarchicalFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToHierarchicalFunction() async {
+        initializeTestConfig()
         let hierarchicalItems = [
             GenericHierarchicalItem(title: "Root", level: 0)
         ]
@@ -588,7 +598,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to temporal function when content is [GenericTemporalItem]
-    @Test func testPlatformPresentContentL1DelegatesToTemporalFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToTemporalFunction() async {
+        initializeTestConfig()
         let temporalItems = [
             GenericTemporalItem(title: "Event", date: Date(), duration: 3600)
         ]
@@ -610,7 +621,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to item collection function when content is identifiable array
-    @Test func testPlatformPresentContentL1DelegatesToItemCollectionFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToItemCollectionFunction() async {
+            initializeTestConfig()
         struct TestItem: Identifiable {
             let id = UUID()
             let name: String
@@ -635,7 +647,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to basic value function when content is basic numeric type
-    @Test func testPlatformPresentContentL1DelegatesToBasicValueFunctionForNumeric() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToBasicValueFunctionForNumeric() async {
+        initializeTestConfig()
         let view = platformPresentContent_L1(content: 42, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -653,7 +666,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to basic array function when content is basic array
-    @Test func testPlatformPresentContentL1DelegatesToBasicArrayFunction() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToBasicArrayFunction() async {
+        initializeTestConfig()
         let view = platformPresentContent_L1(content: [1, 2, 3], hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -671,7 +685,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to basic value function when content is String
-    @Test func testPlatformPresentContentL1DelegatesToBasicValueFunctionForString() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToBasicValueFunctionForString() async {
+        initializeTestConfig()
         let view = platformPresentContent_L1(content: "Test String", hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -689,7 +704,8 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
     }
     
     /// Test platformPresentContent_L1 delegates to GenericFallbackView for unknown types
-    @Test func testPlatformPresentContentL1DelegatesToFallbackView() async {
+    @Test @MainActor func testPlatformPresentContentL1DelegatesToFallbackView() async {
+            initializeTestConfig()
         struct UnknownType {
             let value: String
         }

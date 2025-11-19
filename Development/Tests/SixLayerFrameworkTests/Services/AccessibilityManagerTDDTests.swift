@@ -17,7 +17,7 @@ import SwiftUI
  */
 
 @Suite("Accessibility Manager")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class AccessibilityManagerTDDTests: BaseTestClass {
 
     @Test func testAccessibilityManagerDetectsVoiceOverStatus() async {

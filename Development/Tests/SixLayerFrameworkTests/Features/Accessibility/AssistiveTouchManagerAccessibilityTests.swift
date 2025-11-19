@@ -13,7 +13,8 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using AssistiveTouchManager generate proper accessibility identifiers
     /// Tests views with .assistiveTouchEnabled() modifier which uses AssistiveTouchManager
-    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnIOS() {
+        initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .assistiveTouchEnabled() modifier (which uses AssistiveTouchManager)
             let view = Button("Test Button") { }
@@ -41,7 +42,8 @@ open class AssistiveTouchManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using AssistiveTouchManager generate proper accessibility identifiers
     /// Tests views with .assistiveTouchEnabled() modifier which uses AssistiveTouchManager
-    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testAssistiveTouchManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+        initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .assistiveTouchEnabled() modifier (which uses AssistiveTouchManager)
             let view = Button("Test Button") { }

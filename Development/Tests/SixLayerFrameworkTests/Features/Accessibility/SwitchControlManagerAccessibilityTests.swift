@@ -13,7 +13,8 @@ open class SwitchControlManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using SwitchControlManager generate proper accessibility identifiers
     /// Tests views with .switchControlEnabled() modifier which uses SwitchControlManager
-    @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnIOS() {
+        initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .switchControlEnabled() modifier (which uses SwitchControlManager)
             let view = Button("Test Button") { }
@@ -41,7 +42,8 @@ open class SwitchControlManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using SwitchControlManager generate proper accessibility identifiers
     /// Tests views with .switchControlEnabled() modifier which uses SwitchControlManager
-    @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testSwitchControlManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+        initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .switchControlEnabled() modifier (which uses SwitchControlManager)
             let view = Button("Test Button") { }

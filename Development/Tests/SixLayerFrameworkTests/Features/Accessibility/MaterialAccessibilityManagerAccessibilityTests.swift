@@ -13,7 +13,8 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using MaterialAccessibilityManager generate proper accessibility identifiers
     /// Tests MaterialAccessibilityEnhancedView which uses MaterialAccessibilityManager internally
-    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnIOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
             let view = VStack {
@@ -40,7 +41,8 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using MaterialAccessibilityManager generate proper accessibility identifiers
     /// Tests MaterialAccessibilityEnhancedView which uses MaterialAccessibilityManager internally
-    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
             let view = VStack {

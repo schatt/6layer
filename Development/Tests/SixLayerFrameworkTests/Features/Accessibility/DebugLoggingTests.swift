@@ -12,15 +12,16 @@ import Foundation
 
 /// TDD Tests for Debug Logging Functionality
 /// Following Red-Green-Refactor cycle: Write failing tests first, then implement
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Debug Logging")
 open class DebugLoggingTDDTests: BaseTestClass {
     
     // MARK: - Test Setup// MARK: - AccessibilityIdentifierGenerator Tests
     
     /// TEST: AccessibilityIdentifierGenerator should exist and be instantiable
-    @Test func testAccessibilityIdentifierGeneratorExists() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAccessibilityIdentifierGeneratorExists() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: We need an AccessibilityIdentifierGenerator
             // When: Creating an instance
             let generator = AccessibilityIdentifierGenerator()
@@ -31,8 +32,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: generateID method should exist and return a string
-    @Test func testGenerateIDMethodExists() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testGenerateIDMethodExists() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: An AccessibilityIdentifierGenerator
             let generator = AccessibilityIdentifierGenerator()
             
@@ -46,8 +48,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: generateID should respect debug logging when enabled
-    @Test func testGenerateIDRespectsDebugLoggingWhenEnabled() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testGenerateIDRespectsDebugLoggingWhenEnabled() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -74,8 +77,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: generateID should not log when debug logging is disabled
-    @Test func testGenerateIDDoesNotLogWhenDebugLoggingDisabled() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testGenerateIDDoesNotLogWhenDebugLoggingDisabled() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is disabled
             guard let config = testConfig else {
 
@@ -101,8 +105,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     // MARK: - Debug Log Management Tests
     
     /// TEST: getDebugLog method should exist and return a string
-    @Test func testGetDebugLogMethodExists() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testGetDebugLogMethodExists() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: AccessibilityIdentifierConfig
             guard let config = testConfig else {
 
@@ -121,8 +126,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: clearDebugLog method should exist and clear the log
-    @Test func testClearDebugLogMethodExists() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testClearDebugLogMethodExists() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled and we have some log entries
             guard let config = testConfig else {
 
@@ -150,8 +156,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: Debug log should accumulate multiple entries
-    @Test func testDebugLogAccumulatesMultipleEntries() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLogAccumulatesMultipleEntries() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -179,8 +186,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: Debug log should include timestamps
-    @Test func testDebugLogIncludesTimestamps() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLogIncludesTimestamps() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -204,8 +212,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: Debug log should be formatted consistently
-    @Test func testDebugLogFormatIsConsistent() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLogFormatIsConsistent() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -234,8 +243,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     // MARK: - Configuration Integration Tests
     
     /// TEST: Debug logging should respect enableDebugLogging flag
-    @Test func testDebugLoggingRespectsEnableFlag() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLoggingRespectsEnableFlag() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: AccessibilityIdentifierConfig
             guard let config = testConfig else {
 
@@ -268,8 +278,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: Debug log should persist across multiple generator instances
-    @Test func testDebugLogPersistsAcrossGeneratorInstances() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLogPersistsAcrossGeneratorInstances() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -298,8 +309,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     // MARK: - Edge Cases Tests
     
     /// TEST: Debug logging should handle empty component names
-    @Test func testDebugLoggingHandlesEmptyComponentNames() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLoggingHandlesEmptyComponentNames() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -324,8 +336,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: Debug logging should handle special characters in component names
-    @Test func testDebugLoggingHandlesSpecialCharacters() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLoggingHandlesSpecialCharacters() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 
@@ -351,8 +364,9 @@ open class DebugLoggingTDDTests: BaseTestClass {
     }
     
     /// TEST: Debug log should have reasonable size limits
-    @Test func testDebugLogHasReasonableSizeLimits() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDebugLogHasReasonableSizeLimits() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Debug logging is enabled
             guard let config = testConfig else {
 

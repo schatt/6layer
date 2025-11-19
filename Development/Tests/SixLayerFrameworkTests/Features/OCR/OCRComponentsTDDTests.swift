@@ -18,12 +18,13 @@ import ViewInspector
  */
 
 @Suite("OCR Components")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCRComponentsTDDTests: BaseTestClass {
 
     // MARK: - OCR Overlay View
 
-    @Test func testOCROverlayViewRendersCameraInterface() async {
+    @Test @MainActor func testOCROverlayViewRendersCameraInterface() async {
+                initializeTestConfig()
         // TDD: OCROverlayView should:
         // 1. Render image with OCR result overlay
         // 2. Display extracted text regions
@@ -85,7 +86,8 @@ open class OCRComponentsTDDTests: BaseTestClass {
         #endif
     }
 
-    @Test func testOCROverlayViewProcessesImageWithOCR() async {
+    @Test @MainActor func testOCROverlayViewProcessesImageWithOCR() async {
+            initializeTestConfig()
         // TDD: OCROverlayView should:
         // 1. Display image with OCR result overlay
         // 2. Show text regions from OCR result

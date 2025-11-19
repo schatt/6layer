@@ -10,13 +10,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Apple HIG Compliance Component Accessibility")
 open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - AppleHIGComplianceModifier Tests
     
-    @Test func testAppleHIGComplianceModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAppleHIGComplianceModifierGeneratesAccessibilityIdentifiers() async {
+            initializeTestConfig()
         // Given: Framework components (testing our framework, not SwiftUI)
         let testContent = VStack {
             platformPresentContent_L1(content: "HIG Compliance Content", hints: PresentationHints())
@@ -49,7 +50,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - SystemAccessibilityModifier Tests
     
-    @Test func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testSystemAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("System Accessibility Content")
@@ -80,7 +81,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformPatternModifier Tests
     
-    @Test func testPlatformPatternModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPatternModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Pattern Content")
@@ -111,7 +112,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - VisualConsistencyModifier Tests
     
-    @Test func testVisualConsistencyModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVisualConsistencyModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Visual Consistency Content")
@@ -142,7 +143,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - InteractionPatternModifier Tests
     
-    @Test func testInteractionPatternModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testInteractionPatternModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Interaction Pattern Content")
@@ -173,7 +174,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - VoiceOverSupportModifier Tests
     
-    @Test func testVoiceOverSupportModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVoiceOverSupportModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("VoiceOver Support Content")
@@ -204,7 +205,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - KeyboardNavigationModifier Tests
     
-    @Test func testKeyboardNavigationModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testKeyboardNavigationModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Keyboard Navigation Content")
@@ -235,7 +236,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - HighContrastModifier Tests
     
-    @Test func testHighContrastModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHighContrastModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("High Contrast Content")
@@ -266,7 +267,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - ReducedMotionModifier Tests
     
-    @Test func testReducedMotionModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testReducedMotionModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Reduced Motion Content")
@@ -297,7 +298,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicTypeModifier Tests
     
-    @Test func testDynamicTypeModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDynamicTypeModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Dynamic Type Content")
@@ -328,7 +329,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformNavigationModifier Tests
     
-    @Test func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Navigation Content")
@@ -359,7 +360,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformStylingModifier Tests
     
-    @Test func testPlatformStylingModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformStylingModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Styling Content")
@@ -390,7 +391,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformIconModifier Tests
     
-    @Test func testPlatformIconModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformIconModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Icon Content")
@@ -421,7 +422,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - SystemColorModifier Tests
     
-    @Test func testSystemColorModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testSystemColorModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("System Color Content")
@@ -452,7 +453,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - SystemTypographyModifier Tests
     
-    @Test func testSystemTypographyModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testSystemTypographyModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("System Typography Content")
@@ -483,7 +484,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - SpacingModifier Tests
     
-    @Test func testSpacingModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testSpacingModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Spacing Content")
@@ -514,7 +515,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - TouchTargetModifier Tests
     
-    @Test func testTouchTargetModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testTouchTargetModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Touch Target Content")
@@ -545,7 +546,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformInteractionModifier Tests
     
-    @Test func testPlatformInteractionModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformInteractionModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Platform Interaction Content")
@@ -576,7 +577,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - HapticFeedbackModifier Tests
     
-    @Test func testHapticFeedbackModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHapticFeedbackModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Haptic Feedback Content")
@@ -607,7 +608,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - GestureRecognitionModifier Tests
     
-    @Test func testGestureRecognitionModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGestureRecognitionModifierGeneratesAccessibilityIdentifiers() async {
         // Given: Test content
         let testContent = VStack {
             Text("Gesture Recognition Content")
@@ -638,7 +639,7 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - AppleHIGComplianceManager Tests
     
-    @Test func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiers() async {
         // Given: AppleHIGComplianceManager
         let manager = AppleHIGComplianceManager()
         

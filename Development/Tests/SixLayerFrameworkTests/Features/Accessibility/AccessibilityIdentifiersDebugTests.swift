@@ -4,7 +4,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Debug Test: Check if .automaticCompliance() works at all
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Identifiers Debug")
 open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
         // Test .automaticCompliance() directly
@@ -34,7 +34,8 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
         print("🔍 Testing direct .automaticCompliance()")
     }
     
-    @Test func testNamedModifierWorks() {
+    @Test @MainActor func testNamedModifierWorks() {
+            initializeTestConfig()
         // Test .named() modifier
         let testView = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
@@ -63,7 +64,8 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
         print("🔍 Testing .named() + .automaticCompliance()")
     }
     
-    @Test func testAutomaticAccessibilityModifierWorks() {
+    @Test @MainActor func testAutomaticAccessibilityModifierWorks() {
+            initializeTestConfig()
         // Test AutomaticAccessibilityModifier directly
         let testView = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
@@ -94,7 +96,8 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func tes
         print("🔍 Testing AutomaticAccessibilityModifier directly")
     }
     
-    @Test func testAutomaticAccessibilityExtensionWorks() {
+    @Test @MainActor func testAutomaticAccessibilityExtensionWorks() {
+            initializeTestConfig()
         // Test .automaticAccessibility() extension
         let testView = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())

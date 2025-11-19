@@ -7,7 +7,7 @@ import SwiftData
 #endif
 
 /// Tests for DataIntrospectionEngine functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Data Introspection")
 open class DataIntrospectionTests: BaseTestClass {
     

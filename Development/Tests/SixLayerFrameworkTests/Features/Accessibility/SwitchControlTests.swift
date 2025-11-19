@@ -4,13 +4,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Tests for Switch Control accessibility features
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Switch Control")
 open class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control Manager Tests
     
-    @Test func testSwitchControlManagerInitialization() {
+    @Test @MainActor func testSwitchControlManagerInitialization() {
+        initializeTestConfig()
         // Given: Switch Control configuration
         let config = SwitchControlConfig(
             enableNavigation: true,
@@ -29,7 +30,8 @@ open class SwitchControlTests: BaseTestClass {
         #expect(manager.focusManagement == .automatic)
     }
     
-    @Test func testSwitchControlNavigationSupport() {
+    @Test @MainActor func testSwitchControlNavigationSupport() {
+        initializeTestConfig()
         // Given: Switch Control Manager with navigation enabled
         let config = SwitchControlConfig(enableNavigation: true)
         let manager = SwitchControlManager(config: config)
@@ -41,7 +43,7 @@ open class SwitchControlTests: BaseTestClass {
         #expect(isSupported)
     }
     
-    @Test func testSwitchControlCustomActions() {
+    @Test @MainActor func testSwitchControlCustomActions() {
         // Given: Switch Control Manager with custom actions enabled
         let config = SwitchControlConfig(enableCustomActions: true)
         let manager = SwitchControlManager(config: config)
@@ -67,7 +69,8 @@ open class SwitchControlTests: BaseTestClass {
         #expect(manager.hasAction(named: "Next Item"))
     }
     
-    @Test func testSwitchControlFocusManagement() {
+    @Test @MainActor func testSwitchControlFocusManagement() {
+        initializeTestConfig()
         // Given: Switch Control Manager with focus management
         let config = SwitchControlConfig(focusManagement: .automatic)
         let manager = SwitchControlManager(config: config)
@@ -80,7 +83,8 @@ open class SwitchControlTests: BaseTestClass {
         #expect(focusResult.focusedElement != nil)
     }
     
-    @Test func testSwitchControlGestureSupport() {
+    @Test @MainActor func testSwitchControlGestureSupport() {
+        initializeTestConfig()
         // Given: Switch Control Manager with gesture support
         let config = SwitchControlConfig(enableGestureSupport: true)
         let manager = SwitchControlManager(config: config)
@@ -96,7 +100,8 @@ open class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control Configuration Tests
     
-    @Test func testSwitchControlConfiguration() {
+    @Test @MainActor func testSwitchControlConfiguration() {
+        initializeTestConfig()
         // Given: Switch Control configuration
         let config = SwitchControlConfig(
             enableNavigation: true,
@@ -118,7 +123,7 @@ open class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control Actions Tests
     
-    @Test func testSwitchControlActionCreation() {
+    @Test @MainActor func testSwitchControlActionCreation() {
         // Given: Switch Control action parameters
         let action = SwitchControlAction(
             name: "Test Action",
@@ -132,7 +137,7 @@ open class SwitchControlTests: BaseTestClass {
         #expect(action.action != nil)
     }
     
-    @Test func testSwitchControlGestureTypes() {
+    @Test @MainActor func testSwitchControlGestureTypes() {
         // Given: Different gesture types
         let singleTap = SwitchControlGesture(type: .singleTap, intensity: .light)
         let doubleTap = SwitchControlGesture(type: .doubleTap, intensity: .medium)
@@ -148,7 +153,7 @@ open class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control Focus Management Tests
     
-    @Test func testSwitchControlFocusDirection() {
+    @Test @MainActor func testSwitchControlFocusDirection() {
         // Given: Different focus directions
         let nextFocus = SwitchControlFocusDirection.next
         let previousFocus = SwitchControlFocusDirection.previous
@@ -162,7 +167,7 @@ open class SwitchControlTests: BaseTestClass {
         #expect(lastFocus == .last)
     }
     
-    @Test func testSwitchControlFocusManagementMode() {
+    @Test @MainActor func testSwitchControlFocusManagementMode() {
         // Given: Different focus management modes
         let automatic = SwitchControlFocusManagement.automatic
         let manual = SwitchControlFocusManagement.manual
@@ -176,7 +181,7 @@ open class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control View Modifier Tests
     
-    @Test func testSwitchControlViewModifier() {
+    @Test @MainActor func testSwitchControlViewModifier() {
         // Given: A view with Switch Control support
         let view = platformPresentContent_L1(
             content: "Test",
@@ -188,7 +193,7 @@ open class SwitchControlTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testSwitchControlViewModifierWithConfiguration() {
+    @Test @MainActor func testSwitchControlViewModifierWithConfiguration() {
         // Given: A view with Switch Control configuration
         let config = SwitchControlConfig(enableNavigation: true)
         let view = platformPresentContent_L1(
@@ -203,7 +208,7 @@ open class SwitchControlTests: BaseTestClass {
     
     // MARK: - Switch Control Compliance Tests
     
-    @Test func testSwitchControlCompliance() {
+    @Test @MainActor func testSwitchControlCompliance() {
         // Given: Framework components with Switch Control support
         let view = VStack {
             platformPresentContent_L1(content: "Title", hints: PresentationHints())
@@ -219,7 +224,8 @@ open class SwitchControlTests: BaseTestClass {
         #expect(compliance.issues.count == 0)
     }
     
-    @Test func testSwitchControlComplianceWithIssues() {
+    @Test @MainActor func testSwitchControlComplianceWithIssues() {
+        initializeTestConfig()
         // Given: A view without proper Switch Control support
         // TODO: View introspection limitation - We cannot reliably detect if a view lacks
         // Switch Control support without ViewInspector. The compliance checker currently

@@ -39,7 +39,7 @@ import CoreGraphics
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Core Architecture")
 open class CoreArchitectureTests: BaseTestClass {
     

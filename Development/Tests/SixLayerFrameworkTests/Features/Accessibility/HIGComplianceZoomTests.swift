@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Zoom Support")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceZoomTests: BaseTestClass {
     
     // MARK: - UI Scaling Tests
     
-    @Test func testViewScalesWithSystemZoom() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testViewScalesWithSystemZoom() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
             let view = VStack {
                 Text("Zoom Test")
@@ -58,8 +59,9 @@ open class HIGComplianceZoomTests: BaseTestClass {
         }
     }
     
-    @Test func testTextRemainsReadableAtZoomLevels() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTextRemainsReadableAtZoomLevels() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("Readable Text at Zoom")
                 .automaticCompliance()
@@ -81,8 +83,9 @@ open class HIGComplianceZoomTests: BaseTestClass {
         }
     }
     
-    @Test func testButtonRemainsUsableAtZoomLevels() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonRemainsUsableAtZoomLevels() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Button with automatic compliance
             let button = Button("Zoom Button") { }
                 .automaticCompliance()
@@ -106,8 +109,9 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     // MARK: - Layout Integrity Tests
     
-    @Test func testLayoutMaintainsIntegrityAtZoomLevels() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testLayoutMaintainsIntegrityAtZoomLevels() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Complex layout with automatic compliance
             let view = VStack {
                 HStack {
@@ -141,8 +145,9 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testZoomSupportOnAllPlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testZoomSupportOnAllPlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
             let view = Text("Cross-Platform Zoom Test")
                 .automaticCompliance()

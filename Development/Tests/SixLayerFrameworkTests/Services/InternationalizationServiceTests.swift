@@ -5,7 +5,7 @@ import Foundation
 /// Functional tests for InternationalizationService
 /// Tests the actual functionality of the internationalization service
 /// Consolidates API tests and business logic tests
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Internationalization Service")
 open class InternationalizationServiceTests: BaseTestClass {
     

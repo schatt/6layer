@@ -11,7 +11,8 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
+/// Individual test functions that need UI access are marked @MainActor
 @Suite("OCR Overlay")
 open class OCROverlayTests: BaseTestClass {
     
@@ -119,7 +120,8 @@ open class OCROverlayTests: BaseTestClass {
         #expect(testOCRResult.boundingBoxes[2] == CGRect(x: 120, y: 100, width: 60, height: 20))
     }
     
-    @Test func testBoundingBoxCoordinateConversion() {
+    @Test @MainActor func testBoundingBoxCoordinateConversion() {
+        initializeTestConfig()
         // Given: Normalized bounding box coordinates
         let boundingBox = CGRect(x: 0.1, y: 0.2, width: 0.5, height: 0.3) // Normalized coordinates
         

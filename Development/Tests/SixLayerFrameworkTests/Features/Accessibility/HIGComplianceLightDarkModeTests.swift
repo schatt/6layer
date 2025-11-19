@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Light/Dark Mode")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceLightDarkModeTests: BaseTestClass {
     
     // MARK: - System Color Scheme Tests
     
-    @Test func testViewRespectsSystemColorScheme() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testViewRespectsSystemColorScheme() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
             let view = Text("Test Text")
                 .automaticCompliance()
@@ -53,8 +54,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
         }
     }
     
-    @Test func testTextUsesSystemColorsForLightDarkMode() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTextUsesSystemColorsForLightDarkMode() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("System Color Text")
                 .automaticCompliance()
@@ -76,8 +78,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
         }
     }
     
-    @Test func testButtonUsesSystemColorsForLightDarkMode() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonUsesSystemColorsForLightDarkMode() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()
@@ -101,8 +104,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
     
     // MARK: - Background Color Tests
     
-    @Test func testBackgroundAdaptsToColorScheme() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testBackgroundAdaptsToColorScheme() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with background and automatic compliance
             let view = Text("Background Text")
                 .padding()
@@ -128,8 +132,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
     
     // MARK: - Color Contrast in Both Modes
     
-    @Test func testColorContrastMaintainedInLightMode() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testColorContrastMaintainedInLightMode() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with colors and automatic compliance
             let view = Text("Light Mode Text")
                 .foregroundColor(.primary)
@@ -153,8 +158,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
         }
     }
     
-    @Test func testColorContrastMaintainedInDarkMode() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testColorContrastMaintainedInDarkMode() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with colors and automatic compliance
             let view = Text("Dark Mode Text")
                 .foregroundColor(.primary)
@@ -180,8 +186,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
     
     // MARK: - System Color Usage Tests
     
-    @Test func testSystemPrimaryColorAdaptsToColorScheme() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testSystemPrimaryColorAdaptsToColorScheme() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text using system primary color with automatic compliance
             let view = Text("Primary Color Text")
                 .foregroundColor(.primary)
@@ -204,8 +211,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
         }
     }
     
-    @Test func testSystemSecondaryColorAdaptsToColorScheme() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testSystemSecondaryColorAdaptsToColorScheme() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text using system secondary color with automatic compliance
             let view = Text("Secondary Color Text")
                 .foregroundColor(.secondary)
@@ -230,8 +238,9 @@ open class HIGComplianceLightDarkModeTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testLightDarkModeOnAllPlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testLightDarkModeOnAllPlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
             let view = VStack {
                 Text("Light/Dark Mode Test")

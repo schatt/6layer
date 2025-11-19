@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Hover Support")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceHoverTests: BaseTestClass {
     
     // MARK: - Hover State Tests
     
-    @Test func testButtonHasHoverState() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonHasHoverState() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Hover Button") { }
                 .automaticCompliance()
@@ -53,8 +54,9 @@ open class HIGComplianceHoverTests: BaseTestClass {
         }
     }
     
-    @Test func testLinkHasHoverState() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testLinkHasHoverState() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A link with automatic compliance
             let link = Link("Hover Link", destination: URL(string: "https://example.com")!)
                 .automaticCompliance()
@@ -78,8 +80,9 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     // MARK: - Hover Text Tests (macOS)
     
-    @Test func testTextReadableWithHoverText() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTextReadableWithHoverText() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("Hover Text Test")
                 .automaticCompliance()
@@ -103,8 +106,9 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     // MARK: - Pointer Interaction Tests
     
-    @Test func testPointerInteractionsWorkCorrectly() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPointerInteractionsWorkCorrectly() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Interactive view with automatic compliance
             let view = Text("Pointer Interaction Test")
                 .onHover { _ in }
@@ -129,8 +133,9 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testHoverSupportOnHoverCapablePlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testHoverSupportOnHoverCapablePlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Hover Test Button") { }
                 .automaticCompliance()

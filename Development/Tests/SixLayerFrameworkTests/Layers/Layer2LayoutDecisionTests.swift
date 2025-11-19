@@ -25,7 +25,7 @@ import Foundation
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Layout Decision")
 open class Layer2LayoutDecisionTests: BaseTestClass {
     

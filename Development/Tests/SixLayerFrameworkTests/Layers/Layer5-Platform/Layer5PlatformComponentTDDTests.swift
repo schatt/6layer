@@ -16,13 +16,14 @@ import SwiftUI
  */
 
 @Suite("Layer 5 Platform Components")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Recognition Layer 5
 
-    @Test func testPlatformRecognitionLayer5ProvidesAIIntelligence() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformRecognitionLayer5ProvidesAIIntelligence() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // TDD: PlatformRecognitionLayer5 should provide:
             // 1. AI/ML-powered content recognition capabilities
             // 2. Image analysis and text recognition services

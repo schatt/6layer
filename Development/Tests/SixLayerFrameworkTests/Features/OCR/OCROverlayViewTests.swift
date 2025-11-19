@@ -9,13 +9,14 @@ import SwiftUI
 /// TESTING SCOPE: All components in OCROverlayView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("OCR Overlay View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCROverlayViewTests: BaseTestClass {
     
     // MARK: - OCROverlayView Tests
     // BaseTestClass.init() handles setupTestEnvironment() automatically
     
-@Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testOCROverlayViewGeneratesAccessibilityIdentifiersOnIOS() async {
+                initializeTestConfig()
         let testImage = PlatformImage()
         let testResult = OCRResult(
             extractedText: "Test OCR Text",
@@ -49,7 +50,8 @@ open class OCROverlayViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+                initializeTestConfig()
         let testImage = PlatformImage()
         let testResult = OCRResult(
             extractedText: "Test OCR Text",

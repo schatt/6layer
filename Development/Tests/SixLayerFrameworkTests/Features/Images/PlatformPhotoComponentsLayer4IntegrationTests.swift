@@ -33,7 +33,7 @@ import AppKit
 @testable import SixLayerFramework
 
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Photo Components Layer Integration")
 open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     
@@ -42,7 +42,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test camera callback API signature and callback function
     /// TESTING SCOPE: Tests that camera callback API accepts PlatformImage parameter and callback works
     /// METHODOLOGY: Verify callback signature compiles and test callback function directly
-    @Test func testPlatformCameraInterface_ActualCallbackExecution() {
+    @Test @MainActor func testPlatformCameraInterface_ActualCallbackExecution() {
         // Given: Test image and callback function
         let testImage = createTestPlatformImage()
         var capturedImage: PlatformImage?
@@ -75,7 +75,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test camera callback with real image data
     /// TESTING SCOPE: Tests that camera callbacks work with actual image data
     /// METHODOLOGY: Use real image data to test callback functionality
-    @Test func testPlatformCameraInterface_RealImageData() {
+    @Test @MainActor func testPlatformCameraInterface_RealImageData() {
         // Given: Camera interface and real image data
         var capturedImage: PlatformImage?
         
@@ -101,7 +101,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test photo picker callback API signature and callback function
     /// TESTING SCOPE: Tests that photo picker callback API accepts PlatformImage parameter and callback works
     /// METHODOLOGY: Verify callback signature compiles and test callback function directly
-    @Test func testPlatformPhotoPicker_ActualCallbackExecution() {
+    @Test @MainActor func testPlatformPhotoPicker_ActualCallbackExecution() {
         // Given: Test image and callback function
         let testImage = createTestPlatformImage()
         var selectedImage: PlatformImage?
@@ -134,7 +134,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test photo picker callback with real image data
     /// TESTING SCOPE: Tests that photo picker callbacks work with actual image data
     /// METHODOLOGY: Use real image data to test callback functionality
-    @Test func testPlatformPhotoPicker_RealImageData() {
+    @Test @MainActor func testPlatformPhotoPicker_RealImageData() {
         // Given: Photo picker and real image data
         var selectedImage: PlatformImage?
         

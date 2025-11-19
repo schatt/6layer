@@ -4,9 +4,10 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Simple Test: Check if ANY accessibility identifier modifier is applied
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Simple Accessibility")
-open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkComponentWithNamedModifier() {
+open class SimpleAccessibilityTest: BaseTestClass {    @Test @MainActor func testFrameworkComponentWithNamedModifier() {
+        initializeTestConfig()
         // Test that framework components work with .named() modifier
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -33,7 +34,7 @@ open class SimpleAccessibilityTest: BaseTestClass {    @Test func testFrameworkC
         #endif
     }
     
-    @Test func testAutomaticAccessibilityIdentifierModifierApplied() {
+    @Test @MainActor func testAutomaticAccessibilityIdentifierModifierApplied() {
         // Test that framework components automatically apply accessibility identifiers
         let testView = platformPresentBasicValue_L1(
             value: 42,

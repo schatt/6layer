@@ -29,7 +29,7 @@ import Testing
 
 /// Tests for OCR disambiguation functionality
 @Suite("OCR Disambiguation")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCRDisambiguationTDDTests: BaseTestClass {
 
     @Test func testOCRDisambiguationViewRendersAlternativesAndHandlesSelection() async {
@@ -157,7 +157,7 @@ open class OCRDisambiguationTDDTests: BaseTestClass {
     }
 }
 /// TODO: Implement real tests that test actual OCR disambiguation functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("OCR Disambiguation")
 open class OCRDisambiguationTests: BaseTestClass {// MARK: - Real OCR Disambiguation Tests (To Be Implemented)
     

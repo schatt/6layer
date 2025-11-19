@@ -48,7 +48,8 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
     /// BUSINESS PURPOSE: platformPresentItemCollection_L1 should automatically apply HIG compliance modifiers
     /// TESTING SCOPE: Tests that item collection views automatically have accessibility and HIG compliance
     /// METHODOLOGY: Creates a view using Layer 1 function and verifies it has automatic compliance features
-    @Test func testPlatformPresentItemCollection_L1_AutomaticHIGCompliance() async {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_AutomaticHIGCompliance() async {
+        initializeTestConfig()
         // Given: Test items and hints
         let items = [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")]
         let hints = PresentationHints()
@@ -72,7 +73,8 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
     /// BUSINESS PURPOSE: platformPresentItemCollection_L1 should automatically apply accessibility features when VoiceOver is enabled
     /// TESTING SCOPE: Tests that accessibility features are automatically applied based on runtime capabilities
     /// METHODOLOGY: Enables VoiceOver via mock framework and verifies automatic accessibility application
-    @Test func testPlatformPresentItemCollection_L1_AutomaticVoiceOverSupport() async {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_AutomaticVoiceOverSupport() async {
+        initializeTestConfig()
         // Given: VoiceOver enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
 
@@ -97,7 +99,8 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
     /// BUSINESS PURPOSE: platformPresentItemCollection_L1 should automatically apply platform-specific patterns
     /// TESTING SCOPE: Tests that platform-specific behavior is automatically applied across different platforms
     /// METHODOLOGY: Tests automatic platform pattern application across iOS, macOS, watchOS, tvOS, and visionOS
-    @Test func testPlatformPresentItemCollection_L1_AutomaticPlatformPatterns() async {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_AutomaticPlatformPatterns() async {
+            initializeTestConfig()
         // Setup test data
         let testItems = [
             TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1"),
@@ -127,7 +130,8 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
     /// BUSINESS PURPOSE: platformPresentItemCollection_L1 should automatically apply visual consistency
     /// TESTING SCOPE: Tests that visual design consistency is automatically applied to all views
     /// METHODOLOGY: Creates views and verifies they have consistent visual styling and theming
-    @Test func testPlatformPresentItemCollection_L1_AutomaticVisualConsistency() async {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_AutomaticVisualConsistency() async {
+        initializeTestConfig()
         // When: Creating view using Layer 1 function
         let view = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
@@ -145,7 +149,8 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
     /// BUSINESS PURPOSE: All Layer 1 functions should automatically apply HIG compliance
     /// TESTING SCOPE: Tests that multiple Layer 1 functions automatically apply compliance
     /// METHODOLOGY: Tests various Layer 1 functions to ensure they all have automatic compliance
-    @Test func testAllLayer1Functions_AutomaticHIGCompliance() async {
+    @Test @MainActor func testAllLayer1Functions_AutomaticHIGCompliance() async {
+        initializeTestConfig()
         // Test platformPresentItemCollection_L1
         let collectionView = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test Item 1", subtitle: "Test Description 1")],
@@ -177,7 +182,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
     /// BUSINESS PURPOSE: Automatic HIG compliance should work with different accessibility capabilities
     /// TESTING SCOPE: Tests automatic compliance with various accessibility features enabled/disabled
     /// METHODOLOGY: Tests automatic compliance with different combinations of accessibility capabilities
-    @Test func testAutomaticHIGCompliance_WithVariousAccessibilityCapabilities() async {
+    @Test @MainActor func testAutomaticHIGCompliance_WithVariousAccessibilityCapabilities() async {
         // Test with VoiceOver enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(false)

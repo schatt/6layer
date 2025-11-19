@@ -85,7 +85,7 @@ class L4ComponentTests: BaseTestClass {
     
     // MARK: - OCR Component Implementation Functions
     
-    @Test func testPlatformOCRImplementation_L4() {
+    @Test @MainActor func testPlatformOCRImplementation_L4() {
         // Given
         let image = samplePlatformImage
         let context = sampleOCRContext
@@ -107,7 +107,7 @@ class L4ComponentTests: BaseTestClass {
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
-    @Test func testPlatformTextExtraction_L4() {
+    @Test @MainActor func testPlatformTextExtraction_L4() {
         // Given
         let image = samplePlatformImage
         let context = sampleOCRContext
@@ -131,7 +131,7 @@ class L4ComponentTests: BaseTestClass {
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
-    @Test func testPlatformTextRecognition_L4() {
+    @Test @MainActor func testPlatformTextRecognition_L4() {
         // Given
         let image = samplePlatformImage
         let options = sampleTextRecognitionOptions
@@ -151,7 +151,7 @@ class L4ComponentTests: BaseTestClass {
         #expect(result?.extractedText.contains("deprecated") == true, "Should return deprecation message")
     }
     
-    @Test func testSafePlatformOCRImplementation_L4() {
+    @Test @MainActor func testSafePlatformOCRImplementation_L4() {
         // Given
         let image = samplePlatformImage
         let context = sampleOCRContext
@@ -177,7 +177,7 @@ class L4ComponentTests: BaseTestClass {
     
     // MARK: - Photo Component Implementation Functions
     
-    @Test func testPlatformCameraInterface_L4() {
+    @Test @MainActor func testPlatformCameraInterface_L4() {
         // Given
         var capturedImage: PlatformImage?
         
@@ -191,7 +191,7 @@ class L4ComponentTests: BaseTestClass {
         // Note: The actual behavior depends on platform availability
     }
     
-    @Test func testPlatformPhotoPicker_L4() {
+    @Test @MainActor func testPlatformPhotoPicker_L4() {
         // Given
         var selectedImage: PlatformImage?
         
@@ -205,7 +205,7 @@ class L4ComponentTests: BaseTestClass {
         // Note: The actual behavior depends on platform availability
     }
     
-    @Test func testPlatformPhotoDisplay_L4() {
+    @Test @MainActor func testPlatformPhotoDisplay_L4() {
         // Given
         let image: PlatformImage? = samplePlatformImage
         let style = samplePhotoDisplayStyle
@@ -220,7 +220,7 @@ class L4ComponentTests: BaseTestClass {
         LayeredTestUtilities.verifyViewCreation(view, testName: "platformPhotoDisplay_L4")
     }
     
-    @Test func testPlatformPhotoDisplay_L4_NilImage() {
+    @Test @MainActor func testPlatformPhotoDisplay_L4_NilImage() {
         // Given
         let image: PlatformImage? = nil
         let style = samplePhotoDisplayStyle
@@ -236,7 +236,7 @@ class L4ComponentTests: BaseTestClass {
         // Should show placeholder when image is nil
     }
     
-    @Test func testPlatformPhotoEditor_L4() {
+    @Test @MainActor func testPlatformPhotoEditor_L4() {
         // Given
         let image = samplePlatformImage
         var editedImage: PlatformImage?
@@ -254,7 +254,7 @@ class L4ComponentTests: BaseTestClass {
     
     // MARK: - Component Implementation Validation
     
-    @Test func testComponentImplementationConsistency() {
+    @Test @MainActor func testComponentImplementationConsistency() {
         // Given
         let image = samplePlatformImage
         let context = sampleOCRContext
@@ -281,7 +281,7 @@ class L4ComponentTests: BaseTestClass {
         // Both views should be created successfully
     }
     
-    @Test func testComponentImplementationPerformance() {
+    @Test @MainActor func testComponentImplementationPerformance() {
         // Given
         let image = samplePlatformImage
         let context = sampleOCRContext
@@ -299,7 +299,7 @@ class L4ComponentTests: BaseTestClass {
         LayeredTestUtilities.verifyViewCreation(view, testName: "Component performance test")
     }
     
-    @Test func testComponentImplementationEdgeCases() {
+    @Test @MainActor func testComponentImplementationEdgeCases() {
         // Given
         let image = PlatformImage() // Empty image
         let context = OCRContext() // Default context
@@ -320,7 +320,7 @@ class L4ComponentTests: BaseTestClass {
     
     // MARK: - Platform-Specific Component Testing
     
-    @Test func testPlatformSpecificComponents() {
+    @Test @MainActor func testPlatformSpecificComponents() {
         // Given
         let image = samplePlatformImage
         let style = samplePhotoDisplayStyle

@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All components in CrossPlatformNavigation.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Cross Platform Navigation")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class CrossPlatformNavigationTests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -23,7 +23,7 @@ open class CrossPlatformNavigationTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = Text("Test Navigation")
             .platformNavigation {
                 Text("Content")
@@ -43,7 +43,7 @@ open class CrossPlatformNavigationTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testCrossPlatformNavigationGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = Text("Test Navigation")
             .platformNavigation {
                 Text("Content")

@@ -14,7 +14,7 @@ import CoreGraphics
 /// BUSINESS PURPOSE: Verify that PlatformTypes.swift compiles correctly and all types are accessible
 /// TESTING SCOPE: PlatformTypes compilation, type accessibility, cross-platform compatibility
 /// METHODOLOGY: Direct compilation tests and type instantiation verification
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct PlatformTypesCompilationTests {
     
     // MARK: - Core Platform Types Tests

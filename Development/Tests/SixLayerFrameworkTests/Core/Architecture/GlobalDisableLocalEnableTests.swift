@@ -9,13 +9,14 @@ import ViewInspector
 #endif
 /// TDD Tests for "Global Disable, Local Enable" Functionality
 /// Following proper TDD: Write failing tests first to prove the desired behavior
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Global Disable Local Enable")
 open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
 
     // BaseTestClass handles setup automatically - no need for custom init    // MARK: - TDD Red Phase: Tests That Should Fail Initially
     
-    @Test func testFrameworkComponentGlobalDisableLocalEnableGeneratesID() {
+    @Test @MainActor func testFrameworkComponentGlobalDisableLocalEnableGeneratesID() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // TDD: Test with actual framework component - this should work
             
@@ -54,7 +55,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
         }
     }
     
-    @Test func testGlobalEnableLocalDisableDoesNotGenerateID() {
+    @Test @MainActor func testGlobalEnableLocalDisableDoesNotGenerateID() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // TDD: This test SHOULD FAIL initially - .named() always works regardless of global settings
             
@@ -90,7 +92,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
         }
     }
     
-    @Test func testFrameworkComponentsRespectGlobalConfig() {
+    @Test @MainActor func testFrameworkComponentsRespectGlobalConfig() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // TDD: This test SHOULD PASS - .named() always works regardless of global config
             
@@ -124,7 +127,8 @@ open class GlobalDisableLocalEnableTDDTests: BaseTestClass {
         }
     }
     
-    @Test func testPlainSwiftUIRequiresExplicitEnable() {
+    @Test @MainActor func testPlainSwiftUIRequiresExplicitEnable() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // TDD: This test SHOULD PASS - .named() always works regardless of global config
             

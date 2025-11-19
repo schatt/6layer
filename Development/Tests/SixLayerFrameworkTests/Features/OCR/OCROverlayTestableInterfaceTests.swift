@@ -29,7 +29,7 @@ import Testing
 
 /// Tests for OCR overlay testable interface functionality
 /// TODO: Implement real tests that test actual OCR overlay testable interface functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("OCR Overlayable Interface")
 open class OCROverlayTestableInterfaceTests: BaseTestClass {
     

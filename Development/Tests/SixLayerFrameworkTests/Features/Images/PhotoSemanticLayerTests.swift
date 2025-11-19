@@ -3,7 +3,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Photo Semantic Layer")
 open class PhotoSemanticLayerTests: BaseTestClass {
     

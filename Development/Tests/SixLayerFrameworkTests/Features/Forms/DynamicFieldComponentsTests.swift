@@ -16,12 +16,12 @@ import SwiftUI
  */
 
 @Suite("Dynamic Field Components")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Multi-Select Field
 
-    @Test func testDynamicMultiSelectFieldRendersSelectionInterface() async {
+    @Test @MainActor func testDynamicMultiSelectFieldRendersSelectionInterface() async {
         // DynamicMultiSelectField should:
         // 1. Render a multi-selection interface (checkboxes or toggle list)
         // 2. Display all options from field.options
@@ -102,7 +102,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Radio Field
 
-    @Test func testDynamicRadioFieldRendersRadioButtons() async {
+    @Test @MainActor func testDynamicRadioFieldRendersRadioButtons() async {
         // DynamicRadioField should:
         // 1. Render radio button group (only one selection allowed)
         // 2. Display all options from field.options
@@ -170,7 +170,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Checkbox Field
 
-    @Test func testDynamicCheckboxFieldRendersCheckboxes() async {
+    @Test @MainActor func testDynamicCheckboxFieldRendersCheckboxes() async {
         // DynamicCheckboxField should:
         // 1. Render checkbox group (multiple selections allowed)
         // 2. Display all options from field.options as checkboxes
@@ -233,7 +233,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Rich Text Field
 
-    @Test func testDynamicRichTextFieldRendersRichTextEditor() async {
+    @Test @MainActor func testDynamicRichTextFieldRendersRichTextEditor() async {
         // DynamicRichTextField should:
         // 1. Render a rich text editor (formatted text input)
         // 2. Support text formatting (bold, italic, etc.)
@@ -293,7 +293,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - File Field
 
-    @Test func testDynamicFileFieldRendersFilePicker() async {
+    @Test @MainActor func testDynamicFileFieldRendersFilePicker() async {
         // DynamicFileField should:
         // 1. Render file picker button/interface
         // 2. Allow selecting files from device
@@ -350,7 +350,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Image Field
 
-    @Test func testDynamicImageFieldRendersImagePicker() async {
+    @Test @MainActor func testDynamicImageFieldRendersImagePicker() async {
         // DynamicImageField should:
         // 1. Render image picker button/interface
         // 2. Allow selecting images from photo library or camera
@@ -407,7 +407,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Array Field
 
-    @Test func testDynamicArrayFieldRendersArrayInput() async {
+    @Test @MainActor func testDynamicArrayFieldRendersArrayInput() async {
         // DynamicArrayField should:
         // 1. Render interface for entering array of values
         // 2. Allow adding/removing items dynamically
@@ -464,7 +464,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Data Field
 
-    @Test func testDynamicDataFieldRendersDataInput() async {
+    @Test @MainActor func testDynamicDataFieldRendersDataInput() async {
         // DynamicDataField should:
         // 1. Render interface for binary data input
         // 2. Allow pasting or importing data
@@ -521,7 +521,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Autocomplete Field
 
-    @Test func testDynamicAutocompleteFieldRendersAutocomplete() async {
+    @Test @MainActor func testDynamicAutocompleteFieldRendersAutocomplete() async {
         // DynamicAutocompleteField should:
         // 1. Render text input with autocomplete suggestions
         // 2. Show suggestions as user types
@@ -577,7 +577,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Enum Field
 
-    @Test func testDynamicEnumFieldRendersEnumPicker() async {
+    @Test @MainActor func testDynamicEnumFieldRendersEnumPicker() async {
         // DynamicEnumField should:
         // 1. Render enum value picker
         // 2. Display all enum options from field.options
@@ -640,7 +640,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Custom Field
 
-    @Test func testDynamicCustomFieldRendersCustomComponent() async {
+    @Test @MainActor func testDynamicCustomFieldRendersCustomComponent() async {
         // DynamicCustomField should:
         // 1. Use CustomFieldRegistry to find registered component
         // 2. Render registered custom component if available
@@ -694,7 +694,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Color Field
 
-    @Test func testDynamicColorFieldRendersColorPicker() async {
+    @Test @MainActor func testDynamicColorFieldRendersColorPicker() async {
         // DynamicColorField should:
         // 1. Render color picker interface
         // 2. Allow selecting colors (hex, RGB, or visual picker)
@@ -748,7 +748,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
     // MARK: - Text Area Field
 
-    @Test func testDynamicTextAreaFieldRendersMultiLineEditor() async {
+    @Test @MainActor func testDynamicTextAreaFieldRendersMultiLineEditor() async {
         // DynamicTextAreaField should:
         // 1. Render multi-line text editor (TextEditor on iOS, TextField on macOS)
         // 2. Allow entering multiple lines of text

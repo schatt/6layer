@@ -9,7 +9,7 @@ import ViewInspector
 /// View Generation Tests
 /// Tests that the framework correctly generates SwiftUI views with proper structure and properties
 /// These tests focus on what we can actually verify when running on macOS
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("View Generation")
 open class ViewGenerationTests: BaseTestClass {
     
@@ -221,7 +221,8 @@ open class ViewGenerationTests: BaseTestClass {
     
     // MARK: - Data Analysis Tests
     
-    @Test func testDataIntrospection() {
+    @Test @MainActor func testDataIntrospection() {
+        initializeTestConfig()
         // GIVEN: A test data item
         let item = createViewGenerationTestData()[0]
         
@@ -235,7 +236,8 @@ open class ViewGenerationTests: BaseTestClass {
         _ = analysis.patterns
     }
     
-    @Test func testDataIntrospectionWithDifferentTypes() {
+    @Test @MainActor func testDataIntrospectionWithDifferentTypes() {
+        initializeTestConfig()
         // GIVEN: Different data types
         let stringData = "Test String"
         let intData = 42

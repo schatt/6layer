@@ -40,7 +40,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate that Layer 1 functions now automatically apply HIG compliance
     /// TESTING SCOPE: Shows the difference between old manual approach and new automatic approach
     /// METHODOLOGY: Creates views using Layer 1 functions and verifies automatic compliance
-    @Test func testDemonstrateAutomaticHIGCompliance() async {
+    @Test @MainActor func testDemonstrateAutomaticHIGCompliance() async {
+        initializeTestConfig()
         // OLD WAY (what developers had to do before):
         // let view = platformPresentItemCollection_L1(items: items, hints: hints)
         //     .appleHIGCompliant()           // Manual
@@ -77,7 +78,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate that automatic compliance works with different accessibility states
     /// TESTING SCOPE: Shows automatic compliance adapts to different accessibility capabilities
     /// METHODOLOGY: Tests automatic compliance with VoiceOver, Switch Control, and AssistiveTouch
-    @Test func testDemonstrateAutomaticComplianceWithAccessibilityStates() async {
+    @Test @MainActor func testDemonstrateAutomaticComplianceWithAccessibilityStates() async {
+        initializeTestConfig()
         // Setup test data
         let testItems = [
             DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
@@ -123,7 +125,8 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate that automatic compliance works across all platforms
     /// TESTING SCOPE: Shows automatic compliance works on iOS, macOS, watchOS, tvOS, and visionOS
     /// METHODOLOGY: Tests automatic compliance across all supported platforms
-    @Test func testDemonstrateAutomaticComplianceAcrossPlatforms() async {
+    @Test @MainActor func testDemonstrateAutomaticComplianceAcrossPlatforms() async {
+            initializeTestConfig()
         // Setup test data
         let testItems = [
             DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),
@@ -148,7 +151,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate that multiple Layer 1 functions all have automatic compliance
     /// TESTING SCOPE: Shows that all Layer 1 functions automatically apply compliance
     /// METHODOLOGY: Tests multiple Layer 1 functions to verify they all have automatic compliance
-    @Test func testDemonstrateAllLayer1FunctionsHaveAutomaticCompliance() async {
+    @Test @MainActor func testDemonstrateAllLayer1FunctionsHaveAutomaticCompliance() async {
         // Setup test data
         let testItems = [
             DemonstrationTestItem(id: "1", title: "Test Item 1", subtitle: "Subtitle 1"),

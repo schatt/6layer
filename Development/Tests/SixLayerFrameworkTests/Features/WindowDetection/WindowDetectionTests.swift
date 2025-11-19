@@ -7,7 +7,7 @@ import SwiftUI
 /// TDD Tests for window size detection across all platforms
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Window Detection")
 open class WindowDetectionTests: BaseTestClass {
     

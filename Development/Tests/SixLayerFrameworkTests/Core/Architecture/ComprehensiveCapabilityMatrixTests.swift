@@ -39,7 +39,7 @@ import SwiftUI
 /// Comprehensive Capability Matrix Tests
 /// Tests EVERY combination of platform capabilities and accessibility features
 /// This ensures we handle all possible user configurations and platform variations
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class ComprehensiveCapabilityMatrixTests: BaseTestClass {
     
     // MARK: - Test Data

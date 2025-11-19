@@ -4,13 +4,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Test what happens when automatic accessibility IDs are disabled
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Identifier Disabled")
 open class AccessibilityIdentifierDisabledTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically - no need for custom init
     
-    @Test func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
+    @Test @MainActor func testAutomaticIDsDisabled_NoIdentifiersGenerated() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test: When automatic IDs are disabled, views should not have accessibility identifier modifiers
             guard let config = testConfig else {
@@ -43,7 +44,8 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
         }
     }
     
-    @Test func testManualIDsStillWorkWhenAutomaticDisabled() {
+    @Test @MainActor func testManualIDsStillWorkWhenAutomaticDisabled() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             guard let config = testConfig else {
                 Issue.record("testConfig is nil")
@@ -74,7 +76,8 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
         }
     }
     
-    @Test func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
+    @Test @MainActor func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
+            initializeTestConfig()
         // Test: Named modifiers should still work for tracking
         let view = VStack {
             platformPresentContent_L1(content: "Content", hints: PresentationHints())

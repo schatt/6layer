@@ -40,7 +40,7 @@ import SwiftUI
 
 /// Capability combination validation testing
 /// Validates that capability combinations work correctly on the current platform
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Current Platform Combination Tests
     
     @Test func testCurrentPlatformCombination() {

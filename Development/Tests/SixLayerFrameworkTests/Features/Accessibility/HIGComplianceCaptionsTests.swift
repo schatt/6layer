@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Caption Support")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceCaptionsTests: BaseTestClass {
     
     // MARK: - Caption Support Tests
     
-    @Test func testVideoComponentSupportsCaptions() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testVideoComponentSupportsCaptions() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A video component with automatic compliance
             // Note: Using a placeholder view since we may not have video components yet
             let view = VStack {
@@ -58,8 +59,9 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
         }
     }
     
-    @Test func testCaptionsAreAccessible() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testCaptionsAreAccessible() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A media component with captions and automatic compliance
             let view = VStack {
                 Text("Media Component")
@@ -87,8 +89,9 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
         }
     }
     
-    @Test func testCaptionPositioningIsAppropriate() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testCaptionPositioningIsAppropriate() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A media component with captions and automatic compliance
             let view = VStack {
                 Text("Media Component")
@@ -118,8 +121,9 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testCaptionSupportOnAllPlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testCaptionSupportOnAllPlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A media component with automatic compliance
             let view = VStack {
                 Text("Cross-Platform Media")

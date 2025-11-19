@@ -26,7 +26,7 @@ import SixLayerFramework
 /// - External modules couldn't access it (compilation error)
 /// - These tests would have caught that bug
 @Suite("External Module Integration Tests")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct ExternalModuleIntegrationTests {
     
     /// Tests that global photo picker function is accessible from external modules
@@ -37,7 +37,7 @@ struct ExternalModuleIntegrationTests {
     /// var selectedImage: PlatformImage?
     /// let picker = platformPhotoPicker_L4(onImageSelected: { image in selectedImage = image })
     /// ```
-    @Test("Global photo picker function accessible")
+    @Test("Global photo picker function accessible") @MainActor
     func testGlobalPhotoPickerAccessible() {
         // Simulate how CarManager would call this
         let _ = platformPhotoPicker_L4(onImageSelected: { _ in
@@ -53,7 +53,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that global camera interface function is accessible
-    @Test("Global camera interface function accessible")
+    @Test("Global camera interface function accessible") @MainActor
     func testGlobalCameraInterfaceAccessible() {
         let _ = platformCameraInterface_L4(onImageCaptured: { _ in
             // Callback signature is accessible - in real usage, external modules would use this
@@ -68,7 +68,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that global photo display function is accessible
-    @Test("Global photo display function accessible")
+    @Test("Global photo display function accessible") @MainActor
     func testGlobalPhotoDisplayAccessible() {
         let image = PlatformImage()
         let _ = platformPhotoDisplay_L4(image: image, style: .thumbnail)
@@ -100,7 +100,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that photo components have accessibility identifiers (external perspective)
-    @Test("Photo components have accessibility identifiers")
+    @Test("Photo components have accessibility identifiers") @MainActor
     func testPhotoComponentsHaveAccessibilityIdentifiers() {
         // Test that photo components apply accessibility identifiers
         // These should work from an external module perspective
@@ -118,7 +118,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that PlatformPhotoComponentsLayer4 enum methods are accessible
-    @Test("PlatformPhotoComponentsLayer4 enum methods accessible")
+    @Test("PlatformPhotoComponentsLayer4 enum methods accessible") @MainActor
     func testPhotoComponentsLayer4MethodsAccessible() {
         // Test that we can use the enum methods
         let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: { _ in })
@@ -130,7 +130,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that OCROverlayView is accessible from external modules
-    @Test("OCROverlayView accessible from external modules")
+    @Test("OCROverlayView accessible from external modules") @MainActor
     func testOCROverlayViewAccessible() {
         let testImage = PlatformImage()
         let testResult = OCRResult(
@@ -159,7 +159,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that ListCollectionView properly handles callbacks
-    @Test("ListCollectionView callbacks accessible from external modules")
+    @Test("ListCollectionView callbacks accessible from external modules") @MainActor
     func testListCollectionViewCallbacksAccessible() {
         // Create sample items for testing
         struct TestItem: Identifiable {
@@ -188,7 +188,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that IntelligentFormView.generateForm is accessible from external modules
-    @Test("IntelligentFormView.generateForm is accessible")
+    @Test("IntelligentFormView.generateForm is accessible") @MainActor
     func testIntelligentFormViewGenerateFormAccessible() {
         // Test that IntelligentFormView.generateForm can be called from external modules
         struct TestFormData: Identifiable {
@@ -219,7 +219,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that IntelligentDetailView.platformDetailView is accessible from external modules
-    @Test("IntelligentDetailView.platformDetailView is accessible")
+    @Test("IntelligentDetailView.platformDetailView is accessible") @MainActor
     func testIntelligentDetailViewAccessible() {
         struct TestDetailData: Identifiable {
             let id = UUID()
@@ -237,7 +237,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that ResponsiveLayout static methods are accessible from external modules
-    @Test("ResponsiveLayout static methods accessible")
+    @Test("ResponsiveLayout static methods accessible") @MainActor
     func testResponsiveLayoutAccessible() {
         // Test that ResponsiveLayout static methods can be used from external modules
         let _ = ResponsiveLayout.adaptiveGrid {
@@ -249,7 +249,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that ResponsiveContainer is accessible from external modules
-    @Test("ResponsiveContainer is accessible")
+    @Test("ResponsiveContainer is accessible") @MainActor
     func testResponsiveContainerAccessible() {
         // Test that ResponsiveContainer can be used from external modules
         // Note: Uses proper 2-parameter closure signature
@@ -265,7 +265,7 @@ struct ExternalModuleIntegrationTests {
     }
     
     /// Tests that OCR Layer 1 functions are accessible from external modules
-    @Test("OCR Layer 1 functions accessible")
+    @Test("OCR Layer 1 functions accessible") @MainActor
     func testOCRLayer1Accessible() {
         let testImage = PlatformImage()
         let context = OCRContext(

@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All components in ResponsiveCardsView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Responsive Cards View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class ResponsiveCardsViewTests: BaseTestClass {
     
     // MARK: - Test Setup

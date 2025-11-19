@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All components in IntelligentDetailView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Detail View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class IntelligentDetailViewTests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -23,7 +23,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         
         let view = IntelligentDetailView.platformDetailView(for: testData)
@@ -42,7 +43,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testIntelligentDetailViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         
         let view = IntelligentDetailView.platformDetailView(for: testData)
@@ -63,7 +65,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
     
     // MARK: - Test All Layout Strategies
     
-    @Test func testIntelligentDetailViewCompactLayoutGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testIntelligentDetailViewCompactLayoutGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         let hints = PresentationHints(
             dataType: .generic,
@@ -89,7 +92,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testIntelligentDetailViewStandardLayoutGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testIntelligentDetailViewStandardLayoutGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         let hints = PresentationHints(
             dataType: .generic,
@@ -115,7 +119,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testIntelligentDetailViewDetailedLayoutGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testIntelligentDetailViewDetailedLayoutGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         let hints = PresentationHints(
             dataType: .generic,
@@ -141,7 +146,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testIntelligentDetailViewTabbedLayoutGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testIntelligentDetailViewTabbedLayoutGeneratesAccessibilityIdentifiers() async {
+            initializeTestConfig()
         struct ComplexTestData {
             let field1: String
             let field2: Int
@@ -181,7 +187,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testIntelligentDetailViewAdaptiveLayoutGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testIntelligentDetailViewAdaptiveLayoutGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         // Don't specify hints to trigger adaptive strategy
         let view = IntelligentDetailView.platformDetailView(for: testData, hints: nil)
@@ -202,7 +209,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
 
     // MARK: - Edit Button Tests
 
-    @Test func testIntelligentDetailViewShowsEditButtonByDefault() async {
+    @Test @MainActor func testIntelligentDetailViewShowsEditButtonByDefault() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         var editCalled = false
 
@@ -217,7 +225,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         // view is non-optional, not used further
     }
 
-    @Test func testIntelligentDetailViewCanDisableEditButton() async {
+    @Test @MainActor func testIntelligentDetailViewCanDisableEditButton() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
 
         // Test that the view can be created with edit button disabled
@@ -230,7 +239,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         // view is non-optional, not used further
     }
 
-    @Test func testIntelligentDetailViewEditButtonAccessibility() async {
+    @Test @MainActor func testIntelligentDetailViewEditButtonAccessibility() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
 
         let view = IntelligentDetailView.platformDetailView(
@@ -252,7 +262,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testIntelligentDetailViewCompactLayoutWithEditButton() async {
+    @Test @MainActor func testIntelligentDetailViewCompactLayoutWithEditButton() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         let hints = PresentationHints(
             dataType: .generic,
@@ -282,7 +293,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testIntelligentDetailViewStandardLayoutWithEditButton() async {
+    @Test @MainActor func testIntelligentDetailViewStandardLayoutWithEditButton() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         let hints = PresentationHints(
             dataType: .generic,
@@ -312,7 +324,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testIntelligentDetailViewDetailedLayoutWithEditButton() async {
+    @Test @MainActor func testIntelligentDetailViewDetailedLayoutWithEditButton() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
         let hints = PresentationHints(
             dataType: .generic,
@@ -342,7 +355,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testIntelligentDetailViewTabbedLayoutWithEditButton() async {
+    @Test @MainActor func testIntelligentDetailViewTabbedLayoutWithEditButton() async {
+            initializeTestConfig()
         struct ComplexTestData {
             let field1: String
             let field2: Int
@@ -386,7 +400,8 @@ open class IntelligentDetailViewTests: BaseTestClass {
         #endif
     }
 
-    @Test func testIntelligentDetailViewAdaptiveLayoutWithEditButton() async {
+    @Test @MainActor func testIntelligentDetailViewAdaptiveLayoutWithEditButton() async {
+                initializeTestConfig()
         let testData = TestDataModel(name: "Test Name", value: 42)
 
         let view = IntelligentDetailView.platformDetailView(

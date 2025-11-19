@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Safety Component Accessibility")
 open class SafetyComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Safety Component Tests
     
-    @Test func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: VisionSafety
         let testView = VisionSafety()
         
@@ -37,7 +38,8 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSafetyGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformSafetyGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: PlatformSafety
         let testView = PlatformSafety()
         
@@ -57,7 +59,8 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSecurityGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformSecurityGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: PlatformSecurity
         let testView = PlatformSecurity()
         
@@ -77,7 +80,8 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPrivacyGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPrivacyGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: PlatformPrivacy
         let testView = PlatformPrivacy()
         

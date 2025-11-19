@@ -6,7 +6,7 @@ import SwiftUI
 
 /// Comprehensive test suite for Apple HIG Compliance system
 /// Tests automatic application of Apple Human Interface Guidelines
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Apple HIG Compliance")
 open class AppleHIGComplianceTests: BaseTestClass {
     
@@ -14,7 +14,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - Apple HIG Compliance Manager Tests
     
-    @Test func testComplianceManagerInitialization() {
+    @Test @MainActor func testComplianceManagerInitialization() {
         // Given: A new AppleHIGComplianceManager
         let complianceManager = AppleHIGComplianceManager()
         
@@ -24,7 +24,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // accessibilityState, designSystem, and currentPlatform are non-optional
     }
     
-    @Test func testPlatformDetection() {
+    @Test @MainActor func testPlatformDetection() {
         // Given: AppleHIGComplianceManager
         let complianceManager = AppleHIGComplianceManager()
         
@@ -41,7 +41,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityStateMonitoring() {
+    @Test @MainActor func testAccessibilityStateMonitoring() {
         // Given: AppleHIGComplianceManager
         let complianceManager = AppleHIGComplianceManager()
         
@@ -52,7 +52,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - Design System Tests
     
-    @Test func testDesignSystemInitialization() {
+    @Test @MainActor func testDesignSystemInitialization() {
         // Given: AppleHIGComplianceManager
         let complianceManager = AppleHIGComplianceManager()
         
@@ -63,7 +63,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Design system components are non-optional - no need to check for nil
     }
     
-    @Test func testColorSystemPlatformSpecific() {
+    @Test @MainActor func testColorSystemPlatformSpecific() {
         // Given: Different platforms
         // When: Color system is created
         // Then: Should have platform-appropriate colors
@@ -71,14 +71,14 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Color types are non-optional in SwiftUI - no need to check for nil
     }
     
-    @Test func testTypographySystemPlatformSpecific() {
+    @Test @MainActor func testTypographySystemPlatformSpecific() {
         // Given: Different platforms
         // When: Typography system is created
         // Then: Should have platform-appropriate typography
         // Font types are non-optional in SwiftUI - no need to check for nil
     }
     
-    @Test func testSpacingSystem8ptGrid() {
+    @Test @MainActor func testSpacingSystem8ptGrid() {
         // Given: Spacing system
         // When: Spacing values are accessed
         // Then: Should follow Apple's 8pt grid system
@@ -95,7 +95,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - View Modifier Tests
     
-    @Test func testAppleHIGCompliantModifier() {
+    @Test @MainActor func testAppleHIGCompliantModifier() {
         // Given: Framework component (testing our framework, not SwiftUI)
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -108,7 +108,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(Bool(true), "Framework component with Apple HIG compliance should be valid")  // testView is non-optional
     }
     
-    @Test func testAutomaticAccessibilityModifier() {
+    @Test @MainActor func testAutomaticAccessibilityModifier() {
         // Given: Framework component
         let testView = platformPresentBasicValue_L1(
             value: 42,
@@ -120,7 +120,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(Bool(true), "Framework component should support automatic accessibility")  // testView is non-optional
     }
     
-    @Test func testPlatformPatternsModifier() {
+    @Test @MainActor func testPlatformPatternsModifier() {
         // Given: Framework component
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -133,7 +133,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(Bool(true), "Framework component with platform patterns should be valid")  // testView is non-optional
     }
     
-    @Test func testVisualConsistencyModifier() {
+    @Test @MainActor func testVisualConsistencyModifier() {
         // Given: Framework component
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -146,7 +146,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(Bool(true), "Framework component with visual consistency should be valid")  // testView is non-optional
     }
     
-    @Test func testInteractionPatternsModifier() {
+    @Test @MainActor func testInteractionPatternsModifier() {
         // Given: Framework component
         let testView = platformPresentBasicValue_L1(
             value: 42,
@@ -160,7 +160,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - Compliance Checking Tests
     
-    @Test func testHIGComplianceCheck() async {
+    @Test @MainActor func testHIGComplianceCheck() async {
+        initializeTestConfig()
         // Given: A test view
         let complianceManager = AppleHIGComplianceManager()
         let testView = Button("Test") { }
@@ -182,7 +183,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // recommendations is non-optional array
     }
     
-    @Test func testComplianceReportStructure() {
+    @Test @MainActor func testComplianceReportStructure() {
+        initializeTestConfig()
         // Given: A compliance report
         let report = HIGComplianceReport(
             overallScore: 85.0,
@@ -205,7 +207,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - Accessibility System State Tests
     
-    @Test func testAccessibilitySystemStateInitialization() {
+    @Test @MainActor func testAccessibilitySystemStateInitialization() {
+        initializeTestConfig()
         // Given: Accessibility system state
         let state = AccessibilitySystemState()
         
@@ -214,7 +217,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // Note: AccessibilitySystemState properties are non-optional and don't need nil checks
     }
     
-    @Test func testAccessibilitySystemStateFromSystemChecker() {
+    @Test @MainActor func testAccessibilitySystemStateFromSystemChecker() {
+        initializeTestConfig()
         // Given: System checker state (using simplified accessibility testing)
         let systemState = SixLayerFramework.AccessibilitySystemState()
         
@@ -234,7 +238,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - HIG Recommendation Tests
     
-    @Test func testHIGRecommendationCreation() {
+    @Test @MainActor func testHIGRecommendationCreation() {
         // Given: Recommendation data
         let recommendation = SixLayerFramework.HIGRecommendation(
             category: .accessibility,
@@ -251,7 +255,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(recommendation.suggestion == "Add proper accessibility labels")
     }
     
-    @Test func testHIGCategoryEnum() {
+    @Test @MainActor func testHIGCategoryEnum() {
         // Given: HIG categories
         // When: Categories are accessed
         // Then: Should have all expected categories
@@ -262,7 +266,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(categories.contains(.platform))
     }
     
-    @Test func testHIGPriorityEnum() {
+    @Test @MainActor func testHIGPriorityEnum() {
         // Given: HIG priorities
         // When: Priorities are accessed
         // Then: Should have all expected priorities
@@ -275,7 +279,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - Platform Enum Tests
     
-    @Test func testPlatformEnum() {
+    @Test @MainActor func testPlatformEnum() {
         // Given: Platform enum
         // When: Platforms are accessed
         // Then: Should have all expected platforms
@@ -286,7 +290,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(platforms.contains(SixLayerPlatform.tvOS))
     }
     
-    @Test func testPlatformStringValues() {
+    @Test @MainActor func testPlatformStringValues() {
         // Given: Platform enum values
         // When: String values are accessed
         // Then: Should have correct string representations
@@ -298,7 +302,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - HIG Compliance Level Tests
     
-    @Test func testHIGComplianceLevelEnum() {
+    @Test @MainActor func testHIGComplianceLevelEnum() {
         // Given: HIG compliance levels
         // When: Levels are accessed
         // Then: Should have all expected levels
@@ -309,7 +313,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         #expect(levels.contains(.minimal))
     }
     
-    @Test func testHIGComplianceLevelStringValues() {
+    @Test @MainActor func testHIGComplianceLevelStringValues() {
         // Given: HIG compliance level enum values
         // When: String values are accessed
         // Then: Should have correct string representations
@@ -328,7 +332,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
      * TESTING SCOPE: Tests accessibility integration through platform configuration
      * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
      */
-    @Test func testAccessibilityOptimizationManagerIntegration() async {
+    @Test @MainActor func testAccessibilityOptimizationManagerIntegration() async {
         // Test with accessibility features enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -362,7 +366,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
      * TESTING SCOPE: Tests automatic accessibility integration through platform configuration
      * METHODOLOGY: Uses mock capability detection to test both enabled and disabled states
      */
-    @Test func testAutomaticAccessibilityIntegration() async {
+    @Test @MainActor func testAutomaticAccessibilityIntegration() async {
+        initializeTestConfig()
         // Test with accessibility features enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -398,7 +403,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
      * TESTING SCOPE: Tests platform-specific behavior across all supported platforms
      * METHODOLOGY: Uses mock platform detection to test each platform's specific capabilities
      */
-    @Test func testPlatformSpecificComplianceBehavior() async {
+    @Test @MainActor func testPlatformSpecificComplianceBehavior() async {
+        initializeTestConfig()
         // Test that platform detection works correctly
         let originalPlatform = RuntimeCapabilityDetection.currentPlatform
         
@@ -439,7 +445,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     // MARK: - Business Purpose Tests
     
-    @Test func testAppleHIGComplianceBusinessPurpose() {
+    @Test @MainActor func testAppleHIGComplianceBusinessPurpose() {
+        initializeTestConfig()
         // Given: A business requirement for Apple HIG compliance
         // When: A developer uses the framework
         // Then: Should automatically get Apple-quality UI without configuration
@@ -449,7 +456,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // businessView is some View (non-optional)
     }
     
-    @Test func testPlatformAdaptationBusinessPurpose() {
+    @Test @MainActor func testPlatformAdaptationBusinessPurpose() {
+        initializeTestConfig()
         // Given: A business requirement for cross-platform apps
         // When: The same code runs on different platforms
         // Then: Should automatically adapt to platform conventions
@@ -458,7 +466,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // crossPlatformView is some View (non-optional)
     }
     
-    @Test func testAccessibilityInclusionBusinessPurpose() {
+    @Test @MainActor func testAccessibilityInclusionBusinessPurpose() {
+        initializeTestConfig()
         // Given: A business requirement for inclusive design
         // When: Users with accessibility needs use the app
         // Then: Should automatically provide appropriate accessibility features
@@ -467,7 +476,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // inclusiveView is some View (non-optional)
     }
     
-    @Test func testDesignConsistencyBusinessPurpose() {
+    @Test @MainActor func testDesignConsistencyBusinessPurpose() {
+        initializeTestConfig()
         // Given: A business requirement for consistent design
         // When: Multiple developers work on the same app
         // Then: Should automatically maintain Apple design consistency
@@ -476,7 +486,8 @@ open class AppleHIGComplianceTests: BaseTestClass {
         // consistentView is some View (non-optional)
     }
     
-    @Test func testDeveloperProductivityBusinessPurpose() {
+    @Test @MainActor func testDeveloperProductivityBusinessPurpose() {
+        initializeTestConfig()
         // Given: A business requirement for developer productivity
         // When: Developers build UI components
         // Then: Should require minimal code for maximum quality

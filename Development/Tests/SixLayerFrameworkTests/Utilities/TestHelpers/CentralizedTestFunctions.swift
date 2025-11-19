@@ -511,7 +511,8 @@ extension Optional: AnyOptional {
  EXAMPLE USAGE PATTERN:
  
  // In CollectionEmptyStateViewTests.swift:
- @Test func testCollectionEmptyStateViewAccessibility() async {
+ @Test @MainActor func testCollectionEmptyStateViewAccessibility() async {
+             initializeTestConfig()
      // Setup
      setupTestEnvironment()
 
@@ -539,7 +540,8 @@ extension Optional: AnyOptional {
  }
  
  // Test when accessibility IDs are disabled:
- @Test func testCollectionEmptyStateViewAccessibilityDisabled() async {
+ @Test @MainActor func testCollectionEmptyStateViewAccessibilityDisabled() async {
+             initializeTestConfig()
      // Setup with auto IDs disabled
      setupTestEnvironment(enableAutoIDs: false)
 
@@ -566,7 +568,8 @@ extension Optional: AnyOptional {
  }
  
  // Test different accessibility modes:
- @Test func testCollectionEmptyStateViewAccessibilityModes() async {
+ @Test @MainActor func testCollectionEmptyStateViewAccessibilityModes() async {
+             initializeTestConfig()
      let view = CollectionEmptyStateView(
          title: "Test Title",
          message: "Test Message",

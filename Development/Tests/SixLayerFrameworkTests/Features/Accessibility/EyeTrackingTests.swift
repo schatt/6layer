@@ -35,7 +35,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Eye Tracking")
 open class EyeTrackingTests: BaseTestClass {
     
@@ -128,7 +128,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingManager initialization functionality
     /// TESTING SCOPE: Tests EyeTrackingManager initialization with configuration
     /// METHODOLOGY: Initialize EyeTrackingManager with config and verify proper setup
-    @Test func testEyeTrackingManagerInitialization() {
+    @Test @MainActor func testEyeTrackingManagerInitialization() {
+        initializeTestConfig()
         // Given
         let eyeTrackingManager = createEyeTrackingManager()
         
@@ -145,7 +146,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingManager enable functionality
     /// TESTING SCOPE: Tests EyeTrackingManager enabling and state management
     /// METHODOLOGY: Enable EyeTrackingManager and verify enabled state and tracking behavior
-    @Test func testEyeTrackingManagerEnable() async {
+    @Test @MainActor func testEyeTrackingManagerEnable() async {
+        initializeTestConfig()
         // Initialize test data first
         let testConfig = createEyeTrackingConfig()
         let eyeTrackingManager = EyeTrackingManager(config: testConfig)
@@ -162,7 +164,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingManager disable functionality
     /// TESTING SCOPE: Tests EyeTrackingManager disabling and state cleanup
     /// METHODOLOGY: Disable EyeTrackingManager and verify disabled state and cleanup behavior
-    @Test func testEyeTrackingManagerDisable() async {
+    @Test @MainActor func testEyeTrackingManagerDisable() async {
+        initializeTestConfig()
         let eyeTrackingManager = createEyeTrackingManager()
         eyeTrackingManager.enable()
         eyeTrackingManager.disable()
@@ -176,7 +179,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingManager config update functionality
     /// TESTING SCOPE: Tests EyeTrackingManager configuration updates
     /// METHODOLOGY: Update EyeTrackingManager config and verify configuration changes
-    @Test func testEyeTrackingManagerConfigUpdate() async {
+    @Test @MainActor func testEyeTrackingManagerConfigUpdate() async {
+        initializeTestConfig()
         let newConfig = EyeTrackingConfig(
             sensitivity: .high,
             dwellTime: 2.0,
@@ -197,7 +201,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate GazeEvent initialization functionality
     /// TESTING SCOPE: Tests GazeEvent initialization with position and timestamp
     /// METHODOLOGY: Create GazeEvent with parameters and verify all properties are set correctly
-    @Test func testGazeEventInitialization() {
+    @Test @MainActor func testGazeEventInitialization() {
+        initializeTestConfig()
         let position = CGPoint(x: 100, y: 200)
         let timestamp = Date()
         let confidence = 0.85
@@ -219,7 +224,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate GazeEvent default timestamp functionality
     /// TESTING SCOPE: Tests GazeEvent default timestamp generation
     /// METHODOLOGY: Create GazeEvent without timestamp and verify automatic timestamp generation
-    @Test func testGazeEventDefaultTimestamp() {
+    @Test @MainActor func testGazeEventDefaultTimestamp() {
+        initializeTestConfig()
         let gazeEvent = EyeTrackingGazeEvent(
             position: CGPoint(x: 50, y: 75),
             confidence: 0.9
@@ -233,7 +239,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate gaze event processing functionality
     /// TESTING SCOPE: Tests EyeTrackingManager gaze event processing and tracking
     /// METHODOLOGY: Process gaze events and verify tracking behavior and state updates
-    @Test func testProcessGazeEvent() {
+    @Test @MainActor func testProcessGazeEvent() {
+        initializeTestConfig()
         // Force enable for testing (bypass availability check)
         let eyeTrackingManager = createEyeTrackingManager()
         eyeTrackingManager.isEnabled = true
@@ -254,7 +261,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate DwellEvent initialization functionality
     /// TESTING SCOPE: Tests DwellEvent initialization with target and duration
     /// METHODOLOGY: Create DwellEvent with parameters and verify all properties are set correctly
-    @Test func testDwellEventInitialization() {
+    @Test @MainActor func testDwellEventInitialization() {
+        initializeTestConfig()
         let targetView = AnyView(platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -278,7 +286,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate DwellEvent default timestamp functionality
     /// TESTING SCOPE: Tests DwellEvent default timestamp generation
     /// METHODOLOGY: Create DwellEvent without timestamp and verify automatic timestamp generation
-    @Test func testDwellEventDefaultTimestamp() {
+    @Test @MainActor func testDwellEventDefaultTimestamp() {
+        initializeTestConfig()
         let dwellEvent = EyeTrackingDwellEvent(
             targetView: AnyView(platformPresentContent_L1(
                 content: "Test",
@@ -297,7 +306,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate calibration start functionality
     /// TESTING SCOPE: Tests eye tracking calibration initiation
     /// METHODOLOGY: Start calibration and verify calibration state and process
-    @Test func testStartCalibration() async {
+    @Test @MainActor func testStartCalibration() async {
+        initializeTestConfig()
         let testConfig = EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,
@@ -319,7 +329,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate calibration completion functionality
     /// TESTING SCOPE: Tests eye tracking calibration completion and accuracy
     /// METHODOLOGY: Complete calibration and verify calibration state and accuracy values
-    @Test func testCompleteCalibration() async {
+    @Test @MainActor func testCompleteCalibration() async {
+        initializeTestConfig()
         let testConfig = EyeTrackingConfig(
             sensitivity: .medium,
             dwellTime: 1.0,
@@ -341,7 +352,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingModifier initialization functionality
     /// TESTING SCOPE: Tests SwiftUI eye tracking modifier initialization
     /// METHODOLOGY: Create eye tracking modifier and verify proper setup
-    @Test func testEyeTrackingModifierInitialization() {
+    @Test @MainActor func testEyeTrackingModifierInitialization() {
+        initializeTestConfig()
         // Test that modifier can be created
         #expect(Bool(true), "Modifier should be created successfully")
     }
@@ -349,14 +361,16 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate EyeTrackingModifier configuration functionality
     /// TESTING SCOPE: Tests SwiftUI eye tracking modifier with custom configuration
     /// METHODOLOGY: Apply eye tracking modifier with config and verify configuration
-    @Test func testEyeTrackingModifierWithConfig() {
+    @Test @MainActor func testEyeTrackingModifierWithConfig() {
+        initializeTestConfig()
         #expect(Bool(true), "Modifier should be created successfully")
     }
     
     /// BUSINESS PURPOSE: Validate EyeTrackingModifier callback functionality
     /// TESTING SCOPE: Tests SwiftUI eye tracking modifier callback invocation
     /// METHODOLOGY: Apply eye tracking modifier with callbacks and verify callback execution
-    @Test func testEyeTrackingModifierWithCallbacks() {
+    @Test @MainActor func testEyeTrackingModifierWithCallbacks() {
+        initializeTestConfig()
         var _ = false // gazeCallbackCalled
         var _ = false // dwellCallbackCalled
         
@@ -369,7 +383,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled modifier functionality
     /// TESTING SCOPE: Tests SwiftUI eyeTrackingEnabled convenience modifier
     /// METHODOLOGY: Apply eyeTrackingEnabled modifier and verify modifier application
-    @Test func testEyeTrackingEnabledViewModifier() {
+    @Test @MainActor func testEyeTrackingEnabledViewModifier() {
+        initializeTestConfig()
         let testView = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -385,7 +400,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled with config functionality
     /// TESTING SCOPE: Tests SwiftUI eyeTrackingEnabled modifier with custom configuration
     /// METHODOLOGY: Apply eyeTrackingEnabled with config and verify configuration
-    @Test func testEyeTrackingEnabledWithConfig() {
+    @Test @MainActor func testEyeTrackingEnabledWithConfig() {
+        initializeTestConfig()
         let testView = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
@@ -402,7 +418,8 @@ open class EyeTrackingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate eyeTrackingEnabled with callbacks functionality
     /// TESTING SCOPE: Tests SwiftUI eyeTrackingEnabled modifier with callback invocation
     /// METHODOLOGY: Apply eyeTrackingEnabled with callbacks and verify callback execution
-    @Test func testEyeTrackingEnabledWithCallbacks() {
+    @Test @MainActor func testEyeTrackingEnabledWithCallbacks() {
+        initializeTestConfig()
         let testView = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()

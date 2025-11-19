@@ -12,7 +12,8 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using OCRService generate proper accessibility identifiers
     /// Tests OCROverlayView which uses OCRService internally
-    @Test func testOCROverlayViewWithOCRServiceGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testOCROverlayViewWithOCRServiceGeneratesAccessibilityIdentifiersOnIOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: OCROverlayView that uses OCRService internally
             let testImage = PlatformImage()
@@ -55,7 +56,8 @@ open class OCRServiceAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using OCRService generate proper accessibility identifiers
     /// Tests OCROverlayView which uses OCRService internally
-    @Test func testOCROverlayViewWithOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testOCROverlayViewWithOCRServiceGeneratesAccessibilityIdentifiersOnMacOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: OCROverlayView that uses OCRService internally
             let testImage = PlatformImage()

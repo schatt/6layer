@@ -19,12 +19,12 @@ import SwiftUI
 /// 
 /// Platform mocking via `RuntimeCapabilityDetection.setTestPlatform()` affects runtime capability detection
 /// but cannot overcome compile-time platform availability restrictions for UIKit vs AppKit types.
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PhotoCallbackFunctionalTests: BaseTestClass {
     
     // MARK: - PhotoPicker Callback Tests
     
-    @Test func testPhotoPickerOnImageSelectedCallbackInvoked() async throws {
+    @Test @MainActor func testPhotoPickerOnImageSelectedCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
         var callbackInvoked = false
@@ -65,7 +65,7 @@ open class PhotoCallbackFunctionalTests: BaseTestClass {
         #endif
     }
     
-    @Test func testCameraOnImageCapturedCallbackInvoked() async throws {
+    @Test @MainActor func testCameraOnImageCapturedCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
         
         var callbackInvoked = false
@@ -108,7 +108,7 @@ open class PhotoCallbackFunctionalTests: BaseTestClass {
     
     // MARK: - External Integration Tests
     
-    @Test func testPhotoPickerCallbacksExternallyAccessible() async throws {
+    @Test @MainActor func testPhotoPickerCallbacksExternallyAccessible() async throws {
         // Rule 8: External module integration
         
         let _ = platformPhotoPicker_L4(

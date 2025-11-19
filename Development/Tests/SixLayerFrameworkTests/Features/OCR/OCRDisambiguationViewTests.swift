@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All components in OCRDisambiguationView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("OCR Disambiguation View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class OCRDisambiguationViewTests: BaseTestClass {
     
     // MARK: - Test Setup

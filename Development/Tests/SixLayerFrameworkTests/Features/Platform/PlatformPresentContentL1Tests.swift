@@ -38,13 +38,14 @@ import ViewInspector
 
 import SwiftUI
 @testable import SixLayerFramework
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Present Content L")
 open class PlatformPresentContentL1Tests: BaseTestClass {
     
     // MARK: - Basic Functionality Tests
     
-    @Test func testPlatformPresentContent_L1_WithString() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithString() {
+            initializeTestConfig()
         // Given
         let content = "Hello, World!"
         let hints = createTestHints()
@@ -120,7 +121,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformPresentContent_L1_WithNumber() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithNumber() {
+            initializeTestConfig()
         // Given
         let content = 42
         let hints = createTestHints()
@@ -188,7 +190,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #expect(Bool(true), "Should handle negative values")  // negativeView is non-optional
     }
     
-    @Test func testPlatformPresentContent_L1_WithArray() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithArray() {
+        initializeTestConfig()
         // Given
         let content = [1, 2, 3, 4, 5]
         let hints = createTestHints()
@@ -219,7 +222,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #expect(Bool(true), "Should handle single element arrays")  // singleElementView is non-optional
     }
     
-    @Test func testPlatformPresentContent_L1_WithDictionary() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithDictionary() {
+        initializeTestConfig()
         // Given
         let content: [String: Any] = ["name": "Test", "value": 123]
         let hints = createTestHints()
@@ -250,7 +254,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #expect(Bool(true), "Should handle single key dictionaries")  // singleKeyView is non-optional
     }
     
-    @Test func testPlatformPresentContent_L1_WithNil() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithNil() {
+        initializeTestConfig()
         // Given
         let content: Any? = nil
         let hints = createTestHints()
@@ -267,7 +272,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
     
     // MARK: - Different Hint Types Tests
     
-    @Test func testPlatformPresentContent_L1_WithDifferentDataTypes() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithDifferentDataTypes() {
+        initializeTestConfig()
         // Given
         let content = "Test content"
         let hints = PresentationHints(
@@ -287,7 +293,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentContent_L1 should return a view with different data type hints")  // view is non-optional
     }
     
-    @Test func testPlatformPresentContent_L1_WithComplexContent() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithComplexContent() {
+        initializeTestConfig()
         // Given
         let content = PresentationHints(
             dataType: .generic,
@@ -309,7 +316,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
     
     // MARK: - Edge Cases Tests
     
-    @Test func testPlatformPresentContent_L1_WithEmptyString() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithEmptyString() {
+        initializeTestConfig()
         // Given
         let content = ""
         let hints = createTestHints()
@@ -324,7 +332,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentContent_L1 should return a view for empty string")  // view is non-optional
     }
     
-    @Test func testPlatformPresentContent_L1_WithEmptyArray() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithEmptyArray() {
+        initializeTestConfig()
         // Given
         let content: [Any] = []
         let hints = createTestHints()
@@ -339,7 +348,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentContent_L1 should return a view for empty array")  // view is non-optional
     }
     
-    @Test func testPlatformPresentContent_L1_WithEmptyDictionary() {
+    @Test @MainActor func testPlatformPresentContent_L1_WithEmptyDictionary() {
+        initializeTestConfig()
         // Given
         let content: [String: Any] = [:]
         let hints = createTestHints()

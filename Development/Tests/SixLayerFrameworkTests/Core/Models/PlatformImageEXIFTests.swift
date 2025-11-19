@@ -16,7 +16,7 @@ import ImageIO
 
 /// Tests for PlatformImage EXIF GPS location extraction
 /// Implements GitHub Issue #21
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Image EXIF")
 open class PlatformImageEXIFTests: BaseTestClass {
     

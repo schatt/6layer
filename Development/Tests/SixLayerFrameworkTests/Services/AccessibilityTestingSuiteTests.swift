@@ -5,7 +5,7 @@ import SwiftUI
 /// Functional tests for AccessibilityTestingSuite
 /// Tests the actual functionality of the accessibility testing suite
 /// Consolidates API tests and comprehensive business logic tests
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibilitying Suite")
 open class AccessibilityTestingSuiteTests: BaseTestClass {
     

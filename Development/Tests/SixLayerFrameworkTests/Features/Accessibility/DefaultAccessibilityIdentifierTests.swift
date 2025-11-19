@@ -12,11 +12,12 @@ import SwiftUI
  * METHODOLOGY: Tests that views get automatic identifiers without explicit enabling
  */
 @Suite("Default Accessibility Identifier")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS PURPOSE: Verify that automatic identifiers work by default
     /// TESTING SCOPE: Tests that no explicit enabling is required
     /// METHODOLOGY: Tests that views get identifiers without .enableGlobalAutomaticCompliance()
-    @Test func testAutomaticIdentifiersWorkByDefault() async {
+    @Test @MainActor func testAutomaticIdentifiersWorkByDefault() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Explicitly set configuration for this test
             guard let config = testConfig else {
@@ -61,7 +62,8 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     
     /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers work by default
     /// TESTING SCOPE: Tests that automatic accessibility identifiers work without explicit enabling
-    @Test func testAutomaticAccessibilityIdentifiersWorkByDefault() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersWorkByDefault() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Default configuration
             guard let config = testConfig else {
@@ -92,7 +94,8 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// BUSINESS PURPOSE: Verify that manual identifiers still work
     /// TESTING SCOPE: Tests that manual identifiers continue to work with new defaults
     /// METHODOLOGY: Tests that manual identifiers take precedence
-    @Test func testManualIdentifiersStillWork() async {
+    @Test @MainActor func testManualIdentifiersStillWork() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Default configuration
             // config is non-optional, so no need to check for nil
@@ -127,7 +130,8 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
     /// BUSINESS PURPOSE: Verify that opt-out still works
     /// TESTING SCOPE: Tests that .disableAutomaticAccessibilityIdentifiers() still works
     /// METHODOLOGY: Tests that opt-out functionality is preserved
-    @Test func testOptOutStillWorks() async {
+    @Test @MainActor func testOptOutStillWorks() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Default configuration
             guard let config = testConfig else {

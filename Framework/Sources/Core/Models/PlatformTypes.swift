@@ -967,13 +967,21 @@ public struct FieldDisplayHints: Sendable {
     /// Additional field-specific metadata
     public let metadata: [String: String]
     
+    /// OCR hints for field identification (language-specific, resolved from hints file)
+    public let ocrHints: [String]?
+    
+    /// Calculation groups for computing field values
+    public let calculationGroups: [CalculationGroup]?
+    
     public init(
         expectedLength: Int? = nil,
         displayWidth: String? = nil,
         showCharacterCounter: Bool = false,
         maxLength: Int? = nil,
         minLength: Int? = nil,
-        metadata: [String: String] = [:]
+        metadata: [String: String] = [:],
+        ocrHints: [String]? = nil,
+        calculationGroups: [CalculationGroup]? = nil
     ) {
         self.expectedLength = expectedLength
         self.displayWidth = displayWidth
@@ -981,6 +989,8 @@ public struct FieldDisplayHints: Sendable {
         self.maxLength = maxLength
         self.minLength = minLength
         self.metadata = metadata
+        self.ocrHints = ocrHints
+        self.calculationGroups = calculationGroups
     }
     
     /// Get display width as CGFloat if a specific numeric value is provided

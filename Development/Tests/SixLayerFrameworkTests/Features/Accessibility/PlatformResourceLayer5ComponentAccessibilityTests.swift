@@ -11,13 +11,13 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Resource Layer Component Accessibility")
 open class PlatformResourceLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Resource Layer 5 Component Tests
     
-    @Test func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformResourceLayer5
         let resourceLayer = PlatformResourceLayer5()
         

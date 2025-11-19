@@ -12,7 +12,7 @@ import SwiftUI
 
 /// Comprehensive tests for the Intelligent Card Expansion System
 /// Tests all 6 layers with edge cases, performance, and integration scenarios
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Intelligent Card Expansion Comprehensive")
 open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MARK: - Test Data
     
@@ -46,7 +46,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Layer 1 Tests: Semantic Intent Functions
     
-    @Test func testPlatformPresentItemCollectionL1BasicFunctionality() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1BasicFunctionality() {
+        initializeTestConfig()
         // Test basic Layer 1 functionality
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
@@ -56,7 +57,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // View creation succeeded (non-optional result)
     }
     
-    @Test func testPlatformPresentItemCollectionL1WithEmptyItems() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithEmptyItems() {
+        initializeTestConfig()
         // Test with empty items array - use a concrete type
         let emptyHints = PresentationHints(
             dataType: .collection,
@@ -75,7 +77,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // The view should render an empty state, not crash or show blank content
     }
     
-    @Test func testPlatformPresentItemCollectionL1EmptyStateWithDifferentDataTypes() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1EmptyStateWithDifferentDataTypes() {
+            initializeTestConfig()
         // Test empty state with different data types
         let testCases: [(DataTypeHint, String)] = [
             (.media, "No Media Items"),
@@ -107,7 +110,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         }
     }
     
-    @Test func testPlatformPresentItemCollectionL1EmptyStateWithDifferentContexts() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1EmptyStateWithDifferentContexts() {
+            initializeTestConfig()
         // Test empty state with different contexts
         let testCases: [PresentationContext] = [
             .dashboard,
@@ -136,7 +140,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         }
     }
     
-    @Test func testPlatformPresentItemCollectionL1WithDifferentDataTypes() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithDifferentDataTypes() {
+        initializeTestConfig()
         // Test with different data types
         let hints = PresentationHints(
             dataType: .form,
@@ -333,7 +338,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Interaction style strategies creation succeeded (non-optional results)
     }
     
-    @Test func testSelectCardExpansionStrategyL3WithDifferentContentDensities() {
+    @Test @MainActor func testSelectCardExpansionStrategyL3WithDifferentContentDensities() {
         // Test with different content densities
         let denseStrategy = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
@@ -356,7 +361,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Layer 4 Tests: Component Implementation
     
-    @Test func testExpandableCardComponentBasicFunctionality() {
+    @Test @MainActor func testExpandableCardComponentBasicFunctionality() {
         // Test basic expandable card component
         let layoutDecision = IntelligentCardLayoutDecision(
             columns: 3,
@@ -390,7 +395,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Card component creation succeeded (non-optional result)
     }
     
-    @Test func testExpandableCardComponentWithDifferentStrategies() {
+    @Test @MainActor func testExpandableCardComponentWithDifferentStrategies() {
         // Test with different expansion strategies
         let layoutDecision = IntelligentCardLayoutDecision(
             columns: 3,
@@ -451,7 +456,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     // thread/actor isolation issues on macOS. Each test only runs when simulation works
     // or when testing the actual platform.
     
-    @Test func testGetCardExpansionPlatformConfig_iOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_iOS() async {
         TestSetupUtilities.shared.simulateiOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
@@ -472,7 +477,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         #endif
     }
     
-    @Test func testGetCardExpansionPlatformConfig_macOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_macOS() async {
         TestSetupUtilities.shared.simulateMacOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
@@ -487,7 +492,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
     }
     
-    @Test func testGetCardExpansionPlatformConfig_watchOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_watchOS() async {
         TestSetupUtilities.shared.simulateWatchOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
@@ -502,7 +507,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
     }
     
-    @Test func testGetCardExpansionPlatformConfig_tvOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_tvOS() async {
         TestSetupUtilities.shared.simulateTVOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
@@ -517,7 +522,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
     }
     
-    @Test func testGetCardExpansionPlatformConfig_visionOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_visionOS() async {
         TestSetupUtilities.shared.simulateVisionOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
@@ -542,14 +547,16 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         #endif
     }
     
-    @Test func testGetCardExpansionPerformanceConfig() {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig() {
+        initializeTestConfig()
         // Test performance configuration
         let config = getCardExpansionPerformanceConfig()
         
         // Platform config creation succeeded (non-optional result)
     }
     
-    @Test func testPlatformFeatureMatrix() {
+    @Test @MainActor func testPlatformFeatureMatrix() {
+            initializeTestConfig()
         // Test that platform features are correctly detected
         let config = getCardExpansionPlatformConfig()
         
@@ -608,7 +615,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Layer 6 Tests: Platform System
     
-    @Test func testNativeExpandableCardViewBasicFunctionality() {
+    @Test @MainActor func testNativeExpandableCardViewBasicFunctionality() {
+        initializeTestConfig()
         // Test basic native expandable card view
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
@@ -625,7 +633,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Card view creation succeeded (non-optional result)
     }
     
-    @Test func testNativeExpandableCardViewWithDifferentStrategies() {
+    @Test @MainActor func testNativeExpandableCardViewWithDifferentStrategies() {
+        initializeTestConfig()
         // Test with different expansion strategies
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = CardExpansionPerformanceConfig()
@@ -668,7 +677,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Integration Tests
     
-    @Test func testEndToEndCardExpansionWorkflow() {
+    @Test @MainActor func testEndToEndCardExpansionWorkflow() {
+        initializeTestConfig()
         // Test complete end-to-end workflow
         let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
@@ -717,7 +727,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Platform view creation succeeded (non-optional result)
     }
     
-    @Test func testCrossLayerDataFlow() {
+    @Test @MainActor func testCrossLayerDataFlow() {
+        initializeTestConfig()
         // Test that data flows correctly between layers
         let hints = expandableHints
         
@@ -745,24 +756,28 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Performance Tests
     
-    @Test func testCardExpansionPerformance() {
+    @Test @MainActor func testCardExpansionPerformance() {
+        initializeTestConfig()
         // Performance test removed - performance monitoring was removed from framework
         // Large dataset creation was removed as it was unused
     }
     
-    @Test func testLayoutDecisionPerformance() {
+    @Test @MainActor func testLayoutDecisionPerformance() {
+        initializeTestConfig()
         // Test layout decision performance
         // Performance test removed - performance monitoring was removed from framework
     }
     
-    @Test func testStrategySelectionPerformance() {
+    @Test @MainActor func testStrategySelectionPerformance() {
+        initializeTestConfig()
         // Test strategy selection performance
         // Performance test removed - performance monitoring was removed from framework
     }
     
     // MARK: - Error Handling Tests
     
-    @Test func testErrorHandlingWithInvalidData() {
+    @Test @MainActor func testErrorHandlingWithInvalidData() {
+        initializeTestConfig()
         // Test error handling with invalid data
         let invalidHints = PresentationHints(
             dataType: .collection,
@@ -779,7 +794,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // View creation succeeded (non-optional result)
     }
     
-    @Test func testErrorHandlingWithExtremeValues() {
+    @Test @MainActor func testErrorHandlingWithExtremeValues() {
+        initializeTestConfig()
         // Test error handling with extreme values
         let extremeLayout = determineIntelligentCardLayout_L2(
             contentCount: Int.max,
@@ -793,7 +809,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Accessibility Tests
     
-    @Test func testAccessibilitySupport() {
+    @Test @MainActor func testAccessibilitySupport() {
+        initializeTestConfig()
         // Test accessibility support on iOS (which supports AssistiveTouch)
         RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let platformConfig = getCardExpansionPlatformConfig()
@@ -823,7 +840,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Edge Case Tests
     
-    @Test func testEdgeCaseEmptyItems() {
+    @Test @MainActor func testEdgeCaseEmptyItems() {
+        initializeTestConfig()
         // Test with empty items - use a concrete type
         let emptyItems: [MenuItem] = []
         let view = platformPresentItemCollection_L1(
@@ -834,7 +852,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // View creation succeeded (non-optional result)
     }
     
-    @Test func testCollectionEmptyStateView() {
+    @Test @MainActor func testCollectionEmptyStateView() {
+        initializeTestConfig()
         // Test the CollectionEmptyStateView directly
         let hints = PresentationHints(
             dataType: .collection,
@@ -847,7 +866,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Empty state view creation succeeded (non-optional result)
     }
     
-    @Test func testCollectionEmptyStateViewWithDifferentDataTypes() {
+    @Test @MainActor func testCollectionEmptyStateViewWithDifferentDataTypes() {
+            initializeTestConfig()
         // Test empty state view with different data types
         let testCases: [DataTypeHint] = [
             .media, .navigation, .form, .numeric, .temporal, .hierarchical, .collection, .generic
@@ -866,7 +886,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         }
     }
     
-    @Test func testCollectionEmptyStateViewWithDifferentContexts() {
+    @Test @MainActor func testCollectionEmptyStateViewWithDifferentContexts() {
+            initializeTestConfig()
         // Test empty state view with different contexts
         let testCases: [PresentationContext] = [
             .dashboard, .detail, .search, .summary, .modal
@@ -885,7 +906,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         }
     }
     
-    @Test func testCollectionEmptyStateViewWithDifferentComplexities() {
+    @Test @MainActor func testCollectionEmptyStateViewWithDifferentComplexities() {
+            initializeTestConfig()
         // Test empty state view with different complexity levels
         let testCases: [ContentComplexity] = Array(ContentComplexity.allCases) // Use real enum
         
@@ -904,7 +926,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     // MARK: - Create Action Tests
     
-    @Test func testPlatformPresentItemCollectionL1WithCreateAction() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithCreateAction() {
+            initializeTestConfig()
         // Test with create action provided
         var _ = false
         let createAction = {
@@ -930,7 +953,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // and that calling it triggers the createAction
     }
     
-    @Test func testPlatformPresentItemCollectionL1WithoutCreateAction() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithoutCreateAction() {
+        initializeTestConfig()
         // Test without create action (should not show create button)
         let hints = PresentationHints(
             dataType: .collection,
@@ -950,7 +974,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Note: In a real test environment, we would verify no create button is shown
     }
     
-    @Test func testCollectionEmptyStateViewWithCreateAction() {
+    @Test @MainActor func testCollectionEmptyStateViewWithCreateAction() {
+            initializeTestConfig()
         // Test empty state view with create action
         var _ = false
         let createAction = {
@@ -969,7 +994,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Note: In a real test environment, we would verify the create button is present
     }
     
-    @Test func testCollectionEmptyStateViewWithoutCreateAction() {
+    @Test @MainActor func testCollectionEmptyStateViewWithoutCreateAction() {
+        initializeTestConfig()
         // Test empty state view without create action
         let hints = PresentationHints(
             dataType: .media,
@@ -983,7 +1009,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Note: In a real test environment, we would verify no create button is shown
     }
     
-    @Test func testCreateButtonTitlesForDifferentDataTypes() {
+    @Test @MainActor func testCreateButtonTitlesForDifferentDataTypes() {
+            initializeTestConfig()
         // Test that create button titles are appropriate for different data types
         let testCases: [(DataTypeHint, String)] = [
             (.media, "Add Media"),
@@ -1025,7 +1052,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         }
     }
     
-    @Test func testEdgeCaseSingleItem() {
+    @Test @MainActor func testEdgeCaseSingleItem() {
+        initializeTestConfig()
         // Test with single item
         let singleItem = [sampleMenuItems[0]]
         let view = platformPresentItemCollection_L1(
@@ -1036,7 +1064,8 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // View creation succeeded (non-optional result)
     }
     
-    @Test func testEdgeCaseVeryLargeDataset() {
+    @Test @MainActor func testEdgeCaseVeryLargeDataset() {
+            initializeTestConfig()
         // Test with very large dataset
         let veryLargeDataSet = (1...1000).map { index in
             MenuItem(

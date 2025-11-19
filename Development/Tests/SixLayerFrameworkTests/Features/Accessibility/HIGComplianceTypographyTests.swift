@@ -30,13 +30,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Typography Scaling")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceTypographyTests: BaseTestClass {
     
     // MARK: - Dynamic Type Support Tests
     
-    @Test func testTextSupportsDynamicType() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTextSupportsDynamicType() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("Test Text")
                 .automaticCompliance()
@@ -58,8 +59,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
         }
     }
     
-    @Test func testButtonTextSupportsDynamicType() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonTextSupportsDynamicType() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Button with text and automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()
@@ -81,8 +83,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
         }
     }
     
-    @Test func testLabelSupportsDynamicType() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testLabelSupportsDynamicType() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Label with automatic compliance
             let label = Label("Test Label", systemImage: "star")
                 .automaticCompliance()
@@ -106,8 +109,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
     
     // MARK: - Accessibility Size Range Tests
     
-    @Test func testTextSupportsAccessibilitySizes() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTextSupportsAccessibilitySizes() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text that should support accessibility sizes
             let view = Text("Accessibility Text")
                 .automaticCompliance()
@@ -131,8 +135,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
     
     // MARK: - Minimum Font Size Tests
     
-    @Test func testBodyTextMeetsMinimumSizeRequirements() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testBodyTextMeetsMinimumSizeRequirements() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Body text with automatic compliance
             let view = Text("Body Text")
                 .font(.body)
@@ -161,8 +166,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
         }
     }
     
-    @Test func testCaptionTextMeetsMinimumSizeRequirements() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testCaptionTextMeetsMinimumSizeRequirements() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Caption text with automatic compliance
             let view = Text("Caption Text")
                 .font(.caption)
@@ -186,8 +192,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
         }
     }
     
-    @Test func testCustomFontSizeEnforcedMinimum() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testCustomFontSizeEnforcedMinimum() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with custom font size that might be too small
             let view = Text("Small Text")
                 .font(.system(size: 10)) // Potentially too small
@@ -213,8 +220,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
     
     // MARK: - Platform-Specific Typography Size Tests
     
-    @Test func testPlatformSpecificTypographySizes() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformSpecificTypographySizes() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text using HIG typography styles with automatic compliance
             let view = VStack {
                 Text("Large Title")
@@ -255,8 +263,9 @@ open class HIGComplianceTypographyTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testDynamicTypeOnBothPlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testDynamicTypeOnBothPlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("Cross-Platform Text")
                 .automaticCompliance()

@@ -38,7 +38,7 @@ import SwiftUI
 
 /// TDD Tests for Runtime Capability Detection
 /// These tests define the expected behavior and will initially fail
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Runtime Capability Detection")
 open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
@@ -83,7 +83,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
                      "Runtime detection should use testing defaults when in testing mode")
     }
     
-    @Test func testRuntimeHapticDetectionUsesTestingDefaults() {
+    @Test @MainActor func testRuntimeHapticDetectionUsesTestingDefaults() {
         // In testing mode, should use hardcoded defaults
         let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
@@ -93,7 +93,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
                      "Runtime haptic detection should use testing defaults when in testing mode")
     }
     
-    @Test func testRuntimeHoverDetectionUsesTestingDefaults() {
+    @Test @MainActor func testRuntimeHoverDetectionUsesTestingDefaults() {
         // Set capability override to match testing defaults
         let platform = SixLayerPlatform.current
         let expectedDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)
@@ -110,7 +110,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
     // MARK: - Override Functionality Tests
     
-    @Test func testTouchOverrideTakesPrecedenceOverTestingDefaults() {
+    @Test @MainActor func testTouchOverrideTakesPrecedenceOverTestingDefaults() {
         // Set override
         CapabilityOverride.touchSupport = true
         
@@ -124,7 +124,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
                       "Override should work when set to false")
     }
     
-    @Test func testHapticOverrideTakesPrecedenceOverTestingDefaults() {
+    @Test @MainActor func testHapticOverrideTakesPrecedenceOverTestingDefaults() {
         // Set override
         CapabilityOverride.hapticSupport = true
         
@@ -133,7 +133,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
                      "Haptic override should take precedence over testing defaults")
     }
     
-    @Test func testHoverOverrideTakesPrecedenceOverTestingDefaults() {
+    @Test @MainActor func testHoverOverrideTakesPrecedenceOverTestingDefaults() {
         // Set override
         CapabilityOverride.hoverSupport = false
         
@@ -144,7 +144,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
     // MARK: - Platform-Specific Behavior Tests
     
-    @Test func testMacOSTouchDefaults() {
+    @Test @MainActor func testMacOSTouchDefaults() {
         let macDefaults = TestingCapabilityDetection.getTestingDefaults(for: .macOS)
         
         // macOS testing defaults should be predictable
@@ -154,7 +154,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
         #expect(!macDefaults.supportsAssistiveTouch, "macOS testing default should be false for AssistiveTouch")
     }
     
-    @Test func testiOSTouchDefaults() {
+    @Test @MainActor func testiOSTouchDefaults() {
         let iOSDefaults = TestingCapabilityDetection.getTestingDefaults(for: .iOS)
         
         // iOS testing defaults should be predictable
@@ -164,7 +164,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
         #expect(iOSDefaults.supportsAssistiveTouch, "iOS testing default should be true for AssistiveTouch")
     }
     
-    @Test func testVisionOSTouchDefaults() {
+    @Test @MainActor func testVisionOSTouchDefaults() {
         let visionDefaults = TestingCapabilityDetection.getTestingDefaults(for: .visionOS)
         
         // visionOS testing defaults should match actual platform capabilities

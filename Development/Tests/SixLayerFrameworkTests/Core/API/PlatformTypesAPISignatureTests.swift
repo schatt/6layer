@@ -4,7 +4,7 @@ import Foundation
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformTypesAPISignatureTests: BaseTestClass {
     // MARK: - SixLayerPlatform API
     @Test func testSixLayerPlatformCasesExist() {

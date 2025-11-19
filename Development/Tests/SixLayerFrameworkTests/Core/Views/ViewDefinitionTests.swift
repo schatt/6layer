@@ -7,7 +7,7 @@ import SwiftUI
 /// View Definition Tests
 /// Tests that the correct view definitions are generated based on input capabilities and features
 /// We test the view structure/properties, not runtime behavior
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("View Definition")
 open class ViewDefinitionTests: BaseTestClass {
     

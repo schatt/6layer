@@ -11,13 +11,13 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Knowledge Layer Component Accessibility")
 open class PlatformKnowledgeLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Knowledge Layer 5 Component Tests
     
-    @Test func testPlatformKnowledgeLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformKnowledgeLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformKnowledgeLayer5
         let testView = PlatformKnowledgeLayer5()
         

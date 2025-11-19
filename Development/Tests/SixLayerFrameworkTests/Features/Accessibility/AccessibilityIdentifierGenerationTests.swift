@@ -3,13 +3,14 @@ import SwiftUI
 @testable import SixLayerFramework
 /// TDD Tests for Accessibility Identifier Generation
 /// Following proper TDD: Test drives design, write best code to make tests pass
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Identifier Generation")
 open class AccessibilityIdentifierGenerationTests: BaseTestClass {
     
     // MARK: - TDD Red Phase: Write Failing Tests for Desired Behavior
     
-    @Test func testAccessibilityIdentifiersAreReasonableLength() {
+    @Test @MainActor func testAccessibilityIdentifiersAreReasonableLength() {
+            initializeTestConfig()
         // Setup test environment
         setupTestEnvironment()
         
@@ -40,7 +41,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testAccessibilityIdentifiersDontDuplicateHierarchy() {
+    @Test @MainActor func testAccessibilityIdentifiersDontDuplicateHierarchy() {
+            initializeTestConfig()
         // Setup test environment
         setupTestEnvironment()
         
@@ -75,7 +77,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testAccessibilityIdentifiersAreSemantic() {
+    @Test @MainActor func testAccessibilityIdentifiersAreSemantic() {
+            initializeTestConfig()
         // Setup test environment
         setupTestEnvironment()
         
@@ -112,7 +115,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testAccessibilityIdentifiersWorkInComplexHierarchy() {
+    @Test @MainActor func testAccessibilityIdentifiersWorkInComplexHierarchy() {
         // Setup test environment
         setupTestEnvironment()
         
@@ -161,7 +164,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
     
     // MARK: - TDD Red Phase: Label Text in Identifiers
     
-    @Test func testAccessibilityIdentifiersIncludeLabelTextForStringLabels() {
+    @Test @MainActor func testAccessibilityIdentifiersIncludeLabelTextForStringLabels() {
         // Setup test environment
         setupTestEnvironment()
         
@@ -197,7 +200,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
-    @Test func testAccessibilityIdentifiersSanitizeLabelText() {
+    @Test @MainActor func testAccessibilityIdentifiersSanitizeLabelText() {
         // Setup test environment
         setupTestEnvironment()
         

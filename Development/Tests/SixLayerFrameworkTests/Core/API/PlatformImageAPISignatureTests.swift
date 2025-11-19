@@ -34,7 +34,7 @@ import AppKit
 @testable import SixLayerFramework
 
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformImageAPISignatureTests: BaseTestClass {
     
     // MARK: - API Signature Tests

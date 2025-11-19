@@ -13,22 +13,25 @@ struct MockTaskItemBaseline: Identifiable {
 /// TDD Tests for Framework Component Accessibility - Baseline Test
 /// First prove the components we KNOW work, then systematically fix the rest
 @Suite("Framework Component Accessibility Baseline")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // MARK: - TDD Green Phase: Components That SHOULD Work (Have .automaticAccessibility())
     
-    @Test func testPlatformPresentContentL1GeneratesAccessibilityID() {
+    @Test @MainActor func testPlatformPresentContentL1GeneratesAccessibilityID() {
+        initializeTestConfig()
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let contentView = platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
         assertComponentGeneratesAccessibilityID(contentView, name: "platformPresentContent_L1")
     }
     
-    @Test func testPlatformPresentBasicValueL1GeneratesAccessibilityID() {
+    @Test @MainActor func testPlatformPresentBasicValueL1GeneratesAccessibilityID() {
+        initializeTestConfig()
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let valueView = platformPresentBasicValue_L1(value: 42, hints: PresentationHints())
         assertComponentGeneratesAccessibilityID(valueView, name: "platformPresentBasicValue_L1")
     }
     
-    @Test func testPlatformPresentBasicArrayL1GeneratesAccessibilityID() {
+    @Test @MainActor func testPlatformPresentBasicArrayL1GeneratesAccessibilityID() {
+        initializeTestConfig()
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let arrayView = platformPresentBasicArray_L1(array: [1, 2, 3], hints: PresentationHints())
         assertComponentGeneratesAccessibilityID(arrayView, name: "platformPresentBasicArray_L1")
@@ -36,7 +39,8 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
     
     // MARK: - TDD Red Phase: Components That SHOULD FAIL (Missing .automaticAccessibility())
     
-    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityID() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1GeneratesAccessibilityID() {
+        initializeTestConfig()
         // Test that platformPresentItemCollection_L1 generates accessibility identifiers
         let mockItems = [
             MockTaskItemBaseline(id: "task1", title: "Test Task 1"),

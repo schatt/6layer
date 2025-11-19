@@ -33,6 +33,9 @@ public protocol DataHintsLoader {
     
     /// Load complete hints result including field hints and sections
     func loadHintsResult(for modelName: String) -> DataHintsResult
+    
+    /// Load complete hints result with locale support for language-specific OCR hints
+    func loadHintsResult(for modelName: String, locale: Locale) -> DataHintsResult
 }
 
 // MARK: - File-Based Data Hints Loader
@@ -57,12 +60,18 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
     /// Load complete hints result including field hints and sections
     /// Example: loadHintsResult(for: "User") looks for "User.hints" file in the Hints/ folder
     public func loadHintsResult(for modelName: String) -> DataHintsResult {
+        return loadHintsResult(for: modelName, locale: Locale.current)
+    }
+    
+    /// Load complete hints result with locale support for language-specific OCR hints
+    /// Example: loadHintsResult(for: "User", locale: Locale(identifier: "es")) uses Spanish OCR hints
+    public func loadHintsResult(for modelName: String, locale: Locale) -> DataHintsResult {
         // Try to load from bundle first (in Hints/ subfolder)
         if let hintsFolder = bundle.url(forResource: "Hints", withExtension: nil) {
             let url = hintsFolder.appendingPathComponent("\(modelName).hints")
             if let data = try? Data(contentsOf: url),
                let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                return parseHintsResult(from: json)
+                return parseHintsResult(from: json, locale: locale)
             }
         }
         
@@ -70,7 +79,7 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         if let url = bundle.url(forResource: modelName, withExtension: "hints"),
            let data = try? Data(contentsOf: url),
            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-            return parseHintsResult(from: json)
+            return parseHintsResult(from: json, locale: locale)
         }
         
         // Fall back to documents directory (in Hints/ subfolder)
@@ -80,7 +89,7 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
             if fileManager.fileExists(atPath: hintsFolder.path),
                let data = try? Data(contentsOf: url),
                let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                return parseHintsResult(from: json)
+                return parseHintsResult(from: json, locale: locale)
             }
         }
         
@@ -116,9 +125,12 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
     
     // MARK: - Private Helpers
     
-    private func parseHintsResult(from json: [String: Any]) -> DataHintsResult {
+    private func parseHintsResult(from json: [String: Any], locale: Locale = Locale.current) -> DataHintsResult {
         var fieldHints: [String: FieldDisplayHints] = [:]
         var sections: [DynamicFormSection] = []
+        
+        // Get language code for OCR hints lookup (e.g., "en", "es", "fr")
+        let languageCode = locale.language.languageCode?.identifier ?? "en"
         
         // Parse field hints (all keys except _sections)
         for (key, value) in json {
@@ -126,14 +138,45 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 continue // Handle sections separately
             }
             
-            if let properties = value as? [String: String] {
+            if let properties = value as? [String: Any] {
+                // Parse standard display hints
+                let expectedLength = (properties["expectedLength"] as? String).flatMap(Int.init) ?? 
+                                   (properties["expectedLength"] as? Int)
+                let displayWidth = properties["displayWidth"] as? String
+                let showCharacterCounter = (properties["showCharacterCounter"] as? String) == "true" ||
+                                          (properties["showCharacterCounter"] as? Bool) == true
+                let maxLength = (properties["maxLength"] as? String).flatMap(Int.init) ?? 
+                               (properties["maxLength"] as? Int)
+                let minLength = (properties["minLength"] as? String).flatMap(Int.init) ?? 
+                               (properties["minLength"] as? Int)
+                
+                // Extract metadata (all string properties that aren't special keys)
+                var metadata: [String: String] = [:]
+                for (propKey, propValue) in properties {
+                    if !["expectedLength", "displayWidth", "showCharacterCounter", "maxLength", "minLength", 
+                         "ocrHints", "calculationGroups"].contains(propKey) &&
+                       !propKey.hasPrefix("ocrHints.") {
+                        if let stringValue = propValue as? String {
+                            metadata[propKey] = stringValue
+                        }
+                    }
+                }
+                
+                // Parse OCR hints with language-specific support
+                let ocrHints = parseOCRHints(from: properties, languageCode: languageCode)
+                
+                // Parse calculation groups
+                let calculationGroups = parseCalculationGroups(from: properties)
+                
                 fieldHints[key] = FieldDisplayHints(
-                    expectedLength: properties["expectedLength"].flatMap(Int.init),
-                    displayWidth: properties["displayWidth"],
-                    showCharacterCounter: properties["showCharacterCounter"] == "true",
-                    maxLength: properties["maxLength"].flatMap(Int.init),
-                    minLength: properties["minLength"].flatMap(Int.init),
-                    metadata: properties
+                    expectedLength: expectedLength,
+                    displayWidth: displayWidth,
+                    showCharacterCounter: showCharacterCounter,
+                    maxLength: maxLength,
+                    minLength: minLength,
+                    metadata: metadata,
+                    ocrHints: ocrHints,
+                    calculationGroups: calculationGroups
                 )
             }
         }
@@ -144,6 +187,62 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         }
         
         return DataHintsResult(fieldHints: fieldHints, sections: sections)
+    }
+    
+    /// Parse OCR hints with language-specific fallback: ocrHints.{language} -> ocrHints -> nil
+    private func parseOCRHints(from properties: [String: Any], languageCode: String) -> [String]? {
+        // First try language-specific key (e.g., "ocrHints.es")
+        let languageSpecificKey = "ocrHints.\(languageCode)"
+        if let languageHints = properties[languageSpecificKey] {
+            return parseOCRHintsValue(languageHints)
+        }
+        
+        // Fallback to default "ocrHints" key
+        if let defaultHints = properties["ocrHints"] {
+            return parseOCRHintsValue(defaultHints)
+        }
+        
+        return nil
+    }
+    
+    /// Parse OCR hints value (supports array or comma-separated string)
+    private func parseOCRHintsValue(_ value: Any) -> [String]? {
+        if let array = value as? [String] {
+            return array
+        }
+        
+        if let string = value as? String {
+            // Support comma-separated string format
+            return string.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+        }
+        
+        return nil
+    }
+    
+    /// Parse calculation groups from properties
+    private func parseCalculationGroups(from properties: [String: Any]) -> [CalculationGroup]? {
+        guard let groupsArray = properties["calculationGroups"] as? [[String: Any]] else {
+            return nil
+        }
+        
+        var groups: [CalculationGroup] = []
+        for groupDict in groupsArray {
+            guard let id = groupDict["id"] as? String,
+                  let formula = groupDict["formula"] as? String,
+                  let dependentFields = groupDict["dependentFields"] as? [String],
+                  let priority = groupDict["priority"] as? Int else {
+                continue // Skip invalid groups
+            }
+            
+            groups.append(CalculationGroup(
+                id: id,
+                formula: formula,
+                dependentFields: dependentFields,
+                priority: priority
+            ))
+        }
+        
+        return groups.isEmpty ? nil : groups
     }
     
     private func parseSections(from sectionsArray: [[String: Any]]) -> [DynamicFormSection] {

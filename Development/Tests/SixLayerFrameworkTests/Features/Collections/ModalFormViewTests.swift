@@ -9,11 +9,12 @@ import SwiftUI
 /// TESTING SCOPE: ModalFormView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Modal Form View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class ModalFormViewTests: BaseTestClass {
     
-    @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let testFields = [
                 DynamicFormField(
@@ -55,8 +56,9 @@ open class ModalFormViewTests: BaseTestClass {
     }
 
     
-    @Test func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let testFields = [
                 DynamicFormField(

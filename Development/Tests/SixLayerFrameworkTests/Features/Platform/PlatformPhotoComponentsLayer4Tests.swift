@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All components in PlatformPhotoComponentsLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform Photo Components Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformPhotoComponentsLayer4Tests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -23,7 +23,7 @@ open class PlatformPhotoComponentsLayer4Tests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-    @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnIOS() async {
         
         let view = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
             onImageCaptured: { _ in }
@@ -45,7 +45,7 @@ open class PlatformPhotoComponentsLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformCameraInterfaceL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         
         let view = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(
             onImageCaptured: { _ in }

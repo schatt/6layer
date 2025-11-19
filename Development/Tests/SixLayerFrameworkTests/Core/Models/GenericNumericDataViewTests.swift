@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: GenericNumericDataView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Generic Numeric Data View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class GenericNumericDataViewTests: BaseTestClass {
     
     // MARK: - Helper Methods
@@ -29,7 +29,8 @@ open class GenericNumericDataViewTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         // Setup test environment
         await setupTestEnvironment()
         configureAccessibilityIdentifiers()
@@ -53,7 +54,8 @@ open class GenericNumericDataViewTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testGenericNumericDataViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         // Setup test environment
         await setupTestEnvironment()
         configureAccessibilityIdentifiers()

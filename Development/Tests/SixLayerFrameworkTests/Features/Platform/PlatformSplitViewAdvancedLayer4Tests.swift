@@ -9,7 +9,7 @@ import SwiftUI
 /// METHODOLOGY: Test advanced feature configuration and behavior
 /// Implements Issue #18: Advanced Split View Features
 @Suite("Platform Split View Advanced Features Layer 4")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     
     // MARK: - Test Setup

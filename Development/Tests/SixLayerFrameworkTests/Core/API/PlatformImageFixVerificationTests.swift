@@ -17,7 +17,7 @@ import UIKit
 import AppKit
 #endif
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformImageFixVerificationTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Verify the exact broken code now works

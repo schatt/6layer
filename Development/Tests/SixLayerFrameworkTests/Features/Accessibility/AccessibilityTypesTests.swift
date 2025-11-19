@@ -37,7 +37,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Comprehensive tests for all accessibility types and enums
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Types")
 open class AccessibilityTypesTests: BaseTestClass {
     

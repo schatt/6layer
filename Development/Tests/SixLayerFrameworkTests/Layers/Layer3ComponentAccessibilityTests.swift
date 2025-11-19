@@ -12,7 +12,7 @@ import SwiftUI
 //
 
 @Suite("Layer Component Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer3ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 3 Strategy Component Tests

@@ -29,7 +29,7 @@ import Testing
 
 /// Tests for OCR strategy functionality
 /// TODO: Implement real tests that test actual OCR strategy functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("OCR Strategy")
 open class OCRStrategyTests: BaseTestClass {
     

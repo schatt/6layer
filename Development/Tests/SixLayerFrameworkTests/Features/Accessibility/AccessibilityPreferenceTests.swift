@@ -38,7 +38,7 @@ import SwiftUI
 
 /// Accessibility preference testing
 /// Tests that every function behaves correctly based on accessibility preferences
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Preference")
 open class AccessibilityPreferenceTests: BaseTestClass {
     
@@ -56,7 +56,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     // MARK: - Business Logic Tests for Card Expansion Accessibility Configuration
     
     /// Tests that getCardExpansionAccessibilityConfig returns different configurations for different platforms
-    @Test func testCardExpansionAccessibilityConfig_PlatformSpecificBehavior() {
+    @Test @MainActor func testCardExpansionAccessibilityConfig_PlatformSpecificBehavior() {
         // Given: Different platform contexts
         let platforms: [SixLayerPlatform] = [SixLayerPlatform.iOS, SixLayerPlatform.macOS, SixLayerPlatform.watchOS, SixLayerPlatform.tvOS, SixLayerPlatform.visionOS]
         
@@ -85,7 +85,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     }
     
     /// Tests that getCardExpansionPlatformConfig returns platform-specific capabilities
-    @Test func testCardExpansionPlatformConfig_PlatformSpecificCapabilities() {
+    @Test @MainActor func testCardExpansionPlatformConfig_PlatformSpecificCapabilities() {
         // Given: Current platform
         let platform = SixLayerPlatform.current
         
@@ -138,7 +138,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     }
     
     /// Tests that getCardExpansionPerformanceConfig returns appropriate performance settings
-    @Test func testCardExpansionPerformanceConfig_PerformanceSettings() {
+    @Test @MainActor func testCardExpansionPerformanceConfig_PerformanceSettings() {
         // Given: Current platform
         let platform = SixLayerPlatform.current
         
@@ -180,7 +180,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     // MARK: - Cross-Platform Testing Using Mocking
     
     /// Tests accessibility features using RuntimeCapabilityDetection
-    @Test func testAccessibilityFeatures_UsingRuntimeDetection() {
+    @Test @MainActor func testAccessibilityFeatures_UsingRuntimeDetection() {
         // Test accessibility features using capability overrides
         
         // Test tvOS accessibility features (VoiceOver and Switch Control supported, AssistiveTouch not)
@@ -213,7 +213,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     // MARK: - Edge Cases and Error Handling
     
     /// Tests that the framework handles missing accessibility preferences gracefully
-    @Test func testHandlesMissingAccessibilityPreferences() {
+    @Test @MainActor func testHandlesMissingAccessibilityPreferences() {
         // Given: Platform configuration
         let config = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -235,7 +235,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     }
     
     /// Tests that the framework works correctly when all accessibility features are disabled
-    @Test func testAllAccessibilityFeaturesDisabled() {
+    @Test @MainActor func testAllAccessibilityFeaturesDisabled() {
         // Given: No accessibility features enabled (simulated using tvOS)
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
@@ -260,7 +260,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     }
     
     /// Tests that the framework works correctly when all accessibility features are enabled
-    @Test func testAllAccessibilityFeaturesEnabled() {
+    @Test @MainActor func testAllAccessibilityFeaturesEnabled() {
         // Given: All accessibility features enabled (simulated using iOS)
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
@@ -290,7 +290,7 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     // MARK: - Cross-Platform Consistency Tests
     
     /// Tests that accessibility features are consistently available across platforms
-    @Test func testCrossPlatformAccessibilityConsistency() {
+    @Test @MainActor func testCrossPlatformAccessibilityConsistency() {
         // Given: Different platform configurations
         let simulatedPlatforms = PlatformSimulationTests.testPlatforms
         

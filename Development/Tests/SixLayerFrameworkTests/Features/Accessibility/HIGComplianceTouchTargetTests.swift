@@ -26,13 +26,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Touch Target Sizing")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceTouchTargetTests: BaseTestClass {
     
     // MARK: - Runtime Detection Based Tests
     
-    @Test func testButtonRespectsRuntimeTouchTargetDetection() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonRespectsRuntimeTouchTargetDetection() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()
@@ -76,8 +77,9 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
         }
     }
     
-    @Test func testLinkRespectsRuntimeTouchTargetDetection() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testLinkRespectsRuntimeTouchTargetDetection() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A link with automatic compliance
             let link = Link("Test Link", destination: URL(string: "https://example.com")!)
                 .automaticCompliance()
@@ -111,8 +113,9 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
         }
     }
     
-    @Test func testInteractiveViewRespectsRuntimeTouchTargetDetection() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testInteractiveViewRespectsRuntimeTouchTargetDetection() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: An interactive view (tappable) with automatic compliance
             let interactiveView = Text("Tap Me")
                 .onTapGesture { }
@@ -147,8 +150,9 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
         }
     }
     
-    @Test func testNonTouchPlatformsDoNotRequireTouchTargets() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testNonTouchPlatformsDoNotRequireTouchTargets() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()

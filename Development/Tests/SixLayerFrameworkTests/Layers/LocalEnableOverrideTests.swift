@@ -4,13 +4,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Test the "global disable, local enable" functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Local Enable Override")
 open class LocalEnableOverrideTests: BaseTestClass {
 
     // BaseTestClass handles setup automatically - no need for custom init
     
-    @Test func testGlobalDisableLocalEnable() {
+    @Test @MainActor func testGlobalDisableLocalEnable() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Configure test environment
             guard let config = testConfig else {
@@ -55,7 +56,8 @@ open class LocalEnableOverrideTests: BaseTestClass {
         }
     }
     
-    @Test func testNamedModifierAlwaysWorksRegardlessOfGlobalSettings() {
+    @Test @MainActor func testNamedModifierAlwaysWorksRegardlessOfGlobalSettings() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test that .named() always works regardless of global settings
             // This is the correct behavior - explicit naming should not be affected by global config
@@ -102,7 +104,8 @@ open class LocalEnableOverrideTests: BaseTestClass {
         }
     }
     
-    @Test func testNamedModifierAlwaysWorksEvenWhenGlobalConfigDisabled() {
+    @Test @MainActor func testNamedModifierAlwaysWorksEvenWhenGlobalConfigDisabled() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Configure test environment
             guard let config = testConfig else {

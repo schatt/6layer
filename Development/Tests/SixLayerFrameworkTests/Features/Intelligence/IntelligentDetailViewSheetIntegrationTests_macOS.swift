@@ -6,7 +6,7 @@ import AppKit
 import SwiftUI
 
 /// macOS integration tests that use a real NSWindow sheet to catch sizing/blank-content issues
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct IntelligentDetailViewSheetIntegrationTests_macOS {
 
     private struct TestTask: Codable, Identifiable {
@@ -23,7 +23,7 @@ struct IntelligentDetailViewSheetIntegrationTests_macOS {
     }
 
     /// Present platformDetailView inside a real AppKit sheet and verify it is not tiny/blank
-    @Test func testPlatformDetailViewPresentsNonTinyNonBlankSheet() async {
+    @Test @MainActor func testPlatformDetailViewPresentsNonTinyNonBlankSheet() async {
         // Given
         let task = TestTask(title: "Sheet Task", description: "Details", priority: 3)
 

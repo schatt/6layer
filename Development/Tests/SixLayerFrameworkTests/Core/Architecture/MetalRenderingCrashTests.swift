@@ -7,13 +7,14 @@ import SwiftUI
 /// Following proper TDD: Write failing tests first to prove the desired behavior
 /// 
 /// UPDATE: Performance layer has been removed entirely, eliminating the Metal crash bug
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Metal Rendering Crash")
 open class MetalRenderingCrashTDDTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically - no singleton access needed    // MARK: - TDD Green Phase: Tests That Now Pass After Performance Layer Removal
     
-    @Test func testPlatformPresentItemCollectionL1DoesNotCrash() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1DoesNotCrash() {
+            initializeTestConfig()
         // TDD Green Phase: Performance layer removed, so no Metal crash
         
         let mockItems = [
@@ -54,7 +55,8 @@ open class MetalRenderingCrashTDDTests: BaseTestClass {
         
     }
     
-    @Test func testGenericItemCollectionViewDoesNotCrash() {
+    @Test @MainActor func testGenericItemCollectionViewDoesNotCrash() {
+            initializeTestConfig()
         // TDD Green Phase: Performance layer removed, so no Metal crash
         
         let mockItems = [
@@ -94,7 +96,8 @@ open class MetalRenderingCrashTDDTests: BaseTestClass {
         
     }
     
-    @Test func testMetalRenderingCrashReproduction() {
+    @Test @MainActor func testMetalRenderingCrashReproduction() {
+            initializeTestConfig()
         // TDD Green Phase: Performance layer removed, so no Metal crash
         
         let mockItems = [
@@ -141,7 +144,8 @@ open class MetalRenderingCrashTDDTests: BaseTestClass {
         
     }
     
-    @Test func testSimpleCardComponentWithRegularMaterialCrashes() {
+    @Test @MainActor func testSimpleCardComponentWithRegularMaterialCrashes() {
+            initializeTestConfig()
         // TDD Green Phase: Performance layer removed, so no Metal crash
         
         let mockItem = MockTaskItem(id: "task1", title: "Test Task 1")
@@ -178,7 +182,8 @@ open class MetalRenderingCrashTDDTests: BaseTestClass {
         
     }
     
-    @Test func testPerformanceLayerRemoval() {
+    @Test @MainActor func testPerformanceLayerRemoval() {
+    initializeTestConfig()
         // TDD Green Phase: Document that performance layer has been removed
         
         let mockItems = [

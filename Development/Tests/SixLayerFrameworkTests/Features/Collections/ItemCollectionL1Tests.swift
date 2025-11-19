@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Item Collection L")
 open class ItemCollectionL1Tests: BaseTestClass {
     
     // MARK: - Item Collection Tests
     
-    @Test func testPlatformPresentItemCollection_L1() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1() {
+        initializeTestConfig()
         // Given
         let items = createSampleItems()
         let hints = PresentationHints()
@@ -32,7 +33,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
     }
     
-    @Test func testPlatformPresentItemCollection_L1_WithEmptyItems() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithEmptyItems() {
+        initializeTestConfig()
         // Given
         let items: [GenericDataItem] = []
         let hints = PresentationHints(
@@ -52,7 +54,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentItemCollection_L1 with empty items should return a view")  // view is non-optional
     }
     
-    @Test func testPlatformPresentItemCollection_L1_WithSingleItem() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithSingleItem() {
+        initializeTestConfig()
         // Given
         let items = [createSampleItems().first!]
         let hints = PresentationHints(
@@ -72,7 +75,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentItemCollection_L1 with single item should return a view")  // view is non-optional
     }
     
-    @Test func testPlatformPresentItemCollection_L1_WithManyItems() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithManyItems() {
+        initializeTestConfig()
         // Given
         let items = createManyItems(count: 100)
         let hints = PresentationHints(
@@ -94,7 +98,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
     
     // MARK: - Different Hint Types
     
-    @Test func testPlatformPresentItemCollection_L1_WithCompactHints() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithCompactHints() {
+        initializeTestConfig()
         // Given
         let items = createSampleItems()
         let hints = PresentationHints(
@@ -114,7 +119,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentItemCollection_L1 with compact hints should return a view")  // view is non-optional
     }
     
-    @Test func testPlatformPresentItemCollection_L1_WithDetailedHints() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithDetailedHints() {
+        initializeTestConfig()
         // Given
         let items = createSampleItems()
         let hints = PresentationHints(
@@ -134,7 +140,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentItemCollection_L1 with detailed hints should return a view")  // view is non-optional
     }
     
-    @Test func testPlatformPresentItemCollection_L1_WithGridHints() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithGridHints() {
+        initializeTestConfig()
         // Given
         let items = createSampleItems()
         let hints = PresentationHints(
@@ -154,7 +161,8 @@ open class ItemCollectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPresentItemCollection_L1 with grid hints should return a view")  // view is non-optional
     }
     
-    @Test func testPlatformPresentItemCollection_L1_WithListHints() {
+    @Test @MainActor func testPlatformPresentItemCollection_L1_WithListHints() {
+        initializeTestConfig()
         // Given
         let items = createSampleItems()
         let hints = PresentationHints(

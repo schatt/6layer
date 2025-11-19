@@ -4,13 +4,13 @@ import SwiftUI
 
 /// Comprehensive tests for Layer 5 platform optimization functions
 /// Ensures all Layer 5 functions are tested
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Platform Optimization")
 open class Layer5PlatformOptimizationTests: BaseTestClass {
     
     // MARK: - getCardExpansionPlatformConfig Tests
     
-    @Test func testGetCardExpansionPlatformConfig_iOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_iOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -25,7 +25,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.hoverDelay == expectedHoverDelay, "Current platform \(currentPlatform) should have platform-appropriate hoverDelay (\(expectedHoverDelay))")
     }
     
-    @Test func testGetCardExpansionPlatformConfig_macOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_macOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionPlatformConfig()
         
@@ -34,7 +34,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.hoverDelay == 0.5, "macOS should have 0.5s hover delay")
     }
     
-    @Test func testGetCardExpansionPlatformConfig_visionOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_visionOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestHover(true)
@@ -49,7 +49,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.hoverDelay == expectedHoverDelay, "Current platform \(currentPlatform) should have platform-appropriate hoverDelay (\(expectedHoverDelay))")
     }
     
-    @Test func testGetCardExpansionPlatformConfig_watchOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_watchOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -64,7 +64,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.hoverDelay == expectedHoverDelay, "Current platform \(currentPlatform) should have platform-appropriate hoverDelay (\(expectedHoverDelay))")
     }
     
-    @Test func testGetCardExpansionPlatformConfig_tvOS() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_tvOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -79,7 +79,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.hoverDelay == expectedHoverDelay, "Current platform \(currentPlatform) should have platform-appropriate hoverDelay (\(expectedHoverDelay))")
     }
     
-    @Test func testGetCardExpansionPlatformConfig_AllPlatforms() async {
+    @Test @MainActor func testGetCardExpansionPlatformConfig_AllPlatforms() async {
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
         // Verify platform-appropriate values for current platform (not simulated platform)
@@ -99,7 +99,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     
     // MARK: - getCardExpansionPerformanceConfig Tests
     
-    @Test func testGetCardExpansionPerformanceConfig_iOS() async {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig_iOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(true); RuntimeCapabilityDetection.setTestHapticFeedback(true); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPerformanceConfig()
         
@@ -108,7 +108,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.supportsSmoothAnimations == true, "iOS should support smooth animations")
     }
     
-    @Test func testGetCardExpansionPerformanceConfig_macOS() async {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig_macOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
         let config = getCardExpansionPerformanceConfig()
         
@@ -117,7 +117,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.supportsSmoothAnimations == true, "macOS should support smooth animations")
     }
     
-    @Test func testGetCardExpansionPerformanceConfig_visionOS() async {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig_visionOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestHover(true)
@@ -133,7 +133,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.maxAnimationDuration > 0, "visionOS should have positive max animation duration")
     }
     
-    @Test func testGetCardExpansionPerformanceConfig_watchOS() async {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig_watchOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -149,7 +149,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         }
     }
     
-    @Test func testGetCardExpansionPerformanceConfig_tvOS() async {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig_tvOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(false)
         let config = getCardExpansionPerformanceConfig()
         
@@ -157,7 +157,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.maxAnimationDuration > 0, "tvOS should have positive max animation duration")
     }
     
-    @Test func testGetCardExpansionPerformanceConfig_AllPlatforms() async {
+    @Test @MainActor func testGetCardExpansionPerformanceConfig_AllPlatforms() async {
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
         for platform in platforms {
@@ -173,7 +173,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
     
     // MARK: - getCardExpansionAccessibilityConfig Tests
     
-    @Test func testGetCardExpansionAccessibilityConfig_iOS() async {
+    @Test @MainActor func testGetCardExpansionAccessibilityConfig_iOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -188,7 +188,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.announcementDelay > 0, "iOS should have positive announcement delay")
     }
     
-    @Test func testGetCardExpansionAccessibilityConfig_macOS() async {
+    @Test @MainActor func testGetCardExpansionAccessibilityConfig_macOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestHover(true)
@@ -203,7 +203,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.announcementDelay > 0, "macOS should have positive announcement delay")
     }
     
-    @Test func testGetCardExpansionAccessibilityConfig_visionOS() async {
+    @Test @MainActor func testGetCardExpansionAccessibilityConfig_visionOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestHover(true)
@@ -218,7 +218,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.announcementDelay > 0, "visionOS should have positive announcement delay")
     }
     
-    @Test func testGetCardExpansionAccessibilityConfig_watchOS() async {
+    @Test @MainActor func testGetCardExpansionAccessibilityConfig_watchOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -232,7 +232,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.announcementDelay > 0, "watchOS should have positive announcement delay")
     }
     
-    @Test func testGetCardExpansionAccessibilityConfig_tvOS() async {
+    @Test @MainActor func testGetCardExpansionAccessibilityConfig_tvOS() async {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestHover(false)
@@ -246,7 +246,7 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         #expect(config.announcementDelay > 0, "tvOS should have positive announcement delay")
     }
     
-    @Test func testGetCardExpansionAccessibilityConfig_AllPlatforms() async {
+    @Test @MainActor func testGetCardExpansionAccessibilityConfig_AllPlatforms() async {
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
         for platform in platforms {

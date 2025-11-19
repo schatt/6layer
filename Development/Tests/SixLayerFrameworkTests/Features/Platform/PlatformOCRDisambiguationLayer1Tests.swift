@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All functions in PlatformOCRDisambiguationLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform OCR Disambiguation Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformOCRDisambiguationLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup

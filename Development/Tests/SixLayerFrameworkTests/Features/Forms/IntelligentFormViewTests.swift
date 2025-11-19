@@ -17,10 +17,11 @@ import ViewInspector
 /// TESTING SCOPE: All components in IntelligentFormView.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Form View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class IntelligentFormViewTests: BaseTestClass {
     
-@Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() {
+@Test @MainActor func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnIOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
 
             let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
@@ -45,7 +46,8 @@ open class IntelligentFormViewTests: BaseTestClass {
     }
 
     
-    @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testIntelligentFormViewGeneratesAccessibilityIdentifiersOnMacOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
 
             let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
@@ -73,8 +75,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that Update button calls onSubmit callback when provided
     /// This test verifies Issue #8: Update button should work when onSubmit is provided
-    @Test func testUpdateButtonCallsOnSubmitWhenProvided() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testUpdateButtonCallsOnSubmitWhenProvided() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             var onSubmitCalled = false
@@ -123,8 +126,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that Update button does nothing when onSubmit is empty
     /// This test verifies the bug described in Issue #8
-    @Test func testUpdateButtonDoesNothingWhenOnSubmitIsEmpty() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testUpdateButtonDoesNothingWhenOnSubmitIsEmpty() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             var onSubmitCalled = false
@@ -175,8 +179,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that Update button provides visual feedback
     /// This test verifies Issue #8 requirement for visual feedback
-    @Test func testUpdateButtonProvidesVisualFeedback() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testUpdateButtonProvidesVisualFeedback() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             let testData = TestFormDataModel(name: "Test Name", email: "test@example.com")
@@ -217,8 +222,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that Core Data entities are automatically persisted when onSubmit is empty
     /// This test verifies Issue #9: Auto-persistence for Core Data entities
-    @Test func testCoreDataEntityAutoPersistsWhenOnSubmitIsEmpty() async throws {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testCoreDataEntityAutoPersistsWhenOnSubmitIsEmpty() async throws {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             // GIVEN: A Core Data entity with changes and empty onSubmit callback
@@ -285,8 +291,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that auto-persistence works with custom onSubmit callback
     /// Auto-persistence should happen first, then custom onSubmit should be called
-    @Test func testAutoPersistenceWorksWithCustomOnSubmit() async throws {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAutoPersistenceWorksWithCustomOnSubmit() async throws {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             // GIVEN: A Core Data entity with custom onSubmit callback
@@ -348,8 +355,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that non-Core Data entities don't auto-persist
     /// Auto-persistence should only work for Core Data entities (NSManagedObject)
-    @Test func testNonCoreDataEntitiesDontAutoPersist() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testNonCoreDataEntitiesDontAutoPersist() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             // GIVEN: A non-Core Data entity (struct)
@@ -377,8 +385,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that timestamp fields are automatically updated
     /// When a Core Data entity has updatedAt, modifiedAt, or lastModified, they should be set
-    @Test func testTimestampFieldsAreAutoUpdated() async throws {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTimestampFieldsAreAutoUpdated() async throws {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             // GIVEN: A Core Data entity with updatedAt field
@@ -435,8 +444,9 @@ open class IntelligentFormViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that auto-save handles errors gracefully
     /// If Core Data save fails, error should be logged but not crash
-    @Test func testAutoSaveHandlesErrorsGracefully() async throws {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAutoSaveHandlesErrorsGracefully() async throws {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             setupTestEnvironment()
 
             // GIVEN: A Core Data entity that will fail validation

@@ -17,10 +17,10 @@ import SwiftUI
 /// BUSINESS PURPOSE: Verify that platformPhotoPicker_L4 is accessible as a global function
 /// TESTING SCOPE: Global function accessibility without class instantiation
 /// METHODOLOGY: Direct function call test
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct PlatformPhotoPickerGlobalAccessTests {
     
-    @Test func testPlatformPhotoPicker_L4_IsAccessibleAsGlobalFunction() {
+    @Test @MainActor func testPlatformPhotoPicker_L4_IsAccessibleAsGlobalFunction() {
         // This test would have FAILED before v4.6.5 when the method was an instance method
         // The function should be callable directly without creating an instance
         
@@ -33,7 +33,7 @@ struct PlatformPhotoPickerGlobalAccessTests {
         #expect(Bool(true), "platformPhotoPicker_L4 should be accessible as a global function")
     }
     
-    @Test func testPlatformCameraInterface_L4_IsAccessibleAsGlobalFunction() {
+    @Test @MainActor func testPlatformCameraInterface_L4_IsAccessibleAsGlobalFunction() {
         // This test would have FAILED before v4.6.5 when the method was an instance method
         // The function should be callable directly without creating an instance
         
@@ -46,7 +46,7 @@ struct PlatformPhotoPickerGlobalAccessTests {
         #expect(Bool(true), "platformCameraInterface_L4 should be accessible as a global function")
     }
     
-    @Test func testPlatformPhotoDisplay_L4_IsAccessibleAsGlobalFunction() {
+    @Test @MainActor func testPlatformPhotoDisplay_L4_IsAccessibleAsGlobalFunction() {
         // This test would have FAILED before v4.6.5 when the method was an instance method
         // The function should be callable directly without creating an instance
         
@@ -60,7 +60,7 @@ struct PlatformPhotoPickerGlobalAccessTests {
         #expect(Bool(true), "platformPhotoDisplay_L4 should be accessible as a global function")
     }
     
-    @Test func testGlobalFunctionCallableFromExternalModule() {
+    @Test @MainActor func testGlobalFunctionCallableFromExternalModule() {
         // This test simulates how CarManager (external module) would call these functions
         // In a real external module scenario, the functions would need to be public and accessible
         

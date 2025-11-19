@@ -9,11 +9,12 @@ import SwiftUI
 /// TESTING SCOPE: All components in IntelligentCardExpansionLayer4.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Card Expansion Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     
-    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let testItems = [
                 IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
@@ -47,8 +48,9 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     }
 
     
-    @Test func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let testItems = [
                 IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
@@ -82,8 +84,9 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     }
 
     
-    @Test func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             // Test empty state
             let view = ExpandableCardCollectionView(

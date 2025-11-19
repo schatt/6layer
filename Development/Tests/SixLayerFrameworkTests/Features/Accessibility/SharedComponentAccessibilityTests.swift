@@ -19,12 +19,13 @@ struct TestImage {
 }
 
 @Suite("Shared Component Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class SharedComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Shared Component Tests
     
-    @Test func testGenericNumericDataViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericNumericDataViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericNumericDataView
         let testData = [1.0, 2.0, 3.0]
         let hints = PresentationHints()
@@ -49,7 +50,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericFormViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericFormView
         let testFields = [
             DynamicFormField(
@@ -99,7 +101,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericMediaViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericMediaViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericMediaView
         let testMediaItems = [
             GenericMediaItem(title: "Image 1", url: "image1.jpg", thumbnail: "thumb1.jpg"),
@@ -127,7 +130,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericSettingsViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericSettingsViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericSettingsView
         let testSettings = [
             SettingsSectionData(title: "General", items: [
@@ -157,7 +161,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericItemCollectionViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericItemCollectionView
         let testItems = [
             TestItem(title: "Item 1"),
@@ -182,7 +187,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericHierarchicalViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericHierarchicalViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericHierarchicalView
         let testItems = [
             GenericHierarchicalItem(title: "Root Item", level: 0, children: [
@@ -212,7 +218,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericTemporalViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericTemporalViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericTemporalView
         let testItems = [
             GenericTemporalItem(title: "Event 1", date: Date()),
@@ -240,7 +247,8 @@ open class SharedComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testGenericContentViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testGenericContentViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: GenericContentView
         let testContent = "Sample content"
         let hints = PresentationHints()

@@ -11,7 +11,7 @@ import SwiftUI
 //
 
 @Suite("Layer Component Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer4ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 4 Component Tests
@@ -88,7 +88,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformListRowGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformListRowGeneratesAccessibilityIdentifiers() async {
         // Given: A test list row title
         let title = "Test Item"
         
@@ -112,7 +112,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformCardStyleGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformCardStyleGeneratesAccessibilityIdentifiers() async {
         // Given: A test card content
         let testCard = VStack {
             Text("Test Card Title")
@@ -137,7 +137,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformSheetGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformSheetGeneratesAccessibilityIdentifiers() async {
         // Given: A test sheet content
         let testSheetContent = VStack {
             Text("Test Sheet Title")
@@ -167,7 +167,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformNavigationGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformNavigationGeneratesAccessibilityIdentifiers() async {
         // Given: A test navigation content
         let testNavigationContent = VStack {
             Text("Test Navigation Title")

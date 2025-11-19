@@ -11,12 +11,12 @@ import SwiftUI
 //
 
 @Suite("Layer Component Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 5 Platform Component Tests
     
-    @Test func testPlatformMessagingLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformMessagingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 messaging component
         let messagingLayer = PlatformMessagingLayer5()
         
@@ -42,7 +42,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformMessagingLayer5ToastGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformMessagingLayer5ToastGeneratesAccessibilityIdentifiers() async {
         // Given: Layer 5 messaging component
         let messagingLayer = PlatformMessagingLayer5()
         

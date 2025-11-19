@@ -3,13 +3,14 @@ import SwiftUI
 @testable import SixLayerFramework
 /// TDD Tests for Accessibility Identifier Persistence
 /// Following proper TDD: Write failing tests first to prove the issue exists
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Identifier Persistence")
 open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     
     // MARK: - TDD Red Phase: Tests That Should Fail
     
-    @Test func testAccessibilityIdentifiersArePersistentAcrossSessions() {
+    @Test @MainActor func testAccessibilityIdentifiersArePersistentAcrossSessions() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
@@ -58,7 +59,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityIdentifiersAreDeterministicForSameView() {
+    @Test @MainActor func testAccessibilityIdentifiersAreDeterministicForSameView() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
@@ -93,7 +95,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityIdentifiersDontContainTimestamps() {
+    @Test @MainActor func testAccessibilityIdentifiersDontContainTimestamps() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
@@ -131,7 +134,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityIdentifiersAreStableForUITesting() {
+    @Test @MainActor func testAccessibilityIdentifiersAreStableForUITesting() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
@@ -194,7 +198,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityIdentifiersAreBasedOnViewStructure() {
+    @Test @MainActor func testAccessibilityIdentifiersAreBasedOnViewStructure() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
@@ -232,7 +237,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
+    @Test @MainActor func testAccessibilityIdentifiersAreTrulyPersistentForIdenticalViews() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()
@@ -273,7 +279,8 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityIdentifiersPersistAcrossConfigResets() {
+    @Test @MainActor func testAccessibilityIdentifiersPersistAcrossConfigResets() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Setup test environment
             setupTestEnvironment()

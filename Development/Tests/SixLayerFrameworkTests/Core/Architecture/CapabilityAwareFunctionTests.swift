@@ -38,7 +38,7 @@ import SwiftUI
 
 /// Capability-aware function testing
 /// Tests every function that depends on capabilities in both enabled and disabled states
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class CapabilityAwareFunctionTests: BaseTestClass {
     
     // BaseTestClass handles cleanup automatically
@@ -48,7 +48,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test touch-dependent functions across all platforms
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use mock capability detection to test both enabled and disabled states
-    @Test func testTouchDependentFunctions() {
+    @Test @MainActor func testTouchDependentFunctions() {
         // Test both enabled and disabled states using the new methodology
         testTouchDependentFunctionsEnabled()
         testTouchDependentFunctionsDisabled()
@@ -57,7 +57,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test touch functions when touch is enabled using mock capability detection
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate enabled touch state
-    @Test func testTouchDependentFunctionsEnabled() {
+    @Test @MainActor func testTouchDependentFunctionsEnabled() {
         // Set mock capabilities for enabled touch state
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
@@ -98,7 +98,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test touch functions when touch is disabled using mock capability detection
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate disabled touch state
-    @Test func testTouchDependentFunctionsDisabled() {
+    @Test @MainActor func testTouchDependentFunctionsDisabled() {
         // Set mock capabilities for disabled touch state
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
@@ -135,7 +135,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Touch-dependent functions provide haptic feedback, AssistiveTouch support, and appropriate touch targets
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use real system capability detection to test enabled touch state
-    @Test func testTouchFunctionsEnabled() {
+    @Test @MainActor func testTouchFunctionsEnabled() {
         // Set platform to iOS (which natively supports touch) to test touch-enabled state
         RuntimeCapabilityDetection.setTestTouchSupport(true)
         RuntimeCapabilityDetection.setTestHapticFeedback(true)
@@ -164,7 +164,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Touch-dependent functions gracefully handle disabled touch state by disabling haptic feedback and AssistiveTouch
     /// TESTING SCOPE: Touch capability detection, haptic feedback, AssistiveTouch, touch targets
     /// METHODOLOGY: Use real system capability detection to test disabled touch state
-    @Test func testTouchFunctionsDisabled() {
+    @Test @MainActor func testTouchFunctionsDisabled() {
         // Force disabled state to avoid environment variance
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
@@ -196,7 +196,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test hover-dependent functions across all platforms
     /// TESTING SCOPE: Hover capability detection, hover delay, touch exclusion
     /// METHODOLOGY: Use mock capability detection to test both enabled and disabled states
-    @Test func testHoverDependentFunctions() {
+    @Test @MainActor func testHoverDependentFunctions() {
         // Test both enabled and disabled states using the new methodology
         testHoverDependentFunctionsEnabled()
         testHoverDependentFunctionsDisabled()
@@ -205,7 +205,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test hover functions when hover is enabled using mock capability detection
     /// TESTING SCOPE: Hover capability detection, hover delay, touch exclusion
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate enabled hover state
-    @Test func testHoverDependentFunctionsEnabled() {
+    @Test @MainActor func testHoverDependentFunctionsEnabled() {
         // Set mock capabilities for enabled hover state
         RuntimeCapabilityDetection.setTestHover(true)
         RuntimeCapabilityDetection.setTestTouchSupport(false)
@@ -236,7 +236,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Hover-dependent functions provide hover delays and exclude touch interactions when hover is enabled
     /// TESTING SCOPE: Hover capability detection, hover delay, touch exclusion
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to simulate disabled hover state
-    @Test func testHoverDependentFunctionsDisabled() {
+    @Test @MainActor func testHoverDependentFunctionsDisabled() {
         // Set mock capabilities for disabled hover state; do not assume touch implied
         RuntimeCapabilityDetection.setTestHover(false)
         // Do not force touch true here to avoid conflicting assumptions across platforms
@@ -280,7 +280,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Vision framework functions enable OCR text extraction and image processing when available
     /// TESTING SCOPE: Vision framework availability, OCR processing, image analysis
     /// METHODOLOGY: Test Vision framework enabled state with actual OCR processing
-    @Test func testVisionFunctionsEnabled() {
+    @Test @MainActor func testVisionFunctionsEnabled() {
         // Vision framework should be available
         #expect(isVisionFrameworkAvailable(), 
                      "Vision framework should be available when enabled")
@@ -320,7 +320,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Vision framework functions provide fallback behavior when Vision framework is unavailable
     /// TESTING SCOPE: Vision framework availability, OCR processing, image analysis
     /// METHODOLOGY: Test Vision framework disabled state with graceful fallback handling
-    @Test func testVisionFunctionsDisabled() {
+    @Test @MainActor func testVisionFunctionsDisabled() {
         // If Vision is available on this platform/SDK, skip strict disabled assertions
         guard !isVisionFrameworkAvailable() else {
             // Validate that availability implies OCR availability relationship
@@ -372,7 +372,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Accessibility functions provide VoiceOver and Switch Control support for inclusive user interaction
     /// TESTING SCOPE: VoiceOver support, Switch Control support, accessibility compliance
     /// METHODOLOGY: Test accessibility capability detection and support
-    @Test func testAccessibilityDependentFunctions() {
+    @Test @MainActor func testAccessibilityDependentFunctions() {
         // Test accessibility functions that are available
         // Note: AccessibilityOptimizationManager was removed - using simplified accessibility testing
         
@@ -394,7 +394,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Color encoding functions convert platform-specific colors to cross-platform data format
     /// TESTING SCOPE: Color encoding, color decoding, cross-platform color compatibility
     /// METHODOLOGY: Test color encoding and decoding across all platforms
-    @Test func testColorEncodingDependentFunctions() {
+    @Test @MainActor func testColorEncodingDependentFunctions() {
         // Color encoding should work on all platforms
         testColorEncodingFunctionsEnabled()
     }
@@ -402,7 +402,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Color encoding functions enable cross-platform color data exchange through encoding and decoding
     /// TESTING SCOPE: Color encoding, color decoding, cross-platform color compatibility
     /// METHODOLOGY: Test color encoding and decoding functionality
-    @Test func testColorEncodingFunctionsEnabled() {
+    @Test @MainActor func testColorEncodingFunctionsEnabled() {
         // Color encoding should work on all platforms
         let testColor = Color.blue
         
@@ -422,7 +422,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Comprehensive capability testing validates all capability-dependent functions work correctly together
     /// TESTING SCOPE: All capability-dependent functions, cross-platform consistency
     /// METHODOLOGY: Test all capability-dependent functions in sequence
-    @Test func testAllCapabilityDependentFunctions() {
+    @Test @MainActor func testAllCapabilityDependentFunctions() {
         // Test all capability-dependent functions
         testTouchDependentFunctions()
         testHoverDependentFunctions()
@@ -436,7 +436,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Capability state validation ensures internal consistency between related capabilities
     /// TESTING SCOPE: Capability state consistency, logical capability relationships
     /// METHODOLOGY: Test capability state consistency across all platforms
-    @Test func testCapabilityStateConsistency() {
+    @Test @MainActor func testCapabilityStateConsistency() {
         // Test capability state consistency across all platforms
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)

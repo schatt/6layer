@@ -32,7 +32,7 @@ import AppKit
 @testable import SixLayerFramework
 
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Image Architecture")
 open class PlatformImageArchitectureTests: BaseTestClass {
     
@@ -41,7 +41,7 @@ open class PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify framework APIs only accept PlatformImage
     /// TESTING SCOPE: Tests that all public framework APIs use PlatformImage
     /// METHODOLOGY: Test that no platform-specific image types are accepted
-    @Test func testFrameworkAPIsOnlyAcceptPlatformImage() {
+    @Test @MainActor func testFrameworkAPIsOnlyAcceptPlatformImage() {
         // Given: Platform-specific image types
         #if os(iOS)
         let uiImage = createTestUIImage()
@@ -80,7 +80,7 @@ open class PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify system boundary conversions work correctly
     /// TESTING SCOPE: Tests that UIImage/NSImage ↔ PlatformImage conversions work
     /// METHODOLOGY: Test conversions at system boundaries
-    @Test func testSystemBoundaryConversions() {
+    @Test @MainActor func testSystemBoundaryConversions() {
         // Given: Platform-specific image types
         #if os(iOS)
         let uiImage = createTestUIImage()
@@ -112,7 +112,7 @@ open class PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify PlatformImage is the only image type in callbacks
     /// TESTING SCOPE: Tests that all framework callbacks use PlatformImage
     /// METHODOLOGY: Test callback parameter types
-    @Test func testFrameworkCallbacksUsePlatformImageOnly() {
+    @Test @MainActor func testFrameworkCallbacksUsePlatformImageOnly() {
         // Given: Framework components
         
         
@@ -140,7 +140,7 @@ open class PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify PlatformImage can handle all image operations
     /// TESTING SCOPE: Tests that PlatformImage supports all necessary operations
     /// METHODOLOGY: Test PlatformImage functionality without platform-specific types
-    @Test func testPlatformImageSupportsAllOperations() {
+    @Test @MainActor func testPlatformImageSupportsAllOperations() {
         // Given: PlatformImage
         let platformImage = createTestPlatformImage()
         

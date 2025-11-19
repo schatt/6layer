@@ -7,7 +7,7 @@ import SwiftUI
 /// Platform Logic Tests
 /// Tests the platform detection and configuration logic without relying on runtime platform detection
 /// These tests focus on the logic that determines platform-specific behavior
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Logic")
 open class PlatformLogicTests: BaseTestClass {
     

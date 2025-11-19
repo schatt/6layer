@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Utility Component Accessibility")
 open class UtilityComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Utility Component Tests
     
-    @Test func testAccessibilityTestUtilitiesGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityTestUtilitiesGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component (testing our framework, not SwiftUI)
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -39,7 +40,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierValidationGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component (testing our framework, not SwiftUI)
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -61,7 +63,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierPatternMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierPatternMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier pattern matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -83,7 +86,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierExactMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierExactMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier exact matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -106,7 +110,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierWildcardMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierWildcardMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier wildcard matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -128,7 +133,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierComponentNameMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierComponentNameMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier component name matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -150,7 +156,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierNamespaceMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierNamespaceMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier namespace matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -172,7 +179,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierScreenMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierScreenMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier screen matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -194,7 +202,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierElementMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierElementMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier element matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -217,7 +226,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierStateMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierStateMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier state matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -239,7 +249,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierHierarchyMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierHierarchyMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier hierarchy matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -263,7 +274,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier case insensitive matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -286,7 +298,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier partial matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -308,7 +321,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier regex matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -331,7 +345,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier performance matching
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -353,7 +368,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier error handling
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -375,7 +391,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier null handling
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -398,7 +415,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier empty handling
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -420,7 +438,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier whitespace handling
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -443,7 +462,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier special character handling
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -466,7 +486,8 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Accessibility identifier unicode handling
         let testView = platformPresentContent_L1(
             content: "Test Content",
@@ -489,7 +510,7 @@ open class UtilityComponentAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
         // Given: Accessibility identifier long string handling
         let longString = String(repeating: "A", count: 1000)
         let testView = platformPresentContent_L1(

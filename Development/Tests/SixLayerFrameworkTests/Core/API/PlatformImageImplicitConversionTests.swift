@@ -37,7 +37,7 @@ import AppKit
 @testable import SixLayerFramework
 
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformImageImplicitConversionTests: BaseTestClass {
     
     // MARK: - Implicit Conversion Tests
@@ -45,7 +45,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify UIImage → PlatformImage implicit conversion works
     /// TESTING SCOPE: Tests that UIImage can be implicitly converted to PlatformImage
     /// METHODOLOGY: Test implicit conversion syntax and data integrity
-    @Test func testUIImageImplicitConversion() {
+    @Test @MainActor func testUIImageImplicitConversion() {
         #if os(iOS)
         // Given: UIImage
         let uiImage = createTestUIImage()
@@ -67,7 +67,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify NSImage → PlatformImage implicit conversion works
     /// TESTING SCOPE: Tests that NSImage can be implicitly converted to PlatformImage
     /// METHODOLOGY: Test implicit conversion syntax and data integrity
-    @Test func testNSImageImplicitConversion() {
+    @Test @MainActor func testNSImageImplicitConversion() {
         #if os(macOS)
         // Given: NSImage
         let nsImage = createTestNSImage()
@@ -89,7 +89,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify implicit conversions work in Layer 4 callbacks
     /// TESTING SCOPE: Tests that Layer 4 callbacks work with implicit conversions
     /// METHODOLOGY: Test implicit conversion in callback contexts
-    @Test func testImplicitConversionInLayer4Callbacks() {
+    @Test @MainActor func testImplicitConversionInLayer4Callbacks() {
         #if os(iOS)
         // Given: UIImage and Layer 4 components
         let uiImage = createTestUIImage()
@@ -139,7 +139,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify implicit conversions maintain data integrity
     /// TESTING SCOPE: Tests that implicit conversions preserve image data correctly
     /// METHODOLOGY: Test data integrity after implicit conversion
-    @Test func testImplicitConversionDataIntegrity() {
+    @Test @MainActor func testImplicitConversionDataIntegrity() {
         #if os(iOS)
         // Given: UIImage with specific properties
         let uiImage = createTestUIImage()

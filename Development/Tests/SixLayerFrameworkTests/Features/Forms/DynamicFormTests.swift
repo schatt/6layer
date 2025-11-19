@@ -36,7 +36,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Dynamic Form")
 open class DynamicFormTests: BaseTestClass {
     

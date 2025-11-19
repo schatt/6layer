@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Vision Safety Component Accessibility")
 open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Vision Safety Component Tests
     
-    @Test func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVisionSafetyGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: VisionSafety
         let testView = VisionSafety()
         

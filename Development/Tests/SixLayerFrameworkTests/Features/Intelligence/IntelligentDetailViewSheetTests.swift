@@ -18,7 +18,7 @@ import ViewInspector
 /// Apps using the framework need to display detail views in sheets, and these must work correctly.
 
 @Suite("Intelligent Detail View Sheet")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct IntelligentDetailViewSheetTests {
     
     // MARK: - Test Data
@@ -40,7 +40,8 @@ struct IntelligentDetailViewSheetTests {
     // MARK: - Sheet Presentation Tests
     
     /// Verify that platformDetailView renders content in a sheet (not blank)
-    @Test func testPlatformDetailViewRendersContentInSheet() async throws {
+    @Test @MainActor func testPlatformDetailViewRendersContentInSheet() async throws {
+            initializeTestConfig()
         let task = TestTask(title: "Test Task", description: "Test description", priority: 5)
         
         // Create a view with sheet presentation (simulating .sheet() context)
@@ -82,7 +83,8 @@ struct IntelligentDetailViewSheetTests {
     }
     
     /// Verify that platformDetailView extracts and displays data model properties
-    @Test func testPlatformDetailViewDisplaysModelProperties() async throws {
+    @Test @MainActor func testPlatformDetailViewDisplaysModelProperties() async throws {
+            initializeTestConfig()
         let task = TestTask(title: "Test Task", description: "Task description", priority: 5)
         
         let detailView = IntelligentDetailView.platformDetailView(
@@ -129,7 +131,8 @@ struct IntelligentDetailViewSheetTests {
     }
     
     /// Verify that platformDetailView accepts and respects frame constraints
-    @Test func testPlatformDetailViewRespectsFrameConstraints() async throws {
+    @Test @MainActor func testPlatformDetailViewRespectsFrameConstraints() async throws {
+            initializeTestConfig()
         let task = TestTask(title: "Test Task", description: "Description", priority: 3)
         
         // Apply frame constraints like the sheet context would
@@ -153,7 +156,8 @@ struct IntelligentDetailViewSheetTests {
     }
     
     /// Verify platformDetailView works with NavigationStack in sheet context
-    @Test func testPlatformDetailViewWithNavigationStackInSheet() async throws {
+    @Test @MainActor func testPlatformDetailViewWithNavigationStackInSheet() async throws {
+            initializeTestConfig()
         let task = TestTask(title: "Test Task", description: "Description")
         
         let sheetContent = NavigationStack {
@@ -181,7 +185,8 @@ struct IntelligentDetailViewSheetTests {
     }
     
     /// Verify that different data types work in sheet presentation
-    @Test func testPlatformDetailViewWithDifferentDataTypesInSheet() async throws {
+    @Test @MainActor func testPlatformDetailViewWithDifferentDataTypesInSheet() async throws {
+            initializeTestConfig()
         // Test with various data types
         let task = TestTask(title: "Task", description: "Description", priority: 1)
         let numericData: [String: Double] = ["value": 42.0]
@@ -205,7 +210,7 @@ struct IntelligentDetailViewSheetTests {
     }
     
     /// Verify that platformDetailView generates accessibility identifiers in sheet context
-    @Test func testPlatformDetailViewGeneratesAccessibilityIdentifiersInSheet() async {
+    @Test @MainActor func testPlatformDetailViewGeneratesAccessibilityIdentifiersInSheet() async {
         let task = TestTask(title: "Accessible Task")
         
         let detailView = IntelligentDetailView.platformDetailView(for: task)

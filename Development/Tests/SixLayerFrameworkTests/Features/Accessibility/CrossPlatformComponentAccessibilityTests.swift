@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Cross Platform Component Accessibility")
 open class CrossPlatformComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Cross-Platform Component Tests
     
-    @Test func testCrossPlatformOptimizationGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testCrossPlatformOptimizationGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: CrossPlatformOptimization
         let testView = CrossPlatformOptimization()
         

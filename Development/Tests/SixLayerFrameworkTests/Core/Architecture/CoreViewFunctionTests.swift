@@ -45,7 +45,7 @@ typealias TestDataItem = TestPatterns.TestDataItem
 
 /// DRY Core View Function Tests
 /// Demonstrates how to eliminate duplication using reusable patterns
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Core View Function")
 open class CoreViewFunctionTests: BaseTestClass {
     

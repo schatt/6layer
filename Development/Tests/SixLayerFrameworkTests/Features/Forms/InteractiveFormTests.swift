@@ -43,7 +43,7 @@ import Testing
 // MARK: - DEPRECATED: This test class uses SimpleFormView which depends on GenericFormField
 // TODO: Replace with DynamicFormView tests using DynamicFormField
 /*
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Interactive Form")
 open class InteractiveFormTests: XCTestCase {
     

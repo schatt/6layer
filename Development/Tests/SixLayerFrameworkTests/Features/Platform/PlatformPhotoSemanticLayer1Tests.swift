@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All functions in PlatformPhotoSemanticLayer1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform Photo Semantic Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup

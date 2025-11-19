@@ -38,7 +38,7 @@ import SwiftUI
 
 /// Capability combination testing
 /// Tests all possible combinations of capabilities to ensure they work together correctly
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Combination Matrix
     
     // MARK: - Defensive Enums
@@ -768,7 +768,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate touch and haptic feedback capability dependency functionality
     /// TESTING SCOPE: Touch-haptic dependency logic, capability relationship validation, platform consistency
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-haptic relationships
-    @Test func testTouchHapticCombination() {
+    @Test @MainActor func testTouchHapticCombination() {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
@@ -785,7 +785,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate touch and AssistiveTouch capability dependency functionality
     /// TESTING SCOPE: Touch-AssistiveTouch dependency logic, capability relationship validation, accessibility support
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-AssistiveTouch relationships
-    @Test func testTouchAssistiveTouchCombination() {
+    @Test @MainActor func testTouchAssistiveTouchCombination() {
         let config = getCardExpansionPlatformConfig()
         
         if config.supportsTouch {
@@ -802,7 +802,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate Vision framework and OCR capability dependency functionality
     /// TESTING SCOPE: Vision-OCR dependency logic, framework availability validation, OCR capability testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test Vision-OCR relationships
-    @Test func testVisionOCRCombination() {
+    @Test @MainActor func testVisionOCRCombination() {
         let visionAvailable = isVisionFrameworkAvailable()
         let ocrAvailable = isVisionOCRAvailable()
         
@@ -814,7 +814,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate hover and touch capability mutual exclusivity functionality
     /// TESTING SCOPE: Touch-hover mutual exclusivity logic, platform-specific exceptions, capability conflict detection
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test touch-hover exclusivity
-    @Test func testHoverTouchMutualExclusivity() {
+    @Test @MainActor func testHoverTouchMutualExclusivity() {
         let config = getCardExpansionPlatformConfig()
         let platform = SixLayerPlatform.current
         
@@ -840,7 +840,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate impossible capability combination detection functionality
     /// TESTING SCOPE: Impossible combination detection, capability constraint validation, logical consistency testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test impossible combinations
-    @Test func testImpossibleCombinations() {
+    @Test @MainActor func testImpossibleCombinations() {
         // Test combinations that should never occur
         let config = getCardExpansionPlatformConfig()
         
@@ -860,7 +860,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate conflicting capability combination detection functionality
     /// TESTING SCOPE: Conflicting combination detection, capability conflict resolution, platform-specific conflict handling
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test conflicting combinations
-    @Test func testConflictingCombinations() {
+    @Test @MainActor func testConflictingCombinations() {
         // Test that capability combinations are handled correctly
         // Note: We trust what the OS reports - if touch and hover are both available, both are available
         // Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
@@ -875,7 +875,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     /// BUSINESS PURPOSE: Validate capability dependency validation functionality
     /// TESTING SCOPE: Capability dependency validation, missing dependency detection, dependency chain testing
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test capability dependencies
-    @Test func testMissingDependencies() {
+    @Test @MainActor func testMissingDependencies() {
         // Test that dependent capabilities are properly handled
         let config = getCardExpansionPlatformConfig()
         

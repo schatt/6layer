@@ -52,7 +52,7 @@ struct MockDataContainer: Equatable {
 }
 
 @Suite("Native Types")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class NativeTypesTests: BaseTestClass {
     
     public func createTestFormState() -> DynamicFormState {

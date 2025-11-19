@@ -35,7 +35,7 @@ import SwiftUI
 import ViewInspector
 #endif
 @testable import SixLayerFramework
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Photo Components Layer")
 open class PhotoComponentsLayer4Tests: BaseTestClass {
     
@@ -58,8 +58,9 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
     /// BUSINESS PURPOSE: Layer 4 photo functions return views and should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformCameraInterface_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    @Test func testPlatformCameraInterface_L4_AppliesAutomaticAccessibilityIdentifiers() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformCameraInterface_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Enable debug logging to see what identifier is generated
             guard let config = self.testConfig else {
                 Issue.record("testConfig is nil")
@@ -144,8 +145,9 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
     /// BUSINESS PURPOSE: Layer 4 photo picker functions should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformPhotoPicker_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    @Test func testPlatformPhotoPicker_L4_AppliesAutomaticAccessibilityIdentifiers() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformPhotoPicker_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Layer 4 function with test data
             var selectedImage: PlatformImage?
             
@@ -191,8 +193,9 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
     /// BUSINESS PURPOSE: Layer 4 photo display functions should apply automatic accessibility identifiers
     /// TESTING SCOPE: Tests that platformPhotoDisplay_L4 applies automatic accessibility identifiers
     /// METHODOLOGY: Tests Layer 4 functionality and modifier application
-    @Test func testPlatformPhotoDisplay_L4_AppliesAutomaticAccessibilityIdentifiers() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformPhotoDisplay_L4_AppliesAutomaticAccessibilityIdentifiers() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Layer 4 function with test data
             let testImage = PlatformImage()
             let style = PhotoDisplayStyle.thumbnail

@@ -11,12 +11,13 @@ import ViewInspector
 // Using ViewInspectorWrapper for cross-platform compatibility
 /// Edge case tests for accessibility identifier generation bug fix
 /// These tests ensure our fix handles all edge cases properly
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Identifier Edge Case")
 open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     // MARK: - Edge Case 1: Empty String Parameters
     
-    @Test func testEmptyStringParameters() {
+    @Test @MainActor func testEmptyStringParameters() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -42,7 +43,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 2: Special Characters in Names
     
-    @Test func testSpecialCharactersInNames() {
+    @Test @MainActor func testSpecialCharactersInNames() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -70,7 +72,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 3: Very Long Names
     
-    @Test func testVeryLongNames() {
+    @Test @MainActor func testVeryLongNames() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -106,7 +109,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 4: Manual ID Override
     
-    @Test func testManualIDOverride() {
+    @Test @MainActor func testManualIDOverride() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -134,7 +138,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 5: Disable/Enable Mid-Hierarchy
     
-    @Test func testDisableEnableMidHierarchy() {
+    @Test @MainActor func testDisableEnableMidHierarchy() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -177,7 +182,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 6: Multiple Screen Contexts
     
-    @Test func testMultipleScreenContexts() {
+    @Test @MainActor func testMultipleScreenContexts() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -207,7 +213,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 7: Exact Named Behavior (Red Phase Tests)
     
-    @Test func testExactNamedBehavior() {
+    @Test @MainActor func testExactNamedBehavior() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -247,7 +254,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
         }
     }
     
-    @Test func testExactNamedVsNamedDifference() {
+    @Test @MainActor func testExactNamedVsNamedDifference() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -285,7 +293,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
         }
     }
     
-    @Test func testExactNamedIgnoresHierarchy() {
+    @Test @MainActor func testExactNamedIgnoresHierarchy() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -325,7 +334,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
         }
     }
     
-    @Test func testExactNamedMinimalIdentifier() {
+    @Test @MainActor func testExactNamedMinimalIdentifier() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -356,7 +366,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 8: Configuration Changes Mid-Test
     
-    @Test func testConfigurationChangesMidTest() {
+    @Test @MainActor func testConfigurationChangesMidTest() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -399,7 +410,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 9: Nested .named() Calls
     
-    @Test func testNestedNamedCalls() {
+    @Test @MainActor func testNestedNamedCalls() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -438,7 +450,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
     
     // MARK: - Edge Case 10: Unicode Characters
     
-    @Test func testUnicodeCharacters() {
+    @Test @MainActor func testUnicodeCharacters() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             

@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Input Handling Interactions Component Accessibility")
 open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - PlatformInteractionButton Tests
     
-    @Test func testPlatformInteractionButtonGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformInteractionButtonGeneratesAccessibilityIdentifiers() async {
+            initializeTestConfig()
         // Given: Framework component as label (testing our framework, not SwiftUI)
         let testLabel = platformPresentContent_L1(
             content: "Platform Interaction Button",
@@ -48,7 +49,8 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - InputHandlingManager Tests
     
-    @Test func testInputHandlingManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testInputHandlingManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component with InputHandlingManager
         let manager = InputHandlingManager()
         
@@ -77,7 +79,8 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - KeyboardShortcutManager Tests
     
-    @Test func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testKeyboardShortcutManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // When: Creating a framework component
         let view = platformPresentContent_L1(
             content: "Keyboard Shortcut Manager Content",
@@ -101,7 +104,8 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - HapticFeedbackManager Tests
     
-    @Test func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHapticFeedbackManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // When: Creating a framework component
         let view = platformPresentContent_L1(
             content: "Haptic Feedback Manager Content",
@@ -125,7 +129,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DragDropManager Tests
     
-    @Test func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDragDropManagerGeneratesAccessibilityIdentifiers() async {
         // When: Creating a framework component
         let view = platformPresentContent_L1(
             content: "Drag Drop Manager Content",

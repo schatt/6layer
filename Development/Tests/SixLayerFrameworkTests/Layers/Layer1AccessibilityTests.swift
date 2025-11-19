@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All Layer 1 presentation functions
 /// METHODOLOGY: TDD Red Phase - tests should fail until accessibility identifiers are implemented
 @Suite("Layer Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer1AccessibilityTests: BaseTestClass {
     
     // MARK: - Helper Methods
@@ -25,7 +25,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     
     /// TDD RED PHASE: platformPresentItemCollection_L1 should generate accessibility identifiers
     /// THIS TEST SHOULD FAIL - proving that accessibility identifiers aren't actually generated
-    @Test func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Automatic IDs enabled
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
@@ -60,7 +61,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentItemCollection_L1 with EnhancedPresentationHints variant
-    @Test func testPlatformPresentItemCollectionL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let testItems = createTestItems()
@@ -93,7 +95,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentItemCollection_L1 with custom view variant
-    @Test func testPlatformPresentItemCollectionL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+                initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let testItems = createTestItems()
@@ -125,7 +128,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentItemCollection_L1 with enhanced hints and custom view variant
-    @Test func testPlatformPresentItemCollectionL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+                initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let testItems = createTestItems()
@@ -164,7 +168,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
     }
     
     /// Test platformPresentItemCollection_L1 with all custom views variant
-    @Test func testPlatformPresentItemCollectionL1WithAllCustomViewsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithAllCustomViewsGeneratesAccessibilityIdentifiers() async {
+                initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         let testItems = createTestItems()

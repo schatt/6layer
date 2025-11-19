@@ -302,6 +302,35 @@ public struct DynamicFormField: Identifiable {
             metadata: metadata
         )
     }
+    
+    /// Apply hints to this field, creating a new field with updated properties
+    /// - Parameter hints: The hints to apply
+    /// - Returns: A new field with hints applied
+    public func applying(hints: FieldDisplayHints) -> DynamicFormField {
+        return DynamicFormField(
+            id: self.id,
+            textContentType: self.textContentType,
+            contentType: self.contentType,
+            label: self.label,
+            placeholder: self.placeholder,
+            description: self.description,
+            isRequired: self.isRequired,
+            validationRules: self.validationRules,
+            options: self.options,
+            defaultValue: self.defaultValue,
+            metadata: self.metadata,
+            supportsOCR: hints.ocrHints != nil ? true : self.supportsOCR,
+            ocrHint: self.ocrHint,
+            ocrValidationTypes: self.ocrValidationTypes,
+            ocrFieldIdentifier: self.ocrFieldIdentifier,
+            ocrValidationRules: self.ocrValidationRules,
+            ocrHints: hints.ocrHints ?? self.ocrHints,
+            isCalculated: hints.calculationGroups != nil ? true : self.isCalculated,
+            calculationFormula: self.calculationFormula,
+            calculationDependencies: self.calculationDependencies,
+            calculationGroups: hints.calculationGroups ?? self.calculationGroups
+        )
+    }
 }
 
 /// Test-specific field type enum for convenience initializer
@@ -476,7 +505,7 @@ public struct DynamicFormConfiguration: Identifiable {
 // MARK: - Calculation Groups
 
 /// Represents a group of fields that can be used to calculate a target field
-public struct CalculationGroup {
+public struct CalculationGroup: Sendable {
     /// Unique identifier for this calculation group
     public let id: String
     /// Formula for calculating the target field (e.g., "total = price * quantity")

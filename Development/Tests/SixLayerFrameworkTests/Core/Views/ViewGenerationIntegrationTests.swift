@@ -5,7 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 /// View Generation Integration Tests
 /// Tests the actual view generation pipeline with different capability states
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("View Generation Integration")
 open class ViewGenerationIntegrationTests: BaseTestClass {
     
@@ -978,7 +978,7 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     }
     
     /// Test that different platform configurations generate different underlying view types
-    @Test func testPlatformSpecificViewGeneration() {
+    @Test @MainActor func testPlatformSpecificViewGeneration() {
         // Create different platform configurations using general platform types
         let touchConfig = ViewGenerationTestConfig.CapabilitySet(
             supportsTouch: true,

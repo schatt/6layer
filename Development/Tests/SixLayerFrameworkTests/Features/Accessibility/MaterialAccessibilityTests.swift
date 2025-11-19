@@ -6,7 +6,7 @@ import SwiftUI
 
 /// Tests for Material Accessibility features
 /// Ensures materials are accessible and comply with accessibility standards
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Material Accessibility")
 open class MaterialAccessibilityTests: BaseTestClass {
     

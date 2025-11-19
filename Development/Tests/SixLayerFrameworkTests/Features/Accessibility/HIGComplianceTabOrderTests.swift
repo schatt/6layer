@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Tab Order")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceTabOrderTests: BaseTestClass {
     
     // MARK: - Form Field Tab Order Tests
     
-    @Test func testFormFieldsHaveLogicalTabOrder() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testFormFieldsHaveLogicalTabOrder() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Multiple form fields with automatic compliance
             let view = VStack {
                 TextField("First Name", text: .constant(""))
@@ -62,8 +63,9 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     // MARK: - Button Tab Order Tests
     
-    @Test func testButtonsHaveLogicalTabOrder() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonsHaveLogicalTabOrder() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Multiple buttons with automatic compliance
             let view = HStack {
                 Button("Cancel") { }
@@ -92,8 +94,9 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     // MARK: - Complex Layout Tab Order Tests
     
-    @Test func testComplexLayoutHasLogicalTabOrder() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testComplexLayoutHasLogicalTabOrder() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Complex layout with multiple focusable elements
             let view = VStack {
                 TextField("Name", text: .constant(""))
@@ -127,8 +130,9 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     // MARK: - Cross-Platform Tests
     
-    @Test func testTabOrderOnBothPlatforms() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTabOrderOnBothPlatforms() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Multiple focusable elements with automatic compliance
             let view = VStack {
                 TextField("Field 1", text: .constant(""))

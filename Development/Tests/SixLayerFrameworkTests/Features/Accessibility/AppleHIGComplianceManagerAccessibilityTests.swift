@@ -12,7 +12,8 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using AppleHIGComplianceManager generate proper accessibility identifiers
     /// Tests views with .appleHIGCompliant() modifier which uses AppleHIGComplianceManager
-    @Test func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnIOS() {
+        initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
             let view = VStack {
@@ -42,7 +43,8 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using AppleHIGComplianceManager generate proper accessibility identifiers
     /// Tests views with .appleHIGCompliant() modifier which uses AppleHIGComplianceManager
-    @Test func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testAppleHIGComplianceManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+        initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
             let view = VStack {

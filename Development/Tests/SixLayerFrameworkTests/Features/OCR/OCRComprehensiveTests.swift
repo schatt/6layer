@@ -31,7 +31,7 @@ import Testing
 
 /// Comprehensive tests for OCR functionality
 /// TODO: Implement real tests that test actual OCR functionality
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("OCR Comprehensive")
 open class OCRComprehensiveTests: BaseTestClass {// MARK: - Real OCR Comprehensive Tests (To Be Implemented)
     

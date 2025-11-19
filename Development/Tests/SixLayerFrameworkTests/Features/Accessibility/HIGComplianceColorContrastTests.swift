@@ -25,13 +25,14 @@ import SwiftUI
 @testable import SixLayerFramework
 
 @Suite("HIG Compliance - Color Contrast")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class HIGComplianceColorContrastTests: BaseTestClass {
     
     // MARK: - WCAG AA Contrast Tests (4.5:1 for normal text)
     
-    @Test func testTextMeetsWCAGAAContrastRatio() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testTextMeetsWCAGAAContrastRatio() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with foreground and background colors
             let view = Text("Test Text")
                 .foregroundColor(.black)
@@ -55,8 +56,9 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
         }
     }
     
-    @Test func testLargeTextMeetsWCAGAAContrastRatio() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testLargeTextMeetsWCAGAAContrastRatio() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Large text (18pt+ or 14pt+ bold) with foreground and background colors
             let view = Text("Large Text")
                 .font(.largeTitle)
@@ -81,8 +83,9 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
         }
     }
     
-    @Test func testButtonTextMeetsWCAGAAContrastRatio() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testButtonTextMeetsWCAGAAContrastRatio() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Button with text and background color
             let button = Button("Test Button") { }
                 .foregroundColor(.white)
@@ -108,8 +111,9 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     // MARK: - Automatic Color Adjustment Tests
     
-    @Test func testAutomaticColorAdjustmentForLowContrast() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testAutomaticColorAdjustmentForLowContrast() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text with low contrast colors (e.g., light gray on white)
             let view = Text("Low Contrast Text")
                 .foregroundColor(.gray)
@@ -135,8 +139,9 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     // MARK: - System Color Tests
     
-    @Test func testSystemColorsMeetContrastRequirements() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testSystemColorsMeetContrastRequirements() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // GIVEN: Text using system colors (which should automatically meet contrast)
             let view = Text("System Color Text")
                 .foregroundColor(.primary)

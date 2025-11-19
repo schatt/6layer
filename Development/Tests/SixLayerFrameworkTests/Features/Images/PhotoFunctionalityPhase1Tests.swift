@@ -145,7 +145,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         #expect(metadata.format != .unknown, "Metadata should contain valid format")
     }
     
-    @Test func testPlatformImageMeetsRequirements() {
+    @Test @MainActor func testPlatformImageMeetsRequirements() {
         // Given: A PlatformImage and photo purpose
         let originalImage = createTestPlatformImage()
         let purpose = PhotoPurpose.vehiclePhoto
@@ -159,7 +159,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Photo Purpose Tests
     
-    @Test func testPhotoPurposeEnum() {
+    @Test @MainActor func testPhotoPurposeEnum() {
         // Given: PhotoPurpose enum
         let purposes = PhotoPurpose.allCases
         
@@ -176,7 +176,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Photo Context Tests
     
-    @Test func testPhotoContextInitialization() {
+    @Test @MainActor func testPhotoContextInitialization() {
         // Given: PhotoContext parameters
         let screenSize = PlatformSize(width: 1024, height: 768)
         let availableSpace = PlatformSize(width: 800, height: 600)
@@ -200,7 +200,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Photo Preferences Tests
     
-    @Test func testPhotoPreferencesInitialization() {
+    @Test @MainActor func testPhotoPreferencesInitialization() {
         // Given: PhotoPreferences parameters
         let source = PhotoSource.camera
         let allowEditing = true
@@ -225,7 +225,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Device Capabilities Tests
     
-    @Test func testDeviceCapabilitiesInitialization() {
+    @Test @MainActor func testDeviceCapabilitiesInitialization() {
         // Given: DeviceCapabilities parameters
         let hasCamera = true
         let hasPhotoLibrary = true

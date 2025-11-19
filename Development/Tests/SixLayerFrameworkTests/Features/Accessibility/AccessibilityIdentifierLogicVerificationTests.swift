@@ -23,7 +23,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     // BaseTestClass handles setup automatically - no singleton access needed    /// BUSINESS PURPOSE: Verify that the identifier generation logic correctly evaluates conditions
     /// TESTING SCOPE: Tests that the AccessibilityIdentifierAssignmentModifier logic works correctly
     /// METHODOLOGY: Tests the actual logic that determines whether identifiers should be generated
-    @Test func testIdentifierGenerationLogicEvaluatesConditionsCorrectly() async {
+    @Test @MainActor func testIdentifierGenerationLogicEvaluatesConditionsCorrectly() async {
         let config = AccessibilityIdentifierConfig.shared
 
         // Test Case 1: All conditions met - should generate identifiers
@@ -60,7 +60,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers work properly
     /// TESTING SCOPE: Tests that automatic accessibility identifiers work correctly
     /// METHODOLOGY: Tests that automatic accessibility identifiers work correctly
-    @Test func testAutomaticAccessibilityIdentifiersWorkCorrectly() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersWorkCorrectly() async {
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
         config.namespace = "test"
@@ -98,7 +98,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that the AccessibilityIdentifierGenerator creates proper identifiers
     /// TESTING SCOPE: Tests that the identifier generation logic produces correct output
     /// METHODOLOGY: Tests the actual identifier generation with various inputs
-    @Test func testAccessibilityIdentifierGeneratorCreatesProperIdentifiers() async {
+    @Test @MainActor func testAccessibilityIdentifierGeneratorCreatesProperIdentifiers() async {
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
         config.namespace = "SixLayer"
@@ -140,7 +140,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that the bug fix actually resolves the identifier generation issue
     /// TESTING SCOPE: Tests that the specific bug scenario now works correctly
     /// METHODOLOGY: Tests the exact conditions that were failing in the bug report
-    @Test func testBugFixResolvesIdentifierGenerationIssue() async {
+    @Test @MainActor func testBugFixResolvesIdentifierGenerationIssue() async {
         let config = AccessibilityIdentifierConfig.shared
 
         // Given: The exact configuration from the bug report
@@ -174,7 +174,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that the default behavior change works correctly
     /// TESTING SCOPE: Tests that globalAutomaticAccessibilityIdentifiers now defaults to true
     /// METHODOLOGY: Tests that the environment variable default change works
-    @Test func testDefaultBehaviorChangeWorksCorrectly() async {
+    @Test @MainActor func testDefaultBehaviorChangeWorksCorrectly() async {
         let config = AccessibilityIdentifierConfig.shared
 
         // Given: Explicitly set configuration for this test
@@ -197,7 +197,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that manual identifiers still override automatic ones
     /// TESTING SCOPE: Tests that manual identifiers take precedence over automatic generation
     /// METHODOLOGY: Tests that manual identifiers work even when automatic generation is enabled
-    @Test func testManualIdentifiersOverrideAutomaticGeneration() async {
+    @Test @MainActor func testManualIdentifiersOverrideAutomaticGeneration() async {
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
         config.namespace = "auto"
@@ -222,7 +222,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that opt-out actually prevents identifier generation
     /// TESTING SCOPE: Tests that .disableAutomaticAccessibilityIdentifiers() works
     /// METHODOLOGY: Tests that opt-out modifier prevents automatic ID generation
-    @Test func testOptOutPreventsIdentifierGeneration() async {
+    @Test @MainActor func testOptOutPreventsIdentifierGeneration() async {
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
         config.namespace = "test"

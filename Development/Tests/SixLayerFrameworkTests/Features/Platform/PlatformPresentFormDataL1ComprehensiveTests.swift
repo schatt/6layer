@@ -34,7 +34,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Present Form Data L Comprehensive")
 open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
 

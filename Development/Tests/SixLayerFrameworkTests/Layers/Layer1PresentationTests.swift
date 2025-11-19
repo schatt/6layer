@@ -10,7 +10,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Presentation")
 open class Layer1PresentationTests: BaseTestClass {
     

@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: CustomItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Custom Item Collection View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class CustomItemCollectionViewTests: BaseTestClass {
     
     // MARK: - Helper Methods

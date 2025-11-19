@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Features Layer Component Accessibility")
 open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - AccessibilityEnhancedView Tests
     
-    @Test func testAccessibilityEnhancedViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityEnhancedViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Test content
         let testContent = VStack {
             Text("Enhanced Content")
@@ -48,7 +49,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - VoiceOverEnabledView Tests
     
-    @Test func testVoiceOverEnabledViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVoiceOverEnabledViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Test content
         let testContent = VStack {
             Text("VoiceOver Content")
@@ -77,7 +79,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - KeyboardNavigableView Tests
     
-    @Test func testKeyboardNavigableViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testKeyboardNavigableViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Test content
         let testContent = VStack {
             Text("Keyboard Content")
@@ -106,7 +109,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - HighContrastEnabledView Tests
     
-    @Test func testHighContrastEnabledViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHighContrastEnabledViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Test content
         let testContent = VStack {
             Text("High Contrast Content")
@@ -135,7 +139,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - AccessibilityHostingView Tests
     
-    @Test func testAccessibilityHostingViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityHostingViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Test content
         let testContent = VStack {
             Text("Hosting Content")
@@ -165,7 +170,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - AccessibilityTestingView Tests
     
-    @Test func testAccessibilityTestingViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityTestingViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // When: Creating AccessibilityTestingView
         let view = AccessibilityTestingView()
         
@@ -190,7 +196,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - VoiceOverManager Tests
     
-    @Test func testVoiceOverManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVoiceOverManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: VoiceOverManager
         let manager = VoiceOverManager()
         
@@ -218,7 +225,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - KeyboardNavigationManager Tests
     
-    @Test func testKeyboardNavigationManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testKeyboardNavigationManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: KeyboardNavigationManager
         let manager = KeyboardNavigationManager()
         
@@ -246,7 +254,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - HighContrastManager Tests
     
-    @Test func testHighContrastManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHighContrastManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: HighContrastManager
         let manager = HighContrastManager()
         
@@ -274,7 +283,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - AccessibilityTestingManager Tests
     
-    @Test func testAccessibilityTestingManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAccessibilityTestingManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: AccessibilityTestingManager
         let manager = AccessibilityTestingManager()
         
@@ -302,7 +312,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - SwitchControlManager Tests
     
-    @Test func testSwitchControlManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testSwitchControlManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: SwitchControlManager
         let config = SwitchControlConfig(
             enableNavigation: true,
@@ -338,7 +349,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - MaterialAccessibilityManager Tests
     
-    @Test func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: MaterialAccessibilityManager
         let manager = MaterialAccessibilityManager()
         
@@ -366,7 +378,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - EyeTrackingManager Tests
     
-    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testEyeTrackingManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: EyeTrackingManager
         let manager = EyeTrackingManager()
         
@@ -394,7 +407,8 @@ open class AccessibilityFeaturesLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - AssistiveTouchManager Tests
     
-    @Test func testAssistiveTouchManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testAssistiveTouchManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: AssistiveTouchManager
         let config = AssistiveTouchConfig(
             enableIntegration: true,

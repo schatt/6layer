@@ -29,13 +29,13 @@ import SwiftUI
 
 /// Accessibility state simulation testing
 /// Tests accessibility configuration and platform-specific behavior
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility State Simulation")
 open class AccessibilityStateSimulationTests: BaseTestClass {
     
     // MARK: - Configuration Initialization Tests
     
-    @Test func testCardExpansionAccessibilityConfigDefaultInitialization() {
+    @Test @MainActor func testCardExpansionAccessibilityConfigDefaultInitialization() {
         // Given: Default configuration initialization
         let config = CardExpansionAccessibilityConfig()
         
@@ -50,7 +50,7 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
         #expect(config.focusManagement, "Should support focus management by default")
     }
     
-    @Test func testCardExpansionAccessibilityConfigCustomInitialization() {
+    @Test @MainActor func testCardExpansionAccessibilityConfigCustomInitialization() {
         // Given: Custom configuration parameters
         let customConfig = CardExpansionAccessibilityConfig(
             supportsVoiceOver: false,
@@ -76,7 +76,7 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     
     // MARK: - Platform-Specific Configuration Tests
     
-    @Test func testPlatformSpecificAccessibilityConfiguration() {
+    @Test @MainActor func testPlatformSpecificAccessibilityConfiguration() {
         // Given: Platform-specific configuration with accessibility overrides
         let platform = SixLayerPlatform.current
         
@@ -141,7 +141,7 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     
     // MARK: - Configuration Parameter Validation Tests
     
-    @Test func testAccessibilityConfigurationParameterValidation() {
+    @Test @MainActor func testAccessibilityConfigurationParameterValidation() {
         // Given: Configuration with various parameter combinations
         let testCases = [
             // All enabled
@@ -195,7 +195,7 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling Tests
     
-    @Test func testAccessibilityConfigurationEdgeCases() {
+    @Test @MainActor func testAccessibilityConfigurationEdgeCases() {
         // Given: Edge case configurations
         let zeroDelayConfig = CardExpansionAccessibilityConfig(announcementDelay: 0.0)
         let longDelayConfig = CardExpansionAccessibilityConfig(announcementDelay: 5.0)
@@ -216,7 +216,7 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     
     // MARK: - Cross-Platform Consistency Tests
     
-    @Test func testAccessibilityConfigurationCrossPlatformConsistency() {
+    @Test @MainActor func testAccessibilityConfigurationCrossPlatformConsistency() {
         // Given: Configuration from different platforms with accessibility overrides
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -240,7 +240,7 @@ open class AccessibilityStateSimulationTests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    @Test func testAccessibilityConfigurationPerformance() {
+    @Test @MainActor func testAccessibilityConfigurationPerformance() {
         // Given: Performance test parameters
         let iterations = 1000
         

@@ -14,7 +14,8 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that .automaticCompliance() actually generates identifiers
     /// TESTING SCOPE: Tests that the basic automatic identifier modifier works end-to-end
     /// METHODOLOGY: Uses centralized test functions for consistent validation
-    @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersActuallyGenerateIDs() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Test: Use centralized component accessibility testing
             // BaseTestClass already sets up testConfig, just enable debug logging if needed
@@ -49,7 +50,8 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that .named() actually triggers identifier generation
     /// TESTING SCOPE: Tests that the Enhanced Breadcrumb System modifier works end-to-end
     /// METHODOLOGY: Uses centralized test functions for consistent validation
-    @Test func testNamedActuallyGeneratesIdentifiers() async {
+    @Test @MainActor func testNamedActuallyGeneratesIdentifiers() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // BaseTestClass already sets up testConfig with namespace "SixLayer"
             guard let config = self.testConfig else {
@@ -84,7 +86,8 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that automatic accessibility identifiers actually generate identifiers
     /// TESTING SCOPE: Tests that automatic accessibility identifiers work together end-to-end
     /// METHODOLOGY: Tests the exact scenario from the bug report with multiple modifiers
-    @Test func testAutomaticAccessibilityIdentifiersActuallyGenerateIdentifiers() async {
+    @Test @MainActor func testAutomaticAccessibilityIdentifiersActuallyGenerateIdentifiers() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Configuration matching the bug report exactly
             guard let config = testConfig else {
@@ -133,7 +136,8 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that manual identifiers still override automatic ones
     /// TESTING SCOPE: Tests that manual identifiers take precedence over automatic generation
     /// METHODOLOGY: Tests that manual identifiers work even when automatic generation is enabled
-    @Test func testManualIdentifiersOverrideAutomaticGeneration() async {
+    @Test @MainActor func testManualIdentifiersOverrideAutomaticGeneration() async {
+            initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Automatic IDs enabled, set namespace for this test
             guard let config = self.testConfig else {
@@ -177,7 +181,8 @@ open class AccessibilityIdentifierGenerationVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that global configuration actually controls identifier generation
     /// TESTING SCOPE: Tests that global config settings affect actual identifier generation
     /// METHODOLOGY: Tests that enabling/disabling automatic IDs actually works
-    @Test func testGlobalConfigActuallyControlsIdentifierGeneration() async {
+    @Test @MainActor func testGlobalConfigActuallyControlsIdentifierGeneration() async {
+        initializeTestConfig()
         await runWithTaskLocalConfig {
             // Use isolated testConfig instead of shared
             guard let config = self.testConfig else {

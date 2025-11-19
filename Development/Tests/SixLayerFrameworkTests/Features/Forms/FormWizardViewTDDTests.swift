@@ -14,7 +14,7 @@ import SwiftUI
  */
 
 @Suite("Form Wizard View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class FormWizardViewTDDTests: BaseTestClass {
 
     @Test func testFormWizardViewRendersStepNavigation() async {

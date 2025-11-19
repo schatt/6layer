@@ -31,7 +31,7 @@ import UIKit
 import AppKit
 #endif
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Platform Image Architecture")
 open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     
@@ -40,7 +40,7 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify Layer 4 callbacks only use PlatformImage
     /// TESTING SCOPE: Tests that Layer 4 callbacks work with PlatformImage only
     /// METHODOLOGY: Test callback parameter types and behavior
-    @Test func testLayer4CallbacksUsePlatformImageOnly() {
+    @Test @MainActor func testLayer4CallbacksUsePlatformImageOnly() {
         // Given: Layer 4 components
         
         
@@ -71,7 +71,7 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify Layer 4 delegate methods work with PlatformImage
     /// TESTING SCOPE: Tests that delegate methods use PlatformImage correctly
     /// METHODOLOGY: Test delegate method implementations
-    @Test func testLayer4DelegateMethodsUsePlatformImage() {
+    @Test @MainActor func testLayer4DelegateMethodsUsePlatformImage() {
         #if os(iOS)
         // Given: iOS delegate method setup
         var capturedImage: PlatformImage?
@@ -115,7 +115,7 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify Layer 4 system boundary conversions
     /// TESTING SCOPE: Tests that system boundary conversions work correctly
     /// METHODOLOGY: Test conversions at Layer 4 boundaries
-    @Test func testLayer4SystemBoundaryConversions() {
+    @Test @MainActor func testLayer4SystemBoundaryConversions() {
         #if os(iOS)
         // Given: iOS system boundary
         let uiImage = createTestUIImage()
@@ -159,7 +159,7 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify Layer 4 doesn't expose platform-specific types
     /// TESTING SCOPE: Tests that Layer 4 APIs don't leak platform-specific types
     /// METHODOLOGY: Test that Layer 4 only works with PlatformImage
-    @Test func testLayer4DoesNotExposePlatformSpecificTypes() {
+    @Test @MainActor func testLayer4DoesNotExposePlatformSpecificTypes() {
         // Given: Layer 4 components
         
         let platformImage = createTestPlatformImage()
@@ -186,7 +186,7 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify Layer 4 follows currency exchange model
     /// TESTING SCOPE: Tests that Layer 4 enforces the currency exchange architecture
     /// METHODOLOGY: Test that conversions happen at boundaries, not inside Layer 4
-    @Test func testLayer4FollowsCurrencyExchangeModel() {
+    @Test @MainActor func testLayer4FollowsCurrencyExchangeModel() {
         // Given: Platform-specific image types
         #if os(iOS)
         let uiImage = createTestUIImage()

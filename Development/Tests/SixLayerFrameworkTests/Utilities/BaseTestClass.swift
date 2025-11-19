@@ -4,7 +4,8 @@ import SwiftUI
 
 /// Base class for all tests following DRY principle
 /// Provides common setup and teardown functionality for all test classes
-@MainActor
+/// NOTE: Not marked @MainActor to allow test parallelization. Individual test functions
+/// that need UI access should be marked @MainActor.
 open class BaseTestClass {
     
     // MARK: - Test Config (Isolated Instance)
@@ -13,12 +14,10 @@ open class BaseTestClass {
     /// Automatically set as task-local in setupTestEnvironment() so framework code picks it up automatically
     /// Each test runs in its own task, so @TaskLocal provides isolation even when all tasks run on MainActor
     /// Tests can use `runWithTaskLocalConfig()` to wrap test execution for automatic isolation
-    @MainActor
     public var testConfig: AccessibilityIdentifierConfig!
     
     // MARK: - Test Setup
     
-    @MainActor
     public init() {
         // BaseTestClass handles all setup automatically
         // NOTE: Subclasses should NOT override init() - use helper methods to create test data instead
@@ -26,14 +25,21 @@ open class BaseTestClass {
         setupTestEnvironment()
     }
     
-    @MainActor
     open func setupTestEnvironment() {
         // NOTE: No need to clear capability overrides - each test runs in its own thread
         // Thread-local storage (Thread.current.threadDictionary) is already empty per thread
         
-        // CRITICAL: Create isolated config instance for this test (per-test isolation)
-        // Each test runs in its own task, so @TaskLocal provides automatic isolation
+        // CRITICAL: Config initialization is deferred until test execution
+        // Tests that need config should be marked @MainActor and will initialize it lazily
+        // This allows non-UI tests to run in parallel without MainActor contention
         // Framework code automatically uses task-local config via AccessibilityIdentifierConfig.currentTaskLocalConfig
+        // Config will be created on MainActor when first accessed by a test
+    }
+    
+    /// Initialize test config on MainActor (call from @MainActor test functions)
+    @MainActor
+    open func initializeTestConfig() {
+        if testConfig == nil {
         testConfig = AccessibilityIdentifierConfig()
         guard let config = testConfig else {
             Issue.record("testConfig is nil")
@@ -45,13 +51,13 @@ open class BaseTestClass {
         config.globalPrefix = ""  // Explicitly empty - tests don't set prefix unless testing it
         config.mode = .automatic
         config.enableDebugLogging = false
+        }
         
         // Task-local config will be set via runWithTaskLocalConfig() when tests wrap their execution
         // Framework code checks: taskLocalConfig ?? injectedConfig ?? shared
         // This ensures parallel tests get isolated configs automatically
     }
     
-    @MainActor
     open func cleanupTestEnvironment() {
         // Task-local config is automatically cleared when test task completes
         // No explicit cleanup needed - @TaskLocal is scoped to the task
@@ -60,16 +66,30 @@ open class BaseTestClass {
     /// Run a test function with task-local config automatically set
     /// This ensures framework code automatically picks up the test's isolated config
     /// Tests should wrap their test body with this for automatic isolation
-    @MainActor
+    /// NOTE: If the operation needs MainActor, mark the calling test function with @MainActor
+    /// This will automatically initialize testConfig if needed (on MainActor when called)
     public func runWithTaskLocalConfig<T>(_ operation: () async throws -> T) async rethrows -> T {
+        // Initialize config if needed (lazy initialization - will be on MainActor if test is @MainActor)
+        if testConfig == nil {
+            await MainActor.run {
+                initializeTestConfig()
+            }
+        }
         return try await AccessibilityIdentifierConfig.$taskLocalConfig.withValue(testConfig) {
             try await operation()
         }
     }
     
     /// Synchronous version for non-async tests
+    /// NOTE: Tests that need config should be marked @MainActor and call initializeTestConfig() first
+    /// This version assumes config is already initialized (tests should call initializeTestConfig() explicitly)
     @MainActor
     public func runWithTaskLocalConfig<T>(_ operation: () throws -> T) rethrows -> T {
+        // Config should already be initialized by test calling initializeTestConfig()
+        // If not, initialize it now (we're on MainActor)
+        if testConfig == nil {
+            initializeTestConfig()
+        }
         return try AccessibilityIdentifierConfig.$taskLocalConfig.withValue(testConfig) {
             try operation()
         }
@@ -105,7 +125,6 @@ open class BaseTestClass {
     
     /// Creates generic sample data for testing
     /// Override this method in subclasses to provide specific test data
-    @MainActor
     open func createSampleData() -> [Any] {
         return [
             "Sample Item 1",
@@ -117,7 +136,6 @@ open class BaseTestClass {
     /// Creates test hints for presentation components
     /// Each test should call this to create fresh hints (test isolation)
     /// Parameters allow customization while maintaining sensible defaults
-    @MainActor
     open func createTestHints(
         dataType: DataTypeHint = .generic,
         presentationPreference: PresentationPreference = .automatic,
@@ -136,7 +154,6 @@ open class BaseTestClass {
     
     /// Creates a default layout decision for testing
     /// Override this method in subclasses to provide specific layout decisions
-    @MainActor
     open func createLayoutDecision() -> IntelligentCardLayoutDecision {
         return IntelligentCardLayoutDecision(
             columns: 2,
@@ -151,6 +168,7 @@ open class BaseTestClass {
     
     /// Creates a test data item for testing using TestPatterns
     /// Each test should call this to create fresh data (test isolation)
+    /// NOTE: This is @MainActor because TestPatterns is @MainActor
     @MainActor
     open func createTestDataItem(
         title: String = "Item 1",
@@ -170,6 +188,7 @@ open class BaseTestClass {
     
     /// Creates multiple test data items
     /// Each test should call this to create fresh data (test isolation)
+    /// NOTE: This is @MainActor because it calls createTestDataItem which is @MainActor
     @MainActor
     open func createTestDataItems() -> [TestPatterns.TestDataItem] {
         return [
@@ -183,7 +202,6 @@ open class BaseTestClass {
     
     /// Creates a PhotoContext for testing
     /// Each test should call this to create fresh context (test isolation)
-    @MainActor
     open func createPhotoContext(
         screenSize: CGSize = CGSize(width: 375, height: 667),
         availableSpace: CGSize? = nil,
@@ -200,14 +218,12 @@ open class BaseTestClass {
     
     /// Creates an OCRContext for testing
     /// Each test should call this to create fresh context (test isolation)
-    @MainActor
     open func createOCRContext() -> OCRContext {
         return OCRContext()
     }
     
     /// Creates PresentationHints for testing
     /// Each test should call this to create fresh hints (test isolation)
-    @MainActor
     open func createPresentationHints() -> PresentationHints {
         return PresentationHints()
     }

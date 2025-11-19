@@ -13,7 +13,7 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Comprehensive tests for Internationalization & Localization
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Internationalization")
 open class InternationalizationTests: BaseTestClass {
     

@@ -18,7 +18,7 @@ struct TestData {
 }
 
 @Suite("Dynamic Form View Component Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Shared Test Data (DRY Principle)
@@ -96,7 +96,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFormView Tests
     
-    @Test func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFormView DOES have .automaticCompliance(named: "DynamicFormView") 
         // modifier applied in Framework/Sources/Components/Views/IntelligentFormView.swift:146 and 
         // Framework/Sources/Components/Forms/DynamicFormView.swift:22-35. 
@@ -129,7 +130,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFormHeader Tests
     
-    @Test func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFormHeader DOES have .automaticCompliance(named: "DynamicFormHeader") 
         // modifier applied in Framework/Sources/Components/Views/IntelligentFormView.swift:128 and :164.
         // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
@@ -156,7 +158,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFormSectionView Tests
     
-    @Test func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFormSectionView DOES have .automaticCompliance(named: "DynamicFormSectionView") 
         // modifier applied in Framework/Sources/Components/Forms/DynamicFormView.swift:117.
         // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
@@ -183,7 +186,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicFormActions Tests
     
-    @Test func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // TODO: ViewInspector Detection Issue - VERIFIED: DynamicFormActions component structure exists in 
         // Framework/Sources/Components/Views/IntelligentFormView.swift (generateFormActions method).
         // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
@@ -210,7 +214,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicTextField Tests
     
-    @Test func testDynamicTextFieldRendersTextFieldWithCorrectBindingAndAccessibility() async {
+    @Test @MainActor func testDynamicTextFieldRendersTextFieldWithCorrectBindingAndAccessibility() async {
+        initializeTestConfig()
         // TDD: DynamicTextField should render a VStack with:
         // 1. A Text label showing the field label
         // 2. A TextField with the correct placeholder and keyboard type
@@ -281,7 +286,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicNumberField Tests
     
-    @Test func testDynamicNumberFieldRendersTextFieldWithNumericKeyboard() async {
+    @Test @MainActor func testDynamicNumberFieldRendersTextFieldWithNumericKeyboard() async {
+        initializeTestConfig()
         // TDD: DynamicNumberField should render a VStack with:
         // 1. A Text label showing "Age"
         // 2. A TextField with decimalPad keyboard type (iOS) and "Enter age" placeholder
@@ -358,7 +364,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicTextAreaField Tests
     
-    @Test func testDynamicTextAreaFieldRendersMultilineTextEditor() async {
+    @Test @MainActor func testDynamicTextAreaFieldRendersMultilineTextEditor() async {
+        initializeTestConfig()
         // TDD: DynamicTextAreaField should render a VStack with:
         // 1. A Text label showing "Description"
         // 2. A TextEditor (multiline text input) with "Enter description" placeholder
@@ -424,7 +431,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicSelectField Tests
     
-    @Test func testDynamicSelectFieldRendersPickerWithSelectableOptions() async {
+    @Test @MainActor func testDynamicSelectFieldRendersPickerWithSelectableOptions() async {
+        initializeTestConfig()
         // TDD: DynamicSelectField should render a VStack with:
         // 1. A Text label showing "Country"
         // 2. A Picker with options ["USA", "Canada", "Mexico"]
@@ -491,7 +499,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicMultiSelectField Tests
     
-    @Test func testDynamicMultiSelectFieldRendersMultipleSelectionControls() async {
+    @Test @MainActor func testDynamicMultiSelectFieldRendersMultipleSelectionControls() async {
+        initializeTestConfig()
         // TDD: DynamicMultiSelectField should render a VStack with:
         // 1. A Text label showing "Interests"
         // 2. Multiple Toggle controls for options ["Reading", "Sports", "Music"]
@@ -558,7 +567,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicRadioField Tests
     
-    @Test func testDynamicRadioFieldRendersRadioButtonGroup() async {
+    @Test @MainActor func testDynamicRadioFieldRendersRadioButtonGroup() async {
+        initializeTestConfig()
         // TDD: DynamicRadioField should render a VStack with:
         // 1. A Text label showing "Gender"
         // 2. Radio button style Picker with options ["Male", "Female", "Other"]
@@ -625,7 +635,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicCheckboxField Tests
     
-    @Test func testDynamicCheckboxFieldRendersToggleControl() async {
+    @Test @MainActor func testDynamicCheckboxFieldRendersToggleControl() async {
+        initializeTestConfig()
         // TDD: DynamicCheckboxField should render a VStack with:
         // 1. A Text label showing "Subscribe to Newsletter"
         // 2. A Toggle control bound to boolean form state
@@ -691,7 +702,8 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - DynamicToggleField Tests
     
-    @Test func testDynamicToggleFieldRendersToggleControl() async {
+    @Test @MainActor func testDynamicToggleFieldRendersToggleControl() async {
+        initializeTestConfig()
         // TDD: DynamicToggleField should render a VStack with:
         // 1. A Text label showing "Enable Feature"
         // 2. A Toggle control bound to boolean form state

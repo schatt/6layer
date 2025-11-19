@@ -35,7 +35,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Form Wizard")
 open class FormWizardTests: BaseTestClass {
     

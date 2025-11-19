@@ -5,7 +5,7 @@ import SwiftUI
 /// BUSINESS PURPOSE: Accessibility tests for hierarchical and temporal data functions in PlatformSemanticLayer1.swift
 /// Ensures hierarchical and temporal data presentation functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Semantic Layer Hierarchical Temporal Accessibility")
 open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTestClass {
     
@@ -28,7 +28,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     
     /// BUSINESS PURPOSE: Validates that platformPresentHierarchicalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         // Given
         let testData = GenericHierarchicalItem(
             title: "Root Item",
@@ -74,7 +75,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     
     /// BUSINESS PURPOSE: Validates that platformPresentHierarchicalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         // Given
         let testData = GenericHierarchicalItem(
             title: "Root Item",
@@ -122,7 +124,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     
     /// BUSINESS PURPOSE: Validates that platformPresentTemporalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
         // Given
         let testData = GenericTemporalItem(
             title: "Event 1",
@@ -165,7 +168,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     
     /// BUSINESS PURPOSE: Validates that platformPresentTemporalData_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentTemporalDataL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
         // Given
         let testData = GenericTemporalItem(
             title: "Event 1",
@@ -209,7 +213,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     // MARK: - Hierarchical Data Variant Tests
     
     /// Test platformPresentHierarchicalData_L1 with EnhancedPresentationHints variant
-    @Test func testPlatformPresentHierarchicalDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = GenericHierarchicalItem(
             title: "Root Item",
             level: 0,
@@ -253,7 +258,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     }
     
     /// Test platformPresentHierarchicalData_L1 with custom view variant
-    @Test func testPlatformPresentHierarchicalDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+                initializeTestConfig()
         let testData = GenericHierarchicalItem(
             title: "Root Item",
             level: 0,
@@ -301,7 +307,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     }
     
     /// Test platformPresentHierarchicalData_L1 with enhanced hints and custom view variant
-    @Test func testPlatformPresentHierarchicalDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+                initializeTestConfig()
         let testData = GenericHierarchicalItem(
             title: "Root Item",
             level: 0,
@@ -350,7 +357,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     }
     
     /// Test platformPresentHierarchicalData_L1 single-item variant (delegates to array version)
-    @Test func testPlatformPresentHierarchicalDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = GenericHierarchicalItem(
             title: "Root Item",
             level: 0,
@@ -394,7 +402,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     // MARK: - Temporal Data Variant Tests
     
     /// Test platformPresentTemporalData_L1 with EnhancedPresentationHints variant
-    @Test func testPlatformPresentTemporalDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentTemporalDataL1WithEnhancedHintsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = GenericTemporalItem(
             title: "Event 1",
             date: Date(),
@@ -435,7 +444,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     }
     
     /// Test platformPresentTemporalData_L1 with custom view variant
-    @Test func testPlatformPresentTemporalDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentTemporalDataL1WithCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = GenericTemporalItem(
             title: "Event 1",
             date: Date(),
@@ -481,7 +491,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     }
     
     /// Test platformPresentTemporalData_L1 with enhanced hints and custom view variant
-    @Test func testPlatformPresentTemporalDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentTemporalDataL1WithEnhancedHintsAndCustomViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = GenericTemporalItem(
             title: "Event 1",
             date: Date(),
@@ -528,7 +539,8 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
     }
     
     /// Test platformPresentTemporalData_L1 single-item variant (delegates to array version)
-    @Test func testPlatformPresentTemporalDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPresentTemporalDataL1SingleItemGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         let testData = GenericTemporalItem(
             title: "Event 1",
             date: Date(),

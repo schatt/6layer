@@ -12,7 +12,7 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Platform Optimization")
 open class Layer6PlatformOptimizationTests: BaseTestClass {
     

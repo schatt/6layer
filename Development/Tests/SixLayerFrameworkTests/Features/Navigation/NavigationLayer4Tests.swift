@@ -14,13 +14,13 @@ import ViewInspector
 
 import SwiftUI
 @testable import SixLayerFramework
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Navigation Layer")
 open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Navigation Link Tests
     
-    @Test func testPlatformNavigationLink_L4_BasicDestination() {
+    @Test @MainActor func testPlatformNavigationLink_L4_BasicDestination() {
         // Given: Basic navigation link with destination
         let destination = Text("Destination View")
         let label = Text("Navigate")
@@ -87,7 +87,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformNavigationLink_L4_WithTitleAndSystemImage() {
+    @Test @MainActor func testPlatformNavigationLink_L4_WithTitleAndSystemImage() {
         // Given: Navigation link with title and system image
         let title = "Settings"
         let systemImage = "gear"
@@ -109,7 +109,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Navigation link with title and system image should be created")  // link is non-optional
     }
     
-    @Test func testPlatformNavigationLink_L4_WithValue() {
+    @Test @MainActor func testPlatformNavigationLink_L4_WithValue() {
         // Given: Navigation link with value
         let value: String? = "test-value"
         let label = Text("Navigate to Value")
@@ -125,7 +125,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Navigation link with value should be created")  // link is non-optional
     }
     
-    @Test func testPlatformNavigationLink_L4_WithNilValue() {
+    @Test @MainActor func testPlatformNavigationLink_L4_WithNilValue() {
         // Given: Navigation link with nil value
         let value: String? = nil
         let label = Text("Navigate to Nil")
@@ -141,7 +141,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Navigation link with nil value should be created")  // link is non-optional
     }
     
-    @Test func testPlatformNavigationLink_L4_WithTagAndSelection() {
+    @Test @MainActor func testPlatformNavigationLink_L4_WithTagAndSelection() {
         // Given: Navigation link with tag and selection
         let tag = "test-tag"
         let selection = Binding<String?>(get: { nil }, set: { _ in })
@@ -161,7 +161,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Navigation link with tag should be created")  // link is non-optional
     }
     
-    @Test func testPlatformNavigationLink_L4_WithDifferentTagTypes() {
+    @Test @MainActor func testPlatformNavigationLink_L4_WithDifferentTagTypes() {
         // Given: Different tag types
         let stringTag = "string-tag"
         let intTag = 42
@@ -201,7 +201,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Navigation Bar Items Tests
     
-    @Test func testPlatformNavigationBarItems_L4_TrailingItem() {
+    @Test @MainActor func testPlatformNavigationBarItems_L4_TrailingItem() {
         // Given: Navigation bar items with trailing item
         let trailingItem = Button("Save") { }
         
@@ -213,7 +213,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "View with navigation bar items should be created")  // view is non-optional
     }
     
-    @Test func testPlatformNavigationBarItems_L4_WithDifferentTrailingItems() {
+    @Test @MainActor func testPlatformNavigationBarItems_L4_WithDifferentTrailingItems() {
         // Given: Different types of trailing items
         let buttonItem = Button("Action") { }
         let textItem = Text("Info")
@@ -237,7 +237,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Navigation Container Tests
     
-    @Test func testPlatformNavigationContainer() {
+    @Test @MainActor func testPlatformNavigationContainer() {
         // Given: Content to wrap in navigation container
         let content = Text("Navigation Content")
         
@@ -284,7 +284,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformNavigationContainer_WithComplexContent() {
+    @Test @MainActor func testPlatformNavigationContainer_WithComplexContent() {
         // Given: Complex content to wrap
         let complexContent = VStack {
             Text("Title")
@@ -304,7 +304,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Navigation Destination Tests
     
-    @Test func testPlatformNavigationDestination() {
+    @Test @MainActor func testPlatformNavigationDestination() {
         // Given: Navigation destination with item
         let item = Binding<TestItem?>(get: { TestItem(title: "test-item") }, set: { _ in })
         
@@ -318,7 +318,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Navigation destination should be created")  // destination is non-optional
     }
     
-    @Test func testPlatformNavigationDestination_WithNilItem() {
+    @Test @MainActor func testPlatformNavigationDestination_WithNilItem() {
         // Given: Navigation destination with nil item
         let item = Binding<TestItem?>(get: { nil }, set: { _ in })
         
@@ -332,7 +332,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Navigation destination with nil item should be created")  // destination is non-optional
     }
     
-    @Test func testPlatformNavigationDestination_WithDifferentItemTypes() {
+    @Test @MainActor func testPlatformNavigationDestination_WithDifferentItemTypes() {
         // Given: Different item types
         let item1 = Binding<TestItem?>(get: { TestItem(title: "string") }, set: { _ in })
         let item2 = Binding<TestItem?>(get: { TestItem(title: "number") }, set: { _ in })
@@ -362,7 +362,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Platform Navigation Tests
     
-    @Test func testPlatformNavigation_Basic() {
+    @Test @MainActor func testPlatformNavigation_Basic() {
         // Given: Content to wrap in platform navigation
         let content = Text("Navigation Content")
         
@@ -400,7 +400,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformNavigation_WithComplexContent() {
+    @Test @MainActor func testPlatformNavigation_WithComplexContent() {
         // Given: Complex content
         let complexContent = VStack {
             Text("Title")
@@ -420,7 +420,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testNavigationComponents_Integration() {
+    @Test @MainActor func testNavigationComponents_Integration() {
         // Given: Multiple navigation components
         let isActive = Binding<Bool>(get: { false }, set: { _ in })
         let selection = Binding<String?>(get: { nil }, set: { _ in })
@@ -457,7 +457,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Integrated navigation view should be created")  // integratedView is non-optional
     }
     
-    @Test func testNavigationComponents_WithStateManagement() {
+    @Test @MainActor func testNavigationComponents_WithStateManagement() {
         // Given: State management for navigation
         let isActive = Binding<Bool>(get: { false }, set: { _ in })
         let selection = Binding<String?>(get: { nil }, set: { _ in })
@@ -497,7 +497,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling
     
-    @Test func testNavigationComponents_EmptyContent() {
+    @Test @MainActor func testNavigationComponents_EmptyContent() {
         // Given: Empty content
         let emptyContent = EmptyView()
         
@@ -515,7 +515,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Empty container should be created")  // emptyContainer is non-optional
     }
     
-    @Test func testNavigationComponents_WithNilBindings() {
+    @Test @MainActor func testNavigationComponents_WithNilBindings() {
         // Given: Nil bindings
         let nilIsActive = Binding<Bool>(get: { false }, set: { _ in })
         let nilSelection = Binding<String?>(get: { nil }, set: { _ in })

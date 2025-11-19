@@ -11,14 +11,15 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Intelligent Form View Component Accessibility")
 open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - IntelligentFormView Tests
     
-    @Test func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Sample data for form generation
             struct SampleData {
                 let name: String
@@ -53,8 +54,9 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - IntelligentDetailView Tests
     
-    @Test func testIntelligentDetailViewGeneratesAccessibilityIdentifiers() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testIntelligentDetailViewGeneratesAccessibilityIdentifiers() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
             // Given: Test detail data
             let detailData = IntelligentDetailData(
                 id: "detail-1",

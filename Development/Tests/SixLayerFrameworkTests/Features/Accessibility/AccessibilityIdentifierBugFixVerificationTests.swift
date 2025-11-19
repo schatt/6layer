@@ -24,7 +24,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify the exact bug scenario from the user's report is now fixed
     /// TESTING SCOPE: Tests the specific configuration and usage pattern that was failing
     /// METHODOLOGY: Reproduces the exact scenario and verifies identifiers are generated
-    @Test func testBugReportScenarioIsFixed() async {
+    @Test @MainActor func testBugReportScenarioIsFixed() async {
         // Given: Exact configuration from the user's bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -74,7 +74,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that .named() modifier generates accessibility identifiers
     /// TESTING SCOPE: Tests ONLY the .named() modifier functionality (without screen context)
     /// METHODOLOGY: Tests the .named() modifier in isolation
-    @Test func testNamedModifierGeneratesIdentifiers() async {
+    @Test @MainActor func testNamedModifierGeneratesIdentifiers() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -109,7 +109,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Verify that .named() modifier respects screen context when combined
     /// METHODOLOGY: Tests that .named() modifier respects previously set screen context
-    @Test func testNamedModifierWithScreenContext() async {
+    @Test @MainActor func testNamedModifierWithScreenContext() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -138,7 +138,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     
     /// TESTING SCOPE: Tests that screen context modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    @Test func testScreenContextGeneratesIdentifiers() async {
+    @Test @MainActor func testScreenContextGeneratesIdentifiers() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -171,7 +171,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     
     /// TESTING SCOPE: Tests that navigation state modifiers work correctly
     /// METHODOLOGY: Tests the specific modifier that was failing in the bug report
-    @Test func testNavigationStateGeneratesIdentifiers() async {
+    @Test @MainActor func testNavigationStateGeneratesIdentifiers() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -205,7 +205,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that manual accessibility identifiers still work (regression test)
     /// TESTING SCOPE: Tests that manual identifiers continue to work as before
     /// METHODOLOGY: Tests that the fix doesn't break existing functionality
-    @Test func testManualAccessibilityIdentifiersStillWork() async {
+    @Test @MainActor func testManualAccessibilityIdentifiersStillWork() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -244,7 +244,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that the fix enables proper identifier generation
     /// TESTING SCOPE: Tests that the root cause has been addressed
     /// METHODOLOGY: Tests that globalAutomaticAccessibilityIdentifiers is properly set
-    @Test func testGlobalAutomaticAccessibilityIdentifiersIsSet() async {
+    @Test @MainActor func testGlobalAutomaticAccessibilityIdentifiersIsSet() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -283,7 +283,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that the fix doesn't break existing global modifier usage
     /// TESTING SCOPE: Tests that .enableGlobalAutomaticCompliance() still works
     /// METHODOLOGY: Tests that the fix doesn't interfere with existing functionality
-    @Test func testGlobalModifierStillWorks() async {
+    @Test @MainActor func testGlobalModifierStillWorks() async {
         // Given: Configuration matching the bug report
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true
@@ -304,7 +304,7 @@ open class AccessibilityIdentifierBugFixVerificationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify that the fix enables proper identifier generation with context
     /// TESTING SCOPE: Tests that identifiers are generated with proper context information
     /// METHODOLOGY: Tests that the Enhanced Breadcrumb System now works correctly
-    @Test func testIdentifiersGeneratedWithProperContext() async {
+    @Test @MainActor func testIdentifiersGeneratedWithProperContext() async {
         // Given: Configuration with enhanced features enabled
         let config = AccessibilityIdentifierConfig.shared
         config.enableAutoIDs = true

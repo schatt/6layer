@@ -4,13 +4,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Debug test to understand environment variable propagation
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Environment Variable Debug")
 open class EnvironmentVariableDebugTests: BaseTestClass {
 
     // BaseTestClass handles setup automatically - no need for custom init
     
-    @Test func testEnvironmentVariablePropagation() {
+    @Test @MainActor func testEnvironmentVariablePropagation() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             
             // Test: Does the environment variable get set properly?
@@ -50,7 +51,8 @@ open class EnvironmentVariableDebugTests: BaseTestClass {
         }
     }
     
-    @Test func testDirectEnvironmentVariableSetting() {
+    @Test @MainActor func testDirectEnvironmentVariableSetting() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Test: Does setting the environment variable directly work?
             

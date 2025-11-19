@@ -11,13 +11,13 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Photo Components Layer Component Accessibility")
 open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Photo Components Layer 4 Tests
     
-    @Test func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPhotoComponentsLayer4GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPhotoComponentsLayer4
         
         

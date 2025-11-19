@@ -30,7 +30,7 @@ import AppKit
 @testable import SixLayerFramework
 
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class TestingFailureDemonstrationTests: BaseTestClass {
     
     // MARK: - Demonstration of Testing Failure
@@ -38,7 +38,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate our improved testing approach
     /// TESTING SCOPE: Shows that we now test callbacks directly in unit tests
     /// METHODOLOGY: Test callback function directly and verify API signature
-    @Test func testCurrentTestingApproach_DoesNotExecuteCallbacks() {
+    @Test @MainActor func testCurrentTestingApproach_DoesNotExecuteCallbacks() {
         // Given: Test image and callback function
         let testImage = createTestPlatformImage()
         var callbackExecuted = false
@@ -92,7 +92,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate what proper testing should look like
     /// TESTING SCOPE: Shows what we should have been testing
     /// METHODOLOGY: Execute the actual callback code that was broken
-    @Test func testProperTestingApproach_ExecutesCallbacks() {
+    @Test @MainActor func testProperTestingApproach_ExecutesCallbacks() {
         // Given: Proper testing approach
         var callbackExecuted = false
         var capturedImage: PlatformImage?
@@ -146,7 +146,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate the exact testing gap
     /// TESTING SCOPE: Shows the difference between what we test vs what we should test
     /// METHODOLOGY: Compare current tests vs proper tests
-    @Test func testTestingGapDemonstration() {
+    @Test @MainActor func testTestingGapDemonstration() {
         // Given: The exact code that was broken
         #if os(iOS)
         let testImage = createTestUIImage()
@@ -179,7 +179,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate what tests would have caught the breaking change
     /// TESTING SCOPE: Shows the specific tests that would have failed
     /// METHODOLOGY: Execute the exact code that was broken
-    @Test func testWhatWouldHaveCaughtTheBreakingChange() {
+    @Test @MainActor func testWhatWouldHaveCaughtTheBreakingChange() {
         // Given: The exact code that was broken in 4.6.2
         #if os(iOS)
         let testImage = createTestUIImage()
@@ -214,7 +214,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Demonstrate the testing architecture failure
     /// TESTING SCOPE: Shows the fundamental problem with our testing approach
     /// METHODOLOGY: Compare our testing approach vs proper testing
-    @Test func testTestingArchitectureFailure() {
+    @Test @MainActor func testTestingArchitectureFailure() {
         // Given: Our testing approach vs proper testing approach
         
         // Our current approach: Test the wrapper

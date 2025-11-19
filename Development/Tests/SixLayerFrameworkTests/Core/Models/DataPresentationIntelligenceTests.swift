@@ -2,7 +2,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Data Presentation Intelligence")
 open class DataPresentationIntelligenceTests: BaseTestClass {
     

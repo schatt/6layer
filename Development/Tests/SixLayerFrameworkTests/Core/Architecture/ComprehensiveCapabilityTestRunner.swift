@@ -38,7 +38,7 @@ import SwiftUI
 
 /// Comprehensive Capability Test Runner
 /// Demonstrates the new testing methodology that tests both sides of every capability branch
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 struct ComprehensiveCapabilityTestRunner {
     // MARK: - Test Setup
     
@@ -126,7 +126,7 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Run all comprehensive capability tests
     
-@Test func testAllComprehensiveCapabilityTests() async {
+@Test @MainActor func testAllComprehensiveCapabilityTests() async {
         await setupTestEnvironment()
         defer { Task { await cleanupTestEnvironment() } }
         

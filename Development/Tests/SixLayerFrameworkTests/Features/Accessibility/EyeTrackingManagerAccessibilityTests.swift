@@ -13,7 +13,8 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using EyeTrackingManager generate proper accessibility identifiers
     /// Tests views with EyeTrackingModifier which uses EyeTrackingManager internally
-    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() {
+    @Test @MainActor func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnIOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with EyeTrackingModifier (which uses EyeTrackingManager)
             let view = VStack {
@@ -43,7 +44,8 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that views using EyeTrackingManager generate proper accessibility identifiers
     /// Tests views with EyeTrackingModifier which uses EyeTrackingManager internally
-    @Test func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+    @Test @MainActor func testEyeTrackingManagerGeneratesAccessibilityIdentifiersOnMacOS() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with EyeTrackingModifier (which uses EyeTrackingManager)
             let view = VStack {

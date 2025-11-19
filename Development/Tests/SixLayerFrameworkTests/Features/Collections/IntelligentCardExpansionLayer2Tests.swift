@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All functions in IntelligentCardExpansionLayer2.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Intelligent Card Expansion Layer")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class IntelligentCardExpansionLayer2Tests: BaseTestClass {
     
     // MARK: - Test Setup

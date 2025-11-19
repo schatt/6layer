@@ -8,7 +8,7 @@ import AppKit
 @testable import SixLayerFramework
 /// TDD Red Phase: REAL Test for OCROverlayView
 /// This test SHOULD FAIL - proving OCROverlayView doesn't generate accessibility IDs
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("OCR Overlay View Real Accessibility")
 open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
     

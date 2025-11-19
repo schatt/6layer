@@ -2,7 +2,7 @@ import Testing
 
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Six Layer Framework")
 open class SixLayerFrameworkTests: BaseTestClass {
     

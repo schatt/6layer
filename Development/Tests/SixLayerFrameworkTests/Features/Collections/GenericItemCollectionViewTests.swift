@@ -9,11 +9,12 @@ import SwiftUI
 /// TESTING SCOPE: GenericItemCollectionView component from PlatformSemanticLayer1.swift
 /// METHODOLOGY: Test component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Generic Item Collection View")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class GenericItemCollectionViewTests: BaseTestClass {
     
-    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let testItems = [
                 GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),
@@ -41,8 +42,9 @@ open class GenericItemCollectionViewTests: BaseTestClass {
     }
 
     
-    @Test func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testGenericItemCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let testItems = [
                 GenericItemCollectionViewTestItem(id: "item1", title: "Test Item 1"),

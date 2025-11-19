@@ -36,7 +36,7 @@ import Foundation
 
 /// Platform simulation tests that can test different platform combinations
 /// without requiring actual hardware for each platform
-@MainActor
+/// NOTE: Not marked @MainActor to allow parallel execution - these tests don't need UI access
 @Suite("Platform Simulation")
 open class PlatformSimulationTests: BaseTestClass {
     

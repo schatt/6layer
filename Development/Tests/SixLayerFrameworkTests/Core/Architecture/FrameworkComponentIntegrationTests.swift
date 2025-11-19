@@ -5,13 +5,14 @@ import SwiftUI
 @testable import SixLayerFramework
 /// Integration Tests for Framework Component Accessibility
 /// Tests that components can be created and work in real view hierarchies
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Framework Component Integration")
 open class FrameworkComponentIntegrationTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically - no singleton access needed    // MARK: - Components That Work (Have .automaticAccessibility())
     
-    @Test func testPlatformPresentContentL1CanBeCreated() {
+    @Test @MainActor func testPlatformPresentContentL1CanBeCreated() {
+            initializeTestConfig()
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let contentView = platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
         
@@ -26,7 +27,8 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
         #expect(Bool(true), "platformPresentContent_L1 should work in view hierarchy")  // testView is non-optional
     }
     
-    @Test func testPlatformPresentBasicValueL1CanBeCreated() {
+    @Test @MainActor func testPlatformPresentBasicValueL1CanBeCreated() {
+            initializeTestConfig()
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let valueView = platformPresentBasicValue_L1(value: 42, hints: PresentationHints())
         
@@ -41,7 +43,8 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
         #expect(Bool(true), "platformPresentBasicValue_L1 should work in view hierarchy")  // testView is non-optional
     }
     
-    @Test func testPlatformPresentBasicArrayL1CanBeCreated() {
+    @Test @MainActor func testPlatformPresentBasicArrayL1CanBeCreated() {
+            initializeTestConfig()
         // TDD Green Phase: This SHOULD PASS - has .automaticAccessibility()
         let arrayView = platformPresentBasicArray_L1(array: [1, 2, 3], hints: PresentationHints())
         
@@ -58,7 +61,8 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
     
     // MARK: - Components That Should Have .automaticAccessibility()
     
-    @Test func testPlatformPresentItemCollectionL1CanBeCreated() {
+    @Test @MainActor func testPlatformPresentItemCollectionL1CanBeCreated() {
+            initializeTestConfig()
         // Component can be created but should have .automaticAccessibility() for accessibility
         let mockItems = [
             MockTaskItemIntegration(id: "task1", title: "Test Task 1"),
@@ -91,7 +95,8 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
     
     // MARK: - Integration Test: Test Components in Real View Hierarchy
     
-    @Test func testFrameworkComponentsWorkInRealViewHierarchy() {
+    @Test @MainActor func testFrameworkComponentsWorkInRealViewHierarchy() {
+            initializeTestConfig()
         // Test that multiple framework components can work together
         let mockItems = [
             MockTaskItemIntegration(id: "task1", title: "Test Task 1"),

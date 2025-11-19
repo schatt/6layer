@@ -11,7 +11,7 @@ import SwiftUI
 //
 
 @Suite("Layer Component Accessibility")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class Layer6ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Layer 6 Optimization Component Tests

@@ -4,10 +4,11 @@ import SwiftUI
 
 /// Simple test to demonstrate green phase - basic functionality works
 @Suite("Green Phase Tests")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class GreenPhaseTest: BaseTestClass {
 
-    @Test func testBasicViewCreation() {
+    @Test @MainActor func testBasicViewCreation() {
+        initializeTestConfig()
         // Given: Simple test data
         let testItems = [
             TestItem(id: "1", title: "Test Item 1"),

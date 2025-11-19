@@ -9,7 +9,7 @@ import SwiftUI
 /// TESTING SCOPE: All components in ResponsiveContainer.swift
 /// METHODOLOGY: Test each component on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Responsive Container")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class ResponsiveContainerTests: BaseTestClass {
     
     // MARK: - Test Setup
@@ -23,7 +23,7 @@ open class ResponsiveContainerTests: BaseTestClass {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }
     
-@Test func testResponsiveContainerGeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testResponsiveContainerGeneratesAccessibilityIdentifiersOnIOS() async {
         let view = ResponsiveContainer { isHorizontal, isVertical in
             Text("Test Content")
         }
@@ -42,7 +42,7 @@ open class ResponsiveContainerTests: BaseTestClass {
         #endif
     }
     
-    @Test func testResponsiveContainerGeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testResponsiveContainerGeneratesAccessibilityIdentifiersOnMacOS() async {
         let view = ResponsiveContainer { isHorizontal, isVertical in
             Text("Test Content")
         }

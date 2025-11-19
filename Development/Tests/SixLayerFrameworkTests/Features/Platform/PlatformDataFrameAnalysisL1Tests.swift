@@ -38,13 +38,14 @@ import Foundation
 @testable import SixLayerFramework
 import TabularData
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform Data Frame Analysis L")
 open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - Basic DataFrame Analysis Tests
     
-    @Test func testPlatformAnalyzeDataFrame_L1_Basic() {
+    @Test @MainActor func testPlatformAnalyzeDataFrame_L1_Basic() {
+        initializeTestConfig()
         // Given: A test DataFrame
         let hints = DataFrameAnalysisHints()
         
@@ -55,7 +56,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testPlatformAnalyzeDataFrame_L1_WithHints() {
+    @Test @MainActor func testPlatformAnalyzeDataFrame_L1_WithHints() {
+        initializeTestConfig()
         // Given: A test DataFrame with specific hints
         let hints = DataFrameAnalysisHints(
             focusAreas: [.dataQuality, .statisticalAnalysis],
@@ -70,7 +72,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testPlatformAnalyzeDataFrame_L1_EmptyDataFrame() {
+    @Test @MainActor func testPlatformAnalyzeDataFrame_L1_EmptyDataFrame() {
+        initializeTestConfig()
         // Given: An empty DataFrame
         let emptyDataFrame = DataFrame()
         let hints = DataFrameAnalysisHints()
@@ -84,7 +87,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - DataFrame Comparison Tests
     
-    @Test func testPlatformCompareDataFrames_L1_Basic() {
+    @Test @MainActor func testPlatformCompareDataFrames_L1_Basic() {
+        initializeTestConfig()
         // Given: Multiple test DataFrames
         let dataFrames = [createTestDataFrame(), createTestDataFrame2()]
         let hints = DataFrameAnalysisHints()
@@ -96,7 +100,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testPlatformCompareDataFrames_L1_SingleDataFrame() {
+    @Test @MainActor func testPlatformCompareDataFrames_L1_SingleDataFrame() {
+        initializeTestConfig()
         // Given: Single DataFrame
         let dataFrames = [createTestDataFrame()]
         let hints = DataFrameAnalysisHints()

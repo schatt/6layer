@@ -18,7 +18,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
     /// BUSINESS PURPOSE: Validates that platformPhotoPicker_L4 returns the correct platform-specific implementation
     /// This test actually verifies that the compile-time platform detection works correctly
     /// NOTE: ViewInspector may not be available on all platforms
-    @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
+    @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS]) @MainActor
     func testPlatformPhotoPickerL4ReturnsCorrectPlatformImplementation(
         platform: SixLayerPlatform
     ) async {
@@ -98,7 +98,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
     
     /// BUSINESS PURPOSE: Validates that platformPhotoEditor_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testPhoto = PlatformImage()
         

@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Comprehensive tests for Layer 4 View extension functions
 /// Ensures all View extension functions in Layer 4 are tested
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer View Extension")
 open class Layer4ViewExtensionTests: BaseTestClass {
     
@@ -52,7 +52,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFormFieldGroup Tests
     
-    @Test func testPlatformFormFieldGroup_WithTitle() async {
+    @Test @MainActor func testPlatformFormFieldGroup_WithTitle() async {
         let view = Text("Group Content")
             .platformFormFieldGroup(title: "Test Group") {
                 Text("Group Content")
@@ -72,7 +72,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFormFieldGroup_WithoutTitle() async {
+    @Test @MainActor func testPlatformFormFieldGroup_WithoutTitle() async {
         let view = Text("Group Content")
             .platformFormFieldGroup {
                 Text("Group Content")
@@ -94,7 +94,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformValidationMessage Tests
     
-    @Test func testPlatformValidationMessage_Error() async {
+    @Test @MainActor func testPlatformValidationMessage_Error() async {
         let view = Text("Test")
             .platformValidationMessage("Error message", type: .error)
         
@@ -112,7 +112,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformValidationMessage_AllTypes() async {
+    @Test @MainActor func testPlatformValidationMessage_AllTypes() async {
         let types: [ValidationType] = [.error, .warning, .success, .info]
         
         for type in types {
@@ -135,7 +135,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFormDivider Tests
     
-    @Test func testPlatformFormDivider() async {
+    @Test @MainActor func testPlatformFormDivider() async {
         let view = Text("Test")
             .platformFormDivider()
         
@@ -155,7 +155,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFormSpacing Tests
     
-    @Test func testPlatformFormSpacing_AllSizes() async {
+    @Test @MainActor func testPlatformFormSpacing_AllSizes() async {
         let sizes: [FormSpacing] = [.small, .medium, .large, .extraLarge]
         
         for size in sizes {
@@ -178,7 +178,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigation Tests
     
-    @Test func testPlatformNavigation() async {
+    @Test @MainActor func testPlatformNavigation() async {
         let view = Text("Content")
             .platformNavigation {
                 Text("Content")
@@ -200,7 +200,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigationContainer Tests
     
-    @Test func testPlatformNavigationContainer() async {
+    @Test @MainActor func testPlatformNavigationContainer() async {
         let view = Text("Content")
             .platformNavigationContainer {
                 Text("Content")
@@ -222,7 +222,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigationDestination Tests
     
-    @Test func testPlatformNavigationDestination() async {
+    @Test @MainActor func testPlatformNavigationDestination() async {
         struct TestItem: Identifiable, Hashable {
             let id = UUID()
         }
@@ -249,7 +249,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigationButton Tests
     
-    @Test func testPlatformNavigationButton() async {
+    @Test @MainActor func testPlatformNavigationButton() async {
         var buttonPressed = false
         let view = Text("Content")
             .platformNavigationButton(
@@ -276,7 +276,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigationTitle Tests
     
-    @Test func testPlatformNavigationTitle() async {
+    @Test @MainActor func testPlatformNavigationTitle() async {
         let view = Text("Content")
             .platformNavigationTitle("Test Title")
         
@@ -296,7 +296,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigationTitleDisplayMode Tests
     
-    @Test func testPlatformNavigationTitleDisplayMode() async {
+    @Test @MainActor func testPlatformNavigationTitleDisplayMode() async {
         let modes: [PlatformTitleDisplayMode] = [.automatic, .inline, .large]
         
         for mode in modes {
@@ -319,7 +319,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformNavigationBarTitleDisplayMode Tests
     
-    @Test func testPlatformNavigationBarTitleDisplayMode() async {
+    @Test @MainActor func testPlatformNavigationBarTitleDisplayMode() async {
         let modes: [PlatformTitleDisplayMode] = [.automatic, .inline, .large]
         
         for mode in modes {
@@ -644,7 +644,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFrame Tests
     
-    @Test func testPlatformMinFrame() async {
+    @Test @MainActor func testPlatformMinFrame() async {
         let view = Text("Content")
             .platformMinFrame()
         
@@ -662,7 +662,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformMaxFrame() async {
+    @Test @MainActor func testPlatformMaxFrame() async {
         let view = Text("Content")
             .platformMaxFrame()
         
@@ -680,7 +680,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformIdealFrame() async {
+    @Test @MainActor func testPlatformIdealFrame() async {
         let view = Text("Content")
             .platformIdealFrame()
         
@@ -698,7 +698,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformAdaptiveFrame() async {
+    @Test @MainActor func testPlatformAdaptiveFrame() async {
         let view = Text("Content")
             .platformAdaptiveFrame()
         
@@ -718,7 +718,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformFormStyle Tests
     
-    @Test func testPlatformFormStyle() async {
+    @Test @MainActor func testPlatformFormStyle() async {
         let view = Text("Content")
             .platformFormStyle()
         
@@ -738,7 +738,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformContentSpacing Tests
     
-    @Test func testPlatformContentSpacing() async {
+    @Test @MainActor func testPlatformContentSpacing() async {
         let view = Text("Content")
             .platformContentSpacing()
         
@@ -758,7 +758,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformPhotoPicker_L4 Tests
     
-    @Test func testPlatformPhotoPicker_L4() async {
+    @Test @MainActor func testPlatformPhotoPicker_L4() async {
         var imageSelected: PlatformImage?
         let view = platformPhotoPicker_L4 { image in
             imageSelected = image
@@ -780,7 +780,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformCameraInterface_L4 Tests
     
-    @Test func testPlatformCameraInterface_L4() async {
+    @Test @MainActor func testPlatformCameraInterface_L4() async {
         var imageCaptured: PlatformImage?
         let view = platformCameraInterface_L4 { image in
             imageCaptured = image
@@ -802,7 +802,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     
     // MARK: - platformPhotoDisplay_L4 Tests
     
-    @Test func testPlatformPhotoDisplay_L4() async {
+    @Test @MainActor func testPlatformPhotoDisplay_L4() async {
         let testImage = PlatformImage()
         let styles: [PhotoDisplayStyle] = [.thumbnail, .aspectFit, .fullSize, .rounded]
         

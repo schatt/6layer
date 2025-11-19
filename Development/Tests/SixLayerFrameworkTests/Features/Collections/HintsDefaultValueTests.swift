@@ -5,7 +5,7 @@ import SwiftUI
 
 /// Tests for hints default value feature
 /// All features are implemented and tests are passing
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Hints Default Value")
 struct HintsDefaultValueTests {
     
@@ -130,7 +130,7 @@ struct HintsDefaultValueTests {
     }
     
     /// Test that hints with default values take precedence over CardDisplayable protocol
-    @Test func testHintsDefaultValuesTakePrecedenceOverCardDisplayable() async {
+    @Test @MainActor func testHintsDefaultValuesTakePrecedenceOverCardDisplayable() async {
         // Given: Entity with nil values, CardDisplayable implementation, and hints with default values
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
         let hints = PresentationHints(
@@ -152,7 +152,8 @@ struct HintsDefaultValueTests {
     }
     
     /// Test that hints with default values work with non-string properties
-    @Test func testHintsWithDefaultValuesForNonStringProperties() async {
+    @Test @MainActor func testHintsWithDefaultValuesForNonStringProperties() async {
+            initializeTestConfig()
         // Given: Entity with non-string values and hints with default values
         struct TestItem: Identifiable, CardDisplayable {
             public let id = UUID()
@@ -196,7 +197,8 @@ struct HintsDefaultValueTests {
     }
     
     /// Test that hints with default values work with color properties
-    @Test func testHintsWithDefaultValuesForColorProperties() async {
+    @Test @MainActor func testHintsWithDefaultValuesForColorProperties() async {
+        initializeTestConfig()
         // Given: Entity with nil color values and hints with default color values
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
         let hints = PresentationHints(
@@ -214,7 +216,8 @@ struct HintsDefaultValueTests {
     }
     
     /// Test that hints with default values work with mixed scenarios
-    @Test func testHintsWithDefaultValuesMixedScenarios() async {
+    @Test @MainActor func testHintsWithDefaultValuesMixedScenarios() async {
+        initializeTestConfig()
         // Given: Entity with mixed nil and valid values, and hints with default values
         let task = CoreDataTask(title: "Valid Title", taskDescription: nil, status: "completed", priority: nil)
         let hints = PresentationHints(
@@ -244,7 +247,8 @@ struct HintsDefaultValueTests {
     }
     
     /// Test that hints with default values work with platformPresentItemCollection_L1
-    @Test func testPlatformPresentItemCollectionWithDefaultValues() async {
+    @Test @MainActor func testPlatformPresentItemCollectionWithDefaultValues() async {
+        initializeTestConfig()
         // Given: Core Data entities with nil values and hints with default values
         let tasks = [
             CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil),

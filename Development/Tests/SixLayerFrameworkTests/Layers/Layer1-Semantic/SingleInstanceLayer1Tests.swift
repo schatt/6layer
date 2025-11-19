@@ -6,7 +6,7 @@ import SwiftUI
 
 /// Tests for single-instance Layer 1 functions
 /// Following TDD principles - these tests define the expected behavior
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Single Instance Layer")
 open class SingleInstanceLayer1Tests: BaseTestClass {
     
@@ -26,7 +26,8 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Single Instance Numeric Data Tests
     
-    @Test func testPlatformPresentNumericData_L1_SingleInstance() {
+    @Test @MainActor func testPlatformPresentNumericData_L1_SingleInstance() {
+        initializeTestConfig()
         // GIVEN: A single GenericNumericData item
         let testHints = createNumericTestHints()
         let singleNumericData = GenericNumericData(
@@ -46,7 +47,8 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         #expect(Bool(true), "Single numeric data view should be hostable")  // hostingView is non-optional
     }
     
-    @Test func testPlatformPresentNumericData_L1_SingleInstance_Consistency() {
+    @Test @MainActor func testPlatformPresentNumericData_L1_SingleInstance_Consistency() {
+        initializeTestConfig()
         // GIVEN: A single GenericNumericData item
         let testHints = createNumericTestHints()
         let singleNumericData = GenericNumericData(
@@ -71,7 +73,8 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Single Instance Media Data Tests
     
-    @Test func testPlatformPresentMediaData_L1_SingleInstance() {
+    @Test @MainActor func testPlatformPresentMediaData_L1_SingleInstance() {
+        initializeTestConfig()
         // GIVEN: A single GenericMediaItem
         let testHints = createNumericTestHints()
         let singleMediaItem = GenericMediaItem(

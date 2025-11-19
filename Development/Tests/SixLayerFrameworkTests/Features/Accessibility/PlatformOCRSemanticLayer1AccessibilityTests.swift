@@ -5,13 +5,14 @@ import SwiftUI
 /// BUSINESS PURPOSE: Accessibility tests for PlatformOCRSemanticLayer1.swift functions
 /// Ensures OCR semantic Layer 1 functions generate proper accessibility identifiers
 /// for automated testing and accessibility tools compliance
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform OCR Semantic Layer Accessibility")
 open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MARK: - OCR Visual Correction Tests
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+                initializeTestConfig()
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -48,7 +49,8 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformOCRWithVisualCorrectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+                initializeTestConfig()
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -85,7 +87,8 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformOCRWithVisualCorrectionArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformOCRWithVisualCorrectionArrayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+                initializeTestConfig()
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(
@@ -122,7 +125,8 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformOCRWithVisualCorrectionArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformOCRWithVisualCorrectionArrayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+                initializeTestConfig()
         // Given
         let testImage = PlatformImage()
         let context = OCRContext(

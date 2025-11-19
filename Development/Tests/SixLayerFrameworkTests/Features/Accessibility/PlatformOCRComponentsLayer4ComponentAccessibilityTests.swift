@@ -11,13 +11,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Platform OCR Components Layer Component Accessibility")
 open class PlatformOCRComponentsLayer4ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform OCR Components Layer 4 Tests
     
-    @Test func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
         // Given: Framework component (testing our framework, not SwiftUI)
         let testView = platformPresentContent_L1(
             content: "OCR Service Test",

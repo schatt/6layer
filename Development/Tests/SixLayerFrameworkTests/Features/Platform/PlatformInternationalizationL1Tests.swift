@@ -9,11 +9,12 @@ import SwiftUI
 /// TESTING SCOPE: All functions in PlatformInternationalizationL1.swift
 /// METHODOLOGY: Test each function on both iOS and macOS platforms as required by mandatory testing guidelines
 @Suite("Platform Internationalization L")
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformInternationalizationL1Tests: BaseTestClass {
     
-@Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+@Test @MainActor func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -38,8 +39,9 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     }
 
     
-    @Test func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -66,8 +68,9 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     
     // MARK: - platformPresentLocalizedText_L1 Tests
     
-    @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -88,8 +91,9 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     }
 
     
-    @Test func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
-        runWithTaskLocalConfig {
+    @Test @MainActor func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+            initializeTestConfig()
+        await runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         

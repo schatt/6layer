@@ -6,7 +6,7 @@ import SwiftUI
 /// TDD Tests for card content display functionality
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Card Content Display")
 open class CardContentDisplayTests: BaseTestClass {
     
@@ -74,7 +74,7 @@ open class CardContentDisplayTests: BaseTestClass {
         // The actual assertion would be done through UI testing or by checking the view's content
     }
     
-    @Test func testSimpleCardComponentDisplaysItemIcon() {
+    @Test @MainActor func testSimpleCardComponentDisplaysItemIcon() {
         // GIVEN: A test item with an icon
         let sampleItems = createCardTestItems()
         let item = sampleItems[0]
@@ -94,7 +94,8 @@ open class CardContentDisplayTests: BaseTestClass {
         #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
-    @Test func testSimpleCardComponentHandlesMissingIcon() {
+    @Test @MainActor func testSimpleCardComponentHandlesMissingIcon() {
+        initializeTestConfig()
         // GIVEN: A test item without an icon
         let sampleItems = createCardTestItems()
         let item = sampleItems[2] // This item has icon: nil
@@ -116,7 +117,7 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - ExpandableCardComponent Tests
     
-    @Test func testExpandableCardComponentDisplaysItemContent() {
+    @Test @MainActor func testExpandableCardComponentDisplaysItemContent() {
         // GIVEN: A test item with title and description
         let sampleItems = createCardTestItems()
         let item = sampleItems[0]
@@ -147,7 +148,8 @@ open class CardContentDisplayTests: BaseTestClass {
         #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
-    @Test func testExpandableCardComponentExpandedContent() {
+    @Test @MainActor func testExpandableCardComponentExpandedContent() {
+                initializeTestConfig()
         // GIVEN: A test item and expanded state
         let sampleItems = createCardTestItems()
         let item = sampleItems[0]
@@ -180,7 +182,8 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - ListCardComponent Tests
     
-    @Test func testListCardComponentDisplaysItemData() {
+    @Test @MainActor func testListCardComponentDisplaysItemData() {
+        initializeTestConfig()
         // GIVEN: A test item
         let sampleItems = createCardTestItems()
         let item = sampleItems[0]
@@ -192,7 +195,8 @@ open class CardContentDisplayTests: BaseTestClass {
         #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
-    @Test func testListCardComponentHandlesMissingSubtitle() {
+    @Test @MainActor func testListCardComponentHandlesMissingSubtitle() {
+        initializeTestConfig()
         // GIVEN: A test item without subtitle
         let sampleItems = createCardTestItems()
         let item = sampleItems[2] // This item has subtitle: nil
@@ -206,7 +210,8 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - MasonryCardComponent Tests
     
-    @Test func testMasonryCardComponentDisplaysItemData() {
+    @Test @MainActor func testMasonryCardComponentDisplaysItemData() {
+        initializeTestConfig()
         // GIVEN: A test item
         let sampleItems = createCardTestItems()
         let item = sampleItems[0]
@@ -220,7 +225,8 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Generic Item Display Tests
     
-    @Test func testCardComponentsWorkWithGenericDataItem() {
+    @Test @MainActor func testCardComponentsWorkWithGenericDataItem() {
+        initializeTestConfig()
         // GIVEN: GenericDataItem instances
         let layoutDecision = createLayoutDecision()
         let genericItems = [
@@ -247,7 +253,8 @@ open class CardContentDisplayTests: BaseTestClass {
         #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
     }
     
-    @Test func testCardComponentsWorkWithGenericVehicle() {
+    @Test @MainActor func testCardComponentsWorkWithGenericVehicle() {
+        initializeTestConfig()
         // GIVEN: GenericDataItem instances (using available types)
         let layoutDecision = createLayoutDecision()
         let vehicles = [
@@ -276,7 +283,8 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Edge Cases
     
-    @Test func testCardComponentsWithEmptyStrings() {
+    @Test @MainActor func testCardComponentsWithEmptyStrings() {
+        initializeTestConfig()
         // GIVEN: Items with empty strings
         let layoutDecision = createLayoutDecision()
         let emptyItem = TestItem(title: "", subtitle: "", description: "", icon: "", color: nil)
@@ -300,7 +308,8 @@ open class CardContentDisplayTests: BaseTestClass {
         #expect(Bool(true), "masonryCard is non-optional")  // masonryCard is non-optional
     }
     
-    @Test func testCardComponentsWithVeryLongText() {
+    @Test @MainActor func testCardComponentsWithVeryLongText() {
+        initializeTestConfig()
         // GIVEN: Items with very long text
         let layoutDecision = createLayoutDecision()
         let longText = String(repeating: "Very long text that should be truncated properly. ", count: 10)
@@ -336,7 +345,7 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - Accessibility Tests
     
-    @Test func testCardComponentsHaveProperAccessibility() {
+    @Test @MainActor func testCardComponentsHaveProperAccessibility() {
         // GIVEN: A test item and layout decision
         let layoutDecision = createLayoutDecision()
         let sampleItems = createCardTestItems()

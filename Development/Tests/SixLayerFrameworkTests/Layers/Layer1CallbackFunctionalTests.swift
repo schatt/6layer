@@ -5,7 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 /// Layer 1 Function Callback Functional Tests
 /// Tests that Layer 1 functions ACTUALLY INVOKE callbacks when expected (Rules 6.1, 6.2, 7.3, 7.4)
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Callback Functional")
 open class Layer1CallbackFunctionalTests: BaseTestClass {
     
@@ -63,7 +63,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentItemCollection_L1 with Enhanced Hints
     
-    @Test func testPlatformPresentItemCollectionL1WithEnhancedHintsCallbacks() async throws {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithEnhancedHintsCallbacks() async throws {
+                initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
         resetCallbacks()
@@ -128,7 +129,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentSettings_L1 Tests
     
-    @Test func testPlatformPresentSettingsL1WithCallbacks() async throws {
+    @Test @MainActor func testPlatformPresentSettingsL1WithCallbacks() async throws {
+                initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         
         resetCallbacks()
@@ -159,7 +161,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentItemCollection_L1 with Custom Views
     
-    @Test func testPlatformPresentItemCollectionL1WithCustomViews() async throws {
+    @Test @MainActor func testPlatformPresentItemCollectionL1WithCustomViews() async throws {
+                initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing
         
         resetCallbacks()
@@ -195,7 +198,7 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentNumericData_L1 Tests
     
-    @Test func testPlatformPresentNumericDataL1() async throws {
+    @Test @MainActor func testPlatformPresentNumericDataL1() async throws {
         // Rule 6.2 & 7.4: Functional testing
         
         let numericData = [
@@ -216,7 +219,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentMediaData_L1 Tests
     
-    @Test func testPlatformPresentMediaDataL1() async throws {
+    @Test @MainActor func testPlatformPresentMediaDataL1() async throws {
+        initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing
         
         let mediaData = [
@@ -237,7 +241,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentHierarchicalData_L1 Tests
     
-    @Test func testPlatformPresentHierarchicalDataL1() async throws {
+    @Test @MainActor func testPlatformPresentHierarchicalDataL1() async throws {
+        initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing
         
         let hierarchicalData = [
@@ -261,7 +266,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformPresentTemporalData_L1 Tests
     
-    @Test func testPlatformPresentTemporalDataL1() async throws {
+    @Test @MainActor func testPlatformPresentTemporalDataL1() async throws {
+        initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing
         
         let temporalData = [
@@ -282,7 +288,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     
     // MARK: - platformResponsiveCard_L1 Tests
     
-    @Test func testPlatformResponsiveCardL1() async throws {
+    @Test @MainActor func testPlatformResponsiveCardL1() async throws {
+                initializeTestConfig()
         // Rule 6.2 & 7.4: Functional testing
         
         let _ = platformResponsiveCard_L1(
@@ -303,7 +310,8 @@ open class Layer1CallbackFunctionalTests: BaseTestClass {
     // MARK: - External Integration Tests
     
     /// Tests that L1 functions are accessible from external modules (Rule 8)
-    @Test func testPlatformPresentItemCollectionL1ExternallyAccessible() async {
+    @Test @MainActor func testPlatformPresentItemCollectionL1ExternallyAccessible() async {
+                initializeTestConfig()
         // This should be in external integration test module
         // Documenting here for now
         let _ = platformPresentItemCollection_L1(

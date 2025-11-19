@@ -4,13 +4,14 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 /// Test that framework components respect global accessibility config
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Framework Component Global Config")
 open class FrameworkComponentGlobalConfigTests: BaseTestClass {
 
     // BaseTestClass handles setup automatically - no need for custom init
     
-    @Test func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
+    @Test @MainActor func testFrameworkComponentsRespectGlobalConfigWhenDisabled() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
@@ -50,7 +51,8 @@ open class FrameworkComponentGlobalConfigTests: BaseTestClass {
         }
     }
     
-    @Test func testFrameworkComponentsGenerateIDsWhenGlobalConfigEnabled() {
+    @Test @MainActor func testFrameworkComponentsGenerateIDsWhenGlobalConfigEnabled() {
+            initializeTestConfig()
         runWithTaskLocalConfig {
             setupTestEnvironment()
             

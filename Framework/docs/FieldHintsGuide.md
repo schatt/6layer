@@ -55,6 +55,8 @@ Create a file named `{YourModelName}.hints` in your project:
 }
 ```
 
+**NEW in v5.3.0**: You can also include OCR hints and calculation groups in hints files! See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.
+
 ### Using Field Hints
 
 #### 1. Create Your Data Model
@@ -139,8 +141,17 @@ public struct FieldDisplayHints: Sendable {
     
     /// Additional metadata
     public let metadata: [String: String]
+    
+    /// OCR hints for field identification (NEW in v5.3.0)
+    public let ocrHints: [String]?
+    
+    /// Calculation groups for computing field values (NEW in v5.3.0)
+    public let calculationGroups: [CalculationGroup]?
 }
 ```
+
+**📚 For complete OCR hints and calculation groups documentation, see:**
+- **[Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints and calculations in hints files
 
 ## Display Width Guidelines
 

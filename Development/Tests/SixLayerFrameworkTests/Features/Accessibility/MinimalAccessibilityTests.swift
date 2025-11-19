@@ -3,11 +3,11 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Minimal test to debug accessibility identifier issues
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Minimal Accessibility")
 open class MinimalAccessibilityTest {
     
-    @Test func testMinimalAccessibilityIdentifier() async {
+    @Test @MainActor func testMinimalAccessibilityIdentifier() async {
         // Given: Framework component (testing our framework, not SwiftUI Text)
         let testView = platformPresentContent_L1(
             content: "Hello World",

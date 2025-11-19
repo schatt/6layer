@@ -9,12 +9,12 @@ import ViewInspector
 #endif
 /// Form Callback Functional Tests
 /// Tests that forms with callbacks ACTUALLY INVOKE them when buttons are tapped (Rules 6.1, 6.2, 7.3, 7.4)
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 open class FormCallbackFunctionalTests: BaseTestClass {
     
     // MARK: - IntelligentFormView Callback Tests
     
-    @Test func testIntelligentFormViewOnCancelCallbackInvoked() async throws {
+    @Test @MainActor func testIntelligentFormViewOnCancelCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing - Must verify callbacks ACTUALLY invoke
         // NOTE: ViewInspector may not be available on all platforms
         
@@ -81,7 +81,7 @@ open class FormCallbackFunctionalTests: BaseTestClass {
     }
     
     
-    @Test func testIntelligentFormViewOnUpdateCallbackInvoked() async throws {
+    @Test @MainActor func testIntelligentFormViewOnUpdateCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
         // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
@@ -149,7 +149,7 @@ open class FormCallbackFunctionalTests: BaseTestClass {
     // MARK: - DynamicFormView Callback Tests
     
     
-    @Test func testDynamicFormViewOnSubmitCallbackInvoked() async throws {
+    @Test @MainActor func testDynamicFormViewOnSubmitCallbackInvoked() async throws {
         // Rule 6.2 & 7.4: Functional testing
         // NOTE: ViewInspector is iOS-only, so this test only runs on iOS
         
@@ -213,7 +213,7 @@ open class FormCallbackFunctionalTests: BaseTestClass {
     // MARK: - External Integration Tests
     
     /// Tests that form callbacks are accessible from external modules (Rule 8)
-    @Test func testIntelligentFormViewCallbacksExternallyAccessible() async throws {
+    @Test @MainActor func testIntelligentFormViewCallbacksExternallyAccessible() async throws {
         struct TestFormData: Codable {
             let name: String
             let email: String

@@ -15,7 +15,7 @@ import SwiftUI
 import ViewInspector
 #endif
 
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Layer Form Container")
 open class Layer4FormContainerTests: BaseTestClass {
     

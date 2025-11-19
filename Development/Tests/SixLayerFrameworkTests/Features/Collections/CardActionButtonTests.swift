@@ -42,7 +42,7 @@ import SwiftUI
 /// TDD Tests for card action button functionality
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
-@MainActor
+/// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Card Action Button")
 open class CardActionButtonTests: BaseTestClass {
     
@@ -205,7 +205,8 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
-    @Test func testExpandableCardComponentNoActionButtons() {
+    @Test @MainActor func testExpandableCardComponentNoActionButtons() {
+                initializeTestConfig()
         // GIVEN: A test item without callbacks
         let item = CardActionButtonTests.sampleItems[0]
         
@@ -228,7 +229,8 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(Bool(true), "card is non-optional")  // card is non-optional
     }
     
-    @Test func testExpandableCardComponentActionButtonsOnlyWhenExpanded() {
+    @Test @MainActor func testExpandableCardComponentActionButtonsOnlyWhenExpanded() {
+            initializeTestConfig()
         // GIVEN: A test item with callbacks but not expanded
         let item = CardActionButtonTests.sampleItems[0]
         let editCallback: (TestItem) -> Void = { _ in }
@@ -255,7 +257,8 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - SimpleCardComponent Action Button Tests
     
-    @Test func testSimpleCardComponentActionCallbacks() {
+    @Test @MainActor func testSimpleCardComponentActionCallbacks() {
+            initializeTestConfig()
         // GIVEN: A test item and callbacks
         let item = CardActionButtonTests.sampleItems[0]
         let selectedCallback: (TestItem) -> Void = { _ in
@@ -284,7 +287,8 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - ListCardComponent Action Button Tests
     
-    @Test func testListCardComponentActionCallbacks() {
+    @Test @MainActor func testListCardComponentActionCallbacks() {
+        initializeTestConfig()
         // GIVEN: A test item
         let item = CardActionButtonTests.sampleItems[0]
         
@@ -297,7 +301,8 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - CoverFlowCardComponent Action Button Tests
     
-    @Test func testCoverFlowCardComponentActionCallbacks() {
+    @Test @MainActor func testCoverFlowCardComponentActionCallbacks() {
+            initializeTestConfig()
         // GIVEN: A test item and callbacks
         let item = CardActionButtonTests.sampleItems[0]
         let selectedCallback: (TestItem) -> Void = { _ in
@@ -324,7 +329,8 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - MasonryCardComponent Action Button Tests
     
-    @Test func testMasonryCardComponentActionCallbacks() {
+    @Test @MainActor func testMasonryCardComponentActionCallbacks() {
+        initializeTestConfig()
         // GIVEN: A test item
         let item = CardActionButtonTests.sampleItems[0]
         
