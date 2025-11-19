@@ -21,6 +21,13 @@ import ViewInspector
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 struct IntelligentDetailViewSheetTests {
     
+    /// Initialize test config (no-op for structs that don't need config)
+    @MainActor
+    func initializeTestConfig() {
+        // This struct doesn't inherit from BaseTestClass, so we don't need to initialize config
+        // Tests that need config should inherit from BaseTestClass instead
+    }
+    
     // MARK: - Test Data
     
     struct TestTask: Codable, Identifiable {

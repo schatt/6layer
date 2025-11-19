@@ -1,0 +1,177 @@
+//
+//  UnifiedImagePicker.swift
+//  SixLayerFramework
+//
+//  Unified cross-platform image picker that provides a single API
+//  for both iOS and macOS, returning PlatformImage consistently.
+//
+//  This is the core unified API - the whole point of our framework.
+//
+
+import SwiftUI
+import UniformTypeIdentifiers
+
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
+
+/// Unified cross-platform image picker
+/// Provides a single API that works identically on iOS and macOS
+/// Always returns PlatformImage (never platform-specific types)
+@MainActor
+public struct UnifiedImagePicker: View {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    public init(onImageSelected: @escaping (PlatformImage) -> Void) {
+        self.onImageSelected = onImageSelected
+    }
+    
+    public var body: some View {
+        #if os(iOS)
+        iOSImagePicker(onImageSelected: onImageSelected)
+        #elseif os(macOS)
+        macOSImagePicker(onImageSelected: onImageSelected)
+        #else
+        Text("Image picker not available on this platform")
+        #endif
+    }
+}
+
+// MARK: - iOS Implementation
+
+#if os(iOS)
+private struct iOSImagePicker: UIViewControllerRepresentable {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: iOSImagePicker
+        
+        init(_ parent: iOSImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(
+            _ picker: UIImagePickerController,
+            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+        ) {
+            // System boundary conversion: UIImage → PlatformImage
+            if let uiImage = info[.originalImage] as? UIImage {
+                let platformImage = PlatformImage(uiImage)
+                parent.onImageSelected(platformImage)
+            }
+            picker.dismiss(animated: true)
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
+        
+        // For testing
+        func simulateImageSelection(_ image: PlatformImage) {
+            parent.onImageSelected(image)
+        }
+    }
+}
+#endif
+
+// MARK: - macOS Implementation
+
+#if os(macOS)
+private struct macOSImagePicker: NSViewControllerRepresentable {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    func makeNSViewController(context: Context) -> NSViewController {
+        let controller = NSViewController()
+        let button = NSButton(title: "Choose Image", target: context.coordinator, action: #selector(Coordinator.chooseImage))
+        button.bezelStyle = .rounded
+        controller.view = button
+        return controller
+    }
+    
+    func updateNSViewController(_ nsViewController: NSViewController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, @unchecked Sendable {
+        let parent: macOSImagePicker
+        
+        init(_ parent: macOSImagePicker) {
+            self.parent = parent
+        }
+        
+        @MainActor
+        @objc func chooseImage() {
+            let panel = NSOpenPanel()
+            panel.allowsMultipleSelection = false
+            panel.canChooseDirectories = false
+            panel.canChooseFiles = true
+            panel.allowedContentTypes = [
+                .jpeg,
+                .png,
+                .gif,
+                .bmp,
+                .tiff,
+                .heic,
+                .heif,
+                .webP
+            ]
+            
+            if let window = NSApplication.shared.keyWindow {
+                panel.beginSheetModal(for: window) { [weak self] response in
+                    Task { @MainActor in
+                        if response == .OK, let url = panel.url {
+                            self?.handleFileSelection(url: url)
+                        }
+                    }
+                }
+            } else {
+                let response = panel.runModal()
+                if response == .OK, let url = panel.url {
+                    handleFileSelection(url: url)
+                }
+            }
+        }
+        
+        @MainActor
+        func handleFileSelection(url: URL) {
+            // System boundary conversion: File URL → NSImage → PlatformImage
+            let shouldStartAccess = url.startAccessingSecurityScopedResource()
+            defer {
+                if shouldStartAccess {
+                    url.stopAccessingSecurityScopedResource()
+                }
+            }
+            
+            guard let nsImage = NSImage(contentsOf: url) else {
+                return
+            }
+            
+            let platformImage = PlatformImage(nsImage)
+            parent.onImageSelected(platformImage)
+        }
+        
+        // For testing
+        func simulateImageSelection(_ image: PlatformImage) {
+            parent.onImageSelected(image)
+        }
+    }
+}
+#endif
+

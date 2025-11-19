@@ -1,8 +1,8 @@
-# Hints File OCR and Calculations Guide - v5.3.0
+# Hints File OCR and Calculations Guide - v5.4.0
 
 ## Overview
 
-**NEW in v5.3.0**: You can now define **OCR hints** and **calculation groups** directly in your `.hints` files! This extends the hints system to support intelligent OCR form-filling and automatic field calculations, all configured declaratively in JSON.
+**NEW in v5.4.0**: You can now define **OCR hints** and **calculation groups** directly in your `.hints` files! This extends the hints system to support intelligent OCR form-filling and automatic field calculations, all configured declaratively in JSON.
 
 **Key Benefits:**
 - **DRY**: Define OCR hints and calculations once in hints files, use everywhere
@@ -239,7 +239,7 @@ Each calculation group requires:
 
 ### Language-Specific OCR Hints
 
-**NEW in v5.3.0**: Support for language-specific OCR hints with automatic fallback!
+**NEW in v5.4.0**: Support for language-specific OCR hints with automatic fallback!
 
 ### Format
 
@@ -436,7 +436,7 @@ let field = DynamicFormField(
 )
 ```
 
-**After (v5.3.0)**:
+**After (v5.4.0)**:
 ```json
 // FuelReceipt.hints
 {
@@ -475,7 +475,7 @@ let field = DynamicFormField(
 )
 ```
 
-**After (v5.3.0)**:
+**After (v5.4.0)**:
 ```json
 // Invoice.hints
 {
@@ -550,7 +550,7 @@ Ensure formulas reference valid field IDs:
 
 ## Summary
 
-**v5.3.0** brings OCR hints and calculation groups to hints files:
+**v5.4.0** brings OCR hints and calculation groups to hints files:
 
 ✅ **OCR Hints**: Define keywords for better OCR field identification  
 ✅ **Calculation Groups**: Define mathematical relationships between fields  

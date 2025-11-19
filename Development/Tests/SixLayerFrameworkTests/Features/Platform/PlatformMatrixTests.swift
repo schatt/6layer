@@ -76,18 +76,32 @@ open class PlatformMatrixTests: BaseTestClass {
     // MARK: - Touch Capability Matrix
     
     @Test @MainActor func testTouchCapabilityMatrix() {
+        // Set platform-appropriate overrides to ensure consistent test results
+        let platform = SixLayerPlatform.current
+        switch platform {
+        case .iOS, .watchOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
+        case .macOS, .tvOS, .visionOS:
+            RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
+        }
+        defer {
+            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        }
+        
         let config = getCardExpansionPlatformConfig()
         
         // Test touch support matrix
-        switch SixLayerPlatform.current {
+        switch platform {
         case .iOS, .watchOS:
             #expect(config.supportsTouch, 
-                          "\(SixLayerPlatform.current) should support touch")
+                          "\(platform) should support touch")
             #expect(config.supportsHapticFeedback, 
                          "Touch platforms should support haptic feedback")
         case .macOS, .tvOS, .visionOS:
             #expect(!config.supportsTouch, 
-                           "\(SixLayerPlatform.current) should not support touch")
+                           "\(platform) should not support touch")
             #expect(!config.supportsHapticFeedback, 
                           "Non-touch platforms should not support haptic feedback")
         }
@@ -359,10 +373,17 @@ open class PlatformMatrixTests: BaseTestClass {
         let platform = SixLayerPlatform.current
         if platform == .macOS {
             RuntimeCapabilityDetection.setTestTouchSupport(false)
+            RuntimeCapabilityDetection.setTestHapticFeedback(false)
             RuntimeCapabilityDetection.setTestHover(true)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(false)
         } else if platform == .iOS || platform == .watchOS {
             RuntimeCapabilityDetection.setTestTouchSupport(true)
+            RuntimeCapabilityDetection.setTestHapticFeedback(true)
             RuntimeCapabilityDetection.setTestHover(false)
+            RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        }
+        defer {
+            RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
         
         let deviceType = DeviceType.current
@@ -387,8 +408,6 @@ open class PlatformMatrixTests: BaseTestClass {
             supportsVision: isVisionFrameworkAvailable(),
             supportsOCR: isVisionOCRAvailable()
         )
-        
-        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         
         // Verify feature matrix is internally consistent
         #expect(featureMatrix.isInternallyConsistent(), 

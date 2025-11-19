@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.2.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.4.0")
 ]
 ```
 
@@ -41,16 +41,17 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.2.1
+## 🆕 Latest Release: v5.4.0
 
-### **Runtime Capability Detection Refactoring**
-🔧 **Real OS API Detection**: All capability detection now uses actual OS APIs (UIAccessibility, NSWorkspace, etc.)
-🚫 **Removed testPlatform**: Eliminated test platform simulation mechanism - simulators provide accurate values
-✨ **No Hardcoded Values**: All capabilities detected via runtime OS queries
-🧪 **Better Testing**: Capability-specific overrides for precise test control
-🐛 **Bug Fixes**: Fixed broken Package.swift (empty Shared folder reference)
+### **OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets**
+🎯 **OCR Hints in Hints Files**: Define OCR hints directly in `.hints` files for intelligent form-filling
+🧮 **Calculation Groups in Hints Files**: Declarative calculation groups for automatic field computation
+🌍 **Internationalization Support**: Language-specific OCR hints with automatic fallback
+📄 **OCR Overlay Sheet Modifier**: Convenient `ocrOverlaySheet()` view modifier for presenting OCR results in a sheet (Issue #22)
+📝 **Declarative Configuration**: All OCR and calculation configuration in JSON, no code changes needed
+✅ **100% Backward Compatible**: Existing hints files continue to work without modification
 
-### **Previous Release: v5.0.0 - Major Testing and Accessibility Release**
+### **Previous Release: v5.2.1 - Runtime Capability Detection Refactoring**
 🎯 **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
 ♿ **Advanced Accessibility Overhaul**: Complete accessibility system with automatic identifier generation
 🧪 **Testing Infrastructure Revolution**: Comprehensive testing with 800+ tests and full platform coverage
@@ -99,7 +100,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.2.1 (Runtime Capability Detection Refactoring)
+**Version**: v5.4.0 (OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 

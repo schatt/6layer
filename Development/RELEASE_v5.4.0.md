@@ -1,6 +1,46 @@
-# Changelog - v5.3.0
+# Release v5.4.0 - OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets
+
+**Release Date**: November 2025  
+**Release Type**: Minor  
+**Status**: ✅ **COMPLETE**
 
 ## 🎉 Major Features
+
+### OCR Overlay Sheet Modifier (Issue #22)
+
+**NEW**: Convenient view modifier for presenting OCR overlay in a sheet with toolbar and proper configuration!
+
+The `ocrOverlaySheet()` view modifier provides a reusable way to present `OCROverlayView` in a sheet with:
+- Cross-platform support (iOS, macOS)
+- Built-in toolbar with Done button
+- Proper error handling for missing OCR data
+- Configurable callbacks for text editing and deletion
+- Uses `platformSheet_L4()` internally for consistent sheet presentation
+
+#### Example Usage
+
+```swift
+@State private var showOCROverlay = false
+@State private var ocrResult: OCRResult?
+@State private var ocrImage: PlatformImage?
+
+var body: some View {
+    Button("Review OCR Results") {
+        showOCROverlay = true
+    }
+    .ocrOverlaySheet(
+        isPresented: $showOCROverlay,
+        ocrResult: ocrResult,
+        ocrImage: ocrImage,
+        onTextEdit: { text, rect in
+            // Handle text editing
+        },
+        onTextDelete: { rect in
+            // Handle text deletion
+        }
+    )
+}
+```
 
 ### OCR Hints and Calculation Groups in Hints Files
 
@@ -98,6 +138,23 @@ extension DynamicFormField {
 }
 ```
 
+### New OCR Overlay Sheet View Modifier
+
+```swift
+extension View {
+    /// Present OCR overlay in a sheet with toolbar and proper configuration (NEW)
+    /// Implements Issue #22: OCR Overlay Sheet Modifier
+    func ocrOverlaySheet(
+        isPresented: Binding<Bool>,
+        ocrResult: OCRResult?,
+        ocrImage: PlatformImage?,
+        configuration: OCROverlayConfiguration? = nil,
+        onTextEdit: ((String, CGRect) -> Void)? = nil,
+        onTextDelete: ((CGRect) -> Void)? = nil
+    ) -> some View
+}
+```
+
 ### Made `CalculationGroup` Sendable
 
 ```swift
@@ -110,15 +167,16 @@ public struct CalculationGroup: Sendable {  // Now Sendable
 
 ### New Guides
 
-- **[Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints and calculations in hints files
+- **[Hints File OCR and Calculations Guide](Framework/docs/HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints and calculations in hints files
 
 ### Updated Guides
 
-- **[Field Hints Guide](FieldHintsGuide.md)** - Updated with references to new OCR hints and calculation groups features
+- **[Field Hints Guide](Framework/docs/FieldHintsGuide.md)** - Updated with references to new OCR hints and calculation groups features
 
 ## 🐛 Bug Fixes
 
-- None in this release
+- **Fixed Runtime Capability Detection Crashes**: Replaced `MainActor.assumeIsolated` with `Thread.isMainThread` checks to prevent crashes during parallel test execution
+- **Fixed Platform Matrix Tests**: Added proper capability overrides for macOS tests to ensure correct platform-specific behavior
 
 ## 🔄 Migration Guide
 
@@ -135,7 +193,7 @@ let field = DynamicFormField(
 )
 ```
 
-**After (v5.3.0)**:
+**After (v5.4.0)**:
 ```json
 // FuelReceipt.hints
 {
@@ -174,7 +232,7 @@ let field = DynamicFormField(
 )
 ```
 
-**After (v5.3.0)**:
+**After (v5.4.0)**:
 ```json
 // Invoice.hints
 {
@@ -199,10 +257,9 @@ let field = DynamicFormField(
 
 ## 📖 Examples
 
-See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete examples including:
+See the [Hints File OCR and Calculations Guide](Framework/docs/HintsFileOCRAndCalculationsGuide.md) for complete examples including:
 - Basic OCR hints
 - Basic calculation groups
 - Combined OCR + calculations
 - Internationalization examples
 - Complete fuel receipt form example
-

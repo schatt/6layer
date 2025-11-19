@@ -14,6 +14,7 @@ open class PlatformPhotoSemanticLayer1Tests: BaseTestClass {
     
     // MARK: - Test Setup
     
+    @MainActor
     private func cleanupTestEnvironment() async {
         await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
     }

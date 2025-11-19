@@ -209,6 +209,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
 extension SingleInstanceLayer1Tests {
     
     /// Host a SwiftUI view and return the platform root view for inspection
+    @MainActor
     private func hostRootPlatformView<V: View>(_ view: V) -> Any? {
         #if canImport(UIKit)
         let hostingController = UIHostingController(rootView: view)

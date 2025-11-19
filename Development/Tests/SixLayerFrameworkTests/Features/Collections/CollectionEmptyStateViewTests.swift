@@ -41,7 +41,6 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
         #endif
     }
     
-    @Test @MainActor
     @Test @MainActor func testCollectionEmptyStateViewAccessibilityDisabled() {
         initializeTestConfig()
         // Setup: Configure test environment with auto IDs disabled
@@ -61,7 +60,6 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
         #endif
     }
     
-    @Test @MainActor
     @Test @MainActor func testCollectionEmptyStateViewAllAccessibilityModes() {
         initializeTestConfig()
         let view = createCollectionEmptyStateView()
@@ -119,7 +117,6 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that custom message from customPreferences is displayed
     /// This test SHOULD FAIL until custom message support is implemented
-    @Test @MainActor
     @Test @MainActor func testEmptyStateDisplaysCustomMessage() {
         initializeTestConfig()
         setupTestEnvironment()
@@ -172,7 +169,6 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that onCreateItem callback displays a button
     /// This test SHOULD FAIL if button is not displayed when onCreateItem is provided
-    @Test
     @Test @MainActor func testEmptyStateDisplaysCreateButtonWhenOnCreateItemProvided() {
         initializeTestConfig()
         setupTestEnvironment()
@@ -291,7 +287,6 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     }
     
     /// TDD RED PHASE: Test that custom message takes precedence over default context message
-    @Test
     @Test @MainActor func testCustomMessageTakesPrecedenceOverDefaultMessage() {
         initializeTestConfig()
         setupTestEnvironment()

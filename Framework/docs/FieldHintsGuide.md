@@ -55,7 +55,7 @@ Create a file named `{YourModelName}.hints` in your project:
 }
 ```
 
-**NEW in v5.3.0**: You can also include OCR hints and calculation groups in hints files! See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.
+**NEW in v5.4.0**: You can also include OCR hints and calculation groups in hints files! See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.
 
 ### Using Field Hints
 
@@ -142,10 +142,10 @@ public struct FieldDisplayHints: Sendable {
     /// Additional metadata
     public let metadata: [String: String]
     
-    /// OCR hints for field identification (NEW in v5.3.0)
+    /// OCR hints for field identification (NEW in v5.4.0)
     public let ocrHints: [String]?
     
-    /// Calculation groups for computing field values (NEW in v5.3.0)
+    /// Calculation groups for computing field values (NEW in v5.4.0)
     public let calculationGroups: [CalculationGroup]?
 }
 ```

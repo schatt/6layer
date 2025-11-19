@@ -97,7 +97,8 @@ open class MaterialAccessibilityTests: BaseTestClass {
     
     // MARK: - Material Accessibility Compliance Tests
     
-    @Test func testMaterialAccessibilityCompliance() {
+    @Test @MainActor func testMaterialAccessibilityCompliance() {
+        initializeTestConfig()
         // Given: A view with material background
         let view = Rectangle()
             .fill(.regularMaterial)
@@ -126,7 +127,8 @@ open class MaterialAccessibilityTests: BaseTestClass {
     
     // MARK: - Material Accessibility Extensions Tests
     
-    @Test func testMaterialAccessibilityViewModifier() {
+    @Test @MainActor func testMaterialAccessibilityViewModifier() {
+        initializeTestConfig()
         // Given: A view with material
         let view = VStack {
             Text("Test")
@@ -176,7 +178,8 @@ open class MaterialAccessibilityTests: BaseTestClass {
     
     // MARK: - Material Accessibility Integration Tests
     
-    @Test func testMaterialAccessibilityWithVoiceOver() {
+    @Test @MainActor func testMaterialAccessibilityWithVoiceOver() {
+        initializeTestConfig()
         // Given: A view with material and VoiceOver enabled
         let view = Rectangle()
             .fill(.regularMaterial)

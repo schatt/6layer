@@ -129,10 +129,14 @@ public struct RuntimeCapabilityDetection {
     private static func detectiOSTouchSupport() -> Bool {
         // Check if touch events are available by checking if we can detect touch input
         // All iOS devices support touch, but we verify at runtime
-        return MainActor.assumeIsolated {
-            // iOS devices always have touch capability
-            // We can verify by checking if touch events are possible
+        // Use Thread.isMainThread check instead of MainActor.assumeIsolated to prevent crashes
+        // during parallel test execution when many tests access MainActor simultaneously
+        if Thread.isMainThread {
             return UIDevice.current.userInterfaceIdiom != .unspecified
+        } else {
+            // If not on main thread, assume touch is available (all iOS devices have touch)
+            // This prevents crashes during parallel test execution
+            return true
         }
     }
     #endif
@@ -250,9 +254,8 @@ public struct RuntimeCapabilityDetection {
         // Tests should run on actual platforms/simulators to test platform-specific behavior
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        return MainActor.assumeIsolated {
-            detectiOSHoverSupport()
-        }
+        // Use direct call - detectiOSHoverSupport now handles thread safety internally
+        return detectiOSHoverSupport()
         #elseif os(macOS)
         return detectmacOSHoverSupport()  // Doesn't need MainActor
         #elseif os(watchOS)
@@ -268,16 +271,19 @@ public struct RuntimeCapabilityDetection {
     
     #if os(iOS)
     /// iOS hover detection - checks for iPad with Apple Pencil
-    /// Note: Must be called from MainActor context (uses MainActor.assumeIsolated)
+    /// Note: Uses Thread.isMainThread check to prevent crashes during parallel test execution
     private static func detectiOSHoverSupport() -> Bool {
         // Check if we're on iPad with Apple Pencil or hover-capable device
-        // UIDevice.current requires MainActor, but we use assumeIsolated since
-        // this is only called from nonisolated context when we know we need OS API
-        return MainActor.assumeIsolated {
+        // Use Thread.isMainThread check instead of MainActor.assumeIsolated to prevent crashes
+        if Thread.isMainThread {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 // iPad with Apple Pencil 2 or later supports hover
                 return true
             }
+            return false
+        } else {
+            // If not on main thread, assume no hover (conservative default)
+            // This prevents crashes during parallel test execution
             return false
         }
     }
@@ -318,8 +324,11 @@ public struct RuntimeCapabilityDetection {
     private static func detectwatchOSVoiceOverSupport() -> Bool {
         // Check if VoiceOver is available on watchOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isVoiceOverRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isVoiceOverRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -329,8 +338,11 @@ public struct RuntimeCapabilityDetection {
     private static func detectwatchOSSwitchControlSupport() -> Bool {
         // Check if Switch Control is available on watchOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isSwitchControlRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isSwitchControlRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -340,8 +352,11 @@ public struct RuntimeCapabilityDetection {
     private static func detectwatchOSAssistiveTouchSupport() -> Bool {
         // Check if AssistiveTouch is available on watchOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isAssistiveTouchRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isAssistiveTouchRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -368,8 +383,11 @@ public struct RuntimeCapabilityDetection {
     private static func detecttvOSVoiceOverSupport() -> Bool {
         // Check if VoiceOver is available on tvOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isVoiceOverRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isVoiceOverRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -379,8 +397,11 @@ public struct RuntimeCapabilityDetection {
     private static func detecttvOSSwitchControlSupport() -> Bool {
         // Check if Switch Control is available on tvOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isSwitchControlRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isSwitchControlRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -413,8 +434,11 @@ public struct RuntimeCapabilityDetection {
     private static func detectvisionOSVoiceOverSupport() -> Bool {
         // Check if VoiceOver is available on visionOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isVoiceOverRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isVoiceOverRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -424,8 +448,11 @@ public struct RuntimeCapabilityDetection {
     private static func detectvisionOSSwitchControlSupport() -> Bool {
         // Check if Switch Control is available on visionOS
         #if canImport(UIKit)
-        return MainActor.assumeIsolated {
-            UIAccessibility.isSwitchControlRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isSwitchControlRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #else
         return false
@@ -452,13 +479,19 @@ public struct RuntimeCapabilityDetection {
         // Use real runtime detection - tests should run on actual platforms/simulators
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        return MainActor.assumeIsolated {
-            UIAccessibility.isVoiceOverRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isVoiceOverRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #elseif os(macOS)
         // NSWorkspace.shared requires MainActor
-        return MainActor.assumeIsolated {
-            NSWorkspace.shared.isVoiceOverEnabled
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return NSWorkspace.shared.isVoiceOverEnabled
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #elseif os(watchOS)
         return detectwatchOSVoiceOverSupport()
@@ -483,13 +516,19 @@ public struct RuntimeCapabilityDetection {
         // Use real runtime detection - tests should run on actual platforms/simulators
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        return MainActor.assumeIsolated {
-            UIAccessibility.isSwitchControlRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isSwitchControlRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #elseif os(macOS)
         // NSWorkspace.shared requires MainActor
-        return MainActor.assumeIsolated {
-            NSWorkspace.shared.isSwitchControlEnabled
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return NSWorkspace.shared.isSwitchControlEnabled
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #elseif os(watchOS)
         return detectwatchOSSwitchControlSupport()
@@ -514,8 +553,11 @@ public struct RuntimeCapabilityDetection {
         // Use real runtime detection - tests should run on actual platforms/simulators
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        return MainActor.assumeIsolated {
-            UIAccessibility.isAssistiveTouchRunning
+        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        if Thread.isMainThread {
+            return UIAccessibility.isAssistiveTouchRunning
+        } else {
+            return false  // Conservative default when not on main thread
         }
         #elseif os(macOS)
         return detectmacOSAssistiveTouchSupport()

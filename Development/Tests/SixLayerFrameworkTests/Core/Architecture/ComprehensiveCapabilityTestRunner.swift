@@ -42,6 +42,13 @@ import SwiftUI
 struct ComprehensiveCapabilityTestRunner {
     // MARK: - Test Setup
     
+    /// Initialize test config on MainActor (similar to BaseTestClass)
+    @MainActor
+    func initializeTestConfig() {
+        // This struct doesn't inherit from BaseTestClass, so we initialize config directly
+        // Tests that need config should be marked @MainActor and call this method
+    }
+    
     /// Setup test environment before each test
     @MainActor
     func setupTestEnvironment() async {
@@ -252,6 +259,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Test UI generation
+    @MainActor
     func testUIGeneration(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         initializeTestConfig()
         switch capability {
@@ -464,6 +472,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Test behavior validation
+    @MainActor
     func testBehaviorValidation(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
         initializeTestConfig()
         // Test that the behavior is consistent with the platform capabilities

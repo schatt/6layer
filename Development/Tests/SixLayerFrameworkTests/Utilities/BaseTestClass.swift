@@ -71,9 +71,16 @@ open class BaseTestClass {
     public func runWithTaskLocalConfig<T>(_ operation: () async throws -> T) async rethrows -> T {
         // Initialize config if needed (lazy initialization - will be on MainActor if test is @MainActor)
         if testConfig == nil {
-            await MainActor.run {
-                initializeTestConfig()
+            let config = await MainActor.run {
+                let tempConfig = AccessibilityIdentifierConfig()
+                tempConfig.enableAutoIDs = true
+                tempConfig.namespace = "SixLayer"
+                tempConfig.globalPrefix = ""
+                tempConfig.mode = .automatic
+                tempConfig.enableDebugLogging = false
+                return tempConfig
             }
+            testConfig = config
         }
         return try await AccessibilityIdentifierConfig.$taskLocalConfig.withValue(testConfig) {
             try await operation()

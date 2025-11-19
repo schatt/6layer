@@ -33,19 +33,12 @@ public enum PlatformPhotoComponentsLayer4 {
     
     // MARK: - Photo Picker Components
     
-    /// Creates a platform-specific photo picker
+    /// Creates a unified cross-platform photo picker
+    /// Uses the same API on both iOS and macOS, returning PlatformImage consistently
     @ViewBuilder
     public static func platformPhotoPicker_L4(onImageSelected: @escaping (PlatformImage) -> Void) -> some View {
-        #if os(iOS)
-        PhotoPickerView(onImageSelected: onImageSelected)
+        UnifiedImagePicker(onImageSelected: onImageSelected)
             .automaticCompliance()
-        #elseif os(macOS)
-        MacPhotoPickerView(onImageSelected: onImageSelected)
-            .automaticCompliance()
-        #else
-        Text("Photo picker not available on this platform")
-            .automaticCompliance()
-        #endif
     }
     
     // MARK: - Photo Display Components

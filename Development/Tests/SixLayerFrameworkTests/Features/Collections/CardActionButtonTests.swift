@@ -82,7 +82,8 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - ExpandableCardComponent Action Button Tests
     
-    @Test func testExpandableCardComponentEditButtonCallback() {
+    @Test @MainActor func testExpandableCardComponentEditButtonCallback() {
+        initializeTestConfig()
         // GIVEN: A test item and edit callback
         let item = TestItem(
             title: "Test Item",
@@ -91,15 +92,15 @@ open class CardActionButtonTests: BaseTestClass {
             icon: "star",
             color: .blue
         )
-        var editCallbackCalled = false
-        var editCallbackItem: TestItem?
+        nonisolated(unsafe) var editCallbackCalled = false
+        nonisolated(unsafe) var editCallbackItem: TestItem?
         
-        let editCallback: (TestItem) -> Void = { editedItem in
+        let editCallback: @Sendable (TestItem) -> Void = { editedItem in
             editCallbackCalled = true
             editCallbackItem = editedItem
         }
         
-        let deleteCallback: (TestItem) -> Void = { _ in }
+        let deleteCallback: @Sendable (TestItem) -> Void = { _ in }
         
         // WHEN: Creating a simple view with action buttons
         let card = VStack {
@@ -140,13 +141,14 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(editCallbackItem?.id == item.id, "Edit callback should receive the correct item")
     }
     
-    @Test func testExpandableCardComponentDeleteButtonCallback() {
+    @Test @MainActor func testExpandableCardComponentDeleteButtonCallback() {
+        initializeTestConfig()
         // GIVEN: A test item and delete callback
         let item = CardActionButtonTests.sampleItems[0]
-        var deleteCallbackCalled = false
-        var deleteCallbackItem: TestItem?
+        nonisolated(unsafe) var deleteCallbackCalled = false
+        nonisolated(unsafe) var deleteCallbackItem: TestItem?
         
-        let deleteCallback: (TestItem) -> Void = { deletedItem in
+        let deleteCallback: @Sendable (TestItem) -> Void = { deletedItem in
             deleteCallbackCalled = true
             deleteCallbackItem = deletedItem
         }

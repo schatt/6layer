@@ -481,7 +481,8 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     
     /// TDD RED PHASE: Test collision prevention with .exactNamed
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't prevent collisions
-    @Test func testExactNamedModifierDoesNotPreventCollisions() async {
+    @Test @MainActor func testExactNamedModifierDoesNotPreventCollisions() async {
+        initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Two buttons with same exact name
             let view1 = Button("Save") { }
@@ -526,7 +527,8 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that .exactNamed handles empty string
     /// THIS TEST SHOULD FAIL - proving .exactNamed doesn't exist yet
-    @Test func testExactNamedModifierWithEmptyString() async {
+    @Test @MainActor func testExactNamedModifierWithEmptyString() async {
+        initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A button with empty string in .exactNamed
             let testView = Button("Test") { }

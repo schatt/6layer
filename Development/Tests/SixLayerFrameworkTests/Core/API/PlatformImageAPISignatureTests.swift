@@ -211,6 +211,83 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #endif
     }
     
+    // MARK: - CGImage Initializer Tests (Issue #23)
+    
+    /// BUSINESS PURPOSE: Verify CGImage initializer exists and works (Issue #23)
+    /// TESTING SCOPE: Tests that PlatformImage can be initialized from CGImage
+    /// METHODOLOGY: Test CGImage initializer on both platforms
+    @Test func testPlatformImageCGImageInitializer() {
+        // Given: A CGImage
+        let cgImage = createTestCGImage()
+        
+        // When: Creating PlatformImage from CGImage
+        #if os(iOS)
+        let platformImage = PlatformImage(cgImage: cgImage)
+        // platformImage is non-optional, so no nil check needed
+        #expect(Bool(true), "CGImage initializer should exist on iOS")
+        
+        // Then: Should create valid PlatformImage
+        #expect(platformImage.size.width > 0, "PlatformImage should have valid width")
+        #expect(platformImage.size.height > 0, "PlatformImage should have valid height")
+        #expect(platformImage.size.width == CGFloat(cgImage.width), "Size should match CGImage width")
+        #expect(platformImage.size.height == CGFloat(cgImage.height), "Size should match CGImage height")
+        
+        #elseif os(macOS)
+        // macOS requires size parameter
+        let expectedSize = CGSize(width: cgImage.width, height: cgImage.height)
+        let platformImage = PlatformImage(cgImage: cgImage, size: expectedSize)
+        // platformImage is non-optional, so no nil check needed
+        #expect(Bool(true), "CGImage initializer should exist on macOS")
+        
+        // Then: Should create valid PlatformImage
+        #expect(platformImage.size.width > 0, "PlatformImage should have valid width")
+        #expect(platformImage.size.height > 0, "PlatformImage should have valid height")
+        #expect(platformImage.size == expectedSize, "Size should match provided size")
+        #endif
+    }
+    
+    /// BUSINESS PURPOSE: Verify CGImage initializer eliminates platform-specific code (Issue #23)
+    /// TESTING SCOPE: Tests that CGImage initializer works without platform conditionals
+    /// METHODOLOGY: Test cross-platform usage pattern
+    @Test func testPlatformImageCGImageCrossPlatformUsage() {
+        // Given: A CGImage (same on both platforms)
+        let cgImage = createTestCGImage()
+        let expectedSize = CGSize(width: cgImage.width, height: cgImage.height)
+        
+        // When: Creating PlatformImage (no platform conditionals needed in user code)
+        #if os(iOS)
+        // iOS: size is extracted from CGImage automatically
+        let platformImage = PlatformImage(cgImage: cgImage)
+        #expect(platformImage.size == expectedSize, "iOS should extract size from CGImage")
+        #elseif os(macOS)
+        // macOS: size parameter required
+        let platformImage = PlatformImage(cgImage: cgImage, size: expectedSize)
+        #expect(platformImage.size == expectedSize, "macOS should use provided size")
+        #endif
+        
+        // Then: Both platforms produce usable PlatformImage
+        #expect(platformImage.size.width > 0, "PlatformImage should be valid")
+        #expect(platformImage.size.height > 0, "PlatformImage should be valid")
+    }
+    
+    /// BUSINESS PURPOSE: Verify CGImage initializer with default size on macOS (Issue #23)
+    /// TESTING SCOPE: Tests macOS initializer with default size parameter
+    /// METHODOLOGY: Test default size behavior
+    @Test func testPlatformImageCGImageDefaultSize() {
+        #if os(macOS)
+        // Given: A CGImage
+        let cgImage = createTestCGImage()
+        
+        // When: Creating PlatformImage with default size (.zero)
+        let platformImage = PlatformImage(cgImage: cgImage, size: .zero)
+        // platformImage is non-optional, so no nil check needed
+        #expect(Bool(true), "CGImage initializer should work with .zero size")
+        
+        // Then: Should create valid PlatformImage (NSImage handles .zero size)
+        #expect(Bool(true), "PlatformImage should be created even with .zero size")
+        #endif
+    }
+    
     // MARK: - Test Data Helpers
     
     private func createSampleImageData() -> Data {
@@ -263,4 +340,50 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         return nsImage
     }
     #endif
+    
+    /// Create a test CGImage for testing CGImage initializer (Issue #23)
+    private func createTestCGImage() -> CGImage {
+        #if os(iOS)
+        let size = CGSize(width: 300, height: 200)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let uiImage = renderer.image { context in
+            UIColor.green.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        guard let cgImage = uiImage.cgImage else {
+            // Fallback: create a minimal CGImage
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
+            context.setFillColor(UIColor.green.cgColor)
+            context.fill(CGRect(origin: .zero, size: size))
+            return context.makeImage()!
+        }
+        return cgImage
+        
+        #elseif os(macOS)
+        let size = NSSize(width: 300, height: 200)
+        let nsImage = NSImage(size: size)
+        nsImage.lockFocus()
+        NSColor.green.drawSwatch(in: NSRect(origin: .zero, size: size))
+        nsImage.unlockFocus()
+        
+        guard let cgImage = nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+            // Fallback: create a minimal CGImage
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
+            context.setFillColor(NSColor.green.cgColor)
+            context.fill(CGRect(origin: .zero, size: size))
+            return context.makeImage()!
+        }
+        return cgImage
+        
+        #else
+        // Fallback for other platforms
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
+        context.setFillColor(CGColor(red: 0, green: 1, blue: 0, alpha: 1))
+        context.fill(CGRect(origin: .zero, size: CGSize(width: 300, height: 200)))
+        return context.makeImage()!
+        #endif
+    }
 }

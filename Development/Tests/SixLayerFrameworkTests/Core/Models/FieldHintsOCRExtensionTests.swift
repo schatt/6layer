@@ -12,13 +12,34 @@ import Foundation
 @Suite("Field Hints OCR Extensions")
 struct FieldHintsOCRExtensionTests {
     
+    /// Helper to create a loader that reads from documents directory
+    private func createTestLoader() -> FileBasedDataHintsLoader {
+        return FileBasedDataHintsLoader()
+    }
+    
+    /// Helper to write a hints file to documents directory where loader can find it
+    private func writeHintsFile(modelName: String, json: [String: Any]) throws -> URL {
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not find documents directory"])
+        }
+        let hintsDir = documentsURL.appendingPathComponent("Hints")
+        try fileManager.createDirectory(at: hintsDir, withIntermediateDirectories: true)
+        let testFile = hintsDir.appendingPathComponent("\(modelName).hints")
+        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        try data.write(to: testFile, options: .atomic)
+        // Verify file exists
+        guard fileManager.fileExists(atPath: testFile.path) else {
+            throw NSError(domain: "TestError", code: 2, userInfo: [NSLocalizedDescriptionKey: "File was not created"])
+        }
+        return testFile
+    }
+    
     // MARK: - OCR Hints Parsing Tests
     
     @Test func testParseOCRHintsFromHintsFile() async throws {
         // Given: A hints file JSON with OCR hints
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseOCRHintsFromHintsFile"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -27,16 +48,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing the hints
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt")
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName)
         
         // Then: OCR hints should be parsed
         let hints = result.fieldHints["gallons"]
@@ -49,25 +68,21 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseOCRHintsAsStringArray() async throws {
         // Given: OCR hints as array in JSON
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("Invoice.hints")
-        
+        let modelName = "Invoice_testParseOCRHintsAsStringArray"
         let json: [String: Any] = [
             "price": [
                 "ocrHints": ["price", "cost", "amount", "$"]
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "Invoice")
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName)
         
         // Then: Should parse as array
         let hints = result.fieldHints["price"]
@@ -76,24 +91,19 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseOCRHintsAsCommaSeparatedString() async throws {
         // Given: OCR hints as comma-separated string (alternative format)
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("Receipt.hints")
-        
         let json: [String: Any] = [
             "total": [
                 "ocrHints": "total,amount due,grand total"
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: "Receipt", json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
+        let loader = createTestLoader()
         let result = loader.loadHintsResult(for: "Receipt")
         
         // Then: Should parse and split by comma
@@ -106,24 +116,19 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseOCRHintsMissing() async throws {
         // Given: Field without OCR hints
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("User.hints")
-        
         let json: [String: Any] = [
             "username": [
                 "expectedLength": "20"
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: "User", json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
+        let loader = createTestLoader()
         let result = loader.loadHintsResult(for: "User")
         
         // Then: OCR hints should be nil
@@ -135,9 +140,6 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseCalculationGroupsFromHintsFile() async throws {
         // Given: A hints file with calculation groups
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("Order.hints")
-        
         let json: [String: Any] = [
             "total": [
                 "calculationGroups": [
@@ -151,15 +153,13 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: "Order", json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
+        let loader = createTestLoader()
         let result = loader.loadHintsResult(for: "Order")
         
         // Then: Calculation groups should be parsed
@@ -174,9 +174,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseMultipleCalculationGroups() async throws {
         // Given: Field with multiple calculation groups
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("Invoice.hints")
-        
+        let modelName = "Invoice_testParseMultipleCalculationGroups"
         let json: [String: Any] = [
             "total": [
                 "calculationGroups": [
@@ -196,16 +194,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "Invoice")
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName)
         
         // Then: Both groups should be parsed
         let hints = result.fieldHints["total"]
@@ -216,24 +212,19 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseCalculationGroupsMissing() async throws {
         // Given: Field without calculation groups
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("User.hints")
-        
         let json: [String: Any] = [
             "username": [
                 "expectedLength": "20"
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: "User", json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
+        let loader = createTestLoader()
         let result = loader.loadHintsResult(for: "User")
         
         // Then: Calculation groups should be nil
@@ -245,9 +236,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseOCRAndCalculationGroupsTogether() async throws {
         // Given: Field with both OCR hints and calculation groups
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseOCRAndCalculationGroupsTogether"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -263,16 +252,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt")
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName)
         
         // Then: Both should be parsed
         let hints = result.fieldHints["gallons"]
@@ -364,9 +351,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseLanguageSpecificOCRHints() async throws {
         // Given: Hints file with language-specific OCR hints
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseLanguageSpecificOCRHints"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -376,16 +361,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with Spanish locale
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt", locale: Locale(identifier: "es"))
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "es"))
         
         // Then: Should use Spanish OCR hints
         let hints = result.fieldHints["gallons"]
@@ -397,9 +380,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseLanguageSpecificOCRHintsFallbackToDefault() async throws {
         // Given: Hints file with default OCR hints but no language-specific for current locale
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseLanguageSpecificOCRHintsFallbackToDefault"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -408,16 +389,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with French locale (not in file)
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt", locale: Locale(identifier: "fr"))
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "fr"))
         
         // Then: Should fallback to default OCR hints
         let hints = result.fieldHints["gallons"]
@@ -429,9 +408,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseLanguageSpecificOCRHintsUsesCurrentLocale() async throws {
         // Given: Hints file with multiple language-specific OCR hints
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseLanguageSpecificOCRHintsUsesCurrentLocale"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -442,16 +419,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with English locale
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt", locale: Locale(identifier: "en"))
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
         
         // Then: Should use English OCR hints
         let hints = result.fieldHints["gallons"]
@@ -463,9 +438,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseLanguageSpecificOCRHintsBackwardCompatible() async throws {
         // Given: Existing hints file with only default OCR hints (no language-specific)
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseLanguageSpecificOCRHintsBackwardCompatible"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -473,16 +446,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with any locale
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt", locale: Locale(identifier: "es"))
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "es"))
         
         // Then: Should use default OCR hints (backward compatible)
         let hints = result.fieldHints["gallons"]
@@ -494,9 +465,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testParseLanguageSpecificOCRHintsWithCalculationGroups() async throws {
         // Given: Hints file with both language-specific OCR hints and calculation groups
-        let tempDir = FileManager.default.temporaryDirectory
-        let testFile = tempDir.appendingPathComponent("FuelReceipt.hints")
-        
+        let modelName = "FuelReceipt_testParseLanguageSpecificOCRHintsWithCalculationGroups"
         let json: [String: Any] = [
             "gallons": [
                 "expectedLength": "10",
@@ -513,16 +482,14 @@ struct FieldHintsOCRExtensionTests {
             ]
         ]
         
-        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-        try data.write(to: testFile)
-        
+        let testFile = try writeHintsFile(modelName: modelName, json: json)
         defer {
             try? FileManager.default.removeItem(at: testFile)
         }
         
         // When: Parsing with Spanish locale
-        let loader = FileBasedDataHintsLoader()
-        let result = loader.loadHintsResult(for: "FuelReceipt", locale: Locale(identifier: "es"))
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "es"))
         
         // Then: Should have both Spanish OCR hints and calculation groups
         let hints = result.fieldHints["gallons"]

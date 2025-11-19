@@ -46,7 +46,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Dynamic Select Field Tests
     
-    @Test func testDynamicSelectFieldHasPicker() {
+    @Test @MainActor func testDynamicSelectFieldHasPicker() {
+        initializeTestConfig()
         // Given: Dynamic select field
         let field = selectField
         
@@ -57,7 +58,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testDynamicSelectFieldShowsOptions() {
+    @Test @MainActor func testDynamicSelectFieldShowsOptions() {
+        initializeTestConfig()
         // Given: Dynamic select field with options
         let field = selectField
         
@@ -69,7 +71,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
         #expect(field.options?.count ?? 0 == 4)
     }
     
-    @Test func testDynamicSelectFieldHasDefaultSelection() {
+    @Test @MainActor func testDynamicSelectFieldHasDefaultSelection() {
+        initializeTestConfig()
         // Given: Dynamic select field with default selection
         let field = selectField
         
@@ -82,7 +85,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Generic Select Field Tests
     
-    @Test func testGenericSelectFieldHasPicker() {
+    @Test @MainActor func testGenericSelectFieldHasPicker() {
+        initializeTestConfig()
         // Given: Generic select field
         let field = dynamicSelectField
         
@@ -102,7 +106,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testGenericSelectFieldShowsOptions() {
+    @Test @MainActor func testGenericSelectFieldShowsOptions() {
+        initializeTestConfig()
         // Given: Generic select field with options
         let field = dynamicSelectField
         
@@ -125,7 +130,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Theming Integration Tests
     
-    @Test func testThemingIntegrationSelectFieldShouldBeInteractive() {
+    @Test @MainActor func testThemingIntegrationSelectFieldShouldBeInteractive() {
+        initializeTestConfig()
         // Given: Theming integration select field
         let field = selectField
         let formData: [String: Any] = [:]
@@ -161,7 +167,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Platform Semantic Layer Tests
     
-    @Test func testPlatformSemanticLayerSelectFieldShouldBeInteractive() {
+    @Test @MainActor func testPlatformSemanticLayerSelectFieldShouldBeInteractive() {
+        initializeTestConfig()
         // Given: Platform semantic layer select field
         let field = dynamicSelectField
         
@@ -187,10 +194,11 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Radio Button Tests
     
-    @Test func testRadioButtonGroupImplementation() {
+    @Test @MainActor func testRadioButtonGroupImplementation() {
+        initializeTestConfig()
         // Given: Radio button group
         let options = ["Option A", "Option B", "Option C"]
-        var selectedOption = ""
+        nonisolated(unsafe) var selectedOption = ""
         
         // When: Creating radio button group
         let view = VStack(alignment: .leading) {
@@ -217,7 +225,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Edge Case Tests
     
-    @Test func testSelectFieldWithNoOptions() {
+    @Test @MainActor func testSelectFieldWithNoOptions() {
+        initializeTestConfig()
         // Given: Select field with no options
         let field = DynamicFormField(
             id: "empty-select",
@@ -234,7 +243,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testSelectFieldWithSingleOption() {
+    @Test @MainActor func testSelectFieldWithSingleOption() {
+        initializeTestConfig()
         // Given: Select field with single option
         let field = DynamicFormField(
             id: "single-select",
@@ -251,7 +261,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testSelectFieldWithManyOptions() {
+    @Test @MainActor func testSelectFieldWithManyOptions() {
+        initializeTestConfig()
         // Given: Select field with many options
         let manyOptions = (1...50).map { "Option \($0)" }
         let field = DynamicFormField(
@@ -271,7 +282,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Accessibility Tests
     
-    @Test func testSelectFieldAccessibility() {
+    @Test @MainActor func testSelectFieldAccessibility() {
+        initializeTestConfig()
         // Given: Select field with accessibility considerations
         let field = selectField
         
@@ -286,7 +298,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Data Binding Tests
     
-    @Test func testSelectFieldDataBinding() {
+    @Test @MainActor func testSelectFieldDataBinding() {
+        initializeTestConfig()
         // Given: Select field with data binding
         let field = selectField
         var selectedValue = ""
@@ -308,7 +321,8 @@ open class SelectFieldImplementationTests: BaseTestClass {
     
     // MARK: - Validation Tests
     
-    @Test func testSelectFieldValidation() {
+    @Test @MainActor func testSelectFieldValidation() {
+        initializeTestConfig()
         // Given: Required select field
         let field = selectField
         

@@ -771,6 +771,13 @@ public struct PlatformImage: @unchecked Sendable {
     public init(_ image: UIImage) {
         self.init(uiImage: image)
     }
+    
+    /// Initialize from CGImage (iOS)
+    /// Implements Issue #23: Add PlatformImage initializer from CGImage
+    /// This eliminates the need for platform-specific code when working with Core Image/Graphics
+    public init(cgImage: CGImage) {
+        self.init(uiImage: UIImage(cgImage: cgImage))
+    }
     #elseif os(macOS)
     public init(nsImage: NSImage) {
         self._nsImage = nsImage
@@ -780,6 +787,16 @@ public struct PlatformImage: @unchecked Sendable {
     /// This enables the currency exchange model: NSImage → PlatformImage at system boundary
     public init(_ image: NSImage) {
         self.init(nsImage: image)
+    }
+    
+    /// Initialize from CGImage (macOS)
+    /// Implements Issue #23: Add PlatformImage initializer from CGImage
+    /// This eliminates the need for platform-specific code when working with Core Image/Graphics
+    /// - Parameters:
+    ///   - cgImage: The CGImage to convert
+    ///   - size: The size for the NSImage. Defaults to .zero if not specified.
+    public init(cgImage: CGImage, size: CGSize = .zero) {
+        self.init(nsImage: NSImage(cgImage: cgImage, size: size))
     }
     #endif
     

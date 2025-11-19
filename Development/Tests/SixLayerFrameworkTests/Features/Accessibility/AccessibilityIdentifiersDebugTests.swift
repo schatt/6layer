@@ -6,7 +6,9 @@ import SwiftUI
 /// Debug Test: Check if .automaticCompliance() works at all
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Accessibility Identifiers Debug")
-open class AccessibilityIdentifiersDebugTests: BaseTestClass {    @Test func testDirectAutomaticAccessibilityIdentifiersWorks() async {
+open class AccessibilityIdentifiersDebugTests: BaseTestClass {
+    @Test @MainActor func testDirectAutomaticAccessibilityIdentifiersWorks() async {
+        initializeTestConfig()
         // Test .automaticCompliance() directly
         let testView = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())

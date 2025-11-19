@@ -1,12 +1,77 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.2.1 - Runtime Capability Detection Refactoring** 🎯
+## 📍 **Current Release: v5.4.0 - OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets** 🎯
 
 **Release Date**: November 2025  
 **Status**: ✅ **COMPLETE**  
-**Previous Release**: v5.1.1 - PlatformImage EXIF GPS Location Extraction  
-**Note**: Minor release removing testPlatform mechanism and using real runtime OS API detection for all capabilities  
+**Previous Release**: v5.2.1 - Runtime Capability Detection Refactoring  
+**Note**: Minor release adding OCR hints, calculation groups, internationalization support to hints files, and OCR overlay sheet modifier (Issue #22)  
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.4.0 - OCR Hints, Calculation Groups, and Internationalization in Hints Files** (November 2025)
+
+### **What's New:**
+
+#### **🎯 OCR Hints in Hints Files**
+- **Declarative OCR Configuration**: Define OCR hints directly in `.hints` files for intelligent form-filling
+- **Field Identification**: Keyword arrays improve OCR recognition accuracy for field identification
+- **DRY Principle**: Define OCR hints once in hints files, use everywhere
+- **Backward Compatible**: Existing hints files continue to work without modification
+
+#### **🧮 Calculation Groups in Hints Files**
+- **Declarative Calculations**: Define calculation groups directly in `.hints` files
+- **Automatic Field Computation**: System calculates missing form values from partial OCR data
+- **Priority-Based Conflict Resolution**: Fields can belong to multiple calculation groups with priority-based conflict resolution
+- **Mathematical Relationships**: Support for any mathematical relationships (A = B * C, D = E * F, etc.)
+
+#### **🌍 Internationalization Support**
+- **Language-Specific OCR Hints**: Support for language-specific OCR hints with automatic fallback
+- **Fallback Chain**: `ocrHints.{language}` → `ocrHints` → `nil`
+- **Locale-Aware Loading**: `DataHintsLoader` now supports locale parameter for language-specific hints
+
+#### **📄 OCR Overlay Sheet Modifier (Issue #22)**
+- **Convenient Sheet Presentation**: New `ocrOverlaySheet()` view modifier for presenting OCR overlay in a sheet
+- **Cross-Platform Support**: Works on iOS and macOS with proper sheet presentation
+- **Built-in Toolbar**: Includes Done button and proper navigation
+- **Error Handling**: Graceful error states when OCR data is missing
+- **Configurable Callbacks**: Support for text editing and deletion callbacks
+
+### **Technical Changes:**
+- Extended `FieldDisplayHints` struct to include `ocrHints: [String]?` and `calculationGroups: [CalculationGroup]?`
+- Made `CalculationGroup` conform to `Sendable` protocol
+- Extended `DataHintsLoader` protocol with `loadHintsResult(for modelName: String, locale: Locale)` method
+- Added `applying(hints: FieldDisplayHints)` method to `DynamicFormField` for easy hint application
+- Updated `FileBasedDataHintsLoader` to parse language-specific OCR hints from JSON
+
+### **API Changes:**
+- **Extended `FieldDisplayHints`**: Added `ocrHints` and `calculationGroups` properties
+- **Extended `DataHintsLoader`**: Added `loadHintsResult(for:locale:)` method for locale-aware loading
+- **New `DynamicFormField` Method**: Added `applying(hints:)` method to apply hints to fields
+- **New OCR Overlay Sheet Modifier**: Added `ocrOverlaySheet()` view modifier for convenient sheet presentation (Issue #22)
+- **Made `CalculationGroup` Sendable**: Ensures `FieldDisplayHints` remains `Sendable`
+
+### **Documentation:**
+- **New Guide**: [Hints File OCR and Calculations Guide](Framework/docs/HintsFileOCRAndCalculationsGuide.md)
+- **Updated Guide**: [Field Hints Guide](Framework/docs/FieldHintsGuide.md) - Updated with references to new features
+
+### **Testing:**
+- **Comprehensive TDD Tests**: Full test coverage for OCR hints and calculation groups in hints files
+- **Internationalization Tests**: Tests for language-specific OCR hints with fallback
+- **Backward Compatibility Tests**: Verified existing hints files continue to work
+
+### **Bug Fixes:**
+- **Fixed Runtime Capability Detection Crashes**: Replaced `MainActor.assumeIsolated` with `Thread.isMainThread` checks to prevent crashes during parallel test execution
+- **Fixed Platform Matrix Tests**: Added proper capability overrides for macOS tests to ensure correct platform-specific behavior
+
+### **Migration Guide:**
+See [CHANGELOG_v5.4.0.md](Framework/docs/CHANGELOG_v5.4.0.md) for complete migration guide from code-based OCR hints and calculation groups to hints file configuration.
+
+### **Backward Compatibility:**
+- **100% backward compatible**: Existing hints files continue to work without modification
+- Existing code using `DynamicFormField` with OCR hints and calculation groups in code continues to work
+- New features are opt-in - add to hints files as needed
 
 ---
 

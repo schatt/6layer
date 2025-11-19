@@ -9,6 +9,13 @@ import SwiftUI
 @Suite("Hints Default Value")
 struct HintsDefaultValueTests {
     
+    /// Initialize test config (no-op for structs that don't need config)
+    @MainActor
+    func initializeTestConfig() {
+        // This struct doesn't inherit from BaseTestClass, so we don't need to initialize config
+        // Tests that need config should inherit from BaseTestClass instead
+    }
+    
     // MARK: - Test Data Types
     
     /// Core Data-like entity with nil values (simulating the bug report scenario)
