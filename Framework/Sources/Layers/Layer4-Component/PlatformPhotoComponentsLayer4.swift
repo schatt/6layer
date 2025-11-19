@@ -184,7 +184,7 @@ public struct MacPhotoPickerView: NSViewControllerRepresentable {
         Coordinator(self)
     }
     
-    public class Coordinator: NSObject {
+    public class Coordinator: NSObject, @unchecked Sendable {
         let parent: MacPhotoPickerView
         
         init(_ parent: MacPhotoPickerView) {

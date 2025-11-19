@@ -9,7 +9,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Layer 1: Semantic Photo Functions Tests
     
-    @Test func testPlatformPhotoCapture_L1() {
+    @Test @MainActor func testPlatformPhotoCapture_L1() {
         // Given: Photo purpose and context
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -26,7 +26,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         #expect(Bool(true), "captureInterface is non-optional")  // captureInterface is non-optional
     }
     
-    @Test func testPlatformPhotoSelection_L1() {
+    @Test @MainActor func testPlatformPhotoSelection_L1() {
         // Given: Photo purpose and context
         let purpose = PhotoPurpose.fuelReceipt
         let context = PhotoContext(
@@ -43,7 +43,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         #expect(Bool(true), "selectionInterface is non-optional")  // selectionInterface is non-optional
     }
     
-    @Test func testPlatformPhotoDisplay_L1() {
+    @Test @MainActor func testPlatformPhotoDisplay_L1() {
         // Given: Photo purpose, context, and image
         let purpose = PhotoPurpose.odometer
         let context = PhotoContext(
@@ -63,7 +63,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Layer 2: Photo Layout Decision Engine Tests
     
-    @Test func testDetermineOptimalPhotoLayout_L2() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2() {
         // Given: Photo context and purpose
         let context = PhotoContext(
             screenSize: CGSize(width: 1024, height: 768),
@@ -82,7 +82,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         #expect(layout.height > 0)
     }
     
-    @Test func testDeterminePhotoCaptureStrategy_L2() {
+    @Test @MainActor func testDeterminePhotoCaptureStrategy_L2() {
         // Given: Photo context and purpose
         let context = PhotoContext(
             screenSize: CGSize(width: 1024, height: 768),
@@ -101,7 +101,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Layer 3: Photo Strategy Selection Tests
     
-    @Test func testSelectPhotoCaptureStrategy_L3() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3() {
         // Given: Photo context and purpose
         let context = PhotoContext(
             screenSize: CGSize(width: 1024, height: 768),
@@ -118,7 +118,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3() {
         // Given: Photo context and purpose
         let context = PhotoContext(
             screenSize: CGSize(width: 1024, height: 768),
@@ -137,7 +137,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testSemanticPhotoWorkflow() {
+    @Test @MainActor func testSemanticPhotoWorkflow() {
         // Given: Complete photo workflow context
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(

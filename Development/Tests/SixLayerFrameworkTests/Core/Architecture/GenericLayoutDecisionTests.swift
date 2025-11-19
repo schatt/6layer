@@ -70,7 +70,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineOptimalLayout_L2 Tests
     
-    @Test func testDetermineOptimalLayout_L2_EmptyItems() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_EmptyItems() {
+        initializeTestConfig()
         // Given
         let items: [TestItem] = []
         let hints = createBasicHints()
@@ -89,7 +90,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // Note: Actual implementation returns .uniform for empty items
     }
     
-    @Test func testDetermineOptimalLayout_L2_SmallItemCount() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_SmallItemCount() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 3)
         let hints = createBasicHints()
@@ -108,7 +110,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // Note: Actual implementation returns .uniform for small item counts
     }
     
-    @Test func testDetermineOptimalLayout_L2_MediumItemCount() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_MediumItemCount() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 8)
         let hints = createBasicHints()
@@ -127,7 +130,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // CardLayoutDecision doesn't have reasoning property
     }
     
-    @Test func testDetermineOptimalLayout_L2_LargeItemCount() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_LargeItemCount() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 50)
         let hints = createBasicHints()
@@ -146,7 +150,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // CardLayoutDecision doesn't have performance or reasoning properties
     }
     
-    @Test func testDetermineOptimalLayout_L2_VeryLargeItemCount() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_VeryLargeItemCount() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 200)
         let hints = createBasicHints()
@@ -166,7 +171,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(decision.reasoning.contains("very large") || decision.reasoning.contains("dynamic"))
     }
     
-    @Test func testDetermineOptimalLayout_L2_WithCustomHints() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_WithCustomHints() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 12)
         let hints = createComplexHints()
@@ -185,7 +191,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(decision.performance == .highPerformance) // Respects performanceMode hint
     }
     
-    @Test func testDetermineOptimalLayout_L2_DeviceTypeVariations() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_DeviceTypeVariations() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 10)
         let hints = createBasicHints()
@@ -211,7 +218,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(iPadDecision.columns >= 2) // iPad can have more columns
     }
     
-    @Test func testDetermineOptimalLayout_L2_ScreenWidthVariations() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_ScreenWidthVariations() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 15)
         let hints = createBasicHints()
@@ -237,7 +245,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(wideDecision.columns >= 3)
     }
     
-    @Test func testDetermineOptimalLayout_L2_AutoDetection() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_AutoDetection() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 8)
         let hints = createBasicHints()
@@ -256,7 +265,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineOptimalFormLayout_L2 Tests
     
-    @Test func testDetermineOptimalFormLayout_L2_BasicHints() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_BasicHints() {
+        initializeTestConfig()
         // Given
         let hints = createBasicHints()
         
@@ -272,7 +282,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // IntelligentCardLayoutDecision doesn't have reasoning property
     }
     
-    @Test func testDetermineOptimalFormLayout_L2_ComplexHints() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_ComplexHints() {
+        initializeTestConfig()
         // Given
         let hints = createComplexHints()
         
@@ -288,7 +299,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(decision.contentComplexity == .moderate)
     }
     
-    @Test func testDetermineOptimalFormLayout_L2_AccessibilityLevels() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_AccessibilityLevels() {
+        initializeTestConfig()
         // Given
         let standardHints = PresentationHints(
             dataType: .form,
@@ -317,7 +329,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineOptimalCardLayout_L2 Tests
     
-    @Test func testDetermineOptimalCardLayout_L2_SmallCardCount() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_SmallCardCount() {
+        initializeTestConfig()
         // Given
         let cardCount = 3
         let screenWidth: CGFloat = 375
@@ -338,7 +351,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // CardLayoutDecision doesn't have reasoning property
     }
     
-    @Test func testDetermineOptimalCardLayout_L2_MediumCardCount() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_MediumCardCount() {
+        initializeTestConfig()
         // Given
         let cardCount = 8
         let screenWidth: CGFloat = 768
@@ -359,7 +373,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // CardLayoutDecision doesn't have reasoning property
     }
     
-    @Test func testDetermineOptimalCardLayout_L2_LargeCardCount() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_LargeCardCount() {
+        initializeTestConfig()
         // Given
         let cardCount = 25
         let screenWidth: CGFloat = 1024
@@ -380,7 +395,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // CardLayoutDecision doesn't have performance or reasoning properties
     }
     
-    @Test func testDetermineOptimalCardLayout_L2_DeviceTypeVariations() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_DeviceTypeVariations() {
+        initializeTestConfig()
         // Given
         let cardCount = 12
         let screenWidth: CGFloat = 768
@@ -408,7 +424,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(iPadDecision.sizing == .adaptive)
     }
     
-    @Test func testDetermineOptimalCardLayout_L2_ScreenWidthVariations() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_ScreenWidthVariations() {
+        initializeTestConfig()
         // Given
         let cardCount = 15
         let deviceType = DeviceType.pad
@@ -436,7 +453,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineIntelligentCardLayout_L2 Tests
     
-    @Test func testDetermineIntelligentCardLayout_L2_Basic() {
+    @Test @MainActor func testDetermineIntelligentCardLayout_L2_Basic() {
+        initializeTestConfig()
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 768
@@ -457,7 +475,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         // IntelligentCardLayoutDecision doesn't have reasoning property
     }
     
-    @Test func testDetermineIntelligentCardLayout_L2_EdgeCases() {
+    @Test @MainActor func testDetermineIntelligentCardLayout_L2_EdgeCases() {
+        initializeTestConfig()
         // Test zero content
         let zeroDecision = determineIntelligentCardLayout_L2(
             contentCount: 0,
@@ -488,7 +507,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - OCR and Photo Layout Tests (Simplified)
     
-    @Test func testOCRLayoutDecision_Basic() {
+    @Test @MainActor func testOCRLayoutDecision_Basic() {
+        initializeTestConfig()
         // Given
         let context = OCRContext(
             textTypes: [.general],
@@ -508,7 +528,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling
     
-    @Test func testLayoutDecisionWithInvalidHints() {
+    @Test @MainActor func testLayoutDecisionWithInvalidHints() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 5)
         let invalidHints = PresentationHints(
@@ -535,7 +556,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         #expect(decision.columns > 0)
     }
     
-    @Test func testLayoutDecisionWithExtremeValues() {
+    @Test @MainActor func testLayoutDecisionWithExtremeValues() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 1)
         
@@ -563,7 +585,8 @@ open class GenericLayoutDecisionTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testLayoutDecisionIntegration() {
+    @Test @MainActor func testLayoutDecisionIntegration() {
+        initializeTestConfig()
         // Given
         let items = createTestItems(count: 20)
         let hints = createComplexHints()

@@ -226,7 +226,8 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
     // MARK: - Override Persistence Tests
     
-    @Test func testOverridePersistenceAcrossMultipleCalls() {
+    @Test @MainActor func testOverridePersistenceAcrossMultipleCalls() {
+        initializeTestConfig()
         // Set overrides
         CapabilityOverride.touchSupport = true
         CapabilityOverride.hapticSupport = false
@@ -238,7 +239,8 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
         }
     }
     
-    @Test func testOverrideClearing() {
+    @Test @MainActor func testOverrideClearing() {
+        initializeTestConfig()
         // Set override
         CapabilityOverride.touchSupport = true
         #expect(RuntimeCapabilityDetection.supportsTouchWithOverride)
@@ -254,7 +256,8 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
     
     // MARK: - Edge Case Tests
     
-    @Test func testMultipleOverridesWorkIndependently() {
+    @Test @MainActor func testMultipleOverridesWorkIndependently() {
+        initializeTestConfig()
         // Set different overrides
         CapabilityOverride.touchSupport = true
         CapabilityOverride.hapticSupport = false
@@ -266,7 +269,8 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
         #expect(RuntimeCapabilityDetection.supportsHoverWithOverride)
     }
     
-    @Test func testOverridePrecedenceOrder() {
+    @Test @MainActor func testOverridePrecedenceOrder() {
+        initializeTestConfig()
         // Override should take precedence over testing defaults
         let platform = SixLayerPlatform.current
         let testingDefaults = TestingCapabilityDetection.getTestingDefaults(for: platform)

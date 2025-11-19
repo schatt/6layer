@@ -267,7 +267,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Vision framework functions provide OCR processing and image analysis capabilities
     /// TESTING SCOPE: Vision framework availability, OCR processing, image analysis
     /// METHODOLOGY: Test both enabled and disabled Vision framework states
-    @Test func testVisionFrameworkDependentFunctions() {
+    @Test @MainActor func testVisionFrameworkDependentFunctions() {
         let supportsVision = isVisionFrameworkAvailable()
         
         if supportsVision {

@@ -160,7 +160,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test photo display with actual PlatformImage
     /// TESTING SCOPE: Tests that photo display works with real PlatformImage data
     /// METHODOLOGY: Create real PlatformImage and verify display functionality
-    @Test func testPlatformPhotoDisplay_RealPlatformImage() {
+    @Test @MainActor func testPlatformPhotoDisplay_RealPlatformImage() {
         // Given: Real PlatformImage and display component
         let realImage = createRealPlatformImage()
         let style = PhotoDisplayStyle.thumbnail
@@ -187,7 +187,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test that would have failed with the breaking change
     /// TESTING SCOPE: Tests the exact API pattern that was broken in 4.6.2
     /// METHODOLOGY: Test the specific callback code that was broken
-    @Test func testLayer4CallbackBreakingChangeDetection() {
+    @Test @MainActor func testLayer4CallbackBreakingChangeDetection() {
         // This test would have FAILED in version 4.6.2 before our fix
         // It tests the exact callback code that was broken
         

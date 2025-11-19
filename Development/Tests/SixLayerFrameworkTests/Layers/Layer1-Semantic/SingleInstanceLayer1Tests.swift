@@ -96,7 +96,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Single Instance Hierarchical Data Tests
     
-    @Test func testPlatformPresentHierarchicalData_L1_SingleInstance() {
+    @Test @MainActor func testPlatformPresentHierarchicalData_L1_SingleInstance() {
         // GIVEN: A single GenericHierarchicalItem
         let testHints = createNumericTestHints()
         let singleHierarchicalItem = GenericHierarchicalItem(
@@ -118,7 +118,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Single Instance Temporal Data Tests
     
-    @Test func testPlatformPresentTemporalData_L1_SingleInstance() {
+    @Test @MainActor func testPlatformPresentTemporalData_L1_SingleInstance() {
         // GIVEN: A single GenericTemporalItem
         let testHints = createNumericTestHints()
         let singleTemporalItem = GenericTemporalItem(
@@ -140,7 +140,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Single Instance Form Data Tests
     
-    @Test func testPlatformPresentFormData_L1_SingleInstance() {
+    @Test @MainActor func testPlatformPresentFormData_L1_SingleInstance() {
         // GIVEN: A single DynamicFormField
         let testHints = createNumericTestHints()
         let singleFormField = DynamicFormField(
@@ -165,7 +165,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Edge Cases
     
-    @Test func testSingleInstanceFunctions_WithDifferentHints() {
+    @Test @MainActor func testSingleInstanceFunctions_WithDifferentHints() {
         // GIVEN: A single numeric data item and different hint types
         let singleNumericData = GenericNumericData(
             value: 42.0,

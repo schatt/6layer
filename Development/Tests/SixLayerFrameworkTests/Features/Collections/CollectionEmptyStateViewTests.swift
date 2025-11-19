@@ -42,9 +42,9 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     }
     
     @Test @MainActor
-    func testCollectionEmptyStateViewAccessibilityDisabled() {
-        // Setup: Configure test environment with auto IDs disabled
+    @Test @MainActor func testCollectionEmptyStateViewAccessibilityDisabled() {
         initializeTestConfig()
+        // Setup: Configure test environment with auto IDs disabled
         testConfig.enableAutoIDs = false
         setupTestEnvironment()
         
@@ -62,7 +62,7 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     }
     
     @Test @MainActor
-    func testCollectionEmptyStateViewAllAccessibilityModes() {
+    @Test @MainActor func testCollectionEmptyStateViewAllAccessibilityModes() {
         initializeTestConfig()
         let view = createCollectionEmptyStateView()
         
@@ -120,9 +120,9 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     /// TDD RED PHASE: Test that custom message from customPreferences is displayed
     /// This test SHOULD FAIL until custom message support is implemented
     @Test @MainActor
-    func testEmptyStateDisplaysCustomMessage() {
-            initializeTestConfig()
-            setupTestEnvironment()
+    @Test @MainActor func testEmptyStateDisplaysCustomMessage() {
+        initializeTestConfig()
+        setupTestEnvironment()
             
             let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."
             let hints = PresentationHints(
@@ -173,8 +173,9 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     /// TDD RED PHASE: Test that onCreateItem callback displays a button
     /// This test SHOULD FAIL if button is not displayed when onCreateItem is provided
     @Test
-    func testEmptyStateDisplaysCreateButtonWhenOnCreateItemProvided() {
-            setupTestEnvironment()
+    @Test @MainActor func testEmptyStateDisplaysCreateButtonWhenOnCreateItemProvided() {
+        initializeTestConfig()
+        setupTestEnvironment()
             
             var createItemCalled = false
             let onCreateItem: () -> Void = {
@@ -218,9 +219,10 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test Issue #10 - Hints should not be overridden when passed to platformPresentItemCollection_L1
     /// When hints with dataType .collection and context .browse are passed, they should not be changed to .generic/.navigation
-    @Test
+    @Test @MainActor
     func testHintsNotOverriddenInPlatformPresentItemCollection() {
-            setupTestEnvironment()
+        initializeTestConfig()
+        setupTestEnvironment()
             
             // GIVEN: Hints with .collection dataType and .browse context, with custom message
             let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."
@@ -290,8 +292,9 @@ open class CollectionEmptyStateViewTests: BaseTestClass {
     
     /// TDD RED PHASE: Test that custom message takes precedence over default context message
     @Test
-    func testCustomMessageTakesPrecedenceOverDefaultMessage() {
-            setupTestEnvironment()
+    @Test @MainActor func testCustomMessageTakesPrecedenceOverDefaultMessage() {
+        initializeTestConfig()
+        setupTestEnvironment()
             
             let customMessage = "No vehicles added yet. Add your first vehicle to start tracking maintenance, expenses, and fuel records."
             let hints = PresentationHints(

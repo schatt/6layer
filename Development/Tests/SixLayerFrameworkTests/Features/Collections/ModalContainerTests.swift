@@ -45,7 +45,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Basic Modal Container Tests
     
-    @Test func testPlatformModalContainer_Form_L4_BasicSheet() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_BasicSheet() {
         // Given: Basic sheet strategy
         let strategy = createTestModalStrategy(
             presentationType: .sheet,
@@ -60,7 +60,7 @@ open class ModalContainerTests: BaseTestClass {
         // container is a non-optional View, so it exists if we reach here
     }
     
-    @Test func testPlatformModalContainer_Form_L4_Popover() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_Popover() {
         // Given: Popover strategy
         let strategy = createTestModalStrategy(
             presentationType: .popover,
@@ -75,7 +75,7 @@ open class ModalContainerTests: BaseTestClass {
         // container is non-optional View, not used further
     }
     
-    @Test func testPlatformModalContainer_Form_L4_FullScreen() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_FullScreen() {
         // Given: Full screen strategy
         let strategy = createTestModalStrategy(
             presentationType: .fullScreen,
@@ -90,7 +90,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Full screen container should be created successfully")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_Custom() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_Custom() {
         // Given: Custom strategy
         let strategy = createTestModalStrategy(
             presentationType: .custom,
@@ -107,7 +107,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Sizing Tests
     
-    @Test func testPlatformModalContainer_Form_L4_DifferentSizes() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_DifferentSizes() {
         // Given: Different sizing options
         let smallStrategy = createTestModalStrategy(sizing: .small)
         let mediumStrategy = createTestModalStrategy(sizing: .medium)
@@ -127,7 +127,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Custom container should be created")  // customContainer is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_MultipleDetents() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_MultipleDetents() {
         // Given: Strategy with multiple detents
         let strategy = createTestModalStrategy(
             detents: [.small, .medium, .large]
@@ -140,7 +140,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Container with multiple detents should be created")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_CustomDetent() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_CustomDetent() {
         // Given: Strategy with custom detent
         let customHeight: CGFloat = 500
         let strategy = createTestModalStrategy(
@@ -156,7 +156,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Platform Optimization Tests
     
-    @Test func testPlatformModalContainer_Form_L4_WithPlatformOptimizations() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_WithPlatformOptimizations() {
         // Given: Strategy with platform optimizations
         let iOSConstraint = createTestModalConstraint(
             maxWidth: 400,
@@ -186,7 +186,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Container with platform optimizations should be created")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_iOSOptimization() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_iOSOptimization() {
         // Given: iOS-specific optimization
         let iOSConstraint = createTestModalConstraint(
             maxWidth: 400,
@@ -204,7 +204,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "iOS-optimized container should be created")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_macOSOptimization() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_macOSOptimization() {
         // Given: macOS-specific optimization
         let macOSConstraint = createTestModalConstraint(
             maxWidth: 600,
@@ -224,7 +224,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Complex Strategy Tests
     
-    @Test func testPlatformModalContainer_Form_L4_ComplexStrategy() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_ComplexStrategy() {
         // Given: Complex strategy with all options
         let iOSConstraint = createTestModalConstraint(
             maxWidth: 400,
@@ -252,7 +252,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Complex container should be created")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_AllPresentationTypes() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_AllPresentationTypes() {
         // Given: All presentation types
         let presentationTypes: [ModalPresentationType] = [
             .sheet, .popover, .fullScreen, .custom
@@ -268,7 +268,7 @@ open class ModalContainerTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformModalContainer_Form_L4_AllSizingOptions() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_AllSizingOptions() {
         // Given: All sizing options
         let sizingOptions: [ModalSizing] = [
             .small, .medium, .large, .custom
@@ -284,7 +284,7 @@ open class ModalContainerTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformModalContainer_Form_L4_AllDetentTypes() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_AllDetentTypes() {
         // Given: All detent types
         let detentTypes: [SheetDetent] = [
             .small, .medium, .large, .custom(height: 300)
@@ -302,7 +302,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling
     
-    @Test func testPlatformModalContainer_Form_L4_EmptyDetents() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_EmptyDetents() {
         // Given: Strategy with empty detents
         let strategy = createTestModalStrategy(detents: [])
         
@@ -313,7 +313,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Container should handle empty detents gracefully")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_EmptyPlatformOptimizations() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_EmptyPlatformOptimizations() {
         // Given: Strategy with empty platform optimizations
         let strategy = createTestModalStrategy(platformOptimizations: [:])
         
@@ -324,7 +324,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Container should handle empty platform optimizations gracefully")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_MultipleCustomDetents() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_MultipleCustomDetents() {
         // Given: Strategy with multiple custom detents
         let strategy = createTestModalStrategy(
             detents: [
@@ -341,7 +341,7 @@ open class ModalContainerTests: BaseTestClass {
         #expect(Bool(true), "Container should handle multiple custom detents")  // container is non-optional
     }
     
-    @Test func testPlatformModalContainer_Form_L4_ExtremeConstraints() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_ExtremeConstraints() {
         // Given: Strategy with extreme constraints
         let extremeConstraint = createTestModalConstraint(
             maxWidth: 1000,
@@ -362,7 +362,7 @@ open class ModalContainerTests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    @Test func testPlatformModalContainer_Form_L4_Performance() {
+    @Test @MainActor func testPlatformModalContainer_Form_L4_Performance() {
         // Given: Test strategy
         let strategy = createTestModalStrategy()
         

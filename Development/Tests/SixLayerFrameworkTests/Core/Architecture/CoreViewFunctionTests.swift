@@ -57,6 +57,7 @@ open class CoreViewFunctionTests: BaseTestClass {
     // MARK: - Test Data
     
     // Helper method - creates fresh test data (test isolation)
+    @MainActor
     private func createTestItem() -> TestDataItem {
         return TestPatterns.createTestItem(
             title: "Item 1",

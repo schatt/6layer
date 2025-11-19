@@ -22,7 +22,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         return createPhotoContext() // Use BaseTestClass helper
     }    // MARK: - Card Layout Strategy Tests
     
-    @Test func testSelectCardLayoutStrategy_L3_WithSmallContent() {
+    @Test @MainActor func testSelectCardLayoutStrategy_L3_WithSmallContent() {
         // Given
         let contentCount = 3
         let screenWidth: CGFloat = 375
@@ -49,7 +49,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(!strategy.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    @Test func testSelectCardLayoutStrategy_L3_WithLargeContent() {
+    @Test @MainActor func testSelectCardLayoutStrategy_L3_WithLargeContent() {
         // Given
         let contentCount = 20
         let screenWidth: CGFloat = 1024
@@ -76,7 +76,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(!strategy.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    @Test func testSelectCardLayoutStrategy_L3_WithDifferentDeviceTypes() {
+    @Test @MainActor func testSelectCardLayoutStrategy_L3_WithDifferentDeviceTypes() {
         let contentCount = 10
         let complexity = ContentComplexity.moderate
         
@@ -114,7 +114,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "Should be able to create view with mac card layout strategy")  // macTestView is non-optional
     }
     
-    @Test func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
+    @Test @MainActor func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
         let contentCount = 10
         let screenWidth: CGFloat = 375
         let deviceType = DeviceType.phone
@@ -149,7 +149,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - chooseGridStrategy Tests
     
-    @Test func testChooseGridStrategy_SmallContent() {
+    @Test @MainActor func testChooseGridStrategy_SmallContent() {
         let screenWidth: CGFloat = 375
         let deviceType = DeviceType.phone
         let contentCount = 3
@@ -164,7 +164,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.spacing > 0, "Should have positive spacing")
     }
     
-    @Test func testChooseGridStrategy_MediumContent() {
+    @Test @MainActor func testChooseGridStrategy_MediumContent() {
         let screenWidth: CGFloat = 768
         let deviceType = DeviceType.pad
         let contentCount = 6
@@ -180,7 +180,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(!strategy.breakpoints.isEmpty, "Adaptive grid should have breakpoints")
     }
     
-    @Test func testChooseGridStrategy_LargeContent() {
+    @Test @MainActor func testChooseGridStrategy_LargeContent() {
         let screenWidth: CGFloat = 1024
         let deviceType = DeviceType.mac
         let contentCount = 20
@@ -196,7 +196,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(!strategy.breakpoints.isEmpty, "Lazy grid should have breakpoints")
     }
     
-    @Test func testChooseGridStrategy_DifferentDeviceTypes() {
+    @Test @MainActor func testChooseGridStrategy_DifferentDeviceTypes() {
         let contentCount = 10
         let screenWidth: CGFloat = 1024
         
@@ -216,7 +216,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - determineResponsiveBehavior Tests
     
-    @Test func testDetermineResponsiveBehavior_Phone() {
+    @Test @MainActor func testDetermineResponsiveBehavior_Phone() {
         let deviceType = DeviceType.phone
         let complexities: [ContentComplexity] = [.simple, .moderate, .complex, .veryComplex]
         
@@ -231,7 +231,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         }
     }
     
-    @Test func testDetermineResponsiveBehavior_Pad() {
+    @Test @MainActor func testDetermineResponsiveBehavior_Pad() {
         let deviceType = DeviceType.pad
         
         let simpleBehavior = determineResponsiveBehavior(
@@ -249,7 +249,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(complexBehavior.adaptive == true, "Pad should be adaptive")
     }
     
-    @Test func testDetermineResponsiveBehavior_Mac() {
+    @Test @MainActor func testDetermineResponsiveBehavior_Mac() {
         let deviceType = DeviceType.mac
         
         let simpleBehavior = determineResponsiveBehavior(
@@ -267,7 +267,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(complexBehavior.adaptive == true, "Mac should be adaptive")
     }
     
-    @Test func testDetermineResponsiveBehavior_AllDeviceTypes() {
+    @Test @MainActor func testDetermineResponsiveBehavior_AllDeviceTypes() {
         let deviceTypes: [DeviceType] = [.phone, .pad, .mac, .tv, .watch, .vision, .car]
         let complexity = ContentComplexity.moderate
         
@@ -284,7 +284,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - Form Strategy Tests
     
-    @Test func testSelectFormStrategy_AddFuelView_L3() {
+    @Test @MainActor func testSelectFormStrategy_AddFuelView_L3() {
         // Given
         let layout = FormLayoutDecision(
             containerType: .form,
@@ -300,7 +300,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "selectFormStrategy_AddFuelView_L3 should return a strategy")  // strategy is non-optional
     }
     
-    @Test func testSelectModalStrategy_Form_L3() {
+    @Test @MainActor func testSelectModalStrategy_Form_L3() {
         // Given
         let layout = ModalLayoutDecision(
             presentationType: .sheet,
@@ -316,7 +316,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - OCR Strategy Tests
     
-    @Test func testPlatformOCRStrategy_L3_WithGeneralText() {
+    @Test @MainActor func testPlatformOCRStrategy_L3_WithGeneralText() {
         // Given
         let textTypes = [TextType.general]
         let platform = SixLayerPlatform.iOS
@@ -334,7 +334,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformOCRStrategy_L3_WithPriceText() {
+    @Test @MainActor func testPlatformOCRStrategy_L3_WithPriceText() {
         // Given
         let textTypes = [TextType.price]
         let platform = SixLayerPlatform.iOS
@@ -352,7 +352,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformOCRStrategy_L3_WithDateText() {
+    @Test @MainActor func testPlatformOCRStrategy_L3_WithDateText() {
         // Given
         let textTypes = [TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -370,7 +370,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformOCRStrategy_L3_WithMultipleTextTypes() {
+    @Test @MainActor func testPlatformOCRStrategy_L3_WithMultipleTextTypes() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -388,7 +388,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformOCRStrategy_L3_WithDifferentPlatforms() {
+    @Test @MainActor func testPlatformOCRStrategy_L3_WithDifferentPlatforms() {
         let textTypes = [TextType.general]
         
         // Test iOS
@@ -427,7 +427,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "visionOS platform should return a strategy")  // visionOSStrategy is non-optional
     }
     
-    @Test func testPlatformDocumentOCRStrategy_L3() {
+    @Test @MainActor func testPlatformDocumentOCRStrategy_L3() {
         // Given
         let documentType = DocumentType.general
         let platform = SixLayerPlatform.iOS
@@ -445,7 +445,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformReceiptOCRStrategy_L3() {
+    @Test @MainActor func testPlatformReceiptOCRStrategy_L3() {
         // Given
         let platform = SixLayerPlatform.iOS
         
@@ -459,7 +459,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformBusinessCardOCRStrategy_L3() {
+    @Test @MainActor func testPlatformBusinessCardOCRStrategy_L3() {
         // Given
         let platform = SixLayerPlatform.iOS
         
@@ -473,7 +473,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformInvoiceOCRStrategy_L3() {
+    @Test @MainActor func testPlatformInvoiceOCRStrategy_L3() {
         // Given
         let platform = SixLayerPlatform.iOS
         
@@ -487,7 +487,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformOptimalOCRStrategy_L3() {
+    @Test @MainActor func testPlatformOptimalOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -507,7 +507,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.estimatedProcessingTime > 0, "Should have positive processing time")
     }
     
-    @Test func testPlatformBatchOCRStrategy_L3() {
+    @Test @MainActor func testPlatformBatchOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
         let platform = SixLayerPlatform.iOS
@@ -528,7 +528,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - Card Expansion Strategy Tests
     
-    @Test func testSelectCardExpansionStrategy_L3_WithStaticInteraction() {
+    @Test @MainActor func testSelectCardExpansionStrategy_L3_WithStaticInteraction() {
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 375
@@ -553,7 +553,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.animationDuration == 0.0, "Animation duration should be 0.0")
     }
     
-    @Test func testSelectCardExpansionStrategy_L3_WithTouchInteraction() {
+    @Test @MainActor func testSelectCardExpansionStrategy_L3_WithTouchInteraction() {
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 375
@@ -578,7 +578,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.animationDuration >= 0, "Should have non-negative animation duration")
     }
     
-    @Test func testSelectCardExpansionStrategy_L3_WithHoverInteraction() {
+    @Test @MainActor func testSelectCardExpansionStrategy_L3_WithHoverInteraction() {
         // Given
         let contentCount = 10
         let screenWidth: CGFloat = 1024
@@ -603,7 +603,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(strategy.animationDuration >= 0, "Should have non-negative animation duration")
     }
     
-    @Test func testSelectCardExpansionStrategy_L3_WithDifferentDeviceTypes() {
+    @Test @MainActor func testSelectCardExpansionStrategy_L3_WithDifferentDeviceTypes() {
         let contentCount = 10
         let screenWidth: CGFloat = 375
         let interactionStyle = InteractionStyle.interactive
@@ -640,7 +640,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "Mac device type should return a strategy")  // macStrategy is non-optional
     }
     
-    @Test func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
+    @Test @MainActor func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
         let contentCount = 10
         let screenWidth: CGFloat = 375
         let deviceType = DeviceType.phone
@@ -679,7 +679,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     // MARK: - Photo Strategy Tests
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithVehiclePhoto() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = createSamplePhotoContext()
@@ -695,7 +695,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithFuelReceipt() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = createSamplePhotoContext()
@@ -711,7 +711,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithPumpDisplay() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
         let context = createSamplePhotoContext()
@@ -727,7 +727,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithOdometer() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
         let context = createSamplePhotoContext()
@@ -743,7 +743,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithMaintenance() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
         let context = createSamplePhotoContext()
@@ -759,7 +759,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithExpense() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
         let context = createSamplePhotoContext()
@@ -775,7 +775,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithProfile() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
         let context = createSamplePhotoContext()
@@ -791,7 +791,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoCaptureStrategy_L3_WithDocument() {
+    @Test @MainActor func testSelectPhotoCaptureStrategy_L3_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
         let context = createSamplePhotoContext()
@@ -807,7 +807,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.camera, .photoLibrary, .both].contains(strategy), "Should return a valid capture strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithVehiclePhoto() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = createSamplePhotoContext()
@@ -823,7 +823,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithFuelReceipt() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = createSamplePhotoContext()
@@ -839,7 +839,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithPumpDisplay() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
         let context = createSamplePhotoContext()
@@ -855,7 +855,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithOdometer() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
         let context = createSamplePhotoContext()
@@ -871,7 +871,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithMaintenance() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
         let context = createSamplePhotoContext()
@@ -887,7 +887,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithExpense() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
         let context = createSamplePhotoContext()
@@ -903,7 +903,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithProfile() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
         let context = createSamplePhotoContext()
@@ -919,7 +919,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect([.thumbnail, .fullSize, .aspectFit, .aspectFill, .rounded].contains(strategy), "Should return a valid display strategy")
     }
     
-    @Test func testSelectPhotoDisplayStrategy_L3_WithDocument() {
+    @Test @MainActor func testSelectPhotoDisplayStrategy_L3_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
         let context = createSamplePhotoContext()
@@ -944,7 +944,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Layer 3 functions return data structures, not views
     /// TESTING SCOPE: Tests that selectCardExpansionStrategy_L3 returns correct data structure
     /// METHODOLOGY: Tests Layer 3 functionality (data functions don't need accessibility identifiers)
-    @Test func testSelectCardExpansionStrategy_L3_ReturnsCorrectDataStructure() async {
+    @Test @MainActor func testSelectCardExpansionStrategy_L3_ReturnsCorrectDataStructure() async {
         // Given: Layer 3 function with test data
         let contentCount = 10
         let screenWidth: CGFloat = 375.0

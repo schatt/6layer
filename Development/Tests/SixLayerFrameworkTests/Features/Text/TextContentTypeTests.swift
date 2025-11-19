@@ -36,7 +36,9 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Text content types provide appropriate keyboard configuration and auto-correction for different input types
     /// TESTING SCOPE: Text content type mapping, keyboard configuration
     /// METHODOLOGY: Test all UITextContentType cases have correct behavior using exhaustive switch
-    @Test func testTextContentTypeMapping() {
+    @Test @MainActor func testTextContentTypeMapping() {
+        initializeTestConfig()
+        initializeTestConfig()
         // Test all UITextContentType cases have appropriate behavior using exhaustive switch
         #if os(iOS)
         let textContentTypes: [UITextContentType] = [
@@ -140,7 +142,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: One-time code fields provide number pad keyboard and oneTimeCode content type for OTP input
     /// TESTING SCOPE: OTP field configuration, keyboard type, text content type
     /// METHODOLOGY: Test OTP field has correct configuration
-    @Test func testOTPFieldConfiguration() {
+    @Test @MainActor func testOTPFieldConfiguration() {
+        initializeTestConfig()
         // Test OTP field using OS UITextContentType.oneTimeCode
         #if os(iOS)
         let field = DynamicFormField(
@@ -178,7 +181,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Name fields provide appropriate keyboard configuration for name input
     /// TESTING SCOPE: Name field configuration, keyboard type, text content type
     /// METHODOLOGY: Test name field has correct configuration
-    @Test func testNameFieldConfiguration() {
+    @Test @MainActor func testNameFieldConfiguration() {
+        initializeTestConfig()
         // Given: Name field (using textContentType for name)
         #if os(iOS)
         let nameField = DynamicFormField(
@@ -211,7 +215,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Username fields provide appropriate keyboard configuration for username input
     /// TESTING SCOPE: Username field configuration, keyboard type, text content type
     /// METHODOLOGY: Test username field has correct configuration
-    @Test func testUsernameFieldConfiguration() {
+    @Test @MainActor func testUsernameFieldConfiguration() {
+        initializeTestConfig()
         // Given: Username field (using textContentType for username)
         #if os(iOS)
         let usernameField = DynamicFormField(
@@ -244,7 +249,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Postal code fields provide appropriate keyboard configuration for postal code input
     /// TESTING SCOPE: Postal code field configuration, keyboard type, text content type
     /// METHODOLOGY: Test postal code field has correct configuration
-    @Test func testPostalCodeFieldConfiguration() {
+    @Test @MainActor func testPostalCodeFieldConfiguration() {
+        initializeTestConfig()
         // Given: Postal code field (using textContentType for postalCode)
         #if os(iOS)
         let postalCodeField = DynamicFormField(
@@ -277,7 +283,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Credit card fields provide appropriate keyboard configuration for credit card input
     /// TESTING SCOPE: Credit card field configuration, keyboard type, text content type
     /// METHODOLOGY: Test credit card field has correct configuration
-    @Test func testCreditCardFieldConfiguration() {
+    @Test @MainActor func testCreditCardFieldConfiguration() {
+        initializeTestConfig()
         // Given: Credit card field (using textContentType for creditCardNumber)
         #if os(iOS)
         let creditCardField = DynamicFormField(
@@ -310,7 +317,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Address fields provide appropriate keyboard configuration for address input
     /// TESTING SCOPE: Address field configuration, keyboard type, text content type
     /// METHODOLOGY: Test address field has correct configuration
-    @Test func testAddressFieldConfiguration() {
+    @Test @MainActor func testAddressFieldConfiguration() {
+        initializeTestConfig()
         // Given: Address field (using textContentType for fullStreetAddress)
         #if os(iOS)
         let addressField = DynamicFormField(
@@ -343,7 +351,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Job title fields provide appropriate keyboard configuration for job title input
     /// TESTING SCOPE: Job title field configuration, keyboard type, text content type
     /// METHODOLOGY: Test job title field has correct configuration
-    @Test func testJobTitleFieldConfiguration() {
+    @Test @MainActor func testJobTitleFieldConfiguration() {
+        initializeTestConfig()
         // Given: Job title field (using textContentType for jobTitle)
         #if os(iOS)
         let jobTitleField = DynamicFormField(
@@ -376,7 +385,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Organization name fields provide appropriate keyboard configuration for organization input
     /// TESTING SCOPE: Organization field configuration, keyboard type, text content type
     /// METHODOLOGY: Test organization field has correct configuration
-    @Test func testOrganizationFieldConfiguration() {
+    @Test @MainActor func testOrganizationFieldConfiguration() {
+        initializeTestConfig()
         // Given: Organization field (using textContentType for organizationName)
         #if os(iOS)
         let organizationField = DynamicFormField(
@@ -411,7 +421,8 @@ open class TextContentTypeTests: BaseTestClass {
     /// BUSINESS PURPOSE: Text content types work correctly across all supported platforms
     /// TESTING SCOPE: Cross-platform text content type support
     /// METHODOLOGY: Test text content types on all platforms
-    @Test func testCrossPlatformTextContentTypes() {
+    @Test @MainActor func testCrossPlatformTextContentTypes() {
+        initializeTestConfig()
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)

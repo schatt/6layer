@@ -52,7 +52,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - DatePicker Label Tests
     
-    @Test func testDatePickerFieldCreation() {
+    @Test @MainActor func testDatePickerFieldCreation() {
         // Given: Date field with wrapper label
         let field = DynamicFormField(
             id: "test-date",
@@ -72,7 +72,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         #expect(field.contentType == .date)
     }
     
-    @Test func testTimePickerFieldCreation() {
+    @Test @MainActor func testTimePickerFieldCreation() {
         // Given: Time field with wrapper label
         let field = DynamicFormField(
             id: "test-time",
@@ -92,7 +92,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         #expect(field.contentType == .time)
     }
     
-    @Test func testDateTimePickerFieldCreation() {
+    @Test @MainActor func testDateTimePickerFieldCreation() {
         // Given: DateTime field with wrapper label
         let field = DynamicFormField(
             id: "test-datetime",
@@ -114,7 +114,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - ColorPicker Label Tests
     
-    @Test func testColorPickerFieldCreation() {
+    @Test @MainActor func testColorPickerFieldCreation() {
         // Given: Color field with wrapper label
         let field = DynamicFormField(
             id: "test-color",
@@ -136,7 +136,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Toggle Label Tests
     
-    @Test func testToggleFieldCreation() {
+    @Test @MainActor func testToggleFieldCreation() {
         // Given: Toggle field with wrapper label
         let field = DynamicFormField(
             id: "test-toggle",
@@ -156,7 +156,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         #expect(field.contentType == .toggle)
     }
     
-    @Test func testCheckboxFieldCreation() {
+    @Test @MainActor func testCheckboxFieldCreation() {
         // Given: Checkbox field with wrapper label
         let field = DynamicFormField(
             id: "test-checkbox",
@@ -178,7 +178,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - TextEditor Label Tests
     
-    @Test func testTextAreaFieldCreation() {
+    @Test @MainActor func testTextAreaFieldCreation() {
         // Given: TextArea field with wrapper label
         let field = DynamicFormField(
             id: "test-textarea",
@@ -200,7 +200,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Select Field Label Tests
     
-    @Test func testSelectFieldCreation() {
+    @Test @MainActor func testSelectFieldCreation() {
         // Given: Select field with wrapper label
         let field = DynamicFormField(
             id: "test-select",
@@ -224,7 +224,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testDynamicFormViewRendersFields() {
+    @Test @MainActor func testDynamicFormViewRendersFields() {
         // Given: Form with multiple self-labeling fields
         let fields = [
             DynamicFormField(id: "date", contentType: .date, label: "Date"),
@@ -262,7 +262,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Label Policy Tests
     
-    @Test func testSelfLabelingControlsHaveEmptyTitles() {
+    @Test @MainActor func testSelfLabelingControlsHaveEmptyTitles() {
         // Given: Fields that should have empty control titles
         let selfLabelingTypes: [DynamicContentType] = [.date, .time, .datetime, .color, .toggle, .checkbox, .select]
         
@@ -302,7 +302,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Accessibility Tests
     
-    @Test func testAccessibilityLabelsArePreserved() {
+    @Test @MainActor func testAccessibilityLabelsArePreserved() {
         // Given: Field with accessibility requirements
         let field = DynamicFormField(
             id: "test-accessibility",
@@ -323,7 +323,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Edge Case Tests
     
-    @Test func testEmptyLabelHandling() {
+    @Test @MainActor func testEmptyLabelHandling() {
         // Given: Field with empty label
         let field = DynamicFormField(
             id: "test-empty",
@@ -340,7 +340,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         #expect(field.label == "")
     }
     
-    @Test func testLongLabelHandling() {
+    @Test @MainActor func testLongLabelHandling() {
         // Given: Field with very long label
         let longLabel = "This is a very long label that might cause layout issues in the form"
         let field = DynamicFormField(
@@ -360,7 +360,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Label Duplication Prevention Tests
     
-    @Test func testLabelDuplicationPrevention() {
+    @Test @MainActor func testLabelDuplicationPrevention() {
         // Given: Fields that previously had duplicate labels
         let problematicFields = [
             DynamicFormField(id: "date", contentType: .date, label: "Date"),

@@ -475,7 +475,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      * TESTING SCOPE: Modifier integration
      * METHODOLOGY: Test multiple modifier application
      */
-    @Test func testAccessibilityViewModifiersIntegration() {
+    @Test @MainActor func testAccessibilityViewModifiersIntegration() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(

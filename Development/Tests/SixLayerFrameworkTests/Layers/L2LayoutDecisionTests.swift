@@ -31,7 +31,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         return createPhotoContext() // Use BaseTestClass helper
     }    // MARK: - Generic Layout Decision Tests
     
-    @Test func testDetermineOptimalLayout_L2_WithSmallItemCount() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_WithSmallItemCount() {
         // Given
         let items = Array(createSampleItems().prefix(3))
         let hints = PresentationHints(
@@ -58,7 +58,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    @Test func testDetermineOptimalLayout_L2_WithLargeItemCount() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_WithLargeItemCount() {
         // Given
         let items = createManyItems(count: 50)
         let hints = PresentationHints(
@@ -85,7 +85,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    @Test func testDetermineOptimalLayout_L2_WithDifferentComplexityLevels() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_WithDifferentComplexityLevels() {
         // Test simple complexity
         let simpleHints = PresentationHints(
             dataType: .generic,
@@ -132,7 +132,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(Bool(true), "Complex complexity should return a decision")  // complexDecision is non-optional
     }
     
-    @Test func testDetermineOptimalLayout_L2_WithDifferentDeviceTypes() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_WithDifferentDeviceTypes() {
         let hints = PresentationHints()
         
         // Test phone
@@ -165,7 +165,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Form Layout Decision Tests
     
-    @Test func testDetermineOptimalFormLayout_L2_WithSimpleForm() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_WithSimpleForm() {
         // Given
         let hints = PresentationHints(
             dataType: .form,
@@ -183,7 +183,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty, "Should provide reasoning")
     }
     
-    @Test func testDetermineOptimalFormLayout_L2_WithComplexForm() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_WithComplexForm() {
         // Given
         let hints = PresentationHints(
             dataType: .form,
@@ -203,7 +203,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Card Layout Decision Tests
     
-    @Test func testDetermineOptimalCardLayout_L2_WithSmallContent() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_WithSmallContent() {
         // Given
         let contentCount = 3
         let screenWidth: CGFloat = 375
@@ -224,7 +224,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(decision.spacing > 0, "Should have positive spacing")
     }
     
-    @Test func testDetermineOptimalCardLayout_L2_WithLargeContent() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_WithLargeContent() {
         // Given
         let contentCount = 20
         let screenWidth: CGFloat = 1024
@@ -245,7 +245,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(decision.spacing > 0, "Should have positive spacing")
     }
     
-    @Test func testDetermineOptimalCardLayout_L2_WithDifferentDeviceTypes() {
+    @Test @MainActor func testDetermineOptimalCardLayout_L2_WithDifferentDeviceTypes() {
         let contentCount = 10
         let complexity = ContentComplexity.moderate
         
@@ -279,7 +279,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Intelligent Card Layout Decision Tests
     
-    @Test func testDetermineIntelligentCardLayout_L2_WithSmallContent() {
+    @Test @MainActor func testDetermineIntelligentCardLayout_L2_WithSmallContent() {
         // Given
         let contentCount = 3
         let screenWidth: CGFloat = 375
@@ -305,7 +305,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(decision.animationDuration > 0, "Should have positive animation duration")
     }
     
-    @Test func testDetermineIntelligentCardLayout_L2_WithLargeContent() {
+    @Test @MainActor func testDetermineIntelligentCardLayout_L2_WithLargeContent() {
         // Given
         let contentCount = 20
         let screenWidth: CGFloat = 1024
@@ -333,7 +333,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - OCR Layout Decision Tests
     
-    @Test func testPlatformOCRLayout_L2_WithGeneralContext() {
+    @Test @MainActor func testPlatformOCRLayout_L2_WithGeneralContext() {
         // Given
         let context = OCRContext()
         
@@ -348,7 +348,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(layout.recommendedImageSize.height > 0, "Should have positive recommended image height")
     }
     
-    @Test func testPlatformOCRLayout_L2_WithDocumentContext() {
+    @Test @MainActor func testPlatformOCRLayout_L2_WithDocumentContext() {
         // Given
         let context = OCRContext()
         let documentType = DocumentType.general
@@ -365,7 +365,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
     
-    @Test func testPlatformOCRLayout_L2_WithReceiptContext() {
+    @Test @MainActor func testPlatformOCRLayout_L2_WithReceiptContext() {
         // Given
         let context = OCRContext()
         
@@ -378,7 +378,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(layout.maxImageSize.height > 0, "Should have positive max image height")
     }
     
-    @Test func testPlatformOCRLayout_L2_WithBusinessCardContext() {
+    @Test @MainActor func testPlatformOCRLayout_L2_WithBusinessCardContext() {
         // Given
         let context = OCRContext()
         
@@ -393,7 +393,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Photo Layout Decision Tests
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithVehiclePhoto() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = createSamplePhotoContext()
@@ -406,7 +406,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithFuelReceipt() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = createSamplePhotoContext()
@@ -419,7 +419,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithPumpDisplay() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithPumpDisplay() {
         // Given
         let purpose = PhotoPurpose.pumpDisplay
         let context = createSamplePhotoContext()
@@ -432,7 +432,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithOdometer() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithOdometer() {
         // Given
         let purpose = PhotoPurpose.odometer
         let context = createSamplePhotoContext()
@@ -445,7 +445,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithMaintenance() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithMaintenance() {
         // Given
         let purpose = PhotoPurpose.maintenance
         let context = createSamplePhotoContext()
@@ -458,7 +458,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithExpense() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithExpense() {
         // Given
         let purpose = PhotoPurpose.expense
         let context = createSamplePhotoContext()
@@ -471,7 +471,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithProfile() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithProfile() {
         // Given
         let purpose = PhotoPurpose.profile
         let context = createSamplePhotoContext()
@@ -484,7 +484,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDetermineOptimalPhotoLayout_L2_WithDocument() {
+    @Test @MainActor func testDetermineOptimalPhotoLayout_L2_WithDocument() {
         // Given
         let purpose = PhotoPurpose.document
         let context = createSamplePhotoContext()
@@ -497,7 +497,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(size.height > 0, "Should have positive height")
     }
     
-    @Test func testDeterminePhotoCaptureStrategy_L2_WithVehiclePhoto() {
+    @Test @MainActor func testDeterminePhotoCaptureStrategy_L2_WithVehiclePhoto() {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = createSamplePhotoContext()
@@ -509,7 +509,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(Bool(true), "determinePhotoCaptureStrategy_L2 should return a strategy")  // strategy is non-optional
     }
     
-    @Test func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
+    @Test @MainActor func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
         // Given
         let purpose = PhotoPurpose.fuelReceipt
         let context = createSamplePhotoContext()

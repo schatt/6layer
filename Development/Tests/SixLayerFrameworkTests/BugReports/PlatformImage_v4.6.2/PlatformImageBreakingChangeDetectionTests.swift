@@ -39,7 +39,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test the exact delegate method that was broken
     /// TESTING SCOPE: Tests the actual UIImagePickerControllerDelegate method execution
     /// METHODOLOGY: Execute the delegate method that contains the broken PlatformImage(image) call
-    @Test func testImagePickerControllerDelegate_ExactBrokenCode() {
+    @Test @MainActor func testImagePickerControllerDelegate_ExactBrokenCode() {
         #if os(iOS)
         // Given: The exact delegate method that was broken
         var capturedImage: PlatformImage?
@@ -85,7 +85,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test the exact photo picker delegate method that was broken
     /// TESTING SCOPE: Tests the actual UIImagePickerControllerDelegate method for photo selection
     /// METHODOLOGY: Execute the delegate method that contains the broken PlatformImage(image) call
-    @Test func testPhotoPickerDelegate_ExactBrokenCode() {
+    @Test @MainActor func testPhotoPickerDelegate_ExactBrokenCode() {
         #if os(iOS)
         // Given: The exact delegate method that was broken
         var selectedImage: PlatformImage?
@@ -363,6 +363,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     #endif
     
     #if os(macOS)
+    @MainActor
     private func getMacCameraCoordinator(from view: some View) -> MacCameraView.Coordinator? {
         // For testing purposes, we need to create a coordinator directly
         // since we can't easily extract it from the SwiftUI view
@@ -370,6 +371,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         return macCameraView.makeCoordinator()
     }
     
+    @MainActor
     private func getMacPhotoPickerCoordinator(from view: some View) -> MacPhotoPickerView.Coordinator? {
         // For testing purposes, we need to create a coordinator directly
         // since we can't easily extract it from the SwiftUI view

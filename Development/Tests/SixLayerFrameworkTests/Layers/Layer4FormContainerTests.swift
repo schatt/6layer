@@ -25,7 +25,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Form Container Type Tests
     
-    @Test func testPlatformFormContainer_L4_FormContainer() {
+    @Test @MainActor func testPlatformFormContainer_L4_FormContainer() {
         // Given: Form container strategy
         let strategy = FormStrategy(
             containerType: .form,
@@ -103,7 +103,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFormContainer_L4_StandardContainer() {
+    @Test @MainActor func testPlatformFormContainer_L4_StandardContainer() {
         // Given: Standard container strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -168,7 +168,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFormContainer_L4_ScrollViewContainer() {
+    @Test @MainActor func testPlatformFormContainer_L4_ScrollViewContainer() {
         // Given: ScrollView container strategy
         let strategy = FormStrategy(
             containerType: .scrollView,
@@ -216,7 +216,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformFormContainer_L4_CustomContainer() {
+    @Test @MainActor func testPlatformFormContainer_L4_CustomContainer() {
         // Given: Custom container strategy
         let strategy = FormStrategy(
             containerType: .custom,
@@ -236,7 +236,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    @Test func testPlatformFormContainer_L4_AdaptiveContainer() {
+    @Test @MainActor func testPlatformFormContainer_L4_AdaptiveContainer() {
         // Given: Adaptive container strategy
         let strategy = FormStrategy(
             containerType: .adaptive,
@@ -258,7 +258,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Field Layout Tests
     
-    @Test func testPlatformFormContainer_L4_DifferentFieldLayouts() {
+    @Test @MainActor func testPlatformFormContainer_L4_DifferentFieldLayouts() {
         // Given: Different field layout strategies
         let fieldLayouts: [FieldLayout] = [
             .compact, .standard, .spacious, .adaptive,
@@ -285,7 +285,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformFormContainer_L4_CompactLayout() {
+    @Test @MainActor func testPlatformFormContainer_L4_CompactLayout() {
         // Given: Compact field layout strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -305,7 +305,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    @Test func testPlatformFormContainer_L4_SpaciousLayout() {
+    @Test @MainActor func testPlatformFormContainer_L4_SpaciousLayout() {
         // Given: Spacious field layout strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -325,7 +325,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    @Test func testPlatformFormContainer_L4_GridLayout() {
+    @Test @MainActor func testPlatformFormContainer_L4_GridLayout() {
         // Given: Grid field layout strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -347,7 +347,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Validation Strategy Tests
     
-    @Test func testPlatformFormContainer_L4_DifferentValidationStrategies() {
+    @Test @MainActor func testPlatformFormContainer_L4_DifferentValidationStrategies() {
         // Given: Different validation strategies
         let validationStrategies: [ValidationStrategy] = [
             .none, .realTime, .onSubmit, .custom, .immediate, .deferred
@@ -374,7 +374,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Complex Content Tests
     
-    @Test func testPlatformFormContainer_L4_ComplexContent() {
+    @Test @MainActor func testPlatformFormContainer_L4_ComplexContent() {
         // Given: Complex content with multiple views
         let complexContent = VStack {
             Text("Form Title")
@@ -402,7 +402,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         #expect(String(describing: mirror.subjectType) == "AnyView")
     }
     
-    @Test func testPlatformFormContainer_L4_EmptyContent() {
+    @Test @MainActor func testPlatformFormContainer_L4_EmptyContent() {
         // Given: Empty content
         let emptyContent = EmptyView()
         
@@ -426,7 +426,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Platform Adaptations Tests
     
-    @Test func testPlatformFormContainer_L4_WithPlatformAdaptations() {
+    @Test @MainActor func testPlatformFormContainer_L4_WithPlatformAdaptations() {
         // Given: Strategy with platform adaptations
         let platformAdaptations: [ModalPlatform: PlatformAdaptation] = [
             .iOS: .standardFields,
@@ -454,7 +454,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling
     
-    @Test func testPlatformFormContainer_L4_AllContainerTypes() {
+    @Test @MainActor func testPlatformFormContainer_L4_AllContainerTypes() {
         // Given: All possible container types
         let containerTypes: [FormContainerType] = [
             .form, .scrollView, .custom, .adaptive, .standard
@@ -479,7 +479,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformFormContainer_L4_AllFieldLayouts() {
+    @Test @MainActor func testPlatformFormContainer_L4_AllFieldLayouts() {
         // Given: All possible field layouts
         let fieldLayouts: [FieldLayout] = [
             .standard, .compact, .spacious, .adaptive,
@@ -506,7 +506,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformFormContainer_L4_AllValidationStrategies() {
+    @Test @MainActor func testPlatformFormContainer_L4_AllValidationStrategies() {
         // Given: All possible validation strategies
         let validationStrategies: [ValidationStrategy] = [
             .none, .realTime, .onSubmit, .custom, .immediate, .deferred
@@ -533,7 +533,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    @Test func testPlatformFormContainer_L4_Performance() {
+    @Test @MainActor func testPlatformFormContainer_L4_Performance() {
         // Given: Standard strategy
         let strategy = FormStrategy(
             containerType: .standard,
@@ -545,7 +545,7 @@ open class Layer4FormContainerTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformFormContainer_L4_PerformanceWithComplexContent() {
+    @Test @MainActor func testPlatformFormContainer_L4_PerformanceWithComplexContent() {
         // Given: Complex content
         let complexContent = VStack {
             ForEach(0..<50) { i in

@@ -81,7 +81,7 @@ open class Layer1PresentationTests: BaseTestClass {
     
     // MARK: - platformPresentFormData_L1 Tests
     
-    @Test func testPlatformPresentFormData_L1_CreatesSimpleFormView() {
+    @Test @MainActor func testPlatformPresentFormData_L1_CreatesSimpleFormView() {
         // Given: Form fields and hints
         let fields = testFields
         let hints = testHints
@@ -107,7 +107,7 @@ open class Layer1PresentationTests: BaseTestClass {
                      "View should be AsyncFormView (actual implementation) or AnyView (if wrapped)")
     }
     
-    @Test func testPlatformPresentFormData_L1_HandlesEmptyFields() {
+    @Test @MainActor func testPlatformPresentFormData_L1_HandlesEmptyFields() {
         // Given: Empty fields array
         let fields: [DynamicFormField] = []
         let hints = testHints
@@ -131,7 +131,7 @@ open class Layer1PresentationTests: BaseTestClass {
                      "View should be AsyncFormView (actual implementation) or AnyView (if wrapped)")
     }
     
-    @Test func testPlatformPresentFormData_L1_HandlesDifferentComplexityLevels() {
+    @Test @MainActor func testPlatformPresentFormData_L1_HandlesDifferentComplexityLevels() {
         // Given: Different complexity hints
         let simpleHints = PresentationHints(
             dataType: .form,
@@ -166,7 +166,7 @@ open class Layer1PresentationTests: BaseTestClass {
                      "Complex view should be AsyncFormView (actual implementation) or AnyView (if wrapped)")
     }
     
-    @Test func testPlatformPresentFormData_L1_HandlesDifferentDataTypes() {
+    @Test @MainActor func testPlatformPresentFormData_L1_HandlesDifferentDataTypes() {
         // Given: Different data type hints
         let formHints = PresentationHints(
             dataType: .form,
@@ -203,7 +203,7 @@ open class Layer1PresentationTests: BaseTestClass {
     
     // MARK: - platformPresentModalForm_L1 Tests
     
-    @Test func testPlatformPresentModalForm_L1_CreatesModalFormView() {
+    @Test @MainActor func testPlatformPresentModalForm_L1_CreatesModalFormView() {
         // Given: Form type and context
         let formType = DataTypeHint.form
         let context = PresentationContext.form
@@ -218,7 +218,7 @@ open class Layer1PresentationTests: BaseTestClass {
         #expect(String(describing: mirror.subjectType) == "ModifiedContent<ModalFormView, AutomaticComplianceModifier>")
     }
     
-    @Test func testPlatformPresentModalForm_L1_HandlesDifferentFormTypes() {
+    @Test @MainActor func testPlatformPresentModalForm_L1_HandlesDifferentFormTypes() {
         // Given: Different form types
         let formTypes: [DataTypeHint] = [
             .form, .text, .number, .date, .boolean, .collection,
@@ -238,7 +238,7 @@ open class Layer1PresentationTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformPresentModalForm_L1_HandlesDifferentContexts() {
+    @Test @MainActor func testPlatformPresentModalForm_L1_HandlesDifferentContexts() {
         // Given: Different presentation contexts
         let formType = DataTypeHint.form
         let contexts: [PresentationContext] = [
@@ -258,7 +258,7 @@ open class Layer1PresentationTests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformPresentModalForm_L1_GeneratesAppropriateFields() {
+    @Test @MainActor func testPlatformPresentModalForm_L1_GeneratesAppropriateFields() {
         // Given: Different form types that should generate different fields
         let testCases: [(DataTypeHint, Int)] = [
             (.text, 1),           // Should generate 1 field
@@ -288,7 +288,7 @@ open class Layer1PresentationTests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling
     
-    @Test func testPlatformPresentFormData_L1_HandlesLargeFieldSets() {
+    @Test @MainActor func testPlatformPresentFormData_L1_HandlesLargeFieldSets() {
         // Given: Large number of fields
         let largeFieldSet = (1...100).map { i in
             createTestField(
@@ -313,7 +313,7 @@ open class Layer1PresentationTests: BaseTestClass {
                      "View should be AsyncFormView (actual implementation) or AnyView (if wrapped)")
     }
     
-    @Test func testPlatformPresentFormData_L1_HandlesSpecialCharacters() {
+    @Test @MainActor func testPlatformPresentFormData_L1_HandlesSpecialCharacters() {
         // Given: Fields with special characters
         let specialFields = [
             createTestField(
@@ -345,7 +345,7 @@ open class Layer1PresentationTests: BaseTestClass {
                      "View should be AsyncFormView (actual implementation) or AnyView (if wrapped)")
     }
     
-    @Test func testPlatformPresentModalForm_L1_HandlesCustomFormType() {
+    @Test @MainActor func testPlatformPresentModalForm_L1_HandlesCustomFormType() {
         // Given: Custom form type
         let formType = DataTypeHint.custom
         let context = PresentationContext.form
@@ -362,7 +362,7 @@ open class Layer1PresentationTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testPlatformPresentFormData_L1_IntegrationWithHints() {
+    @Test @MainActor func testPlatformPresentFormData_L1_IntegrationWithHints() {
         // Given: Comprehensive hints
         let comprehensiveHints = PresentationHints(
             dataType: .form,
@@ -388,7 +388,7 @@ open class Layer1PresentationTests: BaseTestClass {
                      "View should be AsyncFormView (actual implementation) or AnyView (if wrapped)")
     }
     
-    @Test func testPlatformPresentModalForm_L1_IntegrationWithAllParameters() {
+    @Test @MainActor func testPlatformPresentModalForm_L1_IntegrationWithAllParameters() {
         // Given: All possible parameters
         let formType = DataTypeHint.user
         let context = PresentationContext.create

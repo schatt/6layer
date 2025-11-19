@@ -45,7 +45,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate DataBinder initialization functionality
     /// TESTING SCOPE: Tests DataBinder creation with test model and initial state verification
     /// METHODOLOGY: Create DataBinder with TestModel and verify underlying model properties
-    @Test func testDataBinderInitialization() {
+    @Test @MainActor func testDataBinderInitialization() {
+        initializeTestConfig()
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)
@@ -65,7 +66,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate field binding establishment functionality
     /// TESTING SCOPE: Tests DataBinder field binding creation and verification
     /// METHODOLOGY: Bind field to model property and verify binding state and value retrieval
-    @Test func testDataBinderBindField() {
+    @Test @MainActor func testDataBinderBindField() {
+        initializeTestConfig()
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         
@@ -80,7 +82,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate field update functionality
     /// TESTING SCOPE: Tests DataBinder field value updates and change tracking
     /// METHODOLOGY: Update bound field value and verify binder state, model updates, and dirty tracking
-    @Test func testDataBinderUpdateField() {
+    @Test @MainActor func testDataBinderUpdateField() {
+        initializeTestConfig()
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)
@@ -107,7 +110,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate model synchronization functionality
     /// TESTING SCOPE: Tests DataBinder synchronization of multiple field updates to underlying model
     /// METHODOLOGY: Update multiple bound fields and verify model synchronization after sync call
-    @Test func testDataBinderSyncToModel() {
+    @Test @MainActor func testDataBinderSyncToModel() {
+        initializeTestConfig()
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         binder.bind("name", to: \TestModel.name)
@@ -129,7 +133,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate multiple field binding functionality
     /// TESTING SCOPE: Tests DataBinder creation and management of multiple field bindings
     /// METHODOLOGY: Bind multiple fields to model properties and verify all bindings are established
-    @Test func testDataBinderMultipleBindings() {
+    @Test @MainActor func testDataBinderMultipleBindings() {
+        initializeTestConfig()
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         
@@ -148,7 +153,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate field unbinding functionality
     /// TESTING SCOPE: Tests DataBinder field unbinding and binding removal
     /// METHODOLOGY: Bind field, then unbind it and verify binding is completely removed
-    @Test func testDataBinderUnbindField() {
+    @Test @MainActor func testDataBinderUnbindField() {
+        initializeTestConfig()
         let testModel = TestModel(name: "John", age: 30, isActive: true)
         let binder = DataBinder(testModel)
         binder.bind("name", to: \TestModel.name)
@@ -169,7 +175,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate ChangeTracker initialization functionality
     /// TESTING SCOPE: Tests ChangeTracker creation and initial state verification
     /// METHODOLOGY: Create ChangeTracker and verify initial state with no changes tracked
-    @Test func testChangeTrackerInitialization() {
+    @Test @MainActor func testChangeTrackerInitialization() {
+        initializeTestConfig()
         let tracker = ChangeTracker()
         
         // Verify initial state
@@ -181,7 +188,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate change tracking functionality
     /// TESTING SCOPE: Tests ChangeTracker single field change tracking and state management
     /// METHODOLOGY: Track single field change and verify tracker state reflects the change
-    @Test func testChangeTrackerTrackChange() {
+    @Test @MainActor func testChangeTrackerTrackChange() {
+        initializeTestConfig()
         let tracker = ChangeTracker()
         
         // Track a change
@@ -197,7 +205,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate multiple change tracking functionality
     /// TESTING SCOPE: Tests ChangeTracker multiple field change tracking and aggregation
     /// METHODOLOGY: Track multiple field changes and verify all changes are properly tracked and counted
-    @Test func testChangeTrackerTrackMultipleChanges() {
+    @Test @MainActor func testChangeTrackerTrackMultipleChanges() {
+        initializeTestConfig()
         let tracker = ChangeTracker()
         
         // Track multiple changes
@@ -215,7 +224,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate change details retrieval functionality
     /// TESTING SCOPE: Tests ChangeTracker change details access and data integrity
     /// METHODOLOGY: Track change and verify change details can be retrieved with correct old/new values
-    @Test func testChangeTrackerGetChangeDetails() {
+    @Test @MainActor func testChangeTrackerGetChangeDetails() {
+        initializeTestConfig()
         let tracker = ChangeTracker()
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
@@ -231,7 +241,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate change clearing functionality
     /// TESTING SCOPE: Tests ChangeTracker change clearing and state reset
     /// METHODOLOGY: Track changes, clear them, and verify tracker returns to initial state
-    @Test func testChangeTrackerClearChanges() {
+    @Test @MainActor func testChangeTrackerClearChanges() {
+        initializeTestConfig()
         let tracker = ChangeTracker()
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
@@ -250,7 +261,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate field reversion functionality
     /// TESTING SCOPE: Tests ChangeTracker individual field reversion and change removal
     /// METHODOLOGY: Track change, revert specific field, and verify field returns to original value and is removed from tracking
-    @Test func testChangeTrackerRevertField() {
+    @Test @MainActor func testChangeTrackerRevertField() {
+        initializeTestConfig()
         let tracker = ChangeTracker()
         tracker.trackChange("name", oldValue: "John", newValue: "Jane")
         
@@ -270,7 +282,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate DirtyStateManager initialization functionality
     /// TESTING SCOPE: Tests DirtyStateManager creation and initial state verification
     /// METHODOLOGY: Create DirtyStateManager and verify initial state with no dirty fields
-    @Test func testDirtyStateManagerInitialization() {
+    @Test @MainActor func testDirtyStateManagerInitialization() {
+        initializeTestConfig()
         let manager = DirtyStateManager()
         
         // Verify initial state
@@ -281,7 +294,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate dirty field marking functionality
     /// TESTING SCOPE: Tests DirtyStateManager field dirty state marking and tracking
     /// METHODOLOGY: Mark field as dirty and verify dirty state is properly tracked
-    @Test func testDirtyStateManagerMarkFieldDirty() {
+    @Test @MainActor func testDirtyStateManagerMarkFieldDirty() {
+        initializeTestConfig()
         let manager = DirtyStateManager()
         
         // Mark field as dirty
@@ -296,7 +310,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate clean field marking functionality
     /// TESTING SCOPE: Tests DirtyStateManager field clean state marking and dirty state removal
     /// METHODOLOGY: Mark field dirty, then mark clean, and verify dirty state is properly cleared
-    @Test func testDirtyStateManagerMarkFieldClean() {
+    @Test @MainActor func testDirtyStateManagerMarkFieldClean() {
+        initializeTestConfig()
         let manager = DirtyStateManager()
         manager.markFieldDirty("name")
         
@@ -314,7 +329,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate multiple field dirty state management functionality
     /// TESTING SCOPE: Tests DirtyStateManager multiple field dirty state tracking and partial cleaning
     /// METHODOLOGY: Mark multiple fields dirty, clean one field, and verify partial dirty state management
-    @Test func testDirtyStateManagerMultipleFields() {
+    @Test @MainActor func testDirtyStateManagerMultipleFields() {
+        initializeTestConfig()
         let manager = DirtyStateManager()
         
         // Mark multiple fields as dirty
@@ -340,7 +356,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate dirty state clearing functionality
     /// TESTING SCOPE: Tests DirtyStateManager bulk dirty state clearing and reset
     /// METHODOLOGY: Mark multiple fields dirty, clear all, and verify complete clean state
-    @Test func testDirtyStateManagerClearAll() {
+    @Test @MainActor func testDirtyStateManagerClearAll() {
+        initializeTestConfig()
         let manager = DirtyStateManager()
         manager.markFieldDirty("name")
         manager.markFieldDirty("age")
@@ -359,7 +376,8 @@ open class DataBindingTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate dirty values retrieval functionality
     /// TESTING SCOPE: Tests DirtyStateManager dirty field values access and enumeration
     /// METHODOLOGY: Mark multiple fields dirty and verify dirty values can be retrieved correctly
-    @Test func testDirtyStateManagerGetDirtyValues() {
+    @Test @MainActor func testDirtyStateManagerGetDirtyValues() {
+        initializeTestConfig()
         let manager = DirtyStateManager()
         manager.markFieldDirty("name")
         manager.markFieldDirty("age")

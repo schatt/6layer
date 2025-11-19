@@ -123,7 +123,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate text field data binding functionality
     /// TESTING SCOPE: Tests text field data binding and value synchronization
     /// METHODOLOGY: Create text field with data binding and verify binding functionality
-    @Test func testTextFieldWithDataBinding() {
+    @Test @MainActor func testTextFieldWithDataBinding() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)
@@ -155,7 +155,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate email field data binding functionality
     /// TESTING SCOPE: Tests email field data binding and value synchronization
     /// METHODOLOGY: Create email field with data binding and verify binding functionality
-    @Test func testEmailFieldWithDataBinding() {
+    @Test @MainActor func testEmailFieldWithDataBinding() {
         // Given: Email field with data binding
         resetCallbacks()
         let emailField = sampleFormFields[1]
@@ -181,7 +181,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate select field picker functionality
     /// TESTING SCOPE: Tests select field picker interaction and selection
     /// METHODOLOGY: Create select field with picker and verify selection functionality
-    @Test func testSelectFieldWithPicker() {
+    @Test @MainActor func testSelectFieldWithPicker() {
         // Given: Select field with picker options
         resetCallbacks()
         let selectField = sampleFormFields[2]
@@ -211,7 +211,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate radio button group selection functionality
     /// TESTING SCOPE: Tests radio button group selection and state management
     /// METHODOLOGY: Create radio button group and verify selection functionality
-    @Test func testRadioButtonGroupWithSelection() {
+    @Test @MainActor func testRadioButtonGroupWithSelection() {
         // Given: Radio button group with selection
         resetCallbacks()
         let radioField = sampleFormFields[3]
@@ -242,7 +242,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate number field data binding functionality
     /// TESTING SCOPE: Tests number field data binding and value synchronization
     /// METHODOLOGY: Create number field with data binding and verify binding functionality
-    @Test func testNumberFieldWithDataBinding() {
+    @Test @MainActor func testNumberFieldWithDataBinding() {
         // Given: Number field with data binding
         resetCallbacks()
         let numberField = sampleFormFields[4]
@@ -268,7 +268,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate date field data binding functionality
     /// TESTING SCOPE: Tests date field data binding and value synchronization
     /// METHODOLOGY: Create date field with data binding and verify binding functionality
-    @Test func testDateFieldWithDataBinding() {
+    @Test @MainActor func testDateFieldWithDataBinding() {
         // Given: Date field with data binding
         resetCallbacks()
         let dateField = sampleFormFields[5]
@@ -294,7 +294,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate checkbox field data binding functionality
     /// TESTING SCOPE: Tests checkbox field data binding and value synchronization
     /// METHODOLOGY: Create checkbox field with data binding and verify binding functionality
-    @Test func testCheckboxFieldWithDataBinding() {
+    @Test @MainActor func testCheckboxFieldWithDataBinding() {
         // Given: Checkbox field with data binding
         resetCallbacks()
         let checkboxField = sampleFormFields[6]
@@ -321,7 +321,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate platform form data presentation functionality
     /// TESTING SCOPE: Tests platform form data presentation with interactive fields
     /// METHODOLOGY: Create platform form data presentation and verify interactive functionality
-    @Test func testPlatformPresentFormDataL1WithInteractiveFields() {
+    @Test @MainActor func testPlatformPresentFormDataL1WithInteractiveFields() {
         // Given: Form with interactive fields
         resetCallbacks()
         
@@ -338,7 +338,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate simple form view interactive functionality
     /// TESTING SCOPE: Tests simple form view with interactive fields
     /// METHODOLOGY: Create simple form view and verify interactive field functionality
-    @Test func testSimpleFormViewWithInteractiveFields() {
+    @Test @MainActor func testSimpleFormViewWithInteractiveFields() {
         // Given: Simple form view with interactive fields
         resetCallbacks()
         
@@ -357,7 +357,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate field validation error display functionality
     /// TESTING SCOPE: Tests field validation and error display
     /// METHODOLOGY: Test field validation and verify error display functionality
-    @Test func testFieldValidationWithErrorDisplay() {
+    @Test @MainActor func testFieldValidationWithErrorDisplay() {
         // Given: Field with validation
         resetCallbacks()
         let textField = sampleFormFields[0]
@@ -403,7 +403,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate required field validation functionality
     /// TESTING SCOPE: Tests required field validation and error handling
     /// METHODOLOGY: Test required field validation and verify error handling functionality
-    @Test func testRequiredFieldValidation() {
+    @Test @MainActor func testRequiredFieldValidation() {
         // Given: Required field validation
         resetCallbacks()
         let requiredField = sampleFormFields[0] // Text field is required
@@ -441,7 +441,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate field focus management functionality
     /// TESTING SCOPE: Tests field focus management and navigation
     /// METHODOLOGY: Test field focus management and verify focus navigation functionality
-    @Test func testFieldFocusManagement() {
+    @Test @MainActor func testFieldFocusManagement() {
         // Given: Field with focus management
         resetCallbacks()
         let textField = sampleFormFields[0]
@@ -472,7 +472,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate empty form fields functionality
     /// TESTING SCOPE: Tests empty form fields handling and validation
     /// METHODOLOGY: Test empty form fields and verify handling functionality
-    @Test func testEmptyFormFields() {
+    @Test @MainActor func testEmptyFormFields() {
         // Given: Empty form fields array
         resetCallbacks()
         
@@ -489,7 +489,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form with all field types functionality
     /// TESTING SCOPE: Tests form with all field types and interactions
     /// METHODOLOGY: Create form with all field types and verify comprehensive functionality
-    @Test func testFormWithAllFieldTypes() {
+    @Test @MainActor func testFormWithAllFieldTypes() {
         // Given: Form with all field types
         resetCallbacks()
         let allContentTypes: [DynamicContentType] = Array(DynamicContentType.allCases) // Use real enum
@@ -516,7 +516,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form with long labels functionality
     /// TESTING SCOPE: Tests form with long labels and layout handling
     /// METHODOLOGY: Create form with long labels and verify layout functionality
-    @Test func testFormWithLongLabels() {
+    @Test @MainActor func testFormWithLongLabels() {
         // Given: Form with long labels
         resetCallbacks()
         let longLabelField = DynamicFormField(
@@ -540,7 +540,7 @@ open class FormFieldInteractionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form with special characters functionality
     /// TESTING SCOPE: Tests form with special characters and input handling
     /// METHODOLOGY: Create form with special characters and verify input functionality
-    @Test func testFormWithSpecialCharacters() {
+    @Test @MainActor func testFormWithSpecialCharacters() {
         // Given: Form with special characters
         resetCallbacks()
         let specialField = DynamicFormField(

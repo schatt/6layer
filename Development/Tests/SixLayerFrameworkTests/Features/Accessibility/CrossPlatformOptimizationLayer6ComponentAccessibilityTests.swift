@@ -17,7 +17,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // MARK: - CrossPlatformOptimizationManager Tests
     
-    @Test func testCrossPlatformOptimizationManagerGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testCrossPlatformOptimizationManagerGeneratesAccessibilityIdentifiers() async {
         await runWithTaskLocalConfig {
             // Given: A view with CrossPlatformOptimizationManager
             let manager = CrossPlatformOptimizationManager()
@@ -47,7 +47,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // MARK: - PlatformOptimizationSettings Tests
     
-    @Test func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOptimizationSettings
         let settings = PlatformOptimizationSettings(for: .iOS)
         
@@ -73,7 +73,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // MARK: - CrossPlatformPerformanceMetrics Tests
     
-    @Test func testCrossPlatformPerformanceMetricsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testCrossPlatformPerformanceMetricsGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformPerformanceMetrics
         let metrics = CrossPlatformPerformanceMetrics()
         
@@ -100,7 +100,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // MARK: - PlatformUIPatterns Tests
     
-    @Test func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformUIPatterns
         let patterns = PlatformUIPatterns(for: .iOS)
         
@@ -128,7 +128,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // NOTE: PlatformRecommendationEngine moved to possible-features/ - test disabled
     /*
-    @Test func testPlatformRecommendationEngineGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformRecommendationEngineGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRecommendationEngine
         let engine = PlatformRecommendationEngine()
         
@@ -155,7 +155,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     // MARK: - CrossPlatformTesting Tests
     
-    @Test func testCrossPlatformTestingGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testCrossPlatformTestingGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformTesting
         let testing = CrossPlatformTesting()
         

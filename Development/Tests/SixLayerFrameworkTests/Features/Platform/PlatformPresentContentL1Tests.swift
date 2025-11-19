@@ -366,7 +366,8 @@ open class PlatformPresentContentL1Tests: BaseTestClass {
     
     // MARK: - Performance Tests
     
-    @Test func testPlatformPresentContent_L1_Performance() {
+    @Test @MainActor func testPlatformPresentContent_L1_Performance() {
+        initializeTestConfig()
         // Given
         let content = "Performance test content"
         let hints = createTestHints()

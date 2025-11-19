@@ -45,6 +45,7 @@ struct ComprehensiveCapabilityTestRunner {
     /// Setup test environment before each test
     @MainActor
     func setupTestEnvironment() async {
+        initializeTestConfig()
         // Use real platform detection - no override needed
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
@@ -53,6 +54,7 @@ struct ComprehensiveCapabilityTestRunner {
     /// Cleanup test environment after each test
     @MainActor
     func cleanupTestEnvironment() async {
+        initializeTestConfig()
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         RuntimeCapabilityDetection.setTestVoiceOver(nil)
         RuntimeCapabilityDetection.setTestSwitchControl(nil)
@@ -136,6 +138,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run a specific comprehensive capability test
+    @MainActor
     private func runComprehensiveCapabilityTest(_ config: TestRunnerConfig) async {
         print("🚀 Running comprehensive capability test: \(config.name)")
         print("   Test types: \(config.testTypes.map { "\($0)" }.joined(separator: ", "))")
@@ -151,6 +154,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run a specific test type
+    @MainActor
     private func runTestType(_ testType: TestRunnerConfig.TestType, config: TestRunnerConfig) {
         print("   📋 Running \(testType) tests...")
         
@@ -172,6 +176,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - Capability Detection Tests
     
     /// Run capability detection tests
+    @MainActor
     private func runCapabilityDetectionTests(_ config: TestRunnerConfig) {
         for capability in config.capabilities {
             runCapabilityDetectionTest(capability, config: config)
@@ -179,6 +184,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run capability detection test for a specific capability
+    @MainActor
     private func runCapabilityDetectionTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         print("     🔍 Testing \(capability) detection...")
         
@@ -194,7 +200,9 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Test capability detection
+    @MainActor
     func testCapabilityDetection(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+        initializeTestConfig()
         switch capability {
         case .touch:
             #expect(config.supportsTouch == enabled, "Touch detection should be \(enabled)")
@@ -220,6 +228,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - UI Generation Tests
     
     /// Run UI generation tests
+    @MainActor
     private func runUIGenerationTests(_ config: TestRunnerConfig) {
         for capability in config.capabilities {
             runUIGenerationTest(capability, config: config)
@@ -227,6 +236,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run UI generation test for a specific capability
+    @MainActor
     private func runUIGenerationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         print("     🎨 Testing \(capability) UI generation...")
         
@@ -243,6 +253,7 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Test UI generation
     func testUIGeneration(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+        initializeTestConfig()
         switch capability {
         case .touch:
             // Touch should match the enabled state (runtime detection)
@@ -287,6 +298,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - Cross-Platform Consistency Tests
     
     /// Run cross-platform consistency tests
+    @MainActor
     private func runCrossPlatformConsistencyTests(_ config: TestRunnerConfig) {
         for platform in config.platforms {
             runCrossPlatformConsistencyTest(platform, config: config)
@@ -294,6 +306,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run cross-platform consistency test for a specific platform
+    @MainActor
     private func runCrossPlatformConsistencyTest(_ platform: SixLayerPlatform, config: TestRunnerConfig) {
         print("     🌐 Testing cross-platform consistency for \(platform)...")
         
@@ -304,7 +317,9 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Test cross-platform consistency
+    @MainActor
     func testCrossPlatformConsistency(_ platform: SixLayerPlatform, capability: TestRunnerConfig.CapabilityType) {
+        initializeTestConfig()
         // Set test platform before getting config
         setCapabilitiesForPlatform(platform)
         
@@ -365,6 +380,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - View Generation Integration Tests
     
     /// Run view generation integration tests
+    @MainActor
     private func runViewGenerationIntegrationTests(_ config: TestRunnerConfig) {
         for platform in config.platforms {
             runViewGenerationIntegrationTest(platform, config: config)
@@ -372,6 +388,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run view generation integration test for a specific platform
+    @MainActor
     private func runViewGenerationIntegrationTest(_ platform: SixLayerPlatform, config: TestRunnerConfig) {
         print("     🔗 Testing view generation integration for \(platform)...")
         
@@ -387,7 +404,9 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Test view generation integration
+    @MainActor
     func testViewGenerationIntegration(_ config: CardExpansionPlatformConfig, platform: SixLayerPlatform) {
+        initializeTestConfig()
         // Test that the configuration is valid for view generation and actually works
         #expect(Bool(true), "Configuration should be valid for view generation on \(platform)")  // config is non-optional
         
@@ -422,6 +441,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - Behavior Validation Tests
     
     /// Run behavior validation tests
+    @MainActor
     private func runBehaviorValidationTests(_ config: TestRunnerConfig) {
         for capability in config.capabilities {
             runBehaviorValidationTest(capability, config: config)
@@ -429,6 +449,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run behavior validation test for a specific capability
+    @MainActor
     private func runBehaviorValidationTest(_ capability: TestRunnerConfig.CapabilityType, config: TestRunnerConfig) {
         
         // Test with capability enabled
@@ -444,6 +465,7 @@ struct ComprehensiveCapabilityTestRunner {
     
     /// Test behavior validation
     func testBehaviorValidation(_ config: CardExpansionPlatformConfig, capability: TestRunnerConfig.CapabilityType, enabled: Bool) {
+        initializeTestConfig()
         // Test that the behavior is consistent with the platform capabilities
         switch capability {
         case .touch:
@@ -517,6 +539,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Create a platform configuration for a specific platform using centralized utilities
+    @MainActor
     public func createPlatformConfig(platform: SixLayerPlatform) -> CardExpansionPlatformConfig {
         let snapshot = PlatformTestUtilities.getPlatformConfig(for: platform)
         return CardExpansionPlatformConfig(
@@ -534,7 +557,7 @@ struct ComprehensiveCapabilityTestRunner {
     // MARK: - Individual Test Runners
     
     /// Run complete capability testing
-    @Test func completeCapabilityTesting() async {
+    @Test @MainActor func completeCapabilityTesting() async {
         await setupTestEnvironment()
         
         let config = testRunnerConfigurations.first { $0.name == "Complete Capability Testing" }!
@@ -544,7 +567,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run touch-focused testing
-    @Test func touchFocusedTesting() async {
+    @Test @MainActor func touchFocusedTesting() async {
         await setupTestEnvironment()
         
         let config = testRunnerConfigurations.first { $0.name == "Touch-Focused Testing" }!
@@ -554,7 +577,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run hover-focused testing
-    @Test func hoverFocusedTesting() async {
+    @Test @MainActor func hoverFocusedTesting() async {
         await setupTestEnvironment()
         
         let config = testRunnerConfigurations.first { $0.name == "Hover-Focused Testing" }!
@@ -564,7 +587,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run accessibility-focused testing
-    @Test func accessibilityFocusedTesting() async {
+    @Test @MainActor func accessibilityFocusedTesting() async {
         await setupTestEnvironment()
         
         let config = testRunnerConfigurations.first { $0.name == "Accessibility-Focused Testing" }!
@@ -574,7 +597,7 @@ struct ComprehensiveCapabilityTestRunner {
     }
     
     /// Run vision-focused testing
-    @Test func visionFocusedTesting() async {
+    @Test @MainActor func visionFocusedTesting() async {
         await setupTestEnvironment()
         
         let config = testRunnerConfigurations.first { $0.name == "Vision-Focused Testing" }!

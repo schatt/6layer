@@ -18,7 +18,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - CrossPlatformOptimizationManager Tests
     
-    @Test func testCrossPlatformOptimizationManager_Initialization() {
+    @Test @MainActor func testCrossPlatformOptimizationManager_Initialization() {
         // Given: Cross-platform optimization manager
         let manager = CrossPlatformOptimizationManager()
         
@@ -46,7 +46,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testCrossPlatformOptimizationManager_WithSpecificPlatform() {
+    @Test @MainActor func testCrossPlatformOptimizationManager_WithSpecificPlatform() {
         // Given: Manager initialized with specific platform
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -61,7 +61,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testCrossPlatformOptimizationManager_OptimizeView() {
+    @Test @MainActor func testCrossPlatformOptimizationManager_OptimizeView() {
         // Given: Manager and test view
         let manager = CrossPlatformOptimizationManager()
         let testView = Text("Test View")
@@ -100,7 +100,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testCrossPlatformOptimizationManager_PlatformRecommendations() {
+    @Test @MainActor func testCrossPlatformOptimizationManager_PlatformRecommendations() {
         // NOTE: getPlatformRecommendations() has been removed - PlatformRecommendationEngine moved to possible-features/
         // Given: Manager
         let manager = CrossPlatformOptimizationManager()
@@ -117,7 +117,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - PlatformOptimizationSettings Tests
     
-    @Test func testPlatformOptimizationSettings_Creation() {
+    @Test @MainActor func testPlatformOptimizationSettings_Creation() {
         // Given: Different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -133,7 +133,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformOptimizationSettings_PerformanceLevels() {
+    @Test @MainActor func testPlatformOptimizationSettings_PerformanceLevels() {
         // Given: Performance levels
         let levels: [PerformanceLevel] = [.low, .balanced, .high, .maximum]
         
@@ -156,7 +156,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
                          "High should be less than maximum")
     }
     
-    @Test func testPlatformOptimizationSettings_MemoryStrategies() {
+    @Test @MainActor func testPlatformOptimizationSettings_MemoryStrategies() {
         // Given: Memory strategies
         let strategies: [MemoryStrategy] = [.conservative, .adaptive, .aggressive]
         
@@ -180,7 +180,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - CrossPlatformPerformanceMetrics Tests
     
-    @Test func testCrossPlatformPerformanceMetrics_Initialization() {
+    @Test @MainActor func testCrossPlatformPerformanceMetrics_Initialization() {
         // Given: Performance metrics
         let metrics = CrossPlatformPerformanceMetrics()
         
@@ -200,7 +200,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
                     "Should have metrics for current platform")
     }
     
-    @Test func testCrossPlatformPerformanceMetrics_RecordMeasurement() {
+    @Test @MainActor func testCrossPlatformPerformanceMetrics_RecordMeasurement() {
         // Given: Performance metrics and measurement
         let metrics = CrossPlatformPerformanceMetrics()
         let measurement = PerformanceMeasurement(
@@ -220,7 +220,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
                       "Summary should be for current platform")
     }
     
-    @Test func testCrossPlatformPerformanceMetrics_PlatformSummary() {
+    @Test @MainActor func testCrossPlatformPerformanceMetrics_PlatformSummary() {
         // Given: Performance metrics
         let metrics = CrossPlatformPerformanceMetrics()
         
@@ -240,7 +240,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - PlatformUIPatterns Tests
     
-    @Test func testPlatformUIPatterns_PlatformSpecific() {
+    @Test @MainActor func testPlatformUIPatterns_PlatformSpecific() {
         // Given: Different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -281,7 +281,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformUIPatterns_NavigationPatterns() {
+    @Test @MainActor func testPlatformUIPatterns_NavigationPatterns() {
         // Given: Navigation patterns for different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -301,7 +301,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformUIPatterns_InteractionPatterns() {
+    @Test @MainActor func testPlatformUIPatterns_InteractionPatterns() {
         // Given: Interaction patterns for different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -321,7 +321,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testPlatformUIPatterns_LayoutPatterns() {
+    @Test @MainActor func testPlatformUIPatterns_LayoutPatterns() {
         // Given: Layout patterns for different platforms
         let platforms: [SixLayerPlatform] = [.iOS, .macOS, .visionOS, .watchOS, .tvOS]
         
@@ -344,7 +344,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - View Modifier Tests
     
-    @Test func testPlatformSpecificOptimizationsModifier() {
+    @Test @MainActor func testPlatformSpecificOptimizationsModifier() {
         // Given: Test view and platform
         let testView = Text("Test View")
         let platform = SixLayerPlatform.current
@@ -383,7 +383,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testPerformanceOptimizationsModifier() {
+    @Test @MainActor func testPerformanceOptimizationsModifier() {
         // Given: Test view and performance settings
         let testView = Text("Test View")
         let settings = PlatformOptimizationSettings(for: SixLayerPlatform.current)
@@ -422,7 +422,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testUIPatternOptimizationsModifier() {
+    @Test @MainActor func testUIPatternOptimizationsModifier() {
         // Given: Test view and UI patterns
         let testView = Text("Test View")
         let patterns = PlatformUIPatterns(for: SixLayerPlatform.current)
@@ -463,7 +463,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - Environment Values Tests
     
-    @Test func testEnvironmentValues_PlatformSpecific() {
+    @Test @MainActor func testEnvironmentValues_PlatformSpecific() {
         // Given: Environment values
         var environment = EnvironmentValues()
         
@@ -481,7 +481,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testCrossPlatformOptimizationIntegration() {
+    @Test @MainActor func testCrossPlatformOptimizationIntegration() {
         // Given: Manager and test view
         let manager = CrossPlatformOptimizationManager()
         let testView = Text("Integration Test View")
@@ -504,7 +504,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testCrossPlatformOptimizationPerformance() {
+    @Test @MainActor func testCrossPlatformOptimizationPerformance() {
         // Given: Manager for performance testing
         let manager = CrossPlatformOptimizationManager()
         
@@ -519,7 +519,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
     
     // MARK: - Platform Detection Tests
     
-    @Test func testSixLayerPlatform_CurrentPlatformDetection() {
+    @Test @MainActor func testSixLayerPlatform_CurrentPlatformDetection() {
         // Given: Current platform detection
         let currentPlatform = SixLayerPlatform.current
         
@@ -540,7 +540,7 @@ open class CrossPlatformOptimizationLayer6Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testSixLayerPlatform_AllPlatforms() {
+    @Test @MainActor func testSixLayerPlatform_AllPlatforms() {
         // Given: All available platforms
         let allPlatforms = SixLayerPlatform.allCases
         

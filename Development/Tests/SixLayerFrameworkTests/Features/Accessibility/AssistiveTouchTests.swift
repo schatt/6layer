@@ -26,7 +26,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager initialization creates a manager instance with specific configuration
     /// TESTING SCOPE: Tests manager creation with various configuration options and verifies all properties are set correctly
     /// METHODOLOGY: Creates manager with different configurations and asserts all boolean properties match expected values
-    @Test func testAssistiveTouchManagerInitialization() {
+    @Test @MainActor func testAssistiveTouchManagerInitialization() {
         // Given: AssistiveTouch configuration
         let config = AssistiveTouchConfig(
             enableIntegration: true,
@@ -48,7 +48,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager provides platform-specific integration support based on runtime capabilities
     /// TESTING SCOPE: Tests integration support across different platforms and mock capability states
     /// METHODOLOGY: Uses mock framework to test both enabled and disabled AssistiveTouch states across platforms
-    @Test func testAssistiveTouchIntegrationSupport() async {
+    @Test @MainActor func testAssistiveTouchIntegrationSupport() async {
         // Test with AssistiveTouch enabled
         RuntimeCapabilityDetection.setTestAssistiveTouch(true)
         #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
@@ -74,7 +74,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager handles custom action registration and management for gesture-based interactions
     /// TESTING SCOPE: Tests custom action creation, registration, and retrieval with various gesture types
     /// METHODOLOGY: Creates multiple actions with different gestures and verifies they are properly stored and retrievable
-    @Test func testAssistiveTouchCustomActions() {
+    @Test @MainActor func testAssistiveTouchCustomActions() {
         // Given: AssistiveTouch Manager with custom actions enabled
         let config = AssistiveTouchConfig(enableCustomActions: true)
         let manager = AssistiveTouchManager(config: config)
@@ -103,7 +103,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager provides menu management capabilities for accessibility navigation
     /// TESTING SCOPE: Tests menu operations across platforms and mock capability states
     /// METHODOLOGY: Uses mock framework to test menu management with different AssistiveTouch states
-    @Test func testAssistiveTouchMenuSupport() async {
+    @Test @MainActor func testAssistiveTouchMenuSupport() async {
         // Test with AssistiveTouch enabled
         RuntimeCapabilityDetection.setTestAssistiveTouch(true)
 
@@ -132,7 +132,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager processes gesture recognition for motor-impaired users
     /// TESTING SCOPE: Tests gesture processing with different gesture types and intensity levels
     /// METHODOLOGY: Creates various gestures and verifies they are processed correctly with proper results
-    @Test func testAssistiveTouchGestureRecognition() async {
+    @Test @MainActor func testAssistiveTouchGestureRecognition() async {
         // Test with AssistiveTouch enabled
         RuntimeCapabilityDetection.setTestAssistiveTouch(true)
 
@@ -318,7 +318,7 @@ open class AssistiveTouchTests: BaseTestClass {
     /// BUSINESS PURPOSE: AssistiveTouchManager identifies compliance issues in views that lack proper accessibility support
     /// TESTING SCOPE: Tests compliance checking for views without AssistiveTouch support
     /// METHODOLOGY: Creates non-compliant views and verifies compliance issues are properly identified
-    @Test func testAssistiveTouchComplianceWithIssues() {
+    @Test @MainActor func testAssistiveTouchComplianceWithIssues() {
         // Given: A view without proper AssistiveTouch support
         // TODO: View introspection limitation - We cannot reliably detect if a view lacks
         // AssistiveTouch support without ViewInspector. The compliance checker currently

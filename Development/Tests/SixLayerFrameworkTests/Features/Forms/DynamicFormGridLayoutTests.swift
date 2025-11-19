@@ -51,7 +51,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Grid Layout Detection Tests
     
-    @Test func testDetectsGridFieldsWithGridColumnMetadata() {
+    @Test @MainActor func testDetectsGridFieldsWithGridColumnMetadata() {
         // Given: Fields with gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -73,7 +73,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
-    @Test func testDoesNotDetectGridFieldsWithoutGridColumnMetadata() {
+    @Test @MainActor func testDoesNotDetectGridFieldsWithoutGridColumnMetadata() {
         // Given: Fields without gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
@@ -97,7 +97,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Grid Column Calculation Tests
     
-    @Test func testCalculatesCorrectGridColumnsFromMetadata() {
+    @Test @MainActor func testCalculatesCorrectGridColumnsFromMetadata() {
         // Given: Fields with different gridColumn values
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -120,7 +120,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         // Note: We can't directly test the computed property, but we can test the behavior
     }
     
-    @Test func testHandlesMixedGridColumnValues() {
+    @Test @MainActor func testHandlesMixedGridColumnValues() {
         // Given: Fields with non-sequential gridColumn values
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -144,7 +144,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testDynamicFormViewRendersGridLayout() {
+    @Test @MainActor func testDynamicFormViewRendersGridLayout() {
         // Given: Form with grid-enabled section
         let gridFields = [
             DynamicFormField(id: "odometer", contentType: .number, label: "Odometer", metadata: ["gridColumn": "1"]),
@@ -179,7 +179,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         #expect(configuration.sections.first?.fields.count == 3)
     }
     
-    @Test func testMixedGridAndVerticalSections() {
+    @Test @MainActor func testMixedGridAndVerticalSections() {
         // Given: Form with both grid and vertical sections
         let gridFields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"]),
@@ -219,7 +219,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Edge Case Tests
     
-    @Test func testHandlesEmptyGridColumnMetadata() {
+    @Test @MainActor func testHandlesEmptyGridColumnMetadata() {
         // Given: Field with empty gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": ""])
@@ -238,7 +238,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testHandlesInvalidGridColumnMetadata() {
+    @Test @MainActor func testHandlesInvalidGridColumnMetadata() {
         // Given: Field with invalid gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "invalid"])
@@ -257,7 +257,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testHandlesSingleGridField() {
+    @Test @MainActor func testHandlesSingleGridField() {
         // Given: Single field with gridColumn metadata
         let fields = [
             DynamicFormField(id: "field1", contentType: .text, label: "Field 1", metadata: ["gridColumn": "1"])
@@ -278,7 +278,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Real-World Scenario Tests
     
-    @Test func testFuelDetailsGridLayout() {
+    @Test @MainActor func testFuelDetailsGridLayout() {
         // Given: Real-world fuel details fields (matching SixLayer usage)
         let fuelFields = [
             DynamicFormField(id: "odometer", contentType: .number, label: "Odometer", metadata: ["maxWidth": "120", "gridColumn": "1"]),

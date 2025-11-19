@@ -52,7 +52,8 @@ open class CardContentDisplayTests: BaseTestClass {
     
     // MARK: - SimpleCardComponent Tests
     
-    @Test func testSimpleCardComponentDisplaysItemTitle() {
+    @Test @MainActor func testSimpleCardComponentDisplaysItemTitle() {
+        initializeTestConfig()
         // GIVEN: A test item with a title
         let sampleItems = createCardTestItems()
         let item = sampleItems[0]

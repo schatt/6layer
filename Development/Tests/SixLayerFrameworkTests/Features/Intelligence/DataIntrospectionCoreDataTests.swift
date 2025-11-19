@@ -17,7 +17,7 @@ import CoreData
 struct DataIntrospectionCoreDataTests {
     
     /// Test that Core Data entities are detected and properly introspected
-    @Test func testCoreDataEntityReturnsProperAnalysis() throws {
+    @Test @MainActor func testCoreDataEntityReturnsProperAnalysis() throws {
         // GIVEN: A Core Data managed object with properties
         let model = NSManagedObjectModel()
         
@@ -61,7 +61,7 @@ struct DataIntrospectionCoreDataTests {
     }
     
     /// Test that Core Data field types are correctly inferred
-    @Test func testCoreDataFieldTypesAreCorrect() throws {
+    @Test @MainActor func testCoreDataFieldTypesAreCorrect() throws {
         let model = NSManagedObjectModel()
         
         let productEntity = NSEntityDescription()
@@ -109,7 +109,7 @@ struct DataIntrospectionCoreDataTests {
     }
     
     /// Test that regular (non-Core Data) objects still work with Mirror introspection
-    @Test func testRegularObjectsStillWorkWithMirror() {
+    @Test @MainActor func testRegularObjectsStillWorkWithMirror() {
         struct RegularStruct {
             let title: String
             let count: Int

@@ -188,6 +188,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     
     // MARK: - Platform Capability Simulation
     
+    @MainActor
     private func simulatePlatformCapabilities(
         platform: SixLayerPlatform,
         deviceType: DeviceType,
@@ -526,7 +527,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
-    func testCapabilityCombination(_ combination: CapabilityCombination) {
+    @MainActor func testCapabilityCombination(_ combination: CapabilityCombination) {
         initializeTestConfig()
         let platform = SixLayerPlatform.current
         let shouldMatch = combination.expectedPlatforms.contains(platform)
@@ -555,7 +556,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
-    func testCombinationBehavior(_ combination: CapabilityCombination) {
+    @MainActor func testCombinationBehavior(_ combination: CapabilityCombination) {
         initializeTestConfig()
         // Use enum-based approach instead of string matching
         guard let combinationType = combination.combinationType else {
@@ -595,7 +596,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
-    func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
+    @MainActor func testCombinationMatchesPlatform(_ combination: CapabilityCombination) {
         initializeTestConfig()
         // Set up test platform and capabilities based on the combination
         // Use the first expected platform for testing
@@ -660,7 +661,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         CapabilityCombination(name: "Remote + VoiceOver + SwitchControl", capabilities: ["remote": true, "voiceOver": true, "switchControl": true], expectedPlatforms: [.tvOS]),
         CapabilityCombination(name: "Gesture + EyeTracking + VoiceOver", capabilities: ["gesture": true, "eyeTracking": true, "voiceOver": true], expectedPlatforms: [.visionOS])
     ])
-    func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
+    @MainActor func testCombinationDoesNotMatchPlatform(_ combination: CapabilityCombination) {
         initializeTestConfig()
         // Set up a platform that doesn't match the combination
         // Use a platform that's not in the expected platforms list
@@ -712,6 +713,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
     
+    @MainActor
     private func getActualCapabilityValue(_ capability: String, config: SixLayerFramework.CardExpansionPlatformConfig) -> Bool {
         // Accept case-insensitive and different naming styles in test inputs
         // Use RuntimeCapabilityDetection.currentPlatform to respect test platform overrides
@@ -736,6 +738,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
     
     // MARK: - Missing Test Methods (Added for enum-based approach)
     
+    @MainActor
     private func testHoverVoiceOverSwitchControlCombination() {
         // Test macOS-specific combination
         RuntimeCapabilityDetection.setTestHover(true)
@@ -747,6 +750,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         #expect(config.supportsSwitchControl, "macOS should support Switch Control")
     }
     
+    @MainActor
     private func testRemoteVoiceOverSwitchControlCombination() {
         // Test tvOS-specific combination
         RuntimeCapabilityDetection.setTestVoiceOver(true)
@@ -757,6 +761,7 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         // Note: Remote capability is tvOS-specific and not in CardExpansionPlatformConfig
     }
     
+    @MainActor
     private func testGestureEyeTrackingVoiceOverCombination() {
         // Test visionOS-specific combination
         // Set accessibility capability overrides to ensure they're detected

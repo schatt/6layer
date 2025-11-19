@@ -166,7 +166,7 @@ open class PlatformImageArchitectureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify no platform-specific image types leak into framework
     /// TESTING SCOPE: Tests that framework doesn't expose platform-specific types
     /// METHODOLOGY: Test that framework APIs don't return platform-specific types
-    @Test func testNoPlatformSpecificTypesInFramework() {
+    @Test @MainActor func testNoPlatformSpecificTypesInFramework() {
         // Given: Framework components
         
         let platformImage = createTestPlatformImage()

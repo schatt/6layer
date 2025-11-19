@@ -539,14 +539,16 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     // MARK: - View Generation Tests
     
     /// Test all view generation configurations
-    @Test func testAllViewGenerationConfigurations() {
+    @Test @MainActor func testAllViewGenerationConfigurations() {
         for config in viewGenerationTestConfigurations {
             testViewGenerationConfiguration(config)
         }
     }
     
     /// Test a specific view generation configuration
+    @MainActor
     func testViewGenerationConfiguration(_ config: ViewGenerationTestConfig) {
+        initializeTestConfig()
         print("🎨 Testing view generation for: \(config.name)")
         
         // Test view component generation
@@ -565,13 +567,16 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     // MARK: - View Component Generation Tests
     
     /// Test that the correct view components are generated
+    @MainActor
     func testViewComponentGeneration(_ config: ViewGenerationTestConfig) {
+        initializeTestConfig()
         for expectedComponent in config.expectedViewComponents {
             testViewComponent(expectedComponent, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific view component
+    @MainActor
     func testViewComponent(
         _ expectedComponent: ViewGenerationTestConfig.ExpectedViewComponent,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
@@ -615,13 +620,16 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     // MARK: - Modifier Generation Tests
     
     /// Test that the correct modifiers are generated
+    @MainActor
     func testModifierGeneration(_ config: ViewGenerationTestConfig) {
+        initializeTestConfig()
         for expectedModifier in config.expectedModifiers {
             testModifier(expectedModifier, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific modifier
+    @MainActor
     func testModifier(
         _ expectedModifier: ViewGenerationTestConfig.ExpectedModifier,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
@@ -667,13 +675,16 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     // MARK: - Behavior Generation Tests
     
     /// Test that the correct behaviors are generated
+    @MainActor
     func testBehaviorGeneration(_ config: ViewGenerationTestConfig) {
+        initializeTestConfig()
         for expectedBehavior in config.expectedBehaviors {
             testBehavior(expectedBehavior, capabilities: config.capabilities, configName: config.name)
         }
     }
     
     /// Test a specific behavior
+    @MainActor
     func testBehavior(
         _ expectedBehavior: ViewGenerationTestConfig.ExpectedBehavior,
         capabilities: ViewGenerationTestConfig.CapabilitySet,
@@ -717,7 +728,9 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     // MARK: - Integration Tests
     
     /// Test view generation integration
+    @MainActor
     func testViewGenerationIntegration(_ config: ViewGenerationTestConfig) {
+        initializeTestConfig()
         // Test that the configuration can be used to generate a complete view
         let mockConfig = createMockPlatformConfig(from: config.capabilities)
         
@@ -748,10 +761,12 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     }
     
     /// Create a mock platform config from capabilities
+    @MainActor
     public func createMockPlatformConfig(from capabilities: ViewGenerationTestConfig.CapabilitySet) -> SixLayerFramework.CardExpansionPlatformConfig {
         return getCardExpansionPlatformConfig()
     }
     
+    @MainActor
     public func createTestViewWithMockConfig(_ config: SixLayerFramework.CardExpansionPlatformConfig) -> AnyView? {
         // Create a test item for the view
         struct TestItem: Identifiable {
@@ -791,7 +806,9 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     }
     
     /// Test view generation behavior
+    @MainActor
     func testViewGenerationBehavior(_ config: SixLayerFramework.CardExpansionPlatformConfig, configName: String) {
+        initializeTestConfig()
         // Test that the configuration produces the expected view behavior
         // This would test actual view generation in a real implementation
         
@@ -817,7 +834,7 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     // MARK: - Individual Capability View Tests
     
     /// Test touch view generation in both enabled and disabled states
-    @Test func testTouchViewGenerationBothStates() {
+    @Test @MainActor func testTouchViewGenerationBothStates() {
         // Test touch enabled
         let touchEnabledConfig = ViewGenerationTestConfig(
             name: "Touch Enabled View",
@@ -888,7 +905,7 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     }
     
     /// Test hover view generation in both enabled and disabled states
-    @Test func testHoverViewGenerationBothStates() {
+    @Test @MainActor func testHoverViewGenerationBothStates() {
         // Test hover enabled
         let hoverEnabledConfig = ViewGenerationTestConfig(
             name: "Hover Enabled View",
@@ -1048,7 +1065,7 @@ open class ViewGenerationIntegrationTests: BaseTestClass {
     }
     
     /// Test that platform mocking actually creates different underlying view types
-    @Test func testPlatformMockingCreatesDifferentViewTypes() {
+    @Test @MainActor func testPlatformMockingCreatesDifferentViewTypes() {
         // This test verifies that platform mocking works correctly
         // by ensuring different platforms generate different underlying view types
         

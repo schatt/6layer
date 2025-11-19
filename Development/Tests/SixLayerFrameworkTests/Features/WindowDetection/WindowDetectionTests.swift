@@ -13,6 +13,7 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
+    @MainActor
     public func createWindowDetection() -> UnifiedWindowDetection {
         return UnifiedWindowDetection()
     }
@@ -113,7 +114,7 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Screen Size Class Tests (Positive Cases)
     
-    @Test func testScreenSizeClassCompactDetection() {
+    @Test @MainActor func testScreenSizeClassCompactDetection() {
         // GIVEN: Small window sizes
         let testCases = [
             CGSize(width: 320, height: 568),  // iPhone SE
@@ -131,7 +132,7 @@ open class WindowDetectionTests: BaseTestClass {
         }
     }
     
-    @Test func testScreenSizeClassRegularDetection() {
+    @Test @MainActor func testScreenSizeClassRegularDetection() {
         // GIVEN: Medium window sizes
         let testCases = [
             CGSize(width: 768, height: 1024),  // iPad
@@ -149,7 +150,7 @@ open class WindowDetectionTests: BaseTestClass {
         }
     }
     
-    @Test func testScreenSizeClassLargeDetection() {
+    @Test @MainActor func testScreenSizeClassLargeDetection() {
         // GIVEN: Large window sizes
         let testCases = [
             CGSize(width: 1920, height: 1080), // Desktop
@@ -169,7 +170,7 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Edge Case Tests (Negative Cases)
     
-    @Test func testZeroWindowSize() {
+    @Test @MainActor func testZeroWindowSize() {
         // GIVEN: Zero window size
         let zeroSize = CGSize(width: 0, height: 0)
         
@@ -179,7 +180,7 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(sizeClass == .compact, "Zero size should default to compact")
     }
     
-    @Test func testNegativeWindowSize() {
+    @Test @MainActor func testNegativeWindowSize() {
         // GIVEN: Negative window size
         let negativeSize = CGSize(width: -100, height: -200)
         
@@ -189,7 +190,7 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(sizeClass == .compact, "Negative size should default to compact")
     }
     
-    @Test func testExtremelyLargeWindowSize() {
+    @Test @MainActor func testExtremelyLargeWindowSize() {
         // GIVEN: Extremely large window size
         let hugeSize = CGSize(width: 100000, height: 100000)
         
@@ -199,7 +200,7 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(sizeClass == .large, "Huge size should be large")
     }
     
-    @Test func testVerySmallWindowSize() {
+    @Test @MainActor func testVerySmallWindowSize() {
         // GIVEN: Very small window size
         let tinySize = CGSize(width: 1, height: 1)
         
@@ -209,7 +210,7 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(sizeClass == .compact, "Tiny size should be compact")
     }
     
-    @Test func testAspectRatioEdgeCases() {
+    @Test @MainActor func testAspectRatioEdgeCases() {
         // GIVEN: Unusual aspect ratios
         let testCases = [
             CGSize(width: 1000, height: 1),    // Very wide
@@ -231,7 +232,7 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Window State Tests
     
-    @Test func testWindowStateEnumCompleteness() {
+    @Test @MainActor func testWindowStateEnumCompleteness() {
         // GIVEN: Window state enum
         // WHEN: All cases are checked
         // THEN: Should contain all expected states
@@ -246,7 +247,7 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(states.count == 7, "Should have exactly 7 window states")
     }
     
-    @Test func testWindowStateStringValues() {
+    @Test @MainActor func testWindowStateStringValues() {
         // GIVEN: Window state enum cases
         // WHEN: String values are checked
         // THEN: Should have expected string values
@@ -261,7 +262,7 @@ open class WindowDetectionTests: BaseTestClass {
     
     // MARK: - Device Context Tests
     
-    @Test func testDeviceContextEnumCompleteness() {
+    @Test @MainActor func testDeviceContextEnumCompleteness() {
         // GIVEN: Device context enum
         // WHEN: All cases are checked
         // THEN: Should contain all expected contexts
@@ -274,7 +275,7 @@ open class WindowDetectionTests: BaseTestClass {
         #expect(contexts.count == 5, "Should have exactly 5 device contexts")
     }
     
-    @Test func testDeviceContextStringValues() {
+    @Test @MainActor func testDeviceContextStringValues() {
         // GIVEN: Device context enum cases
         // WHEN: String values are checked
         // THEN: Should have expected string values

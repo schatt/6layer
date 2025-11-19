@@ -31,7 +31,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineOptimalLayout_L2 Tests
     
-    @Test func testDetermineOptimalLayout_L2_ContentComplexityAlgorithm() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_ContentComplexityAlgorithm() {
         // Test the actual content complexity analysis algorithm
         // Algorithm: 0-5=simple, 6-9=moderate, 10-25=complex, 25+=veryComplex
         
@@ -76,7 +76,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(veryComplexDecision.approach == .dynamic, "30 items should result in dynamic approach (very complex content)")
     }
     
-    @Test func testDetermineOptimalLayout_L2_ComplexContent() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_ComplexContent() {
         // Given: Complex content with many items
         let items = (1...50).map { i in
             TestItem(title: "Item \(i)")
@@ -104,7 +104,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(decision.performance == .maximumPerformance) // 50 items = veryComplex = maximumPerformance
     }
     
-    @Test func testDetermineOptimalLayout_L2_DifferentDeviceTypes() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_DifferentDeviceTypes() {
         // Given: Same content for different device types
         let items = (1...20).map { i in
             TestItem(title: "Item \(i)")
@@ -150,7 +150,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(padDecision.columns <= macDecision.columns)
     }
     
-    @Test func testDetermineOptimalLayout_L2_DifferentComplexityLevels() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_DifferentComplexityLevels() {
         // Given: Same items with different complexity hints
         let items = (1...10).map { i in
             TestItem(title: "Item \(i)")
@@ -199,7 +199,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(complexDecision.performance == .highPerformance) // 10 items = complex = highPerformance
     }
     
-    @Test func testDetermineOptimalLayout_L2_EmptyItems() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_EmptyItems() {
         // Given: Empty items array
         let items: [TestItem] = []
         let hints = PresentationHints(
@@ -224,7 +224,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty)
     }
     
-    @Test func testDetermineOptimalLayout_L2_WithoutDeviceContext() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_WithoutDeviceContext() {
         // Given: Items without explicit device context
         let items = (1...5).map { i in
             TestItem(title: "Item \(i)")
@@ -249,7 +249,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty)
     }
     
-    @Test func testDetermineOptimalLayout_L2_ColumnCalculationAlgorithm() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_ColumnCalculationAlgorithm() {
         // Test the actual column calculation algorithm
         // Algorithm: baseColumns = max(1, min(6, itemCount / 3))
         // Then apply complexity limits: simple=3, moderate=4, complex=5, veryComplex=6
@@ -290,7 +290,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - determineOptimalFormLayout_L2 Tests
     
-    @Test func testDetermineOptimalFormLayout_L2_FieldCountComplexityAlgorithm() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_FieldCountComplexityAlgorithm() {
         // Test the actual form complexity analysis algorithm
         // Algorithm: fieldCount >= 8 && hasComplexFields && hasValidation = complex
         //           fieldCount >= 5 = moderate
@@ -361,7 +361,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(edgeDecision.validation == .none, "No validation specified should result in none")
     }
     
-    @Test func testDetermineOptimalFormLayout_L2_ComplexForm() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_ComplexForm() {
         // Given: Complex form hints
         let hints = PresentationHints(
             dataType: .form,
@@ -388,7 +388,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty)
     }
     
-    @Test func testDetermineOptimalFormLayout_L2_ModerateForm() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_ModerateForm() {
         // Given: Moderate form hints
         let hints = PresentationHints(
             dataType: .form,
@@ -415,7 +415,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty)
     }
     
-    @Test func testDetermineOptimalFormLayout_L2_DefaultPreferences() {
+    @Test @MainActor func testDetermineOptimalFormLayout_L2_DefaultPreferences() {
         // Given: Form hints with default preferences
         let hints = PresentationHints(
             dataType: .form,
@@ -439,7 +439,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
     
     // MARK: - Edge Cases and Error Handling
     
-    @Test func testDetermineOptimalLayout_L2_ExtremeValues() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_ExtremeValues() {
         // Given: Very large number of items
         let items = (1...1000).map { i in
             TestItem(title: "Item \(i)")
@@ -467,7 +467,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         #expect(!decision.reasoning.isEmpty)
     }
     
-    @Test func testDetermineOptimalLayout_L2_DifferentDataTypes() {
+    @Test @MainActor func testDetermineOptimalLayout_L2_DifferentDataTypes() {
         // Given: Different data types
         let items = (1...5).map { i in
             TestItem(title: "Item \(i)")

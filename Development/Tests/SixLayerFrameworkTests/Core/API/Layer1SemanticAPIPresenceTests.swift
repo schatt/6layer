@@ -14,18 +14,18 @@ open class Layer1SemanticAPIPresenceTests: BaseTestClass {
         let _ = view
     }
 
-    @Test func testPlatformPresentContentL1Exists() {
+    @Test @MainActor func testPlatformPresentContentL1Exists() {
         let hints = PresentationHints(dataType: .generic, presentationPreference: .automatic, complexity: .simple, context: .dashboard)
         let view = platformPresentContent_L1(content: [1,2,3], hints: hints)
         let _ = view
     }
 
-    @Test func testPlatformPresentModalFormL1Exists() {
+    @Test @MainActor func testPlatformPresentModalFormL1Exists() {
         let view = platformPresentModalForm_L1(formType: .form, context: .modal)
         let _ = view
     }
 
-    @Test func testPlatformPhotoCaptureSelectionL1Exist() {
+    @Test @MainActor func testPlatformPhotoCaptureSelectionL1Exist() {
         let context = PhotoContext(
             screenSize: CGSize(width: 1024, height: 768),
             availableSpace: CGSize(width: 1024, height: 600),

@@ -24,7 +24,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         return DataFrameAnalysisEngine()
     }    // MARK: - Basic DataFrame Analysis Tests
     
-    @Test func testAnalyzeDataFrame_BasicStructure() throws {
+    @Test @MainActor func testAnalyzeDataFrame_BasicStructure() throws {
         // Given: A simple DataFrame with basic data
         let dataFrame = try createSampleDataFrame()
         
@@ -37,7 +37,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.columnCount == 3)
     }
     
-    @Test func testAnalyzeDataFrame_EmptyDataFrame() throws {
+    @Test @MainActor func testAnalyzeDataFrame_EmptyDataFrame() throws {
         // Given: An empty DataFrame
         let dataFrame = DataFrame()
         
@@ -50,7 +50,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.columns.isEmpty)
     }
     
-    @Test func testAnalyzeDataFrame_ColumnTypes() throws {
+    @Test @MainActor func testAnalyzeDataFrame_ColumnTypes() throws {
         // Given: A DataFrame with mixed column types
         let dataFrame = try createMixedTypeDataFrame()
         
@@ -75,7 +75,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
     
     // MARK: - Statistical Analysis Tests
     
-    @Test func testAnalyzeDataFrame_StatisticalAnalysis() throws {
+    @Test @MainActor func testAnalyzeDataFrame_StatisticalAnalysis() throws {
         // Given: A DataFrame with numeric data
         let dataFrame = try createNumericDataFrame()
         
@@ -88,7 +88,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.statisticalAnalysis?.standardDeviations.count ?? 0 > 0)
     }
     
-    @Test func testAnalyzeDataFrame_TimeSeriesDetection() throws {
+    @Test @MainActor func testAnalyzeDataFrame_TimeSeriesDetection() throws {
         // Given: A DataFrame with time series data
         let dataFrame = try createTimeSeriesDataFrame()
         
@@ -100,7 +100,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.timeSeriesAnalysis != nil)
     }
     
-    @Test func testAnalyzeDataFrame_CategoricalAnalysis() throws {
+    @Test @MainActor func testAnalyzeDataFrame_CategoricalAnalysis() throws {
         // Given: A DataFrame with categorical data
         let dataFrame = try createCategoricalDataFrame()
         
@@ -115,7 +115,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
     
     // MARK: - Data Quality Tests
     
-    @Test func testAnalyzeDataFrame_MissingDataDetection() throws {
+    @Test @MainActor func testAnalyzeDataFrame_MissingDataDetection() throws {
         // Given: A DataFrame with missing values
         let dataFrame = try createDataFrameWithMissingValues()
         
@@ -128,7 +128,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         #expect(result.dataQuality?.completenessScore ?? 0 > 0)
     }
     
-    @Test func testAnalyzeDataFrame_OutlierDetection() throws {
+    @Test @MainActor func testAnalyzeDataFrame_OutlierDetection() throws {
         // Given: A DataFrame with outliers
         let dataFrame = try createDataFrameWithOutliers()
         
@@ -142,7 +142,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
     
     // MARK: - Visualization Recommendations Tests
     
-    @Test func testAnalyzeDataFrame_VisualizationRecommendations() throws {
+    @Test @MainActor func testAnalyzeDataFrame_VisualizationRecommendations() throws {
         // Given: A DataFrame with various data types
         let dataFrame = try createMixedTypeDataFrame()
         
@@ -162,7 +162,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
     
     // MARK: - Integration with Existing DataIntrospectionEngine Tests
     
-    @Test func testDataFrameAnalysis_IntegratesWithDataIntrospection() throws {
+    @Test @MainActor func testDataFrameAnalysis_IntegratesWithDataIntrospection() throws {
         // Given: A DataFrame
         let dataFrame = try createSampleDataFrame()
         

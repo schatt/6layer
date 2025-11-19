@@ -84,7 +84,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testNativeExpandableCardView_HapticFeedback() {
+    @Test @MainActor func testNativeExpandableCardView_HapticFeedback() {
         // Given: Card with haptic feedback enabled
         let platformConfig = getCardExpansionPlatformConfig()
         let performanceConfig = getCardExpansionPerformanceConfig()
@@ -110,7 +110,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Platform-Specific Card View Tests
     
-    @Test func testiOSExpandableCardView_Creation() {
+    @Test @MainActor func testiOSExpandableCardView_Creation() {
         // Given: iOS-specific card view
         let cardView = iOSExpandableCardView(
             item: testItem,
@@ -144,7 +144,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         }
     }
     
-    @Test func testmacOSExpandableCardView_Creation() {
+    @Test @MainActor func testmacOSExpandableCardView_Creation() {
         // Given: macOS-specific card view
         let cardView = macOSExpandableCardView(
             item: testItem,
@@ -318,7 +318,8 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testCardExpansionIntegration_AllPlatforms() {
+    @Test @MainActor func testCardExpansionIntegration_AllPlatforms() {
+        initializeTestConfig()
         // Given: Different platform-specific card views
         let nativeCard = NativeExpandableCardView(
             item: testItem,
@@ -352,7 +353,7 @@ open class IntelligentCardExpansionLayer6Tests: BaseTestClass {
         #endif
     }
     
-    @Test func testCardExpansionPerformance() {
+    @Test @MainActor func testCardExpansionPerformance() {
         // Given: Card view for performance testing
         let cardView = PlatformAwareExpandableCardView(
             item: testItem,

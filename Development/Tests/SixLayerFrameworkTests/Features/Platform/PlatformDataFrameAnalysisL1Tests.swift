@@ -46,6 +46,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformAnalyzeDataFrame_L1_Basic() {
         initializeTestConfig()
+        initializeTestConfig()
         // Given: A test DataFrame
         let hints = DataFrameAnalysisHints()
         
@@ -57,6 +58,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     }
     
     @Test @MainActor func testPlatformAnalyzeDataFrame_L1_WithHints() {
+        initializeTestConfig()
         initializeTestConfig()
         // Given: A test DataFrame with specific hints
         let hints = DataFrameAnalysisHints(
@@ -74,6 +76,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformAnalyzeDataFrame_L1_EmptyDataFrame() {
         initializeTestConfig()
+        initializeTestConfig()
         // Given: An empty DataFrame
         let emptyDataFrame = DataFrame()
         let hints = DataFrameAnalysisHints()
@@ -89,6 +92,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformCompareDataFrames_L1_Basic() {
         initializeTestConfig()
+        initializeTestConfig()
         // Given: Multiple test DataFrames
         let dataFrames = [createTestDataFrame(), createTestDataFrame2()]
         let hints = DataFrameAnalysisHints()
@@ -102,6 +106,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformCompareDataFrames_L1_SingleDataFrame() {
         initializeTestConfig()
+        initializeTestConfig()
         // Given: Single DataFrame
         let dataFrames = [createTestDataFrame()]
         let hints = DataFrameAnalysisHints()
@@ -113,7 +118,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testPlatformCompareDataFrames_L1_EmptyArray() {
+    @Test @MainActor func testPlatformCompareDataFrames_L1_EmptyArray() {
+        initializeTestConfig()
         // Given: Empty array of DataFrames
         let dataFrames: [DataFrame] = []
         let hints = DataFrameAnalysisHints()
@@ -127,7 +133,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - Data Quality Assessment Tests
     
-    @Test func testPlatformAssessDataQuality_L1_Basic() {
+    @Test @MainActor func testPlatformAssessDataQuality_L1_Basic() {
+        initializeTestConfig()
         // Given: A test DataFrame
         let hints = DataFrameAnalysisHints()
         
@@ -138,7 +145,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(Bool(true), "view is non-optional")  // view is non-optional
     }
     
-    @Test func testPlatformAssessDataQuality_L1_WithMissingData() {
+    @Test @MainActor func testPlatformAssessDataQuality_L1_WithMissingData() {
+        initializeTestConfig()
         // Given: A DataFrame with missing data
         let dataFrameWithMissing = createDataFrameWithMissingData()
         let hints = DataFrameAnalysisHints()
@@ -152,7 +160,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - DataFrame Analysis Hints Tests
     
-    @Test func testDataFrameAnalysisHints_DefaultValues() {
+    @Test @MainActor func testDataFrameAnalysisHints_DefaultValues() {
+        initializeTestConfig()
         // Given: Default hints
         let hints = DataFrameAnalysisHints()
         
@@ -165,7 +174,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(hints.includeDataQualityAssessment)
     }
     
-    @Test func testDataFrameAnalysisHints_CustomValues() {
+    @Test @MainActor func testDataFrameAnalysisHints_CustomValues() {
+        initializeTestConfig()
         // Given: Custom hints
         let hints = DataFrameAnalysisHints(
             focusAreas: [.dataQuality, .patternRecognition],
@@ -187,7 +197,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - Focus Areas Tests
     
-    @Test func testDataFrameFocusArea_AllCases() {
+    @Test @MainActor func testDataFrameFocusArea_AllCases() {
+        initializeTestConfig()
         // Given: All focus area cases
         let allCases = DataFrameFocusArea.allCases
         
@@ -203,7 +214,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         #expect(allCases.contains(.outlierDetection))
     }
     
-    @Test func testAnalysisDepth_AllCases() {
+    @Test @MainActor func testAnalysisDepth_AllCases() {
+        initializeTestConfig()
         // Given: All analysis depth cases
         let allCases = AnalysisDepth.allCases
         
@@ -219,7 +231,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testDataFrameAnalysis_IntegratesWithDataIntrospection() {
+    @Test @MainActor func testDataFrameAnalysis_IntegratesWithDataIntrospection() {
+        initializeTestConfig()
         // Given: A test DataFrame
         let hints = DataFrameAnalysisHints()
         
