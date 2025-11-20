@@ -27,7 +27,9 @@ import argparse
 # ============================================================================
 
 PLATFORM_TYPE_VIOLATIONS = {
-    # Color types
+    # ============================================================================
+    # Color Types
+    # ============================================================================
     'NSColor': {
         'replacement': 'Color.platform*',
         'hint': 'Use Color.platformBackground, Color.platformLabel, etc. instead of NSColor',
@@ -41,7 +43,9 @@ PLATFORM_TYPE_VIOLATIONS = {
         'pattern': r'\bUIColor\b'
     },
     
-    # Font types
+    # ============================================================================
+    # Font Types
+    # ============================================================================
     'NSFont': {
         'replacement': 'Font.platform* or Font.system()',
         'hint': 'Use Font.system() or platform-specific font extensions instead of NSFont',
@@ -55,7 +59,9 @@ PLATFORM_TYPE_VIOLATIONS = {
         'pattern': r'\bUIFont\b'
     },
     
-    # Image types
+    # ============================================================================
+    # Image Types
+    # ============================================================================
     'NSImage': {
         'replacement': 'PlatformImage',
         'hint': 'Use PlatformImage instead of NSImage for cross-platform compatibility',
@@ -69,7 +75,9 @@ PLATFORM_TYPE_VIOLATIONS = {
         'pattern': r'\bUIImage\b'
     },
     
-    # Other platform-specific types
+    # ============================================================================
+    # Clipboard Types
+    # ============================================================================
     'NSPasteboard': {
         'replacement': 'PlatformClipboard',
         'hint': 'Use PlatformClipboard.copyToClipboard() instead of NSPasteboard',
@@ -81,6 +89,248 @@ PLATFORM_TYPE_VIOLATIONS = {
         'hint': 'Use PlatformClipboard.copyToClipboard() instead of UIPasteboard',
         'priority': 1,
         'pattern': r'\bUIPasteboard\b'
+    },
+    
+    # ============================================================================
+    # View Controller Types
+    # ============================================================================
+    'NSViewController': {
+        'replacement': 'Use SwiftUI View instead',
+        'hint': 'Use SwiftUI View types instead of NSViewController. Consider platformNavigation() or platformSheet() for presentation',
+        'priority': 1,
+        'pattern': r'\bNSViewController\b'
+    },
+    'UIViewController': {
+        'replacement': 'Use SwiftUI View instead',
+        'hint': 'Use SwiftUI View types instead of UIViewController. Consider platformNavigation() or platformSheet() for presentation',
+        'priority': 1,
+        'pattern': r'\bUIViewController\b'
+    },
+    
+    # ============================================================================
+    # View Types
+    # ============================================================================
+    'NSView': {
+        'replacement': 'Use SwiftUI View instead',
+        'hint': 'Use SwiftUI View types instead of NSView. Use platform-specific view extensions if needed',
+        'priority': 1,
+        'pattern': r'\bNSView\b'
+    },
+    'UIView': {
+        'replacement': 'Use SwiftUI View instead',
+        'hint': 'Use SwiftUI View types instead of UIView. Use platform-specific view extensions if needed',
+        'priority': 1,
+        'pattern': r'\bUIView\b'
+    },
+    
+    # ============================================================================
+    # Window Types
+    # ============================================================================
+    'NSWindow': {
+        'replacement': 'Use SwiftUI window management',
+        'hint': 'Use SwiftUI window management instead of NSWindow. Consider platform-specific window extensions',
+        'priority': 1,
+        'pattern': r'\bNSWindow\b'
+    },
+    'UIWindow': {
+        'replacement': 'Use SwiftUI window management',
+        'hint': 'Use SwiftUI window management instead of UIWindow. Consider platform-specific window extensions',
+        'priority': 1,
+        'pattern': r'\bUIWindow\b'
+    },
+    
+    # ============================================================================
+    # Alert Types
+    # ============================================================================
+    'NSAlert': {
+        'replacement': 'Use SwiftUI alert() modifier or platformMessagingLayer5',
+        'hint': 'Use SwiftUI .alert() modifier or platformMessagingLayer5 instead of NSAlert',
+        'priority': 1,
+        'pattern': r'\bNSAlert\b'
+    },
+    'UIAlertController': {
+        'replacement': 'Use SwiftUI alert() modifier or platformMessagingLayer5',
+        'hint': 'Use SwiftUI .alert() modifier or platformMessagingLayer5 instead of UIAlertController',
+        'priority': 1,
+        'pattern': r'\bUIAlertController\b'
+    },
+    
+    # ============================================================================
+    # Navigation Types
+    # ============================================================================
+    'NSNavigationController': {
+        'replacement': 'platformNavigation() or platformNavigationStack()',
+        'hint': 'Use platformNavigation() or platformNavigationStack() instead of NSNavigationController',
+        'priority': 1,
+        'pattern': r'\bNSNavigationController\b'
+    },
+    'UINavigationController': {
+        'replacement': 'platformNavigation() or platformNavigationStack()',
+        'hint': 'Use platformNavigation() or platformNavigationStack() instead of UINavigationController',
+        'priority': 1,
+        'pattern': r'\bUINavigationController\b'
+    },
+    
+    # ============================================================================
+    # Table/Collection View Types
+    # ============================================================================
+    'NSTableView': {
+        'replacement': 'platformPresentItemCollection_L1() or List',
+        'hint': 'Use platformPresentItemCollection_L1() or SwiftUI List instead of NSTableView',
+        'priority': 1,
+        'pattern': r'\bNSTableView\b'
+    },
+    'UITableView': {
+        'replacement': 'platformPresentItemCollection_L1() or List',
+        'hint': 'Use platformPresentItemCollection_L1() or SwiftUI List instead of UITableView',
+        'priority': 1,
+        'pattern': r'\bUITableView\b'
+    },
+    'NSCollectionView': {
+        'replacement': 'platformPresentItemCollection_L1() or LazyVGrid/LazyHGrid',
+        'hint': 'Use platformPresentItemCollection_L1() or SwiftUI LazyVGrid/LazyHGrid instead of NSCollectionView',
+        'priority': 1,
+        'pattern': r'\bNSCollectionView\b'
+    },
+    'UICollectionView': {
+        'replacement': 'platformPresentItemCollection_L1() or LazyVGrid/LazyHGrid',
+        'hint': 'Use platformPresentItemCollection_L1() or SwiftUI LazyVGrid/LazyHGrid instead of UICollectionView',
+        'priority': 1,
+        'pattern': r'\bUICollectionView\b'
+    },
+    
+    # ============================================================================
+    # Sharing Types
+    # ============================================================================
+    'NSSharingServicePicker': {
+        'replacement': 'platformShare_L4()',
+        'hint': 'Use platformShare_L4() instead of NSSharingServicePicker',
+        'priority': 1,
+        'pattern': r'\bNSSharingServicePicker\b'
+    },
+    'UIActivityViewController': {
+        'replacement': 'platformShare_L4()',
+        'hint': 'Use platformShare_L4() instead of UIActivityViewController',
+        'priority': 1,
+        'pattern': r'\bUIActivityViewController\b'
+    },
+    
+    # ============================================================================
+    # Screen/Device Types
+    # ============================================================================
+    'NSScreen': {
+        'replacement': 'Use platform-specific screen detection extensions',
+        'hint': 'Use platform-specific screen detection extensions instead of NSScreen directly',
+        'priority': 1,
+        'pattern': r'\bNSScreen\b'
+    },
+    'UIScreen': {
+        'replacement': 'Use platform-specific screen detection extensions',
+        'hint': 'Use platform-specific screen detection extensions instead of UIScreen directly',
+        'priority': 1,
+        'pattern': r'\bUIScreen\b'
+    },
+    'UIDevice': {
+        'replacement': 'SixLayerPlatform.deviceType or RuntimeCapabilityDetection',
+        'hint': 'Use SixLayerPlatform.deviceType or RuntimeCapabilityDetection instead of UIDevice',
+        'priority': 1,
+        'pattern': r'\bUIDevice\b'
+    },
+    
+    # ============================================================================
+    # Application Types
+    # ============================================================================
+    'NSApplication': {
+        'replacement': 'Use SwiftUI App lifecycle',
+        'hint': 'Use SwiftUI @main App lifecycle instead of NSApplication',
+        'priority': 1,
+        'pattern': r'\bNSApplication\b'
+    },
+    'UIApplication': {
+        'replacement': 'Use SwiftUI App lifecycle',
+        'hint': 'Use SwiftUI @main App lifecycle instead of UIApplication',
+        'priority': 1,
+        'pattern': r'\bUIApplication\b'
+    },
+    
+    # ============================================================================
+    # Graphics Context Types
+    # ============================================================================
+    'NSGraphicsContext': {
+        'replacement': 'Use CGContext with Color.setFill() extension',
+        'hint': 'Use CGContext with Color.setFill() extension instead of NSGraphicsContext',
+        'priority': 1,
+        'pattern': r'\bNSGraphicsContext\b'
+    },
+    'UIGraphicsImageRenderer': {
+        'replacement': 'Use CGContext with Color.setFill() extension',
+        'hint': 'Use CGContext with Color.setFill() extension instead of UIGraphicsImageRenderer',
+        'priority': 1,
+        'pattern': r'\bUIGraphicsImageRenderer\b'
+    },
+    'UIGraphicsImageRendererContext': {
+        'replacement': 'Use CGContext with Color.setFill() extension',
+        'hint': 'Use CGContext with Color.setFill() extension instead of UIGraphicsImageRendererContext',
+        'priority': 1,
+        'pattern': r'\bUIGraphicsImageRendererContext\b'
+    },
+    
+    # ============================================================================
+    # Image Picker Types
+    # ============================================================================
+    'UIImagePickerController': {
+        'replacement': 'platformPhotoCapture_L1() or platformPhotoSelection_L1()',
+        'hint': 'Use platformPhotoCapture_L1() or platformPhotoSelection_L1() instead of UIImagePickerController',
+        'priority': 1,
+        'pattern': r'\bUIImagePickerController\b'
+    },
+    
+    # ============================================================================
+    # Size Types
+    # ============================================================================
+    'NSSize': {
+        'replacement': 'CGSize',
+        'hint': 'Use CGSize instead of NSSize for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bNSSize\b'
+    },
+    'UISize': {
+        'replacement': 'CGSize',
+        'hint': 'Use CGSize instead of UISize for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bUISize\b'
+    },
+    
+    # ============================================================================
+    # Point Types
+    # ============================================================================
+    'NSPoint': {
+        'replacement': 'CGPoint',
+        'hint': 'Use CGPoint instead of NSPoint for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bNSPoint\b'
+    },
+    'UIPoint': {
+        'replacement': 'CGPoint',
+        'hint': 'Use CGPoint instead of UIPoint for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bUIPoint\b'
+    },
+    
+    # ============================================================================
+    # Rect Types
+    # ============================================================================
+    'NSRect': {
+        'replacement': 'CGRect',
+        'hint': 'Use CGRect instead of NSRect for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bNSRect\b'
+    },
+    'UIRect': {
+        'replacement': 'CGRect',
+        'hint': 'Use CGRect instead of UIRect for cross-platform compatibility',
+        'priority': 1,
+        'pattern': r'\bUIRect\b'
     },
 }
 
