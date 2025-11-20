@@ -70,6 +70,38 @@ let strategy = selectCardLayoutStrategy(
 
 ## 🎯 Direct Layer Usage
 
+### **Layer 1: NavigationStack Semantic Intent**
+```swift
+// Express navigation intent - framework handles everything
+platformPresentNavigationStack_L1(
+    content: MyContentView(),
+    title: "Settings",
+    hints: PresentationHints(
+        dataType: .navigation,
+        presentationPreference: .navigation,
+        complexity: .simple,
+        context: .navigation
+    )
+)
+
+// Navigation with items - automatic list-detail pattern
+platformPresentNavigationStack_L1(
+    items: items,
+    hints: PresentationHints(
+        dataType: .navigation,
+        presentationPreference: .navigation,
+        complexity: .moderate,
+        context: .browse
+    )
+) { item in
+    ItemRow(item: item)
+} destination: { item in
+    ItemDetailView(item: item)
+}
+```
+
+**See [NavigationStackGuide.md](NavigationStackGuide.md) for complete NavigationStack documentation.**
+
 ### **Layer 1: Semantic Intent Only**
 ```swift
 // Use semantic functions for high-level intent

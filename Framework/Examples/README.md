@@ -41,6 +41,15 @@ Comprehensive example of the enhanced breadcrumb system:
 - **UI test helper methods** for common actions
 - **Complete automatic accessibility identifiers** (fixed in v4.1.3)
 
+### **NavigationStackExample.swift** (NEW)
+Complete example of the 6-layer NavigationStack implementation:
+
+- **Simple content navigation** - Basic navigation stack with title
+- **List-detail navigation** - Navigation with items and detail views
+- **Split view navigation** - Large screen optimized navigation
+- **Modal navigation** - Modal presentation pattern
+- **Complete 6-layer flow** - Demonstrates L1 → L2 → L3 → L4 → L5 → L6
+
 ## How to Use Examples
 
 1. **Copy the example files** you need into your project

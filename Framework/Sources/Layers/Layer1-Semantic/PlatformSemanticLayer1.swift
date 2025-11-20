@@ -489,6 +489,60 @@ public func platformPresentTemporalData_L1(
     .automaticCompliance()
 }
 
+// MARK: - Navigation Stack Layer 1 Functions
+
+/// Layer 1 semantic function for presenting content in a navigation stack
+/// Expresses intent to use stack-based navigation without knowing implementation details
+///
+/// This function allows developers to express WHAT they want (stack-based navigation)
+/// without knowing HOW it's implemented (NavigationStack vs NavigationView, platform differences, etc.)
+///
+/// - Parameters:
+///   - content: The content to display in the navigation stack
+///   - title: Optional navigation title
+///   - hints: Presentation hints that guide navigation decisions
+/// - Returns: A view that presents the content in a navigation stack
+@MainActor
+public func platformPresentNavigationStack_L1<Content: View>(
+    content: Content,
+    title: String? = nil,
+    hints: PresentationHints
+) -> some View {
+    return NavigationStackWrapper(
+        content: content,
+        title: title,
+        hints: hints
+    )
+    .environment(\.accessibilityIdentifierName, "platformPresentNavigationStack_L1")
+    .automaticCompliance()
+}
+
+/// Layer 1 semantic function for presenting a collection of items in a navigation stack
+/// Expresses intent to use stack-based navigation with list-detail pattern
+///
+/// - Parameters:
+///   - items: Collection of identifiable items to navigate
+///   - hints: Presentation hints that guide navigation decisions
+///   - itemView: View builder for individual items in the list
+///   - destination: View builder for detail views when an item is selected
+/// - Returns: A view that presents the items in a navigation stack with list-detail navigation
+@MainActor
+public func platformPresentNavigationStack_L1<Item: Identifiable & Hashable, ItemView: View, DestinationView: View>(
+    items: [Item],
+    hints: PresentationHints,
+    @ViewBuilder itemView: @escaping (Item) -> ItemView,
+    @ViewBuilder destination: @escaping (Item) -> DestinationView
+) -> some View {
+    return NavigationStackItemsWrapper(
+        items: items,
+        hints: hints,
+        itemView: { AnyView(itemView($0)) },
+        destination: { AnyView(destination($0)) }
+    )
+    .environment(\.accessibilityIdentifierName, "platformPresentNavigationStack_L1")
+    .automaticCompliance()
+}
+
 /// Generic function for presenting temporal data with custom views and enhanced hints
 @MainActor
 public func platformPresentTemporalData_L1(
@@ -3946,5 +4000,86 @@ public struct CustomNumericDataView: View {
         let minItemWidth: CGFloat = 200
         let maxColumns = Int(width / minItemWidth)
         return max(1, min(maxColumns, 4))
+    }
+}
+
+// MARK: - Navigation Stack Wrapper Views
+
+// MARK: - Helper Types for Navigation Stack
+
+/// Dummy identifiable type for empty content navigation decisions
+private struct EmptyNavigationItem: Identifiable {
+    let id = UUID()
+}
+
+/// Internal wrapper view for navigation stack content
+/// This view implements the full 6-layer flow: L1 -> L2 -> L3 -> L4
+private struct NavigationStackWrapper<Content: View>: View {
+    let content: Content
+    let title: String?
+    let hints: PresentationHints
+    
+    var body: some View {
+        // Layer 2: Content-aware decision making
+        // Use empty array with explicit type for simple content wrapper
+        let emptyItems: [EmptyNavigationItem] = []
+        let l2Decision = determineNavigationStackStrategy_L2(
+            items: emptyItems,
+            hints: hints
+        )
+        
+        // Layer 3: Platform-aware strategy selection
+        let l3Strategy = selectNavigationStackStrategy_L3(
+            decision: l2Decision,
+            platform: SixLayerPlatform.current
+        )
+        
+        // Layer 4: Component implementation
+        platformImplementNavigationStack_L4(
+            content: content,
+            title: title,
+            strategy: l3Strategy
+        )
+    }
+}
+
+/// Internal wrapper view for navigation stack with items
+/// This view implements the full 6-layer flow: L1 -> L2 -> L3 -> L4
+private struct NavigationStackItemsWrapper<Item: Identifiable & Hashable>: View {
+    let items: [Item]
+    let hints: PresentationHints
+    let itemView: (Item) -> AnyView
+    let destination: (Item) -> AnyView
+    
+    @State private var selectedItem: Item?
+    
+    var body: some View {
+        // Layer 2: Content-aware decision making
+        let l2Decision = determineNavigationStackStrategy_L2(
+            items: items,
+            hints: hints
+        )
+        
+        // Layer 3: Platform-aware strategy selection
+        let l3Strategy = selectNavigationStackStrategy_L3(
+            decision: l2Decision,
+            platform: SixLayerPlatform.current
+        )
+        
+        // Layer 4: Component implementation
+        platformImplementNavigationStackItems_L4(
+            items: items,
+            selectedItem: Binding(
+                get: { selectedItem },
+                set: { selectedItem = $0 }
+            ),
+            itemView: { item in
+                itemView(item)
+            },
+            detailView: { item in
+                destination(item)
+            },
+            strategy: l3Strategy
+        )
     }
 }

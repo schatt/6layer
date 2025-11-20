@@ -29,6 +29,10 @@ Define the user's intent in platform-agnostic terms that can be interpreted by t
 ### **Item Collections**
 - `platformPresentItemCollection_L1(items:hints:callbacks:)` - Present collections of identifiable items with automatic row actions
 
+### **Navigation Stack**
+- `platformPresentNavigationStack_L1(content:title:hints:)` - Express intent to present content in a navigation stack
+- `platformPresentNavigationStack_L1(items:hints:itemView:destination:)` - Express intent to present items in a navigation stack with list-detail pattern
+
 ## 📊 Data Types
 
 ### **FormType**
@@ -123,6 +127,39 @@ platformPresentItemCollection_L1(
 - When `onItemDeleted` is provided, a "Delete" button automatically appears
 - Actions are platform-appropriate: iOS uses swipe gestures, macOS uses right-click context menus
 - Both actions can be provided together or individually
+
+### **Navigation Stack with Content**
+```swift
+platformPresentNavigationStack_L1(
+    content: MyContentView(),
+    title: "Settings",
+    hints: PresentationHints(
+        dataType: .navigation,
+        presentationPreference: .navigation,
+        complexity: .simple,
+        context: .navigation
+    )
+)
+```
+
+### **Navigation Stack with Items**
+```swift
+platformPresentNavigationStack_L1(
+    items: items,
+    hints: PresentationHints(
+        dataType: .navigation,
+        presentationPreference: .navigation,
+        complexity: .moderate,
+        context: .browse
+    )
+) { item in
+    ItemRow(item: item)
+} destination: { item in
+    ItemDetailView(item: item)
+}
+```
+
+**See [NavigationStackGuide.md](NavigationStackGuide.md) for complete documentation.**
 
 ### **Item Collection with Custom Actions**
 For custom actions beyond Edit/Delete, use `customItemView`:
