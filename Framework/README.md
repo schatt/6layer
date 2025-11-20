@@ -781,7 +781,7 @@ The SixLayer Framework uses a **tiered licensing model** based on usage and comm
 For detailed licensing information, see:
 - **[Complete License Terms](../LICENSE)** - Full license agreement
 - **[Licensing Guide](docs/Licensing.md)** - Implementation and usage guide
-- **[Contact Licensing](mailto:licensing@sixlayerframework.com)** - Questions and custom pricing
+- **[Contact Licensing](mailto:schatt+6layer@gmail.com)** - Questions and custom pricing
 
 ## 🙏 Acknowledgments
 

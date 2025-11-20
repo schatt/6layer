@@ -88,12 +88,13 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     @Test @MainActor func testPhotoPickerDelegate_ExactBrokenCode() {
         #if os(iOS)
         // Given: The exact delegate method that was broken
+        // Use LegacyPhotoPickerView directly since it uses UIImagePickerController (the broken code path)
         var selectedImage: PlatformImage?
-        let parent = PhotoPickerView { image in
+        let legacyPicker = LegacyPhotoPickerView { image in
             selectedImage = image
         }
         
-        let coordinator = PhotoPickerView.Coordinator(parent)
+        let coordinator = legacyPicker.makeCoordinator()
         
         // When: Execute the delegate method that contains the broken code
         // This is the EXACT code path that was broken in 4.6.2
@@ -241,13 +242,16 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         ]
         
         // Execute the delegate methods that contain the broken code
-        if let cameraCoordinator = getCameraCoordinator(from: cameraInterface) {
-            cameraCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
-        }
+        // Create coordinators directly with the test callbacks
+        let cameraCoordinator = CameraView.Coordinator(CameraView { image in
+            capturedImage = image
+        })
+        cameraCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
-        if let pickerCoordinator = getPhotoPickerCoordinator(from: photoPicker) {
-            pickerCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
-        }
+        let pickerCoordinator = LegacyPhotoPickerView.LegacyPhotoCoordinator(LegacyPhotoPickerView { image in
+            selectedImage = image
+        })
+        pickerCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Verify the production code works (would have failed in 4.6.2)
         #expect(Bool(true), "Production camera code should work")  // capturedImage is non-optional
@@ -355,10 +359,14 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         return nil
     }
     
-    private func getPhotoPickerCoordinator(from view: some View) -> PhotoPickerView.Coordinator? {
+    private func getPhotoPickerCoordinator(from view: some View) -> LegacyPhotoPickerView.LegacyPhotoCoordinator? {
         // This is a simplified version - in reality we'd need to access the coordinator
         // For testing purposes, we'll create a mock coordinator
-        return nil
+        // Since PhotoPickerView wraps either ModernPhotoPickerView or LegacyPhotoPickerView,
+        // we can't directly access the coordinator. For testing, we'll use LegacyPhotoPickerView directly.
+        // Create a LegacyPhotoPickerView for testing
+        let legacyPicker = LegacyPhotoPickerView { _ in }
+        return legacyPicker.makeCoordinator()
     }
     #endif
     

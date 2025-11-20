@@ -17,7 +17,7 @@ open class PlatformNotificationLayer5ComponentAccessibilityTests: BaseTestClass 
     
     // MARK: - Platform Notification Layer 5 Component Tests
     
-    @Test func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformNotificationLayer5
         let testView = PlatformNotificationLayer5()
         

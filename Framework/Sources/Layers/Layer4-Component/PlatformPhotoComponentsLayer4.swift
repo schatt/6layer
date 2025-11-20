@@ -1,5 +1,9 @@
 import SwiftUI
 
+#if os(iOS) && canImport(PhotosUI)
+import PhotosUI
+#endif
+
 /// Layer 4: Component - Platform Photo Components
 ///
 /// This layer provides platform-aware UI components specifically designed for displaying and interacting with photos.
@@ -94,30 +98,101 @@ public struct CameraView: UIViewControllerRepresentable {
     }
 }
 
-public struct PhotoPickerView: UIViewControllerRepresentable {
+public struct PhotoPickerView: View {
     let onImageSelected: (PlatformImage) -> Void
     
-    public func makeUIViewController(context: Context) -> UIImagePickerController {
+    public var body: some View {
+        if #available(iOS 14.0, *) {
+            ModernPhotoPickerView(onImageSelected: onImageSelected)
+        } else {
+            LegacyPhotoPickerView(onImageSelected: onImageSelected)
+        }
+    }
+}
+
+// MARK: - Modern PHPickerViewController Implementation (iOS 14+)
+
+@available(iOS 14.0, *)
+private struct ModernPhotoPickerView: UIViewControllerRepresentable {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    func makeUIViewController(context: Context) -> PHPickerViewController {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 1
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> ModernPhotoCoordinator {
+        ModernPhotoCoordinator(self)
+    }
+    
+    class ModernPhotoCoordinator: NSObject, PHPickerViewControllerDelegate {
+        let parent: ModernPhotoPickerView
+        
+        init(_ parent: ModernPhotoPickerView) {
+            self.parent = parent
+        }
+        
+        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            picker.dismiss(animated: true)
+            
+            guard let result = results.first else {
+                return
+            }
+            
+            // Load the image from the result
+            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                    // Capture the UIImage before crossing concurrency boundary
+                    guard let uiImage = object as? UIImage else {
+                        return
+                    }
+                    Task { @MainActor in
+                        guard let self = self else {
+                            return
+                        }
+                        // System boundary conversion: UIImage → PlatformImage
+                        let platformImage = PlatformImage(uiImage)
+                        self.parent.onImageSelected(platformImage)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Legacy UIImagePickerController Implementation (iOS 13)
+
+struct LegacyPhotoPickerView: UIViewControllerRepresentable {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = context.coordinator
         return picker
     }
     
-    public func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
     
-    public func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+    func makeCoordinator() -> LegacyPhotoCoordinator {
+        LegacyPhotoCoordinator(self)
     }
     
-    public class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: PhotoPickerView
+    class LegacyPhotoCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: LegacyPhotoPickerView
         
-        init(_ parent: PhotoPickerView) {
+        init(_ parent: LegacyPhotoPickerView) {
             self.parent = parent
         }
         
-        public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[.originalImage] as? UIImage {
                 parent.onImageSelected(PlatformImage(image))  // Implicit conversion: UIImage → PlatformImage
             }

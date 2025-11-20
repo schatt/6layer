@@ -67,6 +67,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance
     @Test(arguments: [SixLayerPlatform.iOS, SixLayerPlatform.macOS])
+    @MainActor
     func testPlatformPhotoDisplayL4GeneratesAccessibilityIdentifiers(
         platform: SixLayerPlatform
     ) async {
@@ -129,7 +130,7 @@ open class PlatformPhotoComponentsLayer4AccessibilityTests: BaseTestClass {    /
     
     /// BUSINESS PURPOSE: Validates that platformPhotoEditor_L4 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPhotoEditorL4GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testPhoto = PlatformImage()
         

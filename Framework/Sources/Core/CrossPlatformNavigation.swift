@@ -82,7 +82,7 @@ public struct CrossPlatformNavigation {
 // MARK: - Navigation Strategy
 
 /// Navigation strategies for list-detail views
-public enum NavigationStrategy: String, CaseIterable {
+public enum NavigationStrategy: String, CaseIterable, Sendable {
     case splitView = "splitView"           // Master-detail split view
     case navigationStack = "navigationStack" // Navigation stack with push/pop
     case modal = "modal"                   // Modal presentation
@@ -238,22 +238,63 @@ public extension CrossPlatformNavigation {
         @ViewBuilder detailView: @escaping (T) -> some View,
         analysis: CollectionAnalysisResult
     ) -> some View {
-        NavigationView {
-            platformListSidebar(
-                items: items,
-                selectedItem: selectedItem,
-                itemView: itemView,
-                analysis: analysis
-            )
-            
-            if let selected = selectedItem.wrappedValue {
-                detailView(selected)
-            } else {
-                platformEmptyDetailView()
-            }
-        }
         #if os(iOS)
-        .navigationViewStyle(StackNavigationViewStyle())
+        if #available(iOS 16.0, *) {
+            // Use NavigationStack on iOS 16+
+            return AnyView(
+                NavigationStack {
+                    platformListSidebar(
+                        items: items,
+                        selectedItem: selectedItem,
+                        itemView: itemView,
+                        analysis: analysis
+                    )
+                    
+                    if let selected = selectedItem.wrappedValue {
+                        detailView(selected)
+                    } else {
+                        platformEmptyDetailView()
+                    }
+                }
+            )
+        } else {
+            // Fallback to NavigationView for iOS 15 and earlier
+            return AnyView(
+                NavigationView {
+                    platformListSidebar(
+                        items: items,
+                        selectedItem: selectedItem,
+                        itemView: itemView,
+                        analysis: analysis
+                    )
+                    
+                    if let selected = selectedItem.wrappedValue {
+                        detailView(selected)
+                    } else {
+                        platformEmptyDetailView()
+                    }
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+            )
+        }
+        #else
+        // macOS and other platforms
+        return AnyView(
+            NavigationView {
+                platformListSidebar(
+                    items: items,
+                    selectedItem: selectedItem,
+                    itemView: itemView,
+                    analysis: analysis
+                )
+                
+                if let selected = selectedItem.wrappedValue {
+                    detailView(selected)
+                } else {
+                    platformEmptyDetailView()
+                }
+            }
+        )
         #endif
     }
     

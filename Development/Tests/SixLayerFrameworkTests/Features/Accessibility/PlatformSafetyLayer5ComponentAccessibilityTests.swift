@@ -15,7 +15,7 @@ import SwiftUI
 @Suite("Platform Safety Layer Component Accessibility")
 open class PlatformSafetyLayer5ComponentAccessibilityTests: BaseTestClass {// MARK: - Platform Safety Layer 5 Component Tests
     
-    @Test func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformSafetyLayer5
         let testView = PlatformSafetyLayer5()
         

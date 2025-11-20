@@ -34,14 +34,15 @@ open class PhotoCallbackFunctionalTests: BaseTestClass {
         
         // Test the platform-specific implementation based on current build target
         #if os(iOS)
-        // iOS: Use PhotoPickerView
-        let photoPickerView = PhotoPickerView(
+        // iOS: Use LegacyPhotoPickerView directly for testing coordinator access
+        // PhotoPickerView is a wrapper View that doesn't expose a Coordinator
+        let legacyPicker = LegacyPhotoPickerView(
             onImageSelected: { image in
                 callbackInvoked = true
                 receivedImage = image
             }
         )
-        let coordinator = PhotoPickerView.Coordinator(photoPickerView)
+        let coordinator = legacyPicker.makeCoordinator()
         coordinator.parent.onImageSelected(mockImage)
         
         // Then: Callback should be invoked

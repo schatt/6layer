@@ -17,7 +17,7 @@ open class PlatformOrchestrationLayer5ComponentAccessibilityTests: BaseTestClass
     
     // MARK: - Platform Orchestration Layer 5 Component Tests
     
-    @Test func testPlatformOrchestrationLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformOrchestrationLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOrchestrationLayer5
         let testView = PlatformOrchestrationLayer5()
         

@@ -21,7 +21,7 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that platformPresentModalForm_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let testData = ModalFormTestData(name: "Test Name", email: "test@example.com")
         
@@ -65,7 +65,7 @@ open class PlatformSemanticLayer1ModalFormAccessibilityTests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Validates that platformPresentModalForm_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPresentModalFormL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let testData = ModalFormTestData(name: "Test Name", email: "test@example.com")
         

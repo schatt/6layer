@@ -13,6 +13,9 @@ import UniformTypeIdentifiers
 
 #if os(iOS)
 import UIKit
+#if canImport(PhotosUI)
+import PhotosUI
+#endif
 #elseif os(macOS)
 import AppKit
 #endif
@@ -42,7 +45,83 @@ public struct UnifiedImagePicker: View {
 // MARK: - iOS Implementation
 
 #if os(iOS)
-private struct iOSImagePicker: UIViewControllerRepresentable {
+private struct iOSImagePicker: View {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    var body: some View {
+        if #available(iOS 14.0, *) {
+            ModernImagePicker(onImageSelected: onImageSelected)
+        } else {
+            LegacyImagePicker(onImageSelected: onImageSelected)
+        }
+    }
+}
+
+// MARK: - Modern PHPickerViewController Implementation (iOS 14+)
+
+@available(iOS 14.0, *)
+private struct ModernImagePicker: UIViewControllerRepresentable {
+    let onImageSelected: (PlatformImage) -> Void
+    
+    func makeUIViewController(context: Context) -> PHPickerViewController {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 1
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> ModernCoordinator {
+        ModernCoordinator(self)
+    }
+    
+    class ModernCoordinator: NSObject, PHPickerViewControllerDelegate {
+        let parent: ModernImagePicker
+        
+        init(_ parent: ModernImagePicker) {
+            self.parent = parent
+        }
+        
+        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            picker.dismiss(animated: true)
+            
+            guard let result = results.first else {
+                return
+            }
+            
+            // Load the image from the result
+            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                    // Capture the UIImage before crossing concurrency boundary
+                    guard let uiImage = object as? UIImage else {
+                        return
+                    }
+                    Task { @MainActor in
+                        guard let self = self else {
+                            return
+                        }
+                        // System boundary conversion: UIImage → PlatformImage
+                        let platformImage = PlatformImage(uiImage)
+                        self.parent.onImageSelected(platformImage)
+                    }
+                }
+            }
+        }
+        
+        // For testing
+        func simulateImageSelection(_ image: PlatformImage) {
+            parent.onImageSelected(image)
+        }
+    }
+}
+
+// MARK: - Legacy UIImagePickerController Implementation (iOS 13)
+
+private struct LegacyImagePicker: UIViewControllerRepresentable {
     let onImageSelected: (PlatformImage) -> Void
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -54,14 +133,14 @@ private struct iOSImagePicker: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
     
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+    func makeCoordinator() -> LegacyCoordinator {
+        LegacyCoordinator(self)
     }
     
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: iOSImagePicker
+    class LegacyCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: LegacyImagePicker
         
-        init(_ parent: iOSImagePicker) {
+        init(_ parent: LegacyImagePicker) {
             self.parent = parent
         }
         

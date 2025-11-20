@@ -17,7 +17,7 @@ open class PlatformProfilingLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Profiling Layer 5 Component Tests
     
-    @Test func testPlatformProfilingLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformProfilingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformProfilingLayer5
         let testView = PlatformProfilingLayer5()
         

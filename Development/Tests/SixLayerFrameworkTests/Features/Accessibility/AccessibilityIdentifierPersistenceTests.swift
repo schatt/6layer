@@ -324,6 +324,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
+    @MainActor
     private func generateIDForView(_ view: some View) -> String {
         // Using wrapper - when ViewInspector works on macOS, no changes needed here
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)

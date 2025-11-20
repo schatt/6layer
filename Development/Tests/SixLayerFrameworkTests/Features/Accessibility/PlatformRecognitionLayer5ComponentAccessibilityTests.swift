@@ -17,7 +17,7 @@ open class PlatformRecognitionLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Recognition Layer 5 Component Tests
     
-    @Test func testPlatformRecognitionLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformRecognitionLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRecognitionLayer5
         let testView = PlatformRecognitionLayer5()
         

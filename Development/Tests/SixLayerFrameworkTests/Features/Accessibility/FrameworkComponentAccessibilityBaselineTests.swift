@@ -65,6 +65,7 @@ open class FrameworkComponentAccessibilityBaselineTests: BaseTestClass {    // M
     
     // MARK: - Helper Methods
     
+    @MainActor
     private func assertComponentGeneratesAccessibilityID<T: View>(_ component: T, name: String) {
         // Look for standard accessibility identifier pattern (framework generates generic IDs)
             // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 

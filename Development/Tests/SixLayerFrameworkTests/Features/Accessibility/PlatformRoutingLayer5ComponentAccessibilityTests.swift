@@ -17,7 +17,7 @@ open class PlatformRoutingLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Routing Layer 5 Component Tests
     
-    @Test func testPlatformRoutingLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformRoutingLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformRoutingLayer5
         let testView = PlatformRoutingLayer5()
         

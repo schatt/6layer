@@ -67,7 +67,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Privacy Layer 5
 
-    @Test func testPlatformPrivacyLayer5ManagesDataPrivacy() async {
+    @Test @MainActor func testPlatformPrivacyLayer5ManagesDataPrivacy() async {
         // TDD: PlatformPrivacyLayer5 should provide:
         // 1. Privacy settings and consent management
         // 2. Data sharing controls and permissions
@@ -110,7 +110,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Performance Layer 6
 
-    @Test func testPlatformPerformanceLayer6MonitorsPerformance() async {
+    @Test @MainActor func testPlatformPerformanceLayer6MonitorsPerformance() async {
         // TDD: PlatformPerformanceLayer6 should provide:
         // 1. Real-time performance monitoring and metrics
         // 2. Frame rate analysis and optimization suggestions
@@ -153,7 +153,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Profiling Layer 5
 
-    @Test func testPlatformProfilingLayer5ProvidesUserInsights() async {
+    @Test @MainActor func testPlatformProfilingLayer5ProvidesUserInsights() async {
         // TDD: PlatformProfilingLayer5 should provide:
         // 1. User behavior analysis and profiling
         // 2. Preference learning and personalization
@@ -196,7 +196,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Safety Layer 5
 
-    @Test func testPlatformSafetyLayer5ProvidesSafetyFeatures() async {
+    @Test @MainActor func testPlatformSafetyLayer5ProvidesSafetyFeatures() async {
         // TDD: PlatformSafetyLayer5 should provide:
         // 1. Content safety analysis and filtering
         // 2. Security threat detection and alerts
@@ -239,7 +239,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Routing Layer 5
 
-    @Test func testPlatformRoutingLayer5HandlesNavigation() async {
+    @Test @MainActor func testPlatformRoutingLayer5HandlesNavigation() async {
         // TDD: PlatformRoutingLayer5 should provide:
         // 1. Intelligent navigation and routing logic
         // 2. Context-aware path optimization
@@ -282,7 +282,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Orchestration Layer 5
 
-    @Test func testPlatformOrchestrationLayer5CoordinatesServices() async {
+    @Test @MainActor func testPlatformOrchestrationLayer5CoordinatesServices() async {
         // TDD: PlatformOrchestrationLayer5 should provide:
         // 1. Service coordination and orchestration
         // 2. Cross-platform service integration
@@ -325,7 +325,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Optimization Layer 5
 
-    @Test func testPlatformOptimizationLayer5ProvidesRecommendations() async {
+    @Test @MainActor func testPlatformOptimizationLayer5ProvidesRecommendations() async {
         // TDD: PlatformOptimizationLayer5 should provide:
         // 1. System optimization recommendations
         // 2. Performance tuning suggestions
@@ -368,7 +368,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Organization Layer 5
 
-    @Test func testPlatformOrganizationLayer5ManagesDataOrganization() async {
+    @Test @MainActor func testPlatformOrganizationLayer5ManagesDataOrganization() async {
         // TDD: PlatformOrganizationLayer5 should provide:
         // 1. Data organization and categorization
         // 2. Information architecture management
@@ -416,7 +416,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Notification Layer 5
 
-    @Test func testPlatformNotificationLayer5HandlesNotifications() async {
+    @Test @MainActor func testPlatformNotificationLayer5HandlesNotifications() async {
         // TDD: PlatformNotificationLayer5 should provide:
         // 1. Intelligent notification management
         // 2. Context-aware alert prioritization
@@ -464,7 +464,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
     // MARK: - Platform Interpretation Layer 5
 
-    @Test func testPlatformInterpretationLayer5ProvidesContextAnalysis() async {
+    @Test @MainActor func testPlatformInterpretationLayer5ProvidesContextAnalysis() async {
         // TDD: PlatformInterpretationLayer5 should provide:
         // 1. Context interpretation and understanding
         // 2. Intent analysis and prediction

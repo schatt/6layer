@@ -17,7 +17,7 @@ open class PlatformPerformanceLayer6ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Performance Layer 6 Component Tests
     
-    @Test func testPlatformPerformanceLayer6GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPerformanceLayer6GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPerformanceLayer6
         let testView = PlatformPerformanceLayer6()
         

@@ -17,7 +17,7 @@ open class PlatformPrivacyLayer5ComponentAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Privacy Layer 5 Component Tests
     
-    @Test func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
         // Given: PlatformPrivacyLayer5
         let testView = PlatformPrivacyLayer5()
         

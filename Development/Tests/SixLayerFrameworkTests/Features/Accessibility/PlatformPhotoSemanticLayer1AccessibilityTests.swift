@@ -12,7 +12,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
     
-    @Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -49,7 +49,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
     
     /// BUSINESS PURPOSE: Validates that platformPhotoCapture_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPhotoCaptureL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -88,7 +88,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
     
     /// BUSINESS PURPOSE: Validates that platformPhotoSelection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -126,7 +126,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
     
     /// BUSINESS PURPOSE: Validates that platformPhotoSelection_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPhotoSelectionL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -166,7 +166,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on iOS
-    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
+    @Test @MainActor func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnIOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -204,7 +204,7 @@ open class PlatformPhotoSemanticLayer1AccessibilityTests: BaseTestClass {// MARK
     
     /// BUSINESS PURPOSE: Validates that platformPhotoDisplay_L1 generates proper accessibility identifiers
     /// for automated testing and accessibility tools compliance on macOS
-    @Test func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
+    @Test @MainActor func testPlatformPhotoDisplayL1GeneratesAccessibilityIdentifiersOnMacOS() async {
         // Given
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(

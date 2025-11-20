@@ -107,7 +107,7 @@ platformPresentItemCollection_L1(
 
 ### How to Upgrade
 
-1. **Contact us**: licensing@sixlayerframework.com
+1. **Contact us**: schatt+6layer@gmail.com
 2. **Provide details**: App description, user count, revenue model
 3. **Receive quote**: We'll provide pricing and terms
 4. **Complete purchase**: Payment and license agreement
@@ -157,7 +157,7 @@ We prefer to work with developers to resolve compliance issues:
 - Full framework functionality
 
 ### Paid Tiers
-1. **Contact**: licensing@sixlayerframework.com
+1. **Contact**: schatt+6layer@gmail.com
 2. **Provide**: Application details and expected user count
 3. **Receive**: Billing information and payment setup
 4. **Implement**: No technical implementation required - honor system
@@ -186,13 +186,13 @@ A: Yes, you can downgrade at any time, but you must ensure your usage fits withi
 A: No, this is an honor system. We trust developers to comply with license terms in good faith. No license keys are required or provided.
 
 ### Q: What if I'm not sure which tier I need?
-A: Contact us at licensing@sixlayerframework.com and we'll help you determine the right tier for your use case.
+A: Contact us at schatt+6layer@gmail.com and we'll help you determine the right tier for your use case.
 
 ## Contact
 
 For licensing questions or custom pricing:
-- **Email**: licensing@sixlayerframework.com
-- **Website**: https://sixlayerframework.com/licensing
+- **Email**: schatt+6layer@gmail.com
+- **Website**: https://github.com/schatt/6layer
 - **GitHub**: https://github.com/schatt/6layer/discussions
 
 ---
