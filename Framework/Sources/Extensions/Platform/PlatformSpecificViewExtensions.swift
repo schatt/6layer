@@ -1,6 +1,14 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+#if os(iOS)
+import UIKit
+#endif
+
+#if os(macOS)
+import AppKit
+#endif
+
 /// Semantic intent: Dismiss settings based on presentation model
 /// Layer 1: Express WHAT you want to achieve
 public enum SettingsDismissalType {
@@ -563,8 +571,18 @@ public extension View {
     ) -> some View {
         #if os(iOS)
         return self.sheet(isPresented: isPresented) {
-            NavigationView {
-                content()
+            Group {
+                if #available(iOS 16.0, *) {
+                    // Use NavigationStack on iOS 16+
+                    NavigationStack {
+                        content()
+                    }
+                } else {
+                    // Fallback to NavigationView for iOS 15 and earlier
+                    NavigationView {
+                        content()
+                    }
+                }
             }
             .platformPresentationDetents(detents)
             .deviceAwareFrame() // Layer 4: Device-aware sizing for iPad vs iPhone
@@ -650,8 +668,18 @@ public extension View {
         #if os(iOS)
         // iOS: Use detents with intelligent device-aware sizing
         return self.sheet(isPresented: isPresented) {
-            NavigationView {
-                content()
+            Group {
+                if #available(iOS 16.0, *) {
+                    // Use NavigationStack on iOS 16+
+                    NavigationStack {
+                        content()
+                    }
+                } else {
+                    // Fallback to NavigationView for iOS 15 and earlier
+                    NavigationView {
+                        content()
+                    }
+                }
             }
             .platformPresentationDetents(detents)
             .deviceAwareFrame() // Layer 4: Device-aware sizing for iPad vs iPhone
@@ -1755,6 +1783,169 @@ public extension View {
         }
     }
 
+    /// Platform-specific settings opening
+    /// Opens the app's settings page in the system settings app.
+    /// 
+    /// - Returns: `true` if the settings were successfully opened, `false` otherwise
+    /// 
+    /// ## Platform Behavior
+    /// - **iOS**: Opens the app's settings page in the Settings app using `UIApplicationOpenSettingsURLString`
+    /// - **macOS**: Attempts to open System Settings (macOS 13+). Note: There's no standard URL scheme
+    ///   for app-specific settings on macOS, so apps typically present preferences within the app itself.
+    ///   This function will attempt to open System Settings, but apps should implement their own
+    ///   preferences window for a better user experience.
+    /// - **Other platforms**: Returns `false` (not supported)
+    /// 
+    /// ## Usage Example
+    /// ```swift
+    /// Button("Open Settings") {
+    ///     platformOpenSettings()
+    /// }
+    /// 
+    /// // Or as a View extension:
+    /// Button("Open Settings") {
+    ///     Text("").platformOpenSettings()
+    /// }
+    /// ```
+    @MainActor
+    @discardableResult
+    func platformOpenSettings() -> Bool {
+        #if os(iOS)
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+            print("[SixLayer] Error: Failed to construct settings URL from UIApplication.openSettingsURLString")
+            return false
+        }
+        let success = UIApplication.shared.open(settingsURL)
+        if !success {
+            print("[SixLayer] Error: Failed to open settings URL. App may not have a settings bundle.")
+        }
+        return success
+        #elseif os(macOS)
+        if #available(macOS 13.0, *) {
+            // macOS 13+: Try to open System Settings app
+            // Note: There's no standard URL scheme for app-specific settings on macOS
+            // This will open System Settings, but not the app's specific settings page
+            // Apps should implement their own preferences window for a better user experience
+            let settingsBundleID = "com.apple.systempreferences"
+            if let settingsAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: settingsBundleID) {
+                let success = NSWorkspace.shared.open(settingsAppURL)
+                if !success {
+                    print("[SixLayer] Error: Failed to open System Settings app")
+                }
+                return success
+            }
+            // Fallback: Try opening with x-apple.systempreferences URL scheme (may not work on all versions)
+            if let settingsURL = URL(string: "x-apple.systempreferences:") {
+                let success = NSWorkspace.shared.open(settingsURL)
+                if !success {
+                    print("[SixLayer] Error: Failed to open System Settings via URL scheme")
+                }
+                return success
+            }
+            print("[SixLayer] Error: Could not find System Settings app")
+        } else {
+            // macOS 12 and earlier: Try opening System Preferences
+            let preferencesBundleID = "com.apple.systempreferences"
+            if let preferencesAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: preferencesBundleID) {
+                let success = NSWorkspace.shared.open(preferencesAppURL)
+                if !success {
+                    print("[SixLayer] Error: Failed to open System Preferences app")
+                }
+                return success
+            }
+            print("[SixLayer] Error: Could not find System Preferences app")
+        }
+        // If opening failed: No standard way to open app-specific settings
+        // Apps should present preferences within the app itself
+        return false
+        #else
+        // Other platforms: Not supported
+        print("[SixLayer] Warning: platformOpenSettings() is not supported on this platform")
+        return false
+        #endif
+    }
+    
+    /// Platform-specific settings opening with SwiftUI Environment.openURL
+    /// Opens the app's settings page using SwiftUI's Environment.openURL when available.
+    /// 
+    /// - Parameter openURL: The OpenURLAction from SwiftUI Environment
+    /// - Returns: `true` if the settings were successfully opened, `false` otherwise
+    /// 
+    /// ## Platform Behavior
+    /// - **iOS**: Opens the app's settings page in the Settings app using `UIApplicationOpenSettingsURLString`
+    /// - **macOS**: Attempts to open System Settings (macOS 13+). Note: There's no standard URL scheme
+    ///   for app-specific settings on macOS, so apps typically present preferences within the app itself.
+    ///   This function will attempt to open System Settings, but apps should implement their own
+    ///   preferences window for a better user experience.
+    /// - **Other platforms**: Returns `false` (not supported)
+    /// 
+    /// ## Usage Example
+    /// ```swift
+    /// struct SettingsView: View {
+    ///     @Environment(\.openURL) var openURL
+    ///     
+    ///     var body: some View {
+    ///         Button("Open Settings") {
+    ///             platformOpenSettings(openURL: openURL)
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    @MainActor
+    @discardableResult
+    func platformOpenSettings(openURL: OpenURLAction) -> Bool {
+        #if os(iOS)
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+            print("[SixLayer] Error: Failed to construct settings URL from UIApplication.openSettingsURLString")
+            return false
+        }
+        openURL(settingsURL)
+        // OpenURLAction doesn't return a Bool, so we assume success if URL was constructed
+        // In practice, SwiftUI handles the opening asynchronously
+        return true
+        #elseif os(macOS)
+        if #available(macOS 13.0, *) {
+            // macOS 13+: Try to open System Settings app
+            // Note: There's no standard URL scheme for app-specific settings on macOS
+            // This will open System Settings, but not the app's specific settings page
+            // Apps should implement their own preferences window for a better user experience
+            let settingsBundleID = "com.apple.systempreferences"
+            if let settingsAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: settingsBundleID) {
+                let success = NSWorkspace.shared.open(settingsAppURL)
+                if !success {
+                    print("[SixLayer] Error: Failed to open System Settings app")
+                }
+                return success
+            }
+            // Fallback: Try opening with x-apple.systempreferences URL scheme (may not work on all versions)
+            if let settingsURL = URL(string: "x-apple.systempreferences:") {
+                openURL(settingsURL)
+                // OpenURLAction doesn't return a Bool, so we assume success if URL was constructed
+                return true
+            }
+            print("[SixLayer] Error: Could not find System Settings app")
+        } else {
+            // macOS 12 and earlier: Try opening System Preferences
+            let preferencesBundleID = "com.apple.systempreferences"
+            if let preferencesAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: preferencesBundleID) {
+                let success = NSWorkspace.shared.open(preferencesAppURL)
+                if !success {
+                    print("[SixLayer] Error: Failed to open System Preferences app")
+                }
+                return success
+            }
+            print("[SixLayer] Error: Could not find System Preferences app")
+        }
+        // If opening failed: No standard way to open app-specific settings
+        // Apps should present preferences within the app itself
+        return false
+        #else
+        // Other platforms: Not supported
+        print("[SixLayer] Warning: platformOpenSettings() is not supported on this platform")
+        return false
+        #endif
+    }
+
 
 
 
@@ -1948,6 +2139,166 @@ public extension View {
             return AnyView(self)
         #endif
     }
+}
+
+// MARK: - Standalone Platform Functions
+
+/// Cross-platform function to open app settings
+/// Opens the app's settings page in the system settings app.
+/// 
+/// - Returns: `true` if the settings were successfully opened, `false` otherwise
+/// 
+/// ## Platform Behavior
+/// - **iOS**: Opens the app's settings page in the Settings app using `UIApplicationOpenSettingsURLString`
+/// - **macOS**: Attempts to open System Settings (macOS 13+). Note: There's no standard URL scheme
+///   for app-specific settings on macOS, so apps typically present preferences within the app itself.
+///   This function will attempt to open System Settings, but apps should implement their own
+///   preferences window for a better user experience.
+/// - **Other platforms**: Returns `false` (not supported)
+/// 
+/// ## Usage Example
+/// ```swift
+/// Button("Open Settings") {
+///     platformOpenSettings()
+/// }
+/// ```
+@MainActor
+@discardableResult
+public func platformOpenSettings() -> Bool {
+    #if os(iOS)
+    guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+        print("[SixLayer] Error: Failed to construct settings URL from UIApplication.openSettingsURLString")
+        return false
+    }
+    let success = UIApplication.shared.open(settingsURL)
+    if !success {
+        print("[SixLayer] Error: Failed to open settings URL. App may not have a settings bundle.")
+    }
+    return success
+    #elseif os(macOS)
+    if #available(macOS 13.0, *) {
+        // macOS 13+: Try to open System Settings app
+        // Note: There's no standard URL scheme for app-specific settings on macOS
+        // This will open System Settings, but not the app's specific settings page
+        // Apps should implement their own preferences window for a better user experience
+        let settingsBundleID = "com.apple.systempreferences"
+        if let settingsAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: settingsBundleID) {
+            let success = NSWorkspace.shared.open(settingsAppURL)
+            if !success {
+                print("[SixLayer] Error: Failed to open System Settings app")
+            }
+            return success
+        }
+        // Fallback: Try opening with x-apple.systempreferences URL scheme (may not work on all versions)
+        if let settingsURL = URL(string: "x-apple.systempreferences:") {
+            let success = NSWorkspace.shared.open(settingsURL)
+            if !success {
+                print("[SixLayer] Error: Failed to open System Settings via URL scheme")
+            }
+            return success
+        }
+        print("[SixLayer] Error: Could not find System Settings app")
+    } else {
+        // macOS 12 and earlier: Try opening System Preferences
+        let preferencesBundleID = "com.apple.systempreferences"
+        if let preferencesAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: preferencesBundleID) {
+            let success = NSWorkspace.shared.open(preferencesAppURL)
+            if !success {
+                print("[SixLayer] Error: Failed to open System Preferences app")
+            }
+            return success
+        }
+        print("[SixLayer] Error: Could not find System Preferences app")
+    }
+    // If opening failed: No standard way to open app-specific settings
+    // Apps should present preferences within the app itself
+    return false
+    #else
+    // Other platforms: Not supported
+    print("[SixLayer] Warning: platformOpenSettings() is not supported on this platform")
+    return false
+    #endif
+}
+
+/// Cross-platform function to open app settings using SwiftUI Environment.openURL
+/// Opens the app's settings page using SwiftUI's Environment.openURL when available.
+/// 
+/// - Parameter openURL: The OpenURLAction from SwiftUI Environment
+/// - Returns: `true` if the settings were successfully opened, `false` otherwise
+/// 
+/// ## Platform Behavior
+/// - **iOS**: Opens the app's settings page in the Settings app using `UIApplicationOpenSettingsURLString`
+/// - **macOS**: Attempts to open System Settings (macOS 13+). Note: There's no standard URL scheme
+///   for app-specific settings on macOS, so apps typically present preferences within the app itself.
+///   This function will attempt to open System Settings, but apps should implement their own
+///   preferences window for a better user experience.
+/// - **Other platforms**: Returns `false` (not supported)
+/// 
+/// ## Usage Example
+/// ```swift
+/// struct SettingsView: View {
+///     @Environment(\.openURL) var openURL
+///     
+///     var body: some View {
+///         Button("Open Settings") {
+///             platformOpenSettings(openURL: openURL)
+///         }
+///     }
+/// }
+/// ```
+@MainActor
+@discardableResult
+public func platformOpenSettings(openURL: OpenURLAction) -> Bool {
+    #if os(iOS)
+    guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+        print("[SixLayer] Error: Failed to construct settings URL from UIApplication.openSettingsURLString")
+        return false
+    }
+    openURL(settingsURL)
+    // OpenURLAction doesn't return a Bool, so we assume success if URL was constructed
+    // In practice, SwiftUI handles the opening asynchronously
+    return true
+    #elseif os(macOS)
+    if #available(macOS 13.0, *) {
+        // macOS 13+: Try to open System Settings app
+        // Note: There's no standard URL scheme for app-specific settings on macOS
+        // This will open System Settings, but not the app's specific settings page
+        // Apps should implement their own preferences window for a better user experience
+        let settingsBundleID = "com.apple.systempreferences"
+        if let settingsAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: settingsBundleID) {
+            let success = NSWorkspace.shared.open(settingsAppURL)
+            if !success {
+                print("[SixLayer] Error: Failed to open System Settings app")
+            }
+            return success
+        }
+        // Fallback: Try opening with x-apple.systempreferences URL scheme (may not work on all versions)
+        if let settingsURL = URL(string: "x-apple.systempreferences:") {
+            openURL(settingsURL)
+            // OpenURLAction doesn't return a Bool, so we assume success if URL was constructed
+            return true
+        }
+        print("[SixLayer] Error: Could not find System Settings app")
+    } else {
+        // macOS 12 and earlier: Try opening System Preferences
+        let preferencesBundleID = "com.apple.systempreferences"
+        if let preferencesAppURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: preferencesBundleID) {
+            let success = NSWorkspace.shared.open(preferencesAppURL)
+            if !success {
+                print("[SixLayer] Error: Failed to open System Preferences app")
+            }
+            return success
+        }
+        print("[SixLayer] Error: Could not find System Preferences app")
+    }
+    // If opening failed: No standard way to open app-specific settings
+    // Apps should present preferences within the app itself
+    return false
+    #else
+    // Other platforms: Not supported
+    print("[SixLayer] Warning: platformOpenSettings() is not supported on this platform")
+    return false
+    #endif
 }
 
 // MARK: - Migration Phase: Temporary Type-Specific Layer 4 Functions

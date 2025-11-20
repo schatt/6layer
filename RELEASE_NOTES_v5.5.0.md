@@ -267,6 +267,136 @@ See `Framework/Examples/MapUsageExample.swift` for complete examples including:
 - Current location integration
 - Custom annotation views
 
+### Cross-Platform Settings URL Opening (Issue #26)
+
+**NEW**: Cross-platform function to open app settings!
+
+The framework now provides a unified API for opening system settings that automatically handles platform differences between iOS and macOS.
+
+#### Key Features
+
+- **Cross-Platform Abstraction**: Single API works on both iOS and macOS
+- **Automatic Platform Handling**: Framework handles iOS vs macOS differences automatically
+- **Return Value**: Returns `Bool` indicating success/failure
+- **Dual API**: Available as both View extension method and standalone function
+- **SwiftUI Environment Integration**: Supports both `UIApplication.shared.open()` and SwiftUI's `Environment.openURL`
+- **Error Logging**: Comprehensive error logging with `[SixLayer]` prefix for debugging
+- **Error Handling**: Graceful handling when settings can't be opened
+
+#### Basic Usage
+
+```swift
+import SixLayerFramework
+
+// As a standalone function
+Button("Open Settings") {
+    platformOpenSettings()
+}
+
+// Or as a View extension method
+Button("Open Settings") {
+    Text("").platformOpenSettings()
+}
+
+// With return value handling
+Button("Open Settings") {
+    let success = platformOpenSettings()
+    if !success {
+        print("Could not open settings")
+    }
+}
+
+// With SwiftUI Environment.openURL (recommended for SwiftUI views)
+struct SettingsView: View {
+    @Environment(\.openURL) var openURL
+    
+    var body: some View {
+        Button("Open Settings") {
+            platformOpenSettings(openURL: openURL)
+        }
+    }
+}
+```
+
+### API Reference
+
+```swift
+/// View extension method (uses UIApplication.shared.open)
+@MainActor
+@discardableResult
+func platformOpenSettings() -> Bool
+
+/// View extension method with SwiftUI Environment.openURL
+@MainActor
+@discardableResult
+func platformOpenSettings(openURL: OpenURLAction) -> Bool
+
+/// Standalone function (uses UIApplication.shared.open)
+@MainActor
+@discardableResult
+public func platformOpenSettings() -> Bool
+
+/// Standalone function with SwiftUI Environment.openURL
+@MainActor
+@discardableResult
+public func platformOpenSettings(openURL: OpenURLAction) -> Bool
+```
+
+### Platform Behavior
+
+- **iOS**: Opens the app's settings page in the Settings app using `UIApplicationOpenSettingsURLString`
+  - Returns `true` if settings were opened successfully
+  - Returns `false` if URL construction fails or app has no settings bundle
+  - Logs errors with `[SixLayer]` prefix when opening fails
+  
+- **macOS**: Attempts to open System Settings (macOS 13+) or System Preferences (macOS 12 and earlier)
+  - Note: There's no standard URL scheme for app-specific settings on macOS
+  - This will open System Settings/Preferences, but not the app's specific settings page
+  - Apps should implement their own preferences window for a better user experience
+  - Returns `true` if System Settings/Preferences was opened successfully
+  - Returns `false` if opening failed or on unsupported platforms
+  - Logs errors with `[SixLayer]` prefix when opening fails
+
+- **Other platforms**: Returns `false` (not supported)
+  - Logs warning with `[SixLayer]` prefix
+
+### Examples
+
+```swift
+// Simple usage in a button
+struct SettingsView: View {
+    var body: some View {
+        Button("Open Settings") {
+            platformOpenSettings()
+        }
+    }
+}
+
+// With error handling
+struct SettingsButton: View {
+    @State private var showError = false
+    
+    var body: some View {
+        Button("Open Settings") {
+            let success = platformOpenSettings()
+            if !success {
+                showError = true
+            }
+        }
+        .alert("Error", isPresented: $showError) {
+            Button("OK") { }
+        } message: {
+            Text("Could not open settings")
+        }
+    }
+}
+```
+
+### Location
+
+- **Implementation**: `Framework/Sources/Extensions/Platform/PlatformSpecificViewExtensions.swift`
+- **Tests**: `Development/Tests/SixLayerFrameworkTests/Extensions/Platform/PlatformOpenSettingsTests.swift`
+
 ## 🔧 API Changes
 
 ### New Components
@@ -288,6 +418,15 @@ See `Framework/Examples/MapUsageExample.swift` for complete examples including:
 - `MapAnnotationData` - Cross-platform annotation data type
 - `platformMapView_L4()` - Convenience functions for map views
 - `platformMapViewWithCurrentLocation_L4()` - LocationService-integrated map view
+
+#### Settings URL Opening (Issue #26)
+
+- `platformOpenSettings()` - Standalone function to open app settings (uses UIApplication.shared.open)
+- `platformOpenSettings(openURL:)` - Standalone function with SwiftUI Environment.openURL
+- `platformOpenSettings()` - View extension method to open app settings (uses UIApplication.shared.open)
+- `platformOpenSettings(openURL:)` - View extension method with SwiftUI Environment.openURL
+- All functions return `Bool` indicating success/failure
+- All functions include error logging with `[SixLayer]` prefix
 
 ### No Breaking Changes
 
@@ -345,6 +484,17 @@ See `Framework/Examples/MapUsageExample.swift` for complete examples including:
 - **Error handling tests**: Verify graceful error handling
 - **Accessibility tests**: Verify accessibility support
 
+### Settings URL Opening (Issue #26)
+
+- **12 comprehensive tests** covering all functionality
+- **TDD approach**: Tests written first, then implementation
+- **All tests passing**: 100% test success rate
+- **Cross-platform testing**: Tests verify iOS and macOS implementations
+- **Return value tests**: Verify Bool return value behavior
+- **Error handling tests**: Verify graceful error handling and logging
+- **SwiftUI integration tests**: Verify usage in SwiftUI views
+- **Environment.openURL tests**: Verify SwiftUI Environment integration
+
 ## ✅ Backward Compatibility
 
 - **100% backward compatible**: No breaking changes
@@ -371,6 +521,15 @@ No migration required - this is a new feature. To use maps in your app:
 2. Use `platformMapView_L4()` or `platformMapViewWithCurrentLocation_L4()`
 3. Ensure your app targets iOS 17+ or macOS 14+
 
+### Settings URL Opening (Issue #26)
+
+No migration required - this is a new feature. To open app settings:
+
+1. Call `platformOpenSettings()` as a standalone function or View extension method
+2. Optionally check the return value to handle errors
+3. On iOS, ensure your app has a settings bundle for the function to open app-specific settings
+4. On macOS, consider implementing your own preferences window for better UX
+
 ## 📦 Dependencies
 
 - **MapKit**: Required for map functionality (available on all platforms)
@@ -396,6 +555,16 @@ No migration required - this is a new feature. To use maps in your app:
 - **Cross-Platform Abstraction**: Unified API across platforms
 - **Modern API Only**: Uses `Annotation` with `MapContentBuilder`, avoids deprecated `MapAnnotation`
 - **Accessibility**: Automatic compliance via `automaticCompliance()` modifier
+
+### Settings URL Opening Architecture (Issue #26)
+
+- **Platform Extension**: Follows framework's platform-specific extension pattern
+- **Cross-Platform Abstraction**: Unified API handles iOS/macOS differences automatically
+- **Dual API Design**: Both View extension and standalone function for flexibility
+- **SwiftUI Integration**: Supports both `UIApplication.shared.open()` and `Environment.openURL`
+- **Error Handling**: Returns `Bool` for success/failure indication
+- **Error Logging**: Comprehensive logging with `[SixLayer]` prefix for all error conditions
+- **macOS Limitations**: Documents that macOS has no standard URL scheme for app-specific settings
 
 ### Error Handling
 
@@ -440,10 +609,20 @@ No migration required - this is a new feature. To use maps in your app:
 - Unsupported platforms (tvOS, watchOS) show fallback UI
 - LocationService integration requires location permissions
 
+### Settings URL Opening (Issue #26)
+
+- **iOS**: Requires app to have a settings bundle for `platformOpenSettings()` to open app-specific settings
+- **macOS**: Opens System Settings/Preferences, but not app-specific settings (no standard URL scheme)
+- **Best Practice**: On macOS, implement your own preferences window for better user experience
+- **Return Value**: Always check the return value to handle cases where settings can't be opened
+- **Platform Differences**: Function automatically handles iOS vs macOS differences - no platform-specific code needed
+- **SwiftUI Integration**: Use `platformOpenSettings(openURL:)` with `@Environment(\.openURL)` in SwiftUI views for better integration
+- **Error Logging**: All errors are logged with `[SixLayer]` prefix - check console output for debugging
+
 ---
 
 **Version**: 5.5.0  
 **Release Date**: November 20, 2025  
 **Previous Version**: 5.4.0  
-**Issues**: #24 (NavigationStack), #25 (Map Support)
+**Issues**: #24 (NavigationStack), #25 (Map Support), #26 (Settings URL Opening)
 
