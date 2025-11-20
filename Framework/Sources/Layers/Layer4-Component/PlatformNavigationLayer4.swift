@@ -18,9 +18,17 @@ public extension View {
     ) -> some View {
         let baseView: AnyView = {
             #if os(iOS)
-            return AnyView(NavigationView {
-                content()
-            })
+            if #available(iOS 16.0, *) {
+                // Use NavigationStack on iOS 16+
+                return AnyView(NavigationStack {
+                    content()
+                })
+            } else {
+                // Fallback to NavigationView for iOS 15 and earlier
+                return AnyView(NavigationView {
+                    content()
+                })
+            }
             #else
             return AnyView(content())
             #endif

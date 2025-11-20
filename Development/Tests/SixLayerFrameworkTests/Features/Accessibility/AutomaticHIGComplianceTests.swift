@@ -32,7 +32,8 @@ struct AutomaticHIGComplianceTestItem: Identifiable {
  * functions and verifies they have proper accessibility features, platform-specific behavior, and HIG compliance
  * without requiring manual modifier application.
  */
-@Suite("Automatic H I G Compliance")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode hangs)
+@Suite(.serialized)
 open class AutomaticHIGComplianceTests: BaseTestClass {
     
     // MARK: - Test Data Setup

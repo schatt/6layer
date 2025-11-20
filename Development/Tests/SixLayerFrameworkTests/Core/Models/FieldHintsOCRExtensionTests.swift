@@ -23,7 +23,7 @@ struct FieldHintsOCRExtensionTests {
     private func writeHintsFile(modelName: String, json: [String: Any]) throws -> (fileURL: URL, uniqueModelName: String) {
         let fileManager = FileManager.default
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw NSError(domain: "TestError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Could not find documents directory"])
+            throw NSError(domain: "TestError", code: 1, userInfo: ["NSLocalizedDescription": "Could not find documents directory"])
         }
         let hintsDir = documentsURL.appendingPathComponent("Hints")
         try fileManager.createDirectory(at: hintsDir, withIntermediateDirectories: true)
@@ -34,7 +34,7 @@ struct FieldHintsOCRExtensionTests {
         try data.write(to: testFile, options: .atomic)
         // Verify file exists
         guard fileManager.fileExists(atPath: testFile.path) else {
-            throw NSError(domain: "TestError", code: 2, userInfo: [NSLocalizedDescriptionKey: "File was not created"])
+            throw NSError(domain: "TestError", code: 2, userInfo: ["NSLocalizedDescription": "File was not created"])
         }
         return (testFile, uniqueModelName)
     }

@@ -38,7 +38,15 @@ error: cannot find type '_MapAnnotationData' in scope
 ```
 
 ## Root Cause
-The SwiftUI types (`VideoPlayer`, `SignInWithAppleButton`, `Map` variants) are iOS-only and not available in macOS SDK 26. ViewInspector has conditional compilation guards for `canImport(AVKit)` and `canImport(AuthenticationServices)` but does not exclude these code paths for macOS.
+**INVESTIGATION UPDATE**: Investigation findings show that ViewInspector builds successfully on macOS SDK 26.2 with no errors. All tested types (`VideoPlayer`, `SignInWithAppleButton`, `MapAnnotation`, `MapMarker`, `MapPin`) compile successfully on macOS SDK 26.2.
+
+**Possible actual causes**:
+- Internal SwiftUI types (`_MapAnnotationData`, `_DefaultAnnotatedMapContent`) that ViewInspector relies on may not be available on macOS
+- Build configuration differences when ViewInspector is used as a dependency vs. building ViewInspector itself
+- SDK version differences (26.0 vs 26.2) - issue may have been fixed in 26.2
+- Conditional compilation edge cases with `canImport()` when used as a dependency
+
+**Original claim** (may be incorrect): The SwiftUI types (`VideoPlayer`, `SignInWithAppleButton`, `Map` variants) are iOS-only and not available in macOS SDK 26. ViewInspector has conditional compilation guards for `canImport(AVKit)` and `canImport(AuthenticationServices)` but does not exclude these code paths for macOS.
 
 ## Reproduction
 1. Create a Swift Package targeting macOS

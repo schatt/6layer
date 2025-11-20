@@ -51,9 +51,9 @@ let package = Package(
             name: "SixLayerFrameworkTests",
             dependencies: [
                 "SixLayerFramework",
-                // ViewInspector excluded from macOS due to GitHub Issue #405
-                // iOS-only SwiftUI types (VideoPlayer, SignInWithAppleButton, Map) not available on macOS SDK 26
-                .product(name: "ViewInspector", package: "ViewInspector", condition: .when(platforms: [.iOS]))
+                // ✅ ViewInspector macOS support verified - builds successfully on macOS SDK 26.2
+                // All types (VideoPlayer, SignInWithAppleButton, MapAnnotation, etc.) compile on macOS
+                .product(name: "ViewInspector", package: "ViewInspector")
             ],
             path: "Development/Tests/SixLayerFrameworkTests",
             exclude: [
@@ -68,9 +68,9 @@ let package = Package(
                 "Utilities/TestHelpers/CoreDataTestingGuide.md"
             ],
             swiftSettings: [
-                // ✅ RESOLVED: ViewInspector macOS support is now available via github.com/schatt/ViewInspector
-                // macOS support is permanently enabled - this flag enables ViewInspector on macOS
-                // When flag is present, VIEW_INSPECTOR_MAC_FIXED is defined (true)
+                // ✅ VERIFIED: ViewInspector builds successfully on macOS SDK 26.2
+                // Investigation confirmed all types compile on macOS - issue was incorrect
+                // This flag enables ViewInspector-dependent tests on macOS
                 .define("VIEW_INSPECTOR_MAC_FIXED")
             ]
         ),

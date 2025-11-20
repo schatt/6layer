@@ -36,7 +36,8 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// NOTE: Not marked @MainActor on class to allow parallel execution
-@Suite("Eye Tracking")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode crashes from too many @MainActor threads)
+@Suite(.serialized)
 open class EyeTrackingTests: BaseTestClass {
     
     // MARK: - Helper Methods

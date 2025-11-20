@@ -43,7 +43,8 @@ import SwiftUI
 /// Tests written FIRST, implementation will follow
 /// Comprehensive coverage: positive, negative, edge cases, error conditions
 /// NOTE: Not marked @MainActor on class to allow parallel execution
-@Suite("Card Action Button")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode crashes from too many @MainActor threads)
+@Suite(.serialized)
 open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Test Data

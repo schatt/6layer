@@ -24,7 +24,8 @@ import AppKit
 @testable import SixLayerFramework
 
 
-@Suite("Photo Functionality Phase")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode hangs)
+@Suite(.serialized)
 open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Enhanced PlatformImage Tests

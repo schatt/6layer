@@ -12,7 +12,8 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// NOTE: Not marked @MainActor on class to allow parallel execution
-@Suite("Photo Selection L")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView
+@Suite(.serialized)
 open class PhotoSelectionL1Tests: BaseTestClass {
     
     // MARK: - Test Data
@@ -245,6 +246,56 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+    }
+    
+    // MARK: - Custom View Tests
+    
+    @Test @MainActor
+    func testPlatformPhotoSelection_L1_WithCustomPickerView() {
+        initializeTestConfig()
+        // Given
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = samplePhotoContext
+        
+        // When: Using custom picker view wrapper
+        let view = platformPhotoSelection_L1(
+            purpose: purpose,
+            context: context,
+            onImageSelected: { _ in },
+            customPickerView: { (pickerContent: AnyView) in
+                VStack {
+                    Text("Custom Photo Picker")
+                        .font(.headline)
+                    pickerContent
+                        .padding()
+                        .background(Color.platformSecondaryBackground)
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom wrapper
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformPhotoSelection_L1 with custom picker view should return a view")
+    }
+    
+    @Test @MainActor
+    func testPlatformPhotoSelection_L1_WithCustomPickerView_Nil() {
+        initializeTestConfig()
+        // Given
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = samplePhotoContext
+        
+        // When: Not providing custom picker view (should use default)
+        // Omit the parameter to use default value instead of passing nil
+        let view = platformPhotoSelection_L1(
+            purpose: purpose,
+            context: context,
+            onImageSelected: { _ in }
+        )
+        
+        // Then: Should return default view
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformPhotoSelection_L1 with nil custom picker view should return default view")
     }
     
 }

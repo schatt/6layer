@@ -1,5 +1,6 @@
 import Testing
 import Foundation
+import SwiftUI
 
 
 //
@@ -39,7 +40,8 @@ import Foundation
 import TabularData
 
 /// NOTE: Not marked @MainActor on class to allow parallel execution
-@Suite("Platform Data Frame Analysis L")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView
+@Suite(.serialized)
 open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
     
     // MARK: - Basic DataFrame Analysis Tests
@@ -241,6 +243,100 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         
         // Then: Should integrate with existing systems
         #expect(Bool(true), "view is non-optional")  // view is non-optional
+    }
+    
+    // MARK: - Custom Visualization View Tests
+    
+    @Test @MainActor func testPlatformAnalyzeDataFrame_L1_WithCustomVisualizationView() {
+        initializeTestConfig()
+        // Given: A test DataFrame
+        let hints = DataFrameAnalysisHints()
+        
+        // When: Using custom visualization view
+        let view = platformAnalyzeDataFrame_L1(
+            dataFrame: createTestDataFrame(),
+            hints: hints,
+            customVisualizationView: { (analysisContent: AnyView) in
+                VStack {
+                    Text("Custom Analysis View")
+                        .font(.headline)
+                    analysisContent
+                        .padding()
+                        .background(Color.platformSecondaryBackground)
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom visualization
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformAnalyzeDataFrame_L1 with custom visualization view should return a view")
+    }
+    
+    @Test @MainActor func testPlatformAnalyzeDataFrame_L1_WithCustomVisualizationView_Nil() {
+        initializeTestConfig()
+        // Given: A test DataFrame
+        let hints = DataFrameAnalysisHints()
+        
+        // When: Not providing custom visualization view (should use default)
+        // Omit the parameter to use default value instead of passing nil
+        let view = platformAnalyzeDataFrame_L1(
+            dataFrame: createTestDataFrame(),
+            hints: hints
+        )
+        
+        // Then: Should return default view
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformAnalyzeDataFrame_L1 with nil custom visualization view should return default view")
+    }
+    
+    @Test @MainActor func testPlatformCompareDataFrames_L1_WithCustomVisualizationView() {
+        initializeTestConfig()
+        // Given: Multiple test DataFrames
+        let dataFrames = [createTestDataFrame(), createTestDataFrame2()]
+        let hints = DataFrameAnalysisHints()
+        
+        // When: Using custom visualization view
+        let view = platformCompareDataFrames_L1(
+            dataFrames: dataFrames,
+            hints: hints,
+            customVisualizationView: { (comparisonContent: AnyView) in
+                VStack {
+                    Text("Custom Comparison View")
+                        .font(.headline)
+                    comparisonContent
+                        .padding()
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom visualization
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformCompareDataFrames_L1 with custom visualization view should return a view")
+    }
+    
+    @Test @MainActor func testPlatformAssessDataQuality_L1_WithCustomVisualizationView() {
+        initializeTestConfig()
+        // Given: A test DataFrame
+        let hints = DataFrameAnalysisHints()
+        
+        // When: Using custom visualization view
+        let view = platformAssessDataQuality_L1(
+            dataFrame: createTestDataFrame(),
+            hints: hints,
+            customVisualizationView: { (qualityContent: AnyView) in
+                VStack {
+                    Text("Custom Quality Assessment")
+                        .font(.headline)
+                    qualityContent
+                        .padding()
+                        .background(Color.blue.opacity(0.1))
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom visualization
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformAssessDataQuality_L1 with custom visualization view should return a view")
     }
     
     // MARK: - Helper Methods

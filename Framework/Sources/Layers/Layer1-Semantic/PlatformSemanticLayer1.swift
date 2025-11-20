@@ -280,6 +280,43 @@ public func platformPresentModalForm_L1(
         .automaticCompliance()
 }
 
+/// Generic function for presenting modal forms with custom form container view
+/// Allows custom styling/layout of the modal form container while preserving form logic
+///
+/// - Parameters:
+///   - formType: The type of form to present
+///   - context: The presentation context
+///   - customFormContainer: Optional view builder that wraps the form content with custom styling
+/// - Returns: A view presenting the modal form with optional custom container
+@MainActor
+public func platformPresentModalForm_L1<ContainerContent: View>(
+    formType: DataTypeHint,
+    context: PresentationContext,
+    customFormContainer: ((AnyView) -> ContainerContent)? = nil
+) -> some View {
+    // Create presentation hints for modal context
+    let hints = PresentationHints(
+        dataType: formType,
+        presentationPreference: .modal,
+        complexity: .moderate,
+        context: context
+    )
+    
+    // Create appropriate form fields based on the form type
+    let fields = createFieldsForFormType(formType, context: context)
+    
+    // Create the base modal form view
+    let baseFormView = AnyView(ModalFormView(fields: fields, formType: formType, context: context, hints: hints)
+        .automaticCompliance())
+    
+    // Apply custom container if provided, otherwise return default
+    if let customContainer = customFormContainer {
+        return AnyView(customContainer(baseFormView))
+    } else {
+        return baseFormView
+    }
+}
+
 /// Generic function for presenting media data
 @MainActor
 public func platformPresentMediaData_L1(

@@ -11,9 +11,8 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-/// NOTE: Not marked @MainActor on class to allow parallel execution
-/// Individual test functions that need UI access are marked @MainActor
-@Suite("OCR Overlay")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode crashes from too many @MainActor threads)
+@Suite(.serialized)
 open class OCROverlayTests: BaseTestClass {
     
     // Test data will be created locally in each test method for parallel execution

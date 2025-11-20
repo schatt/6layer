@@ -63,6 +63,80 @@ public func platformAssessDataQuality_L1(
     DataQualityAssessmentView(dataFrame: dataFrame, hints: hints)
 }
 
+// MARK: - Custom Visualization View Support
+
+/// Analyze a DataFrame with custom visualization view
+/// Allows custom visualization components for charts and analysis results
+///
+/// - Parameters:
+///   - dataFrame: The DataFrame to analyze
+///   - hints: Optional hints to guide the analysis
+///   - customVisualizationView: Optional view builder that wraps the analysis results with custom styling
+/// - Returns: A view presenting the analysis results with optional custom visualization
+@MainActor
+public func platformAnalyzeDataFrame_L1<VisualizationContent: View>(
+    dataFrame: DataFrame,
+    hints: DataFrameAnalysisHints = DataFrameAnalysisHints(),
+    customVisualizationView: ((AnyView) -> VisualizationContent)? = nil
+) -> some View {
+    let baseAnalysisView = AnyView(DataFrameAnalysisView(dataFrame: dataFrame, hints: hints))
+    
+    // Apply custom visualization wrapper if provided, otherwise return default
+    if let customWrapper = customVisualizationView {
+        return AnyView(customWrapper(baseAnalysisView))
+    } else {
+        return baseAnalysisView
+    }
+}
+
+/// Analyze multiple DataFrames with custom visualization view
+/// Allows custom visualization components for comparative analysis results
+///
+/// - Parameters:
+///   - dataFrames: Array of DataFrames to analyze
+///   - hints: Optional hints to guide the analysis
+///   - customVisualizationView: Optional view builder that wraps the comparison results with custom styling
+/// - Returns: A view presenting the comparative analysis results with optional custom visualization
+@MainActor
+public func platformCompareDataFrames_L1<VisualizationContent: View>(
+    dataFrames: [DataFrame],
+    hints: DataFrameAnalysisHints = DataFrameAnalysisHints(),
+    customVisualizationView: ((AnyView) -> VisualizationContent)? = nil
+) -> some View {
+    let baseComparisonView = AnyView(DataFrameComparisonView(dataFrames: dataFrames, hints: hints))
+    
+    // Apply custom visualization wrapper if provided, otherwise return default
+    if let customWrapper = customVisualizationView {
+        return AnyView(customWrapper(baseComparisonView))
+    } else {
+        return baseComparisonView
+    }
+}
+
+/// Analyze DataFrame data quality with custom visualization view
+/// Allows custom visualization components for data quality assessment results
+///
+/// - Parameters:
+///   - dataFrame: The DataFrame to analyze
+///   - hints: Optional hints to guide the analysis
+///   - customVisualizationView: Optional view builder that wraps the quality assessment results with custom styling
+/// - Returns: A view presenting data quality insights with optional custom visualization
+@MainActor
+public func platformAssessDataQuality_L1<VisualizationContent: View>(
+    dataFrame: DataFrame,
+    hints: DataFrameAnalysisHints = DataFrameAnalysisHints(),
+    customVisualizationView: ((AnyView) -> VisualizationContent)? = nil
+) -> some View {
+    let baseQualityView = AnyView(DataQualityAssessmentView(dataFrame: dataFrame, hints: hints))
+    
+    // Apply custom visualization wrapper if provided, otherwise return default
+    if let customWrapper = customVisualizationView {
+        return AnyView(customWrapper(baseQualityView))
+    } else {
+        return baseQualityView
+    }
+}
+
 // MARK: - DataFrame Analysis Hints
 
 /// Hints to guide DataFrame analysis at the semantic level

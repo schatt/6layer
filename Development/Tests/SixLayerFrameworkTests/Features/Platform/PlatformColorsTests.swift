@@ -37,7 +37,8 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
-@Suite("Platform Colors")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode hangs)
+@Suite(.serialized)
 open class PlatformColorsTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically - no init() needed

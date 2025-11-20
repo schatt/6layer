@@ -7,7 +7,8 @@ import SwiftUI
 /// Tests for single-instance Layer 1 functions
 /// Following TDD principles - these tests define the expected behavior
 /// NOTE: Not marked @MainActor on class to allow parallel execution
-@Suite("Single Instance Layer")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView (prevents Xcode hangs)
+@Suite(.serialized)
 open class SingleInstanceLayer1Tests: BaseTestClass {
     
     // MARK: - Helper Methods

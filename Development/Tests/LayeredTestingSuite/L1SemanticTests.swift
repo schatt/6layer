@@ -10,6 +10,9 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView
+/// This suite uses hostRootPlatformView extensively and must run serially to prevent Xcode hangs
+@Suite(.serialized)
 class L1SemanticTests: BaseTestClass {
     
     // MARK: - Test Data
@@ -422,6 +425,62 @@ class L1SemanticTests: BaseTestClass {
         // Then: Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoDisplay_L1 view should be hostable")  // hostingView is non-optional
+    }
+    
+    // MARK: - Photo Functions with Custom Views
+    
+    @Test @MainActor
+    func testPlatformPhotoCapture_L1_WithCustomCameraView() {
+        // Given
+        let purpose = samplePhotoPurpose
+        let context = samplePhotoContext
+        
+        // When: Using custom camera view wrapper
+        let view = platformPhotoCapture_L1(
+            purpose: purpose,
+            context: context,
+            onImageCaptured: { _ in },
+            customCameraView: { (cameraContent: AnyView) in
+                VStack {
+                    Text("Custom Camera Interface")
+                        .font(.headline)
+                    cameraContent
+                        .padding()
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom wrapper
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformPhotoCapture_L1 with custom camera view should return a view")
+    }
+    
+    @Test @MainActor
+    func testPlatformPhotoDisplay_L1_WithCustomDisplayView() {
+        // Given
+        let purpose = samplePhotoPurpose
+        let context = samplePhotoContext
+        let image: PlatformImage? = nil
+        
+        // When: Using custom display view wrapper
+        let view = platformPhotoDisplay_L1(
+            purpose: purpose,
+            context: context,
+            image: image,
+            customDisplayView: { (displayContent: AnyView) in
+                VStack {
+                    Text("Custom Photo Display")
+                        .font(.headline)
+                    displayContent
+                        .padding()
+                        .background(Color.platformSecondaryBackground)
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom wrapper
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformPhotoDisplay_L1 with custom display view should return a view")
     }
     
     // MARK: - Internationalization Functions

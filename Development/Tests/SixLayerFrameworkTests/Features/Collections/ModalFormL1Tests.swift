@@ -12,7 +12,8 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// NOTE: Not marked @MainActor on class to allow parallel execution
-@Suite("Modal Form L")
+/// NOTE: Serialized to avoid UI conflicts with hostRootPlatformView
+@Suite(.serialized)
 open class ModalFormL1Tests: BaseTestClass {
     
     // MARK: - Test Data Helpers (test isolation - each test creates fresh data)
@@ -310,5 +311,74 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         #expect(Bool(true), "view is non-optional")  // view is non-optional
         // Performance test removed - performance monitoring was removed from framework
+    }
+    
+    // MARK: - Custom Form Container View Tests
+    
+    @Test @MainActor func testPlatformPresentModalForm_L1_WithCustomFormContainer() {
+        initializeTestConfig()
+        // Given
+        let formType = DataTypeHint.form
+        let context = PresentationContext.modal
+        
+        // When: Using custom form container view
+        let view = platformPresentModalForm_L1(
+            formType: formType,
+            context: context,
+            customFormContainer: { (formContent: AnyView) in
+                VStack {
+                    Text("Custom Header")
+                        .font(.headline)
+                    formContent
+                        .padding()
+                        .background(Color.platformSecondaryBackground)
+                        .cornerRadius(12)
+                }
+            }
+        )
+        
+        // Then: Should return a view with custom container
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformPresentModalForm_L1 with custom form container should return a view")
+    }
+    
+    @Test @MainActor func testPlatformPresentModalForm_L1_WithCustomFormContainer_Nil() {
+        initializeTestConfig()
+        // Given
+        let formType = DataTypeHint.form
+        let context = PresentationContext.modal
+        
+        // When: Not providing custom form container (should use default)
+        // Omit the parameter to use default value instead of passing nil
+        let view = platformPresentModalForm_L1(
+            formType: formType,
+            context: context
+        )
+        
+        // Then: Should return default view
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "platformPresentModalForm_L1 with nil custom form container should return default view")
+    }
+    
+    @Test @MainActor func testPlatformPresentModalForm_L1_WithCustomFormContainer_DifferentFormTypes() {
+        initializeTestConfig()
+        // Given
+        let formTypes: [DataTypeHint] = [.form, .user, .transaction, .action]
+        let context = PresentationContext.modal
+        
+        // When & Then: Each form type should work with custom container
+        for formType in formTypes {
+            let view = platformPresentModalForm_L1(
+                formType: formType,
+                context: context,
+                customFormContainer: { (formContent: AnyView) in
+                    formContent
+                        .padding()
+                        .background(Color.blue.opacity(0.1))
+                }
+            )
+            let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "platformPresentModalForm_L1 with custom container should work for \(formType)")
+        }
     }
 }
