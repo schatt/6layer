@@ -1,5 +1,37 @@
 # Changelog
 
+## v5.5.0 - SwiftUI Map Support
+
+### 🎉 Major Features
+
+#### SwiftUI Map Support (Issue #25)
+- **NEW**: Cross-platform SwiftUI Map components with modern API support
+- **Modern API**: Uses `Annotation` with `MapContentBuilder` (not deprecated `MapAnnotation`)
+- **Cross-Platform**: Unified API works identically on iOS and macOS
+- **LocationService Integration**: Built-in integration with existing `LocationService` for current location
+- **Platform Support**: iOS 17+, macOS 14+ (full support), tvOS/watchOS (fallback UI)
+- **Accessibility**: All map components include automatic accessibility support
+
+#### New APIs
+- `PlatformMapComponentsLayer4` - Layer 4 map component enum
+- `MapAnnotationData` - Cross-platform annotation data type
+- `platformMapView_L4()` - Basic map view with MapContentBuilder
+- `platformMapViewWithCurrentLocation_L4()` - LocationService-integrated map view
+
+### 📚 Documentation
+- New: [Map API Usage Guide](Framework/docs/MapAPIUsage.md)
+- Updated: [Deprecated APIs Audit](Framework/docs/DeprecatedAPIsAudit.md)
+- Examples: `Framework/Examples/MapUsageExample.swift`
+
+### 🧪 Testing
+- 12 comprehensive tests covering all map functionality
+- TDD approach: Tests written first, then implementation
+- All tests passing: 100% test success rate
+
+### ✅ Backward Compatibility
+- 100% backward compatible: No breaking changes
+- Opt-in feature: Map support is new functionality
+
 ## v5.0.1 - Bug Fixes and Priority Order Improvements
 
 ### 🐛 Bug Fixes
