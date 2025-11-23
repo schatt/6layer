@@ -3438,6 +3438,170 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #endif
     }
     
+    // Additional Dynamic Form View Tests from DynamicFormViewComponentAccessibilityTests.swift
+    
+    @Test @MainActor func testDynamicFormViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        struct TestData {
+            let name: String
+            let email: String
+        }
+        
+        let view = IntelligentFormView.generateForm(
+            for: TestData.self,
+            initialData: TestData(name: "Test", email: "test@example.com"),
+            onSubmit: { _ in },
+            onCancel: { }
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view,
+            componentName: "DynamicFormView",
+            expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
+            platform: SixLayerPlatform.iOS,
+            testName: "DynamicFormView should generate accessibility identifiers"
+        )
+        #expect(hasAccessibilityID, "DynamicFormView should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testDynamicFormHeaderGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        struct TestData {
+            let name: String
+            let email: String
+        }
+        
+        let view = IntelligentFormView.generateForm(
+            for: TestData.self,
+            initialData: TestData(name: "Test", email: "test@example.com"),
+            onSubmit: { _ in },
+            onCancel: { }
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view,
+            componentName: "DynamicFormHeader",
+            expectedPattern: "SixLayer.*ui.*DynamicFormHeader.*",
+            platform: SixLayerPlatform.iOS,
+            testName: "DynamicFormHeader should generate accessibility identifiers"
+        )
+        #expect(hasAccessibilityID, "DynamicFormHeader should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // Additional Cross-Platform Component Tests from CrossPlatformComponentAccessibilityTests.swift
+    
+    @Test @MainActor func testCrossPlatformOptimizationGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = CrossPlatformOptimization()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "CrossPlatformOptimization"
+        )
+        #expect(hasAccessibilityID, "CrossPlatformOptimization should generate accessibility identifiers")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // Additional Responsive Layout Tests from ResponsiveLayoutComponentAccessibilityTests.swift
+    
+    @Test @MainActor func testResponsiveGridGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let gridItems = [
+                GridItemData(title: "Grid Item 1", subtitle: "Subtitle 1", icon: "star", color: .blue),
+                GridItemData(title: "Grid Item 2", subtitle: "Subtitle 2", icon: "heart", color: .red)
+            ]
+            
+            let view = ResponsiveGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                ForEach(gridItems) { item in
+                    platformPresentContent_L1(
+                        content: "\(item.title) - \(item.subtitle)",
+                        hints: PresentationHints()
+                    )
+                }
+            }
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "ResponsiveGrid"
+            )
+            #expect(hasAccessibilityID, "ResponsiveGrid should generate accessibility identifiers ")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testResponsiveNavigationGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let navigationContent = { (isHorizontal: Bool) in
+                VStack {
+                    platformPresentContent_L1(
+                        content: "Navigation Content",
+                        hints: PresentationHints()
+                    )
+                }
+            }
+            
+            let view = ResponsiveNavigation(content: navigationContent)
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "ResponsiveNavigation"
+            )
+            #expect(hasAccessibilityID, "ResponsiveNavigation should generate accessibility identifiers ")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testResponsiveStackGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let stackContent = {
+                VStack {
+                    platformPresentContent_L1(content: "Stack Item 1", hints: PresentationHints())
+                    platformPresentContent_L1(content: "Stack Item 2", hints: PresentationHints())
+                }
+            }
+            
+            let view = ResponsiveStack(content: stackContent)
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "ResponsiveStack"
+            )
+            #expect(hasAccessibilityID, "ResponsiveStack should generate accessibility identifiers ")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
     // NOTE: Due to the massive scale (546 total tests), this consolidated file contains
     // representative tests from all major categories. Additional tests from remaining files
     // can be added incrementally as needed. The @Suite(.serialized) attribute ensures
