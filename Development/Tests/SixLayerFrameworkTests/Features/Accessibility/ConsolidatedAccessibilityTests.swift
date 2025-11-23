@@ -3299,6 +3299,145 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #expect(manager.configuration.enableReducedMotionAlternatives)
     }
     
+    // Additional Accessibility Preference Tests from AccessibilityPreferenceTests.swift
+    
+    @Test @MainActor func testCardExpansionAccessibilityConfig_PlatformSpecificBehavior() {
+        initializeTestConfig()
+        let platforms: [SixLayerPlatform] = [.iOS, .macOS, .watchOS, .tvOS, .visionOS]
+        
+        var configurations: [SixLayerPlatform: CardExpansionAccessibilityConfig] = [:]
+        for platform in platforms {
+            let config = getCardExpansionAccessibilityConfig()
+            configurations[platform] = config
+        }
+        
+        for (platform, config) in configurations {
+            #expect(config.supportsVoiceOver == true || config.supportsVoiceOver == false,
+                   "\(platform) VoiceOver support should be determinable")
+            #expect(config.supportsSwitchControl == true || config.supportsSwitchControl == false,
+                   "\(platform) Switch Control support should be determinable")
+            #expect(config.supportsAssistiveTouch == true || config.supportsAssistiveTouch == false,
+                   "\(platform) AssistiveTouch support should be determinable")
+        }
+    }
+    
+    @Test @MainActor func testCardExpansionPlatformConfig_PlatformSpecificCapabilities() {
+        initializeTestConfig()
+        let platform = SixLayerPlatform.current
+        let config = getCardExpansionPlatformConfig()
+        
+        #expect(Bool(true), "Platform configuration should be available")
+        
+        switch platform {
+        case .iOS:
+            #expect(config.supportsTouch == true || config.supportsTouch == false,
+                   "iOS touch support should be determinable")
+            #expect(config.supportsHapticFeedback == true || config.supportsHapticFeedback == false,
+                   "iOS haptic feedback support should be determinable")
+            #expect(config.minTouchTarget == 44, "iOS should have 44pt minimum touch targets")
+        case .macOS:
+            #expect(config.supportsHover == true || config.supportsHover == false,
+                   "macOS hover support should be determinable")
+            #expect(config.hoverDelay == 0.5, "macOS should have 0.5s hover delay")
+        case .watchOS:
+            #expect(config.supportsTouch == true || config.supportsTouch == false,
+                   "watchOS touch support should be determinable")
+            #expect(config.minTouchTarget == 44, "watchOS should have 44pt minimum touch targets")
+        case .tvOS:
+            #expect(config.minTouchTarget >= 60, "tvOS should have larger touch targets")
+        case .visionOS:
+            #expect(config.supportsHapticFeedback == true || config.supportsHapticFeedback == false,
+                   "visionOS haptic feedback support should be determinable")
+        }
+    }
+    
+    // Additional Accessibility State Simulation Tests from AccessibilityStateSimulationTests.swift
+    
+    @Test @MainActor func testCardExpansionAccessibilityConfigDefaultInitialization() {
+        initializeTestConfig()
+        let config = CardExpansionAccessibilityConfig()
+        
+        #expect(config.supportsVoiceOver, "Should support VoiceOver by default")
+        #expect(config.supportsSwitchControl, "Should support Switch Control by default")
+        #expect(config.supportsAssistiveTouch, "Should support AssistiveTouch by default")
+        #expect(config.supportsReduceMotion, "Should support reduced motion by default")
+        #expect(config.supportsHighContrast, "Should support high contrast by default")
+        #expect(config.supportsDynamicType, "Should support dynamic type by default")
+        #expect(config.announcementDelay == 0.5, "Should have default announcement delay")
+        #expect(config.focusManagement, "Should support focus management by default")
+    }
+    
+    @Test @MainActor func testCardExpansionAccessibilityConfigCustomInitialization() {
+        initializeTestConfig()
+        let customConfig = CardExpansionAccessibilityConfig(
+            supportsVoiceOver: false,
+            supportsSwitchControl: true,
+            supportsAssistiveTouch: false,
+            supportsReduceMotion: true,
+            supportsHighContrast: false,
+            supportsDynamicType: true,
+            announcementDelay: 1.0,
+            focusManagement: false
+        )
+        
+        #expect(!customConfig.supportsVoiceOver, "Should respect custom VoiceOver setting")
+        #expect(customConfig.supportsSwitchControl, "Should respect custom Switch Control setting")
+        #expect(!customConfig.supportsAssistiveTouch, "Should respect custom AssistiveTouch setting")
+        #expect(customConfig.supportsReduceMotion, "Should respect custom reduced motion setting")
+        #expect(!customConfig.supportsHighContrast, "Should respect custom high contrast setting")
+        #expect(customConfig.supportsDynamicType, "Should respect custom dynamic type setting")
+        #expect(customConfig.announcementDelay == 1.0, "Should respect custom announcement delay")
+        #expect(!customConfig.focusManagement, "Should respect custom focus management setting")
+    }
+    
+    // Additional Simple Accessibility Tests from SimpleAccessibilityTests.swift
+    
+    @Test @MainActor func testFrameworkComponentWithNamedModifier() {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("test-component")
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "*.main.ui.test-component",
+            platform: SixLayerPlatform.iOS,
+            componentName: "FrameworkComponentWithNamedModifier"
+        ), "Framework component with .named() should generate correct ID")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAutomaticAccessibilityIdentifierModifierApplied() {
+        initializeTestConfig()
+        let testView = platformPresentBasicValue_L1(
+            value: 42,
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "platformPresentBasicValue_L1"
+        ), "Framework component should automatically generate accessibility identifiers")
+        
+        if let inspectedView = testView.tryInspect(),
+           let accessibilityID = try? inspectedView.sixLayerAccessibilityIdentifier() {
+            #expect(accessibilityID != "", "Framework component should have accessibility identifier")
+        } else {
+            Issue.record("Should be able to inspect framework component")
+        }
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
     // NOTE: Due to the massive scale (546 total tests), this consolidated file contains
     // representative tests from all major categories. Additional tests from remaining files
     // can be added incrementally as needed. The @Suite(.serialized) attribute ensures
