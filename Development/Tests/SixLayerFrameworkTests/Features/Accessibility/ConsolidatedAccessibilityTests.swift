@@ -2937,6 +2937,368 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #expect(eyeTrackingManager.isCalibrated)
     }
     
+    // Additional Automatic Accessibility Identifier Tests from AutomaticAccessibilityIdentifierTests.swift
+    
+    @Test @MainActor func testGlobalConfigControlsAutomaticIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = self.testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableAutoIDs = true
+            #expect(config.enableAutoIDs, "Auto IDs should be enabled")
+            config.enableAutoIDs = false
+            #expect(!config.enableAutoIDs, "Auto IDs should be disabled")
+            config.enableAutoIDs = true
+            #expect(config.enableAutoIDs, "Auto IDs should be enabled")
+        }
+    }
+    
+    @Test @MainActor func testGlobalConfigSupportsCustomNamespace() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let customNamespace = "myapp.users"
+            guard let config = self.testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.namespace = customNamespace
+            let retrievedNamespace = config.namespace
+            #expect(retrievedNamespace == customNamespace, "Namespace should match set value")
+        }
+    }
+    
+    @Test @MainActor func testAutomaticIDGeneratorCreatesStableIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = self.testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableAutoIDs = true
+            config.namespace = "test"
+            
+            let testItems = [
+                AccessibilityTestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
+                AccessibilityTestItem(id: "user-2", title: "Bob", subtitle: "Designer")
+            ]
+            
+            guard testItems.count >= 2 else {
+                Issue.record("Test setup failed: need at least 2 test items")
+                return
+            }
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let id1 = generator.generateID(for: testItems[0].id, role: "item", context: "list")
+            let id2 = generator.generateID(for: testItems[1].id, role: "item", context: "list")
+            
+            #expect(id1.contains("user-1") && id1.contains("item") && id1.contains("test"), "ID should include namespace, role, and item identity")
+            #expect(id2.contains("user-2") && id2.contains("item") && id2.contains("test"), "ID should include namespace, role, and item identity")
+            
+            let reorderedItems = [testItems[1], testItems[0]]
+            let id1Reordered = generator.generateID(for: reorderedItems[1].id, role: "item", context: "list")
+            let id2Reordered = generator.generateID(for: reorderedItems[0].id, role: "item", context: "list")
+            
+            #expect(id1Reordered == id1, "ID should be stable regardless of order")
+            #expect(id2Reordered == id2, "ID should be stable regardless of order")
+        }
+    }
+    
+    // Additional Edge Case Tests from AccessibilityIdentifierEdgeCaseTests.swift
+    
+    @Test @MainActor func testEmptyStringParameters() {
+        initializeTestConfig()
+        runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .named("")
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                let buttonID = try inspected.sixLayerAccessibilityIdentifier()
+                #expect(!buttonID.isEmpty, "Should generate ID even with empty parameters")
+                #expect(buttonID.contains("SixLayer"), "Should contain namespace")
+            }
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testSpecialCharactersInNames() {
+        initializeTestConfig()
+        runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+                .named("Button@#$%^&*()")
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                let buttonID = try inspected.sixLayerAccessibilityIdentifier()
+                #expect(!buttonID.isEmpty, "Should generate ID with special characters")
+                #expect(buttonID.contains("SixLayer"), "Should contain namespace")
+                #expect(buttonID.contains("@#$%^&*()"), "Should preserve special characters")
+            }
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testManualIDOverride() {
+        initializeTestConfig()
+        runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                Text("Test")
+            }
+                .accessibilityIdentifier("manual-override")
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                let buttonID = try inspected.sixLayerAccessibilityIdentifier()
+                #expect(buttonID == "manual-override", "Manual ID should override automatic ID")
+            }
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    // Additional Debug Logging Tests from DebugLoggingTests.swift
+    
+    @Test @MainActor func testAccessibilityIdentifierGeneratorExists() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let generator = AccessibilityIdentifierGenerator()
+            #expect(Bool(true), "AccessibilityIdentifierGenerator should be instantiable")
+        }
+    }
+    
+    @Test @MainActor func testGenerateIDMethodExists() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let generator = AccessibilityIdentifierGenerator()
+            let id = generator.generateID(for: "test", role: "button", context: "ui")
+            #expect(!id.isEmpty, "generateID should return a non-empty string")
+            #expect(id.contains("test"), "Generated ID should contain the component name")
+        }
+    }
+    
+    @Test @MainActor func testGenerateIDRespectsDebugLoggingWhenEnabled() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let id = generator.generateID(for: "testButton", role: "button", context: "ui")
+            
+            let debugLog = config.getDebugLog()
+            #expect(!debugLog.isEmpty, "Debug log should not be empty when debug logging is enabled")
+            #expect(debugLog.contains("testButton"), "Debug log should contain component name")
+            #expect(debugLog.contains("button"), "Debug log should contain role")
+            #expect(debugLog.contains(id), "Debug log should contain generated ID")
+        }
+    }
+    
+    @Test @MainActor func testClearDebugLogMethodExists() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            let initialLog = config.getDebugLog()
+            #expect(!initialLog.isEmpty, "Should have log entries before clearing")
+            
+            config.clearDebugLog()
+            
+            let clearedLog = config.getDebugLog()
+            #expect(clearedLog.isEmpty, "Debug log should be empty after clearing")
+        }
+    }
+    
+    // Additional Intelligent Card Expansion Tests from IntelligentCardExpansionComponentAccessibilityTests.swift
+    
+    @Test @MainActor func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let testItems = [
+                CardTestItem(id: "1", title: "Card 1"),
+                CardTestItem(id: "2", title: "Card 2")
+            ]
+            let hints = PresentationHints()
+            
+            let view = ExpandableCardCollectionView(items: testItems, hints: hints)
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "ExpandableCardCollectionView"
+            )
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers ")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testCoverFlowCollectionViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let testItems = [
+                CardTestItem(id: "1", title: "CoverFlow Card 1"),
+                CardTestItem(id: "2", title: "CoverFlow Card 2")
+            ]
+            let hints = PresentationHints()
+            
+            let view = CoverFlowCollectionView(
+                items: testItems,
+                hints: hints,
+                onItemSelected: { _ in },
+                onItemDeleted: { _ in },
+                onItemEdited: { _ in }
+            )
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "CoverFlowCollectionView"
+            )
+            #expect(hasAccessibilityID, "CoverFlowCollectionView should generate accessibility identifiers ")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testGridCollectionViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let testItems = [
+                CardTestItem(id: "1", title: "Grid Card 1"),
+                CardTestItem(id: "2", title: "Grid Card 2")
+            ]
+            let hints = PresentationHints()
+            
+            let view = GridCollectionView(items: testItems, hints: hints)
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
+                platform: SixLayerPlatform.iOS,
+                componentName: "GridCollectionView"
+            )
+            #expect(hasAccessibilityID, "GridCollectionView should generate accessibility identifiers ")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    // Additional Material Accessibility Tests from MaterialAccessibilityTests.swift
+    
+    @Test func testMaterialContrastValidation() {
+        initializeTestConfig()
+        let regularMaterial = Material.regularMaterial
+        let thickMaterial = Material.thickMaterial
+        let thinMaterial = Material.thinMaterial
+        
+        let regularContrast = MaterialAccessibilityManager.validateContrast(regularMaterial)
+        let thickContrast = MaterialAccessibilityManager.validateContrast(thickMaterial)
+        let thinContrast = MaterialAccessibilityManager.validateContrast(thinMaterial)
+        
+        #expect(regularContrast.isValid)
+        #expect(thickContrast.isValid)
+        #expect(thinContrast.isValid)
+        #expect(regularContrast.contrastRatio >= 4.5)
+        #expect(thickContrast.contrastRatio >= 4.5)
+        #expect(thinContrast.contrastRatio >= 4.5)
+    }
+    
+    @Test func testHighContrastMaterialAlternatives() {
+        initializeTestConfig()
+        let material = Material.regularMaterial
+        
+        let highContrastMaterial = MaterialAccessibilityManager.highContrastAlternative(for: material)
+        
+        let originalContrast = MaterialAccessibilityManager.validateContrast(material)
+        let alternativeContrast = MaterialAccessibilityManager.validateContrast(highContrastMaterial)
+        
+        #expect(alternativeContrast.contrastRatio >= originalContrast.contrastRatio)
+        #expect(alternativeContrast.isValid)
+    }
+    
+    @Test func testVoiceOverMaterialDescriptions() {
+        initializeTestConfig()
+        let materials: [Material] = [
+            .regularMaterial,
+            .thickMaterial,
+            .thinMaterial,
+            .ultraThinMaterial,
+            .ultraThickMaterial
+        ]
+        
+        let descriptions = materials.map { MaterialAccessibilityManager.voiceOverDescription(for: $0) }
+        
+        for description in descriptions {
+            #expect(!description.isEmpty)
+            #expect(description.contains("material"))
+        }
+    }
+    
+    @Test @MainActor func testMaterialAccessibilityCompliance() {
+        initializeTestConfig()
+        let view = Rectangle()
+            .fill(.regularMaterial)
+            .accessibilityMaterialEnhanced()
+        
+        let compliance = MaterialAccessibilityManager.checkCompliance(for: view)
+        
+        #expect(compliance.isCompliant)
+        #expect(compliance.issues.count == 0)
+    }
+    
+    @Test func testMaterialAccessibilityConfiguration() {
+        initializeTestConfig()
+        let config = MaterialAccessibilityConfig(
+            enableContrastValidation: true,
+            enableHighContrastAlternatives: true,
+            enableVoiceOverDescriptions: true,
+            enableReducedMotionAlternatives: true
+        )
+        
+        let manager = MaterialAccessibilityManager(configuration: config)
+        
+        #expect(manager.configuration.enableContrastValidation)
+        #expect(manager.configuration.enableHighContrastAlternatives)
+        #expect(manager.configuration.enableVoiceOverDescriptions)
+        #expect(manager.configuration.enableReducedMotionAlternatives)
+    }
+    
     // NOTE: Due to the massive scale (546 total tests), this consolidated file contains
     // representative tests from all major categories. Additional tests from remaining files
     // can be added incrementally as needed. The @Suite(.serialized) attribute ensures
