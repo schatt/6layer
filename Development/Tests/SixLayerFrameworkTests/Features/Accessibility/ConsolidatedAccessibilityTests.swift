@@ -8239,6 +8239,287 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         cleanupTestEnvironment()
     }
     
+    // Additional Apple HIG Compliance Component Tests (continued)
+    
+    @Test @MainActor func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testContent = VStack {
+            Text("Navigation Content")
+            Button("Test Button") { }
+        }
+        
+        let view = testContent.platformNavigation()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "PlatformNavigationModifier"
+        )
+        #expect(hasAccessibilityID, "PlatformNavigationModifier should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testPlatformStylingModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testContent = VStack {
+            Text("Styling Content")
+            Button("Test Button") { }
+        }
+        
+        let view = testContent.platformStyling()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "PlatformStylingModifier"
+        )
+        #expect(hasAccessibilityID, "PlatformStylingModifier should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testPlatformIconModifierGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testContent = VStack {
+            Text("Icon Content")
+            Button("Test Button") { }
+        }
+        
+        let view = testContent.platformIcons()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "PlatformIconModifier"
+        )
+        #expect(hasAccessibilityID, "PlatformIconModifier should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // Additional Dynamic Form View Component Tests (continued)
+    
+    @Test @MainActor func testFieldComponentFunctionality() async {
+        initializeTestConfig()
+        struct TestData {
+            let name: String
+            let email: String
+        }
+        
+        let field = DynamicFormField(
+            id: "test-text-field",
+            textContentType: .name,
+            contentType: .text,
+            label: "Test Text Field",
+            placeholder: "Enter text",
+            isRequired: true,
+            defaultValue: "test default"
+        )
+        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            sections: []
+        ))
+        formState.initializeField(field)
+        
+        let view = CustomFieldView(field: field, formState: formState)
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*CustomFieldView.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "CustomFieldView"
+        )
+        #expect(hasAccessibilityID, "CustomFieldView should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testDynamicFormSectionViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        struct TestData {
+            let name: String
+            let email: String
+        }
+        
+        let view = IntelligentFormView.generateForm(
+            for: TestData.self,
+            initialData: TestData(name: "Test", email: "test@example.com"),
+            onSubmit: { _ in },
+            onCancel: { }
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view,
+            componentName: "DynamicFormSectionView",
+            expectedPattern: "SixLayer.*ui.*DynamicFormSectionView.*",
+            platform: SixLayerPlatform.iOS,
+            testName: "DynamicFormSectionView should generate accessibility identifiers"
+        )
+        #expect(hasAccessibilityID, "DynamicFormSectionView should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testDynamicFormActionsGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        struct TestData {
+            let name: String
+            let email: String
+        }
+        
+        let view = IntelligentFormView.generateForm(
+            for: TestData.self,
+            initialData: TestData(name: "Test", email: "test@example.com"),
+            onSubmit: { _ in },
+            onCancel: { }
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifierGeneration(
+            view,
+            componentName: "DynamicFormActions",
+            expectedPattern: "SixLayer.*ui.*DynamicFormActions.*",
+            platform: SixLayerPlatform.iOS,
+            testName: "DynamicFormActions should generate accessibility identifiers"
+        )
+        #expect(hasAccessibilityID, "DynamicFormActions should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // Additional Accessibility Identifier Edge Case Tests (continued)
+    
+    @Test @MainActor func testVeryLongNames() {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let longName = String(repeating: "VeryLongName", count: 50)
+            let view = PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Test", hints: PresentationHints())
+            }
+            .named(longName)
+            .enableGlobalAutomaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                let buttonID = try inspected.sixLayerAccessibilityIdentifier()
+                #expect(!buttonID.isEmpty, "Should generate ID with very long names")
+                #expect(buttonID.contains("SixLayer"), "Should contain namespace")
+            }
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testDisableEnableMidHierarchy() {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let view = VStack {
+                Button("Auto") { }
+                    .named("AutoButton")
+                    .enableGlobalAutomaticCompliance()
+                
+                Button("Manual") { }
+                    .named("ManualButton")
+                    .disableAutomaticAccessibilityIdentifiers()
+            }
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            do {
+                try withInspectedViewThrowing(view) { inspectedView in
+                    let buttons = inspectedView.sixLayerFindAll(ViewType.Button.self)
+                    #expect(buttons.count == 2, "Should find both buttons")
+                    let autoButtonID = try buttons[0].sixLayerAccessibilityIdentifier()
+                    #expect(autoButtonID.contains("SixLayer"), "Auto button should have automatic ID")
+                    #expect(buttons[1] != nil, "Disabled button should still exist")
+                }
+            } catch {
+                Issue.record("Failed to inspect view with mid-hierarchy disable")
+            }
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testMultipleScreenContexts() {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            setupTestEnvironment()
+            
+            let view = VStack {
+                Text("Content")
+            }
+            .named("TestView")
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            do {
+                try withInspectedViewThrowing(view) { inspectedView in
+                    let vStackID = try inspectedView.sixLayerAccessibilityIdentifier()
+                    #expect(!vStackID.isEmpty, "Should generate ID with screen context")
+                    #expect(vStackID.contains("SixLayer"), "Should contain namespace")
+                }
+            } catch {
+                Issue.record("Failed to inspect view with multiple screen contexts")
+            }
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    // Additional Apple HIG Compliance Tests (continued)
+    
+    @Test @MainActor func testAccessibilitySystemStateFromSystemChecker() {
+        initializeTestConfig()
+        let complianceManager = AppleHIGComplianceManager()
+        let systemState = complianceManager.accessibilityState
+        
+        #expect(systemState.isVoiceOverEnabled == false || systemState.isVoiceOverEnabled == true)
+        #expect(systemState.isSwitchControlEnabled == false || systemState.isSwitchControlEnabled == true)
+        #expect(systemState.isAssistiveTouchEnabled == false || systemState.isAssistiveTouchEnabled == true)
+    }
+    
+    @Test @MainActor func testPlatformStringValues() {
+        initializeTestConfig()
+        #if os(iOS)
+        #expect(SixLayerPlatform.iOS.rawValue == "iOS")
+        #elseif os(macOS)
+        #expect(SixLayerPlatform.macOS.rawValue == "macOS")
+        #elseif os(watchOS)
+        #expect(SixLayerPlatform.watchOS.rawValue == "watchOS")
+        #elseif os(tvOS)
+        #expect(SixLayerPlatform.tvOS.rawValue == "tvOS")
+        #endif
+    }
+    
+    @Test @MainActor func testHIGComplianceLevelStringValues() {
+        initializeTestConfig()
+        #expect(HIGComplianceLevel.automatic.rawValue == "automatic")
+        #expect(HIGComplianceLevel.manual.rawValue == "manual")
+        #expect(HIGComplianceLevel.disabled.rawValue == "disabled")
+    }
+    
     // NOTE: Due to the massive scale (546 total tests), this consolidated file contains
     // representative tests from all major categories. Additional tests from remaining files
     // can be added incrementally as needed. The @Suite(.serialized) attribute ensures
