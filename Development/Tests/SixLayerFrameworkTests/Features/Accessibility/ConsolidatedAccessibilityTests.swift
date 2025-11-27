@@ -10672,6 +10672,319 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #expect(compliance.issues.count >= 0, "Compliance issues count is valid")
     }
     
+    // MARK: - HIG Compliance Typography Tests (batch 2)
+    
+    @Test @MainActor func testTextSupportsDynamicType() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Test Text")
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithDynamicType"
+            )
+            #expect(passed, "Text should support Dynamic Type scaling on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testButtonTextSupportsDynamicType() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let button = Button("Test Button") { }
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                button,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "ButtonWithDynamicType"
+            )
+            #expect(passed, "Button text should support Dynamic Type scaling on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testLabelSupportsDynamicType() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let label = Label("Test Label", systemImage: "star")
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                label,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "LabelWithDynamicType"
+            )
+            #expect(passed, "Label text should support Dynamic Type scaling on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testTextSupportsAccessibilitySizes() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Accessibility Text")
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithAccessibilitySizes"
+            )
+            #expect(passed, "Text should support accessibility size range on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testBodyTextMeetsMinimumSizeRequirements() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Body Text")
+                .font(.body)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "BodyTextWithMinimumSize"
+            )
+            #expect(passed, "Body text should meet platform-specific minimum size requirements on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testCaptionTextMeetsMinimumSizeRequirements() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Caption Text")
+                .font(.caption)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "CaptionTextWithMinimumSize"
+            )
+            #expect(passed, "Caption text should meet platform-specific minimum size requirements on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testCustomFontSizeEnforcedMinimum() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Small Text")
+                .font(.system(size: 10))
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "CustomFontSizeWithMinimum"
+            )
+            #expect(passed, "Custom font sizes should be enforced to meet minimum requirements on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testPlatformSpecificTypographySizes() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = VStack {
+                Text("Large Title")
+                    .font(.largeTitle)
+                    .automaticCompliance()
+                Text("Title")
+                    .font(.title)
+                    .automaticCompliance()
+                Text("Headline")
+                    .font(.headline)
+                    .automaticCompliance()
+                Text("Body")
+                    .font(.body)
+                    .automaticCompliance()
+                Text("Caption")
+                    .font(.caption)
+                    .automaticCompliance()
+            }
+            .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "PlatformSpecificTypographySizes"
+            )
+            #expect(passed, "Typography styles should use platform-appropriate sizes on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testDynamicTypeOnBothPlatforms() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Cross-Platform Text")
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "CrossPlatformDynamicType"
+            )
+            #expect(passed, "Dynamic Type should be supported on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    // MARK: - Accessibility Features Layer 5 Tests (batch 2)
+    
+    @Test @MainActor func testMoveFocusPreviousWithWraparound() {
+        initializeTestConfig()
+        let navigationManager = KeyboardNavigationManager()
+        navigationManager.addFocusableItem("button1")
+        navigationManager.addFocusableItem("button2")
+        navigationManager.addFocusableItem("button3")
+        navigationManager.focusItem("button1")
+        #expect(navigationManager.currentFocusIndex == 0)
+        navigationManager.moveFocus(direction: .previous)
+        #expect(navigationManager.currentFocusIndex == 2)
+    }
+    
+    @Test @MainActor func testMoveFocusEmptyList() {
+        initializeTestConfig()
+        let navigationManager = KeyboardNavigationManager()
+        #expect(navigationManager.focusableItems.count == 0)
+        navigationManager.moveFocus(direction: .next)
+        navigationManager.moveFocus(direction: .previous)
+        #expect(navigationManager.currentFocusIndex == 0)
+    }
+    
+    @Test @MainActor func testAccessibilityEnhancedViewModifier() {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        let config = AccessibilityConfig(
+            enableVoiceOver: true,
+            enableKeyboardNavigation: true,
+            enableHighContrast: true,
+            enableReducedMotion: false,
+            enableLargeText: true
+        )
+        let enhancedView = testView.accessibilityEnhanced(config: config)
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            enhancedView,
+            expectedPattern: "*.main.element.accessibility-enhanced-*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityEnhancedViewModifier"
+        ), "Enhanced view should have accessibility identifier")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityEnhancedViewModifierDefaultConfig() {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        let enhancedView = testView.accessibilityEnhanced()
+        #expect(Bool(true), "Should return accessibility enhanced view with default config")
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            enhancedView,
+            expectedPattern: "*.main.element.accessibility-enhanced-*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
+        ), "Enhanced view with default config should have accessibility identifier")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testVoiceOverEnabledViewModifier() {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        let voiceOverView = testView.voiceOverEnabled()
+        #expect(Bool(true), "VoiceOver view should be created")
+    }
+    
+    @Test @MainActor func testKeyboardNavigableViewModifier() {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        let keyboardView = testView.keyboardNavigable()
+        #expect(Bool(true), "Keyboard navigable view should be created")
+    }
+    
+    @Test @MainActor func testHighContrastEnabledViewModifier() {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        let highContrastView = testView.highContrastEnabled()
+        #expect(Bool(true), "High contrast view should be created")
+    }
+    
+    @Test @MainActor func testAccessibilityViewModifiersIntegration() {
+        let testView = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        let integratedView = testView
+            .accessibilityEnhanced()
+            .voiceOverEnabled()
+            .keyboardNavigable()
+            .highContrastEnabled()
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            integratedView,
+            expectedPattern: "*.main.element.accessibility-enhanced-*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityViewModifiersIntegration"
+        ), "Integrated accessibility view should have accessibility identifier")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
     // NOTE: Due to the massive scale (546 total tests), this consolidated file contains
     // representative tests from all major categories. Additional tests from remaining files
     // can be added incrementally as needed. The @Suite(.serialized) attribute ensures
