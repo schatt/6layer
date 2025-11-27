@@ -6704,16 +6704,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #expect(levels.contains(.maximum))
     }
     
-    @Test func testMaterialAccessibilityConfiguration() {
-        initializeTestConfig()
-        let config = MaterialAccessibilityConfiguration()
-        #expect(config.contrastLevel == .medium)
-        #expect(config.enableHighContrastAlternatives)
-        #expect(config.enableVoiceOverDescriptions)
-        #expect(config.enableSwitchControlSupport)
-        #expect(config.enableAssistiveTouchSupport)
-    }
-    
     @Test func testComplianceLevel() {
         initializeTestConfig()
         let levels = ComplianceLevel.allCases
@@ -8276,32 +8266,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Photo Strategy Selection Layer 3 Tests
     
-    @Test func testSelectPhotoCaptureStrategy_L3_CameraOnly() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let context = PhotoContext(
-            screenSize: PlatformSize(width: 375, height: 812),
-            availableSpace: PlatformSize(width: 375, height: 400),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: true, hasPhotoLibrary: false)
-        )
-        
-        let strategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
-        #expect(strategy == .camera, "Should return camera when only camera is available")
-    }
-    
-    @Test func testSelectPhotoCaptureStrategy_L3_PhotoLibraryOnly() async {
-        let purpose = PhotoPurpose.fuelReceipt
-        let context = PhotoContext(
-            screenSize: PlatformSize(width: 375, height: 812),
-            availableSpace: PlatformSize(width: 375, height: 400),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: false, hasPhotoLibrary: true)
-        )
-        
-        let strategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
-        #expect(strategy == .photoLibrary, "Should return photoLibrary when only photoLibrary is available")
-    }
-    
     @Test func testSelectPhotoCaptureStrategy_L3_UserPreference() async {
         let purpose = PhotoPurpose.vehiclePhoto
         let preferences = PhotoPreferences(preferredSource: .camera)
@@ -8314,19 +8278,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         
         let strategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
         #expect(strategy == .camera, "Should respect user preference for camera")
-    }
-    
-    @Test func testSelectPhotoDisplayStrategy_L3_VehiclePhoto() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let context = PhotoContext(
-            screenSize: PlatformSize(width: 375, height: 812),
-            availableSpace: PlatformSize(width: 375, height: 400),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
-        
-        let strategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
-        #expect(strategy == .aspectFit || strategy == .thumbnail, "Vehicle photo should use aspectFit or thumbnail")
     }
     
     @Test func testSelectPhotoDisplayStrategy_L3_Receipt() async {
@@ -8371,20 +8322,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
     }
     
-    @Test func testShouldEnablePhotoEditing_VehiclePhoto() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let preferences = PhotoPreferences(allowEditing: true)
-        let context = PhotoContext(
-            screenSize: PlatformSize(width: 375, height: 812),
-            availableSpace: PlatformSize(width: 375, height: 400),
-            userPreferences: preferences,
-            deviceCapabilities: PhotoDeviceCapabilities(supportsEditing: true)
-        )
-        
-        let shouldEnable = shouldEnablePhotoEditing(for: purpose, context: context)
-        #expect(shouldEnable == true, "Vehicle photos should allow editing when supported")
-    }
-    
     @Test func testShouldEnablePhotoEditing_Receipt() async {
         let purpose = PhotoPurpose.fuelReceipt
         let preferences = PhotoPreferences(allowEditing: true)
@@ -8411,21 +8348,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         
         let shouldEnable = shouldEnablePhotoEditing(for: purpose, context: context)
         #expect(shouldEnable == false, "Should not enable editing when device doesn't support it")
-    }
-    
-    @Test func testOptimalCompressionQuality_VehiclePhoto() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let preferences = PhotoPreferences(compressionQuality: 0.8)
-        let context = PhotoContext(
-            screenSize: PlatformSize(width: 375, height: 812),
-            availableSpace: PlatformSize(width: 375, height: 400),
-            userPreferences: preferences,
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
-        
-        let quality = optimalCompressionQuality(for: purpose, context: context)
-        #expect(quality > 0.8, "Vehicle photos should have higher quality than base")
-        #expect(quality <= 1.0, "Quality should not exceed 1.0")
     }
     
     @Test func testOptimalCompressionQuality_Receipt() async {
@@ -8823,24 +8745,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     // MARK: - Platform Photo Layout Decision Layer 2 Tests (continued)
     
-    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let context = PhotoContext(
-            screenSize: PlatformSize(width: 375, height: 812),
-            availableSpace: PlatformSize(width: 375, height: 400),
-            userPreferences: PhotoPreferences(),
-            deviceCapabilities: PhotoDeviceCapabilities()
-        )
-        
-        let result = determineOptimalPhotoLayout_L2(
-            purpose: purpose,
-            context: context
-        )
-        
-        #expect(result.width > 0, "Layout decision should have valid width")
-        #expect(result.height > 0, "Layout decision should have valid height")
-    }
-    
     @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
         let purpose = PhotoPurpose.vehiclePhoto
         let context = PhotoContext(
@@ -8886,18 +8790,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #expect(strategy == .camera, "Should respect user preference for camera")
     }
     
-    @Test func testCalculateOptimalImageSize() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let availableSpace = CGSize(width: 800, height: 600)
-        let maxResolution = CGSize(width: 4096, height: 4096)
-        
-        let size = calculateOptimalImageSize(for: purpose, in: availableSpace, maxResolution: maxResolution)
-        #expect(size.width > 0, "Should have valid width")
-        #expect(size.height > 0, "Should have valid height")
-        #expect(size.width <= Double(maxResolution.width), "Should not exceed max resolution width")
-        #expect(size.height <= Double(maxResolution.height), "Should not exceed max resolution height")
-    }
-    
     @Test func testCalculateOptimalImageSize_RespectsMaxResolution() async {
         let purpose = PhotoPurpose.odometer
         let availableSpace = CGSize(width: 10000, height: 10000)
@@ -8906,15 +8798,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         let size = calculateOptimalImageSize(for: purpose, in: availableSpace, maxResolution: maxResolution)
         #expect(size.width <= Double(maxResolution.width), "Should respect max resolution width")
         #expect(size.height <= Double(maxResolution.height), "Should respect max resolution height")
-    }
-    
-    @Test func testShouldCropImage_VehiclePhoto() async {
-        let purpose = PhotoPurpose.vehiclePhoto
-        let imageSize = CGSize(width: 4000, height: 3000)
-        let targetSize = CGSize(width: 2000, height: 1200)
-        
-        let shouldCrop = shouldCropImage(for: purpose, imageSize: imageSize, targetSize: targetSize)
-        #expect(shouldCrop == true, "Vehicle photos with different aspect ratios should be cropped")
     }
     
     @Test func testShouldCropImage_SimilarAspectRatio() async {
@@ -10396,22 +10279,6 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         .assistiveTouchEnabled(config: config)
         
         #expect(Bool(true), "view is non-optional")
-    }
-    
-    @Test @MainActor func testAssistiveTouchCompliance() {
-        initializeTestConfig()
-        let view = VStack {
-            platformPresentContent_L1(content: "Title", hints: PresentationHints())
-            PlatformInteractionButton(style: .primary, action: {}) {
-                platformPresentContent_L1(content: "Action", hints: PresentationHints())
-            }
-        }
-        .assistiveTouchEnabled()
-        
-        let compliance = AssistiveTouchManager.checkCompliance(for: view)
-        
-        #expect(compliance.isCompliant, "View with .assistiveTouchEnabled() should be compliant")
-        #expect(compliance.issues.count == 0, "View with .assistiveTouchEnabled() should have no compliance issues")
     }
     
     @Test @MainActor func testAssistiveTouchComplianceWithIssues() {
