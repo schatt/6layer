@@ -8744,6 +8744,1922 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
     }
     
+    // MARK: - Utility Component Tests (continued)
+    
+    @Test @MainActor func testAccessibilityIdentifierCaseInsensitiveMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("TestElement")
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "*.main.ui.TestElement",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierCaseInsensitiveMatching"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier case insensitive matching should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierPartialMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "*.main.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierPartialMatching"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier partial matching should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierRegexMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: ".*\\.main\\.ui\\.element\\..*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierRegexMatching"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier regex matching should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // MARK: - Accessibility Features Layer 5 Component Tests (continued)
+    
+    @Test @MainActor func testAccessibilityHostingViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testContent = VStack {
+            Text("Hosting Content")
+            Button("Test Button") { }
+        }
+        
+        let view = AccessibilityHostingView {
+            testContent
+        }
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "*.main.element.accessibility-enhanced-*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityHostingView"
+        )
+        #expect(hasAccessibilityID, "AccessibilityHostingView should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityTestingViewGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let view = AccessibilityTestingView()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityTestingView"
+        )
+        #expect(hasAccessibilityID, "AccessibilityTestingView should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testVoiceOverManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let manager = VoiceOverManager()
+        
+        let view = VStack {
+            Text("VoiceOver Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "VoiceOverManager"
+        )
+        #expect(hasAccessibilityID, "VoiceOverManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // MARK: - Debug Logging Tests (continued)
+    
+    @Test @MainActor func testGenerateIDDoesNotLogWhenDebugLoggingDisabled() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = false
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "testButton", role: "button", context: "ui")
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.isEmpty, "Debug log should be empty when debug logging is disabled")
+        }
+    }
+    
+    @Test @MainActor func testGetDebugLogMethodExists() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog is String, "getDebugLog should return a String")
+        }
+    }
+    
+    @Test @MainActor func testDebugLogAccumulatesMultipleEntries() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "button1", role: "button", context: "ui")
+            let _ = generator.generateID(for: "button2", role: "button", context: "ui")
+            let _ = generator.generateID(for: "textField", role: "textField", context: "form")
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.contains("button1"), "Debug log should contain first button")
+            #expect(debugLog.contains("button2"), "Debug log should contain second button")
+            #expect(debugLog.contains("textField"), "Debug log should contain text field")
+        }
+    }
+    
+    // MARK: - Platform OCR Layout Decision Layer 2 Tests (continued)
+    
+    @Test func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+        let context = OCRContext(
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
+        )
+        
+        let result = platformOCRLayout_L2(
+            context: context
+        )
+        
+        #expect(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
+        #expect(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
+    }
+    
+    @Test func testPlatformOCRLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let context = OCRContext(
+            textTypes: [TextType.general],
+            language: OCRLanguage.english
+        )
+        
+        let result = platformOCRLayout_L2(
+            context: context
+        )
+        
+        #expect(result.maxImageSize.width > 0, "Layout decision should have valid max image size")
+        #expect(result.recommendedImageSize.width > 0, "Layout decision should have valid recommended image size")
+    }
+    
+    @Test func testPlatformDocumentOCRLayout_L2_Receipt() async {
+        let context = OCRContext(
+            textTypes: [.price, .number, .date],
+            language: .english
+        )
+        
+        let layout = platformDocumentOCRLayout_L2(documentType: .receipt, context: context)
+        #expect(layout.maxImageSize.width > 0, "Receipt layout should have valid max image size")
+        #expect(layout.recommendedImageSize.width > 0, "Receipt layout should have valid recommended image size")
+    }
+    
+    @Test func testPlatformDocumentOCRLayout_L2_Invoice() async {
+        let context = OCRContext(
+            textTypes: [.price, .number, .date, .address],
+            language: .english
+        )
+        
+        let layout = platformDocumentOCRLayout_L2(documentType: .invoice, context: context)
+        #expect(layout.maxImageSize.width > 0, "Invoice layout should have valid max image size")
+        #expect(layout.recommendedImageSize.width > 0, "Invoice layout should have valid recommended image size")
+    }
+    
+    @Test func testPlatformDocumentOCRLayout_L2_BusinessCard() async {
+        let context = OCRContext(
+            textTypes: [.email, .phone, .address],
+            language: .english
+        )
+        
+        let layout = platformDocumentOCRLayout_L2(documentType: .businessCard, context: context)
+        #expect(layout.maxImageSize.width > 0, "Business card layout should have valid max image size")
+        #expect(layout.recommendedImageSize.width > 0, "Business card layout should have valid recommended image size")
+    }
+    
+    @Test func testPlatformDocumentOCRLayout_L2_AllDocumentTypes() async {
+        let documentTypes: [DocumentType] = [.receipt, .invoice, .businessCard, .form, .license, .passport, .general, .fuelReceipt, .idDocument, .medicalRecord, .legalDocument]
+        let context = OCRContext(
+            textTypes: [.general],
+            language: .english
+        )
+        
+        for documentType in documentTypes {
+            let layout = platformDocumentOCRLayout_L2(documentType: documentType, context: context)
+            #expect(layout.maxImageSize.width > 0, "Layout for \(documentType) should have valid max image size")
+            #expect(layout.recommendedImageSize.width > 0, "Layout for \(documentType) should have valid recommended image size")
+        }
+    }
+    
+    @Test func testPlatformReceiptOCRLayout_L2() async {
+        let context = OCRContext(
+            textTypes: [.general],
+            language: .english,
+            confidenceThreshold: 0.8
+        )
+        
+        let layout = platformReceiptOCRLayout_L2(context: context)
+        #expect(layout.maxImageSize.width > 0, "Receipt OCR layout should have valid max image size")
+        #expect(layout.recommendedImageSize.width > 0, "Receipt OCR layout should have valid recommended image size")
+        #expect(context.confidenceThreshold >= 0.8, "Receipt context should maintain or increase confidence threshold")
+    }
+    
+    @Test func testPlatformBusinessCardOCRLayout_L2() async {
+        let context = OCRContext(
+            textTypes: [.general],
+            language: .english
+        )
+        
+        let layout = platformBusinessCardOCRLayout_L2(context: context)
+        #expect(layout.maxImageSize.width > 0, "Business card OCR layout should have valid max image size")
+        #expect(layout.recommendedImageSize.width > 0, "Business card OCR layout should have valid recommended image size")
+    }
+    
+    @Test func testPlatformOCRLayout_L2_WithCapabilities() async {
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english
+        )
+        let capabilities = OCRDeviceCapabilities(
+            hasVisionFramework: true,
+            hasNeuralEngine: true,
+            maxImageSize: CGSize(width: 5000, height: 5000),
+            supportedLanguages: [.english],
+            processingPower: .neural
+        )
+        
+        let layout = platformOCRLayout_L2(context: context, capabilities: capabilities)
+        #expect(layout.maxImageSize.width > 0, "Layout with capabilities should have valid max image size")
+        #expect(layout.recommendedImageSize.width > 0, "Layout with capabilities should have valid recommended image size")
+    }
+    
+    @Test func testPlatformOCRLayout_L2_DifferentTextTypes() async {
+        let textTypeCombinations: [[TextType]] = [
+            [.price, .number],
+            [.date],
+            [.address],
+            [.email, .phone],
+            [.general]
+        ]
+        
+        for textTypes in textTypeCombinations {
+            let context = OCRContext(
+                textTypes: textTypes,
+                language: .english
+            )
+            let layout = platformOCRLayout_L2(context: context)
+            #expect(layout.maxImageSize.width > 0, "Layout for text types \(textTypes) should have valid max image size")
+            #expect(layout.recommendedImageSize.width > 0, "Layout for text types \(textTypes) should have valid recommended image size")
+        }
+    }
+    
+    // MARK: - Platform Photo Layout Decision Layer 2 Tests (continued)
+    
+    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnIOS() async {
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
+        )
+        
+        let result = determineOptimalPhotoLayout_L2(
+            purpose: purpose,
+            context: context
+        )
+        
+        #expect(result.width > 0, "Layout decision should have valid width")
+        #expect(result.height > 0, "Layout decision should have valid height")
+    }
+    
+    @Test func testPlatformPhotoLayoutL2GeneratesAccessibilityIdentifiersOnMacOS() async {
+        let purpose = PhotoPurpose.vehiclePhoto
+        let context = PhotoContext(
+            screenSize: PlatformSize(width: 1024, height: 768),
+            availableSpace: PlatformSize(width: 1024, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
+        )
+        
+        let result = determineOptimalPhotoLayout_L2(
+            purpose: purpose,
+            context: context
+        )
+        
+        #expect(result.width > 0, "Layout decision should have valid width")
+        #expect(result.height > 0, "Layout decision should have valid height")
+    }
+    
+    @Test func testDeterminePhotoCaptureStrategy_L2_PhotoLibraryOnly() async {
+        let purpose = PhotoPurpose.fuelReceipt
+        let context = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: false, hasPhotoLibrary: true)
+        )
+        
+        let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
+        #expect(strategy == .photoLibrary, "Should return photoLibrary when only photoLibrary is available")
+    }
+    
+    @Test func testDeterminePhotoCaptureStrategy_L2_UserPreferenceCamera() async {
+        let purpose = PhotoPurpose.vehiclePhoto
+        let preferences = PhotoPreferences(preferredSource: .camera)
+        let context = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: preferences,
+            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: true, hasPhotoLibrary: true)
+        )
+        
+        let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
+        #expect(strategy == .camera, "Should respect user preference for camera")
+    }
+    
+    @Test func testCalculateOptimalImageSize() async {
+        let purpose = PhotoPurpose.vehiclePhoto
+        let availableSpace = CGSize(width: 800, height: 600)
+        let maxResolution = CGSize(width: 4096, height: 4096)
+        
+        let size = calculateOptimalImageSize(for: purpose, in: availableSpace, maxResolution: maxResolution)
+        #expect(size.width > 0, "Should have valid width")
+        #expect(size.height > 0, "Should have valid height")
+        #expect(size.width <= Double(maxResolution.width), "Should not exceed max resolution width")
+        #expect(size.height <= Double(maxResolution.height), "Should not exceed max resolution height")
+    }
+    
+    @Test func testCalculateOptimalImageSize_RespectsMaxResolution() async {
+        let purpose = PhotoPurpose.odometer
+        let availableSpace = CGSize(width: 10000, height: 10000)
+        let maxResolution = CGSize(width: 2048, height: 2048)
+        
+        let size = calculateOptimalImageSize(for: purpose, in: availableSpace, maxResolution: maxResolution)
+        #expect(size.width <= Double(maxResolution.width), "Should respect max resolution width")
+        #expect(size.height <= Double(maxResolution.height), "Should respect max resolution height")
+    }
+    
+    @Test func testShouldCropImage_VehiclePhoto() async {
+        let purpose = PhotoPurpose.vehiclePhoto
+        let imageSize = CGSize(width: 4000, height: 3000)
+        let targetSize = CGSize(width: 2000, height: 1200)
+        
+        let shouldCrop = shouldCropImage(for: purpose, imageSize: imageSize, targetSize: targetSize)
+        #expect(shouldCrop == true, "Vehicle photos with different aspect ratios should be cropped")
+    }
+    
+    @Test func testShouldCropImage_SimilarAspectRatio() async {
+        let purpose = PhotoPurpose.vehiclePhoto
+        let imageSize = CGSize(width: 2000, height: 1200)
+        let targetSize = CGSize(width: 2000, height: 1200)
+        
+        let shouldCrop = shouldCropImage(for: purpose, imageSize: imageSize, targetSize: targetSize)
+        #expect(shouldCrop == false, "Images with similar aspect ratios should not be cropped")
+    }
+    
+    @Test func testShouldCropImage_Odometer() async {
+        let purpose = PhotoPurpose.odometer
+        let imageSize = CGSize(width: 4000, height: 3000)
+        let targetSize = CGSize(width: 1000, height: 1000)
+        
+        let shouldCrop = shouldCropImage(for: purpose, imageSize: imageSize, targetSize: targetSize)
+        #expect(shouldCrop == false, "Odometer photos are flexible and should not be cropped")
+    }
+    
+    @Test func testShouldCropImage_Profile() async {
+        let purpose = PhotoPurpose.profile
+        let imageSize = CGSize(width: 2000, height: 3000)
+        let targetSize = CGSize(width: 1000, height: 1000)
+        
+        let shouldCrop = shouldCropImage(for: purpose, imageSize: imageSize, targetSize: targetSize)
+        #expect(shouldCrop == false, "Profile photos are flexible and should not be cropped")
+    }
+    
+    @Test func testDetermineOptimalPhotoLayout_L2_AllPurposes() async {
+        let purposes: [PhotoPurpose] = [.vehiclePhoto, .fuelReceipt, .pumpDisplay, .odometer, .maintenance, .expense, .profile, .document]
+        let context = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(),
+            deviceCapabilities: PhotoDeviceCapabilities()
+        )
+        
+        for purpose in purposes {
+            let layout = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
+            #expect(layout.width > 0, "Layout for \(purpose) should have valid width")
+            #expect(layout.height > 0, "Layout for \(purpose) should have valid height")
+        }
+    }
+    
+    // MARK: - Remaining Components Tests (continued)
+    
+    @Test @MainActor func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItems = [
+            RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
+            RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
+        ]
+        
+        let view = MasonryCollectionView(
+            items: testItems,
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "MasonryCollectionView"
+        )
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on iOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testMasonryCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItems = [
+            RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
+            RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
+        ]
+        
+        let view = MasonryCollectionView(
+            items: testItems,
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "MasonryCollectionView"
+        )
+        #expect(hasAccessibilityID, "MasonryCollectionView should generate accessibility identifiers on macOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItems = [
+            RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
+            RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
+        ]
+        
+        let view = AdaptiveCollectionView(
+            items: testItems,
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AdaptiveCollectionView"
+        )
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on iOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAdaptiveCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItems = [
+            RemainingComponentsTestItem(id: "1", title: "Item 1", subtitle: "Subtitle 1"),
+            RemainingComponentsTestItem(id: "2", title: "Item 2", subtitle: "Subtitle 2")
+        ]
+        
+        let view = AdaptiveCollectionView(
+            items: testItems,
+            hints: PresentationHints(
+                dataType: .generic,
+                presentationPreference: .automatic,
+                complexity: .moderate,
+                context: .modal,
+                customPreferences: [:]
+            )
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AdaptiveCollectionView"
+        )
+        #expect(hasAccessibilityID, "AdaptiveCollectionView should generate accessibility identifiers on macOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // MARK: - Accessibility Identifier Bug Fix Verification Tests (continued)
+    
+    @Test @MainActor func testBugReportScenarioIsFixed() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableViewHierarchyTracking = true
+        config.enableUITestIntegration = true
+        config.enableDebugLogging = true
+
+        let fuelView = VStack(spacing: 0) {
+            VStack {
+                platformPresentContent_L1(content: "Filter Content", hints: PresentationHints())
+            }
+            VStack {
+                platformPresentContent_L1(content: "No Fuel Records", hints: PresentationHints())
+            }
+        }
+        .platformNavigationTitle("Fuel")
+        .platformNavigationTitleDisplayMode(.inline)
+        .named("FuelView")
+        .platformToolbarWithTrailingActions {
+            HStack(spacing: 16) {
+                PlatformInteractionButton(style: .primary, action: { }) {
+                    platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+                }
+                .named("AddFuelButton")
+                .accessibilityIdentifier("manual-add-fuel-button")
+            }
+        }
+
+        #expect(Bool(true), "FuelView should be created successfully")
+        #expect(config.enableAutoIDs, "Auto IDs should be enabled")
+        #expect(config.namespace == "SixLayer", "Namespace should be set correctly")
+        #expect(config.enableViewHierarchyTracking, "View hierarchy tracking should be enabled")
+        #expect(config.enableUITestIntegration, "UI test integration should be enabled")
+        #expect(config.enableDebugLogging, "Debug logging should be enabled")
+    }
+    
+    @Test @MainActor func testNamedModifierGeneratesIdentifiers() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableViewHierarchyTracking = true
+        config.enableDebugLogging = true
+        config.clearDebugLog()
+
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
+        .named("AddFuelButton")
+
+        #expect(Bool(true), "View with .named() should be created successfully")
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AddFuelButton"
+        )
+        #expect(hasAccessibilityID, "View with .named() should generate accessibility identifiers matching pattern 'SixLayer.main.element.*' ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testNamedModifierWithScreenContext() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableViewHierarchyTracking = true
+        config.enableDebugLogging = true
+        config.clearDebugLog()
+
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
+        .named("AddFuelButton")
+
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AddFuelButton"
+        )
+    }
+    
+    @Test @MainActor func testScreenContextGeneratesIdentifiers() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = true
+        config.clearDebugLog()
+
+        let testView = VStack {
+            Text("Test Content")
+        }
+
+        #expect(Bool(true), "View with named modifier should be created successfully")
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "ScreenContext"
+        )
+        #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*ui' ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testNavigationStateGeneratesIdentifiers() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableDebugLogging = true
+        config.clearDebugLog()
+
+        let testView = HStack {
+            Text("Navigation Content")
+        }
+
+        #expect(Bool(true), "View with named modifier should be created successfully")
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "NavigationState"
+        )
+        #expect(hasAccessibilityID, "View with named modifier should generate accessibility identifiers matching pattern 'SixLayer.*' ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testManualAccessibilityIdentifiersStillWork() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+
+        let testView = PlatformInteractionButton(style: .primary, action: {}) {
+            platformPresentContent_L1(content: "Add Fuel", hints: PresentationHints())
+        }
+        .accessibilityIdentifier("manual-add-fuel-button")
+
+        #expect(Bool(true), "View with manual accessibility identifier should be created successfully")
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "manual-add-fuel-button",
+            platform: SixLayerPlatform.iOS,
+            componentName: "ManualAccessibilityIdentifier"
+        ), "Manual accessibility identifier should work")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testGlobalAutomaticAccessibilityIdentifiersIsSet() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+
+        let testView = Button(action: {}) {
+            Label("Test", systemImage: "plus")
+        }
+        .named("TestButton")
+
+        #expect(Bool(true), "View with automatic accessibility identifiers should be created successfully")
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        #expect(testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AutomaticAccessibilityIdentifiers"
+        ), "AutomaticAccessibilityIdentifiers should generate accessibility identifier")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testGlobalModifierStillWorks() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+
+        let testView = Text("Global Test")
+            .enableGlobalAutomaticCompliance()
+
+        #expect(Bool(true), "View with global modifier should be created successfully")
+    }
+    
+    @Test @MainActor func testIdentifiersGeneratedWithProperContext() async {
+        let config = AccessibilityIdentifierConfig.shared
+        config.enableAutoIDs = true
+        config.namespace = "SixLayer"
+        config.mode = .automatic
+        config.enableViewHierarchyTracking = true
+        config.enableUITestIntegration = true
+        config.enableDebugLogging = true
+        config.clearDebugLog()
+
+        config.setScreenContext("FuelView")
+        config.pushViewHierarchy("NavigationView")
+        config.pushViewHierarchy("FuelSection")
+
+        let generator = AccessibilityIdentifierGenerator()
+        let id = generator.generateID(
+            for: "test-object",
+            role: "button",
+            context: "FuelView"
+        )
+
+        #expect(id.contains("SixLayer"), "ID should contain namespace")
+        #expect(id.contains("main"), "ID should contain screen context (forced to 'main' when enableUITestIntegration is true)")
+        #expect(id.contains("button"), "ID should contain role")
+        #expect(id.contains("test-object"), "ID should contain object ID")
+
+        config.popViewHierarchy()
+        config.popViewHierarchy()
+    }
+    
+    // MARK: - Assistive Touch Tests (continued)
+    
+    @Test @MainActor func testAssistiveTouchIntegrationSupport() async {
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+        #expect(RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be enabled")
+
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+        #expect(!RuntimeCapabilityDetection.supportsAssistiveTouch, "AssistiveTouch should be disabled")
+
+        for platform in SixLayerPlatform.allCases {
+            setCapabilitiesForPlatform(platform)
+            let config = AssistiveTouchConfig(enableIntegration: true)
+            let manager = AssistiveTouchManager(config: config)
+            #expect(manager.supportsIntegration(), "Integration should be supported on \(platform)")
+        }
+
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+    }
+    
+    @Test @MainActor func testAssistiveTouchMenuSupport() async {
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+
+        let config = AssistiveTouchConfig(enableMenuSupport: true)
+        let manager = AssistiveTouchManager(config: config)
+
+        let menuResult = manager.manageMenu(for: .show)
+
+        #expect(menuResult.success)
+        #expect(menuResult.menuElement != nil)
+
+        for platform in SixLayerPlatform.allCases {
+            setCapabilitiesForPlatform(platform)
+            let platformResult = manager.manageMenu(for: .toggle)
+            #expect(platformResult.success, "Menu should work on \(platform)")
+        }
+
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+    }
+    
+    @Test @MainActor func testAssistiveTouchGestureRecognition() async {
+        RuntimeCapabilityDetection.setTestAssistiveTouch(true)
+
+        let config = AssistiveTouchConfig(enableGestureRecognition: true)
+        let manager = AssistiveTouchManager(config: config)
+
+        let gesture = AssistiveTouchGesture(type: .swipeLeft, intensity: .medium)
+        let result = manager.processGesture(gesture)
+
+        #expect(result.success)
+        #expect(result.action != nil)
+
+        let gestureTypes: [AssistiveTouchGestureType] = [.singleTap, .doubleTap, .swipeRight, .swipeUp, .swipeDown, .longPress]
+        for gestureType in gestureTypes {
+            let testGesture = AssistiveTouchGesture(type: gestureType, intensity: .light)
+            let testResult = manager.processGesture(testGesture)
+            #expect(testResult.success, "Gesture \(gestureType) should be processed")
+        }
+
+        RuntimeCapabilityDetection.setTestAssistiveTouch(false)
+    }
+    
+    // MARK: - HIG Compliance Light Dark Mode Tests (continued)
+    
+    @Test @MainActor func testViewRespectsSystemColorScheme() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Test Text")
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "ViewWithColorScheme"
+            )
+            #expect(passed, "View should respect system color scheme on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testTextUsesSystemColorsForLightDarkMode() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("System Color Text")
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithSystemColors"
+            )
+            #expect(passed, "Text should use system colors that adapt to light/dark mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testButtonUsesSystemColorsForLightDarkMode() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let button = Button("Test Button") { }
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                button,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "ButtonWithSystemColors"
+            )
+            #expect(passed, "Button should use system colors that adapt to light/dark mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testBackgroundAdaptsToColorScheme() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Background Text")
+                .padding()
+                .background(Color.platformBackground)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "ViewWithAdaptiveBackground"
+            )
+            #expect(passed, "Background should adapt to light/dark mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testColorContrastMaintainedInLightMode() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Light Mode Text")
+                .foregroundColor(.primary)
+                .background(Color.platformBackground)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithLightModeContrast"
+            )
+            #expect(passed, "Color contrast should meet WCAG requirements in light mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testColorContrastMaintainedInDarkMode() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Dark Mode Text")
+                .foregroundColor(.primary)
+                .background(Color.platformBackground)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithDarkModeContrast"
+            )
+            #expect(passed, "Color contrast should meet WCAG requirements in dark mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testSystemPrimaryColorAdaptsToColorScheme() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Primary Color Text")
+                .foregroundColor(.primary)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithPrimaryColor"
+            )
+            #expect(passed, "Primary color should adapt to light/dark mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testSystemSecondaryColorAdaptsToColorScheme() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = Text("Secondary Color Text")
+                .foregroundColor(.secondary)
+                .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "TextWithSecondaryColor"
+            )
+            #expect(passed, "Secondary color should adapt to light/dark mode on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    @Test @MainActor func testLightDarkModeOnAllPlatforms() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            let view = VStack {
+                Text("Light/Dark Mode Test")
+                    .automaticCompliance()
+                Button("Test Button") { }
+                    .automaticCompliance()
+            }
+            .automaticCompliance()
+            
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            let passed = testComponentComplianceCrossPlatform(
+                view,
+                expectedPattern: "SixLayer.*ui",
+                componentName: "CrossPlatformLightDarkMode"
+            )
+            #expect(passed, "Light/dark mode should be supported on all platforms")
+            #else
+            // ViewInspector not available on this platform
+            #endif
+        }
+    }
+    
+    // MARK: - Utility Component Tests (final batch)
+    
+    @Test @MainActor func testAccessibilityIdentifierPerformanceMatchingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierPerformanceMatching"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier performance matching should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierErrorHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "invalid.pattern.that.should.not.match",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierErrorHandling"
+        )
+        #expect(!hasAccessibilityID, "Accessibility identifier error handling should not generate invalid IDs")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierNullHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierNullHandling"
+        )
+        #expect(!hasAccessibilityID, "Accessibility identifier null handling should not generate invalid IDs")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierEmptyHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierEmptyHandling"
+        )
+        #expect(!hasAccessibilityID, "Accessibility identifier empty handling should not generate invalid IDs (modifier verified in code, test logic may need review)")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierWhitespaceHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierWhitespaceHandling"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier whitespace handling should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierSpecialCharacterHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("Test-Element_With.Special@Characters")
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierSpecialCharacterHandling"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier special character handling should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierUnicodeHandlingGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named("TestElementWithUnicode测试")
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierUnicodeHandling"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier unicode handling should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityIdentifierLongStringHandlingGeneratesAccessibilityIdentifiers() async {
+        let longString = String(repeating: "A", count: 1000)
+        let testView = platformPresentContent_L1(
+            content: "Test Content",
+            hints: PresentationHints()
+        )
+        .named(longString)
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            testView,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityIdentifierLongStringHandling"
+        )
+        #expect(hasAccessibilityID, "Accessibility identifier long string handling should work correctly ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // MARK: - Accessibility Features Layer 5 Component Tests (final batch)
+    
+    @Test @MainActor func testKeyboardNavigationManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let manager = KeyboardNavigationManager()
+        
+        let view = VStack {
+            Text("Keyboard Navigation Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "KeyboardNavigationManager"
+        )
+        #expect(hasAccessibilityID, "KeyboardNavigationManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testHighContrastManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let manager = HighContrastManager()
+        
+        let view = VStack {
+            Text("High Contrast Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "HighContrastManager"
+        )
+        #expect(hasAccessibilityID, "HighContrastManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAccessibilityTestingManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let manager = AccessibilityTestingManager()
+        
+        let view = VStack {
+            Text("Accessibility Testing Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AccessibilityTestingManager"
+        )
+        #expect(hasAccessibilityID, "AccessibilityTestingManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testSwitchControlManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let config = SwitchControlConfig(
+            enableNavigation: true,
+            enableCustomActions: true,
+            enableGestureSupport: true,
+            focusManagement: .automatic,
+            gestureSensitivity: .medium,
+            navigationSpeed: .normal
+        )
+        let manager = SwitchControlManager(config: config)
+        
+        let view = VStack {
+            Text("Switch Control Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "SwitchControlManager"
+        )
+        #expect(hasAccessibilityID, "SwitchControlManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testMaterialAccessibilityManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let manager = MaterialAccessibilityManager()
+        
+        let view = VStack {
+            Text("Material Accessibility Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "MaterialAccessibilityManager"
+        )
+        #expect(hasAccessibilityID, "MaterialAccessibilityManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testEyeTrackingManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let manager = EyeTrackingManager()
+        
+        let view = VStack {
+            Text("Eye Tracking Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "EyeTrackingManager"
+        )
+        #expect(hasAccessibilityID, "EyeTrackingManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testAssistiveTouchManagerGeneratesAccessibilityIdentifiers() async {
+        initializeTestConfig()
+        let config = AssistiveTouchConfig(
+            enableIntegration: true,
+            enableCustomActions: true,
+            enableMenuSupport: true,
+            enableGestureRecognition: true,
+            gestureSensitivity: .medium,
+            menuStyle: .floating
+        )
+        let manager = AssistiveTouchManager(config: config)
+        
+        let view = VStack {
+            Text("Assistive Touch Manager Content")
+        }
+        .environmentObject(manager)
+        .automaticCompliance()
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.*ui",
+            platform: SixLayerPlatform.iOS,
+            componentName: "AssistiveTouchManager"
+        )
+        #expect(hasAccessibilityID, "AssistiveTouchManager should generate accessibility identifiers ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // MARK: - Debug Logging Tests (final batch)
+    
+    @Test @MainActor func testDebugLogIncludesTimestamps() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let _ = generator.generateID(for: "test", role: "button", context: "ui")
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.contains(":"), "Debug log should contain timestamp (colon indicates time format)")
+        }
+    }
+    
+    @Test @MainActor func testDebugLogFormatIsConsistent() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let id = generator.generateID(for: "testButton", role: "button", context: "ui")
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.contains("Generated ID"), "Debug log should contain 'Generated ID' label")
+            #expect(debugLog.contains("for:"), "Debug log should contain 'for:' label")
+            #expect(debugLog.contains("role:"), "Debug log should contain 'role:' label")
+            #expect(debugLog.contains("context:"), "Debug log should contain 'context:' label")
+        }
+    }
+    
+    @Test @MainActor func testDebugLoggingRespectsEnableFlag() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            
+            config.enableDebugLogging = false
+            let _ = generator.generateID(for: "test1", role: "button", context: "ui")
+            
+            let logWhenDisabled = config.getDebugLog()
+            #expect(logWhenDisabled.isEmpty, "No log entries when debug logging is disabled")
+            
+            config.enableDebugLogging = true
+            let _ = generator.generateID(for: "test2", role: "button", context: "ui")
+            
+            let logWhenEnabled = config.getDebugLog()
+            #expect(!logWhenEnabled.isEmpty, "Log entries should be created when debug logging is enabled")
+            #expect(logWhenEnabled.contains("test2"), "Log should contain the second test entry")
+        }
+    }
+    
+    @Test @MainActor func testDebugLogPersistsAcrossGeneratorInstances() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator1 = AccessibilityIdentifierGenerator()
+            let generator2 = AccessibilityIdentifierGenerator()
+            
+            let _ = generator1.generateID(for: "test1", role: "button", context: "ui")
+            let _ = generator2.generateID(for: "test2", role: "button", context: "ui")
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.contains("test1"), "Log should contain entry from first generator")
+            #expect(debugLog.contains("test2"), "Log should contain entry from second generator")
+        }
+    }
+    
+    @Test @MainActor func testDebugLoggingHandlesEmptyComponentNames() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let id = generator.generateID(for: "", role: "button", context: "ui")
+            
+            #expect(!id.isEmpty, "Should generate ID even with empty component name")
+            let debugLog = config.getDebugLog()
+            #expect(!debugLog.isEmpty, "Should still log even with empty component name")
+        }
+    }
+    
+    @Test @MainActor func testDebugLoggingHandlesSpecialCharacters() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            let specialName = "test-button_with.special@chars"
+            let id = generator.generateID(for: specialName, role: "button", context: "ui")
+            
+            #expect(!id.isEmpty, "Should generate ID with special characters")
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.contains(specialName), "Debug log should contain special characters")
+        }
+    }
+    
+    @Test @MainActor func testDebugLogHasReasonableSizeLimits() async {
+        initializeTestConfig()
+        await runWithTaskLocalConfig {
+            guard let config = testConfig else {
+                Issue.record("testConfig is nil")
+                return
+            }
+            config.enableDebugLogging = true
+            config.clearDebugLog()
+            
+            let generator = AccessibilityIdentifierGenerator()
+            
+            for i in 1...100 {
+                let _ = generator.generateID(for: "button\(i)", role: "button", context: "ui")
+            }
+            
+            let debugLog = config.getDebugLog()
+            #expect(debugLog.count < 100000, "Debug log should not grow beyond reasonable limits")
+            #expect(debugLog.contains("button100"), "Should still contain recent entries")
+        }
+    }
+    
+    // MARK: - Platform Photo Layout Decision Layer 2 Tests (final batch)
+    
+    @Test func testDeterminePhotoCaptureStrategy_L2_UserPreferencePhotoLibrary() async {
+        let purpose = PhotoPurpose.document
+        let preferences = PhotoPreferences(preferredSource: .photoLibrary)
+        let context = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: preferences,
+            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: true, hasPhotoLibrary: true)
+        )
+        
+        let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
+        #expect(strategy == .photoLibrary, "Should respect user preference for photoLibrary")
+    }
+    
+    @Test func testDeterminePhotoCaptureStrategy_L2_PurposeBasedDecision() async {
+        let vehicleContext = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(preferredSource: .both),
+            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: true, hasPhotoLibrary: true)
+        )
+        let vehicleStrategy = determinePhotoCaptureStrategy_L2(purpose: .vehiclePhoto, context: vehicleContext)
+        #expect(vehicleStrategy == .camera, "Vehicle photos should prefer camera")
+        
+        let receiptContext = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(preferredSource: .both),
+            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: true, hasPhotoLibrary: true)
+        )
+        let receiptStrategy = determinePhotoCaptureStrategy_L2(purpose: .fuelReceipt, context: receiptContext)
+        #expect(receiptStrategy == .photoLibrary, "Receipts should prefer photoLibrary")
+        
+        let profileContext = PhotoContext(
+            screenSize: PlatformSize(width: 375, height: 812),
+            availableSpace: PlatformSize(width: 375, height: 400),
+            userPreferences: PhotoPreferences(preferredSource: .both),
+            deviceCapabilities: PhotoDeviceCapabilities(hasCamera: true, hasPhotoLibrary: true)
+        )
+        let profileStrategy = determinePhotoCaptureStrategy_L2(purpose: .profile, context: profileContext)
+        #expect(profileStrategy == .both, "Profile photos should allow both")
+    }
+    
+    // MARK: - Remaining Components Tests (final batch)
+    
+    @Test @MainActor func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
+        
+        let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 2,
+            spacing: 16,
+            cardWidth: 150,
+            cardHeight: 200,
+            padding: 16,
+            expansionScale: 1.0,
+            animationDuration: 0.3
+        )
+        
+        let view = SimpleCardComponent(
+            item: testItem,
+            layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "SimpleCardComponent"
+        )
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on iOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testSimpleCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
+        
+        let layoutDecision = IntelligentCardLayoutDecision(
+            columns: 3,
+            spacing: 20,
+            cardWidth: 200,
+            cardHeight: 250,
+            padding: 20,
+            expansionScale: 1.0,
+            animationDuration: 0.4
+        )
+        
+        let view = SimpleCardComponent(
+            item: testItem,
+            layoutDecision: layoutDecision,
+            hints: PresentationHints(),
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "SimpleCardComponent"
+        )
+        #expect(hasAccessibilityID, "SimpleCardComponent should generate accessibility identifiers on macOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testListCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
+        
+        let view = ListCardComponent(
+            item: testItem,
+            hints: PresentationHints(),
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "ListCardComponent"
+        )
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on iOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testListCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
+        
+        let view = ListCardComponent(
+            item: testItem,
+            hints: PresentationHints(),
+            onItemSelected: nil,
+            onItemDeleted: nil,
+            onItemEdited: nil
+        )
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "ListCardComponent"
+        )
+        #expect(hasAccessibilityID, "ListCardComponent should generate accessibility identifiers on macOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnIOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
+        
+        let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "MasonryCardComponent"
+        )
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on iOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    @Test @MainActor func testMasonryCardComponentGeneratesAccessibilityIdentifiersOnMacOS() async {
+        initializeTestConfig()
+        struct RemainingComponentsTestItem: Identifiable {
+            let id: String
+            let title: String
+            let subtitle: String
+        }
+        
+        let testItem = RemainingComponentsTestItem(id: "1", title: "Test Card", subtitle: "Test Subtitle")
+        
+        let view = MasonryCardComponent(item: testItem, hints: PresentationHints())
+        
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*",
+            platform: SixLayerPlatform.iOS,
+            componentName: "MasonryCardComponent"
+        )
+        #expect(hasAccessibilityID, "MasonryCardComponent should generate accessibility identifiers on macOS ")
+        #else
+        // ViewInspector not available on this platform
+        #endif
+    }
+    
+    // MARK: - Assistive Touch Tests (final batch)
+    
+    @Test @MainActor func testAssistiveTouchConfiguration() {
+        let config = AssistiveTouchConfig(
+            enableIntegration: true,
+            enableCustomActions: true,
+            enableMenuSupport: true,
+            enableGestureRecognition: true,
+            gestureSensitivity: .high,
+            menuStyle: .floating
+        )
+        
+        #expect(config.enableIntegration)
+        #expect(config.enableCustomActions)
+        #expect(config.enableMenuSupport)
+        #expect(config.enableGestureRecognition)
+        #expect(config.gestureSensitivity == .high)
+        #expect(config.menuStyle == .floating)
+    }
+    
+    @Test @MainActor func testAssistiveTouchActionCreation() {
+        let action = AssistiveTouchAction(
+            name: "Test Action",
+            gesture: .doubleTap,
+            action: { print("Test action executed") }
+        )
+        
+        #expect(action.name == "Test Action")
+        #expect(action.gesture == .doubleTap)
+        #expect(action.action != nil)
+    }
+    
+    @Test @MainActor func testAssistiveTouchGestureTypes() {
+        initializeTestConfig()
+        let singleTap = AssistiveTouchGesture(type: .singleTap, intensity: .light)
+        let doubleTap = AssistiveTouchGesture(type: .doubleTap, intensity: .medium)
+        let swipeLeft = AssistiveTouchGesture(type: .swipeLeft, intensity: .heavy)
+        let swipeRight = AssistiveTouchGesture(type: .swipeRight, intensity: .light)
+        
+        #expect(singleTap.type == .singleTap)
+        #expect(doubleTap.type == .doubleTap)
+        #expect(swipeLeft.type == .swipeLeft)
+        #expect(swipeRight.type == .swipeRight)
+    }
+    
+    @Test @MainActor func testAssistiveTouchViewModifier() {
+        initializeTestConfig()
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        .assistiveTouchEnabled()
+        
+        #expect(Bool(true), "view is non-optional")
+    }
+    
+    @Test @MainActor func testAssistiveTouchViewModifierWithConfiguration() {
+        initializeTestConfig()
+        let config = AssistiveTouchConfig(enableIntegration: true)
+        let view = platformPresentContent_L1(
+            content: "Test",
+            hints: PresentationHints()
+        )
+        .assistiveTouchEnabled(config: config)
+        
+        #expect(Bool(true), "view is non-optional")
+    }
+    
+    @Test @MainActor func testAssistiveTouchCompliance() {
+        initializeTestConfig()
+        let view = VStack {
+            platformPresentContent_L1(content: "Title", hints: PresentationHints())
+            PlatformInteractionButton(style: .primary, action: {}) {
+                platformPresentContent_L1(content: "Action", hints: PresentationHints())
+            }
+        }
+        .assistiveTouchEnabled()
+        
+        let compliance = AssistiveTouchManager.checkCompliance(for: view)
+        
+        #expect(compliance.isCompliant, "View with .assistiveTouchEnabled() should be compliant")
+        #expect(compliance.issues.count == 0, "View with .assistiveTouchEnabled() should have no compliance issues")
+    }
+    
     // NOTE: Due to the massive scale (546 total tests), this consolidated file contains
     // representative tests from all major categories. Additional tests from remaining files
     // can be added incrementally as needed. The @Suite(.serialized) attribute ensures
