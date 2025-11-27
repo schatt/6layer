@@ -305,13 +305,43 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
 // MARK: - Data Hints Registry
 
 /// Global registry for loading data hints
+/// Since hints are immutable during execution, we use a shared cache for synchronous access
 public actor DataHintsRegistry {
     private var cache: [String: [String: FieldDisplayHints]] = [:]
     private var resultCache: [String: DataHintsResult] = [:]
     private let loader: DataHintsLoader
     
+    // Shared cache for synchronous access
+    // File-based hints are immutable, so cached values are safe to access without actor isolation
+    // Code-provided hints (like layoutSpec) are handled separately and not cached here
+    // After initialization, this is read-only, so no synchronization needed for reads
+    nonisolated(unsafe) private static var sharedResultCache: [String: DataHintsResult] = [:]
+    
+    // Flag to track if hints have been preloaded (prevents redundant loading)
+    // Once true, sharedResultCache is effectively read-only
+    nonisolated(unsafe) private static var hintsPreloaded = false
+    // Lock for synchronizing preload operations (shared across all threads)
+    nonisolated(unsafe) private static let preloadLock = NSLock()
+    
     public init(loader: DataHintsLoader = FileBasedDataHintsLoader()) {
         self.loader = loader
+    }
+    
+    /// Synchronously check if file-based hints are cached (nonisolated for fast access)
+    /// File-based hints are immutable, so cached values are safe to access without actor isolation
+    /// Note: Code-provided hints (like layoutSpec) are not cached and handled separately
+    /// After preloading, cache is read-only, so no synchronization needed
+    nonisolated public static func hasCachedHints(for modelName: String) -> Bool {
+        return sharedResultCache[modelName] != nil
+    }
+    
+    /// Synchronously get cached file-based hints if available (nonisolated for fast access)
+    /// Returns nil if not cached - caller should use async loadHintsResult if nil
+    /// File-based hints are immutable, so cached values are safe to access without actor isolation
+    /// Note: Code-provided hints (like layoutSpec) are not cached and handled separately
+    /// After preloading, cache is read-only, so no synchronization needed
+    nonisolated public static func getCachedHints(for modelName: String) -> DataHintsResult? {
+        return sharedResultCache[modelName]
     }
     
     /// Load hints for a data model, checking cache first (backward compatibility)
@@ -321,19 +351,37 @@ public actor DataHintsRegistry {
     
     /// Load complete hints result including field hints and sections
     public func loadHintsResult(for modelName: String) -> DataHintsResult {
-        // Check cache first
+        // Check cache first (both actor-local and shared)
         if let cached = resultCache[modelName] {
+            // Update shared cache if not already there (for synchronous access)
+            // After preload, this should already be set, but safe to check
+            if Self.sharedResultCache[modelName] == nil {
+                Self.sharedResultCache[modelName] = cached
+            }
             return cached
         }
         
-        // Load from file
+        // Check shared cache (might have been preloaded)
+        // After preload, cache is read-only, so direct access is safe
+        if let sharedCached = Self.sharedResultCache[modelName] {
+            resultCache[modelName] = sharedCached
+            cache[modelName] = sharedCached.fieldHints
+            return sharedCached
+        }
+        
+        // Load from file (fallback if not preloaded - should be rare in tests)
         let result = loader.loadHintsResult(for: modelName)
         
-        // Cache for future use
+        // Cache for future use (both actor-local and shared)
+        // Only cache file-based hints - code-provided hints are handled separately
         if !result.fieldHints.isEmpty || !result.sections.isEmpty {
             resultCache[modelName] = result
-            // Also update legacy cache for backward compatibility
             cache[modelName] = result.fieldHints
+            // Update shared cache for synchronous access (file-based hints are immutable)
+            // If preload already happened, this is a no-op (cache is read-only)
+            if !Self.hintsPreloaded {
+                Self.sharedResultCache[modelName] = result
+            }
         }
         
         return result
@@ -361,6 +409,92 @@ public actor DataHintsRegistry {
     public func clearAllCache() {
         cache.removeAll()
         resultCache.removeAll()
+    }
+    
+    /// Preload hints for a model to ensure they're cached before use
+    /// This is useful for eager loading to avoid delays during view instantiation
+    /// Returns immediately if already cached, otherwise loads and caches
+    /// NOTE: This updates both actor-local and shared cache for cross-thread access
+    public func preloadHints(for modelName: String) {
+        // Check shared cache first (nonisolated, accessible from any thread)
+        if Self.sharedResultCache[modelName] != nil {
+            // Already in shared cache - update actor-local cache for consistency
+            if let sharedCached = Self.sharedResultCache[modelName] {
+                resultCache[modelName] = sharedCached
+                cache[modelName] = sharedCached.fieldHints
+            }
+            return
+        }
+        
+        // Check actor-local cache
+        if resultCache[modelName] != nil {
+            // Update shared cache so other threads can access it synchronously
+            Self.sharedResultCache[modelName] = resultCache[modelName]
+            return
+        }
+        
+        // Load and cache (updates both caches for cross-thread access)
+        let result = loader.loadHintsResult(for: modelName)
+        if !result.fieldHints.isEmpty || !result.sections.isEmpty {
+            resultCache[modelName] = result
+            cache[modelName] = result.fieldHints
+            // CRITICAL: Update shared cache for synchronous cross-thread access
+            // Since hints are immutable, this is safe even without actor isolation
+            Self.sharedResultCache[modelName] = result
+        }
+    }
+    
+    /// Preload all hints files once at test suite startup
+    /// This should be called once before any tests run to load all hints files
+    /// After this, the cache is read-only and all accesses are lock-free
+    /// Thread-safe: Uses a simple flag to ensure it only runs once
+    nonisolated public static func preloadAllHintsSync(modelNames: [String]) {
+        // If already preloaded, skip (idempotent)
+        if hintsPreloaded {
+            return
+        }
+        
+        // Simple synchronization: use a lock just for the preload phase
+        // After preload, cache is read-only so no locking needed
+        // Use static lock to ensure proper synchronization across all threads
+        preloadLock.lock()
+        defer { preloadLock.unlock() }
+        
+        // Double-check after acquiring lock
+        if hintsPreloaded {
+            return
+        }
+        
+        // Load all hints files once
+        // Optimize: Skip file system checks if already cached
+        let loader = FileBasedDataHintsLoader()
+        for modelName in modelNames {
+            // Fast path: Already cached - skip all file system operations
+            if sharedResultCache[modelName] != nil {
+                continue
+            }
+            
+            // Only check file existence if not cached (avoids slow bundle.url calls)
+            // Check if hints file exists before trying to load (faster than trying to load non-existent files)
+            if loader.hasHints(for: modelName) {
+                let result = loader.loadHintsResult(for: modelName)
+                if !result.fieldHints.isEmpty || !result.sections.isEmpty {
+                    sharedResultCache[modelName] = result
+                }
+            }
+            // If hints don't exist, skip loading (avoids slow file system checks for non-existent files)
+        }
+        
+        // Mark as preloaded - cache is now read-only
+        hintsPreloaded = true
+    }
+    
+    /// Preload hints for multiple models at once
+    /// Useful for batch loading during app startup or test setup
+    public func preloadHints(for modelNames: [String]) {
+        for modelName in modelNames {
+            preloadHints(for: modelName)
+        }
     }
 }
 

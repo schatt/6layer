@@ -11,7 +11,7 @@ open class InternationalizationServiceTests: BaseTestClass {
     
     // MARK: - Service Initialization Tests
     
-    @Test func testInternationalizationServiceInitialization() async {
+    @Test func testInternationalizationServiceInitialization() {
         // Given & When: Creating the service
         let service = InternationalizationService()
         

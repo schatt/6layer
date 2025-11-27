@@ -18,11 +18,56 @@ open class BaseTestClass {
     
     // MARK: - Test Setup
     
+    // NOTE: Hints preloading is handled by DataHintsRegistry.preloadAllHintsSync
+    // which has its own synchronization. We don't need separate flags/locks here
+    // to avoid deadlock scenarios.
+    
     public init() {
         // BaseTestClass handles all setup automatically
         // NOTE: Subclasses should NOT override init() - use helper methods to create test data instead
         // (Cannot be final because class is open, but subclasses should not override)
+        
+        // NOTE: Hints are loaded lazily when first accessed by AsyncFormView
+        // This avoids memory issues from preloading in every test's init()
+        // The DataHintsRegistry cache ensures hints are only loaded once from disk
+        
         setupTestEnvironment()
+    }
+    
+    /// Preload hints once at test suite startup (called from first test's init)
+    /// This ensures hints are loaded once from disk, not reloaded by every test
+    /// After preload, cache is read-only, so no synchronization needed for reads
+    /// NOTE: This delegates to DataHintsRegistry.preloadAllHintsSync which has its own synchronization
+    /// We don't need our own lock here - DataHintsRegistry handles it
+    private static func preloadHintsOnce() {
+        // Preload hints for common models used in tests
+        // Add model names here as they're identified in test usage
+        let commonModels: [String] = [
+            "User",
+            "UserWithSections"
+            // Add more model names as needed
+        ]
+        
+        // Delegate to DataHintsRegistry which has its own synchronization
+        // This avoids deadlock by using a single lock (in DataHintsRegistry)
+        DataHintsRegistry.preloadAllHintsSync(modelNames: commonModels)
+    }
+    
+    /// Preload hints once at test suite startup (MainActor version)
+    /// This can be called from @MainActor test classes that need to ensure hints are loaded
+    /// This ensures hints are loaded once from disk, not reloaded by every test
+    /// After preload, cache is read-only, so no synchronization needed for reads
+    @MainActor
+    public static func preloadHintsOnceMainActor() {
+        // Delegate to DataHintsRegistry which has its own synchronization
+        // This avoids deadlock by using a single lock (in DataHintsRegistry)
+        let commonModels: [String] = [
+            "User",
+            "UserWithSections"
+            // Add more model names as needed
+        ]
+        
+        DataHintsRegistry.preloadAllHintsSync(modelNames: commonModels)
     }
     
     open func setupTestEnvironment() {

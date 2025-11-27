@@ -975,12 +975,42 @@ private struct AsyncFormView: View {
     let layoutSpec: LayoutSpec?
     
     @State private var resolvedSections: [DynamicFormSection]?
-    @State private var isLoading = true
+    @State private var isLoading: Bool
     
-    // Optimize: Compute initial sections synchronously when no async work is needed
-    private var needsAsyncLoading: Bool {
-        // Only need async if we have a modelName (which requires file I/O)
-        return modelName != nil
+    // Initialize with cached hints if available (synchronous check)
+    // Flow: optional hint → file/cache → default
+    init(fields: [DynamicFormField], hints: EnhancedPresentationHints, modelName: String?, layoutSpec: LayoutSpec?) {
+        self.fields = fields
+        self.hints = hints
+        self.modelName = modelName
+        self.layoutSpec = layoutSpec
+        
+        // Step 1: If code provides hint (layoutSpec), use it synchronously
+        if let explicitSpec = layoutSpec {
+            self._resolvedSections = State(initialValue: explicitSpec.sections)
+            self._isLoading = State(initialValue: false)
+            return
+        }
+        
+        // Step 2: If no code hint, try file/cache synchronously
+        if let modelName = modelName,
+           let cachedHints = DataHintsRegistry.getCachedHints(for: modelName),
+           !cachedHints.sections.isEmpty {
+            // File-based hints are cached - use them immediately without async loading
+            let sections = SectionBuilder.buildSections(
+                from: cachedHints.sections,
+                matching: fields
+            )
+            self._resolvedSections = State(initialValue: sections)
+            self._isLoading = State(initialValue: false)
+            return
+        }
+        
+        // Step 3: If file/cache not available, will need async loading or use default
+        // If modelName provided but not cached, load async
+        // If no modelName, will use default (handled in loadSections)
+        self._resolvedSections = State(initialValue: nil)
+        self._isLoading = State(initialValue: modelName != nil) // Only loading if we have a modelName
     }
     
     // Cache initial sections to avoid recreating on every body evaluation
@@ -990,11 +1020,17 @@ private struct AsyncFormView: View {
             return explicitSpec.sections
         }
         
+        // If resolved sections are already set (from cached hints), use them
+        if let resolved = resolvedSections {
+            return resolved
+        }
+        
         // If no async work needed, return default sections immediately
-        if !needsAsyncLoading {
+        if modelName == nil {
             return createDefaultSections()
         }
         
+        // Need to load hints asynchronously
         return nil
     }
     
@@ -1031,28 +1067,31 @@ private struct AsyncFormView: View {
     
     @MainActor
     private func loadSections() async {
-        // Precedence 1: Explicit layoutSpec takes highest priority
+        // Flow: optional hint → file/cache → default
+        
+        // Step 1: If code provides hint (layoutSpec), use it
         if let explicitSpec = layoutSpec {
             resolvedSections = explicitSpec.sections
             isLoading = false
             return
         }
         
-        // Precedence 2: Load hints from .hints file if modelName provided
+        // Step 2: If no code hint, try file/cache
         if let modelName = modelName {
             let hintsResult = await globalDataHintsRegistry.loadHintsResult(for: modelName)
             
-            // Resolve sections from hints (field hints are merged automatically by framework)
+            // If file/cache has hints, use them
             if !hintsResult.sections.isEmpty {
                 resolvedSections = SectionBuilder.buildSections(
                     from: hintsResult.sections,
                     matching: fields
                 )
             } else {
+                // Step 3: If file/cache has nothing, use default
                 resolvedSections = createDefaultSections()
             }
         } else {
-            // Precedence 3: Default
+            // No modelName provided, use default
             resolvedSections = createDefaultSections()
         }
         

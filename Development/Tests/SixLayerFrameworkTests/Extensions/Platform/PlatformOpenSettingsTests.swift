@@ -219,7 +219,7 @@ open class PlatformOpenSettingsTests: BaseTestClass {
             
             var body: some View {
                 Button("Open Settings") {
-                    // When: Calling platformOpenSettings with OpenURLAction
+        // When: Calling platformOpenSettings with OpenURLAction
                     result = platformOpenSettings(openURL: openURL)
                 }
             }
@@ -266,7 +266,7 @@ open class PlatformOpenSettingsTests: BaseTestClass {
             
             var body: some View {
                 Button("Open Settings") {
-                    // When: Calling platformOpenSettings with OpenURLAction
+        // When: Calling platformOpenSettings with OpenURLAction
                     result = platformOpenSettings(openURL: openURL)
                 }
             }

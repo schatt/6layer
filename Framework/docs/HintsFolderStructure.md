@@ -50,6 +50,52 @@ Add your `.hints` files to the `Hints` folder and ensure they're included in you
 
 Ensure the `Hints` folder and its contents are added as bundle resources.
 
+## XcodeGen Configuration for .hints Files
+
+### Problem
+
+XcodeGen doesn't automatically recognize `.hints` files as resources that should be copied to the app bundle. Files listed in the `resources` section with `.hints` extension were not being included in the built app bundle.
+
+### Solution
+
+To ensure `.hints` files are properly copied to the app bundle, two steps are required:
+
+#### 1. Add the Hints Directory to Sources
+
+Add the hints directory to the `sources` section so XcodeGen can discover and reference the files:
+
+```yaml
+sources:
+  - path: Shared/Resources/Hints
+```
+
+#### 2. Configure Each Hints File with copyFiles Build Phase
+
+For each `.hints` file in the `resources` section, specify `buildPhase: copyFiles` with the appropriate destination:
+
+```yaml
+resources:
+  - path: Shared/Resources/Hints/FuelPurchaseDTO.hints
+    buildPhase: copyFiles
+    destination: resources
+    subpath: ""
+  - path: Shared/Resources/Hints/ExpenseDTO.hints
+    buildPhase: copyFiles
+    destination: resources
+    subpath: ""
+  # ... repeat for each hints file
+```
+
+### Why This Works
+
+- Adding the directory to `sources` allows XcodeGen to find and reference the files in the Xcode project
+- Using `buildPhase: copyFiles` with `destination: resources` creates a "Copy Files" build phase that explicitly copies these files to the app bundle's Resources folder
+- The `subpath: ""` ensures files are copied directly to the Resources folder without a subdirectory
+
+### Result
+
+After this configuration, all `.hints` files are properly included in the app bundle and accessible at runtime via `Bundle.main.url(forResource:withExtension:)` or the `FileBasedDataHintsLoader` from SixLayerFramework.
+
 ## Example Structure
 
 ```
