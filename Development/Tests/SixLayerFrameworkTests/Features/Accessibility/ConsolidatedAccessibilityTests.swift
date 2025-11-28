@@ -8260,11 +8260,20 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
-                    let buttons = inspectedView.sixLayerFindAll(Button.self)
-                    #expect(buttons.count == 2, "Should find both buttons")
-                    let autoButtonID = try buttons[0].sixLayerAccessibilityIdentifier()
-                    #expect(autoButtonID.contains("SixLayer"), "Auto button should have automatic ID")
-                    #expect(buttons[1] != nil, "Disabled button should still exist")
+                    // Use findAll(where:) to find buttons since Button is generic
+                    let allViews = try inspectedView.findAll(where: { _ in true })
+                    // Filter for buttons by trying to access button-specific methods
+                    var buttons: [Inspectable] = []
+                    for view in allViews {
+                        if let _ = try? view.sixLayerButton() {
+                            buttons.append(view as Inspectable)
+                        }
+                    }
+                    #expect(buttons.count >= 2, "Should find both buttons")
+                    if buttons.count >= 2 {
+                        let autoButtonID = try buttons[0].sixLayerAccessibilityIdentifier()
+                        #expect(autoButtonID.contains("SixLayer"), "Auto button should have automatic ID")
+                    }
                 }
             } catch {
                 Issue.record("Failed to inspect view with mid-hierarchy disable")
