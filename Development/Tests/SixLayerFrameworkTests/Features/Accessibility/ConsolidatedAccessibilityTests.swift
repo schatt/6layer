@@ -1334,10 +1334,21 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformOCRComponentsLayer4GeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        // PlatformOCRComponentsLayer4 is not a View type - use one of its functions that returns a View
-        let testView = PlatformOCRComponentsLayer4.platformOCRDisplay_L4(
-            text: "Test OCR Text",
-            confidence: 0.95
+        // PlatformOCRComponentsLayer4 doesn't exist as a type - use platformOCRImplementation_L4 function instead
+        let testImage = PlatformImage.createPlaceholder()
+        let context = OCRContext(textTypes: [.general], language: .english)
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard,
+            requiresNeuralEngine: false,
+            estimatedProcessingTime: 1.0
+        )
+        let testView = platformOCRImplementation_L4(
+            image: testImage,
+            context: context,
+            strategy: strategy,
+            onResult: { _ in }
         )
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
@@ -2178,6 +2189,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     // - MaterialAccessibilityManagerAccessibilityTests.swift
     
     // Helper methods for Eye Tracking tests
+    @MainActor
     private func createEyeTrackingManager() -> EyeTrackingManager {
         let config = EyeTrackingConfig(
             sensitivity: .medium,
@@ -8206,7 +8218,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     // Additional Accessibility Identifier Edge Case Tests (continued)
     
-    @Test @MainActor func testVeryLongNames() {
+    @Test @MainActor func testVeryLongNames() async {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             setupTestEnvironment()
@@ -8248,7 +8260,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             do {
                 try withInspectedViewThrowing(view) { inspectedView in
-                    let buttons = inspectedView.sixLayerFindAll(Button.self.self)
+                    let buttons = inspectedView.sixLayerFindAll(Button.self)
                     #expect(buttons.count == 2, "Should find both buttons")
                     let autoButtonID = try buttons[0].sixLayerAccessibilityIdentifier()
                     #expect(autoButtonID.contains("SixLayer"), "Auto button should have automatic ID")
@@ -8263,7 +8275,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
     }
     
-    @Test @MainActor func testMultipleScreenContexts() {
+    @Test @MainActor func testMultipleScreenContexts() async {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             setupTestEnvironment()
@@ -12499,7 +12511,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
             try withInspectedViewThrowing(view) { inspectedView in
-                let button = try inspectedView.sixLayerFind(Button.self.self)
+                let button = try inspectedView.sixLayerFind(Button.self)
                 let buttonID = try button.sixLayerAccessibilityIdentifier()
                 
                 // Should handle nested calls without duplication
