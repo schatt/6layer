@@ -12520,7 +12520,8 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
             try withInspectedViewThrowing(view) { inspectedView in
-                let button = try inspectedView.sixLayerFind(Button.self)
+                // Use sixLayerButton() instead of sixLayerFind(Button.self) since Button is generic
+                let button = try inspectedView.sixLayerButton()
                 let buttonID = try button.sixLayerAccessibilityIdentifier()
                 
                 // Should handle nested calls without duplication
