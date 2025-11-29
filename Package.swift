@@ -7,7 +7,7 @@ import PackageDescription
 let package = Package(
     name: "SixLayerFramework",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v17),
         .macOS(.v15)
     ],
     products: [
@@ -18,7 +18,7 @@ let package = Package(
         )
     ],
         dependencies: [
-            .package(url: "https://github.com/nalexn/ViewInspector", from: "0.10.3")
+            .package(url: "https://github.com/schatt/ViewInspector", branch: "0.10.3")
         ],
     targets: [
         // Main framework target - organized into logical structure
