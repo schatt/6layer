@@ -385,7 +385,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: testContent, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.ui", 
             platform: .macOS,
@@ -439,7 +439,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentBasicValue_L1(value: testValue, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.ui", 
             platform: .macOS,
@@ -495,7 +495,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentBasicArray_L1(array: testArray, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.ui", 
             platform: .macOS,
@@ -520,7 +520,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: formFields, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -543,7 +543,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: mediaItems, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -566,7 +566,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: numericData, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -589,7 +589,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: hierarchicalItems, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -612,7 +612,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: temporalItems, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -638,7 +638,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: items, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -657,7 +657,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: 42, hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -676,7 +676,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: [1, 2, 3], hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -695,7 +695,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: "Test String", hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -718,7 +718,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         let view = platformPresentContent_L1(content: UnknownType(value: "test"), hints: PresentationHints())
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -776,7 +776,7 @@ open class PlatformSemanticLayer1Tests: BaseTestClass {
         }, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.ui", 
             platform: .macOS,

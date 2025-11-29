@@ -18,7 +18,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -39,7 +39,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -61,7 +61,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -81,7 +81,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -101,7 +101,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformValidationMessage("Error message", type: .error)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -122,7 +122,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 .platformValidationMessage("Message", type: type)
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
@@ -142,7 +142,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformFormDivider()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -165,7 +165,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 .platformFormSpacing(size)
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
@@ -187,7 +187,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -209,7 +209,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -236,7 +236,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -263,7 +263,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             )
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -283,7 +283,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformNavigationTitle("Test Title")
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -306,7 +306,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 .platformNavigationTitleDisplayMode(mode)
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
@@ -329,7 +329,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 .platformNavigationBarTitleDisplayMode(mode)
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
@@ -350,7 +350,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformBackground()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -369,7 +369,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformBackground(.blue)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -390,7 +390,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformPadding()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -409,7 +409,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformPadding(.horizontal, 16)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -428,7 +428,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformPadding(20)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -447,7 +447,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformReducedPadding()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -468,7 +468,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformCornerRadius()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -486,7 +486,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformCornerRadius(16)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -506,7 +506,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformShadow()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -524,7 +524,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformShadow(color: .gray, radius: 8, x: 2, y: 2)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -544,7 +544,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformBorder()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -562,7 +562,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformBorder(color: .blue, width: 2)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -582,7 +582,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformFont()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -600,7 +600,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformFont(.headline)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -620,7 +620,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformAnimation()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -638,7 +638,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformAnimation(.easeInOut, value: true)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -658,7 +658,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformMinFrame()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -676,7 +676,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformMaxFrame()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -694,7 +694,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformIdealFrame()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -712,7 +712,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformAdaptiveFrame()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -732,7 +732,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformFormStyle()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -752,7 +752,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             .platformContentSpacing()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -774,7 +774,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -796,7 +796,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -819,7 +819,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             let view = platformPhotoDisplay_L4(image: testImage, style: style)
             
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
@@ -836,7 +836,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = platformPhotoDisplay_L4(image: nil, style: .thumbnail)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -875,7 +875,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -927,7 +927,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -960,7 +960,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,

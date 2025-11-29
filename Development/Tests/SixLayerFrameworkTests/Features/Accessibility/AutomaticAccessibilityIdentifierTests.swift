@@ -277,7 +277,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // We test this by verifying the view has the manual identifier
             // The manual identifier should take precedence over automatic generation
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasManualID = testAccessibilityIdentifiersSinglePlatform(
+            let hasManualID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "\(manualID)",
                 platform: SixLayerPlatform.iOS,
@@ -316,7 +316,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // We test this by verifying the view does NOT have an automatic identifier
             // The modifier should not generate an identifier when enableAutoIDs is false
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAutomaticID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAutomaticID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "*.auto.*",
                 platform: SixLayerPlatform.iOS,
@@ -400,7 +400,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.layer1.*element.*", 
                 platform: SixLayerPlatform.iOS,
@@ -833,7 +833,7 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*AddFuelButton", 
                 platform: SixLayerPlatform.iOS,

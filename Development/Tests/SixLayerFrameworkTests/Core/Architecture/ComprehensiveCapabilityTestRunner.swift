@@ -337,7 +337,7 @@ struct ComprehensiveCapabilityTestRunner {
         // platformConfig is a non-optional struct, so it exists if we reach here
         
         // Test that the configuration actually works by creating a test view
-        let testView = createTestViewWithConfig(platformConfig)
+        let _ = createTestViewWithConfig(platformConfig)
         // testView is a non-optional View, so it exists if we reach here
         
         // Test platform-specific consistency and dependencies
@@ -419,7 +419,7 @@ struct ComprehensiveCapabilityTestRunner {
         #expect(Bool(true), "Configuration should be valid for view generation on \(platform)")  // config is non-optional
         
         // Test that the configuration can actually be used to create a functional view
-        let testView = createTestViewWithConfig(config)
+        let _ = createTestViewWithConfig(config)
         #expect(Bool(true), "Should be able to create functional view with config for \(platform)")  // testView is non-optional
         
         // Test that the configuration produces appropriate UI behavior

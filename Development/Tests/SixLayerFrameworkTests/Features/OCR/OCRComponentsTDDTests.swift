@@ -73,7 +73,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*OCROverlayView.*",
             platform: .iOS,
@@ -192,7 +192,7 @@ open class OCRComponentsTDDTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*OCRDisambiguationView.*",
             platform: .iOS,

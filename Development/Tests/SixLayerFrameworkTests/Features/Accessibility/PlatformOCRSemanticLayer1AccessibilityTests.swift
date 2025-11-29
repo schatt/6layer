@@ -30,7 +30,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -68,7 +68,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -106,7 +106,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -144,7 +144,7 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         // Note: Element-level IDs are implemented at the function level
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-        let hasAccessibilityID =         testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,

@@ -29,7 +29,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             styledButton,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -51,7 +51,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             styledButton,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -75,7 +75,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             formField,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -99,7 +99,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             listRow,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -124,7 +124,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             styledCard,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -154,7 +154,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             sheet,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -179,7 +179,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             navigation,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -209,7 +209,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             cardGrid,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -231,7 +231,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             backgroundText,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,

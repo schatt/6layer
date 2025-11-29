@@ -79,7 +79,7 @@ public extension View {
         }
         .automaticCompliance(named: "platformShare_L4")
         #elseif os(macOS)
-        self.onChange(of: isPresented.wrappedValue) { newValue in
+        self.onChange(of: isPresented.wrappedValue) { oldValue, newValue in
             if newValue {
                 platformShareMacOS(items: items, onComplete: onComplete)
                 // Reset binding after sharing

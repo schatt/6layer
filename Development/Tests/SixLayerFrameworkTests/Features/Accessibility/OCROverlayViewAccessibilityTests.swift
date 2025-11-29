@@ -38,7 +38,7 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        #expect(testAccessibilityIdentifiersSinglePlatform(
+        #expect(testComponentComplianceSinglePlatform(
             ocrView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -79,7 +79,7 @@ open class OCROverlayViewRealAccessibilityTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        #expect(testAccessibilityIdentifiersSinglePlatform(
+        #expect(testComponentComplianceSinglePlatform(
             ocrView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.macOS,

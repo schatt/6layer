@@ -26,7 +26,7 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
         // VERIFIED: VisionSafety DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/VisionSafety.swift:15.
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,

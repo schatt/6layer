@@ -115,7 +115,7 @@ public struct RichTextEditor: View {
             .padding(8)
             .background(Color.secondaryBackground)
             .cornerRadius(8)
-                    .onChange(of: text) { _ in
+                    .onChange(of: text) {
             // Handle text changes
         }
     }
@@ -229,7 +229,7 @@ public struct AutocompleteField: View {
                 .textFieldStyle(.roundedBorder)
                 .accessibilityLabel("Autocomplete field for \(field.label)")
                 .accessibilityHint("Type to search and select from suggestions")
-                .onChange(of: text) { newValue in
+                .onChange(of: text) { oldValue, newValue in
                     filterSuggestions(query: newValue)
                     formState.setValue(newValue, for: field.id)
                 }
@@ -568,7 +568,7 @@ public struct DatePickerField: View {
             )
             .datePickerStyle(.compact)
             .selfLabelingControl(label: field.label)
-            .onChange(of: selectedDate) { newDate in
+            .onChange(of: selectedDate) { oldValue, newDate in
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
                 formState.setValue(formatter.string(from: newDate), for: field.id)
@@ -608,7 +608,7 @@ public struct TimePickerField: View {
             )
             .datePickerStyle(.compact)
             .selfLabelingControl(label: field.label)
-            .onChange(of: selectedTime) { newTime in
+            .onChange(of: selectedTime) { oldValue, newTime in
                 let formatter = DateFormatter()
                 formatter.timeStyle = .short
                 formState.setValue(formatter.string(from: newTime), for: field.id)
@@ -648,7 +648,7 @@ public struct DateTimePickerField: View {
             )
             .datePickerStyle(.compact)
             .selfLabelingControl(label: field.label)
-            .onChange(of: selectedDateTime) { newDateTime in
+            .onChange(of: selectedDateTime) { oldValue, newDateTime in
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
                 formatter.timeStyle = .short

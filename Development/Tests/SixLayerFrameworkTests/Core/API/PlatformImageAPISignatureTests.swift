@@ -44,13 +44,13 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test each initializer signature directly
     @Test func testPlatformImageInitializerSignatures() {
         // Test 1: Default initializer
-        let defaultImage = PlatformImage()
+        let _ = PlatformImage()
         // defaultImage is non-optional, so no nil check needed
         #expect(Bool(true), "Default initializer should exist")
         
         // Test 2: Data initializer
         let sampleData = createSampleImageData()
-        let dataImage = PlatformImage(data: sampleData)
+        let _ = PlatformImage(data: sampleData)
         #expect(Bool(true), "Data initializer should exist and work")  // dataImage is non-optional
         
         // Test 3: Platform-specific initializers
@@ -156,11 +156,11 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     @Test func testPlatformImageCrossPlatformConsistency() {
         // Test that data initializer works on all platforms
         let sampleData = createSampleImageData()
-        let dataImage = PlatformImage(data: sampleData)
+        let _ = PlatformImage(data: sampleData)
         #expect(Bool(true), "Data initializer should work on all platforms")  // dataImage is non-optional
         
         // Test that default initializer works on all platforms
-        let defaultImage = PlatformImage()
+        let _ = PlatformImage()
         // defaultImage is non-optional, so no nil check needed
         #expect(Bool(true), "Default initializer should work on all platforms")
         
@@ -279,7 +279,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         let cgImage = createTestCGImage()
         
         // When: Creating PlatformImage with default size (.zero)
-        let platformImage = PlatformImage(cgImage: cgImage, size: .zero)
+        let _ = PlatformImage(cgImage: cgImage, size: .zero)
         // platformImage is non-optional, so no nil check needed
         #expect(Bool(true), "CGImage initializer should work with .zero size")
         

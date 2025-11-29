@@ -25,7 +25,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         // VERIFIED: VisionSafety DOES have .automaticCompliance() modifier applied
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
@@ -46,7 +46,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         // VERIFIED: PlatformSafety DOES have .automaticCompliance() modifier applied
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
@@ -67,7 +67,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         // VERIFIED: PlatformSecurity DOES have .automaticCompliance() modifier applied
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
@@ -88,7 +88,7 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         // VERIFIED: PlatformPrivacy DOES have .automaticCompliance() modifier applied
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,

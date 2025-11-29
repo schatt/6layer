@@ -161,6 +161,7 @@ private struct LegacyImagePicker: UIViewControllerRepresentable {
         }
         
         // For testing
+        @MainActor
         func simulateImageSelection(_ image: PlatformImage) {
             parent.onImageSelected(image)
         }
@@ -247,6 +248,7 @@ private struct macOSImagePicker: NSViewControllerRepresentable {
         }
         
         // For testing
+        @MainActor
         func simulateImageSelection(_ image: PlatformImage) {
             parent.onImageSelected(image)
         }

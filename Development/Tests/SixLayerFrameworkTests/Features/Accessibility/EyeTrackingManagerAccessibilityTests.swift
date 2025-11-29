@@ -29,7 +29,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
@@ -60,7 +60,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.macOS,

@@ -40,7 +40,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
         
             // Then: Should generate accessibility identifiers
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
@@ -75,7 +75,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             let view = ResponsiveNavigation(content: navigationContent)
             // Then: Should generate accessibility identifiers
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
@@ -109,7 +109,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             let view = ResponsiveStack(content: stackContent)
             // Then: Should generate accessibility identifiers
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
@@ -139,7 +139,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
@@ -169,7 +169,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
@@ -204,7 +204,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,

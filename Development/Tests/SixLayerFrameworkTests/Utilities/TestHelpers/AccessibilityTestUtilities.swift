@@ -46,12 +46,43 @@ extension View {
 
 // MARK: - Cross-platform hosting and accessibility utilities
 
+/// Thread-local storage for hosting controllers to prevent deallocation during test execution
+@MainActor
+private final class HostingControllerStorage {
+    private static var storage: [ObjectIdentifier: Any] = [:]
+    private static let lock = NSLock()
+    
+    static func store(_ controller: Any, for view: Any) {
+        lock.lock()
+        defer { lock.unlock() }
+        storage[ObjectIdentifier(view as AnyObject)] = controller
+    }
+    
+    static func remove(for view: Any) {
+        lock.lock()
+        defer { lock.unlock() }
+        storage.removeValue(forKey: ObjectIdentifier(view as AnyObject))
+    }
+    
+    static func cleanup() {
+        lock.lock()
+        defer { lock.unlock() }
+        storage.removeAll()
+    }
+}
+
 /// Host a SwiftUI view and return the platform root view for inspection.
+/// CRITICAL: The hosting controller is retained in static storage to prevent crashes
+/// when the view is accessed after the function returns.
 @MainActor
 public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
     #if canImport(UIKit)
     let hosting = UIHostingController(rootView: view)
     let root = hosting.view
+    // CRITICAL: Store the hosting controller to prevent deallocation
+    if let root = root {
+        HostingControllerStorage.store(hosting, for: root)
+    }
     root?.setNeedsLayout()
     root?.layoutIfNeeded()
     
@@ -68,6 +99,8 @@ public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
     #elseif canImport(AppKit)
     let hosting = NSHostingController(rootView: view)
     let root = hosting.view
+    // CRITICAL: Store the hosting controller to prevent deallocation
+    HostingControllerStorage.store(hosting, for: root)
     root.layoutSubtreeIfNeeded()
     
     // Force accessibility update
@@ -714,25 +747,6 @@ public func testComponentComplianceSinglePlatform<T: View>(
     return accessibilityResult && higComplianceResult
 }
 
-/// Test accessibility identifiers on a single platform (for representative sampling)
-/// This is kept for backward compatibility - it now also tests HIG compliance by default
-@available(*, deprecated, renamed: "testComponentComplianceSinglePlatform", message: "Use testComponentComplianceSinglePlatform which tests both accessibility identifiers and HIG compliance")
-@MainActor
-public func testAccessibilityIdentifiersSinglePlatform<T: View>(
-    _ view: T,
-    expectedPattern: String,
-    platform: SixLayerPlatform,
-    componentName: String,
-    testHIGCompliance: Bool = true
-) -> Bool {
-    return testComponentComplianceSinglePlatform(
-        view,
-        expectedPattern: expectedPattern,
-        platform: platform,
-        componentName: componentName,
-        testHIGCompliance: testHIGCompliance
-    )
-}
 
 // MARK: - HIG Compliance Test Functions
 

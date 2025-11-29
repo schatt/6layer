@@ -353,7 +353,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
         let service = OCRService()
         Task {
             do {
-                let result = try await service.processImage(
+                let _ = try await service.processImage(
                     testImage,
                     context: context,
                     strategy: strategy
@@ -410,7 +410,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
             let encodedData = try platformColorEncode(testColor)
             #expect(!encodedData.isEmpty, "Color encoding should work on all platforms")
             
-            let decodedColor = try platformColorDecode(encodedData)
+            let _ = try platformColorDecode(encodedData)
             #expect(Bool(true), "Color decoding should work on all platforms")  // decodedColor is non-optional
         } catch {
             Issue.record("Color encoding/decoding should work on all platforms: \(error)")

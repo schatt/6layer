@@ -60,7 +60,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let layoutDecision = createLayoutDecision()
         
         // WHEN: Creating a SimpleCardComponent
-        let card = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -82,7 +82,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let layoutDecision = createLayoutDecision()
         
         // WHEN: Creating a SimpleCardComponent
-        let card = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -103,7 +103,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let layoutDecision = createLayoutDecision()
         
         // WHEN: Creating a SimpleCardComponent
-        let card = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -131,7 +131,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // WHEN: Creating an ExpandableCardComponent
-        let card = ExpandableCardComponent(
+        let _ = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
             strategy: strategy,
@@ -163,7 +163,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // WHEN: Creating an ExpandableCardComponent in expanded state
-        let card = ExpandableCardComponent(
+        let _ = ExpandableCardComponent(
             item: item,
             layoutDecision: layoutDecision,
             strategy: strategy,
@@ -190,7 +190,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating a ListCardComponent
-        let card = ListCardComponent(item: item, hints: PresentationHints())
+        let _ = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should display the item's title and subtitle instead of hardcoded text
         #expect(Bool(true), "card is non-optional")  // card is non-optional
@@ -203,7 +203,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[2] // This item has subtitle: nil
         
         // WHEN: Creating a ListCardComponent
-        let card = ListCardComponent(item: item, hints: PresentationHints())
+        let _ = ListCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should handle missing subtitle gracefully
         #expect(Bool(true), "card is non-optional")  // card is non-optional
@@ -218,7 +218,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating a MasonryCardComponent
-        let card = MasonryCardComponent(item: item, hints: PresentationHints())
+        let _ = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should display the item's title instead of hardcoded text
         #expect(Bool(true), "card is non-optional")  // card is non-optional
@@ -236,7 +236,7 @@ open class CardContentDisplayTests: BaseTestClass {
         ]
         
         // WHEN: Creating card components with GenericDataItem
-        let simpleCard = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: genericItems[0],
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -245,8 +245,8 @@ open class CardContentDisplayTests: BaseTestClass {
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: genericItems[0], hints: PresentationHints())
-        let masonryCard = MasonryCardComponent(item: genericItems[0], hints: PresentationHints())
+        let _ = ListCardComponent(item: genericItems[0], hints: PresentationHints())
+        let _ = MasonryCardComponent(item: genericItems[0], hints: PresentationHints())
         
         // THEN: Should display the generic item's title and subtitle
         #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
@@ -264,7 +264,7 @@ open class CardContentDisplayTests: BaseTestClass {
         ]
         
         // WHEN: Creating card components with GenericVehicle
-        let simpleCard = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: vehicles[0],
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -273,8 +273,8 @@ open class CardContentDisplayTests: BaseTestClass {
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: vehicles[0], hints: PresentationHints())
-        let masonryCard = MasonryCardComponent(item: vehicles[0], hints: PresentationHints())
+        let _ = ListCardComponent(item: vehicles[0], hints: PresentationHints())
+        let _ = MasonryCardComponent(item: vehicles[0], hints: PresentationHints())
         
         // THEN: Should display the vehicle's name and description
         #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
@@ -291,7 +291,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let emptyItem = TestItem(title: "", subtitle: "", description: "", icon: "", color: nil)
         
         // WHEN: Creating card components
-        let simpleCard = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: emptyItem,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -300,8 +300,8 @@ open class CardContentDisplayTests: BaseTestClass {
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: emptyItem, hints: PresentationHints())
-        let masonryCard = MasonryCardComponent(item: emptyItem, hints: PresentationHints())
+        let _ = ListCardComponent(item: emptyItem, hints: PresentationHints())
+        let _ = MasonryCardComponent(item: emptyItem, hints: PresentationHints())
         
         // THEN: Should handle empty strings gracefully
         #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
@@ -323,7 +323,7 @@ open class CardContentDisplayTests: BaseTestClass {
         )
         
         // WHEN: Creating card components
-        let simpleCard = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: longItem,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -332,8 +332,8 @@ open class CardContentDisplayTests: BaseTestClass {
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: longItem, hints: PresentationHints())
-        let masonryCard = MasonryCardComponent(item: longItem, hints: PresentationHints())
+        let _ = ListCardComponent(item: longItem, hints: PresentationHints())
+        let _ = MasonryCardComponent(item: longItem, hints: PresentationHints())
         
         // THEN: Should handle long text with proper truncation
         #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
@@ -353,7 +353,7 @@ open class CardContentDisplayTests: BaseTestClass {
         let item = sampleItems[0]
         
         // WHEN: Creating card components
-        let simpleCard = SimpleCardComponent(
+        let _ = SimpleCardComponent(
             item: item,
             layoutDecision: layoutDecision,
             hints: PresentationHints(),
@@ -362,8 +362,8 @@ open class CardContentDisplayTests: BaseTestClass {
             onItemEdited: nil
         )
         
-        let listCard = ListCardComponent(item: item, hints: PresentationHints())
-        let masonryCard = MasonryCardComponent(item: item, hints: PresentationHints())
+        let _ = ListCardComponent(item: item, hints: PresentationHints())
+        let _ = MasonryCardComponent(item: item, hints: PresentationHints())
         
         // THEN: Should have proper accessibility labels
         #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional

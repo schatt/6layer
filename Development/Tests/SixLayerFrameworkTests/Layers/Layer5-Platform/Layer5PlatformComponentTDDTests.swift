@@ -42,7 +42,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformRecognitionLayer5.*",
                     platform: .iOS,
@@ -86,7 +86,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformPrivacyLayer5.*",
                     platform: .iOS,
@@ -129,7 +129,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
             // Should have accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*PlatformPerformanceLayer6.*",
                 platform: .iOS,
@@ -172,7 +172,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformProfilingLayer5.*",
                     platform: .iOS,
@@ -215,7 +215,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformSafetyLayer5.*",
                     platform: .iOS,
@@ -258,7 +258,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformRoutingLayer5.*",
                     platform: .iOS,
@@ -301,7 +301,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformOrchestrationLayer5.*",
                     platform: .iOS,
@@ -344,7 +344,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
 
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformOptimizationLayer5.*",
                     platform: .iOS,
@@ -388,7 +388,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-                let hasAccessibilityID =                 testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID =                 testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformOrganizationLayer5.*",
                     platform: .iOS,
@@ -436,7 +436,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-                let hasAccessibilityID =                 testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID =                 testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformNotificationLayer5.*",
                     platform: .iOS,
@@ -484,7 +484,7 @@ open class Layer5PlatformComponentTDDTests: BaseTestClass {
                 // Should have accessibility identifier
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
 
-                let hasAccessibilityID =                 testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID =                 testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*PlatformInterpretationLayer5.*",
                     platform: .iOS,

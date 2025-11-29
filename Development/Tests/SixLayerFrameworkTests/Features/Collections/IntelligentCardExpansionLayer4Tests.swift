@@ -33,7 +33,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
             )
         
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 platform: SixLayerPlatform.iOS,
@@ -69,7 +69,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
             )
         
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 platform: .macOS,
@@ -101,7 +101,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
             )
         
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 platform: SixLayerPlatform.iOS,

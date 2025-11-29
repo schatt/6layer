@@ -18,6 +18,14 @@ Unable to open XPC store: Error Domain=NSCocoaErrorDomain Code=134060
 ACMonitoredAccountStore: Failed to fetch accounts
 ```
 
+Additionally, you may see macOS sandbox warnings in the console like:
+```
+Couldn't write values for keys (ABMetadataLastOilChange) in CFPrefsPlistSource...
+setting these preferences requires user-preference-write or file-write-data sandbox access
+```
+
+**These sandbox warnings are benign and can be safely ignored.** They occur when macOS tries to access Contacts/AddressBook preferences, which is expected system behavior and doesn't affect test functionality.
+
 ## Solution: Isolated Test Stores
 
 Use `CoreDataTestUtilities` to create isolated test containers that:

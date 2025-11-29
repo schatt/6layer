@@ -30,7 +30,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -50,7 +50,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.macOS,
@@ -79,7 +79,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -106,7 +106,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -133,7 +133,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -174,7 +174,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData, hints: hints)
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
@@ -194,7 +194,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         let view = IntelligentDetailView.platformDetailView(for: testData, hints: nil)
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -249,7 +249,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         )
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -280,7 +280,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         )
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -311,7 +311,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         )
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -342,7 +342,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         )
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -387,7 +387,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         )
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
@@ -411,7 +411,7 @@ open class IntelligentDetailViewTests: BaseTestClass {
         )
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,

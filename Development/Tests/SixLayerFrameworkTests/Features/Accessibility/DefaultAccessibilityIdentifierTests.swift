@@ -43,7 +43,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -114,7 +114,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "manual-test-button", 
                 platform: SixLayerPlatform.iOS,

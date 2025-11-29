@@ -123,9 +123,16 @@ public enum CoreDataTestUtilities {
             // Filter out known benign system-level errors
             if errorDescription.contains("contactsd") || 
                errorDescription.contains("AddressBook") ||
+               errorDescription.contains("ABMetadata") ||
+               errorDescription.contains("CFPrefsPlistSource") ||
+               errorDescription.contains("user-preference-write") ||
+               errorDescription.contains("file-write-data") ||
+               errorDescription.contains("sandbox") ||
                errorDescription.contains("XPC") {
-                // These are system-level Contacts access attempts - benign for in-memory stores
-                print("⚠️ CoreData system-level Contacts access warning (benign, can be ignored): \(errorDescription)")
+                // These are system-level Contacts/AddressBook access attempts - benign for in-memory stores
+                // The sandbox warnings occur when macOS tries to access Contacts preferences,
+                // which is expected behavior and doesn't affect test functionality
+                // Suppress these warnings to reduce noise in test output
             } else {
                 print("⚠️ CoreData test store load warning: \(errorDescription)")
             }

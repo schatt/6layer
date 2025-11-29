@@ -37,7 +37,7 @@ open class OCROverlayViewTests: BaseTestClass {
         
         // OCROverlayView generates "SixLayer.main.ui.*OCROverlayView.*" pattern (with component name)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.ui.*OCROverlayView.*", 
             platform: SixLayerPlatform.iOS,
@@ -72,7 +72,7 @@ open class OCROverlayViewTests: BaseTestClass {
         
         // OCROverlayView generates "SixLayer.main.ui.*OCROverlayView.*" pattern (with component name)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.main.ui.*OCROverlayView.*", 
             platform: SixLayerPlatform.macOS,

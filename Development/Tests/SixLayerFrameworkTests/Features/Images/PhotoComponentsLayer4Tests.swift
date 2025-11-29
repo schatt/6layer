@@ -99,7 +99,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 result, 
                 expectedPattern: "SixLayer.main.ui", 
                 platform: SixLayerPlatform.iOS,

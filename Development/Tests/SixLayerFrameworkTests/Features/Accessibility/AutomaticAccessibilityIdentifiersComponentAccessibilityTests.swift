@@ -19,7 +19,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -41,7 +41,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -63,7 +63,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -85,7 +85,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
@@ -108,7 +108,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
@@ -140,7 +140,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -161,7 +161,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -182,7 +182,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
@@ -205,7 +205,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -227,7 +227,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
@@ -250,7 +250,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -272,7 +272,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
@@ -294,7 +294,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
@@ -316,7 +316,7 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,

@@ -179,7 +179,7 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(deleteCallbackItem?.id == item.id, "Delete callback should receive the correct item")
     }
     
-    @Test func testExpandableCardComponentBothActionButtons() {
+    @Test @MainActor func testExpandableCardComponentBothActionButtons() {
         // GIVEN: A test item and both callbacks
         let item = CardActionButtonTests.sampleItems[0]
         let editCallback: (TestItem) -> Void = { _ in
@@ -346,7 +346,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Edge Cases
     
-    @Test func testActionButtonsWithNilCallbacks() {
+    @Test @MainActor func testActionButtonsWithNilCallbacks() {
         // GIVEN: A test item
         let item = CardActionButtonTests.sampleItems[0]
         
@@ -379,7 +379,7 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(Bool(true), "simpleCard is non-optional")  // simpleCard is non-optional
     }
     
-    @Test func testActionButtonsWithEmptyItems() {
+    @Test @MainActor func testActionButtonsWithEmptyItems() {
         // GIVEN: An empty item
         let emptyItem = TestItem(
             title: "",
@@ -414,7 +414,7 @@ open class CardActionButtonTests: BaseTestClass {
     
     // MARK: - Platform-Specific Business Logic Tests
     
-    @Test func testActionButtonBehaviorAcrossPlatforms() {
+    @Test @MainActor func testActionButtonBehaviorAcrossPlatforms() {
         // GIVEN: Test item and platform-specific expectations
         let sampleItems = [
             TestItem(
@@ -491,7 +491,7 @@ open class CardActionButtonTests: BaseTestClass {
         }
     }
     
-    @Test func testActionButtonVisibilityBasedOnState() {
+    @Test @MainActor func testActionButtonVisibilityBasedOnState() {
         // GIVEN: Test item and different expansion states
         let item = CardActionButtonTests.sampleItems[0]
         
@@ -534,7 +534,7 @@ open class CardActionButtonTests: BaseTestClass {
         #expect(collapsedCard.onItemEdited != nil, "Edit callback should be available in collapsed state")
     }
     
-    @Test func testActionButtonCallbackTypes() {
+    @Test @MainActor func testActionButtonCallbackTypes() {
         let startTime = Date()
         print("⏱️ [TIMING] Test started at \(startTime)")
         

@@ -24,7 +24,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
             
             // When & Then: Should generate accessibility identifiers
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*platformPresentLocalizedContent_L1.*",
                 platform: SixLayerPlatform.iOS,
@@ -50,7 +50,7 @@ open class InternationalizationServiceAccessibilityTests: BaseTestClass {
             
             // When & Then: Should generate accessibility identifiers
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*platformPresentLocalizedContent_L1.*",
                 platform: SixLayerPlatform.macOS,

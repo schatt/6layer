@@ -74,7 +74,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             
             // Test that the view has an accessibility identifier using the same method as working tests
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -149,7 +149,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             
             // Test that the view has an accessibility identifier using the same method as working tests
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -225,7 +225,7 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
             
             // Test that the view has an accessibility identifier using the same method as working tests
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,

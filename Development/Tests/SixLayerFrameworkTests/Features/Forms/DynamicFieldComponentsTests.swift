@@ -81,7 +81,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicMultiSelectField.*",
             platform: .iOS,
@@ -150,7 +150,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicRadioField.*",
             platform: .iOS,
@@ -218,7 +218,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicCheckboxField.*",
             platform: .iOS,
@@ -278,7 +278,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicRichTextField.*",
             platform: .iOS,
@@ -335,7 +335,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicFileField.*",
             platform: .iOS,
@@ -392,7 +392,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicImageField.*",
             platform: .iOS,
@@ -449,7 +449,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicArrayField.*",
             platform: .iOS,
@@ -506,7 +506,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicDataField.*",
             platform: .iOS,
@@ -562,7 +562,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicAutocompleteField.*",
             platform: .iOS,
@@ -625,7 +625,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicEnumField.*",
             platform: .iOS,
@@ -679,7 +679,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicCustomField.*",
             platform: .iOS,
@@ -733,7 +733,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicColorField.*",
             platform: .iOS,
@@ -787,7 +787,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Should generate accessibility identifier
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*DynamicTextAreaField.*",
             platform: .iOS,

@@ -128,7 +128,7 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
     // MARK: - Capability Interaction Tests
     
     @Test func testCapabilityInteractions() {
-        let platform = SixLayerPlatform.current
+        let _ = SixLayerPlatform.current
         
         // Test that capabilities interact correctly
         testTouchHoverInteraction()
@@ -140,8 +140,8 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         // Test that the framework handles touch and hover correctly
         // Touch and hover CAN coexist (e.g., iPad with mouse, macOS with touchscreen, visionOS)
         // We trust what the OS returns - both can be true simultaneously
-        let hasTouch = RuntimeCapabilityDetection.supportsTouch
-        let hasHover = RuntimeCapabilityDetection.supportsHover
+        let _ = RuntimeCapabilityDetection.supportsTouch
+        let _ = RuntimeCapabilityDetection.supportsHover
         
         // Framework can handle both being true or false - that's what matters
         // No logical constraint prevents them from coexisting
@@ -202,8 +202,8 @@ open class CapabilityCombinationValidationTests: BaseTestClass {// MARK: - Curre
         // The only true constraints are logical dependencies (haptic requires touch, AssistiveTouch requires touch)
         // This test verifies that the framework correctly handles coexisting capabilities
         
-        let hasTouch = RuntimeCapabilityDetection.supportsTouch
-        let hasHover = RuntimeCapabilityDetection.supportsHover
+        let _ = RuntimeCapabilityDetection.supportsTouch
+        let _ = RuntimeCapabilityDetection.supportsHover
         
         // Framework can handle both being true or false - that's what matters
         // No logical constraint prevents them from coexisting

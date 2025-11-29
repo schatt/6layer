@@ -225,7 +225,7 @@ struct IntelligentDetailViewSheetTests {
         
         // Verify accessibility identifiers are generated
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             detailView,
             expectedPattern: "SixLayer.main.ui",
             platform: SixLayerPlatform.macOS,

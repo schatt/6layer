@@ -352,7 +352,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        #expect(testAccessibilityIdentifiersSinglePlatform(
+        #expect(testComponentComplianceSinglePlatform(
             enhancedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
@@ -391,7 +391,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        #expect(testAccessibilityIdentifiersSinglePlatform(
+        #expect(testComponentComplianceSinglePlatform(
             enhancedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
@@ -499,7 +499,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        #expect(testAccessibilityIdentifiersSinglePlatform(
+        #expect(testComponentComplianceSinglePlatform(
             integratedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,

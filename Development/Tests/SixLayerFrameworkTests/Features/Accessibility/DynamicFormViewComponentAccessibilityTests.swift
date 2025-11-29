@@ -86,7 +86,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
         let view = CustomFieldView(field: field, formState: formState)
         
         // Test that the component generates accessibility identifiers
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*\(componentName).*",
             platform: platform,
@@ -260,7 +260,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:131.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*DynamicTextField.*",
                 platform: .iOS,
@@ -338,7 +338,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:293.
                 // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*DynamicNumberField.*",
                     platform: .iOS,
@@ -405,7 +405,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:1114.
                 // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*DynamicTextAreaField.*",
                     platform: .iOS,
@@ -473,7 +473,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Forms/DynamicSelectField.swift:53.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*DynamicSelectField.*",
                 platform: .iOS,
@@ -541,7 +541,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:467.
                 // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*DynamicMultiSelectField.*",
                     platform: .iOS,
@@ -609,7 +609,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:527.
                 // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*DynamicRadioField.*",
                     platform: .iOS,
@@ -676,7 +676,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:575.
                 // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*DynamicCheckboxField.*",
                     platform: .iOS,
@@ -743,7 +743,7 @@ open class DynamicFormViewComponentAccessibilityTests: BaseTestClass {
                 // modifier applied in Framework/Sources/Components/Forms/DynamicFieldComponents.swift:1070.
                 // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
                 #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-                let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+                let hasAccessibilityID = testComponentComplianceSinglePlatform(
                     view,
                     expectedPattern: "SixLayer.main.ui.*DynamicToggleField.*",
                     platform: .iOS,

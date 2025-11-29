@@ -29,7 +29,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             alertButtonView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -54,7 +54,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             toastView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -79,7 +79,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             resourceButtonView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -104,7 +104,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             imageView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -130,7 +130,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             notificationView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -156,7 +156,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             optimizationView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -182,7 +182,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             safetyView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
@@ -208,7 +208,7 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             privacyView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,

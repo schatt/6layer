@@ -31,7 +31,7 @@ open class IntelligentFormViewTests: BaseTestClass {
                 initialData: testData
             )
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -57,7 +57,7 @@ open class IntelligentFormViewTests: BaseTestClass {
                 initialData: testData
             )
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.macOS,

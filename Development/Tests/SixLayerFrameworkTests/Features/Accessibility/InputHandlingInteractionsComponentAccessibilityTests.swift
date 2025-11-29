@@ -34,7 +34,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
@@ -89,7 +89,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
@@ -114,7 +114,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
@@ -138,7 +138,7 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,

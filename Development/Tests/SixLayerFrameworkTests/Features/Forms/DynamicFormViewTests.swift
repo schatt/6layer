@@ -75,7 +75,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
             // Should have accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*DynamicFormView.*",
                 platform: .iOS,
@@ -136,7 +136,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
             // Should have accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*DynamicFormSectionView.*",
                 platform: .iOS,
@@ -196,7 +196,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
             // Should have accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*DynamicFormFieldView.*",
                 platform: .iOS,
@@ -262,7 +262,7 @@ open class DynamicFormViewTests: BaseTestClass {
 
             // Should have accessibility identifier
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+            let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*FormWizardView.*",
                 platform: .iOS,
@@ -313,7 +313,7 @@ open class DynamicFormViewTests: BaseTestClass {
         
         // When: Testing accessibility identifier generation
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
             platform: SixLayerPlatform.iOS,
@@ -356,7 +356,7 @@ open class DynamicFormViewTests: BaseTestClass {
         )
         
         // When: Testing accessibility identifier generation
-        let hasAccessibilityID = testAccessibilityIdentifiersSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui.*DynamicFormView.*",
             platform: SixLayerPlatform.macOS,

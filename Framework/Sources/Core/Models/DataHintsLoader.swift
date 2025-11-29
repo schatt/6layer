@@ -321,7 +321,7 @@ public actor DataHintsRegistry {
     // Once true, sharedResultCache is effectively read-only
     nonisolated(unsafe) private static var hintsPreloaded = false
     // Lock for synchronizing preload operations (shared across all threads)
-    nonisolated(unsafe) private static let preloadLock = NSLock()
+    nonisolated private static let preloadLock = NSLock()
     
     public init(loader: DataHintsLoader = FileBasedDataHintsLoader()) {
         self.loader = loader

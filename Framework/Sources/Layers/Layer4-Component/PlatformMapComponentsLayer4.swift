@@ -20,6 +20,10 @@ import MapKit
 /// This layer provides platform-aware UI components specifically designed for displaying maps
 /// and geographic data. It uses the modern SwiftUI Map API with Annotation.
 ///
+/// Note: MapCameraPosition and MapContent are SwiftUI types that require iOS 17+ / macOS 14+
+/// Since our minimum macOS version is 15, these types are always available
+#if canImport(MapKit)
+
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @MainActor
 public enum PlatformMapComponentsLayer4 {
@@ -34,8 +38,9 @@ public enum PlatformMapComponentsLayer4 {
         position: Binding<MapCameraPosition>,
         @MapContentBuilder content: () -> some MapContent
     ) -> some View {
-        #if canImport(MapKit)
+        #if os(iOS) || os(macOS)
         // Use modern SwiftUI Map API (requires iOS 17+, macOS 14+)
+        // Since minimum macOS is 15, Map types are always available
         Map(position: position) {
             content()
         }
@@ -55,7 +60,7 @@ public enum PlatformMapComponentsLayer4 {
         annotations: [MapAnnotationData],
         onAnnotationTapped: ((MapAnnotationData) -> Void)? = nil
     ) -> some View {
-        #if canImport(MapKit)
+        #if os(iOS) || os(macOS)
         // Use modern SwiftUI Map API (requires iOS 17+, macOS 14+)
         Map(position: position) {
             ForEach(annotations) { annotation in
@@ -95,6 +100,7 @@ public enum PlatformMapComponentsLayer4 {
         .automaticCompliance(named: "platformMapViewWithCurrentLocation_L4")
     }
 }
+#endif
 
 // MARK: - Supporting Types
 
@@ -120,7 +126,7 @@ public struct MapAnnotationData: Identifiable {
 
 // MARK: - LocationService Integration View
 
-#if canImport(MapKit)
+#if canImport(MapKit) && (os(iOS) || os(macOS)) && swift(>=5.9)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 private struct MapViewWithLocationService: View {
     let locationService: LocationService
@@ -128,7 +134,7 @@ private struct MapViewWithLocationService: View {
     let additionalAnnotations: [MapAnnotationData]
     let onAnnotationTapped: ((MapAnnotationData) -> Void)?
     
-    @State private var position = MapCameraPosition.automatic
+    @State private var position: MapCameraPosition = .automatic
     @State private var currentLocation: CLLocation?
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -155,7 +161,7 @@ private struct MapViewWithLocationService: View {
         .task {
             await loadCurrentLocation()
         }
-        .onChange(of: currentLocation) { _ in
+        .onChange(of: currentLocation) {
             updateCameraPosition()
         }
     }
@@ -212,12 +218,14 @@ private struct MapViewWithLocationService: View {
     private func updateCameraPosition() {
         guard let location = currentLocation else { return }
         
-        position = .region(
+        #if canImport(MapKit)
+        self.position = MapCameraPosition.region(
             MKCoordinateRegion(
                 center: location.coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             )
         )
+        #endif
     }
 }
 #endif
@@ -239,6 +247,7 @@ private struct UnsupportedPlatformMapView: View {
 
 // MARK: - Convenience Functions (Global)
 
+#if canImport(MapKit)
 /// Creates a platform-specific map view (convenience wrapper)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @ViewBuilder
@@ -265,6 +274,7 @@ public func platformMapView_L4(
         onAnnotationTapped: onAnnotationTapped
     )
 }
+#endif
 
 /// Creates a map view that automatically centers on the user's current location (convenience wrapper)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)

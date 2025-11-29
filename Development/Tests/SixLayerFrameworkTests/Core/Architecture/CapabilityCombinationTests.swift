@@ -873,8 +873,8 @@ open class CapabilityCombinationTests: BaseTestClass {// MARK: - Capability Comb
         // Test that capability combinations are handled correctly
         // Note: We trust what the OS reports - if touch and hover are both available, both are available
         // Touch and hover CAN coexist (iPad with mouse, macOS with touchscreen, visionOS)
-        let config = getCardExpansionPlatformConfig()
-        let platform = SixLayerPlatform.current
+        let _ = getCardExpansionPlatformConfig()
+        let _ = SixLayerPlatform.current
         
         // No mutual exclusivity checks - capabilities are independent unless they have dependencies
         // The only dependencies are: haptic requires touch, AssistiveTouch requires touch

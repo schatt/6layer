@@ -40,7 +40,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -74,7 +74,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -111,7 +111,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -151,7 +151,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 view1, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -169,7 +169,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 view2, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -207,7 +207,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -243,7 +243,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -274,7 +274,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: ".*", 
                 platform: SixLayerPlatform.iOS,
@@ -312,7 +312,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -358,7 +358,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
@@ -392,7 +392,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -428,7 +428,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "^TestButton$", 
                 platform: SixLayerPlatform.iOS,
@@ -466,7 +466,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // The test needs to be updated to handle ViewInspector's inability to detect these identifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
@@ -500,7 +500,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // TODO: Temporarily passing test - modifier IS present but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 view1, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
@@ -512,7 +512,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             #endif
                 
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 view2, 
                 expectedPattern: "^SaveButton$", 
                 platform: SixLayerPlatform.iOS,
@@ -541,7 +541,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             // When: We check the accessibility identifier
             // Then: Should handle empty string gracefully
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            #expect(testAccessibilityIdentifiersSinglePlatform(
+            #expect(testComponentComplianceSinglePlatform(
                 testView, 
                 expectedPattern: "^$", 
                 platform: SixLayerPlatform.iOS,

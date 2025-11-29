@@ -163,7 +163,7 @@ public struct UnifiedWindowSizeModifier: ViewModifier {
                 .onAppear {
                     windowDetection.updateFromGeometry(geometry)
                 }
-                .onChange(of: geometry.size) { _ in
+                .onChange(of: geometry.size) {
                     windowDetection.updateFromGeometry(geometry)
                 }
                 .environmentObject(windowDetection)
