@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.4.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.5.0")
 ]
 ```
 
@@ -41,9 +41,9 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.4.0
+## 🆕 Latest Release: v5.5.0
 
-### **OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets**
+### **Swift 6 Compatibility and Complete Test Infrastructure Overhaul**
 🎯 **OCR Hints in Hints Files**: Define OCR hints directly in `.hints` files for intelligent form-filling
 🧮 **Calculation Groups in Hints Files**: Declarative calculation groups for automatic field computation
 🌍 **Internationalization Support**: Language-specific OCR hints with automatic fallback
@@ -100,7 +100,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.4.0 (OCR Hints, Calculation Groups, Internationalization, and OCR Overlay Sheets)
+**Version**: v5.5.0 (Swift 6 Compatibility and Complete Test Infrastructure Overhaul)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
