@@ -1,6 +1,6 @@
 // swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v5.0.0 - Major Testing and Accessibility Release
+// SixLayerFramework v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions
 
 import PackageDescription
 

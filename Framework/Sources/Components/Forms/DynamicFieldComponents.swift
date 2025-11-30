@@ -155,7 +155,7 @@ public struct DynamicEmailField: View {
             ))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
-            .keyboardType(.emailAddress)
+            .keyboardType(UIKeyboardType.emailAddress)
             #endif
             .automaticCompliance()
         }
@@ -218,7 +218,7 @@ public struct DynamicPhoneField: View {
             ))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
-            .keyboardType(.phonePad)
+            .keyboardType(UIKeyboardType.phonePad)
             #endif
             .automaticCompliance()
         }
@@ -251,7 +251,7 @@ public struct DynamicURLField: View {
             ))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
-            .keyboardType(.URL)
+            .keyboardType(UIKeyboardType.URL)
             #endif
             .automaticCompliance()
         }
@@ -284,7 +284,7 @@ public struct DynamicNumberField: View {
             ))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
-            .keyboardType(.decimalPad)
+            .keyboardType(UIKeyboardType.decimalPad)
             #endif
             .automaticCompliance()
         }
@@ -317,7 +317,7 @@ public struct DynamicIntegerField: View {
             ))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
-            .keyboardType(.numberPad)
+            .keyboardType(UIKeyboardType.numberPad)
             #endif
             .automaticCompliance()
         }

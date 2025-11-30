@@ -802,7 +802,7 @@ private struct DefaultPlatformFieldView: View {
                 ), format: .number)
                 .textFieldStyle(.roundedBorder)
                 #if os(iOS)
-                .keyboardType(.decimalPad)
+                .keyboardType(UIKeyboardType.decimalPad)
                 #endif
                 .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
                 .overlay(
@@ -839,7 +839,7 @@ private struct DefaultPlatformFieldView: View {
             ))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
-            .keyboardType(.URL)
+            .keyboardType(UIKeyboardType.URL)
             .autocapitalization(.none)
             #endif
             .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))

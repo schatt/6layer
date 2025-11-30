@@ -236,7 +236,7 @@ public struct PlatformColorFormExamples: View {
                 TextField("Enter your email", text: $email)
                     .foregroundColor(.platformPrimaryLabel)
                     #if os(iOS)
-                    .keyboardType(.emailAddress)
+                    .keyboardType(KeyboardType.emailAddress)
                     #endif
                 
                 SecureField("Enter your password", text: $password)

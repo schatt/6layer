@@ -133,6 +133,16 @@ fi
 
 echo "✅ Main README correctly updated with v$VERSION"
 
+# Step 6.5: Check Package.swift version consistency
+echo "📋 Step 6.5: Checking Package.swift version consistency..."
+if ! grep -q "v$VERSION" Package.swift; then
+    echo "❌ Package.swift missing v$VERSION in version comment!"
+    echo "Please update the version comment in Package.swift to match v$VERSION"
+    echo "Expected format: // SixLayerFramework v$VERSION - [Description]"
+    exit 1
+fi
+echo "✅ Package.swift version comment correctly updated with v$VERSION"
+
 if grep -q "v$VERSION" Framework/README.md; then
     echo "✅ Framework README updated"
 else
@@ -213,6 +223,7 @@ echo "✅ RELEASES.md updated correctly"
 echo "✅ Individual release file exists"
 echo "✅ AI_AGENT file exists (for major/minor releases)"
 echo "✅ All README files updated"
+echo "✅ Package.swift version comment updated"
 echo "✅ Project status files updated"
 echo "✅ Main AI_AGENT.md file exists"
 echo "✅ Documentation files exist"

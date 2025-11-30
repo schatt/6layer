@@ -22,16 +22,72 @@ Define the user's intent in platform-agnostic terms that can be interpreted by t
 - `platformPresentForm(type:complexity:style:)` - Express intent to present a form
 - `platformPresentNavigation(style:title:)` - Express intent to present navigation
 - `platformPresentModal(type:content:)` - Express intent to present a modal
+- `platformPresentModalForm_L1(formType:context:)` - Present modal forms with automatic field generation
+- `platformPresentModalForm_L1(formType:context:customFormContainer:)` - Present modal forms with custom container styling
 
 ### **Responsive Cards**
 - `platformResponsiveCard(type:content:)` - Express intent for responsive cards
 
 ### **Item Collections**
 - `platformPresentItemCollection_L1(items:hints:callbacks:)` - Present collections of identifiable items with automatic row actions
+- `platformPresentItemCollection_L1(items:hints:callbacks:customItemView:)` - Present collections with custom item view styling
+
+### **Photo Functions**
+- `platformPhotoCapture_L1(purpose:context:onImageCaptured:)` - Capture photos with intelligent camera interface selection
+- `platformPhotoCapture_L1(purpose:context:onImageCaptured:customCameraView:)` - Capture photos with custom camera UI wrapper
+- `platformPhotoSelection_L1(purpose:context:onImageSelected:)` - Select photos from library with intelligent picker selection
+- `platformPhotoSelection_L1(purpose:context:onImageSelected:customPickerView:)` - Select photos with custom picker UI wrapper
+- `platformPhotoDisplay_L1(purpose:context:image:)` - Display photos with intelligent styling and layout
+- `platformPhotoDisplay_L1(purpose:context:image:customDisplayView:)` - Display photos with custom display UI wrapper
+
+### **DataFrame Analysis**
+- `platformAnalyzeDataFrame_L1(dataFrame:hints:)` - Analyze DataFrame with automatic visualization selection
+- `platformAnalyzeDataFrame_L1(dataFrame:hints:customVisualizationView:)` - Analyze DataFrame with custom visualization wrapper
+- `platformCompareDataFrames_L1(dataFrames:hints:)` - Compare multiple DataFrames with automatic visualization
+- `platformCompareDataFrames_L1(dataFrames:hints:customVisualizationView:)` - Compare DataFrames with custom visualization wrapper
+- `platformAssessDataQuality_L1(dataFrame:hints:)` - Assess data quality with automatic visualization
+- `platformAssessDataQuality_L1(dataFrame:hints:customVisualizationView:)` - Assess data quality with custom visualization wrapper
 
 ### **Navigation Stack**
 - `platformPresentNavigationStack_L1(content:title:hints:)` - Express intent to present content in a navigation stack
 - `platformPresentNavigationStack_L1(items:hints:itemView:destination:)` - Express intent to present items in a navigation stack with list-detail pattern
+
+## 🎨 Custom View Support
+
+Many Layer 1 functions support custom view wrappers that allow you to customize the visual presentation while maintaining all framework benefits (accessibility, platform adaptation, intelligent layout).
+
+### **How Custom Views Work**
+
+Custom view parameters use `@ViewBuilder` closures that receive the framework's base view and return a styled wrapper:
+
+```swift
+// Basic usage
+platformPresentModalForm_L1(formType: .form, context: .modal)
+
+// With custom styling
+platformPresentModalForm_L1(formType: .form, context: .modal, customFormContainer: { baseForm in
+    baseForm
+        .padding()
+        .background(Color.blue.opacity(0.1))
+        .cornerRadius(12)
+        .shadow(radius: 4)
+})
+```
+
+### **Framework Benefits Preserved**
+
+Custom views automatically receive:
+- **Accessibility**: Automatic screen reader support and keyboard navigation
+- **Platform Adaptation**: iOS and macOS specific optimizations
+- **Compliance**: Automatic UI compliance and validation
+- **Performance**: Framework optimizations and memory management
+
+### **Available Custom View Functions**
+
+- **Modal Forms**: `customFormContainer` - Style modal form containers
+- **Photo Functions**: `customCameraView`, `customPickerView`, `customDisplayView` - Style photo interfaces
+- **DataFrame Analysis**: `customVisualizationView` - Style analysis result presentations
+- **Item Collections**: `customItemView` - Style collection item presentations
 
 ## 📊 Data Types
 
@@ -160,6 +216,131 @@ platformPresentNavigationStack_L1(
 ```
 
 **See [NavigationStackGuide.md](NavigationStackGuide.md) for complete documentation.**
+
+### **Modal Form with Custom Container**
+
+```swift
+// Basic modal form
+platformPresentModalForm_L1(
+    formType: .user,
+    context: .modal
+)
+
+// With custom container styling
+platformPresentModalForm_L1(
+    formType: .user,
+    context: .modal,
+    customFormContainer: { baseForm in
+        baseForm
+            .padding(20)
+            .background(
+                LinearGradient(
+                    colors: [.blue.opacity(0.1), .purple.opacity(0.1)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .cornerRadius(16)
+            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.blue.opacity(0.3), lineWidth: 1)
+            )
+    }
+)
+```
+
+### **Photo Capture with Custom Camera UI**
+
+```swift
+// Basic photo capture
+platformPhotoCapture_L1(
+    purpose: .profile,
+    context: .modal
+) { capturedImage in
+    profileImage = capturedImage
+}
+
+// With custom camera interface
+platformPhotoCapture_L1(
+    purpose: .profile,
+    context: .modal,
+    onImageCaptured: { capturedImage in
+        profileImage = capturedImage
+    },
+    customCameraView: { baseCameraView in
+        ZStack {
+            baseCameraView
+                .overlay(
+                    VStack {
+                        Spacer()
+                        Text("Position face in frame")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.7))
+                            .cornerRadius(8)
+                            .padding(.bottom, 20)
+                    }
+                )
+
+            // Custom overlay controls
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: { /* flash toggle */ }) {
+                        Image(systemName: "bolt.fill")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.5))
+                            .clipShape(Circle())
+                    }
+                    .padding()
+                }
+                Spacer()
+            }
+        }
+    }
+)
+```
+
+### **DataFrame Analysis with Custom Visualization**
+
+```swift
+// Basic DataFrame analysis
+platformAnalyzeDataFrame_L1(
+    dataFrame: salesData,
+    hints: DataFrameAnalysisHints()
+)
+
+// With custom visualization styling
+platformAnalyzeDataFrame_L1(
+    dataFrame: salesData,
+    hints: DataFrameAnalysisHints(),
+    customVisualizationView: { baseAnalysisView in
+        VStack(spacing: 16) {
+            // Custom header
+            HStack {
+                Image(systemName: "chart.bar.fill")
+                Text("Sales Analysis Dashboard")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+            }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color.blue.opacity(0.1))
+            .cornerRadius(12)
+
+            // Framework's analysis content
+            baseAnalysisView
+                .padding()
+                .background(Color.white)
+                .cornerRadius(12)
+                .shadow(radius: 2)
+        }
+        .padding()
+    }
+)
+```
 
 ### **Item Collection with Custom Actions**
 For custom actions beyond Edit/Delete, use `customItemView`:

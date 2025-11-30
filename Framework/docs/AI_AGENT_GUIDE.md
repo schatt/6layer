@@ -124,6 +124,13 @@ public func platformPresentModalForm_L1(
     context: PresentationContext
 ) -> some View
 
+// Modal form with custom container
+public func platformPresentModalForm_L1<ContainerContent: View>(
+    formType: DataTypeHint,
+    context: PresentationContext,
+    customFormContainer: ((AnyView) -> ContainerContent)?
+) -> some View
+
 // Generic content presentation (for runtime-unknown content types)
 public func platformPresentContent_L1(
     content: Any,

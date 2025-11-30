@@ -744,6 +744,12 @@ case .sheet:
 extension View {
     func platformPresentGenericForm_L1(data: Any, context: PresentationContext) -> some View
     func platformPresentModalForm_L1(formType: DataTypeHint, context: PresentationContext) -> some View
+    // Enhanced with custom view support
+    func platformPresentModalForm_L1<ContainerContent: View>(
+        formType: DataTypeHint,
+        context: PresentationContext,
+        customFormContainer: ((AnyView) -> ContainerContent)?
+    ) -> some View
 }
 ```
 

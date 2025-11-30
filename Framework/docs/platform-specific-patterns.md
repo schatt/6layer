@@ -293,6 +293,42 @@ DatePicker("Select date", selection: $date)
     .platformDatePickerStyle()
 ```
 
+#### `keyboardType(_ type: KeyboardType)`
+
+Applies keyboard type based on the framework's KeyboardType enum. Maps to SwiftUI's keyboardType modifier on iOS, no-op on macOS.
+
+```swift
+// Email input with appropriate keyboard
+TextField("Email", text: $email)
+    .keyboardType(.emailAddress)
+
+// Phone number input
+TextField("Phone", text: $phone)
+    .keyboardType(.phonePad)
+
+// Numeric input
+TextField("Amount", text: $amount)
+    .keyboardType(.decimalPad)
+```
+
+**Supported Keyboard Types:**
+- `.default` - Standard keyboard
+- `.asciiCapable` - ASCII-only keyboard
+- `.numbersAndPunctuation` - Numbers and punctuation
+- `.URL` - URL entry keyboard
+- `.numberPad` - Numeric keypad
+- `.phonePad` - Phone number keypad
+- `.namePhonePad` - Name and phone keyboard
+- `.emailAddress` - Email address keyboard
+- `.decimalPad` - Decimal number keypad
+- `.twitter` - Twitter-style keyboard
+- `.webSearch` - Web search keyboard
+
+**Platform Behavior:**
+- **iOS**: Applies corresponding SwiftUI.UIKeyboardType
+- **macOS**: No-op (returns unmodified view)
+- **Other platforms**: No-op
+
 ### Button Style Modifiers
 
 #### `platformPrimaryButtonStyle()`

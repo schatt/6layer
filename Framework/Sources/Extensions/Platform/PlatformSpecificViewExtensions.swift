@@ -836,6 +836,59 @@ public extension View {
         #endif
     }
 
+    /// Applies keyboard type based on KeyboardType enum
+    /// Maps framework's KeyboardType enum to SwiftUI's keyboardType modifier on iOS
+    ///
+    /// - Parameter type: The keyboard type to apply
+    /// - Returns: A view with the appropriate keyboard type applied
+    ///
+    /// ## Platform Behavior
+    /// - **iOS**: Applies the corresponding SwiftUI.UIKeyboardType
+    /// - **macOS**: No-op (keyboard types don't apply on macOS)
+    /// - **Other platforms**: No-op
+    ///
+    /// ## Usage Example
+    /// ```swift
+    /// TextField("Email", text: $email)
+    ///     .keyboardType(.emailAddress)
+    ///
+    /// TextField("Phone", text: $phone)
+    ///     .keyboardType(.phonePad)
+    /// ```
+    @ViewBuilder
+    func keyboardType(_ type: KeyboardType) -> some View {
+        #if os(iOS)
+        // Map KeyboardType enum to SwiftUI.UIKeyboardType
+        switch type {
+        case .default:
+            self.keyboardType(UIKeyboardType.default)
+        case .asciiCapable:
+            self.keyboardType(UIKeyboardType.asciiCapable)
+        case .numbersAndPunctuation:
+            self.keyboardType(UIKeyboardType.numbersAndPunctuation)
+        case .URL:
+            self.keyboardType(UIKeyboardType.URL)
+        case .numberPad:
+            self.keyboardType(UIKeyboardType.numberPad)
+        case .phonePad:
+            self.keyboardType(UIKeyboardType.phonePad)
+        case .namePhonePad:
+            self.keyboardType(UIKeyboardType.namePhonePad)
+        case .emailAddress:
+            self.keyboardType(UIKeyboardType.emailAddress)
+        case .decimalPad:
+            self.keyboardType(UIKeyboardType.decimalPad)
+        case .twitter:
+            self.keyboardType(UIKeyboardType.twitter)
+        case .webSearch:
+            self.keyboardType(UIKeyboardType.webSearch)
+        }
+        #else
+        // macOS and other platforms: No-op (keyboard types don't apply)
+        self
+        #endif
+    }
+
     // MARK: - Platform-Specific View Builders
 
 /// Protocol for platform-specific view builders
