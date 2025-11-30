@@ -1,11 +1,11 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v5.5.0 - Swift 6 Compatibility and Complete Test Infrastructure Overhaul** 🎯
+## 📍 **Current Status: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions** 🎯
 
-**Last Release**: v5.5.0 - Swift 6 Compatibility and Complete Test Infrastructure Overhaul
-**Current Phase**: Minor Release (Swift 6 Compatibility and Complete Test Infrastructure Overhaul)
+**Last Release**: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions
+**Current Phase**: Minor Release (Enhanced Layer 1 Functions & KeyboardType Extensions)
 **Next Phase**: Continue framework evolution and feature development
-**Note**: v5.5.0 achieves complete Swift 6 compatibility with modern concurrency patterns, complete test infrastructure overhaul with clean separation between unit and UI tests, iOS 17+ API modernization, and enhanced developer experience with automated release processes. Previous release v5.4.0 adds OCR hints and calculation groups to hints files, internationalization support for language-specific OCR hints, and OCR overlay sheet modifier (Issue #22).
+**Note**: v5.6.0 adds enhanced Layer 1 functions with custom view support and cross-platform keyboard type extensions. Previous release v5.5.0 achieves complete Swift 6 compatibility with modern concurrency patterns, complete test infrastructure overhaul with clean separation between unit and UI tests, iOS 17+ API modernization, and enhanced developer experience with automated release processes. Previous release v5.4.0 adds OCR hints and calculation groups to hints files, internationalization support for language-specific OCR hints, and OCR overlay sheet modifier (Issue #22).
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 
