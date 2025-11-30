@@ -98,6 +98,7 @@ targets:
       SWIFT_VERSION: "6.0"
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) VIEW_INSPECTOR_MAC_FIXED
       SWIFT_STRICT_CONCURRENCY: disabled
+      OTHER_SWIFT_FLAGS: -Xfrontend -warn-concurrency -Xfrontend -disable-availability-checking
       GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: SixLayerFramework_macOS

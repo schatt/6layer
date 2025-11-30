@@ -394,6 +394,14 @@ class Violation:
     def to_dict(self):
         return asdict(self)
 
+@dataclass
+class Exclusion:
+    file_path: str
+    reason: str
+
+    def to_dict(self):
+        return asdict(self)
+
 # ============================================================================
 # Comment Stripping
 # ============================================================================
@@ -492,45 +500,51 @@ def strip_comments_from_lines(lines: List[str]) -> List[str]:
 # Detection Logic
 # ============================================================================
 
-def is_app_code(file_path: Path, exclude_framework: bool = True) -> bool:
-    """Check if file is app code (not framework/test code)."""
+def is_app_code_with_reason(file_path: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[bool, str]:
+    """Check if file is app code (not framework/test code). Returns (is_app_code, exclusion_reason)."""
     path_str = str(file_path)
-    
+
     # Exclude build directories and dependencies
     if '.build' in path_str or '.build-clean' in path_str:
-        return False
+        return False, "build directory"
     if 'DerivedData' in path_str:
-        return False
+        return False, "DerivedData directory"
     if 'Pods/' in path_str:
-        return False
+        return False, "Pods directory"
     if 'Carthage/' in path_str:
-        return False
+        return False, "Carthage directory"
     if '.swiftpm/' in path_str:
-        return False
-    
+        return False, "Swift Package Manager directory"
+
     # Exclude framework code
     if exclude_framework:
         if 'Framework/' in path_str:
-            return False
-        if 'Development/Tests/' in path_str:
-            return False
+            return False, "framework code"
         if 'Development/scripts/' in path_str:
-            return False
+            return False, "script file"
         if 'scripts/' in path_str:
-            return False
-    
+            return False, "script file"
+
+    # Exclude test code (separately controllable)
+    if exclude_tests:
+        if 'Development/Tests/' in path_str:
+            return False, "test code"
+
     # Only process Swift files
     if not file_path.suffix == '.swift':
-        return False
-    
-    return True
+        return False, "not a Swift file"
 
-def find_violations_in_file(file_path: Path, exclude_framework: bool = True) -> List[Violation]:
+    return True, ""
+
+def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[List[Violation], List[Exclusion]]:
     """Scan a single file for violations."""
     violations = []
-    
-    if not is_app_code(file_path, exclude_framework):
-        return violations
+    exclusions = []
+
+    is_app, exclusion_reason = is_app_code_with_reason(file_path, exclude_framework, exclude_tests)
+    if not is_app:
+        exclusions.append(Exclusion(str(file_path), exclusion_reason))
+        return violations, exclusions
     
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -538,7 +552,7 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True) -> 
             content = ''.join(lines)
     except Exception as e:
         print(f"Warning: Could not read {file_path}: {e}", file=sys.stderr)
-        return violations
+        return violations, exclusions
     
     # Strip comments from lines for violation detection
     # Keep original lines for display in violation reports
@@ -610,47 +624,72 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True) -> 
                         priority=violation_info['priority'],
                         column=match.start() + 1
                     ))
-    
-    return violations
 
-def scan_directory(directory: Path, exclude_framework: bool = True) -> List[Violation]:
+    return violations, exclusions
+
+def scan_directory(directory: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[List[Violation], List[Exclusion]]:
     """Scan a directory tree for violations."""
     all_violations = []
-    
+    all_exclusions = []
+
     if not directory.exists():
         print(f"Error: Directory {directory} does not exist", file=sys.stderr)
-        return all_violations
-    
+        return all_violations, all_exclusions
+
     swift_files = list(directory.rglob('*.swift'))
-    
+
     print(f"Scanning {len(swift_files)} Swift files...", file=sys.stderr)
-    
+
     for swift_file in swift_files:
-        violations = find_violations_in_file(swift_file, exclude_framework)
+        violations, exclusions = find_violations_in_file(swift_file, exclude_framework, exclude_tests)
         all_violations.extend(violations)
-    
-    return all_violations
+        all_exclusions.extend(exclusions)
+
+    # Warn if all files were excluded - might indicate incorrect exclusion settings
+    if len(all_exclusions) == len(swift_files) and len(swift_files) > 0:
+        print(f"\n⚠️  Warning: All {len(swift_files)} Swift files in {directory} were excluded from scanning.", file=sys.stderr)
+        print(f"   This might indicate that the exclusion settings are too restrictive for this directory.", file=sys.stderr)
+        print(f"   Consider using --include-framework or --include-tests if you want to scan these files.", file=sys.stderr)
+
+    return all_violations, all_exclusions
 
 # ============================================================================
 # Output Formatting
 # ============================================================================
 
-def print_console_report(violations: List[Violation]):
-    """Print violations to console."""
-    if not violations:
+def print_console_report(violations: List[Violation], exclusions: List[Exclusion] = None):
+    """Print violations and exclusions to console."""
+    if exclusions is None:
+        exclusions = []
+
+    if not violations and not exclusions:
         print("✅ No violations found!")
         return
-    
-    # Group by priority
+
+    # Group violations by priority
     priority_1 = [v for v in violations if v.priority == 1]
     priority_2 = [v for v in violations if v.priority == 2]
-    
+
+    # Group exclusions by reason
+    exclusion_reasons = {}
+    for exclusion in exclusions:
+        reason = exclusion.reason
+        exclusion_reasons[reason] = exclusion_reasons.get(reason, 0) + 1
+
     print(f"\n{'='*80}")
     print(f"6-Layer Type Violations Report")
     print(f"{'='*80}")
-    print(f"Total violations: {len(violations)}")
-    print(f"  Priority 1 (Platform-specific types): {len(priority_1)}")
-    print(f"  Priority 2 (View usage): {len(priority_2)}")
+    if violations:
+        print(f"Total violations: {len(violations)}")
+        print(f"  Priority 1 (Platform-specific types): {len(priority_1)}")
+        print(f"  Priority 2 (View usage): {len(priority_2)}")
+    else:
+        print("Total violations: 0")
+
+    if exclusions:
+        print(f"Total files excluded: {len(exclusions)}")
+        for reason, count in sorted(exclusion_reasons.items()):
+            print(f"  {count} files excluded because of {reason}")
     print(f"{'='*80}\n")
     
     # Print Priority 1 violations
@@ -675,14 +714,26 @@ def print_console_report(violations: List[Violation]):
             print(f"💡 Hint: {violation.hint}")
             print(f"✅ Use: {violation.replacement}")
 
-def generate_json_report(violations: List[Violation]) -> Dict:
+def generate_json_report(violations: List[Violation], exclusions: List[Exclusion] = None) -> Dict:
     """Generate JSON report."""
+    if exclusions is None:
+        exclusions = []
+
+    # Group exclusions by reason
+    exclusion_reasons = {}
+    for exclusion in exclusions:
+        reason = exclusion.reason
+        exclusion_reasons[reason] = exclusion_reasons.get(reason, 0) + 1
+
     return {
         'timestamp': datetime.now().isoformat(),
         'total_violations': len(violations),
         'priority_1_count': len([v for v in violations if v.priority == 1]),
         'priority_2_count': len([v for v in violations if v.priority == 2]),
-        'violations': [v.to_dict() for v in violations]
+        'total_exclusions': len(exclusions),
+        'exclusion_reasons': exclusion_reasons,
+        'violations': [v.to_dict() for v in violations],
+        'exclusions': [e.to_dict() for e in exclusions]
     }
 
 # ============================================================================
@@ -708,30 +759,47 @@ def main():
         '--exclude-framework',
         action='store_true',
         default=True,
-        help='Exclude framework code from scanning (default: True)'
+        help='Exclude Framework/ code from scanning (default: True)'
     )
     parser.add_argument(
         '--include-framework',
         action='store_false',
         dest='exclude_framework',
-        help='Include framework code in scanning'
+        help='Include Framework/ code in scanning'
+    )
+    parser.add_argument(
+        '--exclude-tests',
+        action='store_true',
+        default=False,
+        help='Exclude Development/Tests/ code from scanning (default: False)'
+    )
+    parser.add_argument(
+        '--include-tests',
+        action='store_false',
+        dest='exclude_tests',
+        help='Include Development/Tests/ code in scanning'
     )
     
     args = parser.parse_args()
-    
-    # Scan directory
-    directory = Path(args.directory).resolve()
-    violations = scan_directory(directory, exclude_framework=args.exclude_framework)
+
+    # Handle both directories and single files
+    path = Path(args.directory).resolve()
+    if path.is_file():
+        # Single file
+        violations, exclusions = find_violations_in_file(path, args.exclude_framework, args.exclude_tests)
+    else:
+        # Directory
+        violations, exclusions = scan_directory(path, exclude_framework=args.exclude_framework, exclude_tests=args.exclude_tests)
     
     # Sort violations by priority, then by file
     violations.sort(key=lambda v: (v.priority, v.file_path, v.line_number))
     
     # Print console report
-    print_console_report(violations)
+    print_console_report(violations, exclusions)
     
     # Generate JSON report if requested
     if args.json:
-        json_report = generate_json_report(violations)
+        json_report = generate_json_report(violations, exclusions)
         with open(args.json, 'w') as f:
             json.dump(json_report, f, indent=2)
         print(f"\n📄 JSON report written to: {args.json}", file=sys.stderr)

@@ -6534,14 +6534,14 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test @MainActor func testVoiceOverSupportModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testVoiceOverEnabledModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         let testContent = VStack {
             Text("VoiceOver Support Content")
             Button("Test Button") { }
         }
 
-        let view = testContent.voiceOverSupport()
+        let view = testContent.voiceOverEnabled()
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
@@ -6556,14 +6556,14 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test @MainActor func testKeyboardNavigationModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testKeyboardNavigableModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         let testContent = VStack {
             Text("Keyboard Navigation Content")
             Button("Test Button") { }
         }
 
-        let view = testContent.keyboardNavigation()
+        let view = testContent.keyboardNavigable()
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
@@ -6578,14 +6578,14 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         #endif
     }
     
-    @Test @MainActor func testHighContrastModifierGeneratesAccessibilityIdentifiers() async {
+    @Test @MainActor func testHighContrastEnabledModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         let testContent = VStack {
             Text("High Contrast Content")
             Button("Test Button") { }
         }
 
-        let view = testContent.highContrast()
+        let view = testContent.highContrastEnabled()
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
@@ -6607,7 +6607,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             Button("Test Button") { }
         }
 
-        let view = testContent.reducedMotion()
+        let view = testContent.modifier(ReducedMotionModifier(isEnabled: true))
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
@@ -6629,7 +6629,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             Button("Test Button") { }
         }
 
-        let view = testContent.dynamicType()
+        let view = testContent.modifier(DynamicTypeModifier())
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
@@ -8121,7 +8121,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
 
         // When: Applying PlatformNavigationModifier
-        let view = testContent.platformNavigation()
+        let view = testContent.modifier(PlatformNavigationModifier(platform: .iOS))
 
         // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: PlatformNavigationModifier DOES have .automaticCompliance()
@@ -8149,7 +8149,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             Button("Test Button") { }
         }
 
-        let view = testContent.platformStyling()
+        let view = testContent.modifier(PlatformStylingModifier(designSystem: PlatformDesignSystem(for: .iOS)))
 
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
@@ -10843,7 +10843,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
 
         // When: Applying TouchTargetModifier
-        let view = testContent.touchTarget()
+        let view = testContent.modifier(TouchTargetModifier(platform: .iOS))
 
         // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: TouchTargetModifier DOES have .automaticCompliance()
@@ -10873,7 +10873,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
 
         // When: Applying PlatformInteractionModifier
-        let view = testContent.platformInteraction()
+        let view = testContent.modifier(PlatformInteractionModifier(platform: .iOS))
 
         // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: PlatformInteractionModifier DOES have .automaticCompliance()
@@ -10903,7 +10903,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
 
         // When: Applying HapticFeedbackModifier
-        let view = testContent.hapticFeedback()
+        let view = testContent.modifier(HapticFeedbackModifier(platform: .iOS))
 
         // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: HapticFeedbackModifier DOES have .automaticCompliance()
@@ -10933,7 +10933,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
 
         // When: Applying GestureRecognitionModifier
-        let view = testContent.gestureRecognition()
+        let view = testContent.modifier(GestureRecognitionModifier(platform: .iOS))
 
         // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: GestureRecognitionModifier DOES have .automaticCompliance()
