@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.6.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.5.0")
 ]
 ```
 
