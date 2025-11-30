@@ -1815,11 +1815,11 @@ public extension View {
             print("[SixLayer] Error: Failed to construct settings URL from UIApplication.openSettingsURLString")
             return false
         }
-        let success = UIApplication.shared.open(settingsURL)
-        if !success {
-            print("[SixLayer] Error: Failed to open settings URL. App may not have a settings bundle.")
+        // iOS 16+: Use async API (deployment target is iOS 17, so always use async)
+        Task { @MainActor in
+            await UIApplication.shared.open(settingsURL)
         }
-        return success
+        return true
         #elseif os(macOS)
         if #available(macOS 13.0, *) {
             // macOS 13+: Try to open System Settings app
@@ -2170,11 +2170,11 @@ public func platformOpenSettings() -> Bool {
         print("[SixLayer] Error: Failed to construct settings URL from UIApplication.openSettingsURLString")
         return false
     }
-    let success = UIApplication.shared.open(settingsURL)
-    if !success {
-        print("[SixLayer] Error: Failed to open settings URL. App may not have a settings bundle.")
+    // iOS 16+: Use async API (deployment target is iOS 17, so always use async)
+    Task { @MainActor in
+        await UIApplication.shared.open(settingsURL)
     }
-    return success
+    return true
     #elseif os(macOS)
     if #available(macOS 13.0, *) {
         // macOS 13+: Try to open System Settings app

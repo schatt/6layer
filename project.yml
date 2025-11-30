@@ -1,0 +1,206 @@
+name: SixLayerFramework
+options:
+  bundleIdPrefix: com.sixlayer
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "15.0"
+  developmentLanguage: en
+  xcodeVersion: "16.0"
+  usesTabs: false
+  indentWidth: 4
+  tabWidth: 4
+
+packages:
+  ViewInspector:
+    url: https://github.com/schatt/ViewInspector
+    branch: 0.10.3
+
+targets:
+  # Main framework target - supports both iOS and macOS
+  SixLayerFramework:
+    type: framework
+    platform: [iOS, macOS]
+    sources:
+      - path: Framework/Sources
+        excludes:
+          - "**/ExampleHelpers.swift"
+          - "**/ExtensibleHintsExample.swift"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework
+      PRODUCT_MODULE_NAME: SixLayerFramework
+      SWIFT_VERSION: "6.0"
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) ENABLE_PREVIEWS
+      ENABLE_TESTABILITY: YES
+    dependencies: []
+
+  # Unit tests - iOS
+  SixLayerFrameworkUnitTests_iOS:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Development/Tests/SixLayerFrameworkUnitTests
+        excludes:
+          - "**/README.md"
+          - "**/CoreDataTestingGuide.md"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.unit-tests
+      SWIFT_VERSION: "6.0"
+      GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SixLayerFramework_iOS
+
+  # Unit tests - macOS
+  SixLayerFrameworkUnitTests_macOS:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Development/Tests/SixLayerFrameworkUnitTests
+        excludes:
+          - "**/README.md"
+          - "**/CoreDataTestingGuide.md"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.unit-tests
+      SWIFT_VERSION: "6.0"
+      GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SixLayerFramework_iOS
+
+  # UI tests - iOS
+  SixLayerFrameworkUITests_iOS:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Development/Tests/SixLayerFrameworkUITests
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.ui-tests
+      SWIFT_VERSION: "6.0"
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) VIEW_INSPECTOR_MAC_FIXED
+      GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SixLayerFramework_iOS
+      - package: ViewInspector
+        product: ViewInspector
+
+  # UI tests - macOS
+  SixLayerFrameworkUITests_macOS:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Development/Tests/SixLayerFrameworkUITests
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.ui-tests
+      SWIFT_VERSION: "6.0"
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) VIEW_INSPECTOR_MAC_FIXED
+      GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SixLayerFramework_iOS
+      - package: ViewInspector
+        product: ViewInspector
+
+  # External integration tests - iOS
+  SixLayerFrameworkExternalIntegrationTests_iOS:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Development/Tests/SixLayerFrameworkExternalIntegrationTests
+        excludes:
+          - "**/README.md"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.external-integration-tests
+      SWIFT_VERSION: "6.0"
+      GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SixLayerFramework_iOS
+
+  # External integration tests - macOS
+  SixLayerFrameworkExternalIntegrationTests_macOS:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Development/Tests/SixLayerFrameworkExternalIntegrationTests
+        excludes:
+          - "**/README.md"
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.external-integration-tests
+      SWIFT_VERSION: "6.0"
+      GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: SixLayerFramework_iOS
+
+schemes:
+  SixLayerFramework-iOS:
+    build:
+      targets:
+        SixLayerFramework_iOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUnitTests_iOS
+        - SixLayerFrameworkExternalIntegrationTests_iOS
+      # UITests excluded by default due to ViewInspector Swift 6 issues
+      # Uncomment when ViewInspector is fixed:
+      # - SixLayerFrameworkUITests_iOS
+
+  SixLayerFramework-macOS:
+    build:
+      targets:
+        SixLayerFramework_macOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUnitTests_macOS
+        - SixLayerFrameworkExternalIntegrationTests_macOS
+      # UITests excluded by default due to ViewInspector Swift 6 issues
+      # Uncomment when ViewInspector is fixed:
+      # - SixLayerFrameworkUITests_macOS
+
+  SixLayerFramework-AllTests-iOS:
+    build:
+      targets:
+        SixLayerFramework_iOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUnitTests_iOS
+        - SixLayerFrameworkUITests_iOS
+        - SixLayerFrameworkExternalIntegrationTests_iOS
+
+  SixLayerFramework-AllTests-macOS:
+    build:
+      targets:
+        SixLayerFramework_macOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUnitTests_macOS
+        - SixLayerFrameworkUITests_macOS
+        - SixLayerFrameworkExternalIntegrationTests_macOS
+
+  SixLayerFramework-UnitTestsOnly-iOS:
+    build:
+      targets:
+        SixLayerFramework_iOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUnitTests_iOS
+
+  SixLayerFramework-UnitTestsOnly-macOS:
+    build:
+      targets:
+        SixLayerFramework_macOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUnitTests_macOS
+
+  SixLayerFramework-UITestsOnly-iOS:
+    build:
+      targets:
+        SixLayerFramework_iOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUITests_iOS
+
+  SixLayerFramework-UITestsOnly-macOS:
+    build:
+      targets:
+        SixLayerFramework_macOS: all
+    test:
+      targets:
+        - SixLayerFrameworkUITests_macOS
+
