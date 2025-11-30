@@ -17,7 +17,7 @@ test:
 # Quality gate: treats warnings as failures
 quality-gate:
 	@echo "🔍 Running Build Quality Gate..."
-	@./scripts/build-quality-check.sh
+	@./Development/scripts/build-quality-check.sh
 
 # Clean build artifacts
 clean:
@@ -30,7 +30,7 @@ dev: clean build test
 # Pre-release check (mandatory before any release)
 pre-release-check:
 	@echo "🚀 Running Pre-Release Check..."
-	@./scripts/pre-release-check.sh
+	@./Development/scripts/pre-release-check.sh
 
 # CI workflow
 ci: quality-gate
