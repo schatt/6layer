@@ -177,7 +177,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with ComprehensiveAccessibilityModifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -203,7 +203,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with SystemAccessibilityModifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -232,7 +232,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with AccessibilityIdentifierAssignmentModifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -261,7 +261,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with .named() modifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -287,7 +287,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with .exactNamed() modifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -313,7 +313,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with .automaticCompliance() modifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -339,7 +339,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A view with .automaticAccessibility() modifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -364,7 +364,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         await runWithTaskLocalConfig {
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -382,7 +382,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testNavigationStateModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         await runWithTaskLocalConfig {
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -454,7 +454,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Accessibility identifier generation
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -480,7 +480,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Accessibility identifier validation
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -506,7 +506,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Accessibility identifier hierarchy
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -533,7 +533,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Accessibility identifier collision prevention
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -569,7 +569,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             config.clearDebugLog()
             
             // When: Creating a view with debug logging
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Text("Test Content")
                 Button("Test Button") { }
             }
@@ -9228,7 +9228,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         config.enableDebugLogging = true
         config.clearDebugLog()
 
-        let testView = VStack {
+        let testView = platformVStackContainer {
             Text("Test Content")
         }
 
@@ -9255,7 +9255,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         config.enableDebugLogging = true
         config.clearDebugLog()
 
-        let testView = HStack {
+        let testView = platformHStackContainer {
             Text("Navigation Content")
         }
 
@@ -12569,8 +12569,8 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // Test: What happens with deeply nested .named() calls?
-        let view = VStack {
-            HStack {
+        let view = platformVStackContainer {
+            platformHStackContainer {
                 Button("Content") { }
                     .named("DeepNested")
                     .enableGlobalAutomaticCompliance()
@@ -14202,8 +14202,8 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     setupTestEnvironment()
     
     // TDD: Define the behavior I want - works in complex nested views
-    let view = VStack {
-        HStack {
+    let view = platformVStackContainer {
+        platformHStackContainer {
             Text("Title")
                 .named("TitleText")
             Button("Action") { }
@@ -15343,8 +15343,8 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: Complex layout with automatic compliance
-        let view = VStack {
-            HStack {
+        let view = platformVStackContainer {
+            platformHStackContainer {
                 Text("Left")
                     .automaticCompliance()
                 Text("Right")
