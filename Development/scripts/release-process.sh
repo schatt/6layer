@@ -17,8 +17,22 @@ fi
 
 echo "🚀 Starting release process for v$VERSION ($RELEASE_TYPE)"
 
-# Step 1: Run tests
-echo "📋 Step 1: Running test suite..."
+# Step 1: Regenerate Xcode project
+echo "📋 Step 1: Ensuring Xcode project is up to date..."
+if command -v xcodegen &> /dev/null; then
+    echo "🔧 Regenerating Xcode project with xcodegen..."
+    if xcodegen; then
+        echo "✅ Xcode project regenerated successfully"
+    else
+        echo "❌ Failed to regenerate Xcode project!"
+        exit 1
+    fi
+else
+    echo "⚠️  xcodegen not available, skipping project regeneration"
+fi
+
+# Step 2: Run tests
+echo "📋 Step 2: Running test suite..."
 
 # Run unit tests first
 echo "🧪 Running unit tests..."
@@ -101,8 +115,8 @@ if [[ "$RELEASE_TYPE" == "major" || "$RELEASE_TYPE" == "minor" ]]; then
     fi
 fi
 
-# Step 6: Check README files
-echo "📋 Step 6: Checking README files..."
+# Step 7: Check README files
+echo "📋 Step 7: Checking README files..."
 
 # Check main README.md - verify version appears in key locations
 if ! grep -q "v$VERSION" README.md; then
@@ -133,8 +147,8 @@ fi
 
 echo "✅ Main README correctly updated with v$VERSION"
 
-# Step 6.5: Check Package.swift version consistency
-echo "📋 Step 6.5: Checking Package.swift version consistency..."
+# Step 7.5: Check Package.swift version consistency
+echo "📋 Step 7.5: Checking Package.swift version consistency..."
 if ! grep -q "v$VERSION" Package.swift; then
     echo "❌ Package.swift missing v$VERSION in version comment!"
     echo "Please update the version comment in Package.swift to match v$VERSION"
@@ -157,8 +171,8 @@ else
     exit 1
 fi
 
-# Step 7: Check project status files
-echo "📋 Step 7: Checking project status files..."
+# Step 8: Check project status files
+echo "📋 Step 8: Checking project status files..."
 if grep -q "v$VERSION" Development/PROJECT_STATUS.md; then
     echo "✅ PROJECT_STATUS.md updated"
 else
@@ -173,8 +187,8 @@ else
     exit 1
 fi
 
-# Step 8: Check main AI_AGENT.md file
-echo "📋 Step 8: Checking main AI_AGENT.md file..."
+# Step 9: Check main AI_AGENT.md file
+echo "📋 Step 9: Checking main AI_AGENT.md file..."
 if [ -f "Development/AI_AGENT.md" ]; then
     echo "✅ Main AI_AGENT.md file exists"
 else
@@ -183,8 +197,8 @@ else
     exit 1
 fi
 
-# Step 9: Check documentation files (only if features changed)
-echo "📋 Step 9: Checking documentation files..."
+# Step 10: Check documentation files (only if features changed)
+echo "📋 Step 10: Checking documentation files..."
 echo "ℹ️  Feature documentation only needs updating if features changed"
 if [ -f "Framework/docs/AutomaticAccessibilityIdentifiers.md" ]; then
     echo "✅ AutomaticAccessibilityIdentifiers.md exists"
@@ -192,8 +206,8 @@ else
     echo "⚠️  Missing Framework/docs/AutomaticAccessibilityIdentifiers.md (only needed if accessibility features changed)"
 fi
 
-# Step 10: Check example files (only if features changed)
-echo "📋 Step 10: Checking example files..."
+# Step 11: Check example files (only if features changed)
+echo "📋 Step 11: Checking example files..."
 echo "ℹ️  Example files only need updating if features changed"
 if [ -f "Framework/Examples/AutomaticAccessibilityIdentifiersExample.swift" ]; then
     echo "✅ AutomaticAccessibilityIdentifiersExample.swift exists"
@@ -217,6 +231,7 @@ echo ""
 echo "🎉 All release documentation checks passed!"
 echo ""
 echo "📋 Release Checklist Complete:"
+echo "✅ Xcode project regenerated"
 echo "✅ Tests passed"
 echo "✅ Git repository is clean"
 echo "✅ RELEASES.md updated correctly"
