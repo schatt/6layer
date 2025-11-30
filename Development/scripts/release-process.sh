@@ -48,13 +48,18 @@ echo "📋 Step 2: Running test suite..."
 echo "🧪 Running unit tests..."
 if ! xcodebuild test -project SixLayerFramework.xcodeproj -scheme SixLayerFramework-UnitTestsOnly-macOS -destination "platform=macOS" -quiet; then
     log_error "Unit tests failed! Cannot proceed with release."
+    exit 1
 fi
 echo "✅ Unit tests passed"
 
-# Note: UI tests are currently disabled due to missing implementations
-# They can be re-enabled once the remaining method stubs are implemented
-echo "ℹ️  UI tests temporarily disabled (missing implementations)"
-echo "✅ Test suite validation complete"
+# Run UI tests
+echo "🖥️  Running UI tests..."
+if ! xcodebuild test -project SixLayerFramework.xcodeproj -scheme SixLayerFramework-UITestsOnly-macOS -destination "platform=macOS" -quiet; then
+    log_error "UI tests failed! Cannot proceed with release."
+    exit 1
+fi
+echo "✅ UI tests passed"
+echo "✅ Complete test suite validation passed"
 
 # Step 2: Check git is clean (no uncommitted changes)
 echo "📋 Step 2: Checking git repository status..."

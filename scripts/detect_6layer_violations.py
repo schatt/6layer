@@ -348,21 +348,30 @@ VIEW_VIOLATIONS = {
         'requires_context': True
     },
     'VStack without semantic intent': {
-        'replacement': 'platformPresentItemCollection_L1() or platformResponsiveCard_L1()',
-        'hint': 'Consider using Layer 1 semantic functions instead of raw VStack',
+        'replacement': 'platformVStackContainer() or platformPresentItemCollection_L1()',
+        'hint': 'Use platformVStackContainer() or Layer 1 semantic functions instead of raw VStack',
         'priority': 2,
         'pattern': r'\bVStack\s*\{',
-        'context_pattern': r'(?:platformFormSection|platformPresentFormData_L1|platformPresentItemCollection_L1)',
-        'requires_context': False,
+        'exclude_patterns': [
+            r'platformVStackContainer\s*\(',
+            r'platformVerticalStack\s*\(',
+            r'platformLazyVStackContainer\s*\(',
+            r'platformPresentItemCollection_L1\s*\(',
+            r'platformResponsiveCard_L1\s*\('
+        ],
         'exclude_in_framework': True
     },
     'HStack without semantic intent': {
-        'replacement': 'platformPresentItemCollection_L1() or platformResponsiveCard_L1()',
-        'hint': 'Consider using Layer 1 semantic functions instead of raw HStack',
+        'replacement': 'platformHStackContainer() or platformPresentItemCollection_L1()',
+        'hint': 'Use platformHStackContainer() or Layer 1 semantic functions instead of raw HStack',
         'priority': 2,
         'pattern': r'\bHStack\s*\{',
-        'context_pattern': r'(?:platformFormSection|platformPresentFormData_L1|platformPresentItemCollection_L1)',
-        'requires_context': False,
+        'exclude_patterns': [
+            r'platformHStackContainer\s*\(',
+            r'platformLazyHStackContainer\s*\(',
+            r'platformPresentItemCollection_L1\s*\(',
+            r'platformResponsiveCard_L1\s*\('
+        ],
         'exclude_in_framework': True
     },
 }
@@ -557,13 +566,24 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True) -> 
         pattern = violation_info['pattern']
         context_pattern = violation_info.get('context_pattern')
         requires_context = violation_info.get('requires_context', False)
-        
+        exclude_patterns = violation_info.get('exclude_patterns', [])
+
         # Check if we should exclude framework code for this violation
         if violation_info.get('exclude_in_framework', False) and 'Framework/' in str(file_path):
             continue
-        
+
         for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_comments), start=1):
             if re.search(pattern, stripped_line):
+                # Check if this line should be excluded based on exclude patterns
+                should_exclude = False
+                for exclude_pattern in exclude_patterns:
+                    if re.search(exclude_pattern, stripped_line):
+                        should_exclude = True
+                        break
+
+                if should_exclude:
+                    continue
+
                 # If context is required, check if it exists nearby
                 if requires_context and context_pattern:
                     # Check surrounding lines for context (use stripped lines for context check)
@@ -573,10 +593,10 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True) -> 
                     context_lines = ''.join(lines_without_comments[start:end])
                     if re.search(context_pattern, context_lines):
                         context_found = True
-                    
+
                     if not context_found:
                         continue
-                
+
                 # Found a violation
                 match = re.search(pattern, stripped_line)
                 if match:
