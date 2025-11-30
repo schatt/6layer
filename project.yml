@@ -4,6 +4,9 @@ options:
   deploymentTarget:
     iOS: "17.0"
     macOS: "15.0"
+  xcodeVersion: "16.1"
+  swiftVersion: "6.0"
+  SWIFT_STRICT_CONCURRENCY: disabled
   developmentLanguage: en
   xcodeVersion: "16.0"
   usesTabs: false
@@ -12,8 +15,8 @@ options:
 
 packages:
   ViewInspector:
-    url: https://github.com/schatt/ViewInspector
-    branch: 0.10.3
+    url: https://github.com/nalexn/ViewInspector
+    version: 0.9.0
 
 targets:
   # Main framework target - supports both iOS and macOS
@@ -75,6 +78,7 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.ui-tests
       SWIFT_VERSION: "6.0"
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) VIEW_INSPECTOR_MAC_FIXED
+      SWIFT_STRICT_CONCURRENCY: disabled
       GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: SixLayerFramework_iOS
@@ -91,9 +95,10 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.ui-tests
       SWIFT_VERSION: "6.0"
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) VIEW_INSPECTOR_MAC_FIXED
+      SWIFT_STRICT_CONCURRENCY: disabled
       GENERATE_INFOPLIST_FILE: YES
     dependencies:
-      - target: SixLayerFramework_iOS
+      - target: SixLayerFramework_macOS
       - package: ViewInspector
         product: ViewInspector
 

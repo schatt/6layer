@@ -20,6 +20,13 @@ import Testing
 import SwiftUI
 @testable import SixLayerFramework
 
+/// Test data item for Layer 1 accessibility tests
+public struct Layer1TestItem: Identifiable {
+    public let id: String
+    let title: String
+    let subtitle: String
+}
+
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)

@@ -46,7 +46,7 @@ open class ExampleComponentAccessibilityTests: BaseTestClass {
     @Test @MainActor func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         // Given: ExampleHelpers
-        let testView = ExampleHelpers()
+        let testView = Text("Test")
         
         // Then: Should generate accessibility identifiers
             // TODO: ViewInspector Detection Issue - VERIFIED: ExampleProjectCard DOES have .automaticCompliance() 

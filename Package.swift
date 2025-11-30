@@ -18,7 +18,7 @@ let package = Package(
         )
     ],
         dependencies: [
-            .package(url: "https://github.com/schatt/ViewInspector", branch: "0.10.3")
+            .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.0")
         ],
     targets: [
         // Main framework target - organized into logical structure

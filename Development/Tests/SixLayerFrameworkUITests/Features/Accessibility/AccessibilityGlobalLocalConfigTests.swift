@@ -283,12 +283,12 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func generateIDForView(_ view: some View) -> String {
+    private func generateIDForView(_ view: some View) async -> String {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
-            let inspectedView = try view.inspect()
-            let button = try inspectedView.button()
-            return try button.accessibilityIdentifier()
+            let inspectedView = try await view.inspect()
+            let button = try await inspectedView.button()
+            return try await button.accessibilityIdentifier()
         } catch {
             Issue.record("Failed to generate ID for view")
             return ""
