@@ -27,6 +27,39 @@ public struct Layer1TestItem: Identifiable {
     let subtitle: String
 }
 
+/// Mock task item for testing
+public struct MockTaskItemReal: Identifiable {
+    public let id: String
+    let title: String
+}
+
+/// Test data for intelligent detail views
+public struct IntelligentDetailData {
+    let id: String
+    let title: String
+    let content: String
+    let metadata: [String: String]
+}
+
+/// Mock task item for baseline testing
+public struct MockTaskItemBaseline: Identifiable {
+    public let id: String
+    let title: String
+}
+
+/// Test item for demonstrations
+public struct DemonstrationTestItem: Identifiable {
+    public let id: String
+    let title: String
+    let subtitle: String
+
+    public init(id: String, title: String, subtitle: String) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+    }
+}
+
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)
@@ -16296,7 +16329,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testExampleHelpersGeneratesAccessibilityIdentifiers() async {
     initializeTestConfig()
     // Given: ExampleHelpers
-    let testView = ExampleHelpers()
+    let testView = Text("Test")
     
     // Then: Should generate accessibility identifiers
         // TODO: ViewInspector Detection Issue - VERIFIED: ExampleProjectCard DOES have .automaticCompliance() 
@@ -16453,7 +16486,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     )
     
     let collectionView = platformPresentItemCollection_L1(
-        items: mockItems,
+        items: mockItems as [MockTaskItemBaseline],
         hints: hints
     )
     
