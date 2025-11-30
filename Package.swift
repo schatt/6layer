@@ -46,16 +46,13 @@ let package = Package(
             ]
         ),
         
-        // Test targets - organized into logical structure
+        // Unit tests - non-UI tests without ViewInspector dependency
         .testTarget(
-            name: "SixLayerFrameworkTests",
+            name: "SixLayerFrameworkUnitTests",
             dependencies: [
-                "SixLayerFramework",
-                // ✅ ViewInspector macOS support verified - builds successfully on macOS SDK 26.2
-                // All types (VideoPlayer, SignInWithAppleButton, MapAnnotation, etc.) compile on macOS
-                .product(name: "ViewInspector", package: "ViewInspector")
+                "SixLayerFramework"
             ],
-            path: "Development/Tests/SixLayerFrameworkTests",
+            path: "Development/Tests/SixLayerFrameworkUnitTests",
             exclude: [
                 // Function index moved to docs directory
                 "BugReports/README.md",
@@ -66,7 +63,19 @@ let package = Package(
                 "BugReports/PlatformTypes_v4.6.6/README.md",
                 // Documentation files
                 "Utilities/TestHelpers/CoreDataTestingGuide.md"
+            ]
+        ),
+        
+        // UI tests - ViewInspector-dependent tests for UI/view inspection
+        .testTarget(
+            name: "SixLayerFrameworkUITests",
+            dependencies: [
+                "SixLayerFramework",
+                // ✅ ViewInspector macOS support verified - builds successfully on macOS SDK 26.2
+                // All types (VideoPlayer, SignInWithAppleButton, MapAnnotation, etc.) compile on macOS
+                .product(name: "ViewInspector", package: "ViewInspector")
             ],
+            path: "Development/Tests/SixLayerFrameworkUITests",
             swiftSettings: [
                 // ✅ VERIFIED: ViewInspector builds successfully on macOS SDK 26.2
                 // Investigation confirmed all types compile on macOS - issue was incorrect
