@@ -9,8 +9,8 @@ options:
   SWIFT_STRICT_CONCURRENCY: disabled
   CODE_SIGN_STYLE: Automatic
   CODE_SIGNING_REQUIRED: YES
-  DEVELOPMENT_TEAM: MF5T75B2HC
-  developmentTeam: MF5T75B2HC
+  DEVELOPMENT_TEAM: Y53G7YPJSZ
+  developmentTeam: Y53G7YPJSZ
   developmentLanguage: en
   usesTabs: false
   indentWidth: 4
@@ -38,7 +38,7 @@ targets:
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) ENABLE_PREVIEWS
       ENABLE_TESTABILITY: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies: []
 
   # Unit tests - iOS
@@ -55,7 +55,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -73,7 +73,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -90,7 +90,7 @@ targets:
       SWIFT_STRICT_CONCURRENCY: disabled
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
       - package: ViewInspector
@@ -110,7 +110,7 @@ targets:
       OTHER_SWIFT_FLAGS: -Xfrontend -warn-concurrency -Xfrontend -disable-availability-checking
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_macOS
       - package: ViewInspector
@@ -129,7 +129,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -146,7 +146,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      DEVELOPMENT_TEAM: MF5T75B2HC
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
 
