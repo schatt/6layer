@@ -173,9 +173,10 @@ open class PlatformColorEncodeTests: BaseTestClass {
             do {
                 let encodedData = try platformColorEncode(color)
                 
-                // Then: Should handle edge cases gracefully
-                #expect(Bool(true), "Should handle edge case color gracefully")  // encodedData is non-optional
-                let _ = encodedData
+                // Then: Should handle edge cases gracefully (may produce data or throw)
+                // Edge cases might produce valid encoded data or throw errors - both are acceptable
+                // If we reach here without throwing, verify the data exists
+                let _ = encodedData  // Verify it exists if no error thrown
                 
             } catch {
                 // Edge cases might throw errors, which is acceptable

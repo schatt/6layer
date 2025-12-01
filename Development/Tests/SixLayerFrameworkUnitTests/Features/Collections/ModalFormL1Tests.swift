@@ -309,7 +309,11 @@ open class ModalFormL1Tests: BaseTestClass {
             formType: formType,
             context: context
         )
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Verify view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: view)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View should be a SwiftUI view type, got: \(viewType)")
         // Performance test removed - performance monitoring was removed from framework
     }
     

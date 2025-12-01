@@ -46,8 +46,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -63,12 +67,19 @@ open class PhotoSelectionL1Tests: BaseTestClass {
             onImageSelected: { _ in }
         )
         
-        // Then: Should return a view that can be hosted
-        #expect(Bool(true), "platformPhotoSelection_L1 with different purpose should return a view")  // view is non-optional
+        // Then: Should return a valid SwiftUI view
+        let mirror = Mirror(reflecting: view)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View should be a SwiftUI view type for different purpose")
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     // MARK: - Different Photo Purposes
@@ -90,8 +101,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for fuel receipt should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -111,8 +126,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for pump display should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -132,8 +151,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for odometer should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -153,8 +176,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for maintenance should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -174,8 +201,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for expense should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -195,8 +226,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for profile should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     @Test @MainActor
@@ -216,8 +251,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for document should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     // MARK: - Edge Cases
@@ -244,8 +283,12 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 with empty context should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify hosting view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: mirror.subjectType)
+        #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
+                "Hosting view should be a SwiftUI view type")
     }
     
     // MARK: - Custom View Tests
