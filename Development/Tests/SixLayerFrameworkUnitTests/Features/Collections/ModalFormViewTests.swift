@@ -14,7 +14,7 @@ open class ModalFormViewTests: BaseTestClass {
     
     @Test @MainActor func testModalFormViewGeneratesAccessibilityIdentifiersOnIOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let testFields = [
                 DynamicFormField(
@@ -58,7 +58,7 @@ open class ModalFormViewTests: BaseTestClass {
     
     @Test @MainActor func testModalFormViewGeneratesAccessibilityIdentifiersOnMacOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let testFields = [
                 DynamicFormField(

@@ -14,7 +14,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     
     @Test @MainActor func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnIOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let testItems = [
                 IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
@@ -50,7 +50,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     
     @Test @MainActor func testExpandableCardCollectionViewGeneratesAccessibilityIdentifiersOnMacOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let testItems = [
                 IntelligentCardExpansionLayer4TestItem(id: "item1", title: "Test Item 1"),
@@ -86,7 +86,7 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
     
     @Test @MainActor func testExpandableCardCollectionViewEmptyStateGeneratesAccessibilityIdentifiers() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             // Test empty state
             let view = ExpandableCardCollectionView(

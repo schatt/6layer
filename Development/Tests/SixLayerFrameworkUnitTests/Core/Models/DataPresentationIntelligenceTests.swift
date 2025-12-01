@@ -18,7 +18,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
 @Test @MainActor func testDataPresentationIntelligenceExists() {
         initializeTestConfig()
         // Given & When
-        let intelligence = DataPresentationIntelligence.shared
+        let _ = DataPresentationIntelligence.shared
         
         // Then
         // intelligence is a non-optional singleton instance, so it exists if we reach here
@@ -351,7 +351,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let singleData = ["Single Item"]
         
         // When
-        let result = await intelligence.analyzeData(singleData)
+        let result = intelligence.analyzeData(singleData)
         
         // Then
         #expect(result.dataPoints == 1)
@@ -365,7 +365,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let identicalValues = Array(repeating: 42.0, count: 10)
         
         // When
-        let result = await intelligence.analyzeNumericalData(identicalValues)
+        let result = intelligence.analyzeNumericalData(identicalValues)
         
         // Then
         #expect(result.dataPoints == 10)
@@ -380,7 +380,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let zeroValues: [Double] = [0, 0, 0, 0, 0]
         
         // When
-        let result = await intelligence.analyzeNumericalData(zeroValues)
+        let result = intelligence.analyzeNumericalData(zeroValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -395,7 +395,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let negativeValues: [Double] = [-10, -5, 0, 5, 10]
         
         // When
-        let result = await intelligence.analyzeNumericalData(negativeValues)
+        let result = intelligence.analyzeNumericalData(negativeValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -409,7 +409,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let largeValues: [Double] = [1e6, 2e6, 3e6, 4e6, 5e6]
         
         // When
-        let result = await intelligence.analyzeNumericalData(largeValues)
+        let result = intelligence.analyzeNumericalData(largeValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -425,8 +425,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let data = ["A", "B", "C", "D", "E"]
         
         // When
-        let result1 = await intelligence.analyzeData(data)
-        let result2 = await intelligence.analyzeData(data)
+        let result1 = intelligence.analyzeData(data)
+        let result2 = intelligence.analyzeData(data)
         
         // Then
         #expect(result1.dataPoints == result2.dataPoints)
@@ -443,8 +443,8 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         let data2 = ["X", "Y", "Z", "W", "V"]
         
         // When
-        let result1 = await intelligence.analyzeData(data1)
-        let result2 = await intelligence.analyzeData(data2)
+        let result1 = intelligence.analyzeData(data1)
+        let result2 = intelligence.analyzeData(data2)
         
         // Then
         #expect(result1.dataPoints == result2.dataPoints)

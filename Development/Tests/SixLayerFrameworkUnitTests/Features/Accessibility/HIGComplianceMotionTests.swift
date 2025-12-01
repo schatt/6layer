@@ -32,7 +32,7 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     @Test @MainActor func testAnimationRespectsReducedMotion() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A view with animation and automatic compliance
             let view = Text("Animated Text")
                 .automaticCompliance()
@@ -56,7 +56,7 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     @Test @MainActor func testTransitionRespectsReducedMotion() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A view with transition and automatic compliance
             let view = Text("Transitioning Text")
                 .transition(.opacity)
@@ -81,7 +81,7 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     @Test @MainActor func testButtonAnimationRespectsReducedMotion() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with animation and automatic compliance
             let button = Button("Animated Button") { }
                 .automaticCompliance()
@@ -107,7 +107,7 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     @Test @MainActor func testAnimationWorksWithNormalMotion() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A view with animation and automatic compliance
             let view = Text("Animated Text")
                 .automaticCompliance()
@@ -133,7 +133,7 @@ open class HIGComplianceMotionTests: BaseTestClass {
     
     @Test @MainActor func testMotionPreferencesOnBothPlatforms() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A view with animation and automatic compliance
             let view = Text("Cross-Platform Animated Text")
                 .automaticCompliance()

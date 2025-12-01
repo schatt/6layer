@@ -111,7 +111,7 @@ open class UnifiedImagePickerTests: BaseTestClass {
         
         // When: Test system boundary conversion directly
         let placeholderImage = PlatformImage.createPlaceholder()
-        let testUIImage = placeholderImage.uiImage!
+        let testUIImage = placeholderImage.uiImage
         let platformImage = PlatformImage(testUIImage)
         
         // Simulate callback with converted image
@@ -140,9 +140,10 @@ open class UnifiedImagePickerTests: BaseTestClass {
             
             // Verify picker can handle image selection (tests conversion path)
             let placeholderImage = PlatformImage.createPlaceholder()
-            let testUIImage = placeholderImage.uiImage!
+            let testUIImage = placeholderImage.uiImage
             let platformImage = PlatformImage(testUIImage)
-            #expect(platformImage.uiImage != nil, "Should convert UIImage to PlatformImage")
+            // uiImage is non-optional, so verify it has valid size
+            #expect(platformImage.uiImage.size.width > 0, "Should convert UIImage to PlatformImage")
         } else {
             // iOS 13: Should use UIImagePickerController fallback
             let picker = UnifiedImagePicker { _ in }
@@ -205,7 +206,7 @@ open class UnifiedImagePickerTests: BaseTestClass {
 
         #if os(iOS)
         // Given: UIImage from system API
-        let uiImage = placeholderImage.uiImage!
+        let uiImage = placeholderImage.uiImage
 
         // When: Convert at system boundary
         let platformImage = PlatformImage(uiImage)
@@ -222,7 +223,7 @@ open class UnifiedImagePickerTests: BaseTestClass {
         let platformImage = PlatformImage(nsImage)
 
         // Then: Should create PlatformImage correctly
-        #expect(platformImage.nsImage != nil, "Should convert NSImage to PlatformImage")
+        #expect(platformImage.nsImage.size.width > 0, "Should convert NSImage to PlatformImage")
         #expect(platformImage.size == placeholderImage.size, "Should preserve image size")
         #endif
     }

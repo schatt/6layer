@@ -48,7 +48,7 @@ open class PlatformMapComponentsLayer4Tests: BaseTestClass {
             let position = Binding.constant(MapCameraPosition.automatic)
             
             // When: API is called
-            let mapView = PlatformMapComponentsLayer4.platformMapView_L4(position: position) {
+            _ = PlatformMapComponentsLayer4.platformMapView_L4(position: position) {
                 // Empty map content for test
             }
             
@@ -225,7 +225,7 @@ open class PlatformMapComponentsLayer4Tests: BaseTestClass {
     @Test @MainActor func testPlatformMapView_ErrorHandling() {
         #if canImport(MapKit)
         // Given: Invalid coordinate
-        let invalidCoordinate = CLLocationCoordinate2D(latitude: 91.0, longitude: 181.0) // Out of range
+        _ = CLLocationCoordinate2D(latitude: 91.0, longitude: 181.0) // Out of range
         
         // When: Coordinate is validated
         // Then: Should handle invalid coordinates

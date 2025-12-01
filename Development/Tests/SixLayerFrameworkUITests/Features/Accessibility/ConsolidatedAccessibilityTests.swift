@@ -10751,7 +10751,9 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     }
     
     // When: Applying SystemColorModifier
-    let view = testContent.systemColor()
+    let platform = SixLayerPlatform.current
+    let colorSystem = HIGColorSystem(for: platform)
+    let view = testContent.modifier(SystemColorModifier(colorSystem: colorSystem))
     
     // Then: Should generate accessibility identifiers
         // TODO: ViewInspector Detection Issue - VERIFIED: SystemColorModifier DOES have .automaticCompliance() 
@@ -10780,7 +10782,9 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     }
     
     // When: Applying SystemTypographyModifier
-    let view = testContent.systemTypography()
+    let platform = SixLayerPlatform.current
+    let typographySystem = HIGTypographySystem(for: platform)
+    let view = testContent.modifier(SystemTypographyModifier(typographySystem: typographySystem))
     
     // Then: Should generate accessibility identifiers
         // TODO: ViewInspector Detection Issue - VERIFIED: SystemTypographyModifier DOES have .automaticCompliance() 
@@ -10809,7 +10813,9 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     }
     
     // When: Applying SpacingModifier
-    let view = testContent.spacing()
+    let platform = SixLayerPlatform.current
+    let spacingSystem = HIGSpacingSystem(for: platform)
+    let view = testContent.modifier(SpacingModifier(spacingSystem: spacingSystem))
     
     // Then: Should generate accessibility identifiers
         // TODO: ViewInspector Detection Issue - VERIFIED: SpacingModifier DOES have .automaticCompliance() 

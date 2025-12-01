@@ -12,9 +12,9 @@ import SwiftUI
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 open class PlatformInternationalizationL1Tests: BaseTestClass {
     
-@Test @MainActor func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() async {
+@Test @MainActor func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnIOS() {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -41,7 +41,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformPresentLocalizedContentL1GeneratesAccessibilityIdentifiersOnMacOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -70,7 +70,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnIOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         
@@ -93,7 +93,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformPresentLocalizedTextL1GeneratesAccessibilityIdentifiersOnMacOS() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
 
             let hints = InternationalizationHints()
         

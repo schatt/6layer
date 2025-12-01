@@ -36,7 +36,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         #expect(platformImage.uiImage == uiImage, "Broken pattern should now work")
         #elseif os(macOS)
         // Given: The exact code that was broken in 4.6.2
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // When: Use the exact pattern that was broken
         let platformImage = PlatformImage(nsImage)
@@ -60,7 +60,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         // Both should work and produce equivalent results
         #expect(oldPattern.uiImage == newPattern.uiImage, "Both patterns should work")
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // Test both patterns
         let oldPattern = PlatformImage(nsImage)        // Old pattern (was broken)
@@ -88,7 +88,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         #expect(capturedImage.uiImage == uiImage, "Camera callback should work")
         #expect(selectedImage.uiImage == uiImage, "Photo picker callback should work")
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // This is the EXACT code that was broken in Layer 4 callbacks
         let capturedImage = PlatformImage(nsImage)

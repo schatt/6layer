@@ -45,7 +45,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         
         // TDD RED PHASE: Test accessibility identifiers across both platforms
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasSpecificAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
+        let hasSpecificAccessibilityID = testComponentComplianceCrossPlatform(
             view, 
             expectedPattern: "*.main.ui.element.*", 
             componentName: "ItemCollection",
@@ -248,7 +248,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         
         // TDD RED PHASE: Test accessibility identifiers across both platforms (platform-dependent behavior)
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasSpecificAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
+        let hasSpecificAccessibilityID = testComponentComplianceCrossPlatform(
             view, 
             expectedPattern: "*.main.ui.element.*", 
             componentName: "FormField",

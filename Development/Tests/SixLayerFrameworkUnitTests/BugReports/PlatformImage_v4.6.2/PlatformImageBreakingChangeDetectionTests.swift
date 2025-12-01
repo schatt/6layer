@@ -151,7 +151,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         #expect(platformImage.uiImage == uiImage, "Implicit parameter should produce correct result")
         #elseif os(macOS)
         // Given: The exact API pattern that was broken
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // When: Use the exact pattern that was broken in 4.6.2
         let platformImage = PlatformImage(nsImage)
@@ -207,7 +207,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
 
-        let testNSImage = PlatformImage.createPlaceholder().nsImage! // 6LAYER_ALLOW: boundary testing PlatformImage.nsImage property access
+        let testNSImage = PlatformImage.createPlaceholder().nsImage // 6LAYER_ALLOW: boundary testing PlatformImage.nsImage property access
 
         capturedImage = PlatformImage(testNSImage) // 6LAYER_ALLOW: boundary testing PlatformImage construction from NSImage
         selectedImage = PlatformImage(testNSImage) // 6LAYER_ALLOW: boundary testing PlatformImage construction from NSImage

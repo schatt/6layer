@@ -32,7 +32,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     @Test @MainActor func testButtonHasHoverState() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Hover Button") { }
                 .automaticCompliance()
@@ -56,7 +56,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     @Test @MainActor func testLinkHasHoverState() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A link with automatic compliance
             let link = Link("Hover Link", destination: URL(string: "https://example.com")!)
                 .automaticCompliance()
@@ -82,7 +82,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     @Test @MainActor func testTextReadableWithHoverText() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("Hover Text Test")
                 .automaticCompliance()
@@ -108,7 +108,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     @Test @MainActor func testPointerInteractionsWorkCorrectly() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Interactive view with automatic compliance
             let view = Text("Pointer Interaction Test")
                 .onHover { _ in }
@@ -135,7 +135,7 @@ open class HIGComplianceHoverTests: BaseTestClass {
     
     @Test @MainActor func testHoverSupportOnHoverCapablePlatforms() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Hover Test Button") { }
                 .automaticCompliance()

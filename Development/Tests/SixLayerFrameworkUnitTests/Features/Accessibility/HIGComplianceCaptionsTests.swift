@@ -32,7 +32,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
     
     @Test @MainActor func testVideoComponentSupportsCaptions() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A video component with automatic compliance
             // Note: Using a placeholder view since we may not have video components yet
             let view = platformVStackContainer {
@@ -61,7 +61,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
     
     @Test @MainActor func testCaptionsAreAccessible() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A media component with captions and automatic compliance
             let view = platformVStackContainer {
                 Text("Media Component")
@@ -91,7 +91,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
     
     @Test @MainActor func testCaptionPositioningIsAppropriate() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A media component with captions and automatic compliance
             let view = platformVStackContainer {
                 Text("Media Component")
@@ -123,7 +123,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
     
     @Test @MainActor func testCaptionSupportOnAllPlatforms() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A media component with automatic compliance
             let view = platformVStackContainer {
                 Text("Cross-Platform Media")

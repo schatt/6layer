@@ -32,7 +32,7 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     @Test @MainActor func testTextMeetsWCAGAAContrastRatio() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Text with foreground and background colors
             let view = Text("Test Text")
                 .foregroundColor(.black)
@@ -58,7 +58,7 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     @Test @MainActor func testLargeTextMeetsWCAGAAContrastRatio() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Large text (18pt+ or 14pt+ bold) with foreground and background colors
             let view = Text("Large Text")
                 .font(.largeTitle)
@@ -85,7 +85,7 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     @Test @MainActor func testButtonTextMeetsWCAGAAContrastRatio() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Button with text and background color
             let button = Button("Test Button") { }
                 .foregroundColor(.white)
@@ -113,7 +113,7 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     @Test @MainActor func testAutomaticColorAdjustmentForLowContrast() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Text with low contrast colors (e.g., light gray on white)
             let view = Text("Low Contrast Text")
                 .foregroundColor(.gray)
@@ -141,7 +141,7 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
     
     @Test @MainActor func testSystemColorsMeetContrastRequirements() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Text using system colors (which should automatically meet contrast)
             let view = Text("System Color Text")
                 .foregroundColor(.primary)

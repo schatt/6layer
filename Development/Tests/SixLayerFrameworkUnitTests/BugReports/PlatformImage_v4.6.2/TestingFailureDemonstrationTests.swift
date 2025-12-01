@@ -92,7 +92,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         let placeholderImage = PlatformImage.createPlaceholder()
         // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: placeholderImage.uiImage!
+            .originalImage: placeholderImage.uiImage
         ]
         
         // Execute the delegate method that contains the broken code
@@ -133,7 +133,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         // Given: The exact code that was broken
         let placeholderImage = PlatformImage.createPlaceholder()
         #if os(iOS)
-        let testImage = placeholderImage.uiImage!
+        let testImage = placeholderImage.uiImage
         #elseif os(macOS)
         let testImage = placeholderImage.nsImage
         #endif
@@ -167,7 +167,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         // Given: The exact code that was broken in 4.6.2
         let placeholderImage = PlatformImage.createPlaceholder()
         #if os(iOS)
-        let testImage = placeholderImage.uiImage!
+        let testImage = placeholderImage.uiImage
         #elseif os(macOS)
         let testImage = placeholderImage.nsImage
         #endif
@@ -217,17 +217,19 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         // Proper approach: Test the functionality
         let placeholderImage = PlatformImage.createPlaceholder()
         #if os(iOS)
-        let testImage = placeholderImage.uiImage!
+        let testImage = placeholderImage.uiImage
         let platformImage = PlatformImage(testImage)
 
         // What we SHOULD test: Actual functionality
-        #expect(platformImage.uiImage != nil, "We should test actual results")
+        // uiImage is non-optional, so verify it has valid size
+        #expect(platformImage.uiImage.size.width > 0, "We should test actual results")
         #elseif os(macOS)
         let testImage = placeholderImage.nsImage
         let platformImage = PlatformImage(testImage)
 
         // What we SHOULD test: Actual functionality
-        #expect(platformImage.nsImage != nil, "We should test actual results")
+        // nsImage is non-optional, so verify it has valid size
+        #expect(platformImage.nsImage.size.width > 0, "We should test actual results")
         #endif
         
         // The failure: We test the interface but not the implementation

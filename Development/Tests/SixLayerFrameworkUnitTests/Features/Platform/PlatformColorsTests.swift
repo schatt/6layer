@@ -445,10 +445,25 @@ open class PlatformColorsTests: BaseTestClass {
         
         // Then - Test business logic: Shadow color should be available
         #expect(shadowColor != Color.clear, "Platform shadow color should be available")
-        #expect(shadowColor.opacity < 1.0, "Shadow color should have some transparency")
+        
+        // Test business logic: Shadow color should have opacity (not fully opaque)
+        // Extract alpha value to verify transparency
+        #if os(iOS)
+        let uiColor = UIColor(shadowColor)
+        var alpha: CGFloat = 0
+        uiColor.getRed(nil, green: nil, blue: nil, alpha: &alpha)
+        #expect(alpha < 1.0, "Shadow color should have some transparency (alpha: \(alpha))")
+        #elseif os(macOS)
+        let nsColor = NSColor(shadowColor)
+        var alpha: CGFloat = 0
+        nsColor.getRed(nil, green: nil, blue: nil, alpha: &alpha)
+        #expect(alpha < 1.0, "Shadow color should have some transparency (alpha: \(alpha))")
+        #else
+        // On other platforms, just verify color is valid
+        #expect(shadowColor != Color.clear, "Platform shadow color should not be clear")
+        #endif
         
         // Test business logic: Shadow color should be black-based (for shadows)
-        // Shadow color should have opacity (not fully opaque)
         #expect(shadowColor != Color.clear, "Platform shadow color should not be clear")
     }
     

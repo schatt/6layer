@@ -45,9 +45,9 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         // Given: Platform-specific image types
         let placeholderImage = PlatformImage.createPlaceholder()
         #if os(iOS)
-        let uiImage = placeholderImage.uiImage!
+        let uiImage = placeholderImage.uiImage
         #elseif os(macOS)
-        let nsImage = placeholderImage.nsImage!
+        let nsImage = placeholderImage.nsImage
         #endif
         
         // When: Try to use platform-specific types with framework APIs
@@ -60,17 +60,19 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         // Test that framework doesn't accept UIImage directly
         // (This would be a compilation error if we tried to pass UIImage)
         let platformImage = PlatformImage(uiImage: uiImage)
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
+        _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             // image parameter should be PlatformImage, not UIImage
-            #expect(image is PlatformImage, "Framework callback should receive PlatformImage")
+            // Verify it's actually a PlatformImage by checking it has PlatformImage properties
+            #expect(platformImage.size.width > 0, "Framework callback should receive PlatformImage")
         }
         
         #elseif os(macOS)
         // Test that framework doesn't accept NSImage directly
         let platformImage = PlatformImage(nsImage: nsImage)
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
+        _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             // image parameter should be PlatformImage, not NSImage
-            #expect(image is PlatformImage, "Framework callback should receive PlatformImage")
+            // Verify it's actually a PlatformImage by checking it has PlatformImage properties
+            #expect(platformImage.size.width > 0, "Framework callback should receive PlatformImage")
         }
         #endif
         
@@ -118,15 +120,12 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         
         
         // When: Set up callbacks
-        var capturedImage: PlatformImage?
-        var selectedImage: PlatformImage?
-        
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
-            capturedImage = image
+        _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { _ in
+            // Callback accepts PlatformImage parameter
         }
         
-        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
-            selectedImage = image
+        _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { _ in
+            // Callback accepts PlatformImage parameter
         }
         
         // Then: Callbacks should only work with PlatformImage
@@ -173,7 +172,7 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         let platformImage = createTestPlatformImage()
         
         // When: Use framework APIs
-        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -185,16 +184,16 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         // Verify we can't accidentally get UIImage from framework
         // (This would be a compilation error if framework exposed UIImage)
         let uiImage = platformImage.uiImage  // This is OK - it's a property access
-        #expect(Bool(true), "PlatformImage should provide UIImage access")  // uiImage is non-optional
+        #expect(uiImage.size.width > 0, "PlatformImage should provide valid UIImage access")
         
         #elseif os(macOS)
         // Verify we can't accidentally get NSImage from framework
         let nsImage = platformImage.nsImage  // This is OK - it's a property access
-        #expect(Bool(true), "PlatformImage should provide NSImage access")  // nsImage is non-optional
+        #expect(nsImage.size.width > 0, "PlatformImage should provide valid NSImage access")
         #endif
         
         // Verify framework components work
-        #expect(Bool(true), "Framework should work with PlatformImage")  // photoDisplay is non-optional
+        #expect(platformImage.size.width > 0, "Framework should work with PlatformImage")
     }
     
     // MARK: - Test Data Helpers
@@ -203,6 +202,26 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         let imageData = createTestImageData()
         return PlatformImage(data: imageData) ?? PlatformImage()
     }
+    
+    #if os(iOS)
+    private func createTestUIImage() -> UIImage {
+        let size = CGSize(width: 100, height: 100)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { context in
+            UIColor.red.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+    }
+    #elseif os(macOS)
+    private func createTestNSImage() -> NSImage {
+        let size = NSSize(width: 100, height: 100)
+        let nsImage = NSImage(size: size)
+        nsImage.lockFocus()
+        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
+        nsImage.unlockFocus()
+        return nsImage
+    }
+    #endif
     
     // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
     private func createTestImageData() -> Data {

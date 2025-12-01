@@ -32,7 +32,7 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
     
     @Test @MainActor func testButtonHasFocusIndicator() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A focusable button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()
@@ -56,7 +56,7 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
     
     @Test @MainActor func testLinkHasFocusIndicator() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A focusable link with automatic compliance
             let link = Link("Test Link", destination: URL(string: "https://example.com")!)
                 .automaticCompliance()
@@ -82,7 +82,7 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
     
     @Test @MainActor func testTextFieldHasFocusIndicator() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A text field with automatic compliance
             let textField = TextField("Placeholder", text: .constant(""))
                 .automaticCompliance()
@@ -106,7 +106,7 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
     
     @Test @MainActor func testSecureFieldHasFocusIndicator() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A secure field with automatic compliance
             let secureField = SecureField("Password", text: .constant(""))
                 .automaticCompliance()
@@ -132,7 +132,7 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
     
     @Test @MainActor func testFocusIndicatorVisibleInHighContrast() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()
@@ -158,7 +158,7 @@ open class HIGComplianceFocusIndicatorsTests: BaseTestClass {
     
     @Test @MainActor func testFocusIndicatorsOnBothPlatforms() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()

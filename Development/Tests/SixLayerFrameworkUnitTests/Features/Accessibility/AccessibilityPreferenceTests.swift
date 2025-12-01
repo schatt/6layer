@@ -221,12 +221,13 @@ open class AccessibilityPreferenceTests: BaseTestClass {
         
         // When: Check that all required properties are present
         // Then: Test actual business logic
-        // All accessibility-related properties should have valid values
-        #expect(config.supportsVoiceOver != nil, "VoiceOver support should be detectable")
-        #expect(config.supportsSwitchControl != nil, "Switch Control support should be detectable")
-        #expect(config.supportsAssistiveTouch != nil, "AssistiveTouch support should be detectable")
-        #expect(performanceConfig.maxAnimationDuration != nil, "Animation duration should be configurable")
-        #expect(accessibilityConfig.supportsVoiceOver != nil, "Accessibility VoiceOver support should be detectable")
+        // All accessibility-related properties should have valid values (all are non-optional Bool/TimeInterval)
+        let _ = config.supportsVoiceOver
+        let _ = config.supportsSwitchControl
+        let _ = config.supportsAssistiveTouch
+        let _ = performanceConfig.maxAnimationDuration
+        let _ = accessibilityConfig.supportsVoiceOver
+        #expect(Bool(true), "All accessibility properties should be accessible")
         
         // Test that values are within reasonable ranges
         #expect(config.minTouchTarget >= 0, "Touch target size should be non-negative")
@@ -304,9 +305,10 @@ open class AccessibilityPreferenceTests: BaseTestClass {
             let config = getCardExpansionPlatformConfig()
             
             // Then: Test actual business logic
-            // Each platform should have consistent accessibility support
-            #expect(config.supportsVoiceOver != nil, "VoiceOver should be detectable on \(platform)")
-            #expect(config.supportsSwitchControl != nil, "Switch Control should be detectable on \(platform)")
+            // Each platform should have consistent accessibility support (all are non-optional Bool)
+            let _ = config.supportsVoiceOver
+            let _ = config.supportsSwitchControl
+            #expect(Bool(true), "VoiceOver and Switch Control should be accessible on \(platform)")
             
             // Verify platform-correct minTouchTarget value
             // Note: minTouchTarget is based on compile-time platform, not capability overrides

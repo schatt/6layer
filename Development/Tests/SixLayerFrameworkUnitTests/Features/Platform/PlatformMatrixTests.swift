@@ -244,8 +244,8 @@ open class PlatformMatrixTests: BaseTestClass {
             let encodedData = try platformColorEncode(testColor)
             #expect(!encodedData.isEmpty, "Color encoding should produce data")
             
-            let decodedColor = try platformColorDecode(encodedData)
-            // decodedColor is non-optional Color, so it exists if we reach here
+            _ = try platformColorDecode(encodedData)
+            // Decoded color is non-optional, so it exists if we reach here
         } catch {
             Issue.record("Color encoding/decoding should work on all platforms: \(error)")
         }

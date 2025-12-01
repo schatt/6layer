@@ -32,7 +32,7 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     @Test @MainActor func testViewScalesWithSystemZoom() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
             let view = platformVStackContainer {
                 Text("Zoom Test")
@@ -61,7 +61,7 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     @Test @MainActor func testTextRemainsReadableAtZoomLevels() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Text with automatic compliance
             let view = Text("Readable Text at Zoom")
                 .automaticCompliance()
@@ -85,7 +85,7 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     @Test @MainActor func testButtonRemainsUsableAtZoomLevels() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Button with automatic compliance
             let button = Button("Zoom Button") { }
                 .automaticCompliance()
@@ -111,7 +111,7 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     @Test @MainActor func testLayoutMaintainsIntegrityAtZoomLevels() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Complex layout with automatic compliance
             let view = platformVStackContainer {
                 platformHStackContainer {
@@ -147,7 +147,7 @@ open class HIGComplianceZoomTests: BaseTestClass {
     
     @Test @MainActor func testZoomSupportOnAllPlatforms() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
             let view = Text("Cross-Platform Zoom Test")
                 .automaticCompliance()

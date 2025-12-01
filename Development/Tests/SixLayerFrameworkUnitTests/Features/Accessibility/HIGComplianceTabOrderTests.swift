@@ -32,7 +32,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     @Test @MainActor func testFormFieldsHaveLogicalTabOrder() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Multiple form fields with automatic compliance
             let view = platformVStackContainer {
                 TextField("First Name", text: .constant(""))
@@ -65,7 +65,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     @Test @MainActor func testButtonsHaveLogicalTabOrder() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Multiple buttons with automatic compliance
             let view = platformHStackContainer {
                 Button("Cancel") { }
@@ -96,7 +96,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     @Test @MainActor func testComplexLayoutHasLogicalTabOrder() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Complex layout with multiple focusable elements
             let view = platformVStackContainer {
                 TextField("Name", text: .constant(""))
@@ -132,7 +132,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
     
     @Test @MainActor func testTabOrderOnBothPlatforms() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: Multiple focusable elements with automatic compliance
             let view = platformVStackContainer {
                 TextField("Field 1", text: .constant(""))

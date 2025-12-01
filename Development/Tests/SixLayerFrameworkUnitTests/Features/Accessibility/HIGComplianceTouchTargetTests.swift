@@ -33,7 +33,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
     
     @Test @MainActor func testButtonRespectsRuntimeTouchTargetDetection() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()
@@ -79,7 +79,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
     
     @Test @MainActor func testLinkRespectsRuntimeTouchTargetDetection() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A link with automatic compliance
             let link = Link("Test Link", destination: URL(string: "https://example.com")!)
                 .automaticCompliance()
@@ -115,7 +115,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
     
     @Test @MainActor func testInteractiveViewRespectsRuntimeTouchTargetDetection() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: An interactive view (tappable) with automatic compliance
             let interactiveView = Text("Tap Me")
                 .onTapGesture { }
@@ -152,7 +152,7 @@ open class HIGComplianceTouchTargetTests: BaseTestClass {
     
     @Test @MainActor func testNonTouchPlatformsDoNotRequireTouchTargets() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // GIVEN: A button with automatic compliance
             let button = Button("Test Button") { }
                 .automaticCompliance()

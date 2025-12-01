@@ -28,7 +28,7 @@ platforms:
       - build/macos/*.app
     # scheme: Required. The Xcode scheme to build for this platform.
   - name: iOS_build
-    build_command: xcodebuild build -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework   -destination "platform=iOS Simulator,name=iPhone 16 Pro"
+    build_command: xcodebuild build -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework   -destination "platform=iOS Simulator,name=iPhone 17 Pro Max"
     artifact_dir: build/ios
     artifact_patterns:
       - build/ios/*.ipa

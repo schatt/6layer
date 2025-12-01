@@ -37,7 +37,7 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         let result = testView.platformOpenSettings()
         
         // Then: Should return a Bool (may be true or false depending on platform/capabilities)
-        #expect(result is Bool, "platformOpenSettings should return Bool")
+        #expect(result == true || result == false, "platformOpenSettings should return Bool")
     }
     
     /// BUSINESS PURPOSE: Validates that standalone platformOpenSettings function exists
@@ -50,7 +50,9 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         let result = platformOpenSettings()
         
         // Then: Should return a Bool (may be true or false depending on platform/capabilities)
-        #expect(result is Bool, "Standalone platformOpenSettings should return Bool")
+        // result is already typed as Bool, so just verify it's accessible
+        let _ = result
+        #expect(Bool(true), "platformOpenSettings should return Bool")
     }
     
     // MARK: - iOS-Specific Tests
@@ -98,7 +100,8 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         let result = testView.platformOpenSettings()
         
         // Then: Function should return Bool (may be false on macOS as there's no standard way to open app settings)
-        #expect(result is Bool, "platformOpenSettings should return Bool on macOS")
+        let _ = result
+    #expect(Bool(true), "result is Bool")
     }
     #endif
     
@@ -117,7 +120,8 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         let result = testView.platformOpenSettings()
         
         // Then: Should return Bool on any platform
-        #expect(result is Bool, "platformOpenSettings should return Bool on all platforms")
+        let _ = result
+    #expect(Bool(true), "result is Bool")
     }
     
     // MARK: - Error Handling Tests
@@ -137,9 +141,12 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         let result3 = testView.platformOpenSettings()
         
         // Then: Should return Bool for all calls without crashing
-        #expect(result1 is Bool, "First call should return Bool")
-        #expect(result2 is Bool, "Second call should return Bool")
-        #expect(result3 is Bool, "Third call should return Bool")
+        let _ = result1
+    #expect(Bool(true), "result is Bool")
+        let _ = result2
+    #expect(Bool(true), "result is Bool")
+        let _ = result3
+    #expect(Bool(true), "result is Bool")
     }
     
     // MARK: - Integration Tests
@@ -161,9 +168,9 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         }
         
         // When: Views are created
-        // Then: Should not crash
-        #expect(testView1 is Button<Text>, "View with extension should be a Button")
-        #expect(testView2 is Button<Text>, "View with standalone function should be a Button")
+        // Then: Should not crash (views are non-optional, so they exist if we reach here)
+        _ = testView1
+        _ = testView2
     }
     
     /// BUSINESS PURPOSE: Validates return value indicates success/failure
@@ -202,9 +209,8 @@ open class PlatformOpenSettingsTests: BaseTestClass {
             }
         }
         
-        // Then: View should compile and be creatable
-        let testView = TestView()
-        #expect(testView is TestView, "View with Environment.openURL should be creatable")
+        // Then: View should compile and be creatable (non-optional, so it exists if we reach here)
+        _ = TestView()
     }
     
     /// BUSINESS PURPOSE: Validates that Environment.openURL overload returns Bool
@@ -248,7 +254,8 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         
         // Then: Should return Bool (error logging happens internally, we can't test it directly)
         // But we can verify the function doesn't crash and returns appropriate value
-        #expect(result is Bool, "Should return Bool even when logging errors")
+        let _ = result
+    #expect(Bool(true), "result is Bool")
         
         // Note: Actual error logging verification would require integration tests
         // or mocking the logging system, which is beyond unit test scope

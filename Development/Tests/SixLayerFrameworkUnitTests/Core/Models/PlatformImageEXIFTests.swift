@@ -88,7 +88,7 @@ open class PlatformImageEXIFTests: BaseTestClass {
     @Test func testEXIFWorksOnAllPlatforms() async {
         // Given: A PlatformImage
         let image = PlatformImage.createPlaceholder()
-        let currentPlatform = SixLayerPlatform.current
+        _ = SixLayerPlatform.current
         
         // When: Accessing EXIF data
         let exif = image.exif

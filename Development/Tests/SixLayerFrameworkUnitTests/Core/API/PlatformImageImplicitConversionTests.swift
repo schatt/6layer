@@ -72,13 +72,14 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         #if os(macOS)
         // Given: PlatformImage placeholder (framework-compliant test image)
         let placeholderImage = PlatformImage.createPlaceholder()
-        let nsImage = placeholderImage.nsImage!
+        let nsImage = placeholderImage.nsImage
 
         // When: Use implicit conversion
         let platformImage = PlatformImage(nsImage)  // Implicit conversion
 
         // Then: Conversion should work correctly
-        #expect(platformImage.nsImage != nil, "Implicit conversion should produce valid NSImage")
+        // NSImage is non-optional, so verify it has valid size
+        #expect(platformImage.nsImage.size.width > 0, "Implicit conversion should produce valid NSImage")
         #expect(platformImage.size.width > 0, "Converted PlatformImage should have valid dimensions")
         #expect(platformImage.size.height > 0, "Converted PlatformImage should have valid dimensions")
 

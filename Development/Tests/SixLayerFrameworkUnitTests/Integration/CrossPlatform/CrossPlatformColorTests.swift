@@ -137,7 +137,7 @@ open class CrossPlatformColorTests: BaseTestClass {
         }
     }
     
-    @Test func testCrossPlatformColorsSupportFrameworkGoals() {
+    @Test @MainActor func testCrossPlatformColorsSupportFrameworkGoals() {
         // Test that our color system supports the framework's cross-platform goals
         // Business purpose: enabling developers to write once, run everywhere
         

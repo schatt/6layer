@@ -146,19 +146,16 @@ open class FormWizardViewTDDTests: BaseTestClass {
                     if state.currentStepIndex > 0 {
                         Button("Previous") {
                             previous()
-                            previousCalled = true
                         }
                     }
                     Spacer()
                     if state.isLastStep {
                         Button("Finish") {
                             finish()
-                            finishCalled = true
                         }
                     } else {
                         Button("Next") {
                             next()
-                            nextCalled = true
                         }
                     }
                 }

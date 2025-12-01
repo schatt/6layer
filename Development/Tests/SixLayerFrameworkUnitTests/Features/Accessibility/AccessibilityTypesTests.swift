@@ -359,7 +359,8 @@ open class AccessibilityTypesTests: BaseTestClass {
         
         #expect(gesture.type == .singleTap)
         #expect(gesture.intensity == .medium)
-        #expect(gesture.timestamp != nil)
+        // timestamp is non-optional Date, so just verify it exists
+        let _ = gesture.timestamp
     }
     
     @Test func testSwitchControlAction() {
@@ -504,7 +505,8 @@ open class AccessibilityTypesTests: BaseTestClass {
         
         #expect(gesture.type == .singleTap)
         #expect(gesture.intensity == .medium)
-        #expect(gesture.timestamp != nil)
+        // timestamp is non-optional Date, so just verify it exists
+        let _ = gesture.timestamp
     }
     
     @Test func testAssistiveTouchAction() {
@@ -819,7 +821,8 @@ open class AccessibilityTypesTests: BaseTestClass {
         #expect(recognition.phrase == "Test phrase")
         #expect(recognition.confidence == 0.85)
         #expect(recognition.recognizedCommand == .tap)
-        #expect(recognition.timestamp != nil)
+        let _ = recognition.timestamp
+    #expect()
     }
     
     @Test func testVoiceControlCompliance() {

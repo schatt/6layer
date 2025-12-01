@@ -19,7 +19,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentFormViewGeneratesAccessibilityIdentifiers() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given: Sample data for form generation
             struct SampleData {
                 let name: String
@@ -56,7 +56,7 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testIntelligentDetailViewGeneratesAccessibilityIdentifiers() async {
             initializeTestConfig()
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given: Test detail data
             let detailData = IntelligentDetailData(
                 id: "detail-1",

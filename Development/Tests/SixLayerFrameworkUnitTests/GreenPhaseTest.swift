@@ -16,7 +16,7 @@ open class GreenPhaseTest: BaseTestClass {
         ]
 
         // When: Create a basic view
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: PresentationHints(
                 dataType: .generic,

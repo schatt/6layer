@@ -62,7 +62,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         
         // Test 2: Verify API accepts callbacks with correct signature (compile-time check)
         // This verifies the API signature - if wrong, this won't compile
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: callback)
+        _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: callback)
         
         // Then: Verify API accepts the callback and creates the view
         // cameraInterface is non-optional View, so it exists if we reach here
@@ -121,7 +121,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         
         // Test 2: Verify API accepts callbacks with correct signature (compile-time check)
         // This verifies the API signature - if wrong, this won't compile
-        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: callback)
+        _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: callback)
         
         // Then: Verify API accepts the callback and creates the view
         // photoPicker is non-optional View, so it exists if we reach here
@@ -166,7 +166,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         let style = PhotoDisplayStyle.thumbnail
         
         
-        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: realImage,
             style: style
         )
@@ -177,7 +177,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         
         // Test that the display component can actually render the image
         // This tests the integration between PlatformImage and display components
-        let displaySize = getDisplaySize(for: style)
+        _ = getDisplaySize(for: style)
         #expect(realImage.size.width > 0, "Real image should have valid width")
         #expect(realImage.size.height > 0, "Real image should have valid height")
     }
@@ -202,12 +202,13 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         // callbackResult is a non-optional PlatformImage, so it exists if we reach here
         #expect(callbackResult.uiImage != nil, "Callback pattern should produce valid result")
         #elseif os(macOS)
-        let nsImage = placeholderImage.nsImage!
+        let nsImage = placeholderImage.nsImage
 
         // Test the exact pattern used in Layer 4 callbacks
         let callbackResult = PlatformImage(nsImage)
         // callbackResult is a non-optional PlatformImage, so it exists if we reach here
-        #expect(callbackResult.nsImage != nil, "Callback pattern should produce valid result")
+        // NSImage is non-optional, so verify it has valid size
+        #expect(callbackResult.nsImage.size.width > 0, "Callback pattern should produce valid result")
         #endif
     }
     
@@ -238,6 +239,33 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
     private func createRealPlatformImage() -> PlatformImage {
         let imageData = createRealImageData()
         return PlatformImage(data: imageData) ?? PlatformImage()
+    }
+    
+    private func createRealImageData() -> Data {
+        #if os(iOS)
+        let size = CGSize(width: 200, height: 200)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let uiImage = renderer.image { context in
+            UIColor.blue.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        return uiImage.jpegData(compressionQuality: 0.8) ?? Data()
+        #elseif os(macOS)
+        let size = NSSize(width: 200, height: 200)
+        let nsImage = NSImage(size: size)
+        nsImage.lockFocus()
+        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
+        nsImage.unlockFocus()
+        
+        guard let tiffData = nsImage.tiffRepresentation,
+              let bitmapRep = NSBitmapImageRep(data: tiffData),
+              let jpegData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
+            return Data()
+        }
+        return jpegData
+        #else
+        return Data()
+        #endif
     }
     
     #if os(iOS)

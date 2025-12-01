@@ -53,10 +53,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Analyzing the DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
+        _ = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
         
-        // Then: Should return a view
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should return a view (non-optional, so it exists if we reach here)
     }
     
     @Test @MainActor func testPlatformAnalyzeDataFrame_L1_WithHints() {
@@ -70,10 +69,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         )
         
         // When: Analyzing the DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
+        _ = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
         
-        // Then: Should return a view
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should return a view (non-optional, so it exists if we reach here)
     }
     
     @Test @MainActor func testPlatformAnalyzeDataFrame_L1_EmptyDataFrame() {
@@ -84,10 +82,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Analyzing the empty DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: emptyDataFrame, hints: hints)
+        _ = platformAnalyzeDataFrame_L1(dataFrame: emptyDataFrame, hints: hints)
         
-        // Then: Should handle empty DataFrame gracefully
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should handle empty DataFrame gracefully (non-optional, so it exists if we reach here)
     }
     
     // MARK: - DataFrame Comparison Tests
@@ -100,10 +97,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Comparing DataFrames
-        let view = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
+        _ = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
         
-        // Then: Should return a comparison view
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should return a comparison view (non-optional, so it exists if we reach here)
     }
     
     @Test @MainActor func testPlatformCompareDataFrames_L1_SingleDataFrame() {
@@ -114,10 +110,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Comparing single DataFrame
-        let view = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
+        _ = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
         
-        // Then: Should handle single DataFrame
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should handle single DataFrame (non-optional, so it exists if we reach here)
     }
     
     @Test @MainActor func testPlatformCompareDataFrames_L1_EmptyArray() {
@@ -127,10 +122,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Comparing empty array
-        let view = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
+        _ = platformCompareDataFrames_L1(dataFrames: dataFrames, hints: hints)
         
-        // Then: Should handle empty array gracefully
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should handle empty array gracefully (non-optional, so it exists if we reach here)
     }
     
     // MARK: - Data Quality Assessment Tests
@@ -141,10 +135,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Assessing data quality
-        let view = platformAssessDataQuality_L1(dataFrame: createTestDataFrame(), hints: hints)
+        _ = platformAssessDataQuality_L1(dataFrame: createTestDataFrame(), hints: hints)
         
-        // Then: Should return a quality assessment view
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should return a quality assessment view (non-optional, so it exists if we reach here)
     }
     
     @Test @MainActor func testPlatformAssessDataQuality_L1_WithMissingData() {
@@ -154,10 +147,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Assessing data quality
-        let view = platformAssessDataQuality_L1(dataFrame: dataFrameWithMissing, hints: hints)
+        _ = platformAssessDataQuality_L1(dataFrame: dataFrameWithMissing, hints: hints)
         
-        // Then: Should return a quality assessment view
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should return a quality assessment view (non-optional, so it exists if we reach here)
     }
     
     // MARK: - DataFrame Analysis Hints Tests
@@ -239,10 +231,9 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Analyzing the DataFrame
-        let view = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
+        _ = platformAnalyzeDataFrame_L1(dataFrame: createTestDataFrame(), hints: hints)
         
-        // Then: Should integrate with existing systems
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: Should integrate with existing systems (non-optional, so it exists if we reach here)
     }
     
     // MARK: - Custom Visualization View Tests
@@ -268,8 +259,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view with custom visualization
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformAnalyzeDataFrame_L1 with custom visualization view should return a view")
+        _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        // Verify view was created successfully (non-optional, so it exists if we reach here)
     }
     
     @Test @MainActor func testPlatformAnalyzeDataFrame_L1_WithCustomVisualizationView_Nil() {
@@ -284,9 +275,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
             hints: hints
         )
         
-        // Then: Should return default view
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformAnalyzeDataFrame_L1 with nil custom visualization view should return default view")
+        // Then: Should return default view (non-optional, so it exists if we reach here)
+        _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
     }
     
     @Test @MainActor func testPlatformCompareDataFrames_L1_WithCustomVisualizationView() {
@@ -309,9 +299,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
             }
         )
         
-        // Then: Should return a view with custom visualization
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformCompareDataFrames_L1 with custom visualization view should return a view")
+        // Then: Should return a view with custom visualization (non-optional, so it exists if we reach here)
+        _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
     }
     
     @Test @MainActor func testPlatformAssessDataQuality_L1_WithCustomVisualizationView() {
@@ -334,9 +323,8 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
             }
         )
         
-        // Then: Should return a view with custom visualization
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformAssessDataQuality_L1 with custom visualization view should return a view")
+        // Then: Should return a view with custom visualization (non-optional, so it exists if we reach here)
+        _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
     }
     
     // MARK: - Helper Methods

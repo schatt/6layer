@@ -18,7 +18,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     // MARK: - CrossPlatformOptimizationManager Tests
     
     @Test @MainActor func testCrossPlatformOptimizationManagerGeneratesAccessibilityIdentifiers() async {
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             // Given: A view with CrossPlatformOptimizationManager
             let manager = CrossPlatformOptimizationManager()
             

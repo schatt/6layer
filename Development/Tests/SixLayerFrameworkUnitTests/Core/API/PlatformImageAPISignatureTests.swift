@@ -67,7 +67,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #expect(Bool(true), "Implicit parameter initializer should exist for backward compatibility")
         #expect(implicitInit.uiImage == uiImage, "Implicit parameter initializer should work correctly") // 6LAYER_ALLOW: testing PlatformImage boundary property access
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage! // 6LAYER_ALLOW: testing PlatformImage boundary API access
+        let nsImage = PlatformImage.createPlaceholder().nsImage // 6LAYER_ALLOW: testing PlatformImage boundary API access
         let nsImageInit = PlatformImage(nsImage: nsImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         // nsImageInit is non-optional, so no nil check needed
         #expect(Bool(true), "NSImage initializer should exist")
@@ -101,7 +101,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // Verify both produce equivalent results
         #expect(explicitInit.uiImage == implicitInit.uiImage, "Both initializers should produce equivalent results")
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // Test explicit parameter label (current API)
         let explicitInit = PlatformImage(nsImage: nsImage)
@@ -136,7 +136,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         let newPattern = PlatformImage(uiImage: uiImage)
         #expect(newPattern.uiImage == callbackPattern.uiImage, "Old and new patterns should be equivalent")
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // Test the EXACT pattern used in Layer 4 callbacks
         let callbackPattern = PlatformImage(nsImage)
@@ -171,7 +171,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         let explicit = PlatformImage(uiImage: uiImage)
         #expect(implicit.uiImage == explicit.uiImage, "iOS patterns should be equivalent")
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         let implicit = PlatformImage(nsImage)
         let explicit = PlatformImage(nsImage: nsImage)
         #expect(implicit.nsImage == explicit.nsImage, "macOS patterns should be equivalent")
@@ -198,7 +198,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #expect(brokenPattern.uiImage == uiImage, "Broken pattern should produce correct result")
         #expect(brokenPattern.size == uiImage.size, "Broken pattern should preserve image properties")
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
+        let nsImage = PlatformImage.createPlaceholder().nsImage
         
         // Test the broken pattern from Layer 4 callbacks
         let brokenPattern = PlatformImage(nsImage)
