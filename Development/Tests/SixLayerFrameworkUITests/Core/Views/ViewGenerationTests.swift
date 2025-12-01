@@ -383,7 +383,7 @@ open class ViewGenerationTests: BaseTestClass {
         let _ = IntelligentDetailView.platformDetailView(
             for: item,
             customFieldView: { fieldName, value, fieldType in
-                VStack {
+                platformVStackContainer {
                     Text(fieldName)
                     Text(String(describing: value))
                 }

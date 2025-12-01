@@ -26,7 +26,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
     @Test func testPlatformImageFix_ExactBrokenPattern() {
         #if os(iOS)
         // Given: The exact code that was broken in 4.6.2
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // When: Use the exact pattern that was broken
         // This is the EXACT code from the bug report: PlatformImage(image)
@@ -36,7 +36,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         #expect(platformImage.uiImage == uiImage, "Broken pattern should now work")
         #elseif os(macOS)
         // Given: The exact code that was broken in 4.6.2
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // When: Use the exact pattern that was broken
         let platformImage = PlatformImage(nsImage)
@@ -51,7 +51,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
     /// METHODOLOGY: Test both API patterns to ensure backward compatibility
     @Test func testPlatformImageFix_BothPatternsWork() {
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // Test both patterns
         let oldPattern = PlatformImage(uiImage)        // Old pattern (was broken)
@@ -60,7 +60,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         // Both should work and produce equivalent results
         #expect(oldPattern.uiImage == newPattern.uiImage, "Both patterns should work")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // Test both patterns
         let oldPattern = PlatformImage(nsImage)        // Old pattern (was broken)
@@ -76,7 +76,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
     /// METHODOLOGY: Test the exact callback execution that was broken
     @Test func testPlatformImageFix_Layer4CallbackCode() {
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // This is the EXACT code that was broken in Layer 4 callbacks:
         // parent.onImageCaptured(PlatformImage(image))
@@ -88,7 +88,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         #expect(capturedImage.uiImage == uiImage, "Camera callback should work")
         #expect(selectedImage.uiImage == uiImage, "Photo picker callback should work")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // This is the EXACT code that was broken in Layer 4 callbacks
         let capturedImage = PlatformImage(nsImage)
@@ -100,27 +100,4 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         #endif
     }
     
-    // MARK: - Test Data Helpers
-    
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
-    #endif
 }

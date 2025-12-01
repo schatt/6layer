@@ -7,10 +7,11 @@ options:
   xcodeVersion: "16.1"
   swiftVersion: "6.0"
   SWIFT_STRICT_CONCURRENCY: disabled
-  CODE_SIGN_IDENTITY: ""
-  CODE_SIGNING_REQUIRED: NO
+  CODE_SIGN_STYLE: Automatic
+  CODE_SIGNING_REQUIRED: YES
+  DEVELOPMENT_TEAM: MF5T75B2HC
+  developmentTeam: MF5T75B2HC
   developmentLanguage: en
-  xcodeVersion: "16.0"
   usesTabs: false
   indentWidth: 4
   tabWidth: 4
@@ -36,6 +37,8 @@ targets:
       SWIFT_VERSION: "6.0"
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) ENABLE_PREVIEWS
       ENABLE_TESTABILITY: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies: []
 
   # Unit tests - iOS
@@ -51,6 +54,8 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.unit-tests
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -67,6 +72,8 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.unit-tests
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -82,6 +89,8 @@ targets:
       SWIFT_ACTIVE_COMPILATION_CONDITIONS: $(inherited) VIEW_INSPECTOR_MAC_FIXED
       SWIFT_STRICT_CONCURRENCY: disabled
       GENERATE_INFOPLIST_FILE: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies:
       - target: SixLayerFramework_iOS
       - package: ViewInspector
@@ -100,6 +109,8 @@ targets:
       SWIFT_STRICT_CONCURRENCY: disabled
       OTHER_SWIFT_FLAGS: -Xfrontend -warn-concurrency -Xfrontend -disable-availability-checking
       GENERATE_INFOPLIST_FILE: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies:
       - target: SixLayerFramework_macOS
       - package: ViewInspector
@@ -117,6 +128,8 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.external-integration-tests
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -132,6 +145,8 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework.external-integration-tests
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
+      CODE_SIGN_STYLE: Automatic
+      DEVELOPMENT_TEAM: MF5T75B2HC
     dependencies:
       - target: SixLayerFramework_iOS
 

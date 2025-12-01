@@ -116,7 +116,7 @@ open class MetalRenderingCrashTDDTests: BaseTestClass {
         )
         
         // Simulate the exact scenario from the bug report
-        let view = VStack {
+        let view = platformVStackContainer {
             platformPresentItemCollection_L1(
                 items: mockItems,
                 hints: hints,

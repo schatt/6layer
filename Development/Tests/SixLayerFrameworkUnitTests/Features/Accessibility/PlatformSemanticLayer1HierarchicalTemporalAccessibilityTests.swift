@@ -280,7 +280,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             items: [testData],
             hints: hints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text("Level \(item.level)")
                 }
@@ -330,7 +330,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             items: [testData],
             hints: enhancedHints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text("Level \(item.level)")
                 }
@@ -464,7 +464,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             items: [testData],
             hints: hints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text(item.date.description)
                 }
@@ -512,7 +512,7 @@ open class PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests: BaseTes
             items: [testData],
             hints: enhancedHints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text(item.date.description)
                 }

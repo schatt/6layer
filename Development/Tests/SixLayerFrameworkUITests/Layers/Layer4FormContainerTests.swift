@@ -376,7 +376,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     @Test @MainActor func testPlatformFormContainer_L4_ComplexContent() {
         // Given: Complex content with multiple views
-        let complexContent = VStack {
+        let complexContent = platformVStackContainer {
             Text("Form Title")
                 .font(.headline)
             TextField("Name", text: .constant(""))
@@ -547,7 +547,7 @@ open class Layer4FormContainerTests: BaseTestClass {
     
     @Test @MainActor func testPlatformFormContainer_L4_PerformanceWithComplexContent() {
         // Given: Complex content
-        let complexContent = VStack {
+        let complexContent = platformVStackContainer {
             ForEach(0..<50) { i in
                 TextField("Field \(i)", text: .constant(""))
             }

@@ -31,7 +31,7 @@ open class FormWizardViewTests: BaseTestClass {
         let view = FormWizardView(steps: [step1, step2]) { step, state in
             Text("Step content for \(step.title)")
         } navigation: { state, onNext, onPrevious, onComplete in
-            HStack {
+            platformHStackContainer {
                 Button("Previous") { onPrevious() }
                 Button("Next") { onNext() }
             }
@@ -59,7 +59,7 @@ open class FormWizardViewTests: BaseTestClass {
         let view = FormWizardView(steps: [step1, step2]) { step, state in
             Text("Step content for \(step.title)")
         } navigation: { state, onNext, onPrevious, onComplete in
-            HStack {
+            platformHStackContainer {
                 Button("Previous") { onPrevious() }
                 Button("Next") { onNext() }
             }

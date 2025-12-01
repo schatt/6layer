@@ -43,24 +43,6 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    public func createTestImage() -> PlatformImage {
-        #if os(iOS)
-        let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { context in
-            Color.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return PlatformImage(uiImage: image)
-        #elseif os(macOS)
-        let size = NSSize(width: 100, height: 100)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        Color.blue.fillRect(size: size)
-        image.unlockFocus()
-        return PlatformImage(nsImage: image)
-        #endif
-    }
     
     // MARK: - ImageMetadataIntelligence Tests
     
@@ -70,7 +52,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_ExtractBasicMetadata() async throws {
         // Optimized: Test only current platform instead of all platforms to reduce execution time
         // The metadata extraction logic is platform-agnostic, so testing one platform is sufficient
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -90,7 +72,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Extract EXIF data from test image and verify extraction functionality
     @Test func testImageMetadataIntelligence_ExtractEXIFData() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -110,7 +92,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Extract location data from test image and verify extraction functionality
     @Test func testImageMetadataIntelligence_ExtractLocationData() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -126,7 +108,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Extract color profile from test image and verify extraction functionality
     @Test func testImageMetadataIntelligence_ExtractColorProfile() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -144,7 +126,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Extract technical data from test image and verify extraction functionality
     @Test func testImageMetadataIntelligence_ExtractTechnicalData() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -165,7 +147,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Categorize image by content and verify categorization functionality
     @Test func testImageMetadataIntelligence_CategorizeByContent() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -184,7 +166,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Categorize image by purpose and verify categorization functionality
     @Test func testImageMetadataIntelligence_CategorizeByPurpose() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -203,7 +185,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Categorize image by quality and verify categorization functionality
     @Test func testImageMetadataIntelligence_CategorizeByQuality() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -224,7 +206,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Generate optimization recommendations and verify recommendation functionality
     @Test func testImageMetadataIntelligence_GenerateOptimizationRecommendations() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -243,7 +225,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Generate accessibility recommendations and verify recommendation functionality
     @Test func testImageMetadataIntelligence_GenerateAccessibilityRecommendations() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -262,7 +244,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Generate usage recommendations and verify recommendation functionality
     @Test func testImageMetadataIntelligence_GenerateUsageRecommendations() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -283,7 +265,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Analyze image composition and verify analysis functionality
     @Test func testImageMetadataIntelligence_AnalyzeImageComposition() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -303,7 +285,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Analyze color distribution and verify analysis functionality
     @Test func testImageMetadataIntelligence_AnalyzeColorDistribution() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -323,7 +305,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Analyze text content and verify analysis functionality
     @Test func testImageMetadataIntelligence_AnalyzeTextContent() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -345,7 +327,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Test performance metrics and verify performance functionality
     @Test func testImageMetadataIntelligence_Performance() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When
@@ -361,7 +343,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_BatchProcessing() async throws {
         // Optimized: Reduced batch size from 5 to 3 to improve performance
         // Batch processing logic works the same regardless of batch size
-        let images = (0..<3).map { _ in createTestImage() }
+        let images = (0..<3).map { _ in PlatformImage.createPlaceholder() }
         
         // When
         let metadataResults = try await withThrowingTaskGroup(of: ComprehensiveImageMetadata.self) { group in
@@ -427,7 +409,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     /// METHODOLOGY: Test complete integration workflow and verify integration functionality
     @Test func testImageMetadataIntelligence_Integration() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let intelligence = ImageMetadataIntelligence()
         
         // When

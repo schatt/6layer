@@ -104,9 +104,9 @@ open class CardActionButtonTests: BaseTestClass {
         let deleteCallback: @Sendable (TestItem) -> Void = { _ in }
         
         // WHEN: Creating a simple view with action buttons
-        let card = VStack {
+        let card = platformVStackContainer {
             Text(item.title)
-            HStack {
+            platformHStackContainer {
                 Button("Edit") {
                     editCallback(item)
                 }

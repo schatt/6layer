@@ -508,6 +508,7 @@ struct PlatformTypesCompilationTests {
         #expect(platformSizeFromCG.width == 150)
         #expect(platformSizeFromCG.height == 250)
         
+        // 6LAYER_ALLOW: testing framework's PlatformSize boundary conversion methods (asNSSize/asCGSize properties)
         // Test conversion back to CGSize/NSSize (using public property)
         // In real code, prefer using .width and .height properties instead
         #if os(iOS)

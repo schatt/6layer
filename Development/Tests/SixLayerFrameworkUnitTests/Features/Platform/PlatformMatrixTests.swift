@@ -324,6 +324,7 @@ open class PlatformMatrixTests: BaseTestClass {
         
         // Test external display context detection
         #if os(iOS)
+        // 6LAYER_ALLOW: testing platform-specific screen detection for external display context
         if UIScreen.screens.count > 1 && !CarPlayCapabilityDetection.isCarPlayActive {
             #expect(deviceContext == .externalDisplay, "Device context should be externalDisplay when multiple screens are present")
         }

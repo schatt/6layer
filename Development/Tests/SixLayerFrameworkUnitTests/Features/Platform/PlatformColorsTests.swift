@@ -434,7 +434,7 @@ open class PlatformColorsTests: BaseTestClass {
         #expect(Bool(true), "Platform shadow color should work in views with shadows")  // shadowView is non-optional
         
         // Test business logic: Shadow color should work with elevation effects
-        let elevatedView = VStack {
+        let elevatedView = platformVStackContainer {
             Text("Elevated Content")
         }
         .background(Color.platformBackground)
@@ -481,7 +481,7 @@ open class PlatformColorsTests: BaseTestClass {
             .background(Color.accentColor)
             .cornerRadius(8)
         
-        let cardView = VStack {
+        let cardView = platformVStackContainer {
             Text("Card Content")
                 .foregroundColor(Color.platformLabel)
         }
@@ -575,7 +575,7 @@ open class PlatformColorsTests: BaseTestClass {
         
         // When & Then
         for (name, color) in testColors {
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("\(name) Label")
                     .foregroundColor(color)
                 
@@ -592,7 +592,7 @@ open class PlatformColorsTests: BaseTestClass {
     
     @Test func testColorUsageExamples() {
         // Given
-        let exampleView = VStack {
+        let exampleView = platformVStackContainer {
             Text("Primary Text")
                 .foregroundColor(.platformPrimaryLabel)
             
@@ -668,7 +668,7 @@ open class PlatformColorsTests: BaseTestClass {
     
     /// Create a test view using platform colors to verify they work functionally
     public func createTestViewWithPlatformColors() -> some View {
-        return VStack {
+        return platformVStackContainer {
             Text("Primary Label")
                 .foregroundColor(Color.platformPrimaryLabel)
             Text("Secondary Label")

@@ -78,15 +78,28 @@ struct ExternalModuleIntegrationTests {
     /// Tests that PlatformImage implicit conversion works from external modules
     @Test("PlatformImage implicit conversion works externally")
     func testPlatformImageImplicitConversion() {
-        // Test that UIImage and NSImage can be implicitly converted
+        // Test that UIImage and NSImage can be implicitly converted and produce valid results
         #if os(iOS)
+        // 6LAYER_ALLOW: testing PlatformImage boundary conversion from platform-specific images (legitimate external API usage)
         let uiImage = UIImage(systemName: "photo") ?? UIImage()
-        let platformImage = PlatformImage(uiImage: uiImage)
-        #expect(Bool(true), "iOS conversion works")
+        let platformImage = PlatformImage(uiImage)
+
+        // Verify the conversion actually worked
+        #expect(platformImage.uiImage != nil, "PlatformImage should contain valid UIImage")
+        #expect(platformImage.size.width > 0, "Converted image should have valid width")
+        #expect(platformImage.size.height > 0, "Converted image should have valid height")
+        #expect(platformImage.uiImage == uiImage, "Conversion should preserve original image data")
+
         #elseif os(macOS)
+        // 6LAYER_ALLOW: testing PlatformImage boundary conversion from platform-specific images (legitimate external API usage)
         let nsImage = NSImage(systemSymbolName: "photo", accessibilityDescription: nil) ?? NSImage()
-        let platformImage = PlatformImage(nsImage: nsImage)
-        #expect(Bool(true), "macOS conversion works")
+        let platformImage = PlatformImage(nsImage)
+
+        // Verify the conversion actually worked
+        #expect(platformImage.nsImage != nil, "PlatformImage should contain valid NSImage")
+        #expect(platformImage.size.width > 0, "Converted image should have valid width")
+        #expect(platformImage.size.height > 0, "Converted image should have valid height")
+        #expect(platformImage.nsImage == nsImage, "Conversion should preserve original image data")
         #endif
     }
     
@@ -254,7 +267,7 @@ struct ExternalModuleIntegrationTests {
         // Test that ResponsiveContainer can be used from external modules
         // Note: Uses proper 2-parameter closure signature
         let _ = ResponsiveContainer { isHorizontal, isVertical in
-            VStack {
+            platformVStackContainer {
                 Text("H: \(isHorizontal ? "Yes" : "No")")
                 Text("V: \(isVertical ? "Yes" : "No")")
             }

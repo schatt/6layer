@@ -35,7 +35,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
         await runWithTaskLocalConfig {
             // GIVEN: A video component with automatic compliance
             // Note: Using a placeholder view since we may not have video components yet
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Video Component")
                     .automaticCompliance()
                 // In real implementation, this would be a video player component
@@ -63,7 +63,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: A media component with captions and automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Media Component")
                     .automaticCompliance()
                 Text("Caption Text")
@@ -93,7 +93,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: A media component with captions and automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Media Component")
                     .automaticCompliance()
                 Text("Caption Text")
@@ -125,7 +125,7 @@ open class HIGComplianceCaptionsTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: A media component with automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Cross-Platform Media")
                     .automaticCompliance()
             }

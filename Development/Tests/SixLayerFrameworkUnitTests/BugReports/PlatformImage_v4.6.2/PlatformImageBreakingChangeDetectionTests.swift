@@ -189,13 +189,13 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // When: Execute the exact callback code that was broken
         // This simulates the actual callback execution in Layer 4
-        let testUIImage = PlatformImage.createPlaceholder().uiImage!
-        
+        let testUIImage = PlatformImage.createPlaceholder().uiImage! // 6LAYER_ALLOW: boundary testing PlatformImage.uiImage property access
+
         // This is the EXACT code that was broken in the callbacks:
         // parent.onImageCaptured(PlatformImage(image))
         // parent.onImageSelected(PlatformImage(image))
-        capturedImage = PlatformImage(testUIImage)
-        selectedImage = PlatformImage(testUIImage)
+        capturedImage = PlatformImage(testUIImage) // 6LAYER_ALLOW: boundary testing PlatformImage construction from UIImage
+        selectedImage = PlatformImage(testUIImage) // 6LAYER_ALLOW: boundary testing PlatformImage construction from UIImage
         
         // Then: Verify the callbacks work (would have failed in 4.6.2)
         #expect(Bool(true), "Camera callback should work")  // capturedImage is non-optional
@@ -206,11 +206,11 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         // macOS equivalent test
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
-        
-        let testNSImage = PlatformImage.createPlaceholder().nsImage!
-        
-        capturedImage = PlatformImage(testNSImage)
-        selectedImage = PlatformImage(testNSImage)
+
+        let testNSImage = PlatformImage.createPlaceholder().nsImage! // 6LAYER_ALLOW: boundary testing PlatformImage.nsImage property access
+
+        capturedImage = PlatformImage(testNSImage) // 6LAYER_ALLOW: boundary testing PlatformImage construction from NSImage
+        selectedImage = PlatformImage(testNSImage) // 6LAYER_ALLOW: boundary testing PlatformImage construction from NSImage
         
         #expect(Bool(true), "macOS camera callback should work")  // capturedImage is non-optional
         #expect(Bool(true), "macOS photo picker callback should work")  // selectedImage is non-optional

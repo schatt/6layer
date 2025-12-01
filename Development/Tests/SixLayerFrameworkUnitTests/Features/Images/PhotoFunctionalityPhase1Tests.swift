@@ -33,7 +33,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     @Test @MainActor
     func testPlatformImageInitialization() {
         // Given: Sample image data
-        let sampleData = createSampleImageData()
+        let sampleData = Data([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]) // Minimal PNG header
         
         // When: Creating PlatformImage from data
         let platformImage = PlatformImage(data: sampleData)
@@ -43,7 +43,9 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         
         // Test that the PlatformImage can actually be used in a view
         if let platformImage = platformImage {
-            let testView = createTestViewWithPlatformImage(platformImage)
+            let testView = Image(platformImage: platformImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
             #expect(Bool(true), "PlatformImage should work in actual views")  // hostingView is non-optional
         }
@@ -63,7 +65,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     @Test @MainActor
     func testPlatformImageResize() {
         // Given: A PlatformImage
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         let targetSize = CGSize(width: 100, height: 100)
         
         // When: Resizing the image
@@ -73,7 +75,9 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         #expect(resizedImage.size == targetSize, "Image should be resized to target size")
         
         // Test that the resized image can actually be used in a view
-        let testView = createTestViewWithPlatformImage(resizedImage)
+        let testView = Image(platformImage: resizedImage)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
         let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Resized image should work in actual views")  // hostingView is non-optional
     }
@@ -81,7 +85,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     @Test @MainActor
     func testPlatformImageCrop() {
         // Given: A PlatformImage and crop rectangle
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         let cropRect = CGRect(x: 10, y: 10, width: 50, height: 50)
         
         // When: Cropping the image
@@ -91,14 +95,16 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         #expect(croppedImage.size == cropRect.size, "Image should be cropped to specified size")
         
         // Test that the cropped image can actually be used in a view
-        let testView = createTestViewWithPlatformImage(croppedImage)
+        let testView = Image(platformImage: croppedImage)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
         let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Cropped image should work in actual views")  // hostingView is non-optional
     }
     
     @Test func testPlatformImageCompression() {
         // Given: A PlatformImage and photo purpose
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         let purpose = PhotoPurpose.vehiclePhoto
         
         // When: Compressing the image
@@ -111,7 +117,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     @Test func testPlatformImageThumbnail() {
         // Given: A PlatformImage and thumbnail size
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         let thumbnailSize = CGSize(width: 50, height: 50)
         
         // When: Creating thumbnail
@@ -123,7 +129,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     @Test func testPlatformImageOCROptimization() {
         // Given: A PlatformImage
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         
         // When: Optimizing for OCR
         let optimizedImage = originalImage.optimizedForOCR()
@@ -134,7 +140,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     @Test func testPlatformImageMetadata() {
         // Given: A PlatformImage
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         
         // When: Getting metadata
         let metadata = originalImage.metadata
@@ -148,7 +154,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformImageMeetsRequirements() {
         // Given: A PlatformImage and photo purpose
-        let originalImage = createTestPlatformImage()
+        let originalImage = PlatformImage.createPlaceholder()
         let purpose = PhotoPurpose.vehiclePhoto
         
         // When: Checking if image meets requirements
@@ -290,7 +296,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     @Test @MainActor
     func testPlatformPhotoDisplayL4() {
         // Given: A PlatformImage
-        let testImage = createTestPlatformImage()
+        let testImage = PlatformImage.createPlaceholder()
         
         
         // When: Creating photo display
@@ -366,59 +372,12 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    public func createSampleImageData() -> Data {
-        // Create a simple 1x1 pixel image data
-        #if os(iOS)
-        let size = CGSize(width: 1, height: 1)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { context in
-            Color.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return image.pngData() ?? Data()
-        #elseif os(macOS)
-        let size = NSSize(width: 1, height: 1)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        Color.red.fillRect(size: size)
-        image.unlockFocus()
-        return image.tiffRepresentation ?? Data()
-        #else
-        return Data()
-        #endif
-    }
     
-    public func createTestPlatformImage() -> PlatformImage {
-        #if os(iOS)
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let uiImage = renderer.image { context in
-            Color.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return PlatformImage(uiImage: uiImage)
-        #elseif os(macOS)
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        Color.red.fillRect(size: size)
-        nsImage.unlockFocus()
-        return PlatformImage(nsImage: nsImage)
-        #endif
-    }
     
-    /// Create a test view using a PlatformImage to verify it works functionally
-    public func createTestViewWithPlatformImage(_ image: PlatformImage) -> some View {
-        return Image(platformImage: image)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .accessibilityLabel("Test view using PlatformImage")
-            .accessibilityHint("Tests that PlatformImage can be used in actual views")
-    }
     
     /// Create a test view using platform system colors to verify they work functionally
     public func createTestViewWithPlatformSystemColors() -> some View {
-        return VStack {
+        return platformVStackContainer {
             Text("System Background")
                 .foregroundColor(Color.platformLabel)
                 .background(Color.platformSystemBackground)

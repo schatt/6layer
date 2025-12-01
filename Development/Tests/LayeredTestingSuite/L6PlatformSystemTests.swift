@@ -414,13 +414,13 @@ class L6PlatformSystemTests: BaseTestClass {
     
     @Test func testPlatformSystemWithComplexView() {
         // Given
-        let complexView = VStack {
+        let complexView = platformVStackContainer {
             Text("Title")
-            HStack {
+            platformHStackContainer {
                 Text("Left")
                 Text("Right")
             }
-            LazyVStack {
+            LazyplatformVStackContainer {
                 ForEach(0..<10) { index in
                     Text("Item \(index)")
                 }

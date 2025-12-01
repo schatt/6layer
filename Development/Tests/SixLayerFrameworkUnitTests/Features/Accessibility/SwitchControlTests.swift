@@ -210,7 +210,7 @@ open class SwitchControlTests: BaseTestClass {
     
     @Test @MainActor func testSwitchControlCompliance() {
         // Given: Framework components with Switch Control support
-        let view = VStack {
+        let view = platformVStackContainer {
             platformPresentContent_L1(content: "Title", hints: PresentationHints())
             platformPresentBasicValue_L1(value: "Action", hints: PresentationHints())
         }

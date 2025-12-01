@@ -477,7 +477,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
             let formState: DynamicFormState
 
             var body: some View {
-                VStack {
+                platformVStackContainer {
                     Text(field.label)
                     Text("Slider Component")
                         .foregroundColor(.blue)

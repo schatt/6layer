@@ -38,13 +38,13 @@ open class FormWizardViewTDDTests: BaseTestClass {
         let view = FormWizardView(
             steps: steps,
             content: { step, state in
-                VStack {
+                platformVStackContainer {
                     Text(step.title)
                     Text(step.description ?? "")
                 }
             },
             navigation: { state, next, previous, finish in
-                HStack {
+                platformHStackContainer {
                     if state.currentStepIndex > 0 {
                         Button("Previous", action: previous)
                     }
@@ -146,7 +146,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
                 Text(step.title)
             },
             navigation: { state, next, previous, finish in
-                HStack {
+                platformHStackContainer {
                     if state.currentStepIndex > 0 {
                         Button("Previous") {
                             previous()
@@ -220,7 +220,7 @@ open class FormWizardViewTDDTests: BaseTestClass {
                 Text(step.title)
             },
             navigation: { state, next, previous, finish in
-                HStack {
+                platformHStackContainer {
                     if state.currentStepIndex > 0 {
                         Button("Previous", action: previous)
                     }

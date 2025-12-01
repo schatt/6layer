@@ -194,7 +194,7 @@ open class AutomaticAccessibilityIdentifiersTests: BaseTestClass {
             let testConfig = AccessibilityIdentifierConfig.shared
             testConfig.enableAutoIDs = true
             
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Content")
             }
             .automaticCompliance()

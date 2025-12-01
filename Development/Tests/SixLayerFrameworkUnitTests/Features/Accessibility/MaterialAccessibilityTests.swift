@@ -130,7 +130,7 @@ open class MaterialAccessibilityTests: BaseTestClass {
     @Test @MainActor func testMaterialAccessibilityViewModifier() {
         initializeTestConfig()
         // Given: A view with material
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Test")
             Button("Action") { }
         }

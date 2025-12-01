@@ -34,7 +34,7 @@ open class HIGComplianceZoomTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: A view with automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Zoom Test")
                     .automaticCompliance()
                 Button("Test Button") { }
@@ -113,8 +113,8 @@ open class HIGComplianceZoomTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: Complex layout with automatic compliance
-            let view = VStack {
-                HStack {
+            let view = platformVStackContainer {
+                platformHStackContainer {
                     Text("Left")
                         .automaticCompliance()
                     Text("Right")

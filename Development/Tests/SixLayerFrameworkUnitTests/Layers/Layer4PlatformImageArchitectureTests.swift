@@ -84,11 +84,13 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
         // When: Simulate delegate method call with UIImage (system boundary input)
         // UIImagePickerController returns UIImage, which the coordinator converts to PlatformImage
         // We create a PlatformImage for testing, then use implicit conversion to UIImage
-        let testPlatformImage = createTestPlatformImage()
+        let testPlatformImage = PlatformImage.createPlaceholder()
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: testPlatformImage.uiImage  // Use .uiImage property (PlatformImage → UIImage conversion)
+            .originalImage: testPlatformImage.uiImage  // 6LAYER_ALLOW: testing PlatformImage.uiImage boundary property access
         ]
-        
+
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Delegate should convert UIImage to PlatformImage and call callback
@@ -118,13 +120,13 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     @Test @MainActor func testLayer4SystemBoundaryConversions() {
         #if os(iOS)
         // Given: iOS system boundary
-        let uiImage = createTestUIImage()
-        
+        let uiImage = createTestUIImage() // 6LAYER_ALLOW: test helper creating platform-specific image
+
         // When: Convert at system boundary (UIImage → PlatformImage)
-        let platformImage = PlatformImage(uiImage: uiImage)
-        
+        let platformImage = PlatformImage(uiImage: uiImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
+
         // Then: Conversion should work correctly
-        #expect(platformImage.uiImage == uiImage, "UIImage → PlatformImage conversion should work")
+        #expect(platformImage.uiImage == uiImage, "UIImage → PlatformImage conversion should work") // 6LAYER_ALLOW: testing PlatformImage boundary property access
         
         // Test that Layer 4 can work with the converted PlatformImage
         
@@ -137,13 +139,13 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
         
         #elseif os(macOS)
         // Given: macOS system boundary
-        let nsImage = createTestNSImage()
-        
+        let nsImage = createTestNSImage() // 6LAYER_ALLOW: test helper creating platform-specific image
+
         // When: Convert at system boundary (NSImage → PlatformImage)
-        let platformImage = PlatformImage(nsImage: nsImage)
-        
+        let platformImage = PlatformImage(nsImage: nsImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
+
         // Then: Conversion should work correctly
-        #expect(platformImage.nsImage == nsImage, "NSImage → PlatformImage conversion should work")
+        #expect(platformImage.nsImage == nsImage, "NSImage → PlatformImage conversion should work") // 6LAYER_ALLOW: testing PlatformImage boundary property access
         
         // Test that Layer 4 can work with the converted PlatformImage
         
@@ -162,7 +164,7 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     @Test @MainActor func testLayer4DoesNotExposePlatformSpecificTypes() {
         // Given: Layer 4 components
         
-        let platformImage = createTestPlatformImage()
+        let platformImage = PlatformImage.createPlaceholder()
         
         // When: Use Layer 4 APIs
         let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { _ in }
@@ -189,16 +191,16 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     @Test @MainActor func testLayer4FollowsCurrencyExchangeModel() {
         // Given: Platform-specific image types
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = createTestUIImage() // 6LAYER_ALLOW: test helper creating platform-specific image
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = createTestNSImage() // 6LAYER_ALLOW: test helper creating platform-specific image
         #endif
-        
+
         // When: Convert at system boundary (airport)
         #if os(iOS)
-        let platformImage = PlatformImage(uiImage: uiImage)
+        let platformImage = PlatformImage(uiImage: uiImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         #elseif os(macOS)
-        let platformImage = PlatformImage(nsImage: nsImage)
+        let platformImage = PlatformImage(nsImage: nsImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         #endif
         
         // Then: Layer 4 should only work with PlatformImage (dollars in the country)
@@ -227,60 +229,6 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     
     // MARK: - Test Data Helpers
     
-    private func createTestPlatformImage() -> PlatformImage {
-        let imageData = createTestImageData()
-        return PlatformImage(data: imageData) ?? PlatformImage()
-    }
-    
-    private func createTestImageData() -> Data {
-        #if os(iOS)
-        let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let uiImage = renderer.image { context in
-            UIColor.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return uiImage.jpegData(compressionQuality: 0.8) ?? Data()
-        
-        #elseif os(macOS)
-        let size = NSSize(width: 100, height: 100)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        
-        guard let tiffData = nsImage.tiffRepresentation,
-              let bitmapRep = NSBitmapImageRep(data: tiffData),
-              let jpegData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
-            return Data()
-        }
-        return jpegData
-        
-        #else
-        return Data()
-        #endif
-    }
-    
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
     #endif
     
     // MARK: - Mock Classes for Testing

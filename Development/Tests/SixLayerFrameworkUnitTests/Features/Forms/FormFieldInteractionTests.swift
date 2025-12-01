@@ -189,7 +189,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var selectedOption = ""
         
         // When: Creating select field with picker
-        let view = VStack {
+        let view = platformVStackContainer {
             Text(selectField.label)
             Picker(selectField.placeholder ?? "Choose option", selection: Binding(
                 get: { selectedOption },
@@ -222,7 +222,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         let view = VStack(alignment: .leading) {
             Text(radioField.label)
             ForEach(options, id: \.self) { option in
-                HStack {
+                platformHStackContainer {
                     Button(action: {
                         selectedOption = option
                         self.fieldValueChanges[radioField.label] = option
@@ -365,7 +365,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var validationError = ""
         
         // When: Creating field with validation
-        let view = VStack {
+        let view = platformVStackContainer {
             TextField(
                 textField.placeholder ?? "Enter text",
                 text: Binding(
@@ -411,7 +411,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var isValid = false
         
         // When: Creating required field with validation
-        let view = VStack {
+        let view = platformVStackContainer {
             TextField(
                 requiredField.placeholder ?? "Enter text",
                 text: Binding(

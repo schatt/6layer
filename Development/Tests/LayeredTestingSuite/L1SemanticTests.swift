@@ -441,7 +441,7 @@ class L1SemanticTests: BaseTestClass {
             context: context,
             onImageCaptured: { _ in },
             customCameraView: { (cameraContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Camera Interface")
                         .font(.headline)
                     cameraContent
@@ -468,7 +468,7 @@ class L1SemanticTests: BaseTestClass {
             context: context,
             image: image,
             customDisplayView: { (displayContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Photo Display")
                         .font(.headline)
                     displayContent

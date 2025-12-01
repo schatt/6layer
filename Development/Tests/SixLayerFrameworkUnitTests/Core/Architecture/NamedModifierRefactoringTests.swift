@@ -59,7 +59,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Nested components with .named modifiers
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Button("Edit") { }
                     .named("EditButton")
             }
@@ -93,8 +93,8 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Multiple levels of .named modifiers
-            let testView = VStack {
-                HStack {
+            let testView = platformVStackContainer {
+                platformHStackContainer {
                     Button("Cancel") { }
                         .named("CancelButton")
                 }
@@ -130,13 +130,13 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Two buttons with same name in different contexts
-            let view1 = VStack {
+            let view1 = platformVStackContainer {
                 Button("Save") { }
                     .named("SaveButton")
             }
             .named("UserProfile")
                 
-            let view2 = VStack {
+            let view2 = platformVStackContainer {
                 Button("Save") { }
                     .named("SaveButton")
             }
@@ -228,7 +228,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: A container with .named and subcomponent with automatic accessibility
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Button("Save") { }
                     .automaticCompliance()
             }
@@ -377,7 +377,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Nested components with .exactNamed modifier
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Button("Edit") { }
                     .exactNamed("EditButton")
             }
@@ -451,7 +451,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // Given: Nested components with both modifiers
-            let testView = VStack {
+            let testView = platformVStackContainer {
                 Button("Save") { }
                     .exactNamed("SaveButton")  // Exact name only
                 Button("Cancel") { }

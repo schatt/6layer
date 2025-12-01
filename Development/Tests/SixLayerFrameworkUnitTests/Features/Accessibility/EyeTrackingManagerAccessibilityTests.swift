@@ -17,7 +17,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with EyeTrackingModifier (which uses EyeTrackingManager)
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Eye Tracking Content")
             }
             .eyeTrackingEnabled()
@@ -48,7 +48,7 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with EyeTrackingModifier (which uses EyeTrackingManager)
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Eye Tracking Content")
             }
             .eyeTrackingEnabled()

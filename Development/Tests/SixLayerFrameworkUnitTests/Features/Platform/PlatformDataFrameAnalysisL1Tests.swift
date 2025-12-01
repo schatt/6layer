@@ -257,7 +257,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
             dataFrame: createTestDataFrame(),
             hints: hints,
             customVisualizationView: { (analysisContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Analysis View")
                         .font(.headline)
                     analysisContent
@@ -300,7 +300,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
             dataFrames: dataFrames,
             hints: hints,
             customVisualizationView: { (comparisonContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Comparison View")
                         .font(.headline)
                     comparisonContent
@@ -324,7 +324,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
             dataFrame: createTestDataFrame(),
             hints: hints,
             customVisualizationView: { (qualityContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Quality Assessment")
                         .font(.headline)
                     qualityContent

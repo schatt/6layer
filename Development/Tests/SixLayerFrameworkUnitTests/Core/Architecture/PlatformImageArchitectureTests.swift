@@ -43,10 +43,11 @@ open class PlatformImageArchitectureTests: BaseTestClass {
     /// METHODOLOGY: Test that no platform-specific image types are accepted
     @Test @MainActor func testFrameworkAPIsOnlyAcceptPlatformImage() {
         // Given: Platform-specific image types
+        let placeholderImage = PlatformImage.createPlaceholder()
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = placeholderImage.uiImage!
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = placeholderImage.nsImage!
         #endif
         
         // When: Try to use platform-specific types with framework APIs
@@ -203,21 +204,22 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         return PlatformImage(data: imageData) ?? PlatformImage()
     }
     
+    // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
     private func createTestImageData() -> Data {
         #if os(iOS)
         let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer = UIGraphicsImageRenderer(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         let uiImage = renderer.image { context in
-            UIColor.red.setFill()
+            UIColor.red.setFill() // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
             context.fill(CGRect(origin: .zero, size: size))
         }
         return uiImage.jpegData(compressionQuality: 0.8) ?? Data()
-        
+
         #elseif os(macOS)
-        let size = NSSize(width: 100, height: 100)
-        let nsImage = NSImage(size: size)
+        let size = NSSize(width: 100, height: 100) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        let nsImage = NSImage(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         nsImage.lockFocus()
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
+        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size)) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         nsImage.unlockFocus()
         
         guard let tiffData = nsImage.tiffRepresentation,
@@ -232,25 +234,4 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         #endif
     }
     
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
-    #endif
 }

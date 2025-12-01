@@ -263,7 +263,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
             context: context,
             onImageSelected: { _ in },
             customPickerView: { (pickerContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Photo Picker")
                         .font(.headline)
                     pickerContent

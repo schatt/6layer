@@ -286,7 +286,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformNavigationContainer_WithComplexContent() {
         // Given: Complex content to wrap
-        let complexContent = VStack {
+        let complexContent = platformVStackContainer {
             Text("Title")
             Text("Subtitle")
             Button("Action") { }
@@ -443,7 +443,7 @@ open class NavigationLayer4Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformNavigation_WithComplexContent() {
         // Given: Complex content
-        let complexContent = VStack {
+        let complexContent = platformVStackContainer {
             Text("Title")
             Text("Subtitle")
             Button("Action") { }
@@ -469,7 +469,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         // When: Combining multiple navigation components
         let integratedView = Text("Content")
             .platformNavigation {
-                VStack {
+                platformVStackContainer {
                     Text("Title")
                     
                     Text("Navigate")
@@ -512,7 +512,7 @@ open class NavigationLayer4Tests: BaseTestClass {
         // When: Creating navigation components with state
         let statefulView = Text("Content")
             .platformNavigationContainer {
-                VStack {
+                platformVStackContainer {
                     Text("Stateful Navigation")
                     
                     Text("Link")

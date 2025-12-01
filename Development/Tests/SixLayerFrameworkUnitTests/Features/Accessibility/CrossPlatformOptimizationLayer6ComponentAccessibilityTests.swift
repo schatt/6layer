@@ -23,7 +23,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             let manager = CrossPlatformOptimizationManager()
             
             // When: Creating a view with CrossPlatformOptimizationManager and applying accessibility identifiers
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Cross Platform Optimization Manager Content")
             }
             .environmentObject(manager)
@@ -52,7 +52,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let settings = PlatformOptimizationSettings(for: .iOS)
         
         // When: Creating a view with PlatformOptimizationSettings
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Platform Optimization Settings Content")
         }
         
@@ -78,7 +78,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let metrics = CrossPlatformPerformanceMetrics()
         
         // When: Creating a view with CrossPlatformPerformanceMetrics
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Cross Platform Performance Metrics Content")
         }
         .environmentObject(metrics)
@@ -105,7 +105,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let patterns = PlatformUIPatterns(for: .iOS)
         
         // When: Creating a view with PlatformUIPatterns
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Platform UI Patterns Content")
         }
         
@@ -133,7 +133,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let engine = PlatformRecommendationEngine()
         
         // When: Creating a view with PlatformRecommendationEngine
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Platform Recommendation Engine Content")
         }
         
@@ -160,7 +160,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         let testing = CrossPlatformTesting()
         
         // When: Creating a view with CrossPlatformTesting
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Cross Platform Testing Content")
         }
         

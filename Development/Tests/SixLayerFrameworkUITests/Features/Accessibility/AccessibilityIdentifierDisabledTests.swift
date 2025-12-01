@@ -79,7 +79,7 @@ open class AccessibilityIdentifierDisabledTests: BaseTestClass {
     @Test @MainActor func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
             initializeTestConfig()
         // Test: Named modifiers should still work for tracking
-        let view = VStack {
+        let view = platformVStackContainer {
             platformPresentContent_L1(content: "Content", hints: PresentationHints())
         }
         .named("TestView")

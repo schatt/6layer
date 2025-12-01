@@ -52,7 +52,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
             userPreferences: PhotoPreferences(),
             deviceCapabilities: PhotoDeviceCapabilities()
         )
-        let testImage = createTestPlatformImage()
+        let testImage = PlatformImage.createPlaceholder()
         
         // When: Creating semantic photo display
         let displayInterface = platformPhotoDisplay_L1(purpose: purpose, context: context, image: testImage)
@@ -161,37 +161,4 @@ open class PhotoSemanticLayerTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    public func createTestPlatformImage() -> PlatformImage {
-        // Use existing sample image instead of generating one
-        guard let imagePath = Bundle.main.path(forResource: "IMG_3002", ofType: "jpeg"),
-              let imageData = NSData(contentsOfFile: imagePath) else {
-            // Fallback to a simple colored image if sample image not found
-            #if os(iOS)
-            let size = CGSize(width: 100, height: 100)
-            let renderer = UIGraphicsImageRenderer(size: size)
-            let uiImage = renderer.image { context in
-                UIColor.red.setFill()
-                context.fill(CGRect(origin: .zero, size: size))
-            }
-            return PlatformImage(uiImage: uiImage)
-            #elseif os(macOS)
-            let size = NSSize(width: 100, height: 100)
-            let nsImage = NSImage(size: size)
-            nsImage.lockFocus()
-            NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
-            nsImage.unlockFocus()
-            return PlatformImage(nsImage: nsImage)
-            #else
-            return PlatformImage()
-            #endif
-        }
-        
-        #if os(iOS)
-        return PlatformImage(data: imageData as Data) ?? PlatformImage()
-        #elseif os(macOS)
-        return PlatformImage(data: imageData as Data) ?? PlatformImage()
-        #else
-        return PlatformImage()
-        #endif
-    }
 }

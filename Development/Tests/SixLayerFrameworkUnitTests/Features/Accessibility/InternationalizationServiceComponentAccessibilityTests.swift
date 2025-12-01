@@ -19,7 +19,7 @@ open class InternationalizationServiceComponentAccessibilityTests: BaseTestClass
     
     @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
         // When: Creating a view with InternationalizationService
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Internationalization Service Content")
         }
         

@@ -67,6 +67,7 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         #expect(platform == .iOS, "Test should run on iOS")
         
         // When: Checking that the settings URL string exists
+        // 6LAYER_ALLOW: testing platform-specific UIApplication settings URL functionality
         let settingsURLString = UIApplication.openSettingsURLString
         
         // Then: URL string should be valid and non-empty

@@ -114,7 +114,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformCardStyleGeneratesAccessibilityIdentifiers() async {
         // Given: A test card content
-        let testCard = VStack {
+        let testCard = platformVStackContainer {
             Text("Test Card Title")
             Text("Test Card Content")
         }
@@ -139,7 +139,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformSheetGeneratesAccessibilityIdentifiers() async {
         // Given: A test sheet content
-        let testSheetContent = VStack {
+        let testSheetContent = platformVStackContainer {
             Text("Test Sheet Title")
             Text("Test Sheet Content")
         }
@@ -169,7 +169,7 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformNavigationGeneratesAccessibilityIdentifiers() async {
         // Given: A test navigation content
-        let testNavigationContent = VStack {
+        let testNavigationContent = platformVStackContainer {
             Text("Test Navigation Title")
             Text("Test Navigation Content")
         }

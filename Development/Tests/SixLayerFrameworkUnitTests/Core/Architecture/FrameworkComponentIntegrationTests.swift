@@ -20,7 +20,7 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
         // contentView is a non-optional View, so it exists if we reach here
         
         // Test that it can be used in a view hierarchy
-        let _ = VStack {
+        let _ = platformVStackContainer {
             contentView
         }
         
@@ -36,7 +36,7 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
         #expect(Bool(true), "platformPresentBasicValue_L1 should be creatable")  // valueView is non-optional
         
         // Test that it can be used in a view hierarchy
-        let _ = VStack {
+        let _ = platformVStackContainer {
             valueView
         }
         
@@ -52,7 +52,7 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
         #expect(Bool(true), "platformPresentBasicArray_L1 should be creatable")  // arrayView is non-optional
         
         // Test that it can be used in a view hierarchy
-        let _ = VStack {
+        let _ = platformVStackContainer {
             arrayView
         }
         
@@ -85,7 +85,7 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
         #expect(Bool(true), "platformPresentItemCollection_L1 should be creatable")  // collectionView is non-optional
         
         // Test that it can be used in a view hierarchy
-        let _ = VStack {
+        let _ = platformVStackContainer {
             collectionView
         }
         
@@ -110,7 +110,7 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
             context: .dashboard
         )
         
-        let _ = VStack {
+        let _ = platformVStackContainer {
             platformPresentContent_L1(content: "Header", hints: PresentationHints())
             platformPresentBasicValue_L1(value: 42, hints: PresentationHints())
             platformPresentItemCollection_L1(items: mockItems, hints: hints)

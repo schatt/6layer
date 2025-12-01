@@ -240,7 +240,7 @@ open class DynamicFormViewTests: BaseTestClass {
                 Text("Content for \(step.title)")
             },
             navigation: { wizardState, onPrevious, onNext, onFinish in
-                HStack {
+                platformHStackContainer {
                     Button("Previous", action: onPrevious)
                     Spacer()
                     if wizardState.isLastStep {

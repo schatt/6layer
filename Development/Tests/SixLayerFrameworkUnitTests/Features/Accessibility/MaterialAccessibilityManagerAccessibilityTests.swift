@@ -17,7 +17,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Material Accessibility Content")
             }
             .accessibilityMaterialEnhanced()
@@ -45,7 +45,7 @@ open class MaterialAccessibilityManagerAccessibilityTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Material Accessibility Content")
             }
             .accessibilityMaterialEnhanced()

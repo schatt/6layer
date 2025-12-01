@@ -55,29 +55,29 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         
         // Test 3: Platform-specific initializers
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
-        let uiImageInit = PlatformImage(uiImage: uiImage)
+        let uiImage = PlatformImage.createPlaceholder().uiImage! // 6LAYER_ALLOW: testing PlatformImage boundary API access
+        let uiImageInit = PlatformImage(uiImage: uiImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         // uiImageInit is non-optional, so no nil check needed
         #expect(Bool(true), "UIImage initializer should exist")
-        #expect(uiImageInit.uiImage == uiImage, "UIImage initializer should work correctly")
+        #expect(uiImageInit.uiImage == uiImage, "UIImage initializer should work correctly") // 6LAYER_ALLOW: testing PlatformImage boundary property access
         
         // Test 4: Backward compatibility initializer (implicit parameter)
-        let implicitInit = PlatformImage(uiImage)
+        let implicitInit = PlatformImage(uiImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         // implicitInit is non-optional, so no nil check needed
         #expect(Bool(true), "Implicit parameter initializer should exist for backward compatibility")
-        #expect(implicitInit.uiImage == uiImage, "Implicit parameter initializer should work correctly")
+        #expect(implicitInit.uiImage == uiImage, "Implicit parameter initializer should work correctly") // 6LAYER_ALLOW: testing PlatformImage boundary property access
         #elseif os(macOS)
-        let nsImage = PlatformImage.createPlaceholder().nsImage!
-        let nsImageInit = PlatformImage(nsImage: nsImage)
+        let nsImage = PlatformImage.createPlaceholder().nsImage! // 6LAYER_ALLOW: testing PlatformImage boundary API access
+        let nsImageInit = PlatformImage(nsImage: nsImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         // nsImageInit is non-optional, so no nil check needed
         #expect(Bool(true), "NSImage initializer should exist")
-        #expect(nsImageInit.nsImage == nsImage, "NSImage initializer should work correctly")
-        
+        #expect(nsImageInit.nsImage == nsImage, "NSImage initializer should work correctly") // 6LAYER_ALLOW: testing PlatformImage boundary property access
+
         // Test 4: Backward compatibility initializer (implicit parameter)
-        let implicitInit = PlatformImage(nsImage)
+        let implicitInit = PlatformImage(nsImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         // implicitInit is non-optional, so no nil check needed
         #expect(Bool(true), "Implicit parameter initializer should exist for backward compatibility")
-        #expect(implicitInit.nsImage == nsImage, "Implicit parameter initializer should work correctly")
+        #expect(implicitInit.nsImage == nsImage, "Implicit parameter initializer should work correctly") // 6LAYER_ALLOW: testing PlatformImage boundary property access
         #endif
     }
     

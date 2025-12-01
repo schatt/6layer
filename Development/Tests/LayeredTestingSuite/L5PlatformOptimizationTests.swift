@@ -456,13 +456,13 @@ class L5PlatformOptimizationTests: BaseTestClass {
     
     @Test func testOptimizationWithComplexView() {
         // Given
-        let complexView = VStack {
+        let complexView = platformVStackContainer {
             Text("Title")
-            HStack {
+            platformHStackContainer {
                 Text("Left")
                 Text("Right")
             }
-            LazyVStack {
+            LazyplatformVStackContainer {
                 ForEach(0..<10) { index in
                     Text("Item \(index)")
                 }

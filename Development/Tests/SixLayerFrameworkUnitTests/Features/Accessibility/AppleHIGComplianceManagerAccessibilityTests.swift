@@ -16,7 +16,7 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("HIG Compliant Content")
             }
             .appleHIGCompliant()
@@ -47,7 +47,7 @@ open class AppleHIGComplianceManagerAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("HIG Compliant Content")
             }
             .appleHIGCompliant()

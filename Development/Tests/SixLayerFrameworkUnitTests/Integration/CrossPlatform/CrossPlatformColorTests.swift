@@ -150,7 +150,7 @@ open class CrossPlatformColorTests: BaseTestClass {
         
         for (name, color) in testColors {
             // Each color should be usable in a real UI context
-            let view = VStack {
+            let view = platformVStackContainer {
                 Rectangle()
                     .fill(color)
                     .frame(width: 100, height: 100)

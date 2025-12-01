@@ -359,7 +359,7 @@ VIEW_VIOLATIONS = {
         'priority': 2,
         'pattern': r'\bVStack\s*\{',
         'exclude_patterns': [
-            r'platformVStackContainer\s*\(',
+            r'platformVStackContainer',
             r'platformVerticalStack\s*\(',
             r'platformLazyVStackContainer\s*\(',
             r'platformPresentItemCollection_L1\s*\(',
@@ -373,7 +373,7 @@ VIEW_VIOLATIONS = {
         'priority': 2,
         'pattern': r'\bHStack\s*\{',
         'exclude_patterns': [
-            r'platformHStackContainer\s*\(',
+            r'platformHStackContainer',
             r'platformLazyHStackContainer\s*\(',
             r'platformPresentItemCollection_L1\s*\(',
             r'platformResponsiveCard_L1\s*\('

@@ -217,22 +217,17 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         // Create a simple test image for unit testing
         #if os(iOS)
         let size = CGSize(width: 100, height: 100)
-        // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer = UIGraphicsImageRenderer(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         let uiImage = renderer.image { context in
-            // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
-            UIColor.blue.setFill()
+            UIColor.blue.setFill() // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
             context.fill(CGRect(origin: .zero, size: size))
         }
         return PlatformImage(uiImage: uiImage)
         #elseif os(macOS)
-        // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
-        let size = NSSize(width: 100, height: 100)
-        // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
-        let nsImage = NSImage(size: size)
+        let size = NSSize(width: 100, height: 100) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        let nsImage = NSImage(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         nsImage.lockFocus()
-        // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
+        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size)) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         nsImage.unlockFocus()
         return PlatformImage(nsImage: nsImage)
         #else

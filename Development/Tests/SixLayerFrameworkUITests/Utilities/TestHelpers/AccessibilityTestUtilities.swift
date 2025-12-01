@@ -120,6 +120,7 @@ public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
 @MainActor
 public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     #if canImport(UIKit)
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     guard let rootView = root as? UIView else { return nil }
     
     // Debug: Print all views and their identifiers    // Check root view first
@@ -127,6 +128,7 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     }
     
     // Search through all subviews more thoroughly
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     var stack: [UIView] = rootView.subviews
     var depth = 0
     var checkedViews: Set<ObjectIdentifier> = []
@@ -143,11 +145,13 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         }
         
         // Add all subviews to the stack
+        // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
         stack.append(contentsOf: next.subviews)
         depth += 1
     }
     return nil
     #elseif canImport(AppKit)
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     guard let rootView = root as? NSView else {
         return nil
     }
@@ -159,6 +163,7 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
     }
     
     // Search through all subviews more thoroughly
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     var stack: [NSView] = rootView.subviews
     var depth = 0
     var checkedViews: Set<ObjectIdentifier> = []
@@ -176,6 +181,7 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
         }
         
         // Add all subviews to the stack
+        // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
         stack.append(contentsOf: next.subviews)
         depth += 1
     }
@@ -192,14 +198,16 @@ private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [S
     var identifiers: Set<String> = []
     
     #if canImport(UIKit)
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     guard let rootView = root as? UIView else { return [] }
-    
+
     // Check root view
     if let id = rootView.accessibilityIdentifier, !id.isEmpty {
         identifiers.insert(id)
     }
-    
+
     // Search through all subviews
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     var stack: [UIView] = rootView.subviews
     var depth = 0
     var checkedViews: Set<ObjectIdentifier> = []
@@ -215,21 +223,24 @@ private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [S
             identifiers.insert(id)
         }
         
+        // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
         stack.append(contentsOf: next.subviews)
         depth += 1
     }
     
     return Array(identifiers)
     #elseif canImport(AppKit)
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     guard let rootView = root as? NSView else { return [] }
-    
+
     // Check root view
     let rootId = rootView.accessibilityIdentifier()
     if !rootId.isEmpty {
         identifiers.insert(rootId)
     }
-    
+
     // Search through all subviews
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     var stack: [NSView] = rootView.subviews
     var depth = 0
     var checkedViews: Set<ObjectIdentifier> = []
@@ -246,6 +257,7 @@ private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [S
             identifiers.insert(id)
         }
         
+        // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
         stack.append(contentsOf: next.subviews)
         depth += 1
     }

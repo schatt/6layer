@@ -91,7 +91,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = dynamicSelectField
         
         // When: Creating generic select field view
-        let view = VStack {
+        let view = platformVStackContainer {
             Text(field.label)
             Picker(field.placeholder ?? "Select option", selection: .constant(field.defaultValue ?? "")) {
                 Text("Select an option").tag("")
@@ -112,7 +112,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = dynamicSelectField
         
         // When: Creating generic select field view
-        let view = VStack {
+        let view = platformVStackContainer {
             Text(field.label)
             Picker(field.placeholder ?? "Select option", selection: .constant(field.defaultValue ?? "")) {
                 Text("Select an option").tag("")
@@ -146,7 +146,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         
         // When: Creating theming integration select field
         // This should be interactive, not just text display
-        let view = VStack {
+        let view = platformVStackContainer {
             Text(field.label)
                 .font(typography.body)
             
@@ -207,7 +207,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
                 .fontWeight(.medium)
             
             ForEach(options, id: \.self) { option in
-                HStack {
+                platformHStackContainer {
                     Button(action: {
                         selectedOption = option
                     }) {
@@ -327,7 +327,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = selectField
         
         // When: Creating select field with validation
-        let view = VStack {
+        let view = platformVStackContainer {
             DynamicSelectField(field: field, formState: formState)
             
             if field.isRequired && (formState.getValue(for: field.id) as String? ?? "").isEmpty {

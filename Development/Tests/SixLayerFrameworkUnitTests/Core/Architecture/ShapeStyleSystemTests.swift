@@ -485,7 +485,7 @@ open class ShapeStyleSystemTests: BaseTestClass {
     
     @Test @MainActor func testShapeStyleSystemIntegration() {
         // Given: A complex view
-        let testView = VStack {
+        let testView = platformVStackContainer {
             Text("Title")
                 .font(.title)
             Text("Subtitle")

@@ -312,8 +312,8 @@ open class WindowDetectionTests: BaseTestClass {
         // GIVEN: Different SwiftUI view types
         let views: [AnyView] = [
             AnyView(Text("Text")),
-            AnyView(VStack { Text("VStack") }),
-            AnyView(HStack { Text("HStack") }),
+            AnyView(platformVStackContainer { Text("VStack") }),
+            AnyView(platformHStackContainer { Text("HStack") }),
             AnyView(Image(systemName: "star")),
             AnyView(Button("Button") { })
         ]

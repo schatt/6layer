@@ -52,7 +52,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
     /// This test should FAIL initially because checks are mocked
     @Test @MainActor func testAccessibilityTestingPerformsActualChecks() async {
         // Given: A view with known accessibility issues
-        let problematicView = VStack {
+        let problematicView = platformVStackContainer {
             Image(systemName: "photo") // No accessibility label
             Button("") { } // Empty button text
         }
@@ -81,7 +81,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
     /// This test should FAIL initially because tab order checking is not implemented
     @Test @MainActor func testAccessibilityTestingValidatesTabOrder() async {
         // Given: A view with poor tab order
-        let poorTabOrderView = VStack {
+        let poorTabOrderView = platformVStackContainer {
             Button("Last Button") { }
             Button("First Button") { }
             Button("Middle Button") { }

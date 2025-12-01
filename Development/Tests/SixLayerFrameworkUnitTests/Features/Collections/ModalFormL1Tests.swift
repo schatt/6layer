@@ -326,7 +326,7 @@ open class ModalFormL1Tests: BaseTestClass {
             formType: formType,
             context: context,
             customFormContainer: { (formContent: AnyView) in
-                VStack {
+                platformVStackContainer {
                     Text("Custom Header")
                         .font(.headline)
                     formContent

@@ -106,7 +106,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             items: testItems,
             hints: testHints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text(item.subtitle)
                 }
@@ -146,7 +146,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             items: testItems,
             hints: enhancedHints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text(item.subtitle)
                 }
@@ -179,7 +179,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             items: testItems,
             hints: testHints,
             customItemView: { item in
-                VStack {
+                platformVStackContainer {
                     Text(item.title)
                     Text(item.subtitle)
                 }
@@ -338,7 +338,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
             hints: PresentationHints(),
             customDataView: { data in
-                VStack {
+                platformVStackContainer {
                     Text(data.label)
                     Text("\(data.value) \(data.unit)")
                 }
@@ -377,7 +377,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             data: [GenericNumericData(value: 123.45, label: "Test Value", unit: "units")],
             hints: enhancedHints,
             customDataView: { data in
-                VStack {
+                platformVStackContainer {
                     Text(data.label)
                     Text("\(data.value) \(data.unit)")
                 }
@@ -497,7 +497,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             media: GenericMediaItem(title: "Test Media", url: "https://example.com"),
             hints: PresentationHints(),
             customMediaView: { media in
-                VStack {
+                platformVStackContainer {
                     Text(media.title)
                     Text(media.url ?? "")
                 }
@@ -536,7 +536,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             media: GenericMediaItem(title: "Test Media", url: "https://example.com"),
             hints: enhancedHints,
             customMediaView: { media in
-                VStack {
+                platformVStackContainer {
                     Text(media.title)
                     Text(media.url ?? "")
                 }
@@ -638,7 +638,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             ],
             hints: PresentationHints(),
             customSettingView: { section in
-                VStack {
+                platformVStackContainer {
                     Text(section.title)
                     ForEach(section.items, id: \.key) { item in
                         Text(item.title)
@@ -686,7 +686,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             ],
             hints: enhancedHints,
             customSettingView: { section in
-                VStack {
+                platformVStackContainer {
                     Text(section.title)
                     ForEach(section.items, id: \.key) { item in
                         Text(item.title)

@@ -93,7 +93,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // platformNavigationTitle should include title in identifier
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Content")
         }
         .platformNavigationTitle("Settings")
@@ -127,7 +127,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // platformNavigationLink_L4 with title should include title
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Navigate")
                 .platformNavigationLink_L4(
                     title: "Next Page",
@@ -168,7 +168,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // platformNavigationButton should include title
-        let button = VStack {
+        let button = platformVStackContainer {
             EmptyView()
                 .platformNavigationButton(
                     title: "Save",
@@ -1090,7 +1090,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         let hints = PresentationHints()
         
         // Create a view with ForEach
-        let listView = VStack {
+        let listView = platformVStackContainer {
             ForEach(items) { item in
                 ListCardComponent(item: item, hints: hints)
                     .enableGlobalAutomaticCompliance()
@@ -1904,13 +1904,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: platformListSectionHeader should include title in identifier
-        let header1 = VStack {
+        let header1 = platformVStackContainer {
             Text("Content")
         }
         .platformListSectionHeader(title: "Section One", subtitle: "Subtitle")
         .enableGlobalAutomaticCompliance()
         
-        let header2 = VStack {
+        let header2 = platformVStackContainer {
             Text("Content")
         }
         .platformListSectionHeader(title: "Section Two")
@@ -1947,7 +1947,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: platformFormField should include label in identifier
-        let field1 = VStack {
+        let field1 = platformVStackContainer {
             TextField("", text: .constant(""))
         }
         .platformFormField(label: "Email Address") {
@@ -1955,7 +1955,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         }
         .enableGlobalAutomaticCompliance()
         
-        let field2 = VStack {
+        let field2 = platformVStackContainer {
             TextField("", text: .constant(""))
         }
         .platformFormField(label: "Phone Number") {
@@ -1991,7 +1991,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: platformFormFieldGroup should include title in identifier
-        let group1 = VStack {
+        let group1 = platformVStackContainer {
             Text("Content")
         }
         .platformFormFieldGroup(title: "Personal Information") {
@@ -1999,7 +1999,7 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         }
         .enableGlobalAutomaticCompliance()
         
-        let group2 = VStack {
+        let group2 = platformVStackContainer {
             Text("Content")
         }
         .platformFormFieldGroup(title: "Contact Details") {
@@ -2035,13 +2035,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: platformListEmptyState should include title in identifier
-        let emptyState1 = VStack {
+        let emptyState1 = platformVStackContainer {
             Text("Content")
         }
         .platformListEmptyState(systemImage: "tray", title: "No Items", message: "Add items to get started")
         .enableGlobalAutomaticCompliance()
         
-        let emptyState2 = VStack {
+        let emptyState2 = platformVStackContainer {
             Text("Content")
         }
         .platformListEmptyState(systemImage: "tray", title: "No Results", message: "Try a different search")
@@ -2075,13 +2075,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD RED: platformDetailPlaceholder should include title in identifier
-        let placeholder1 = VStack {
+        let placeholder1 = platformVStackContainer {
             Text("Content")
         }
         .platformDetailPlaceholder(systemImage: "doc", title: "Select an Item", message: "Choose an item to view details")
         .enableGlobalAutomaticCompliance()
         
-        let placeholder2 = VStack {
+        let placeholder2 = platformVStackContainer {
             Text("Content")
         }
         .platformDetailPlaceholder(systemImage: "doc", title: "No Selection", message: "Please select an item")
@@ -2150,13 +2150,13 @@ open class ComponentLabelTextAccessibilityTests: BaseTestClass {
         
         // TDD RED: platformValidationMessage should include message text in identifier
         // Note: If used in ForEach loops with multiple errors, each should be unique
-        let message1 = VStack {
+        let message1 = platformVStackContainer {
             Text("Content")
         }
         .platformValidationMessage("Email is required", type: .error)
         .enableGlobalAutomaticCompliance()
         
-        let message2 = VStack {
+        let message2 = platformVStackContainer {
             Text("Content")
         }
         .platformValidationMessage("Password too short", type: .error)

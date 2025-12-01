@@ -226,8 +226,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
         let nsImage1 = NSImage(size: size)
         nsImage1.lockFocus()
-        // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
+        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size)) // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
         nsImage1.unlockFocus()
         let platformImage1 = PlatformImage(nsImage1)
         #expect(platformImage1.nsImage == nsImage1, "Implicit conversion should work with NSImage")

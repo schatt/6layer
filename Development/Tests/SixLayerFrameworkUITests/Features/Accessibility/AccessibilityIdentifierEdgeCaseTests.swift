@@ -144,7 +144,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             setupTestEnvironment()
             
             // Test: Does disable work mid-hierarchy?
-            let view = VStack {
+            let view = platformVStackContainer {
                 Button("Auto") { }
                     .named("AutoButton")
                     .enableGlobalAutomaticCompliance()
@@ -187,7 +187,7 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
         runWithTaskLocalConfig {
             setupTestEnvironment()
             
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Content")
             }
                 .named("TestView")
@@ -416,8 +416,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
             setupTestEnvironment()
             
             // Test: What happens with deeply nested .named() calls?
-            let view = VStack {
-                HStack {
+            let view = platformVStackContainer {
+                platformHStackContainer {
                     Button("Content") { }
                         .named("DeepNested")
                         .enableGlobalAutomaticCompliance()

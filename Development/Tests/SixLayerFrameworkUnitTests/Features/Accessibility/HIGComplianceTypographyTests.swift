@@ -224,7 +224,7 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: Text using HIG typography styles with automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Large Title")
                     .font(.largeTitle)
                     .automaticCompliance()

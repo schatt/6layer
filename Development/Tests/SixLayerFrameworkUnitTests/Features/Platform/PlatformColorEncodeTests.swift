@@ -272,10 +272,12 @@ open class PlatformColorEncodeTests: BaseTestClass {
 private func testPlatformColorDecode(_ data: Data) throws -> Color? {
     do {
         #if os(iOS)
+        // 6LAYER_ALLOW: testing framework's color decoding boundary with platform-specific archived objects
         if let uiColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
             return Color(uiColor)
         }
         #elseif os(macOS)
+        // 6LAYER_ALLOW: testing framework's color decoding boundary with platform-specific archived objects
         if let nsColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSColor.self, from: data) {
             return Color(nsColor)
         }

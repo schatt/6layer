@@ -117,6 +117,7 @@ private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [S
     var identifiers: Set<String> = []
     
     #if canImport(UIKit)
+    // 6LAYER_ALLOW: test utilities must traverse platform-specific view hierarchies for accessibility testing
     guard let rootView = root as? UIView else { return [] }
     
     // Check root view

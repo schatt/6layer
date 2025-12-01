@@ -47,7 +47,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD: Define the behavior I want - no hierarchy duplication
-        let view = VStack {
+        let view = platformVStackContainer {
             PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
@@ -83,7 +83,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD: Define the behavior I want - semantic, meaningful IDs
-        let view = VStack {
+        let view = platformVStackContainer {
             platformPresentContent_L1(content: "User Profile", hints: PresentationHints())
                 .named("ProfileTitle")
             PlatformInteractionButton(style: .primary, action: {}) {
@@ -120,8 +120,8 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
         setupTestEnvironment()
         
         // TDD: Define the behavior I want - works in complex nested views
-        let view = VStack {
-            HStack {
+        let view = platformVStackContainer {
+            platformHStackContainer {
                 Text("Title")
                     .named("TitleText")
                 Button("Action") { }
@@ -129,7 +129,7 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             }
             .named("HeaderRow")
             
-            VStack {
+            platformVStackContainer {
                 ForEach(0..<3) { index in
                     Text("Item \(index)")
                         .named("Item\(index)")

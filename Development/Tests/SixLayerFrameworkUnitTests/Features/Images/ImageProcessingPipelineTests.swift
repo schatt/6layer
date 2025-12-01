@@ -41,24 +41,6 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    public func createTestImage() -> PlatformImage {
-        // Create a simple test image
-        #if os(iOS)
-        let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { context in
-            Color.blue.fillRect(size: size, in: context)
-        }
-        return PlatformImage(uiImage: image)
-        #elseif os(macOS)
-        let size = NSSize(width: 100, height: 100)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        Color.blue.fillRect(size: size)
-        image.unlockFocus()
-        return PlatformImage(nsImage: image)
-        #endif
-    }
     
     public func createProcessingOptions() -> ProcessingOptions {
         return ProcessingOptions(
@@ -80,7 +62,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
             setCapabilitiesForPlatform(platform)
             
             // Given
-            let image = createTestImage()
+            let image = PlatformImage.createPlaceholder()
             let purpose = ImagePurpose.ocr
             let options = createProcessingOptions()
             
@@ -106,7 +88,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Process image for fuel receipt and verify fuel receipt processing functionality
     @Test func testImageProcessingPipeline_ProcessForFuelReceipt() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purpose = ImagePurpose.fuelReceipt
         let options = createProcessingOptions()
         
@@ -128,7 +110,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Process image for document and verify document processing functionality
     @Test func testImageProcessingPipeline_ProcessForDocument() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purpose = ImagePurpose.document
         let options = createProcessingOptions()
         
@@ -150,7 +132,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Process image for photo and verify photo processing functionality
     @Test func testImageProcessingPipeline_ProcessForPhoto() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purpose = ImagePurpose.photo
         let options = createProcessingOptions()
         
@@ -172,7 +154,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Process image for thumbnail and verify thumbnail processing functionality
     @Test func testImageProcessingPipeline_ProcessForThumbnail() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purpose = ImagePurpose.thumbnail
         let options = ProcessingOptions(
             quality: .medium,
@@ -199,7 +181,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Process image for preview and verify preview processing functionality
     @Test func testImageProcessingPipeline_ProcessForPreview() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purpose = ImagePurpose.preview
         let options = ProcessingOptions(
             quality: .low,
@@ -228,7 +210,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Enhance image and verify enhancement functionality
     @Test func testImageProcessor_EnhanceImage() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let processor = ImageProcessor()
         let options = EnhancementOptions(
             brightness: 0.1,
@@ -250,7 +232,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Analyze image and verify analysis functionality
     @Test func testImageProcessor_AnalyzeImage() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let processor = ImageProcessor()
         
         // When
@@ -270,7 +252,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Enhance image for OCR and verify OCR enhancement functionality
     @Test func testOCREnhancementStrategy_EnhanceImage() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let strategy = OCREnhancementStrategy()
         
         // When
@@ -286,7 +268,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Detect text regions and verify detection functionality
     @Test func testOCREnhancementStrategy_DetectTextRegions() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let strategy = OCREnhancementStrategy()
         
         // When
@@ -302,7 +284,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Optimize image for OCR and verify optimization functionality
     @Test func testOCREnhancementStrategy_OptimizeForOCR() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let strategy = OCREnhancementStrategy()
         
         // When
@@ -342,7 +324,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Test with unsupported purpose and verify error handling functionality
     @Test func testImageProcessingPipeline_UnsupportedPurpose() async {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purpose = ImagePurpose.ocr
         let options = ProcessingOptions(
             quality: .high,
@@ -371,7 +353,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     /// METHODOLOGY: Test complete integration workflow and verify integration functionality
     @Test func testImageProcessingPipeline_Integration() async throws {
         // Given
-        let image = createTestImage()
+        let image = PlatformImage.createPlaceholder()
         let purposes: [ImagePurpose] = Array(ImagePurpose.allCases.prefix(6)) // Use real enum
         
         // When

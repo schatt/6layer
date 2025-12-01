@@ -44,13 +44,7 @@ open class PhotoComponentsLayer4Tests: BaseTestClass {
     // Helper method - creates fresh test image for each test (test isolation)
     @MainActor
     private func createTestImage() -> PlatformImage {
-        #if os(iOS)
-        return PlatformImage(uiImage: UIImage(systemName: "photo") ?? UIImage())
-        #elseif os(macOS)
-        return PlatformImage(nsImage: NSImage(systemSymbolName: "photo", accessibilityDescription: "Test photo") ?? NSImage())
-        #else
-        return PlatformImage()
-        #endif
+        return PlatformImage.createPlaceholder()
     }
     
     // MARK: - Layer 4 Photo Component Tests

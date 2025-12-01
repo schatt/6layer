@@ -34,7 +34,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: Multiple form fields with automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 TextField("First Name", text: .constant(""))
                     .automaticCompliance()
                 TextField("Last Name", text: .constant(""))
@@ -67,7 +67,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: Multiple buttons with automatic compliance
-            let view = HStack {
+            let view = platformHStackContainer {
                 Button("Cancel") { }
                     .automaticCompliance()
                 Button("Save") { }
@@ -98,10 +98,10 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: Complex layout with multiple focusable elements
-            let view = VStack {
+            let view = platformVStackContainer {
                 TextField("Name", text: .constant(""))
                     .automaticCompliance()
-                HStack {
+                platformHStackContainer {
                     Button("Cancel") { }
                         .automaticCompliance()
                     Button("Save") { }
@@ -134,7 +134,7 @@ open class HIGComplianceTabOrderTests: BaseTestClass {
             initializeTestConfig()
         await runWithTaskLocalConfig {
             // GIVEN: Multiple focusable elements with automatic compliance
-            let view = VStack {
+            let view = platformVStackContainer {
                 TextField("Field 1", text: .constant(""))
                     .automaticCompliance()
                 TextField("Field 2", text: .constant(""))

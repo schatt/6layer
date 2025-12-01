@@ -63,7 +63,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
 
             // Given: Test navigation content
             let navigationContent = { (isHorizontal: Bool) in
-                VStack {
+                platformVStackContainer {
                     platformPresentContent_L1(
                         content: "Navigation Content",
                         hints: PresentationHints()
@@ -98,7 +98,7 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
 
             // Given: Test stack content
             let stackContent = {
-                VStack {
+                platformVStackContainer {
                     platformPresentContent_L1(content: "Stack Item 1", hints: PresentationHints())
                     platformPresentContent_L1(content: "Stack Item 2", hints: PresentationHints())
                     platformPresentContent_L1(content: "Stack Item 3", hints: PresentationHints())

@@ -41,7 +41,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
             set: { isPresented = $0 }
         )
         let ocrResult = createTestOCRResult()
-        let ocrImage = createTestPlatformImage()
+        let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying the modifier
         let modifiedView = testView.ocrOverlaySheet(
@@ -67,7 +67,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
             set: { isPresented = $0 }
         )
         let ocrResult = createTestOCRResult()
-        let ocrImage = createTestPlatformImage()
+        let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying modifier without callbacks
         let viewWithoutCallbacks = testView.ocrOverlaySheet(
@@ -109,7 +109,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
             set: { isPresented = $0 }
         )
         let ocrResult = createTestOCRResult()
-        let ocrImage = createTestPlatformImage()
+        let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying modifier without configuration (uses defaults)
         let viewWithoutConfig = testView.ocrOverlaySheet(
@@ -151,7 +151,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
             set: { isPresented = $0 }
         )
         let ocrResult = createTestOCRResult()
-        let ocrImage = createTestPlatformImage()
+        let ocrImage = PlatformImage.createPlaceholder()
         
         let modifiedView = testView.ocrOverlaySheet(
             isPresented: binding,
@@ -185,7 +185,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
             get: { isPresented },
             set: { isPresented = $0 }
         )
-        let ocrImage = createTestPlatformImage()
+        let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying modifier with nil result
         let modifiedView = testView.ocrOverlaySheet(
@@ -236,25 +236,5 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         )
     }
     
-    private func createTestPlatformImage() -> PlatformImage {
-        #if os(iOS)
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let uiImage = renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return PlatformImage(uiImage: uiImage)
-        #elseif os(macOS)
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return PlatformImage(nsImage: nsImage)
-        #else
-        return PlatformImage()
-        #endif
-    }
 }
 
