@@ -213,7 +213,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceCompilesWithSwift6StrictConcurrency() async {
         // Given: LocationService
-        let _ = LocationService()
+        let service = LocationService()
         
         // When: Using the service in async MainActor context
         // This test verifies that the service properly handles Swift 6 concurrency
