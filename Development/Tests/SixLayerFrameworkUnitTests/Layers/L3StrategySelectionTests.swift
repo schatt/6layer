@@ -30,7 +30,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         let complexity = ContentComplexity.simple
         
         // When
-        let _ = selectCardLayoutStrategy_L3(
+        let strategy = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
@@ -57,7 +57,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         let complexity = ContentComplexity.complex
         
         // When
-        let _ = selectCardLayoutStrategy_L3(
+        let strategy = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
@@ -277,7 +277,9 @@ open class L3StrategySelectionTests: BaseTestClass {
                 contentComplexity: complexity
             )
             
-            #expect(behavior.type != nil, "Device type \(deviceType) should return valid responsive type")
+            // type is non-optional ResponsiveType enum, so just verify it exists
+            let _ = behavior.type
+            #expect(Bool(true), "Device type \(deviceType) should return valid responsive type")
             #expect(!behavior.breakpoints.isEmpty || behavior.type == .fixed, "Non-fixed behaviors should have breakpoints")
         }
     }
@@ -963,7 +965,9 @@ open class L3StrategySelectionTests: BaseTestClass {
 
         // Then: Should return correct data structure
         #expect(Bool(true), "Layer 3 function should return a result")  // result is non-optional
-        #expect(result.primaryStrategy != nil, "Should have expansion strategy")
+        // primaryStrategy is non-optional ExpansionStrategy enum, so just verify it exists
+        let _ = result.primaryStrategy
+        #expect(Bool(true), "Should have expansion strategy")
         #expect(result.animationDuration >= 0, "Should have non-negative duration")
         #expect(result.expansionScale > 0, "Should have positive expansion scale")
 

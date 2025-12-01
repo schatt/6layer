@@ -53,7 +53,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
         // Optimized: Test only current platform instead of all platforms to reduce execution time
         // The metadata extraction logic is platform-agnostic, so testing one platform is sufficient
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let metadata = try await intelligence.extractMetadata(from: image)
@@ -73,7 +73,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_ExtractEXIFData() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let exifData = try await intelligence.extractEXIFData(from: image)
@@ -93,7 +93,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_ExtractLocationData() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let _ = try await intelligence.extractLocationData(from: image)
@@ -109,7 +109,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_ExtractColorProfile() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let colorProfile = try await intelligence.extractColorProfile(from: image)
@@ -127,7 +127,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_ExtractTechnicalData() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let technicalData = try await intelligence.extractTechnicalData(from: image)
@@ -148,7 +148,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_CategorizeByContent() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let categorization = try await intelligence.categorizeByContent(image)
@@ -207,7 +207,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_GenerateOptimizationRecommendations() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let recommendations = try await intelligence.generateOptimizationRecommendations(for: image)
@@ -226,7 +226,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_GenerateAccessibilityRecommendations() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let recommendations = try await intelligence.generateAccessibilityRecommendations(for: image)
@@ -245,7 +245,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_GenerateUsageRecommendations() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let recommendations = try await intelligence.generateUsageRecommendations(for: image)
@@ -266,7 +266,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_AnalyzeImageComposition() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let composition = try await intelligence.analyzeImageComposition(image)
@@ -286,7 +286,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_AnalyzeColorDistribution() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let colorDistribution = try await intelligence.analyzeColorDistribution(image)
@@ -306,7 +306,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_AnalyzeTextContent() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let _ = try await intelligence.analyzeTextContent(image)
@@ -328,7 +328,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_Performance() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let _ = try await intelligence.extractMetadata(from: image)
@@ -410,7 +410,7 @@ open class ImageMetadataIntelligenceTests: BaseTestClass {
     @Test func testImageMetadataIntelligence_Integration() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let _ = ImageMetadataIntelligence()
+        let intelligence = ImageMetadataIntelligence()
         
         // When
         let metadata = try await intelligence.extractMetadata(from: image)
