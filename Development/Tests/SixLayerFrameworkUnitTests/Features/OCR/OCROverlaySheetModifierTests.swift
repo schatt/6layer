@@ -34,7 +34,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
     /// METHODOLOGY: Test API signature and compilation
     @Test @MainActor func testOCROverlaySheetModifierAPISignature() {
         // Given: A view and OCR data
-        let _ = Text("Test")
+        let testView = Text("Test")
         var isPresented = false
         let binding = Binding(
             get: { isPresented },

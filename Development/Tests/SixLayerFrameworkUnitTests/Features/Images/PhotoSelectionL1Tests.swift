@@ -36,7 +36,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -57,7 +57,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -80,7 +80,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -101,7 +101,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -122,7 +122,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -143,7 +143,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -164,7 +164,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -185,7 +185,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -206,7 +206,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -234,7 +234,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // When
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -258,7 +258,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When: Using custom picker view wrapper
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in },
@@ -287,7 +287,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         
         // When: Not providing custom picker view (should use default)
         // Omit the parameter to use default value instead of passing nil
-        let _ = platformPhotoSelection_L1(
+        let view = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }

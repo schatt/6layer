@@ -72,7 +72,7 @@ open class PlatformColorsTests: BaseTestClass {
     @Test @MainActor
     func testPlatformColorsAcrossPlatforms() {
         // Given: Platform-specific color expectations
-        let _ = SixLayerPlatform.current
+        let platform = SixLayerPlatform.current
         
         // When: Testing platform colors on different platforms
         // Then: Test platform-specific business logic

@@ -63,7 +63,7 @@ open class PlatformColorEncodeTests: BaseTestClass {
         // When: Encoding each color
         for color in colors {
             do {
-                let _ = try platformColorEncode(color)
+                let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
                 // encodedData is non-optional Data, so it exists if we reach here
@@ -93,7 +93,7 @@ open class PlatformColorEncodeTests: BaseTestClass {
         // When: Encoding each custom color
         for (color, name) in customColors {
             do {
-                let _ = try platformColorEncode(color)
+                let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
                 #expect(Bool(true), "Should encode \(name) successfully")  // encodedData is non-optional
@@ -118,7 +118,7 @@ open class PlatformColorEncodeTests: BaseTestClass {
         // When: Encoding each alpha color
         for (color, expectedAlpha) in alphaColors {
             do {
-                let _ = try platformColorEncode(color)
+                let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
                 #expect(Bool(true), "Should encode color with alpha \(expectedAlpha) successfully")  // encodedData is non-optional
@@ -138,7 +138,7 @@ open class PlatformColorEncodeTests: BaseTestClass {
         
         // When: Encoding the color
         do {
-            let _ = try platformColorEncode(color)
+            let encodedData = try platformColorEncode(color)
             
             // Then: Should work on current platform
             #expect(Bool(true), "Should encode color on current platform")  // encodedData is non-optional
