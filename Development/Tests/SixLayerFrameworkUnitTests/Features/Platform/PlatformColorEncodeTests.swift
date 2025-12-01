@@ -193,7 +193,6 @@ open class PlatformColorEncodeTests: BaseTestClass {
         // When: Encoding and decoding the color
         do {
             let encodedData = try platformColorEncode(originalColor)
-            let _ = try platformColorDecode(encodedData)
             
             // Then: Decoded color should exist (exact matching difficult due to platform differences)
             let decodedColor = try platformColorDecode(encodedData)
