@@ -73,7 +73,7 @@ open class SwitchControlTests: BaseTestClass {
         initializeTestConfig()
         // Given: Switch Control Manager with focus management
         let config = SwitchControlConfig(focusManagement: .automatic)
-        let _ = SwitchControlManager(config: config)
+        let manager = SwitchControlManager(config: config)
         
         // When: Managing focus
         let focusResult = manager.manageFocus(for: .next)

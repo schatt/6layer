@@ -299,12 +299,16 @@ open class WindowDetectionTests: BaseTestClass {
     @Test @MainActor func testDetectWindowSizeViewExtension() {
         initializeTestConfig()
         // GIVEN: A SwiftUI view
-        let _ = Text("Test")
+        let view = Text("Test")
         
         // WHEN: Detect window size modifier is applied
         // THEN: Should return modified view without crashing
         let modifiedView = view.detectWindowSize()
-        #expect(Bool(true), "modifiedView is non-optional")  // modifiedView is non-optional
+        // Verify modified view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: modifiedView)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "Modified view should be a SwiftUI view type, got: \(viewType)")
     }
     
     @Test @MainActor func testDetectWindowSizeOnDifferentViewTypes() {
