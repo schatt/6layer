@@ -88,8 +88,7 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let phoneTestView = createTestViewWithCardLayoutStrategy(phoneStrategy)
-        // phoneTestView is a non-optional View, so it exists if we reach here
+        let _ = createTestViewWithCardLayoutStrategy(phoneStrategy)
         
         // Test pad
         let padStrategy = selectCardLayoutStrategy_L3(
@@ -99,8 +98,7 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let padTestView = createTestViewWithCardLayoutStrategy(padStrategy)
-        // padTestView is a non-optional View, so it exists if we reach here
+        let _ = createTestViewWithCardLayoutStrategy(padStrategy)
         
         // Test mac
         let macStrategy = selectCardLayoutStrategy_L3(
@@ -110,8 +108,8 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let macTestView = createTestViewWithCardLayoutStrategy(macStrategy)
-        #expect(Bool(true), "Should be able to create view with mac card layout strategy")  // macTestView is non-optional
+        let _ = createTestViewWithCardLayoutStrategy(macStrategy)
+        #expect(Bool(true), "Should be able to create view with mac card layout strategy")
     }
     
     @Test @MainActor func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
@@ -120,31 +118,31 @@ open class L3StrategySelectionTests: BaseTestClass {
         let deviceType = DeviceType.phone
         
         // Test simple complexity
-        let simpleStrategy = selectCardLayoutStrategy_L3(
+        let _ = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .simple
         )
-        #expect(Bool(true), "Simple complexity should return a strategy")  // simpleStrategy is non-optional
+        #expect(Bool(true), "Simple complexity should return a strategy")
         
         // Test moderate complexity
-        let moderateStrategy = selectCardLayoutStrategy_L3(
+        let _ = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .moderate
         )
-        #expect(Bool(true), "Moderate complexity should return a strategy")  // moderateStrategy is non-optional
+        #expect(Bool(true), "Moderate complexity should return a strategy")
         
         // Test complex complexity
-        let complexStrategy = selectCardLayoutStrategy_L3(
+        let _ = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .complex
         )
-        #expect(Bool(true), "Complex complexity should return a strategy")  // complexStrategy is non-optional
+        #expect(Bool(true), "Complex complexity should return a strategy")
     }
     
     // MARK: - chooseGridStrategy Tests
@@ -622,24 +620,24 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "Phone device type should return a strategy")  // phoneStrategy is non-optional
         
         // Test pad
-        let padStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: 768,
             deviceType: .pad,
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(Bool(true), "Pad device type should return a strategy")  // padStrategy is non-optional
+        #expect(Bool(true), "Pad device type should return a strategy")
         
         // Test mac
-        let macStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: 1024,
             deviceType: .mac,
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(Bool(true), "Mac device type should return a strategy")  // macStrategy is non-optional
+        #expect(Bool(true), "Mac device type should return a strategy")
     }
     
     @Test @MainActor func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
