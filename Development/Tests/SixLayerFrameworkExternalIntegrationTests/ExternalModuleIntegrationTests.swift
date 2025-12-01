@@ -96,9 +96,10 @@ struct ExternalModuleIntegrationTests {
         let platformImage = PlatformImage(nsImage)
 
         // Verify the conversion actually worked
-        #expect(platformImage.nsImage != nil, "PlatformImage should contain valid NSImage")
-        #expect(platformImage.size.width > 0, "Converted image should have valid width")
-        #expect(platformImage.size.height > 0, "Converted image should have valid height")
+        // NSImage is non-optional, so check if the image has valid size instead
+        #expect(platformImage.size.width > 0, "PlatformImage should have valid width")
+        #expect(platformImage.size.height > 0, "PlatformImage should have valid height")
+        #expect(platformImage.size.width > 0 && platformImage.size.height > 0, "Converted image should have valid dimensions")
         #expect(platformImage.nsImage == nsImage, "Conversion should preserve original image data")
         #endif
     }
@@ -267,7 +268,7 @@ struct ExternalModuleIntegrationTests {
         // Test that ResponsiveContainer can be used from external modules
         // Note: Uses proper 2-parameter closure signature
         let _ = ResponsiveContainer { isHorizontal, isVertical in
-            platformVStackContainer {
+            EmptyView().platformVStackContainer {
                 Text("H: \(isHorizontal ? "Yes" : "No")")
                 Text("V: \(isVertical ? "Yes" : "No")")
             }

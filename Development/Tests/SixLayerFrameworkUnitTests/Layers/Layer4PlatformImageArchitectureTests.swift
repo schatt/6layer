@@ -229,8 +229,6 @@ open class Layer4PlatformImageArchitectureTests: BaseTestClass {
     
     // MARK: - Test Data Helpers
     
-    #endif
-    
     // MARK: - Mock Classes for Testing
     
     #if os(iOS)

@@ -129,10 +129,12 @@ public struct RuntimeCapabilityDetection {
     private static func detectiOSTouchSupport() -> Bool {
         // Check if touch events are available by checking if we can detect touch input
         // All iOS devices support touch, but we verify at runtime
-        // Use Thread.isMainThread check instead of MainActor.assumeIsolated to prevent crashes
-        // during parallel test execution when many tests access MainActor simultaneously
+        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
+        // while preventing crashes during parallel test execution
         if Thread.isMainThread {
-            return UIDevice.current.userInterfaceIdiom != .unspecified
+            return MainActor.assumeIsolated {
+                UIDevice.current.userInterfaceIdiom != .unspecified
+            }
         } else {
             // If not on main thread, assume touch is available (all iOS devices have touch)
             // This prevents crashes during parallel test execution
@@ -274,13 +276,16 @@ public struct RuntimeCapabilityDetection {
     /// Note: Uses Thread.isMainThread check to prevent crashes during parallel test execution
     private static func detectiOSHoverSupport() -> Bool {
         // Check if we're on iPad with Apple Pencil or hover-capable device
-        // Use Thread.isMainThread check instead of MainActor.assumeIsolated to prevent crashes
+        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
+        // while preventing crashes during parallel test execution
         if Thread.isMainThread {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                // iPad with Apple Pencil 2 or later supports hover
-                return true
+            return MainActor.assumeIsolated {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    // iPad with Apple Pencil 2 or later supports hover
+                    return true
+                }
+                return false
             }
-            return false
         } else {
             // If not on main thread, assume no hover (conservative default)
             // This prevents crashes during parallel test execution
@@ -479,9 +484,12 @@ public struct RuntimeCapabilityDetection {
         // Use real runtime detection - tests should run on actual platforms/simulators
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
+        // while preventing crashes during parallel test execution
         if Thread.isMainThread {
-            return UIAccessibility.isVoiceOverRunning
+            return MainActor.assumeIsolated {
+                UIAccessibility.isVoiceOverRunning
+            }
         } else {
             return false  // Conservative default when not on main thread
         }
@@ -516,9 +524,12 @@ public struct RuntimeCapabilityDetection {
         // Use real runtime detection - tests should run on actual platforms/simulators
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
+        // while preventing crashes during parallel test execution
         if Thread.isMainThread {
-            return UIAccessibility.isSwitchControlRunning
+            return MainActor.assumeIsolated {
+                UIAccessibility.isSwitchControlRunning
+            }
         } else {
             return false  // Conservative default when not on main thread
         }
@@ -553,9 +564,12 @@ public struct RuntimeCapabilityDetection {
         // Use real runtime detection - tests should run on actual platforms/simulators
         #if os(iOS)
         // Access MainActor API only when actually on iOS and not in test mode
-        // Use Thread.isMainThread check to prevent crashes during parallel test execution
+        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
+        // while preventing crashes during parallel test execution
         if Thread.isMainThread {
-            return UIAccessibility.isAssistiveTouchRunning
+            return MainActor.assumeIsolated {
+                UIAccessibility.isAssistiveTouchRunning
+            }
         } else {
             return false  // Conservative default when not on main thread
         }

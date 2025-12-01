@@ -787,7 +787,6 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Verify clipboard contains test code using cross-platform API
             let clipboardContent = PlatformClipboard.getTextFromClipboard() ?? ""
             #expect(!clipboardContent.isEmpty, "Clipboard should contain generated UI test content")
-            #endif
         }
     }
     

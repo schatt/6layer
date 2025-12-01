@@ -87,7 +87,7 @@ public extension View {
         style: IOSHapticStyle = .light,
         onTrigger trigger: Bool = true
     ) -> some View {
-        return self.onChange(of: trigger) { _ in
+        return self.onChange(of: trigger) {
             let impactFeedback: UIImpactFeedbackGenerator
             
             switch style {
