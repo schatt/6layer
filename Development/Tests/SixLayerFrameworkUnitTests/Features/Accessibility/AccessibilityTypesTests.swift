@@ -821,8 +821,8 @@ open class AccessibilityTypesTests: BaseTestClass {
         #expect(recognition.phrase == "Test phrase")
         #expect(recognition.confidence == 0.85)
         #expect(recognition.recognizedCommand == .tap)
+        // timestamp is non-optional, so it exists if we reach here
         let _ = recognition.timestamp
-    #expect()
     }
     
     @Test func testVoiceControlCompliance() {
