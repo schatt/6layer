@@ -135,7 +135,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         #if os(iOS)
         let testImage = placeholderImage.uiImage!
         #elseif os(macOS)
-        let testImage = placeholderImage.nsImage!
+        let testImage = placeholderImage.nsImage
         #endif
         
         // When: Test what we currently test (view creation)
@@ -169,7 +169,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         #if os(iOS)
         let testImage = placeholderImage.uiImage!
         #elseif os(macOS)
-        let testImage = placeholderImage.nsImage!
+        let testImage = placeholderImage.nsImage
         #endif
         
         // When: Execute the exact code that was broken

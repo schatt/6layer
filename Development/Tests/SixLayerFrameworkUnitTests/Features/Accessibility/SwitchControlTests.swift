@@ -134,7 +134,7 @@ open class SwitchControlTests: BaseTestClass {
         // Then: Action should be properly created
         #expect(action.name == "Test Action")
         #expect(action.gesture == .doubleTap)
-        #expect(action.action != nil)
+        // action.action is non-optional () -> Void, so it's always available
     }
     
     @Test @MainActor func testSwitchControlGestureTypes() {
@@ -183,27 +183,27 @@ open class SwitchControlTests: BaseTestClass {
     
     @Test @MainActor func testSwitchControlViewModifier() {
         // Given: A view with Switch Control support
-        let view = platformPresentContent_L1(
+        _ = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
             .switchControlEnabled()
         
-        // Then: View should support Switch Control
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: View should support Switch Control (creation verifies it works)
+        #expect(Bool(true), "View with Switch Control should be creatable")
     }
     
     @Test @MainActor func testSwitchControlViewModifierWithConfiguration() {
         // Given: A view with Switch Control configuration
         let config = SwitchControlConfig(enableNavigation: true)
-        let view = platformPresentContent_L1(
+        _ = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
             .switchControlEnabled(config: config)
         
-        // Then: View should support Switch Control with configuration
-        #expect(Bool(true), "view is non-optional")  // view is non-optional
+        // Then: View should support Switch Control with configuration (creation verifies it works)
+        #expect(Bool(true), "View with Switch Control config should be creatable")
     }
     
     // MARK: - Switch Control Compliance Tests
@@ -250,9 +250,10 @@ open class SwitchControlTests: BaseTestClass {
     @Test func testSwitchControlPerformance() {
         // Given: Switch Control Manager
         let config = SwitchControlConfig(enableNavigation: true)
-        let manager = SwitchControlManager(config: config)
+        _ = SwitchControlManager(config: config)
         
         // When: Measuring performance
         // Performance test removed - performance monitoring was removed from framework
+        // Manager creation verifies it can be instantiated
     }
 }

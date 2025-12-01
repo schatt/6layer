@@ -46,8 +46,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
             let testView = Image(platformImage: platformImage)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-            let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "PlatformImage should work in actual views")  // hostingView is non-optional
+            _ = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "PlatformImage should work in actual views")
         }
     }
     
@@ -78,8 +78,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         let testView = Image(platformImage: resizedImage)
             .resizable()
             .aspectRatio(contentMode: .fit)
-        let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Resized image should work in actual views")  // hostingView is non-optional
+        _ = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Resized image should work in actual views")
     }
     
     @Test @MainActor
@@ -98,8 +98,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         let testView = Image(platformImage: croppedImage)
             .resizable()
             .aspectRatio(contentMode: .fit)
-        let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Cropped image should work in actual views")  // hostingView is non-optional
+        _ = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Cropped image should work in actual views")
     }
     
     @Test func testPlatformImageCompression() {
@@ -132,10 +132,9 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         let originalImage = PlatformImage.createPlaceholder()
         
         // When: Optimizing for OCR
-        let optimizedImage = originalImage.optimizedForOCR()
+        _ = originalImage.optimizedForOCR()
         
-        // Then: Optimized image should be returned
-        // optimizedImage is a non-optional PlatformImage, so it exists if we reach here
+        // Then: Optimized image should be returned (function call verifies it works)
     }
     
     @Test func testPlatformImageMetadata() {
@@ -271,8 +270,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         // cameraInterface is a non-optional View, so it exists if we reach here
         
         // Test that the camera interface can actually be hosted
-        let hostingView = hostRootPlatformView(cameraInterface.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Camera interface should be hostable")  // hostingView is non-optional
+        _ = hostRootPlatformView(cameraInterface.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Camera interface should be hostable")
     }
     
     @Test @MainActor
@@ -289,8 +288,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         // photoPicker is a non-optional View, so it exists if we reach here
         
         // Test that the photo picker can actually be hosted
-        let hostingView = hostRootPlatformView(photoPicker.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Photo picker should be hostable")  // hostingView is non-optional
+        _ = hostRootPlatformView(photoPicker.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Photo picker should be hostable")
     }
     
     @Test @MainActor
@@ -306,8 +305,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         // photoDisplay is a non-optional View, so it exists if we reach here
         
         // Test that the photo display can actually be hosted
-        let hostingView = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Photo display should be hostable")  // hostingView is non-optional
+        _ = hostRootPlatformView(photoDisplay.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Photo display should be hostable")
     }
     
     // MARK: - Cross-Platform Color Tests
@@ -317,8 +316,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         // Then: Platform system colors should be available and usable
         // Test that platform colors can actually be used in views
         let testView = createTestViewWithPlatformSystemColors()
-        let hostingView = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Platform system colors should work in actual views")  // hostingView is non-optional
+        _ = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Platform system colors should work in actual views")
     }
     
     // MARK: - Cross-Platform Keyboard Tests
@@ -336,8 +335,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         // modifiedView is a non-optional View, so it exists if we reach here
         
         // Test that the modified view can actually be hosted
-        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Modified view with keyboard type should be hostable")  // hostingView is non-optional
+        _ = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Modified view with keyboard type should be hostable")
     }
     
     @Test @MainActor
@@ -353,8 +352,8 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         // modifiedView is a non-optional View, so it exists if we reach here
         
         // Test that the modified view can actually be hosted
-        let hostingView = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Modified view with text field style should be hostable")  // hostingView is non-optional
+        _ = hostRootPlatformView(modifiedView.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "Modified view with text field style should be hostable")
     }
     
     // MARK: - Cross-Platform Location Tests
@@ -376,6 +375,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
     
     
     /// Create a test view using platform system colors to verify they work functionally
+    @MainActor
     public func createTestViewWithPlatformSystemColors() -> some View {
         return platformVStackContainer {
             Text("System Background")

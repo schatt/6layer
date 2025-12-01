@@ -409,10 +409,9 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        _ = platformModalContainer_Form_L4(strategy: strategy)
         
-        // Then: Container created successfully (non-optional, so existence is verified)
-        _ = container
+        // Then: Container created successfully (creation verifies it works)
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_CrossPlatformCompatibility() {
@@ -425,10 +424,9 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        _ = platformModalContainer_Form_L4(strategy: strategy)
         
-        // Then: Container created successfully (non-optional, so existence is verified)
-        _ = container
+        // Then: Container created successfully (creation verifies it works)
     }
     
     // MARK: - Test Helper Functions

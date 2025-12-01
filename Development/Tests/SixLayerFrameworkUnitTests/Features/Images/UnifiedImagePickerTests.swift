@@ -216,7 +216,7 @@ open class UnifiedImagePickerTests: BaseTestClass {
 
         #elseif os(macOS)
         // Given: NSImage from system API
-        let nsImage = placeholderImage.nsImage!
+        let nsImage = placeholderImage.nsImage
 
         // When: Convert at system boundary
         let platformImage = PlatformImage(nsImage)
@@ -248,6 +248,36 @@ open class UnifiedImagePickerTests: BaseTestClass {
         return PlatformImage(nsImage: nsImage)
         #else
         return PlatformImage()
+        #endif
+    }
+    
+    // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+    private func createTestImageData() -> Data {
+        #if os(iOS)
+        let size = CGSize(width: 100, height: 100)
+        let renderer = UIGraphicsImageRenderer(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        let uiImage = renderer.image { context in
+            UIColor.red.setFill() // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        return uiImage.jpegData(compressionQuality: 0.8) ?? Data()
+
+        #elseif os(macOS)
+        let size = NSSize(width: 100, height: 100) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        let nsImage = NSImage(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        nsImage.lockFocus()
+        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size)) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        nsImage.unlockFocus()
+        
+        guard let tiffData = nsImage.tiffRepresentation,
+              let bitmapRep = NSBitmapImageRep(data: tiffData),
+              let jpegData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
+            return Data()
+        }
+        return jpegData
+        
+        #else
+        return Data()
         #endif
     }
     

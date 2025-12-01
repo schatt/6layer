@@ -44,14 +44,13 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying the modifier
-        let modifiedView = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage
         )
         
-        // Then: Modifier should be applied successfully
-        // modifiedView is non-optional View, so it exists if we reach here
+        // Then: Modifier should be applied successfully (creation verifies it works)
         #expect(Bool(true), "OCR overlay sheet modifier should exist and be applicable")
     }
     
@@ -70,7 +69,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying modifier without callbacks
-        let viewWithoutCallbacks = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage
@@ -80,7 +79,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         var editCallbackExecuted = false
         var deleteCallbackExecuted = false
         
-        let viewWithCallbacks = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage,
@@ -112,7 +111,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying modifier without configuration (uses defaults)
-        let viewWithoutConfig = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage
@@ -125,14 +124,14 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
             showConfidenceIndicators: false
         )
         
-        let viewWithConfig = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage,
             configuration: customConfig
         )
         
-        // Then: Both should compile and work
+        // Then: Both should compile and work (creation verifies it works)
         #expect(Bool(true), "Modifier should work without configuration")
         #expect(Bool(true), "Modifier should work with custom configuration")
     }
@@ -188,14 +187,13 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         let ocrImage = PlatformImage.createPlaceholder()
         
         // When: Applying modifier with nil result
-        let modifiedView = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: nil,
             ocrImage: ocrImage
         )
         
-        // Then: Modifier should handle nil gracefully
-        // modifiedView is non-optional View, so it exists if we reach here
+        // Then: Modifier should handle nil gracefully (creation verifies it works)
         #expect(Bool(true), "Modifier should handle nil result")
     }
     
@@ -213,7 +211,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         let ocrResult = createTestOCRResult()
         
         // When: Applying modifier with nil image
-        let modifiedView = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: nil

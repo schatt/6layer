@@ -56,33 +56,32 @@ open class PlatformColorsTests: BaseTestClass {
         case .iOS:
             // Test that iOS colors can actually be used in views
             let iosView = createTestViewWithPlatformColors()
-            let iosHostingView = hostRootPlatformView(iosView.withGlobalAutoIDsEnabled())
-            // iosHostingView is optional (Any?), valid check
-            #expect(Bool(true), "iOS colors should work in actual views")  // iosHostingView is non-optional
+            _ = hostRootPlatformView(iosView.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "iOS colors should work in actual views")
             
         case .macOS:
             // Test that macOS colors can actually be used in views
             let macosView = createTestViewWithPlatformColors()
-            let macosHostingView = hostRootPlatformView(macosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "macOS colors should work in actual views")  // macosHostingView is non-optional
+            _ = hostRootPlatformView(macosView.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "macOS colors should work in actual views")
             
         case .watchOS:
             // Test that watchOS colors can actually be used in views
             let watchosView = createTestViewWithPlatformColors()
-            let watchosHostingView = hostRootPlatformView(watchosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "watchOS colors should work in actual views")  // watchosHostingView is non-optional
+            _ = hostRootPlatformView(watchosView.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "watchOS colors should work in actual views")
             
         case .tvOS:
             // Test that tvOS colors can actually be used in views
             let tvosView = createTestViewWithPlatformColors()
-            let tvosHostingView = hostRootPlatformView(tvosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "tvOS colors should work in actual views")  // tvosHostingView is non-optional
+            _ = hostRootPlatformView(tvosView.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "tvOS colors should work in actual views")
             
         case .visionOS:
             // Test that visionOS colors can actually be used in views
             let visionosView = createTestViewWithPlatformColors()
-            let visionosHostingView = hostRootPlatformView(visionosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "visionOS colors should work in actual views")  // visionosHostingView is non-optional
+            _ = hostRootPlatformView(visionosView.withGlobalAutoIDsEnabled())
+            #expect(Bool(true), "visionOS colors should work in actual views")
         }
     }
     
@@ -129,10 +128,15 @@ open class PlatformColorsTests: BaseTestClass {
         #expect(Bool(true), "Secondary label color should be encodable")  // secondaryEncoded is non-optional
         #expect(Bool(true), "Background color should be encodable")  // backgroundEncoded is non-optional
         
-        // Test business logic: Encoded colors should be decodable
-        #expect(try platformColorDecode(primaryEncoded) != nil, "Primary label color should be decodable")
-        #expect(try platformColorDecode(secondaryEncoded) != nil, "Secondary label color should be decodable")
-        #expect(try platformColorDecode(backgroundEncoded) != nil, "Background color should be decodable")
+        // Test business logic: Encoded colors should be decodable (platformColorDecode returns non-optional Color, throws on error)
+        do {
+            let _ = try platformColorDecode(primaryEncoded)
+            let _ = try platformColorDecode(secondaryEncoded)
+            let _ = try platformColorDecode(backgroundEncoded)
+            #expect(Bool(true), "All colors should be decodable")
+        } catch {
+            Issue.record("Color decoding failed: \(error)")
+        }
         
         // Test business logic: Decoded colors should match original colors
         #expect(try platformColorDecode(primaryEncoded) == primaryLabel, "Decoded primary label color should match original")
@@ -144,10 +148,10 @@ open class PlatformColorsTests: BaseTestClass {
     
     @Test func testPlatformPrimaryLabelColor() {
         // Given & When
-        let color = Color.platformPrimaryLabel
+        _ = Color.platformPrimaryLabel
         
         // Then - Test business logic: Platform primary label color should be properly defined
-        #expect(Bool(true), "Platform primary label color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform primary label color should be accessible")
         
         // Test business logic: Platform primary label should be consistent with platform label
         #expect(color == Color.platformLabel, "Platform primary label should equal platform label")
@@ -162,52 +166,52 @@ open class PlatformColorsTests: BaseTestClass {
     
     @Test func testPlatformSecondaryLabelColor() {
         // Given & When
-        let color = Color.platformSecondaryLabel
+        _ = Color.platformSecondaryLabel
         
         // Then
-        #expect(Bool(true), "Platform secondary label color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform secondary label color should be accessible")
         // Should be the same as existing platformSecondaryLabel
         #expect(color == Color.platformSecondaryLabel, "Platform secondary label should be consistent")
     }
     
     @Test func testPlatformTertiaryLabelColor() {
         // Given & When
-        let color = Color.platformTertiaryLabel
+        _ = Color.platformTertiaryLabel
         
         // Then
-        #expect(Bool(true), "Platform tertiary label color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform tertiary label color should be accessible")
     }
     
     @Test func testPlatformQuaternaryLabelColor() {
         // Given & When
-        let color = Color.platformQuaternaryLabel
+        _ = Color.platformQuaternaryLabel
         
         // Then
-        #expect(Bool(true), "Platform quaternary label color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform quaternary label color should be accessible")
     }
     
     @Test func testPlatformPlaceholderTextColor() {
         // Given & When
-        let color = Color.platformPlaceholderText
+        _ = Color.platformPlaceholderText
         
         // Then
-        #expect(Bool(true), "Platform placeholder text color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform placeholder text color should be accessible")
     }
     
     @Test func testPlatformSeparatorColor() {
         // Given & When
-        let color = Color.platformSeparator
+        _ = Color.platformSeparator
         
         // Then
-        #expect(Bool(true), "Platform separator color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform separator color should be accessible")
     }
     
     @Test func testPlatformOpaqueSeparatorColor() {
         // Given & When
-        let color = Color.platformOpaqueSeparator
+        _ = Color.platformOpaqueSeparator
         
         // Then
-        #expect(Bool(true), "Platform opaque separator color should not be nil")  // color is non-optional
+        #expect(Bool(true), "Platform opaque separator color should be accessible")
     }
     
     // MARK: - Platform-Specific Behavior Tests
@@ -421,7 +425,7 @@ open class PlatformColorsTests: BaseTestClass {
         #endif
     }
     
-    @Test func testPlatformShadowColorWorksInViews() {
+    @Test @MainActor func testPlatformShadowColorWorksInViews() {
         // Given
         let shadowColor = Color.platformShadowColor
         
@@ -470,7 +474,7 @@ open class PlatformColorsTests: BaseTestClass {
         }
     }
     
-    @Test func testAccessibilityAwareColorsWithSwiftUIViews() {
+    @Test @MainActor func testAccessibilityAwareColorsWithSwiftUIViews() {
         // Given
         let buttonTextColor = Color.platformButtonTextOnColor
         let shadowColor = Color.platformShadowColor
@@ -561,7 +565,7 @@ open class PlatformColorsTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testColorsWithSwiftUIViews() {
+    @Test @MainActor func testColorsWithSwiftUIViews() {
         // Given
         let testColors = [
             ("Primary", Color.platformPrimaryLabel),
@@ -590,7 +594,7 @@ open class PlatformColorsTests: BaseTestClass {
     
     // MARK: - Documentation Tests
     
-    @Test func testColorUsageExamples() {
+    @Test @MainActor func testColorUsageExamples() {
         // Given
         let exampleView = platformVStackContainer {
             Text("Primary Text")
@@ -667,6 +671,7 @@ open class PlatformColorsTests: BaseTestClass {
     // MARK: - Helper Functions
     
     /// Create a test view using platform colors to verify they work functionally
+    @MainActor
     public func createTestViewWithPlatformColors() -> some View {
         return platformVStackContainer {
             Text("Primary Label")
