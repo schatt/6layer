@@ -46,9 +46,13 @@ open class NavigationStackLayer3Tests: BaseTestClass {
             platform: .iOS
         )
         
-        // Then: Should return a strategy
-        #expect(Bool(true), "strategy is non-optional")
+        // Then: Should return a valid strategy with implementation
         #expect(strategy.implementation != nil, "Should have an implementation strategy")
+        // Verify strategy has valid properties
+        if let implementation = strategy.implementation {
+            #expect([.navigationStack, .navigationView, .splitView, .modal].contains(implementation), 
+                    "Implementation should be a valid NavigationImplementationStrategy")
+        }
     }
     
     @Test @MainActor func testSelectNavigationStackStrategy_L3_iOS16PlusUsesNavigationStack() {

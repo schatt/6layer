@@ -84,10 +84,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid full screen container
-        #expect(Bool(true), "Full screen container should be created successfully")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Full screen container should be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_Custom() {
@@ -99,10 +102,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid custom container
-        #expect(Bool(true), "Custom container should be created successfully")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Custom container should be a SwiftUI view type")
     }
     
     // MARK: - Sizing Tests
@@ -115,16 +121,18 @@ open class ModalContainerTests: BaseTestClass {
         let customStrategy = createTestModalStrategy(sizing: .custom)
         
         // When: Creating containers with different sizes
-        let _ = platformModalContainer_Form_L4(strategy: smallStrategy)
-        let _ = platformModalContainer_Form_L4(strategy: mediumStrategy)
-        let _ = platformModalContainer_Form_L4(strategy: largeStrategy)
-        let _ = platformModalContainer_Form_L4(strategy: customStrategy)
+        let smallContainer = platformModalContainer_Form_L4(strategy: smallStrategy)
+        let mediumContainer = platformModalContainer_Form_L4(strategy: mediumStrategy)
+        let largeContainer = platformModalContainer_Form_L4(strategy: largeStrategy)
+        let customContainer = platformModalContainer_Form_L4(strategy: customStrategy)
         
-        // Then: All containers should be created successfully
-        #expect(Bool(true), "Small container should be created")  // smallContainer is non-optional
-        #expect(Bool(true), "Medium container should be created")  // mediumContainer is non-optional
-        #expect(Bool(true), "Large container should be created")  // largeContainer is non-optional
-        #expect(Bool(true), "Custom container should be created")  // customContainer is non-optional
+        // Then: All containers should be created successfully and be valid SwiftUI views
+        for (container, sizeName) in [(smallContainer, "small"), (mediumContainer, "medium"), (largeContainer, "large"), (customContainer, "custom")] {
+            let mirror = Mirror(reflecting: container)
+            let containerType = String(describing: mirror.subjectType)
+            #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                    "\(sizeName.capitalized) container should be a SwiftUI view type, got: \(containerType)")
+        }
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_MultipleDetents() {
@@ -134,10 +142,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with multiple detents
-        #expect(Bool(true), "Container with multiple detents should be created")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container with multiple detents should be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_CustomDetent() {
@@ -148,10 +159,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with custom detent
-        #expect(Bool(true), "Container with custom detent should be created")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container with custom detent should be a SwiftUI view type")
     }
     
     // MARK: - Platform Optimization Tests
@@ -180,10 +194,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with platform optimizations
-        #expect(Bool(true), "Container with platform optimizations should be created")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container with platform optimizations should be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_iOSOptimization() {
@@ -198,10 +215,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create iOS-optimized container
-        #expect(Bool(true), "iOS-optimized container should be created")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "iOS-optimized container should be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_macOSOptimization() {
@@ -216,10 +236,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create macOS-optimized container
-        #expect(Bool(true), "macOS-optimized container should be created")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "macOS-optimized container should be a SwiftUI view type")
     }
     
     // MARK: - Complex Strategy Tests
@@ -246,10 +269,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create complex container
-        #expect(Bool(true), "Complex container should be created")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Complex container should be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_AllPresentationTypes() {
@@ -261,10 +287,13 @@ open class ModalContainerTests: BaseTestClass {
         // When: Creating containers for each presentation type
         for presentationType in presentationTypes {
             let strategy = createTestModalStrategy(presentationType: presentationType)
-            let _ = platformModalContainer_Form_L4(strategy: strategy)
+            let container = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each presentation type
-            #expect(Bool(true), "Container should be created for presentation type: \(presentationType)")  // container is non-optional
+            let mirror = Mirror(reflecting: container)
+            let containerType = String(describing: mirror.subjectType)
+            #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                    "Container should be a SwiftUI view type for presentation type: \(presentationType)")
         }
     }
     
@@ -277,10 +306,13 @@ open class ModalContainerTests: BaseTestClass {
         // When: Creating containers for each sizing option
         for sizing in sizingOptions {
             let strategy = createTestModalStrategy(sizing: sizing)
-            let _ = platformModalContainer_Form_L4(strategy: strategy)
+            let container = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each sizing option
-            #expect(Bool(true), "Container should be created for sizing: \(sizing)")  // container is non-optional
+            let mirror = Mirror(reflecting: container)
+            let containerType = String(describing: mirror.subjectType)
+            #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                    "Container should be a SwiftUI view type for sizing: \(sizing)")
         }
     }
     
@@ -293,10 +325,13 @@ open class ModalContainerTests: BaseTestClass {
         // When: Creating containers for each detent type
         for detent in detentTypes {
             let strategy = createTestModalStrategy(detents: [detent])
-            let _ = platformModalContainer_Form_L4(strategy: strategy)
+            let container = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each detent type
-            #expect(Bool(true), "Container should be created for detent: \(detent)")  // container is non-optional
+            let mirror = Mirror(reflecting: container)
+            let containerType = String(describing: mirror.subjectType)
+            #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                    "Container should be a SwiftUI view type for detent: \(detent)")
         }
     }
     
@@ -307,10 +342,13 @@ open class ModalContainerTests: BaseTestClass {
         let strategy = createTestModalStrategy(detents: [])
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle empty detents gracefully
-        #expect(Bool(true), "Container should handle empty detents gracefully")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container should handle empty detents gracefully and still be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_EmptyPlatformOptimizations() {
@@ -318,10 +356,13 @@ open class ModalContainerTests: BaseTestClass {
         let strategy = createTestModalStrategy(platformOptimizations: [:])
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle empty optimizations gracefully
-        #expect(Bool(true), "Container should handle empty platform optimizations gracefully")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container should handle empty platform optimizations gracefully and still be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_MultipleCustomDetents() {
@@ -335,10 +376,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle multiple custom detents
-        #expect(Bool(true), "Container should handle multiple custom detents")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container should handle multiple custom detents and be a SwiftUI view type")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_ExtremeConstraints() {
@@ -354,10 +398,13 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle extreme constraints
-        #expect(Bool(true), "Container should handle extreme constraints")  // container is non-optional
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container should handle extreme constraints and still be a SwiftUI view type")
     }
     
     // MARK: - Performance Tests
@@ -390,10 +437,14 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating container with complex strategy
-        let _ = platformModalContainer_Form_L4(strategy: strategy)
+        let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container successfully (performance test - should be fast)
-        #expect(Bool(true), "Container should be created with complex strategy")
+        // Verify container is a valid view by checking its type
+        let mirror = Mirror(reflecting: container)
+        let containerType = String(describing: mirror.subjectType)
+        #expect(containerType.lowercased().contains("view") || containerType.contains("ModifiedContent"), 
+                "Container should be a SwiftUI view type, got: \(containerType)")
     }
     
     // MARK: - Integration Tests

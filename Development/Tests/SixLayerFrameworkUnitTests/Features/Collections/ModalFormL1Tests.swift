@@ -339,7 +339,11 @@ open class ModalFormL1Tests: BaseTestClass {
         
         // Then: Should return a view with custom container
         let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPresentModalForm_L1 with custom form container should return a view")
+        // Verify view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: view)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "platformPresentModalForm_L1 should return a SwiftUI view type, got: \(viewType)")
     }
     
     @Test @MainActor func testPlatformPresentModalForm_L1_WithCustomFormContainer_Nil() {
@@ -357,7 +361,11 @@ open class ModalFormL1Tests: BaseTestClass {
         
         // Then: Should return default view
         let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPresentModalForm_L1 with nil custom form container should return default view")
+        // Verify view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: view)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "platformPresentModalForm_L1 should return a SwiftUI view type, got: \(viewType)")
     }
     
     @Test @MainActor func testPlatformPresentModalForm_L1_WithCustomFormContainer_DifferentFormTypes() {

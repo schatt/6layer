@@ -96,8 +96,8 @@ open class PlatformColorEncodeTests: BaseTestClass {
                 let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
-                #expect(Bool(true), "Should encode \(name) successfully")  // encodedData is non-optional
                 #expect(!encodedData.isEmpty, "Encoded data should not be empty for \(name)")
+                #expect(encodedData.count > 0, "Encoded data should have content for \(name)")
                 
             } catch {
                 Issue.record("Failed to encode \(name): \(error)")
@@ -121,8 +121,8 @@ open class PlatformColorEncodeTests: BaseTestClass {
                 let encodedData = try platformColorEncode(color)
                 
                 // Then: Should successfully encode
-                #expect(Bool(true), "Should encode color with alpha \(expectedAlpha) successfully")  // encodedData is non-optional
-                #expect(!encodedData.isEmpty, "Encoded data should not be empty")
+                #expect(!encodedData.isEmpty, "Encoded data should not be empty for alpha \(expectedAlpha)")
+                #expect(encodedData.count > 0, "Encoded data should have content")
                 
             } catch {
                 Issue.record("Failed to encode color with alpha \(expectedAlpha): \(error)")
@@ -141,8 +141,8 @@ open class PlatformColorEncodeTests: BaseTestClass {
             let encodedData = try platformColorEncode(color)
             
             // Then: Should work on current platform
-            #expect(Bool(true), "Should encode color on current platform")  // encodedData is non-optional
             #expect(!encodedData.isEmpty, "Encoded data should not be empty")
+            #expect(encodedData.count > 0, "Encoded data should have content")
             
             // Verify platform-specific encoding
             #if os(iOS)
@@ -195,11 +195,11 @@ open class PlatformColorEncodeTests: BaseTestClass {
             let encodedData = try platformColorEncode(originalColor)
             let _ = try platformColorDecode(encodedData)
             
-            // Then: Decoded color should match original (within tolerance)
-            #expect(Bool(true), "Should decode color successfully")  // decodedColor is non-optional
-            
+            // Then: Decoded color should exist (exact matching difficult due to platform differences)
+            let decodedColor = try platformColorDecode(encodedData)
+            let _ = decodedColor  // Verify decoded color exists
             // Note: Exact color matching might be difficult due to platform differences
-            // We'll verify the data was encoded and decoded successfully
+            // We verify the round-trip encoding/decoding succeeds
             
         } catch {
             Issue.record("Failed to encode/decode color: \(error)")
