@@ -79,13 +79,12 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         // Given: Camera interface and real image data
         var capturedImage: PlatformImage?
         
-        
         let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
         // When: Simulate capture with real image data
-        let realImageData = Data([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01]) // Minimal JPEG header
+        let realImageData = createRealImageData()
         simulatePhotoCaptureWithData(cameraInterface, imageData: realImageData) { image in
             capturedImage = image
         }
@@ -144,13 +143,12 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         // Given: Photo picker and real image data
         var selectedImage: PlatformImage?
         
-        
         let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         
         // When: Simulate selection with real image data
-        let realImageData = Data([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01]) // Minimal JPEG header
+        let realImageData = createRealImageData()
         simulatePhotoSelectionWithData(photoPicker, imageData: realImageData) { image in
             selectedImage = image
         }
