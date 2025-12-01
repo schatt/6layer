@@ -51,12 +51,14 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // When: Execute the delegate method that contains the broken code
         // This is the EXACT code path that was broken in 4.6.2
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: createTestUIImage()
+            .originalImage: PlatformImage.createPlaceholder().uiImage!
         ]
         
         // This would have FAILED in 4.6.2 before our fix
         // The broken code: PlatformImage(image) is executed here
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Verify the callback was executed successfully
@@ -98,12 +100,14 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // When: Execute the delegate method that contains the broken code
         // This is the EXACT code path that was broken in 4.6.2
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: createTestUIImage()
+            .originalImage: PlatformImage.createPlaceholder().uiImage!
         ]
         
         // This would have FAILED in 4.6.2 before our fix
         // The broken code: PlatformImage(image) is executed here
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Verify the callback was executed successfully
@@ -135,7 +139,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     @Test @MainActor func testPlatformImageImplicitParameter_ExactBrokenPattern() {
         #if os(iOS)
         // Given: The exact API pattern that was broken
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // When: Use the exact pattern that was broken in 4.6.2
         // This is the EXACT code that was broken: PlatformImage(image)
@@ -147,7 +151,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         #expect(platformImage.uiImage == uiImage, "Implicit parameter should produce correct result")
         #elseif os(macOS)
         // Given: The exact API pattern that was broken
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // When: Use the exact pattern that was broken in 4.6.2
         let platformImage = PlatformImage(nsImage)
@@ -185,7 +189,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // When: Execute the exact callback code that was broken
         // This simulates the actual callback execution in Layer 4
-        let testUIImage = createTestUIImage()
+        let testUIImage = PlatformImage.createPlaceholder().uiImage!
         
         // This is the EXACT code that was broken in the callbacks:
         // parent.onImageCaptured(PlatformImage(image))
@@ -203,7 +207,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
         
-        let testNSImage = createTestNSImage()
+        let testNSImage = PlatformImage.createPlaceholder().nsImage!
         
         capturedImage = PlatformImage(testNSImage)
         selectedImage = PlatformImage(testNSImage)
@@ -237,8 +241,9 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // Simulate the actual delegate method execution
         // This is where the broken PlatformImage(image) code would be executed
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: createTestUIImage()
+            .originalImage: PlatformImage.createPlaceholder().uiImage!
         ]
         
         // Execute the delegate methods that contain the broken code
@@ -246,12 +251,12 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         let cameraCoordinator = CameraView.Coordinator(CameraView { image in
             capturedImage = image
         })
-        cameraCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
+        cameraCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo) // 6LAYER_ALLOW: testing platform image picker coordinator
         
         let pickerCoordinator = LegacyPhotoPickerView.LegacyPhotoCoordinator(LegacyPhotoPickerView { image in
             selectedImage = image
         })
-        pickerCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
+        pickerCoordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo) // 6LAYER_ALLOW: testing platform image picker coordinator
         
         // Then: Verify the production code works (would have failed in 4.6.2)
         #expect(Bool(true), "Production camera code should work")  // capturedImage is non-optional
@@ -290,27 +295,6 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     
     // MARK: - Test Data Helpers
     
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
-    #endif
     
     // MARK: - Mock Classes for Testing
     

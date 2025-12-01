@@ -28,8 +28,9 @@ struct IntelligentDetailViewSheetIntegrationTests_macOS {
         let task = TestTask(title: "Sheet Task", description: "Details", priority: 3)
 
         // Host window
+        // 6LAYER_ALLOW: testing macOS-specific sheet/window functionality with NSWindow/NSRect (legitimate platform integration testing)
         let hostWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 800, height: 600),
+            contentRect: NSRect(x: 0, y: 0, width: 800, height: 600), // 6LAYER_ALLOW: testing macOS-specific window functionality
             styleMask: [.titled, .closable, .resizable],
             backing: .buffered,
             defer: false
@@ -42,6 +43,7 @@ struct IntelligentDetailViewSheetIntegrationTests_macOS {
             .frame(minWidth: 400, minHeight: 500)
 
         let sheetController = NSHostingController(rootView: sheetRoot)
+        // 6LAYER_ALLOW: testing macOS-specific sheet/window functionality with NSWindow/NSRect (legitimate platform integration testing)
         let sheetWindow = NSWindow(contentViewController: sheetController)
         sheetWindow.isReleasedWhenClosed = false
 

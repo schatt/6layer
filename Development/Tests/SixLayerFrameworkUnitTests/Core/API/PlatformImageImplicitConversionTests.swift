@@ -109,7 +109,9 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
             capturedImage = image
         }))
         
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [.originalImage: uiImage]
+        // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMediaWithInfo: mockInfo)
         
         // Then: Implicit conversion should work in callback context
@@ -197,8 +199,11 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         let size = CGSize(width: 50, height: 50)
         
         // Test 1: UIGraphicsImageRenderer
+        // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
+        // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
         let renderer = UIGraphicsImageRenderer(size: size)
         let uiImage1 = renderer.image { context in
+            // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
             UIColor.red.setFill()
             context.fill(CGRect(origin: .zero, size: size))
         }
@@ -207,18 +212,21 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         
         // Test 2: UIImage from data
         if let data = uiImage1.jpegData(compressionQuality: 0.8),
-           let uiImage2 = UIImage(data: data) {
+           let uiImage2 = UIImage(data: data) { // 6LAYER_ALLOW: testing PlatformImage constructor with UIImage from data
             let platformImage2 = PlatformImage(uiImage2)
             #expect(platformImage2.uiImage == uiImage2, "Implicit conversion should work with UIImage from data")
         }
         
         #elseif os(macOS)
         // Test with different NSImage creation methods
+        // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
         let size = NSSize(width: 50, height: 50)
-        
+
         // Test 1: NSImage with size
+        // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
         let nsImage1 = NSImage(size: size)
         nsImage1.lockFocus()
+        // 6LAYER_ALLOW: testing platform-specific image rendering boundary conversions
         NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
         nsImage1.unlockFocus()
         let platformImage1 = PlatformImage(nsImage1)
@@ -226,7 +234,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         
         // Test 2: NSImage from data
         if let tiffData = nsImage1.tiffRepresentation,
-           let nsImage2 = NSImage(data: tiffData) {
+           let nsImage2 = NSImage(data: tiffData) { // 6LAYER_ALLOW: testing PlatformImage constructor with NSImage from data
             let platformImage2 = PlatformImage(nsImage2)
             #expect(platformImage2.nsImage == nsImage2, "Implicit conversion should work with NSImage from data")
         }
@@ -236,22 +244,22 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
     // MARK: - Test Data Helpers
     
     #if os(iOS)
-    private func createTestUIImage() -> UIImage {
+    private func createTestUIImage() -> UIImage { // 6LAYER_ALLOW: test helper returning platform-specific image type
         let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let renderer = UIGraphicsImageRenderer(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         return renderer.image { context in
-            UIColor.blue.setFill()
+            UIColor.blue.setFill() // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
             context.fill(CGRect(origin: .zero, size: size))
         }
     }
     #endif
     
     #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 100, height: 100)
-        let nsImage = NSImage(size: size)
+    private func createTestNSImage() -> NSImage { // 6LAYER_ALLOW: test helper returning platform-specific image type
+        let size = NSSize(width: 100, height: 100) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
+        let nsImage = NSImage(size: size) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
+        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size)) // 6LAYER_ALLOW: test helper using platform-specific image rendering APIs
         nsImage.unlockFocus()
         return nsImage
     }
