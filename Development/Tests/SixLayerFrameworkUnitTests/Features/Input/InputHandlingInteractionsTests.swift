@@ -60,7 +60,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
                 let testPlatform = platform
                 
                 // When
-                let _ = InputHandlingManager(platform: testPlatform)
+                let manager = InputHandlingManager(platform: testPlatform)
                 
                 // Then
                 #expect(manager.currentPlatform == testPlatform)
@@ -80,7 +80,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given & When
-            let _ = InputHandlingManager()
+            let manager = InputHandlingManager()
             
             // Then
             #expect(manager.currentPlatform == SixLayerPlatform.current)
@@ -96,7 +96,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = InputHandlingManager(platform: .iOS)
+            let manager = InputHandlingManager(platform: .iOS)
             let gesture = SixLayerFramework.GestureType.tap
             
             // When
@@ -118,7 +118,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = InputHandlingManager(platform: .iOS)
+            let manager = InputHandlingManager(platform: .iOS)
             let gesture = SixLayerFramework.GestureType.rightClick // Not supported on iOS
             
             // When
@@ -140,7 +140,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = InputHandlingManager(platform: .macOS)
+            let manager = InputHandlingManager(platform: .macOS)
             let gesture = SixLayerFramework.GestureType.click
             
             // When
@@ -167,7 +167,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             let platform = SixLayerPlatform.macOS
             
             // When
-            let _ = KeyboardShortcutManager(for: platform)
+            let manager = KeyboardShortcutManager(for: platform)
             
             // Then
             #expect(manager.platform == platform)
@@ -181,7 +181,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = KeyboardShortcutManager(for: .macOS)
+            let manager = KeyboardShortcutManager(for: .macOS)
             let key = KeyEquivalent("s")
             let modifiers = EventModifiers.command
             
@@ -208,7 +208,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = KeyboardShortcutManager(for: .iOS)
+            let manager = KeyboardShortcutManager(for: .iOS)
             let key = KeyEquivalent("s")
             let modifiers = EventModifiers.command
             
@@ -235,7 +235,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = KeyboardShortcutManager(for: .macOS)
+            let manager = KeyboardShortcutManager(for: .macOS)
             let key = KeyEquivalent("s")
             let modifiers = EventModifiers.command
             
@@ -254,7 +254,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = KeyboardShortcutManager(for: .iOS)
+            let manager = KeyboardShortcutManager(for: .iOS)
             let key = KeyEquivalent("s")
             let modifiers = EventModifiers.command
             
@@ -273,7 +273,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = KeyboardShortcutManager(for: .watchOS)
+            let manager = KeyboardShortcutManager(for: .watchOS)
             let key = KeyEquivalent("s")
             let modifiers = EventModifiers.command
             
@@ -292,7 +292,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = KeyboardShortcutManager(for: .tvOS)
+            let manager = KeyboardShortcutManager(for: .tvOS)
             let key = KeyEquivalent("s")
             let modifiers = EventModifiers.command
             
@@ -316,7 +316,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             let platform = SixLayerPlatform.iOS
             
             // When
-            let _ = HapticFeedbackManager(for: platform)
+            let manager = HapticFeedbackManager(for: platform)
             
             // Then
             #expect(manager.platform == platform)
@@ -396,10 +396,10 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = SixLayerPlatform.iOS
+            let platform = SixLayerPlatform.iOS
             
             // When
-            let _ = DragDropManager(for: platform)
+            let manager = DragDropManager(for: platform)
             
             // Then
             #expect(manager.platform == platform)
@@ -413,7 +413,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = DragDropManager(for: .iOS)
+            let manager = DragDropManager(for: .iOS)
             
             // When
             let behavior = manager.getDragBehavior()
@@ -433,7 +433,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = DragDropManager(for: .macOS)
+            let manager = DragDropManager(for: .macOS)
             
             // When
             let behavior = manager.getDragBehavior()
@@ -453,7 +453,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = DragDropManager(for: .watchOS)
+            let manager = DragDropManager(for: .watchOS)
             
             // When
             let behavior = manager.getDragBehavior()
@@ -473,7 +473,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = DragDropManager(for: .tvOS)
+            let manager = DragDropManager(for: .tvOS)
             
             // When
             let behavior = manager.getDragBehavior()
@@ -629,7 +629,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given
-            let _ = InputHandlingManager(platform: .iOS)
+            let manager = InputHandlingManager(platform: .iOS)
             
             // When
             let behavior = manager.getInteractionBehavior(for: .tap)

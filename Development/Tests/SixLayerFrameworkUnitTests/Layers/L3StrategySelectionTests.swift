@@ -41,7 +41,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         // strategy is a non-optional struct, so it exists if we reach here
         
         // Test that the strategy can be used to create a functional view
-        let _ = createTestViewWithCardLayoutStrategy(strategy)
+        let testView = createTestViewWithCardLayoutStrategy(strategy)
         // testView is a non-optional View, so it exists if we reach here
         
         #expect(strategy.columns > 0, "Should have at least 1 column")
@@ -68,7 +68,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         // strategy is a non-optional struct, so it exists if we reach here
         
         // Test that the strategy can be used to create a functional view
-        let _ = createTestViewWithCardLayoutStrategy(strategy)
+        let testView = createTestViewWithCardLayoutStrategy(strategy)
         // testView is a non-optional View, so it exists if we reach here
         
         #expect(strategy.columns > 1, "Should have multiple columns for large content")
@@ -88,7 +88,8 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let _ = createTestViewWithCardLayoutStrategy(phoneStrategy)
+        let phoneTestView = createTestViewWithCardLayoutStrategy(phoneStrategy)
+        // phoneTestView is a non-optional View, so it exists if we reach here
         
         // Test pad
         let padStrategy = selectCardLayoutStrategy_L3(
@@ -98,7 +99,8 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let _ = createTestViewWithCardLayoutStrategy(padStrategy)
+        let padTestView = createTestViewWithCardLayoutStrategy(padStrategy)
+        // padTestView is a non-optional View, so it exists if we reach here
         
         // Test mac
         let macStrategy = selectCardLayoutStrategy_L3(
@@ -108,8 +110,8 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let _ = createTestViewWithCardLayoutStrategy(macStrategy)
-        #expect(Bool(true), "Should be able to create view with mac card layout strategy")
+        let macTestView = createTestViewWithCardLayoutStrategy(macStrategy)
+        #expect(Bool(true), "Should be able to create view with mac card layout strategy")  // macTestView is non-optional
     }
     
     @Test @MainActor func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
@@ -118,31 +120,31 @@ open class L3StrategySelectionTests: BaseTestClass {
         let deviceType = DeviceType.phone
         
         // Test simple complexity
-        let _ = selectCardLayoutStrategy_L3(
+        let simpleStrategy = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .simple
         )
-        #expect(Bool(true), "Simple complexity should return a strategy")
+        #expect(Bool(true), "Simple complexity should return a strategy")  // simpleStrategy is non-optional
         
         // Test moderate complexity
-        let _ = selectCardLayoutStrategy_L3(
+        let moderateStrategy = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .moderate
         )
-        #expect(Bool(true), "Moderate complexity should return a strategy")
+        #expect(Bool(true), "Moderate complexity should return a strategy")  // moderateStrategy is non-optional
         
         // Test complex complexity
-        let _ = selectCardLayoutStrategy_L3(
+        let complexStrategy = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .complex
         )
-        #expect(Bool(true), "Complex complexity should return a strategy")
+        #expect(Bool(true), "Complex complexity should return a strategy")  // complexStrategy is non-optional
     }
     
     // MARK: - chooseGridStrategy Tests
@@ -275,9 +277,7 @@ open class L3StrategySelectionTests: BaseTestClass {
                 contentComplexity: complexity
             )
             
-            // type is non-optional ResponsiveType enum, so just verify it exists
-            let _ = behavior.type
-            #expect(Bool(true), "Device type \(deviceType) should return valid responsive type")
+            #expect(behavior.type != nil, "Device type \(deviceType) should return valid responsive type")
             #expect(!behavior.breakpoints.isEmpty || behavior.type == .fixed, "Non-fixed behaviors should have breakpoints")
         }
     }
@@ -319,7 +319,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformOCRStrategy_L3_WithGeneralText() {
         // Given
         let textTypes = [TextType.general]
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -337,7 +337,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformOCRStrategy_L3_WithPriceText() {
         // Given
         let textTypes = [TextType.price]
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -355,7 +355,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformOCRStrategy_L3_WithDateText() {
         // Given
         let textTypes = [TextType.date]
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -373,7 +373,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformOCRStrategy_L3_WithMultipleTextTypes() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformOCRStrategy_L3(
@@ -392,35 +392,35 @@ open class L3StrategySelectionTests: BaseTestClass {
         let textTypes = [TextType.general]
         
         // Test iOS
-        let _ = platformOCRStrategy_L3(
+        let iOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .iOS
         )
         #expect(Bool(true), "iOS platform should return a strategy")  // iOSStrategy is non-optional
         
         // Test macOS
-        let _ = platformOCRStrategy_L3(
+        let macOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .macOS
         )
         #expect(Bool(true), "macOS platform should return a strategy")  // macOSStrategy is non-optional
         
         // Test watchOS
-        let _ = platformOCRStrategy_L3(
+        let watchOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .watchOS
         )
         #expect(Bool(true), "watchOS platform should return a strategy")  // watchOSStrategy is non-optional
         
         // Test tvOS
-        let _ = platformOCRStrategy_L3(
+        let tvOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .tvOS
         )
         #expect(Bool(true), "tvOS platform should return a strategy")  // tvOSStrategy is non-optional
         
         // Test visionOS
-        let _ = platformOCRStrategy_L3(
+        let visionOSStrategy = platformOCRStrategy_L3(
             textTypes: textTypes,
             platform: .visionOS
         )
@@ -430,7 +430,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformDocumentOCRStrategy_L3() {
         // Given
         let documentType = DocumentType.general
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformDocumentOCRStrategy_L3(
@@ -447,7 +447,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     @Test @MainActor func testPlatformReceiptOCRStrategy_L3() {
         // Given
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformReceiptOCRStrategy_L3(platform: platform)
@@ -461,7 +461,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     @Test @MainActor func testPlatformBusinessCardOCRStrategy_L3() {
         // Given
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformBusinessCardOCRStrategy_L3(platform: platform)
@@ -475,7 +475,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     
     @Test @MainActor func testPlatformInvoiceOCRStrategy_L3() {
         // Given
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformInvoiceOCRStrategy_L3(platform: platform)
@@ -490,7 +490,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformOptimalOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         let confidenceThreshold: Float = 0.8
         
         // When
@@ -510,7 +510,7 @@ open class L3StrategySelectionTests: BaseTestClass {
     @Test @MainActor func testPlatformBatchOCRStrategy_L3() {
         // Given
         let textTypes = [TextType.general, TextType.price, TextType.date]
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // When
         let strategy = platformBatchOCRStrategy_L3(
@@ -610,7 +610,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         let contentDensity = ContentDensity.balanced
         
         // Test phone
-        let _ = selectCardExpansionStrategy_L3(
+        let phoneStrategy = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: .phone,
@@ -620,24 +620,24 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "Phone device type should return a strategy")  // phoneStrategy is non-optional
         
         // Test pad
-        let _ = selectCardExpansionStrategy_L3(
+        let padStrategy = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: 768,
             deviceType: .pad,
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(Bool(true), "Pad device type should return a strategy")
+        #expect(Bool(true), "Pad device type should return a strategy")  // padStrategy is non-optional
         
         // Test mac
-        let _ = selectCardExpansionStrategy_L3(
+        let macStrategy = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: 1024,
             deviceType: .mac,
             interactionStyle: interactionStyle,
             contentDensity: contentDensity
         )
-        #expect(Bool(true), "Mac device type should return a strategy")
+        #expect(Bool(true), "Mac device type should return a strategy")  // macStrategy is non-optional
     }
     
     @Test @MainActor func testSelectCardExpansionStrategy_L3_WithDifferentContentDensities() {
@@ -647,7 +647,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         let interactionStyle = InteractionStyle.interactive
         
         // Test dense density
-        let _ = selectCardExpansionStrategy_L3(
+        let denseDensityStrategy = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
@@ -657,7 +657,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "Dense density should return a strategy")  // denseDensityStrategy is non-optional
         
         // Test balanced density
-        let _ = selectCardExpansionStrategy_L3(
+        let balancedDensityStrategy = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
@@ -667,7 +667,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         #expect(Bool(true), "Balanced density should return a strategy")  // balancedDensityStrategy is non-optional
         
         // Test spacious density
-        let _ = selectCardExpansionStrategy_L3(
+        let spaciousDensityStrategy = selectCardExpansionStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
@@ -963,9 +963,7 @@ open class L3StrategySelectionTests: BaseTestClass {
 
         // Then: Should return correct data structure
         #expect(Bool(true), "Layer 3 function should return a result")  // result is non-optional
-        // primaryStrategy is non-optional ExpansionStrategy enum, so just verify it exists
-        let _ = result.primaryStrategy
-        #expect(Bool(true), "Should have expansion strategy")
+        #expect(result.primaryStrategy != nil, "Should have expansion strategy")
         #expect(result.animationDuration >= 0, "Should have non-negative duration")
         #expect(result.expansionScale > 0, "Should have positive expansion scale")
 

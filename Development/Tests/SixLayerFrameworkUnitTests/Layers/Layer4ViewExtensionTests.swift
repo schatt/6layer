@@ -252,13 +252,14 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     // MARK: - platformNavigationButton Tests
     
     @Test @MainActor func testPlatformNavigationButton() async {
+        var buttonPressed = false
         let view = Text("Content")
             .platformNavigationButton(
                 title: "Button",
                 systemImage: "star",
                 accessibilityLabel: "Test Button",
                 accessibilityHint: "Press to test",
-                action: { _ = true }
+                action: { buttonPressed = true }
             )
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -767,7 +768,9 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     // MARK: - platformPhotoPicker_L4 Tests
     
     @Test @MainActor func testPlatformPhotoPicker_L4() async {
-        let view = platformPhotoPicker_L4 { _ in
+        var imageSelected: PlatformImage?
+        let view = platformPhotoPicker_L4 { image in
+            imageSelected = image
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -787,7 +790,9 @@ open class Layer4ViewExtensionTests: BaseTestClass {
     // MARK: - platformCameraInterface_L4 Tests
     
     @Test @MainActor func testPlatformCameraInterface_L4() async {
-        let view = platformCameraInterface_L4 { _ in
+        var imageCaptured: PlatformImage?
+        let view = platformCameraInterface_L4 { image in
+            imageCaptured = image
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -860,11 +865,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             estimatedProcessingTime: 1.0
         )
         
+        var resultReceived: OCRResult?
         let view = platformOCRImplementation_L4(
             image: testImage,
             context: context,
             strategy: strategy
-        ) { _ in
+        ) { result in
+            resultReceived = result
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -889,7 +896,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             textTypes: [.general],
             language: .english
         )
-        let _ = OCRLayout(
+        let layout = OCRLayout(
             maxImageSize: CGSize(width: 2000, height: 2000),
             recommendedImageSize: CGSize(width: 1000, height: 1000),
             processingMode: .standard,
@@ -909,12 +916,14 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             estimatedProcessingTime: 1.0
         )
         
+        var resultReceived: OCRResult?
         let view = platformTextExtraction_L4(
             image: testImage,
             context: context,
             layout: layout,
             strategy: strategy
-        ) { _ in
+        ) { result in
+            resultReceived = result
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
@@ -942,10 +951,12 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             enableTextCorrection: true
         )
         
+        var resultReceived: OCRResult?
         let view = platformTextRecognition_L4(
             image: testImage,
             options: options
-        ) { _ in
+        ) { result in
+            resultReceived = result
         }
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)

@@ -45,7 +45,7 @@ open class IntelligentCardExpansionTests: BaseTestClass {
     @Test @MainActor func testPlatformPresentItemCollectionL1WithExpandableHints() {
         initializeTestConfig()
         // Test that the Layer 1 function accepts expandable hints
-        let _ = platformPresentItemCollection_L1(
+        let view = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: expandableHints
         )

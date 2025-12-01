@@ -39,7 +39,7 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
         #endif
         
         // Then: UI patterns should be configured for the detected platform
-        let _ = manager.uiPatterns
+        let patterns = manager.uiPatterns
         // Navigation patterns should be configured for the platform
         #expect(patterns.navigationPatterns.platform == manager.currentPlatform, "Navigation patterns should match current platform")
         // Should have a primary navigation type configured

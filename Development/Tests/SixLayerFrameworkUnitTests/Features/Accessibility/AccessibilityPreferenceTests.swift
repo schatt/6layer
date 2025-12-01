@@ -87,10 +87,10 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     /// Tests that getCardExpansionPlatformConfig returns platform-specific capabilities
     @Test @MainActor func testCardExpansionPlatformConfig_PlatformSpecificCapabilities() {
         // Given: Current platform
-        let _ = SixLayerPlatform.current
+        let platform = SixLayerPlatform.current
         
         // When: Get platform configuration
-        let _ = getCardExpansionPlatformConfig()
+        let config = getCardExpansionPlatformConfig()
         
         // Then: Test actual business logic
         // The configuration should be appropriate for the current platform
@@ -140,10 +140,10 @@ open class AccessibilityPreferenceTests: BaseTestClass {
     /// Tests that getCardExpansionPerformanceConfig returns appropriate performance settings
     @Test @MainActor func testCardExpansionPerformanceConfig_PerformanceSettings() {
         // Given: Current platform
-        let _ = SixLayerPlatform.current
+        let platform = SixLayerPlatform.current
         
         // When: Get performance configuration
-        let _ = getCardExpansionPerformanceConfig()
+        let config = getCardExpansionPerformanceConfig()
         
         // Then: Test actual business logic
         // The configuration should have valid performance settings

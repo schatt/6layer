@@ -229,7 +229,7 @@ struct CardDisplayableBugTests {
         )
         
         // When: Create view using platformPresentItemCollection_L1
-        let _ = platformPresentItemCollection_L1(
+        let view = platformPresentItemCollection_L1(
             items: tasks,
             hints: hints
         )

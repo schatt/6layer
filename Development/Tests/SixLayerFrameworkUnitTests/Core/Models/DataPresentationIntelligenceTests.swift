@@ -27,11 +27,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalyzeDataWithEmptyArray() {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let emptyData: [String] = []
         
         // When
-        let _ = intelligence.analyzeData(emptyData)
+        let result = intelligence.analyzeData(emptyData)
         
         // Then
         #expect(result.dataPoints == 0)
@@ -41,11 +41,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalyzeDataWithSimpleData() {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let simpleData = ["A", "B", "C", "D", "E"]
         
         // When
-        let _ = intelligence.analyzeData(simpleData)
+        let result = intelligence.analyzeData(simpleData)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -60,7 +60,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeData(moderateData)
+        let result = intelligence.analyzeData(moderateData)
         
         // Then
         #expect(result.dataPoints == 15)
@@ -74,7 +74,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeData(complexData)
+        let result = intelligence.analyzeData(complexData)
         
         // Then
         #expect(result.dataPoints == 50)
@@ -88,7 +88,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeData(veryComplexData)
+        let result = intelligence.analyzeData(veryComplexData)
         
         // Then
         #expect(result.dataPoints == 150)
@@ -104,7 +104,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeNumericalData(values)
+        let result = intelligence.analyzeNumericalData(values)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -119,7 +119,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeNumericalData(values)
+        let result = intelligence.analyzeNumericalData(values)
         
         // Then
         #expect(result.dataPoints == 10)
@@ -135,7 +135,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeNumericalData(values)
+        let result = intelligence.analyzeNumericalData(values)
         
         // Then
         #expect(result.dataPoints == 12)
@@ -152,7 +152,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeCategoricalData(categories)
+        let result = intelligence.analyzeCategoricalData(categories)
         
         // Then
         #expect(result.dataPoints == 6)
@@ -169,7 +169,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeCategoricalData(categories)
+        let result = intelligence.analyzeCategoricalData(categories)
         
         // Then
         #expect(result.dataPoints == 55) // Sum of 1+2+...+10
@@ -181,11 +181,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalyzeCategoricalDataWithComplexCategories() {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let categories = Dictionary(uniqueKeysWithValues: (1...25).map { ("Category \($0)", $0) })
         
         // When
-        let _ = intelligence.analyzeCategoricalData(categories)
+        let result = intelligence.analyzeCategoricalData(categories)
         
         // Then
         #expect(result.complexity == .complex)
@@ -201,7 +201,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeNumericalData(values)
+        let result = intelligence.analyzeNumericalData(values)
         
         // Then
         #expect(result.recommendedChartType == .bar)
@@ -214,7 +214,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeNumericalData(values)
+        let result = intelligence.analyzeNumericalData(values)
         
         // Then
         #expect(result.recommendedChartType == .line)
@@ -227,7 +227,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeCategoricalData(categories)
+        let result = intelligence.analyzeCategoricalData(categories)
         
         // Then
         #expect(result.recommendedChartType == .pie)
@@ -236,11 +236,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testChartTypeRecommendationForComplexCategoricalData() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let categories = Dictionary(uniqueKeysWithValues: (1...25).map { ("Category \($0)", $0) })
         
         // When
-        let _ = intelligence.analyzeCategoricalData(categories)
+        let result = intelligence.analyzeCategoricalData(categories)
         
         // Then
         #expect(result.recommendedChartType == .table)
@@ -255,7 +255,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeData(simpleData)
+        let result = intelligence.analyzeData(simpleData)
         
         // Then
         #expect(result.confidence == 1.0)
@@ -268,7 +268,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeData(moderateData)
+        let result = intelligence.analyzeData(moderateData)
         
         // Then
         #expect(result.confidence == 0.9)
@@ -277,11 +277,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testConfidenceCalculationForComplexData() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let complexData = Array(1...50).map { "Item \($0)" }
         
         // When
-        let _ = intelligence.analyzeData(complexData)
+        let result = intelligence.analyzeData(complexData)
         
         // Then
         #expect(result.confidence == 0.8)
@@ -294,7 +294,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeData(veryComplexData)
+        let result = intelligence.analyzeData(veryComplexData)
         
         // Then
         #expect(result.confidence == 0.6)
@@ -305,11 +305,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testVisualizationTypeDetectionForNumericalData() {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let numericalData = [1.0, 2.0, 3.0, 4.0, 5.0]
         
         // When
-        let _ = intelligence.analyzeNumericalData(numericalData)
+        let result = intelligence.analyzeNumericalData(numericalData)
         
         // Then
         #expect(result.visualizationType == .numerical)
@@ -322,7 +322,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeNumericalData(temporalData)
+        let result = intelligence.analyzeNumericalData(temporalData)
         
         // Then
         #expect(result.visualizationType == .temporal)
@@ -335,7 +335,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
         
         // When
         let intelligence = createIntelligence()
-        let _ = intelligence.analyzeCategoricalData(categories)
+        let result = intelligence.analyzeCategoricalData(categories)
         
         // Then
         #expect(result.visualizationType == .categorical)
@@ -347,11 +347,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisWithSingleDataPoint() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let singleData = ["Single Item"]
         
         // When
-        let _ = intelligence.analyzeData(singleData)
+        let result = intelligence.analyzeData(singleData)
         
         // Then
         #expect(result.dataPoints == 1)
@@ -361,11 +361,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisWithIdenticalValues() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let identicalValues = Array(repeating: 42.0, count: 10)
         
         // When
-        let _ = intelligence.analyzeNumericalData(identicalValues)
+        let result = intelligence.analyzeNumericalData(identicalValues)
         
         // Then
         #expect(result.dataPoints == 10)
@@ -376,11 +376,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisWithZeroValues() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let zeroValues: [Double] = [0, 0, 0, 0, 0]
         
         // When
-        let _ = intelligence.analyzeNumericalData(zeroValues)
+        let result = intelligence.analyzeNumericalData(zeroValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -391,11 +391,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisWithNegativeValues() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let negativeValues: [Double] = [-10, -5, 0, 5, 10]
         
         // When
-        let _ = intelligence.analyzeNumericalData(negativeValues)
+        let result = intelligence.analyzeNumericalData(negativeValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -405,11 +405,11 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisWithVeryLargeValues() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let largeValues: [Double] = [1e6, 2e6, 3e6, 4e6, 5e6]
         
         // When
-        let _ = intelligence.analyzeNumericalData(largeValues)
+        let result = intelligence.analyzeNumericalData(largeValues)
         
         // Then
         #expect(result.dataPoints == 5)
@@ -421,7 +421,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisConsistencyForSameData() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let data = ["A", "B", "C", "D", "E"]
         
         // When
@@ -438,7 +438,7 @@ open class DataPresentationIntelligenceTests: BaseTestClass {
     @Test @MainActor func testAnalysisConsistencyForSimilarData() async {
         initializeTestConfig()
         // Given
-        let _ = createIntelligence()
+        let intelligence = createIntelligence()
         let data1 = ["A", "B", "C", "D", "E"]
         let data2 = ["X", "Y", "Z", "W", "V"]
         

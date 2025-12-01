@@ -117,7 +117,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         )
         
         // When: Testing different device types
-        let _ = determineOptimalLayout_L2(
+        let phoneDecision = determineOptimalLayout_L2(
             items: items,
             hints: hints,
             screenWidth: 375,
@@ -157,7 +157,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
         }
         
         // When: Testing different complexity levels
-        let _ = determineOptimalLayout_L2(
+        let simpleDecision = determineOptimalLayout_L2(
             items: items,
             hints: PresentationHints(
                 dataType: .text,
@@ -169,7 +169,7 @@ open class Layer2LayoutDecisionTests: BaseTestClass {
             deviceType: .phone
         )
         
-        let _ = determineOptimalLayout_L2(
+        let moderateDecision = determineOptimalLayout_L2(
             items: items,
             hints: PresentationHints(
                 dataType: .collection,

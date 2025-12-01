@@ -75,10 +75,9 @@ open class ImageProcessingPipelineTests: BaseTestClass {
             
             // Then
             #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
-            // originalImage and metadata are non-optional, so just verify they exist
-            let _ = processedImage.originalImage
+            #expect(processedImage.originalImage != nil)
             #expect(processedImage.purpose == purpose)
-            let _ = processedImage.metadata
+            #expect(processedImage.metadata != nil)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -221,7 +220,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         )
         
         // When
-        let _ = try await processor.enhance(image, with: options)
+        let enhancedImage = try await processor.enhance(image, with: options)
         
         // Then
         #expect(Bool(true), "enhancedImage is non-optional")  // enhancedImage is non-optional
@@ -241,10 +240,9 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "analysis is non-optional")  // analysis is non-optional
-        // qualityScore and dimensions are non-optional, so just verify they exist
-        let _ = analysis.qualityScore
-        let _ = analysis.dimensions
-        #expect(analysis.colorPalette != nil)  // colorPalette is optional
+        #expect(analysis.qualityScore != nil)
+        #expect(analysis.dimensions != nil)
+        #expect(analysis.colorPalette != nil)
     }
     
     // MARK: - Enhancement Strategy Tests
@@ -274,7 +272,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         let strategy = OCREnhancementStrategy()
         
         // When
-        let _ = try await strategy.detectTextRegions(image)
+        let textRegions = try await strategy.detectTextRegions(image)
         
         // Then
         #expect(Bool(true), "textRegions is non-optional")  // textRegions is non-optional
@@ -373,8 +371,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         #expect(results.count == purposes.count)
         for (index, result) in results.enumerated() {
             #expect(result.purpose == purposes[index])
-            // originalImage is non-optional PlatformImage
-        let _ = result.originalImage
+            #expect(result.originalImage != nil)
         }
     }
 }

@@ -56,7 +56,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
         let hints = PresentationHints()
 
         // When: Creating view using Layer 1 function
-        let _ = platformPresentItemCollection_L1(
+        let view = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -158,7 +158,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
             hints: PresentationHints()
         )
         // Test that collection view can be hosted and has proper structure
-        let _ = hostRootPlatformView(collectionView.withGlobalAutoIDsEnabled())
+        let collectionHostingView = hostRootPlatformView(collectionView.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Collection view should be hostable")  // collectionHostingView is non-optional
 
         // Test platformPresentNumericData_L1
@@ -171,7 +171,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
         )
 
         // Test that numeric view can be hosted and has proper structure
-        let _ = hostRootPlatformView(numericView.withGlobalAutoIDsEnabled())
+        let numericHostingView = hostRootPlatformView(numericView.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Numeric view should be hostable")  // numericHostingView is non-optional
 
         // Verify that both views are created successfully and can be hosted
@@ -194,7 +194,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
             hints: PresentationHints()
         )
         // Test that VoiceOver-enabled view can be hosted
-        let _ = hostRootPlatformView(viewWithVoiceOver.withGlobalAutoIDsEnabled())
+        let voiceOverHostingView = hostRootPlatformView(viewWithVoiceOver.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "VoiceOver view should be hostable")  // voiceOverHostingView is non-optional
 
         // Test with Switch Control enabled
@@ -208,7 +208,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
         )
 
         // Test that Switch Control-enabled view can be hosted
-        let _ = hostRootPlatformView(viewWithSwitchControl.withGlobalAutoIDsEnabled())
+        let switchControlHostingView = hostRootPlatformView(viewWithSwitchControl.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Switch Control view should be hostable")  // switchControlHostingView is non-optional
 
         // Test with AssistiveTouch enabled
@@ -222,7 +222,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
         )
 
         // Test that AssistiveTouch-enabled view can be hosted
-        let _ = hostRootPlatformView(viewWithAssistiveTouch.withGlobalAutoIDsEnabled())
+        let assistiveTouchHostingView = hostRootPlatformView(viewWithAssistiveTouch.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "AssistiveTouch view should be hostable")  // assistiveTouchHostingView is non-optional
 
         // Test with all accessibility features enabled
@@ -236,7 +236,7 @@ open class AutomaticHIGComplianceTests: BaseTestClass {
         )
 
         // Test that all-accessibility view can be hosted
-        let _ = hostRootPlatformView(viewWithAllAccessibility.withGlobalAutoIDsEnabled())
+        let allAccessibilityHostingView = hostRootPlatformView(viewWithAllAccessibility.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "All accessibility view should be hostable")  // allAccessibilityHostingView is non-optional
 
         // Verify that all views are created successfully and can be hosted

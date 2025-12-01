@@ -92,7 +92,7 @@ struct LiquidGlassDesignSystemTests {
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
-        let _ = material.generateReflection(for: CGSize(width: 100, height: 100))
+        let reflection = material.generateReflection(for: CGSize(width: 100, height: 100))
         
         // Then
         #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
@@ -112,7 +112,7 @@ struct LiquidGlassDesignSystemTests {
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
-        let _ = material.generateReflection(for: CGSize(width: 200, height: 200))
+        let reflection = material.generateReflection(for: CGSize(width: 200, height: 200))
         
         // Then
         #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
@@ -130,7 +130,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given & When
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -200,7 +200,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given & When
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let menu = ContextualMenu(
+        var menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {}),
                 ContextualMenuItem(title: "Delete", action: {})
@@ -293,7 +293,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -322,7 +322,7 @@ struct LiquidGlassDesignSystemTests {
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
-        let _ = material.generateReflection(for: CGSize(width: 1000, height: 1000))
+        let reflection = material.generateReflection(for: CGSize(width: 1000, height: 1000))
         
         // Then
         #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
@@ -381,7 +381,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -405,21 +405,18 @@ struct LiquidGlassDesignSystemTests {
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let system = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
-        let control = FloatingControl(
+        var control = FloatingControl(
             type: .navigation,
             position: .top,
             material: material
         )
-        let menu = ContextualMenu(
+        var menu = ContextualMenu(
             items: [ContextualMenuItem(title: "Test", action: {})],
             material: liquidGlassSystem.createMaterial(.secondary)
         )
         
         // Then
         // material, control, and menu are non-optional structs, so they exist if we reach here
-        let _ = material
-        let _ = control
-        let _ = menu
         #expect(system.isLiquidGlassEnabled)
     }
     
@@ -435,7 +432,7 @@ struct LiquidGlassDesignSystemTests {
         // Given & When
         let system = LiquidGlassDesignSystem.shared
         for feature in LiquidGlassFeature.allCases {
-            let _ = system.getFallbackBehavior(for: feature)
+            let fallbackBehavior = system.getFallbackBehavior(for: feature)
             
             // Then
             #expect(Bool(true), "Feature \(feature.rawValue) should have a fallback behavior")  // fallbackBehavior is non-optional

@@ -45,7 +45,7 @@ open class AccessibilityTypesTests: BaseTestClass {
     
     @Test func testAccessibilityTypesAcrossPlatforms() {
         // Given: Platform-specific accessibility type expectations
-        let _ = SixLayerPlatform.current
+        let platform = SixLayerPlatform.current
         
         // When: Testing accessibility types on different platforms
         // Then: Test platform-specific business logic

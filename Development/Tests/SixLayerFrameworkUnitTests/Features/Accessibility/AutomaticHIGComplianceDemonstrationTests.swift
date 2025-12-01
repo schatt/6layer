@@ -43,7 +43,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
     @Test @MainActor func testDemonstrateAutomaticHIGCompliance() async {
         initializeTestConfig()
         // OLD WAY (what developers had to do before):
-        // let _ = platformPresentItemCollection_L1(items: items, hints: hints)
+        // let view = platformPresentItemCollection_L1(items: items, hints: hints)
         //     .appleHIGCompliant()           // Manual
         //     .automaticAccessibility()     // Manual  
         //     .platformPatterns()           // Manual
@@ -62,7 +62,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             customPreferences: [:]
         )
 
-        let _ = platformPresentItemCollection_L1(
+        let view = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
@@ -89,7 +89,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
 
         // Test with VoiceOver enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
-        let _ = platformPresentItemCollection_L1(
+        let voiceOverView = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
@@ -138,7 +138,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)
 
-            let _ = platformPresentItemCollection_L1(
+            let view = platformPresentItemCollection_L1(
                 items: testItems,
                 hints: testHints
             )
@@ -160,7 +160,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         let testHints = PresentationHints()
 
         // Test platformPresentItemCollection_L1
-        let _ = platformPresentItemCollection_L1(
+        let collectionView = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
@@ -170,7 +170,7 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         let numericData = [
             GenericNumericData(value: 42.0, label: "Test Value", unit: "units")
         ]
-        let _ = platformPresentNumericData_L1(
+        let numericView = platformPresentNumericData_L1(
             data: numericData,
             hints: testHints
         )

@@ -77,7 +77,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // clearDebugLog method doesn't exist, so we skip that
                 
             // When: Using framework component with .named() modifier
-            let _ = PlatformInteractionButton(style: .primary, action: {}) {
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
             }
             .named("TestButton")
@@ -134,7 +134,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: Default configuration
-            guard let _ = testConfig else {
+            guard let config = testConfig else {
 
                 Issue.record("testConfig is nil")
 
@@ -146,7 +146,7 @@ open class DefaultAccessibilityIdentifierTests: BaseTestClass {    /// BUSINESS 
             // Config is available if we reach here
                 
             // When: Using framework component with opt-out modifier
-            let _ = PlatformInteractionButton(style: .primary, action: {}) {
+            let testView = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Decorative Button", hints: PresentationHints())
             }
             .environment(\.globalAutomaticAccessibilityIdentifiers, false)

@@ -104,7 +104,7 @@ open class CardActionButtonTests: BaseTestClass {
         let deleteCallback: @Sendable (TestItem) -> Void = { _ in }
         
         // WHEN: Creating a simple view with action buttons
-        let _ = platformVStackContainer {
+        let card = platformVStackContainer {
             Text(item.title)
             platformHStackContainer {
                 Button("Edit") {
@@ -635,7 +635,7 @@ open class CardActionButtonTests: BaseTestClass {
         
         // THEN: Should have proper accessibility labels and be created successfully
         // Test that the card can be hosted and has proper structure
-        let _ = hostRootPlatformView(expandableCard.withGlobalAutoIDsEnabled())
+        let hostingView = hostRootPlatformView(expandableCard.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "ExpandableCardComponent should be hostable")  // hostingView is non-optional
         
         // Test business logic: Accessibility should be properly configured

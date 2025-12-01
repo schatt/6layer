@@ -49,7 +49,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     @Test @MainActor func testPlatformOptimizationSettingsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformOptimizationSettings
-        let _ = PlatformOptimizationSettings(for: .iOS)
+        let settings = PlatformOptimizationSettings(for: .iOS)
         
         // When: Creating a view with PlatformOptimizationSettings
         let view = platformVStackContainer {
@@ -102,7 +102,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     @Test @MainActor func testPlatformUIPatternsGeneratesAccessibilityIdentifiers() async {
         // Given: PlatformUIPatterns
-        let _ = PlatformUIPatterns(for: .iOS)
+        let patterns = PlatformUIPatterns(for: .iOS)
         
         // When: Creating a view with PlatformUIPatterns
         let view = platformVStackContainer {
@@ -157,7 +157,7 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
     
     @Test @MainActor func testCrossPlatformTestingGeneratesAccessibilityIdentifiers() async {
         // Given: CrossPlatformTesting
-        let _ = CrossPlatformTesting()
+        let testing = CrossPlatformTesting()
         
         // When: Creating a view with CrossPlatformTesting
         let view = platformVStackContainer {

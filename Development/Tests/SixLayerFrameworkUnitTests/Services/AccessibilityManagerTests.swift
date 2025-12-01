@@ -60,7 +60,7 @@ open class AccessibilityManagerTests: BaseTestClass {
         let manager = AccessibilityManager()
         
         // When: Getting accessibility configuration
-        let _ = manager.getAccessibilityConfiguration()
+        let config = manager.getAccessibilityConfiguration()
         
         // Then: Should return a valid configuration
         #expect(Bool(true), "config is non-optional")  // config is non-optional

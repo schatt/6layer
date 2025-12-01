@@ -43,7 +43,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testAccessibilityStateMonitoring() {
         // Given: AppleHIGComplianceManager
-        let _ = AppleHIGComplianceManager()
+        let complianceManager = AppleHIGComplianceManager()
         
         // When: Accessibility state is monitored
         // Then: Should track system accessibility settings
@@ -97,7 +97,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testAppleHIGCompliantModifier() {
         // Given: Framework component (testing our framework, not SwiftUI)
-        let _ = platformPresentContent_L1(
+        let testView = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
@@ -110,7 +110,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testAutomaticAccessibilityModifier() {
         // Given: Framework component
-        let _ = platformPresentBasicValue_L1(
+        let testView = platformPresentBasicValue_L1(
             value: 42,
             hints: PresentationHints()
         )
@@ -122,7 +122,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testPlatformPatternsModifier() {
         // Given: Framework component
-        let _ = platformPresentContent_L1(
+        let testView = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
@@ -135,7 +135,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testVisualConsistencyModifier() {
         // Given: Framework component
-        let _ = platformPresentContent_L1(
+        let testView = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
@@ -148,7 +148,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testInteractionPatternsModifier() {
         // Given: Framework component
-        let _ = platformPresentBasicValue_L1(
+        let testView = platformPresentBasicValue_L1(
             value: 42,
             hints: PresentationHints()
         )
@@ -210,7 +210,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     @Test @MainActor func testAccessibilitySystemStateInitialization() {
         initializeTestConfig()
         // Given: Accessibility system state
-        let _ = AccessibilitySystemState()
+        let state = AccessibilitySystemState()
         
         // When: State is initialized
         // Then: Should have default values
@@ -223,7 +223,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
         let systemState = SixLayerFramework.AccessibilitySystemState()
         
         // When: Accessibility system state is created from system checker
-        let _ = SixLayerFramework.AccessibilitySystemState(from: systemState)
+        let state = SixLayerFramework.AccessibilitySystemState(from: systemState)
         
         // Then: Should reflect system state
         #expect(!state.isVoiceOverRunning)

@@ -121,7 +121,7 @@ open class LocationServiceTests: BaseTestClass {
         let service = LocationService()
         
         // When: Checking platform availability
-        let _ = SixLayerPlatform.current
+        let currentPlatform = SixLayerPlatform.current
         
         // Then: Service should work on all platforms
         // The service should handle platform differences internally

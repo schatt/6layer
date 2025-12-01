@@ -93,7 +93,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             complexity: .simple,
             context: .dashboard
         )
-        let _ = determineOptimalLayout_L2(
+        let simpleDecision = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: simpleHints,
             screenWidth: 375,
@@ -108,7 +108,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             complexity: .moderate,
             context: .browse
         )
-        let _ = determineOptimalLayout_L2(
+        let moderateDecision = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: moderateHints,
             screenWidth: 375,
@@ -123,7 +123,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             complexity: .complex,
             context: .detail
         )
-        let _ = determineOptimalLayout_L2(
+        let complexDecision = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: complexHints,
             screenWidth: 375,
@@ -136,7 +136,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         let hints = PresentationHints()
         
         // Test phone
-        let _ = determineOptimalLayout_L2(
+        let phoneDecision = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: hints,
             screenWidth: 375,
@@ -145,7 +145,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(Bool(true), "Phone device type should return a decision")  // phoneDecision is non-optional
         
         // Test pad
-        let _ = determineOptimalLayout_L2(
+        let padDecision = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: hints,
             screenWidth: 768,
@@ -154,7 +154,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(Bool(true), "Pad device type should return a decision")  // padDecision is non-optional
         
         // Test mac
-        let _ = determineOptimalLayout_L2(
+        let macDecision = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: hints,
             screenWidth: 1024,
@@ -250,7 +250,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         let complexity = ContentComplexity.moderate
         
         // Test phone
-        let _ = determineOptimalCardLayout_L2(
+        let phoneDecision = determineOptimalCardLayout_L2(
             contentCount: contentCount,
             screenWidth: 375,
             deviceType: .phone,
@@ -259,7 +259,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(Bool(true), "Phone device type should return a decision")  // phoneDecision is non-optional
         
         // Test pad
-        let _ = determineOptimalCardLayout_L2(
+        let padDecision = determineOptimalCardLayout_L2(
             contentCount: contentCount,
             screenWidth: 768,
             deviceType: .pad,
@@ -268,7 +268,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
         #expect(Bool(true), "Pad device type should return a decision")  // padDecision is non-optional
         
         // Test mac
-        let _ = determineOptimalCardLayout_L2(
+        let macDecision = determineOptimalCardLayout_L2(
             contentCount: contentCount,
             screenWidth: 1024,
             deviceType: .mac,

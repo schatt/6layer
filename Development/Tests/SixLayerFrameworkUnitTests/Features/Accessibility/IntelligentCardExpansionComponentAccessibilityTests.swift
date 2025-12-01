@@ -57,7 +57,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
             let testItem = CardTestItem(id: "1", title: "Test Card")
             
             // When: Creating ExpandableCardComponent
-            let _ = ExpandableCardComponent(
+            let view = ExpandableCardComponent(
                 item: testItem,
                 layoutDecision: IntelligentCardLayoutDecision(
                     columns: 2,

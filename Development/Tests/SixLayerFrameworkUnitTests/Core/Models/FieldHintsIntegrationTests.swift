@@ -93,7 +93,7 @@ struct FieldHintsIntegrationTests {
         // Verify hints are discovered from fields
         for field in fields {
             let hints = field.displayHints
-            // hints is optional, so check if it exists
+            #expect(Bool(true), "Hints should be discovered from field metadata")  // hints is non-optional
             
             if field.id == "username" {
                 #expect(hints?.displayWidth == "medium")
@@ -116,7 +116,7 @@ struct FieldHintsIntegrationTests {
     
     @Test func testFieldHintsWorkflowWithPresentationHints() {
         // Test that hints from fields work with PresentationHints
-        let _ = [
+        let fields = [
             DynamicFormField(
                 id: "username",
                 contentType: .text,
@@ -169,7 +169,7 @@ struct FieldHintsIntegrationTests {
     
     @Test func testHintsMergingPriority() {
         // Test that manually provided hints take precedence over loaded hints
-        let _ = [
+        let loadedHints = [
             "username": FieldDisplayHints(expectedLength: 10, displayWidth: "medium")
         ]
         

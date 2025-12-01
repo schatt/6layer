@@ -183,7 +183,7 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         initializeTestConfig()
 
         // Test that it works with framework's automatic compliance
-        let _ = Text("Test")
+        let testView = Text("Test")
             .keyboardType(KeyboardType.phonePad)
             .automaticCompliance()
 

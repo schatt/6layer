@@ -68,7 +68,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating form strategy
-        let _ = selectFormStrategy_AddFuelView_L3(
+        let formStrategy = selectFormStrategy_AddFuelView_L3(
             layout: formLayoutDecision
         )
         
@@ -86,7 +86,7 @@ open class Layer3ComponentAccessibilityTests: BaseTestClass {
         )
         
         // When: Creating modal strategy
-        let _ = selectModalStrategy_Form_L3(
+        let modalStrategy = selectModalStrategy_Form_L3(
             layout: modalLayoutDecision
         )
         
