@@ -586,7 +586,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         let manager = AccessibilityManager()
         
         // When: Creating a view with AccessibilityManager
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Accessibility Manager Content")
         }
         .environmentObject(manager)
@@ -2359,7 +2359,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         // CrossPlatformOptimizationLayer6 doesn't exist - use CrossPlatformOptimizationManager's optimizeView method
         let manager = CrossPlatformOptimizationManager()
         let testView = manager.optimizeView(
-            VStack {
+            platformVStackContainer {
                 Text("Test Content")
             }
         )
@@ -3581,7 +3581,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             let navigationContent = { (isHorizontal: Bool) in
-                VStack {
+                platformVStackContainer {
                     platformPresentContent_L1(
                         content: "Navigation Content",
                         hints: PresentationHints()
@@ -3609,7 +3609,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         await runWithTaskLocalConfig {
             let stackContent = {
-                VStack {
+                platformVStackContainer {
                     platformPresentContent_L1(content: "Stack Item 1", hints: PresentationHints())
                     platformPresentContent_L1(content: "Stack Item 2", hints: PresentationHints())
                 }
@@ -3798,7 +3798,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         setupTestEnvironment()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Content")
         }
         .platformNavigationTitle("Settings")
@@ -3823,7 +3823,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         setupTestEnvironment()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Navigate")
                 .platformNavigationLink_L4(
                     title: "Next Page",
@@ -4422,7 +4422,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testAppleHIGComplianceModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             platformPresentContent_L1(content: "HIG Compliance Content", hints: PresentationHints())
             PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test Button", hints: PresentationHints())
@@ -4446,7 +4446,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformPatternModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Platform Pattern Content")
             Button("Test Button") { }
         }
@@ -4468,7 +4468,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testVisualConsistencyModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Visual Consistency Content")
             Button("Test Button") { }
         }
@@ -4567,7 +4567,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testAccessibilityEnhancedViewGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Enhanced Content")
             Button("Test Button") { }
         }
@@ -4592,7 +4592,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testVoiceOverEnabledViewGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("VoiceOver Content")
             Button("Test Button") { }
         }
@@ -4616,7 +4616,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testKeyboardNavigableViewGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Keyboard Content")
             Button("Test Button") { }
         }
@@ -4640,7 +4640,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testHighContrastEnabledViewGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("High Contrast Content")
             Button("Test Button") { }
         }
@@ -4726,7 +4726,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         setupTestEnvironment()
         
-        let button = VStack {
+        let button = platformVStackContainer {
             EmptyView()
                 .platformNavigationButton(
                     title: "Save",
@@ -5887,7 +5887,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         
         let hints = PresentationHints()
         
-        let listView = VStack {
+        let listView = platformVStackContainer {
             ForEach(items) { item in
                 ListCardComponent(item: item, hints: hints)
                     .enableGlobalAutomaticCompliance()
@@ -6514,7 +6514,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testInteractionPatternModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Interaction Pattern Content")
             Button("Test Button") { }
         }
@@ -6536,7 +6536,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testVoiceOverEnabledModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("VoiceOver Support Content")
             Button("Test Button") { }
         }
@@ -6558,7 +6558,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testKeyboardNavigableModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Keyboard Navigation Content")
             Button("Test Button") { }
         }
@@ -6580,7 +6580,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testHighContrastEnabledModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("High Contrast Content")
             Button("Test Button") { }
         }
@@ -6602,7 +6602,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testReducedMotionModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Reduced Motion Content")
             Button("Test Button") { }
         }
@@ -6624,7 +6624,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testDynamicTypeModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Dynamic Type Content")
             Button("Test Button") { }
         }
@@ -7997,13 +7997,13 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         setupTestEnvironment()
         
-        let header1 = VStack {
+        let header1 = platformVStackContainer {
             Text("Content")
         }
         .platformListSectionHeader(title: "Section One", subtitle: "Subtitle")
         .enableGlobalAutomaticCompliance()
         
-        let header2 = VStack {
+        let header2 = platformVStackContainer {
             Text("Content")
         }
         .platformListSectionHeader(title: "Section Two")
@@ -8032,7 +8032,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         setupTestEnvironment()
         
-        let field1 = VStack {
+        let field1 = platformVStackContainer {
             TextField("", text: .constant(""))
         }
         .platformFormField(label: "Email Address") {
@@ -8040,7 +8040,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
         .enableGlobalAutomaticCompliance()
         
-        let field2 = VStack {
+        let field2 = platformVStackContainer {
             TextField("", text: .constant(""))
         }
         .platformFormField(label: "Phone Number") {
@@ -8071,7 +8071,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         setupTestEnvironment()
         
-        let group1 = VStack {
+        let group1 = platformVStackContainer {
             Text("Content")
         }
         .platformFormFieldGroup(title: "Personal Information") {
@@ -8079,7 +8079,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
         .enableGlobalAutomaticCompliance()
         
-        let group2 = VStack {
+        let group2 = platformVStackContainer {
             Text("Content")
         }
         .platformFormFieldGroup(title: "Contact Information") {
@@ -8111,7 +8111,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         // Given: Test content
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Navigation Content")
             Button("Test Button") { }
         }
@@ -8140,7 +8140,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformStylingModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Styling Content")
             Button("Test Button") { }
         }
@@ -8162,7 +8162,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testPlatformIconModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Icon Content")
             Button("Test Button") { }
         }
@@ -8309,7 +8309,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         await runWithTaskLocalConfig {
             setupTestEnvironment()
             
-            let view = VStack {
+            let view = platformVStackContainer {
                 Button("Auto") { }
                     .named("AutoButton")
                     .enableGlobalAutomaticCompliance()
@@ -8344,7 +8344,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         await runWithTaskLocalConfig {
             setupTestEnvironment()
             
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Content")
             }
             .named("TestView")
@@ -8620,7 +8620,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     @Test @MainActor func testAccessibilityHostingViewGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Hosting Content")
             Button("Test Button") { }
         }
@@ -8663,7 +8663,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         let manager = VoiceOverManager()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("VoiceOver Manager Content")
         }
         .environmentObject(manager)
@@ -9137,10 +9137,10 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         config.enableDebugLogging = true
 
         let fuelView = VStack(spacing: 0) {
-            VStack {
+            platformVStackContainer {
                 platformPresentContent_L1(content: "Filter Content", hints: PresentationHints())
             }
-            VStack {
+            platformVStackContainer {
                 platformPresentContent_L1(content: "No Fuel Records", hints: PresentationHints())
             }
         }
@@ -9588,7 +9588,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testLightDarkModeOnAllPlatforms() async {
         initializeTestConfig()
         await runWithTaskLocalConfig {
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Light/Dark Mode Test")
                     .automaticCompliance()
                 Button("Test Button") { }
@@ -9780,7 +9780,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         let manager = KeyboardNavigationManager()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Keyboard Navigation Manager Content")
         }
         .environmentObject(manager)
@@ -9803,7 +9803,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         let manager = HighContrastManager()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("High Contrast Manager Content")
         }
         .environmentObject(manager)
@@ -9826,7 +9826,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         let manager = AccessibilityTestingManager()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Accessibility Testing Manager Content")
         }
         .environmentObject(manager)
@@ -9857,7 +9857,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         )
         let manager = SwitchControlManager(config: config)
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Switch Control Manager Content")
         }
         .environmentObject(manager)
@@ -9880,7 +9880,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         let manager = MaterialAccessibilityManager()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Material Accessibility Manager Content")
         }
         .environmentObject(manager)
@@ -9903,7 +9903,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
         let manager = EyeTrackingManager()
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Eye Tracking Manager Content")
         }
         .environmentObject(manager)
@@ -9934,7 +9934,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         )
         let manager = AssistiveTouchManager(config: config)
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Assistive Touch Manager Content")
         }
         .environmentObject(manager)
@@ -10567,7 +10567,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testPlatformSpecificTypographySizes() async {
         initializeTestConfig()
         await runWithTaskLocalConfig {
-            let view = VStack {
+            let view = platformVStackContainer {
                 Text("Large Title")
                     .font(.largeTitle)
                     .automaticCompliance()
@@ -10745,7 +10745,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
 
     @Test @MainActor func testSystemColorModifierGeneratesAccessibilityIdentifiers() async {
     // Given: Test content
-    let testContent = VStack {
+    let testContent = platformVStackContainer {
         Text("System Color Content")
         Button("Test Button") { }
     }
@@ -10774,7 +10774,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
 
     @Test @MainActor func testSystemTypographyModifierGeneratesAccessibilityIdentifiers() async {
     // Given: Test content
-    let testContent = VStack {
+    let testContent = platformVStackContainer {
         Text("System Typography Content")
         Button("Test Button") { }
     }
@@ -10803,7 +10803,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
 
     @Test @MainActor func testSpacingModifierGeneratesAccessibilityIdentifiers() async {
     // Given: Test content
-    let testContent = VStack {
+    let testContent = platformVStackContainer {
         Text("Spacing Content")
         Button("Test Button") { }
     }
@@ -10833,7 +10833,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testTouchTargetModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         // Given: Test content
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Touch Target Content")
             Button("Test Button") { }
         }
@@ -10863,7 +10863,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testPlatformInteractionModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         // Given: Test content
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Platform Interaction Content")
             Button("Test Button") { }
         }
@@ -10893,7 +10893,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testHapticFeedbackModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         // Given: Test content
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Haptic Feedback Content")
             Button("Test Button") { }
         }
@@ -10923,7 +10923,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testGestureRecognitionModifierGeneratesAccessibilityIdentifiers() async {
         initializeTestConfig()
         // Given: Test content
-        let testContent = VStack {
+        let testContent = platformVStackContainer {
             Text("Gesture Recognition Content")
             Button("Test Button") { }
         }
@@ -10955,7 +10955,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     let manager = AppleHIGComplianceManager()
     
     // When: Creating a view with AppleHIGComplianceManager and applying compliance
-    let baseView = VStack {
+    let baseView = platformVStackContainer {
         Text("Apple HIG Compliance Manager Content")
     }
     let view = manager.applyHIGCompliance(to: baseView)
@@ -11814,7 +11814,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         items: [testData],
         hints: hints,
         customItemView: { item in
-            VStack {
+            platformVStackContainer {
                 Text(item.title)
                 Text("Level \(item.level)")
             }
@@ -11863,7 +11863,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         items: [testData],
         hints: enhancedHints,
         customItemView: { item in
-            VStack {
+            platformVStackContainer {
                 Text(item.title)
                 Text("Level \(item.level)")
             }
@@ -11992,7 +11992,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         items: [testData],
         hints: hints,
         customItemView: { item in
-            VStack {
+            platformVStackContainer {
                 Text(item.title)
                 Text(item.date.description)
             }
@@ -12039,7 +12039,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         items: [testData],
         hints: enhancedHints,
         customItemView: { item in
-            VStack {
+            platformVStackContainer {
                 Text(item.title)
                 Text(item.date.description)
             }
@@ -13356,7 +13356,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testMaterialAccessibilityViewModifier() {
     initializeTestConfig()
     // Given: A view with material
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Test")
         Button("Action") { }
     }
@@ -13880,7 +13880,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         let manager = CrossPlatformOptimizationManager()
         
         // When: Creating a view with CrossPlatformOptimizationManager and applying accessibility identifiers
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Cross Platform Optimization Manager Content")
         }
         .environmentObject(manager)
@@ -13907,7 +13907,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     let settings = PlatformOptimizationSettings(for: .iOS)
     
     // When: Creating a view with PlatformOptimizationSettings
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Platform Optimization Settings Content")
     }
     
@@ -13931,7 +13931,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     let metrics = CrossPlatformPerformanceMetrics()
     
     // When: Creating a view with CrossPlatformPerformanceMetrics
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Cross Platform Performance Metrics Content")
     }
     .environmentObject(metrics)
@@ -13956,7 +13956,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     let patterns = PlatformUIPatterns(for: .iOS)
     
     // When: Creating a view with PlatformUIPatterns
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Platform UI Patterns Content")
     }
     
@@ -13980,7 +13980,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     // PlatformRecommendationEngine does not exist - using placeholder
     
     // When: Creating a view with PlatformRecommendationEngine
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Platform Recommendation Engine Content")
     }
     
@@ -14125,7 +14125,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     setupTestEnvironment()
     
     // TDD: Define the behavior I want - no hierarchy duplication
-    let view = VStack {
+    let view = platformVStackContainer {
         PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
@@ -14161,7 +14161,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     setupTestEnvironment()
     
     // TDD: Define the behavior I want - semantic, meaningful IDs
-    let view = VStack {
+    let view = platformVStackContainer {
         platformPresentContent_L1(content: "User Profile", hints: PresentationHints())
             .named("ProfileTitle")
         PlatformInteractionButton(style: .primary, action: {}) {
@@ -14207,7 +14207,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         }
         .named("HeaderRow")
         
-        VStack {
+        platformVStackContainer {
             ForEach(0..<3) { index in
                 Text("Item \(index)")
                     .named("Item\(index)")
@@ -14625,7 +14625,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         let testConfig = AccessibilityIdentifierConfig.shared
         testConfig.enableAutoIDs = true
         
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Content")
         }
         .automaticCompliance()
@@ -14710,13 +14710,13 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     setupTestEnvironment()
     
     // TDD RED: platformListEmptyState should include title in identifier
-    let emptyState1 = VStack {
+    let emptyState1 = platformVStackContainer {
         Text("Content")
     }
     .platformListEmptyState(systemImage: "tray", title: "No Items", message: "Add items to get started")
     .enableGlobalAutomaticCompliance()
     
-    let emptyState2 = VStack {
+    let emptyState2 = platformVStackContainer {
         Text("Content")
     }
     .platformListEmptyState(systemImage: "tray", title: "No Results", message: "Try a different search")
@@ -14749,13 +14749,13 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     setupTestEnvironment()
     
     // TDD RED: platformDetailPlaceholder should include title in identifier
-    let placeholder1 = VStack {
+    let placeholder1 = platformVStackContainer {
         Text("Content")
     }
     .platformDetailPlaceholder(systemImage: "doc", title: "Select an Item", message: "Choose an item to view details")
     .enableGlobalAutomaticCompliance()
     
-    let placeholder2 = VStack {
+    let placeholder2 = platformVStackContainer {
         Text("Content")
     }
     .platformDetailPlaceholder(systemImage: "doc", title: "No Selection", message: "Please select an item")
@@ -14822,13 +14822,13 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     
     // TDD RED: platformValidationMessage should include message text in identifier
     // Note: If used in ForEach loops with multiple errors, each should be unique
-    let message1 = VStack {
+    let message1 = platformVStackContainer {
         Text("Content")
     }
     .platformValidationMessage("Email is required", type: .error)
     .enableGlobalAutomaticCompliance()
     
-    let message2 = VStack {
+    let message2 = platformVStackContainer {
         Text("Content")
     }
     .platformValidationMessage("Password too short", type: .error)
@@ -15262,7 +15262,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: A view with automatic compliance
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Zoom Test")
                 .automaticCompliance()
             Button("Test Button") { }
@@ -15705,7 +15705,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     @Test @MainActor func testBreadcrumbModifiersStillWorkWhenAutomaticDisabled() {
         initializeTestConfig()
     // Test: Named modifiers should still work for tracking
-    let view = VStack {
+    let view = platformVStackContainer {
         platformPresentContent_L1(content: "Content", hints: PresentationHints())
     }
     .named("TestView")
@@ -15886,7 +15886,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     initializeTestConfig()
     runWithTaskLocalConfig {
         // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("HIG Compliant Content")
         }
         .appleHIGCompliant()
@@ -15915,7 +15915,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     initializeTestConfig()
     runWithTaskLocalConfig {
         // Given: A view with .appleHIGCompliant() modifier (which uses AppleHIGComplianceManager)
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("HIG Compliant Content")
         }
         .appleHIGCompliant()
@@ -16220,7 +16220,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     let testing = CrossPlatformTesting()
     
     // When: Creating a view with CrossPlatformTesting
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Cross Platform Testing Content")
     }
     
@@ -16380,7 +16380,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     runWithTaskLocalConfig {
         // Given: A view with EyeTrackingModifier (which uses EyeTrackingManager)
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Eye Tracking Content")
         }
         .eyeTrackingEnabled()
@@ -16409,7 +16409,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     runWithTaskLocalConfig {
         // Given: A view with EyeTrackingModifier (which uses EyeTrackingManager)
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Eye Tracking Content")
         }
         .eyeTrackingEnabled()
@@ -16685,7 +16685,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
     await runWithTaskLocalConfig {
         // GIVEN: A video component with automatic compliance
         // Note: Using a placeholder view since we may not have video components yet
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Video Component")
                 .automaticCompliance()
             // In real implementation, this would be a video player component
@@ -16713,7 +16713,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: A media component with captions and automatic compliance
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Media Component")
                 .automaticCompliance()
             Text("Caption Text")
@@ -16743,7 +16743,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: A media component with captions and automatic compliance
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Media Component")
                 .automaticCompliance()
             Text("Caption Text")
@@ -16773,7 +16773,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: A media component with automatic compliance
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Cross-Platform Media")
                 .automaticCompliance()
         }
@@ -16824,7 +16824,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: Multiple form fields with automatic compliance
-        let view = VStack {
+        let view = platformVStackContainer {
             TextField("First Name", text: .constant(""))
                 .automaticCompliance()
             TextField("Last Name", text: .constant(""))
@@ -16855,7 +16855,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: Multiple buttons with automatic compliance
-        let view = HStack {
+        let view = platformHStackContainer {
             Button("Cancel") { }
                 .automaticCompliance()
             Button("Save") { }
@@ -16884,10 +16884,10 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: Complex layout with multiple focusable elements
-        let view = VStack {
+        let view = platformVStackContainer {
             TextField("Name", text: .constant(""))
                 .automaticCompliance()
-            HStack {
+            platformHStackContainer {
                 Button("Cancel") { }
                     .automaticCompliance()
                 Button("Save") { }
@@ -16918,7 +16918,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     await runWithTaskLocalConfig {
         // GIVEN: Multiple focusable elements with automatic compliance
-        let view = VStack {
+        let view = platformVStackContainer {
             TextField("Field 1", text: .constant(""))
                 .automaticCompliance()
             TextField("Field 2", text: .constant(""))
@@ -17263,7 +17263,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
 
     @Test @MainActor func testInternationalizationServiceGeneratesAccessibilityIdentifiers() async {
     // When: Creating a view with InternationalizationService
-    let view = VStack {
+    let view = platformVStackContainer {
         Text("Internationalization Service Content")
     }
     
@@ -17286,7 +17286,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     runWithTaskLocalConfig {
         // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Material Accessibility Content")
         }
         .accessibilityMaterialEnhanced()
@@ -17312,7 +17312,7 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
         initializeTestConfig()
     runWithTaskLocalConfig {
         // Given: A view with MaterialAccessibilityManager (via MaterialAccessibilityEnhancedView)
-        let view = VStack {
+        let view = platformVStackContainer {
             Text("Material Accessibility Content")
         }
         .accessibilityMaterialEnhanced()
