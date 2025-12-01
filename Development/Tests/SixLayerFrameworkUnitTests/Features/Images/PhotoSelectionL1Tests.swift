@@ -97,8 +97,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
             onImageSelected: { _ in }
         )
         
-        // Then: Should return a view that can be hosted
-        #expect(Bool(true), "platformPhotoSelection_L1 for fuel receipt should return a view")  // view is non-optional
+        // Then: Should return a valid SwiftUI view
+        let viewMirror = Mirror(reflecting: view)
+        let viewType = String(describing: viewMirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View should be a SwiftUI view type for fuel receipt")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
@@ -279,8 +282,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
             onImageSelected: { _ in }
         )
         
-        // Then: Should return a view that can be hosted
-        #expect(Bool(true), "platformPhotoSelection_L1 with empty context should return a view")  // view is non-optional
+        // Then: Should return a valid SwiftUI view even with empty context
+        let viewMirror = Mirror(reflecting: view)
+        let viewType = String(describing: viewMirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View should be a SwiftUI view type even with empty context")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
@@ -318,7 +324,11 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         
         // Then: Should return a view with custom wrapper
         let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "platformPhotoSelection_L1 with custom picker view should return a view")
+        // Verify view is a valid SwiftUI view type
+        let mirror = Mirror(reflecting: view)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View with custom picker should be a SwiftUI view type, got: \(viewType)")
     }
     
     @Test @MainActor
