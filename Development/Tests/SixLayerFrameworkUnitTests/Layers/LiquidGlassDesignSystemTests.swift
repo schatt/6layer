@@ -92,7 +92,7 @@ struct LiquidGlassDesignSystemTests {
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
-        let reflection = material.generateReflection(for: CGSize(width: 100, height: 100))
+        let _ = material.generateReflection(for: CGSize(width: 100, height: 100))
         
         // Then
         #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
@@ -112,7 +112,7 @@ struct LiquidGlassDesignSystemTests {
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
-        let reflection = material.generateReflection(for: CGSize(width: 200, height: 200))
+        let _ = material.generateReflection(for: CGSize(width: 200, height: 200))
         
         // Then
         #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
@@ -322,7 +322,7 @@ struct LiquidGlassDesignSystemTests {
         let material = liquidGlassSystem.createMaterial(.primary)
         
         // When
-        let reflection = material.generateReflection(for: CGSize(width: 1000, height: 1000))
+        let _ = material.generateReflection(for: CGSize(width: 1000, height: 1000))
         
         // Then
         #expect(Bool(true), "reflection is non-optional")  // reflection is non-optional
@@ -432,7 +432,7 @@ struct LiquidGlassDesignSystemTests {
         // Given & When
         let system = LiquidGlassDesignSystem.shared
         for feature in LiquidGlassFeature.allCases {
-            let fallbackBehavior = system.getFallbackBehavior(for: feature)
+            let _ = system.getFallbackBehavior(for: feature)
             
             // Then
             #expect(Bool(true), "Feature \(feature.rawValue) should have a fallback behavior")  // fallbackBehavior is non-optional

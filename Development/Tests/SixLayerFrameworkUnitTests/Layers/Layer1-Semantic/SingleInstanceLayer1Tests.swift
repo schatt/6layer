@@ -38,13 +38,13 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         )
         
         // WHEN: Presenting the single item
-        let view = platformPresentNumericData_L1(data: singleNumericData, hints: testHints)
+        let _ = platformPresentNumericData_L1(data: singleNumericData, hints: testHints)
         
         // THEN: Should create a view successfully
         // view is a non-optional View, so it exists if we reach here
         
         // Test that the view can be hosted (functional test)
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Single numeric data view should be hostable")  // hostingView is non-optional
     }
     
@@ -66,8 +66,8 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         // singleView and arrayView are non-optional Views, so they exist if we reach here
         
         // Both should be hostable
-        let singleHostingView = hostRootPlatformView(singleView.withGlobalAutoIDsEnabled())
-        let arrayHostingView = hostRootPlatformView(arrayView.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(singleView.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(arrayView.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Single instance view should be hostable")  // singleHostingView is non-optional
         #expect(Bool(true), "Array version view should be hostable")  // arrayHostingView is non-optional
     }
@@ -85,13 +85,13 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         )
         
         // WHEN: Presenting the single item
-        let view = platformPresentMediaData_L1(media: singleMediaItem, hints: testHints)
+        let _ = platformPresentMediaData_L1(media: singleMediaItem, hints: testHints)
         
         // THEN: Should create a view successfully
         // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Single media item view should be hostable")  // hostingView is non-optional
     }
     
@@ -107,13 +107,13 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         )
         
         // WHEN: Presenting the single item
-        let view = platformPresentHierarchicalData_L1(item: singleHierarchicalItem, hints: testHints)
+        let _ = platformPresentHierarchicalData_L1(item: singleHierarchicalItem, hints: testHints)
         
         // THEN: Should create a view successfully
         // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Single hierarchical item view should be hostable")  // hostingView is non-optional
     }
     
@@ -129,13 +129,13 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         )
         
         // WHEN: Presenting the single item
-        let view = platformPresentTemporalData_L1(item: singleTemporalItem, hints: testHints)
+        let _ = platformPresentTemporalData_L1(item: singleTemporalItem, hints: testHints)
         
         // THEN: Should create a view successfully
         // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Single temporal item view should be hostable")  // hostingView is non-optional
     }
     
@@ -154,13 +154,13 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         )
         
         // WHEN: Presenting the single field
-        let view = platformPresentFormData_L1(field: singleFormField, hints: testHints)
+        let _ = platformPresentFormData_L1(field: singleFormField, hints: testHints)
         
         // THEN: Should create a view successfully (even if deprecated)
         // view is non-optional, used below with hostRootPlatformView
         
         // Test that the view can be hosted (functional test)
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "Single form field view should be hostable")  // hostingView is non-optional
     }
     
@@ -191,7 +191,7 @@ open class SingleInstanceLayer1Tests: BaseTestClass {
         )
         
         // WHEN: Presenting with different hints
-        let cardView = platformPresentNumericData_L1(data: singleNumericData, hints: cardHints)
+        let _ = platformPresentNumericData_L1(data: singleNumericData, hints: cardHints)
         let listView = platformPresentNumericData_L1(data: singleNumericData, hints: listHints)
         
         // THEN: Both should create views successfully

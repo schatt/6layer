@@ -91,7 +91,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceCanStopUpdatingLocation() async {
         // Given: LocationService
-        let service = LocationService()
+        let _ = LocationService()
         
         // When: Stopping location updates
         service.stopUpdatingLocation()
@@ -118,10 +118,10 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceWorksOnAllPlatforms() async {
         // Given: LocationService
-        let service = LocationService()
+        let _ = LocationService()
         
         // When: Checking platform availability
-        let currentPlatform = SixLayerPlatform.current
+        let _ = SixLayerPlatform.current
         
         // Then: Service should work on all platforms
         // The service should handle platform differences internally
@@ -198,7 +198,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceNoUncheckedSendableConflict() async {
         // Given: LocationService
-        let service = LocationService()
+        let _ = LocationService()
         
         // When: Checking actor isolation
         // The service is @MainActor, not @unchecked Sendable
@@ -213,7 +213,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceCompilesWithSwift6StrictConcurrency() async {
         // Given: LocationService
-        let service = LocationService()
+        let _ = LocationService()
         
         // When: Using the service in async MainActor context
         // This test verifies that the service properly handles Swift 6 concurrency

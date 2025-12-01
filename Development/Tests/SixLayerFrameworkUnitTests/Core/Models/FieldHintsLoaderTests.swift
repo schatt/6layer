@@ -108,7 +108,7 @@ struct FieldHintsLoaderTests {
     @Test func testParseHintsWithSections() {
         // Should parse _sections from hints file JSON
         
-        let jsonString = """
+        let _ = """
         {
             "_sections": [
                 {
@@ -176,7 +176,7 @@ struct FieldHintsLoaderTests {
     /// METHODOLOGY: Create JSON with section missing title and verify error handling
     @Test func testParseHintsSectionRequiresTitle() {
         // Should require title in _sections (for accessibility)
-        let jsonString = """
+        let _ = """
         {
             "_sections": [
                 {
@@ -198,7 +198,7 @@ struct FieldHintsLoaderTests {
     /// METHODOLOGY: Create JSON with fields in specific order and verify order is preserved
     @Test func testParseHintsPreservesFieldOrder() {
         // Should preserve field order as specified in hints
-        let jsonString = """
+        let _ = """
         {
             "_sections": [
                 {
@@ -221,7 +221,7 @@ struct FieldHintsLoaderTests {
     /// METHODOLOGY: Create JSON without _sections and verify it still works
     @Test func testParseHintsBackwardCompatible() {
         // Should work with hints files that don't have _sections
-        let jsonString = """
+        let _ = """
         {
             "username": {
                 "displayWidth": "medium",

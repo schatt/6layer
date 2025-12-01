@@ -87,7 +87,7 @@ open class Layer1PresentationTests: BaseTestClass {
         let hints = testHints
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+        let _ = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
             dataType: hints.dataType,
             presentationPreference: hints.presentationPreference,
             complexity: hints.complexity,
@@ -113,7 +113,7 @@ open class Layer1PresentationTests: BaseTestClass {
         let hints = testHints
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+        let _ = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
             dataType: hints.dataType,
             presentationPreference: hints.presentationPreference,
             complexity: hints.complexity,
@@ -228,7 +228,7 @@ open class Layer1PresentationTests: BaseTestClass {
         
         for formType in formTypes {
             // When: Creating modal form presentation
-            let view = platformPresentModalForm_L1(formType: formType, context: context)
+            let _ = platformPresentModalForm_L1(formType: formType, context: context)
             
             // Then: Should return a ModalFormView for each type
             // view is non-optional, not used further
@@ -248,7 +248,7 @@ open class Layer1PresentationTests: BaseTestClass {
         
         for context in contexts {
             // When: Creating modal form presentation
-            let view = platformPresentModalForm_L1(formType: formType, context: context)
+            let _ = platformPresentModalForm_L1(formType: formType, context: context)
             
             // Then: Should return a ModalFormView for each context
             #expect(Bool(true), "Should handle context: \(context)")  // view is non-optional
@@ -273,7 +273,7 @@ open class Layer1PresentationTests: BaseTestClass {
         
         for (formType, _) in testCases {
             // When: Creating modal form presentation
-            let view = platformPresentModalForm_L1(formType: formType, context: .form)
+            let _ = platformPresentModalForm_L1(formType: formType, context: .form)
             
             // Then: Should return a ModalFormView
             #expect(Bool(true), "Should handle form type: \(formType)")  // view is non-optional
@@ -377,7 +377,7 @@ open class Layer1PresentationTests: BaseTestClass {
         )
         
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: comprehensiveHints))
+        let _ = platformPresentFormData_L1(fields: testFields, hints: enhancedHints(from: comprehensiveHints))
         
         // Then: Should return a view (AsyncFormView is the actual implementation)
         #expect(Bool(true), "view is non-optional")  // view is non-optional

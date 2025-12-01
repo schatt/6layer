@@ -101,7 +101,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         
         // When: Use implicit conversion in callback
         var capturedImage: PlatformImage?
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
@@ -125,7 +125,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         
         // When: Use implicit conversion in callback
         var capturedImage: PlatformImage?
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
@@ -161,7 +161,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         
         // Test that converted image can be used in framework
         
-        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )
@@ -182,7 +182,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         
         // Test that converted image can be used in framework
         
-        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(
             image: platformImage,
             style: .thumbnail
         )

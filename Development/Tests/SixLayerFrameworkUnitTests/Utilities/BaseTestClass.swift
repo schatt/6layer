@@ -157,7 +157,7 @@ open class BaseTestClass {
     /// This method was removed because it was problematic - it wrapped views unnecessarily
     /// and caused issues with accessibility identifier detection.
     /// 
-    /// Migration: Replace `let view = withTestConfig(myView)` with:
+    /// Migration: Replace `let _ = withTestConfig(myView)` with:
     /// ```
     /// runWithTaskLocalConfig {
     ///     let view = myView

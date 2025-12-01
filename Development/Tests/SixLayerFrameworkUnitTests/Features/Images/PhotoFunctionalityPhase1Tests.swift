@@ -264,7 +264,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         
         // When: Creating camera interface
         
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4(onImageCaptured: onImageCaptured)
         
         // Then: Camera interface should be created and be hostable
         // cameraInterface is a non-optional View, so it exists if we reach here
@@ -282,7 +282,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         
         
         // When: Creating photo picker
-        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: onImageSelected)
         
         // Then: Photo picker should be created and be hostable
         // photoPicker is a non-optional View, so it exists if we reach here
@@ -299,7 +299,7 @@ open class PhotoFunctionalityPhase1Tests: BaseTestClass {
         
         
         // When: Creating photo display
-        let photoDisplay = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: testImage, style: PhotoDisplayStyle.thumbnail)
         
         // Then: Photo display should be created and be hostable
         // photoDisplay is a non-optional View, so it exists if we reach here

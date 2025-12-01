@@ -41,7 +41,7 @@ open class NavigationStackLayer3Tests: BaseTestClass {
         )
         
         // When: Selecting implementation strategy
-        let strategy = selectNavigationStackStrategy_L3(
+        let _ = selectNavigationStackStrategy_L3(
             decision: l2Decision,
             platform: .iOS
         )
@@ -168,7 +168,7 @@ open class NavigationStackLayer3Tests: BaseTestClass {
         )
         
         // When: Selecting strategy
-        let strategy = selectNavigationStackStrategy_L3(
+        let _ = selectNavigationStackStrategy_L3(
             decision: l2Decision,
             platform: .iOS
         )

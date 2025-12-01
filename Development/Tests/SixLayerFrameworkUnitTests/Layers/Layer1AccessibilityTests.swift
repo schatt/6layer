@@ -35,7 +35,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         let testHints = createTestHints(presentationPreference: .grid, context: .list)
         
         // When: Creating view using platformPresentItemCollection_L1
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
@@ -238,7 +238,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         // When: Creating view using platformPresentFormData_L1
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             field: DynamicFormField(id: "test", contentType: .text, label: "Test Field"),
             hints: PresentationHints()
         )
@@ -271,7 +271,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         // When: Creating view using platformPresentNumericData_L1
-        let view = platformPresentNumericData_L1(
+        let _ = platformPresentNumericData_L1(
             data: GenericNumericData(value: 123.45, label: "Test Value", unit: "units"),
             hints: PresentationHints()
         )
@@ -431,7 +431,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         // When: Creating view using platformPresentMediaData_L1
-        let view = platformPresentMediaData_L1(
+        let _ = platformPresentMediaData_L1(
             media: GenericMediaItem(title: "Test Media", url: "https://example.com"),
             hints: PresentationHints()
         )
@@ -590,7 +590,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
         // When: Creating view using platformPresentSettings_L1
-        let view = platformPresentSettings_L1(
+        let _ = platformPresentSettings_L1(
             settings: [
                 SettingsSectionData(
                     title: "General",
@@ -627,7 +627,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
         initializeTestConfig()
         AccessibilityIdentifierConfig.shared.enableAutoIDs = true
         
-        let view = platformPresentSettings_L1(
+        let _ = platformPresentSettings_L1(
             settings: [
                 SettingsSectionData(
                     title: "General",
@@ -675,7 +675,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             extensibleHints: []
         )
         
-        let view = platformPresentSettings_L1(
+        let _ = platformPresentSettings_L1(
             settings: [
                 SettingsSectionData(
                     title: "General",

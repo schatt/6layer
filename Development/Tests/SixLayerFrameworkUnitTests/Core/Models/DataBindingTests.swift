@@ -284,7 +284,7 @@ open class DataBindingTests: BaseTestClass {
     /// METHODOLOGY: Create DirtyStateManager and verify initial state with no dirty fields
     @Test @MainActor func testDirtyStateManagerInitialization() {
         initializeTestConfig()
-        let manager = DirtyStateManager()
+        let _ = DirtyStateManager()
         
         // Verify initial state
         #expect(!manager.isDirty)
@@ -296,7 +296,7 @@ open class DataBindingTests: BaseTestClass {
     /// METHODOLOGY: Mark field as dirty and verify dirty state is properly tracked
     @Test @MainActor func testDirtyStateManagerMarkFieldDirty() {
         initializeTestConfig()
-        let manager = DirtyStateManager()
+        let _ = DirtyStateManager()
         
         // Mark field as dirty
         manager.markFieldDirty("name")
@@ -331,7 +331,7 @@ open class DataBindingTests: BaseTestClass {
     /// METHODOLOGY: Mark multiple fields dirty, clean one field, and verify partial dirty state management
     @Test @MainActor func testDirtyStateManagerMultipleFields() {
         initializeTestConfig()
-        let manager = DirtyStateManager()
+        let _ = DirtyStateManager()
         
         // Mark multiple fields as dirty
         manager.markFieldDirty("name")

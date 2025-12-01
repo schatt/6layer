@@ -76,7 +76,7 @@ open class CoreArchitectureTests: BaseTestClass {
         let context = PresentationContext.detail
         
         // When
-        let hints = EnhancedPresentationHints(
+        let _ = EnhancedPresentationHints(
             dataType: dataType,
             presentationPreference: preference,
             complexity: complexity,
@@ -204,7 +204,7 @@ open class CoreArchitectureTests: BaseTestClass {
         // This tests the actual business behavior, not just existence
         
         for context in PresentationContext.allCases {
-            let fields = createDynamicFormFields(context: context)
+            let _ = createDynamicFormFields(context: context)
             
             // Test context-specific field requirements using switch for compiler enforcement
             switch context {
@@ -350,7 +350,7 @@ open class CoreArchitectureTests: BaseTestClass {
         
         for context in allContexts {
             // This will fail if createDynamicFormFields doesn't handle the context
-            let fields = createDynamicFormFields(context: context)
+            let _ = createDynamicFormFields(context: context)
             handledContexts.insert(context)
             
             // Verify we got fields (not empty array)
@@ -652,7 +652,7 @@ open class CoreArchitectureTests: BaseTestClass {
         let validation = ValidationStrategy.immediate
         
         // When
-        let strategy = FormStrategy(
+        let _ = FormStrategy(
             containerType: containerType,
             fieldLayout: fieldLayout,
             validation: validation
@@ -669,7 +669,7 @@ open class CoreArchitectureTests: BaseTestClass {
     /// METHODOLOGY: Use RuntimeCapabilityDetection mock framework to test form strategy default values
     @Test func testFormStrategyDefaultValues() throws {
         // When
-        let strategy = FormStrategy(
+        let _ = FormStrategy(
             containerType: .standard,
             fieldLayout: .vertical,
             validation: .deferred

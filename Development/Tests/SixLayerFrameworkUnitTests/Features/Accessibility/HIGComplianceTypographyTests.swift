@@ -139,7 +139,7 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // GIVEN: Body text with automatic compliance
-            let view = Text("Body Text")
+            let _ = Text("Body Text")
                 .font(.body)
                 .automaticCompliance()
             
@@ -224,7 +224,7 @@ open class HIGComplianceTypographyTests: BaseTestClass {
             initializeTestConfig()
         runWithTaskLocalConfig {
             // GIVEN: Text using HIG typography styles with automatic compliance
-            let view = platformVStackContainer {
+            let _ = platformVStackContainer {
                 Text("Large Title")
                     .font(.largeTitle)
                     .automaticCompliance()

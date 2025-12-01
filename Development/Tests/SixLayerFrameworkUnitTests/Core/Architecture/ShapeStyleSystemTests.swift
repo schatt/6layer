@@ -347,7 +347,7 @@ open class ShapeStyleSystemTests: BaseTestClass {
     
     @Test @MainActor func testPlatformTextModifier() {
         // Given: A view
-        let testView = Text("Test")
+        let _ = Text("Test")
         
         // When: Applying platform text
         let _ = testView.platformText(for: .iOS)
@@ -358,7 +358,7 @@ open class ShapeStyleSystemTests: BaseTestClass {
     
     @Test @MainActor func testPlatformBorderModifier() {
         // Given: A view
-        let testView = Text("Test")
+        let _ = Text("Test")
         
         // When: Applying platform border
         let _ = testView.platformBorder(for: .macOS, width: 2)

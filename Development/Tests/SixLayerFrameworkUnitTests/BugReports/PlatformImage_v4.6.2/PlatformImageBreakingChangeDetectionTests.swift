@@ -231,11 +231,11 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // When: Execute the exact production code that was broken
         // This is the EXACT code path from the bug report
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
-        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         
@@ -268,11 +268,11 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         var capturedImage: PlatformImage?
         var selectedImage: PlatformImage?
         
-        let cameraInterface = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformCameraInterface_L4 { image in
             capturedImage = image
         }
         
-        let photoPicker = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
+        let _ = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4 { image in
             selectedImage = image
         }
         

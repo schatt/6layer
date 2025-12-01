@@ -134,7 +134,7 @@ open class FormFieldInteractionTests: BaseTestClass {
             var textValue = ""
             
             // When: Creating text field with binding
-            let view = TextField(
+            let _ = TextField(
                 textField.placeholder ?? "Enter text",
                 text: Binding(
                     get: { textValue },
@@ -162,7 +162,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var emailValue = ""
         
         // When: Creating email field with binding
-        let view = TextField(
+        let _ = TextField(
             emailField.placeholder ?? "Enter email",
             text: Binding(
                 get: { emailValue },
@@ -189,7 +189,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var selectedOption = ""
         
         // When: Creating select field with picker
-        let view = platformVStackContainer {
+        let _ = platformVStackContainer {
             Text(selectField.label)
             Picker(selectField.placeholder ?? "Choose option", selection: Binding(
                 get: { selectedOption },
@@ -219,7 +219,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var selectedOption = ""
         
         // When: Creating radio button group
-        let view = VStack(alignment: .leading) {
+        let _ = VStack(alignment: .leading) {
             Text(radioField.label)
             ForEach(options, id: \.self) { option in
                 platformHStackContainer {
@@ -249,7 +249,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var numberValue = 0.0
         
         // When: Creating number field with binding
-        let view = TextField(
+        let _ = TextField(
             numberField.placeholder ?? "Enter number",
             value: Binding(
                 get: { numberValue },
@@ -275,7 +275,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var dateValue = Date()
         
         // When: Creating date field with binding
-        let view = DatePicker(
+        let _ = DatePicker(
             dateField.placeholder ?? "Select date",
             selection: Binding(
                 get: { dateValue },
@@ -301,7 +301,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var isChecked = false
         
         // When: Creating checkbox field with binding
-        let view = Toggle(
+        let _ = Toggle(
             checkboxField.label,
             isOn: Binding(
                 get: { isChecked },
@@ -326,7 +326,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         resetCallbacks()
         
         // When: Creating form with interactive fields
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             fields: sampleFormFields,
             hints: basicHints
         )
@@ -343,7 +343,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         resetCallbacks()
         
         // When: Creating simple form view
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             fields: sampleFormFields,
             hints: basicHints
         )
@@ -365,7 +365,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var validationError = ""
         
         // When: Creating field with validation
-        let view = platformVStackContainer {
+        let _ = platformVStackContainer {
             TextField(
                 textField.placeholder ?? "Enter text",
                 text: Binding(
@@ -411,7 +411,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         var isValid = false
         
         // When: Creating required field with validation
-        let view = platformVStackContainer {
+        let _ = platformVStackContainer {
             TextField(
                 requiredField.placeholder ?? "Enter text",
                 text: Binding(
@@ -449,7 +449,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         let isFocused = false
         
         // When: Creating field with focus management
-        let view = TextField(
+        let _ = TextField(
             textField.placeholder ?? "Enter text",
             text: Binding(
                 get: { textValue },
@@ -477,7 +477,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         resetCallbacks()
         
         // When: Creating form with empty fields
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             fields: [],
             hints: basicHints
         )
@@ -504,7 +504,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         }
         
         // When: Creating form with all field types
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             fields: allFields,
             hints: basicHints
         )
@@ -528,7 +528,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         )
         
         // When: Creating form with long label
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             fields: [longLabelField],
             hints: basicHints
         )
@@ -552,7 +552,7 @@ open class FormFieldInteractionTests: BaseTestClass {
         )
         
         // When: Creating form with special characters
-        let view = platformPresentFormData_L1(
+        let _ = platformPresentFormData_L1(
             fields: [specialField],
             hints: basicHints
         )

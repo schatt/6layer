@@ -88,7 +88,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
 
         // Currently returns hardcoded valid result (stub)
         let mockElement = MockAccessibleElement()
-        let result = manager.validateAccessibility(for: mockElement)
+        let _ = manager.validateAccessibility(for: mockElement)
 
         // Should return a proper validation result
         #expect(Bool(true), "Should return a validation result")  // result is non-optional
@@ -108,7 +108,7 @@ open class AccessibilityManagerTDDTests: BaseTestClass {
         // 3. Settings persist across app sessions
         // 4. Invalid configurations are rejected
 
-        let manager = AccessibilityManager()
+        let _ = AccessibilityManager()
 
         // Get current configuration
         let config = manager.getAccessibilityConfiguration()

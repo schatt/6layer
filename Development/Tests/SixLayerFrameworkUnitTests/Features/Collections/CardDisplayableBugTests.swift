@@ -94,7 +94,7 @@ struct CardDisplayableBugTests {
     @Test func testCardDisplayableFallbackWhenHintsFail() async {
         // Given: Core Data entity with nil values and hints that fail to extract
         let task = CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil)
-        let hints = PresentationHints(
+        let _ = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "title",  // This will be nil, so hints should fail
                 "itemSubtitleProperty": "taskDescription",  // This will be nil too
@@ -134,7 +134,7 @@ struct CardDisplayableBugTests {
         initializeTestConfig()
         // Given: Entity with nil values and hints
         let project = CoreDataProject(name: nil, description: nil)
-        let hints = PresentationHints(
+        let _ = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "name"  // This will be nil, so hints should fail
             ]
@@ -221,7 +221,7 @@ struct CardDisplayableBugTests {
             CoreDataTask(title: nil, taskDescription: nil, status: nil, priority: nil),
             CoreDataTask(title: nil, taskDescription: nil, status: "completed", priority: "high")
         ]
-        let hints = PresentationHints(
+        let _ = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "title",  // This will be nil, so hints should fail
                 "itemSubtitleProperty": "taskDescription"
@@ -229,7 +229,7 @@ struct CardDisplayableBugTests {
         )
         
         // When: Create view using platformPresentItemCollection_L1
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: tasks,
             hints: hints
         )

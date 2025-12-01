@@ -41,7 +41,7 @@ final class Layer2ComponentAccessibilityTests {
         let hints = PresentationHints()
         
         // When: Creating form layout decision using Layer 2 function
-        let formLayoutDecision = determineOptimalFormLayout_L2(
+        let _ = determineOptimalFormLayout_L2(
             hints: hints
         )
         
@@ -56,7 +56,7 @@ final class Layer2ComponentAccessibilityTests {
             "content": "This is test content",
             "image": "test-image"
         ]
-        let hints = PresentationHints()
+        let _ = PresentationHints()
         
         // When: Creating card layout decision using Layer 2 function
         let cardLayoutDecision = determineOptimalCardLayout_L2(
@@ -79,7 +79,7 @@ final class Layer2ComponentAccessibilityTests {
             "content": "This is test content",
             "image": "test-image"
         ]
-        let hints = PresentationHints()
+        let _ = PresentationHints()
         
         // When: Creating intelligent card layout decision using Layer 2 function
         let intelligentLayoutDecision = determineIntelligentCardLayout_L2(
@@ -97,8 +97,8 @@ final class Layer2ComponentAccessibilityTests {
     
     @Test func testDetermineOptimalPhotoLayoutL2ReturnsValidDecision() async {
         // Given: Test photo data
-        let testPhotoData = Data("test-image-data".utf8)
-        let hints = PresentationHints()
+        let _ = Data("test-image-data".utf8)
+        let _ = PresentationHints()
         
         // When: Creating photo layout decision using Layer 2 function
         let photoLayoutDecision = determineOptimalPhotoLayout_L2(

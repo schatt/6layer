@@ -53,7 +53,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // Then: Should initialize successfully and be hostable
-        let hostingView = hostRootPlatformView(overlayView)
+        let _ = hostRootPlatformView(overlayView)
         #expect(Bool(true), "OCR overlay view should be hostable")  // hostingView is non-optional
         // OCROverlayView is non-optional - no need to check for nil
     }
@@ -467,7 +467,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Checking accessibility
         // Then: Should provide accessibility labels and be hostable
-        let hostingView = hostRootPlatformView(overlayView)
+        let _ = hostRootPlatformView(overlayView)
         #expect(Bool(true), "OCR overlay view should be hostable with accessibility")  // hostingView is non-optional
         // Note: We can't directly test SwiftUI accessibility modifiers in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
@@ -503,7 +503,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Checking VoiceOver support
         // Then: Should provide proper accessibility elements and be hostable
-        let hostingView = hostRootPlatformView(overlayView)
+        let _ = hostRootPlatformView(overlayView)
         #expect(Bool(true), "OCR overlay view should be hostable with VoiceOver support")  // hostingView is non-optional
         // Note: We can't directly test SwiftUI accessibility elements in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied

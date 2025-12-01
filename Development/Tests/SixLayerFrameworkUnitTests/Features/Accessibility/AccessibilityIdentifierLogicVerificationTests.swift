@@ -74,16 +74,16 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         // We can't easily test the environment variable directly in unit tests,
         // but we can verify that the modifier chain compiles and the configuration is correct
 
-        let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
+        let _ = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
         .named("TestButton")
 
-        let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
+        let _ = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
 
-        let testView3 = PlatformInteractionButton(style: .primary, action: {}) {
+        let _ = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
 
@@ -141,7 +141,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// TESTING SCOPE: Tests that the specific bug scenario now works correctly
     /// METHODOLOGY: Tests the exact conditions that were failing in the bug report
     @Test @MainActor func testBugFixResolvesIdentifierGenerationIssue() async {
-        let config = AccessibilityIdentifierConfig.shared
+        let _ = AccessibilityIdentifierConfig.shared
 
         // Given: The exact configuration from the bug report
         config.enableAutoIDs = true
@@ -152,7 +152,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         config.enableDebugLogging = true
 
         // When: Using the exact combination from the bug report
-        let testView = Button(action: {}) {
+        let _ = Button(action: {}) {
             Label("Add Fuel", systemImage: "plus")
         }
         .named("AddFuelButton")
@@ -175,7 +175,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
     /// TESTING SCOPE: Tests that globalAutomaticAccessibilityIdentifiers now defaults to true
     /// METHODOLOGY: Tests that the environment variable default change works
     @Test @MainActor func testDefaultBehaviorChangeWorksCorrectly() async {
-        let config = AccessibilityIdentifierConfig.shared
+        let _ = AccessibilityIdentifierConfig.shared
 
         // Given: Explicitly set configuration for this test
         config.resetToDefaults()
@@ -183,7 +183,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         config.namespace = "defaultApp"
 
         // When: Creating a view with explicitly enabled config
-        let testView = Text("Hello World")
+        let _ = Text("Hello World")
             .automaticCompliance()
 
         // Then: The view should be created successfully
@@ -204,7 +204,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
 
         // When: Creating view with manual identifier
         let manualID = "manual-custom-id"
-        let testView = Text("Test")
+        let _ = Text("Test")
             .accessibilityIdentifier(manualID)
             .automaticCompliance()
 
@@ -228,7 +228,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         config.namespace = "test"
 
         // When: Creating view with opt-out modifier
-        let testView = Text("Test")
+        let _ = Text("Test")
             .disableAutomaticAccessibilityIdentifiers()
             .automaticCompliance()
 

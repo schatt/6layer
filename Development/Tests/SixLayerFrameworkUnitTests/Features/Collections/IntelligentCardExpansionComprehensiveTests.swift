@@ -49,7 +49,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     @Test @MainActor func testPlatformPresentItemCollectionL1BasicFunctionality() {
         initializeTestConfig()
         // Test basic Layer 1 functionality
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: expandableHints
         )
@@ -68,7 +68,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         let emptyItems: [MenuItem] = []
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: emptyItems,
             hints: emptyHints
         )
@@ -100,7 +100,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyItems: [MenuItem] = []
-            let view = platformPresentItemCollection_L1(
+            let _ = platformPresentItemCollection_L1(
                 items: emptyItems,
                 hints: hints
             )
@@ -130,7 +130,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyItems: [MenuItem] = []
-            let view = platformPresentItemCollection_L1(
+            let _ = platformPresentItemCollection_L1(
                 items: emptyItems,
                 hints: hints
             )
@@ -150,7 +150,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             context: .dashboard
         )
         
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: hints
         )
@@ -254,14 +254,14 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testDetermineIntelligentCardLayoutL2EdgeCases() {
         // Test edge cases
-        let zeroContentLayout = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: 0,
             screenWidth: 1024,
             deviceType: .pad,
             contentComplexity: .moderate
         )
         
-        let verySmallScreenLayout = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
             screenWidth: 100,
             deviceType: .phone,
@@ -290,7 +290,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testSelectCardExpansionStrategyL3WithDifferentDeviceTypes() {
         // Test with different device types
-        let phoneStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 375,
             deviceType: .phone,
@@ -298,7 +298,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        let tabletStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 768,
             deviceType: .pad,
@@ -306,7 +306,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        let desktopStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1920,
             deviceType: .mac,
@@ -319,7 +319,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testSelectCardExpansionStrategyL3WithDifferentInteractionStyles() {
         // Test with different interaction styles
-        let expandableStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -327,7 +327,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .balanced
         )
         
-        let staticStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -340,7 +340,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test @MainActor func testSelectCardExpansionStrategyL3WithDifferentContentDensities() {
         // Test with different content densities
-        let denseStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -348,7 +348,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             contentDensity: .dense
         )
         
-        let spaciousStrategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -378,7 +378,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             animationDuration: 0.3
         )
         
-        let card = ExpandableCardComponent(
+        let _ = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
             strategy: strategy,
@@ -397,7 +397,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test @MainActor func testExpandableCardComponentWithDifferentStrategies() {
         // Test with different expansion strategies
-        let layoutDecision = IntelligentCardLayoutDecision(
+        let _ = IntelligentCardLayoutDecision(
             columns: 3,
             spacing: 16,
             cardWidth: 200,
@@ -419,7 +419,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             animationDuration: 0.3
         )
         
-        let hoverCard = ExpandableCardComponent(
+        let _ = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
             strategy: hoverStrategy,
@@ -433,7 +433,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             onItemEdited: nil
         )
         
-        let contentRevealCard = ExpandableCardComponent(
+        let _ = ExpandableCardComponent(
             item: sampleMenuItems[0],
             layoutDecision: layoutDecision,
             strategy: contentRevealStrategy,
@@ -550,7 +550,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     @Test @MainActor func testGetCardExpansionPerformanceConfig() {
         initializeTestConfig()
         // Test performance configuration
-        let config = getCardExpansionPerformanceConfig()
+        let _ = getCardExpansionPerformanceConfig()
         
         // Platform config creation succeeded (non-optional result)
     }
@@ -622,7 +622,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
-        let cardView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .hoverExpand,
             platformConfig: platformConfig,
@@ -640,7 +640,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
-        let hoverCardView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .hoverExpand,
             platformConfig: platformConfig,
@@ -648,7 +648,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        let contentRevealCardView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .contentReveal,
             platformConfig: platformConfig,
@@ -656,7 +656,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        let gridReorganizeCardView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .gridReorganize,
             platformConfig: platformConfig,
@@ -664,7 +664,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             accessibilityConfig: accessibilityConfig
         )
         
-        let focusModeCardView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .focusMode,
             platformConfig: platformConfig,
@@ -680,7 +680,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     @Test @MainActor func testEndToEndCardExpansionWorkflow() {
         initializeTestConfig()
         // Test complete end-to-end workflow
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: expandableHints
         )
@@ -688,7 +688,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // View creation succeeded (non-optional result)
         
         // Test Layer 2
-        let layoutDecision = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -698,7 +698,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Layout decision creation succeeded (non-optional result)
         
         // Test Layer 3
-        let strategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -716,7 +716,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         
         // Test Layer 6
         let accessibilityConfig = CardExpansionAccessibilityConfig()
-        let platformView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .hoverExpand,
             platformConfig: platformConfig,
@@ -733,7 +733,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let hints = expandableHints
         
         // Layer 1 -> Layer 2
-        let layoutDecision = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -743,7 +743,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         // Layout decision creation succeeded (non-optional result)
         
         // Layer 2 -> Layer 3
-        let strategy = selectCardExpansionStrategy_L3(
+        let _ = selectCardExpansionStrategy_L3(
             contentCount: sampleMenuItems.count,
             screenWidth: 1024,
             deviceType: .pad,
@@ -786,7 +786,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             context: .dashboard
         )
         
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: invalidHints
         )
@@ -797,7 +797,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     @Test @MainActor func testErrorHandlingWithExtremeValues() {
         initializeTestConfig()
         // Test error handling with extreme values
-        let extremeLayout = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: Int.max,
             screenWidth: 0,
             deviceType: .phone,
@@ -817,7 +817,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         let performanceConfig = CardExpansionPerformanceConfig()
         let accessibilityConfig = CardExpansionAccessibilityConfig()
         
-        let cardView = NativeExpandableCardView(
+        let _ = NativeExpandableCardView(
             item: sampleMenuItems[0],
             expansionStrategy: .hoverExpand,
             platformConfig: platformConfig,
@@ -844,7 +844,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         initializeTestConfig()
         // Test with empty items - use a concrete type
         let emptyItems: [MenuItem] = []
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: emptyItems,
             hints: expandableHints
         )
@@ -901,7 +901,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
                 context: context
             )
             
-            let emptyStateView = CollectionEmptyStateView(hints: hints)
+            let _ = CollectionEmptyStateView(hints: hints)
             // Empty state view creation succeeded (non-optional result)
         }
     }
@@ -919,7 +919,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
                 context: .dashboard
             )
             
-            let emptyStateView = CollectionEmptyStateView(hints: hints)
+            let _ = CollectionEmptyStateView(hints: hints)
             // Empty state view creation succeeded (non-optional result)
         }
     }
@@ -942,7 +942,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         let emptyItems: [MenuItem] = []
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: emptyItems,
             hints: hints,
             onCreateItem: createAction
@@ -964,7 +964,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         )
         
         let emptyItems: [MenuItem] = []
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: emptyItems,
             hints: hints
             // No onCreateItem parameter
@@ -989,7 +989,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             context: .dashboard
         )
         
-        let emptyStateView = CollectionEmptyStateView(hints: hints, onCreateItem: createAction)
+        let _ = CollectionEmptyStateView(hints: hints, onCreateItem: createAction)
         // Empty state view creation succeeded (non-optional result)
         // Note: In a real test environment, we would verify the create button is present
     }
@@ -1004,7 +1004,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             context: .dashboard
         )
         
-        let emptyStateView = CollectionEmptyStateView(hints: hints)
+        let _ = CollectionEmptyStateView(hints: hints)
         // Empty state view creation succeeded (non-optional result)
         // Note: In a real test environment, we would verify no create button is shown
     }
@@ -1046,7 +1046,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
                 context: .dashboard
             )
             
-            let emptyStateView = CollectionEmptyStateView(hints: hints, onCreateItem: {})
+            let _ = CollectionEmptyStateView(hints: hints, onCreateItem: {})
             // Empty state view creation succeeded (non-optional result)
             // Note: In a real test environment, we would verify the button title matches expectedTitle
         }
@@ -1056,7 +1056,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         initializeTestConfig()
         // Test with single item
         let singleItem = [sampleMenuItems[0]]
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: singleItem,
             hints: expandableHints
         )
@@ -1076,7 +1076,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
         }
         
-        let view = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: veryLargeDataSet,
             hints: expandableHints
         )
@@ -1086,7 +1086,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testEdgeCaseVerySmallScreen() {
         // Test with very small screen
-        let layout = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
             screenWidth: 50,
             deviceType: .phone,
@@ -1098,7 +1098,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     
     @Test func testEdgeCaseVeryLargeScreen() {
         // Test with very large screen
-        let layout = determineIntelligentCardLayout_L2(
+        let _ = determineIntelligentCardLayout_L2(
             contentCount: sampleMenuItems.count,
             screenWidth: 10000,
             deviceType: .mac,

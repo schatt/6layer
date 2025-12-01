@@ -896,7 +896,7 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             textTypes: [.general],
             language: .english
         )
-        let layout = OCRLayout(
+        let _ = OCRLayout(
             maxImageSize: CGSize(width: 2000, height: 2000),
             recommendedImageSize: CGSize(width: 1000, height: 1000),
             processingMode: .standard,

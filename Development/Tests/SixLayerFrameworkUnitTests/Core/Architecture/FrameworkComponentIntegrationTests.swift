@@ -76,7 +76,7 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
             context: .dashboard
         )
         
-        let collectionView = platformPresentItemCollection_L1(
+        let _ = platformPresentItemCollection_L1(
             items: mockItems,
             hints: hints
         )

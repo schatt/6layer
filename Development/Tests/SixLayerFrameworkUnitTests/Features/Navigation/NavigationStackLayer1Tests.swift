@@ -36,7 +36,7 @@ open class NavigationStackLayer1Tests: BaseTestClass {
         let content = Text("Test Content")
         
         // When: Creating navigation stack presentation
-        let view = platformPresentNavigationStack_L1(
+        let _ = platformPresentNavigationStack_L1(
             content: content,
             hints: testHints
         )
@@ -58,7 +58,7 @@ open class NavigationStackLayer1Tests: BaseTestClass {
         let title = "Test Navigation"
         
         // When: Creating navigation stack with title
-        let view = platformPresentNavigationStack_L1(
+        let _ = platformPresentNavigationStack_L1(
             content: content,
             title: title,
             hints: testHints
@@ -77,7 +77,7 @@ open class NavigationStackLayer1Tests: BaseTestClass {
         ]
         
         // When: Creating navigation stack with items
-        let view = platformPresentNavigationStack_L1(
+        let _ = platformPresentNavigationStack_L1(
             items: items,
             hints: testHints
         ) { item in
@@ -95,7 +95,7 @@ open class NavigationStackLayer1Tests: BaseTestClass {
         let items: [TestItem] = []
         
         // When: Creating navigation stack with empty items
-        let view = platformPresentNavigationStack_L1(
+        let _ = platformPresentNavigationStack_L1(
             items: items,
             hints: testHints
         ) { item in

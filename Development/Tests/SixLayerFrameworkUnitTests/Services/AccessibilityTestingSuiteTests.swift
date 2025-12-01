@@ -13,7 +13,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     @Test @MainActor func testAccessibilityTestingSuiteInitialization() async {
         // Given & When: Creating the testing suite
-        let suite = AccessibilityTestingSuite()
+        let _ = AccessibilityTestingSuite()
         
         // Then: Suite should be created successfully (verified by using it below)
     }
@@ -73,7 +73,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
         let suite = AccessibilityTestingSuite()
         
         // When: Getting accessibility violations
-        let violations = suite.getAccessibilityViolations()
+        let _ = suite.getAccessibilityViolations()
         
         // Then: Should return violations array
         #expect(Bool(true), "violations is non-optional")  // violations is non-optional
@@ -223,7 +223,7 @@ open class AccessibilityTestingSuiteTests: BaseTestClass {
     
     @Test @MainActor func testAccessibilityTestingSuiteProgressTracking_Comprehensive() async {
         // Given: Testing suite
-        let suite = AccessibilityTestingSuite()
+        let _ = AccessibilityTestingSuite()
         
         // When: Running tests
         await suite.runAllTests()

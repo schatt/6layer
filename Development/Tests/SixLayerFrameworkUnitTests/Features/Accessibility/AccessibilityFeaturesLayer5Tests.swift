@@ -57,8 +57,8 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
     @Test @MainActor func testAddFocusableItemSuccess() {
         let navigationManager = KeyboardNavigationManager()
         // GIVEN: Empty keyboard navigation manager
-        let highContrastManager = HighContrastManager()
-        let cancellables = Set<AnyCancellable>()
+        let _ = HighContrastManager()
+        let _ = Set<AnyCancellable>()
         
         #expect(navigationManager.focusableItems.count == 0)
         
@@ -115,7 +115,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      * METHODOLOGY: Test successful removal
      */
     @Test @MainActor func testRemoveFocusableItemSuccess() {
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -136,7 +136,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      * METHODOLOGY: Test removal of non-existent item
      */
     @Test @MainActor func testRemoveFocusableItemNotExists() {
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         #expect(navigationManager.focusableItems.count == 1)
@@ -156,7 +156,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      * METHODOLOGY: Test wraparound behavior
      */
     @Test @MainActor func testMoveFocusNextWithWraparound() {
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -181,7 +181,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testMoveFocusPreviousWithWraparound() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -206,7 +206,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testMoveFocusFirst() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -231,7 +231,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testMoveFocusLast() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -256,7 +256,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testMoveFocusEmptyList() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Empty keyboard manager
         #expect(navigationManager.focusableItems.count == 0)
         
@@ -276,7 +276,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testFocusItemSuccess() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -297,7 +297,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testFocusItemNotExists() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: Keyboard manager with items
         navigationManager.addFocusableItem("button1")
         navigationManager.addFocusableItem("button2")
@@ -326,7 +326,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testAccessibilityEnhancedViewModifier() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: A view and accessibility config
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -372,7 +372,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testAccessibilityEnhancedViewModifierDefaultConfig() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -411,7 +411,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testVoiceOverEnabledViewModifier() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -419,7 +419,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
         )
         
         // WHEN: Applying VoiceOver enabled modifier
-        let voiceOverView = testView.voiceOverEnabled()
+        let _ = testView.voiceOverEnabled()
         
         // THEN: Should return modified view
         // voiceOverView is non-optional View, not used further
@@ -433,7 +433,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testKeyboardNavigableViewModifier() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -441,7 +441,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
         )
         
         // WHEN: Applying keyboard navigable modifier
-        let keyboardView = testView.keyboardNavigable()
+        let _ = testView.keyboardNavigable()
         
         // THEN: Should return modified view
         // keyboardView is non-optional View, not used further
@@ -455,7 +455,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testHighContrastEnabledViewModifier() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -463,7 +463,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
         )
         
         // WHEN: Applying high contrast enabled modifier
-        let highContrastView = testView.highContrastEnabled()
+        let _ = testView.highContrastEnabled()
         
         // THEN: Should return modified view
         // highContrastView is non-optional View, not used further
@@ -476,7 +476,7 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      * METHODOLOGY: Test multiple modifier application
      */
     @Test @MainActor func testAccessibilityViewModifiersIntegration() {
-        let navigationManager = KeyboardNavigationManager()
+        let _ = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(
             content: "Test",

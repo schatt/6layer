@@ -309,7 +309,7 @@ open class FormWizardTests: BaseTestClass {
     /// TESTING SCOPE: Tests FormWizardState data management and persistence
     /// METHODOLOGY: Manage data in FormWizardState and verify data management functionality
     @Test func testFormWizardStateDataManagement() {
-        let state = FormWizardState()
+        let _ = FormWizardState()
         
         // Test setting and getting step data
         state.setStepData("step1", key: "name", value: "John")
@@ -324,7 +324,7 @@ open class FormWizardTests: BaseTestClass {
     /// TESTING SCOPE: Tests FormWizardState validation error handling and display
     /// METHODOLOGY: Trigger validation errors in FormWizardState and verify error functionality
     @Test func testFormWizardStateValidationErrors() {
-        let state = FormWizardState()
+        let _ = FormWizardState()
         
         // Test validation error management
         state.addValidationError("Name is required", for: "step1")

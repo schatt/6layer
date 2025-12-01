@@ -79,7 +79,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testImageFieldNativeBinding() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "profilePhoto",
             contentType: .image,
@@ -97,7 +97,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testURLFieldNativeBinding() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "website",
             contentType: .url,
@@ -123,7 +123,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testIntegerFieldNativeBinding() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "age",
             contentType: .integer,
@@ -151,7 +151,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testArrayFieldNativeBinding() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "tags",
             contentType: .array,
@@ -169,7 +169,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testRangeFieldConfiguration() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "score",
             contentType: .range,
@@ -199,7 +199,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testDataFieldNativeBinding() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "document",
             contentType: .data,
@@ -227,7 +227,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testEnumFieldNativeBinding() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "status",
             contentType: .enum,
@@ -246,7 +246,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testOptionalTypeHandling() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "optionalField",
             contentType: .text,
@@ -263,7 +263,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testCustomTypeValidation() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "email",
             contentType: .email,
@@ -287,8 +287,8 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testMixedNativeTypesInForm() {
         // Given
-        let formState = createTestFormState()
-        let fields = [
+        let _ = createTestFormState()
+        let _ = [
             DynamicFormField(id: "name", contentType: .text, label: "Name"),
             DynamicFormField(id: "age", contentType: .integer, label: "Age"),
             DynamicFormField(id: "website", contentType: .url, label: "Website"),
@@ -333,7 +333,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testTypeSafetyWithWrongTypes() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "age",
             contentType: .integer,
@@ -351,7 +351,7 @@ open class NativeTypesTests: BaseTestClass {
     
     @Test func testImageMemoryManagement() {
         // Given
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         let field = DynamicFormField(
             id: "image",
             contentType: .image,

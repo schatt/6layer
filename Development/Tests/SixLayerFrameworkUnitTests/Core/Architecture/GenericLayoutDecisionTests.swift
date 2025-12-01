@@ -517,7 +517,7 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         )
         
         // When
-        let layout = platformOCRLayout_L2(context: context)
+        let _ = platformOCRLayout_L2(context: context)
         
         // Then
         #expect(Bool(true), "layout is non-optional")  // layout is non-optional
@@ -592,7 +592,7 @@ open class GenericLayoutDecisionTests: BaseTestClass {
         let hints = createComplexHints()
         
         // When
-        let layoutDecision = determineOptimalLayout_L2(
+        let _ = determineOptimalLayout_L2(
             items: items,
             hints: hints,
             screenWidth: 768,

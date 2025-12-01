@@ -299,7 +299,7 @@ open class WindowDetectionTests: BaseTestClass {
     @Test @MainActor func testDetectWindowSizeViewExtension() {
         initializeTestConfig()
         // GIVEN: A SwiftUI view
-        let view = Text("Test")
+        let _ = Text("Test")
         
         // WHEN: Detect window size modifier is applied
         // THEN: Should return modified view without crashing

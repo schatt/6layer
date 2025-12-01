@@ -47,7 +47,7 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         initializeTestConfig()
         
         // When: Calling standalone platformOpenSettings function
-        let result = platformOpenSettings()
+        let _ = platformOpenSettings()
         
         // Then: Should return a Bool (may be true or false depending on platform/capabilities)
         // result is already typed as Bool, so just verify it's accessible

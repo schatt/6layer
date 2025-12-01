@@ -220,7 +220,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         )
         
         // When
-        let enhancedImage = try await processor.enhance(image, with: options)
+        let _ = try await processor.enhance(image, with: options)
         
         // Then
         #expect(Bool(true), "enhancedImage is non-optional")  // enhancedImage is non-optional
@@ -253,10 +253,10 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     @Test func testOCREnhancementStrategy_EnhanceImage() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let strategy = OCREnhancementStrategy()
+        let _ = OCREnhancementStrategy()
         
         // When
-        let enhancedImage = try await strategy.enhance(image)
+        let _ = try await strategy.enhance(image)
         
         // Then
         #expect(Bool(true), "enhancedImage is non-optional")  // enhancedImage is non-optional
@@ -269,10 +269,10 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     @Test func testOCREnhancementStrategy_DetectTextRegions() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let strategy = OCREnhancementStrategy()
+        let _ = OCREnhancementStrategy()
         
         // When
-        let textRegions = try await strategy.detectTextRegions(image)
+        let _ = try await strategy.detectTextRegions(image)
         
         // Then
         #expect(Bool(true), "textRegions is non-optional")  // textRegions is non-optional
@@ -285,7 +285,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
     @Test func testOCREnhancementStrategy_OptimizeForOCR() async throws {
         // Given
         let image = PlatformImage.createPlaceholder()
-        let strategy = OCREnhancementStrategy()
+        let _ = OCREnhancementStrategy()
         
         // When
         let optimizedImage = try await strategy.optimizeForOCR(image)

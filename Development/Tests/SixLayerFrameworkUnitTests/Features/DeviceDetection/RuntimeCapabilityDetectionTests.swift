@@ -195,7 +195,7 @@ open class RuntimeCapabilityDetectionTDDTests: BaseTestClass {
         RuntimeCapabilityDetection.setTestHapticFeedback(expectedDefaults.supportsHapticFeedback)
         RuntimeCapabilityDetection.setTestHover(expectedDefaults.supportsHover)
         
-        let config = getCardExpansionPlatformConfig()
+        let _ = getCardExpansionPlatformConfig()
         
         // The config should use runtime detection (which respects capability overrides)
         #expect(config.supportsTouch == expectedDefaults.supportsTouch, 

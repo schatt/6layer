@@ -702,8 +702,8 @@ struct PlatformTypesCompilationTests {
     
     @Test @MainActor func testPlatformTypesIntegration() {
         // Test that all types work together without compilation issues
-        let platform = SixLayerPlatform.current
-        let deviceType = DeviceType.current
+        let _ = SixLayerPlatform.current
+        let _ = DeviceType.current
         let deviceContext = DeviceContext.current
         
         // Create a comprehensive configuration using multiple types

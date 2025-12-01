@@ -34,7 +34,7 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         )
         
         // Test the ACTUAL ExpandableCardCollectionView component
-        let collectionView = ExpandableCardCollectionView(
+        let _ = ExpandableCardCollectionView(
             items: mockItems,
             hints: hints,
             onCreateItem: nil,
@@ -91,7 +91,7 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         )
         
         // Test the ACTUAL ExpandableCardCollectionView component
-        let collectionView = ExpandableCardCollectionView(
+        let _ = ExpandableCardCollectionView(
             items: mockItems,
             hints: hints,
             onCreateItem: nil,

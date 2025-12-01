@@ -46,7 +46,7 @@ open class PlatformMatrixTests: BaseTestClass {
     
     @Test @MainActor func testPlatformDetectionMatrix() {
         // Test that platform detection works correctly
-        let platform = SixLayerPlatform.current
+        let _ = SixLayerPlatform.current
         let deviceType = DeviceType.current
         
         // Verify we're running on a known platform

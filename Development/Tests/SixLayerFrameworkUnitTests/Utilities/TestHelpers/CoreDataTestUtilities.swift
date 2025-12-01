@@ -29,7 +29,7 @@ public enum CoreDataTestUtilities {
         managedObjectModel: NSManagedObjectModel? = nil
     ) -> NSPersistentContainer {
         let model = managedObjectModel ?? NSManagedObjectModel()
-        let container = NSPersistentContainer(name: name, managedObjectModel: model)
+        let _ = NSPersistentContainer(name: name, managedObjectModel: model)
         
         let desc = NSPersistentStoreDescription()
         

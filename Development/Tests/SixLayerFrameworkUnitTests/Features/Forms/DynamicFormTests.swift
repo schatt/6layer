@@ -312,7 +312,7 @@ open class DynamicFormTests: BaseTestClass {
             DynamicFormSection(id: "section1", title: "Section 1", fields: fields)
         ]
         
-        let config = DynamicFormConfiguration(
+        let _ = DynamicFormConfiguration(
             id: "testForm",
             title: "Test Form",
             sections: sections
@@ -384,7 +384,7 @@ open class DynamicFormTests: BaseTestClass {
             sections: []
         )
         
-        let state = DynamicFormState(configuration: config)
+        let _ = DynamicFormState(configuration: config)
         
         // Test setting and getting values
         state.setValue("John", for: "firstName")
@@ -407,7 +407,7 @@ open class DynamicFormTests: BaseTestClass {
             sections: []
         )
         
-        let state = DynamicFormState(configuration: config)
+        let _ = DynamicFormState(configuration: config)
         
         // Test error management
         #expect(!state.hasErrors(for: "testField"))
@@ -446,7 +446,7 @@ open class DynamicFormTests: BaseTestClass {
             ]
         )
         
-        let state = DynamicFormState(configuration: config)
+        let _ = DynamicFormState(configuration: config)
         
         // Test section state management
         #expect(!state.isSectionCollapsed("section1"))
@@ -468,7 +468,7 @@ open class DynamicFormTests: BaseTestClass {
             sections: []
         )
         
-        let state = DynamicFormState(configuration: config)
+        let _ = DynamicFormState(configuration: config)
         
         // Set some state
         state.setValue("John", for: "firstName")
@@ -644,7 +644,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // Create form state
-        let formState = DynamicFormState(configuration: config)
+        let _ = DynamicFormState(configuration: config)
         
         // Fill out form
         formState.setValue("John", for: "firstName")
@@ -684,7 +684,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -710,7 +710,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -736,7 +736,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -762,7 +762,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -788,7 +788,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))

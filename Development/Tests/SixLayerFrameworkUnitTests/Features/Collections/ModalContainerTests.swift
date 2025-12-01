@@ -54,7 +54,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid modal container
         // container is a non-optional View, so it exists if we reach here
@@ -69,7 +69,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid popover container
         // container is non-optional View, not used further
@@ -84,7 +84,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid full screen container
         #expect(Bool(true), "Full screen container should be created successfully")  // container is non-optional
@@ -99,7 +99,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid custom container
         #expect(Bool(true), "Custom container should be created successfully")  // container is non-optional
@@ -115,10 +115,10 @@ open class ModalContainerTests: BaseTestClass {
         let customStrategy = createTestModalStrategy(sizing: .custom)
         
         // When: Creating containers with different sizes
-        let smallContainer = platformModalContainer_Form_L4(strategy: smallStrategy)
-        let mediumContainer = platformModalContainer_Form_L4(strategy: mediumStrategy)
-        let largeContainer = platformModalContainer_Form_L4(strategy: largeStrategy)
-        let customContainer = platformModalContainer_Form_L4(strategy: customStrategy)
+        let _ = platformModalContainer_Form_L4(strategy: smallStrategy)
+        let _ = platformModalContainer_Form_L4(strategy: mediumStrategy)
+        let _ = platformModalContainer_Form_L4(strategy: largeStrategy)
+        let _ = platformModalContainer_Form_L4(strategy: customStrategy)
         
         // Then: All containers should be created successfully
         #expect(Bool(true), "Small container should be created")  // smallContainer is non-optional
@@ -134,7 +134,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with multiple detents
         #expect(Bool(true), "Container with multiple detents should be created")  // container is non-optional
@@ -148,7 +148,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with custom detent
         #expect(Bool(true), "Container with custom detent should be created")  // container is non-optional
@@ -180,7 +180,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with platform optimizations
         #expect(Bool(true), "Container with platform optimizations should be created")  // container is non-optional
@@ -198,7 +198,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create iOS-optimized container
         #expect(Bool(true), "iOS-optimized container should be created")  // container is non-optional
@@ -216,7 +216,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create macOS-optimized container
         #expect(Bool(true), "macOS-optimized container should be created")  // container is non-optional
@@ -246,7 +246,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create complex container
         #expect(Bool(true), "Complex container should be created")  // container is non-optional
@@ -261,7 +261,7 @@ open class ModalContainerTests: BaseTestClass {
         // When: Creating containers for each presentation type
         for presentationType in presentationTypes {
             let strategy = createTestModalStrategy(presentationType: presentationType)
-            let container = platformModalContainer_Form_L4(strategy: strategy)
+            let _ = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each presentation type
             #expect(Bool(true), "Container should be created for presentation type: \(presentationType)")  // container is non-optional
@@ -277,7 +277,7 @@ open class ModalContainerTests: BaseTestClass {
         // When: Creating containers for each sizing option
         for sizing in sizingOptions {
             let strategy = createTestModalStrategy(sizing: sizing)
-            let container = platformModalContainer_Form_L4(strategy: strategy)
+            let _ = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each sizing option
             #expect(Bool(true), "Container should be created for sizing: \(sizing)")  // container is non-optional
@@ -293,7 +293,7 @@ open class ModalContainerTests: BaseTestClass {
         // When: Creating containers for each detent type
         for detent in detentTypes {
             let strategy = createTestModalStrategy(detents: [detent])
-            let container = platformModalContainer_Form_L4(strategy: strategy)
+            let _ = platformModalContainer_Form_L4(strategy: strategy)
             
             // Then: Should create container for each detent type
             #expect(Bool(true), "Container should be created for detent: \(detent)")  // container is non-optional
@@ -307,7 +307,7 @@ open class ModalContainerTests: BaseTestClass {
         let strategy = createTestModalStrategy(detents: [])
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle empty detents gracefully
         #expect(Bool(true), "Container should handle empty detents gracefully")  // container is non-optional
@@ -318,7 +318,7 @@ open class ModalContainerTests: BaseTestClass {
         let strategy = createTestModalStrategy(platformOptimizations: [:])
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle empty optimizations gracefully
         #expect(Bool(true), "Container should handle empty platform optimizations gracefully")  // container is non-optional
@@ -335,7 +335,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle multiple custom detents
         #expect(Bool(true), "Container should handle multiple custom detents")  // container is non-optional
@@ -354,7 +354,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should handle extreme constraints
         #expect(Bool(true), "Container should handle extreme constraints")  // container is non-optional
@@ -364,7 +364,7 @@ open class ModalContainerTests: BaseTestClass {
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_Performance() {
         // Given: Test strategy
-        let strategy = createTestModalStrategy()
+        let _ = createTestModalStrategy()
         
         // When: Measuring performance
         }
@@ -382,7 +382,7 @@ open class ModalContainerTests: BaseTestClass {
             maxHeight: 800
         )
         
-        let strategy = createTestModalStrategy(
+        let _ = createTestModalStrategy(
             platformOptimizations: [
                 .iOS: iOSConstraint,
                 .macOS: macOSConstraint
@@ -390,7 +390,7 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating container with complex strategy
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        let _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container successfully (performance test - should be fast)
         #expect(Bool(true), "Container should be created with complex strategy")

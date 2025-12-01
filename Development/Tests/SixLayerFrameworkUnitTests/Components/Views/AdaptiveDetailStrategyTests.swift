@@ -10,7 +10,7 @@ struct AdaptiveDetailStrategyTests {
     @Test func testPhoneDeviceTypeReturnsStandardStrategy() {
         // Given: Phone device type
         // When: We determine the adaptive strategy
-        let strategy = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .phone)
+        let _ = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .phone)
         
         // Then: Should return standard strategy (phones have limited screen space)
         #expect(strategy == .standard, "Phone should use standard detail view")
@@ -19,7 +19,7 @@ struct AdaptiveDetailStrategyTests {
     @Test func testPadDeviceTypeReturnsDetailedStrategy() {
         // Given: iPad device type
         // When: We determine the adaptive strategy
-        let strategy = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .pad)
+        let _ = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .pad)
         
         // Then: Should return detailed strategy (tablets have more screen space)
         #expect(strategy == .detailed, "iPad should use detailed detail view")
@@ -28,7 +28,7 @@ struct AdaptiveDetailStrategyTests {
     @Test func testMacDeviceTypeReturnsDetailedStrategy() {
         // Given: Mac device type
         // When: We determine the adaptive strategy
-        let strategy = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .mac)
+        let _ = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .mac)
         
         // Then: Should return detailed strategy (desktop has plenty of screen space)
         #expect(strategy == .detailed, "Mac should use detailed detail view")
@@ -37,7 +37,7 @@ struct AdaptiveDetailStrategyTests {
     @Test func testWatchDeviceTypeReturnsStandardStrategy() {
         // Given: Watch device type (default case)
         // When: We determine the adaptive strategy
-        let strategy = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .watch)
+        let _ = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .watch)
         
         // Then: Should return standard strategy (default fallback)
         #expect(strategy == .standard, "Watch should use standard detail view as default")
@@ -46,7 +46,7 @@ struct AdaptiveDetailStrategyTests {
     @Test func testTvDeviceTypeReturnsStandardStrategy() {
         // Given: TV device type (default case)
         // When: We determine the adaptive strategy
-        let strategy = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .tv)
+        let _ = IntelligentDetailView.determineAdaptiveDetailStrategy(for: .tv)
         
         // Then: Should return standard strategy (default fallback)
         #expect(strategy == .standard, "TV should use standard detail view as default")

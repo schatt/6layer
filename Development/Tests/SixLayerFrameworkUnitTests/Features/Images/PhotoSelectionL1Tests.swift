@@ -36,7 +36,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -46,7 +46,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -57,7 +57,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -67,7 +67,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 with different purpose should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -80,7 +80,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -90,7 +90,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for fuel receipt should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -101,7 +101,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -111,7 +111,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for pump display should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -122,7 +122,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -132,7 +132,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for odometer should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -143,7 +143,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -153,7 +153,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for maintenance should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -164,7 +164,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -174,7 +174,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for expense should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -185,7 +185,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -195,7 +195,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for profile should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -206,7 +206,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -216,7 +216,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 for document should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -234,7 +234,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
@@ -244,7 +244,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         #expect(Bool(true), "platformPhotoSelection_L1 with empty context should return a view")  // view is non-optional
         
         // Test that the view can actually be hosted
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 view should be hostable")  // hostingView is non-optional
     }
     
@@ -258,7 +258,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         let context = samplePhotoContext
         
         // When: Using custom picker view wrapper
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in },
@@ -274,7 +274,7 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view with custom wrapper
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 with custom picker view should return a view")
     }
     
@@ -287,14 +287,14 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         
         // When: Not providing custom picker view (should use default)
         // Omit the parameter to use default value instead of passing nil
-        let view = platformPhotoSelection_L1(
+        let _ = platformPhotoSelection_L1(
             purpose: purpose,
             context: context,
             onImageSelected: { _ in }
         )
         
         // Then: Should return default view
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        let _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPhotoSelection_L1 with nil custom picker view should return default view")
     }
     

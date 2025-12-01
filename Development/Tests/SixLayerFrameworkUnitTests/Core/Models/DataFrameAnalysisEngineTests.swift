@@ -133,7 +133,7 @@ open class DataFrameAnalysisEngineTests: BaseTestClass {
         let dataFrame = try createDataFrameWithOutliers()
         
         // When: Analyzing the DataFrame
-        let result = createAnalysisEngine().analyzeDataFrame(dataFrame)
+        let _ = createAnalysisEngine().analyzeDataFrame(dataFrame)
         
         // Then: Should detect outliers
         #expect(result.dataQuality != nil)

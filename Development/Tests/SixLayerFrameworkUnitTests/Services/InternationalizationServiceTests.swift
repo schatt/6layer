@@ -72,7 +72,7 @@ open class InternationalizationServiceTests: BaseTestClass {
         let service = InternationalizationService()
         
         // When: Setting a different language
-        let originalLanguage = service.currentLanguage()
+        let _ = service.currentLanguage()
         service.setLanguage("en")
         let newLanguage = service.currentLanguage()
         
@@ -84,7 +84,7 @@ open class InternationalizationServiceTests: BaseTestClass {
     
     @Test func testInternationalizationService_BusinessLogic() {
         // Given - Create service locally for this test
-        let service = InternationalizationService(locale: Locale(identifier: "en-US"))
+        let _ = InternationalizationService(locale: Locale(identifier: "en-US"))
         let testText = "Hello World"
         
         // When
@@ -116,7 +116,7 @@ open class InternationalizationServiceTests: BaseTestClass {
     
     @Test func testInternationalizationService_MixedText_BusinessLogic() {
         // Given - Create service locally for this test
-        let service = InternationalizationService(locale: Locale(identifier: "en-US"))
+        let _ = InternationalizationService(locale: Locale(identifier: "en-US"))
         let mixedText = "Hello مرحبا World"
         
         // When
@@ -143,7 +143,7 @@ open class InternationalizationServiceTests: BaseTestClass {
     
     @Test func testInternationalizationService_EmptyText_BusinessLogic() {
         // Given - Create service locally for this test
-        let service = InternationalizationService(locale: Locale(identifier: "en-US"))
+        let _ = InternationalizationService(locale: Locale(identifier: "en-US"))
         let emptyText = ""
         
         // When
