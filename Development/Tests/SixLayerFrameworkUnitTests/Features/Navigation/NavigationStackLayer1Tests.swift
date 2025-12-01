@@ -36,7 +36,7 @@ open class NavigationStackLayer1Tests: BaseTestClass {
         let content = Text("Test Content")
         
         // When: Creating navigation stack presentation
-        let _ = platformPresentNavigationStack_L1(
+        let view = platformPresentNavigationStack_L1(
             content: content,
             hints: testHints
         )

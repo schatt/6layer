@@ -171,10 +171,11 @@ open class PlatformColorEncodeTests: BaseTestClass {
         
         for color in edgeCaseColors {
             do {
-                let _ = try platformColorEncode(color)
+                let encodedData = try platformColorEncode(color)
                 
                 // Then: Should handle edge cases gracefully
                 #expect(Bool(true), "Should handle edge case color gracefully")  // encodedData is non-optional
+                let _ = encodedData
                 
             } catch {
                 // Edge cases might throw errors, which is acceptable

@@ -322,7 +322,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When: Using custom form container view
-        let _ = platformPresentModalForm_L1(
+        let view = platformPresentModalForm_L1(
             formType: formType,
             context: context,
             customFormContainer: { (formContent: AnyView) in
@@ -350,7 +350,7 @@ open class ModalFormL1Tests: BaseTestClass {
         
         // When: Not providing custom form container (should use default)
         // Omit the parameter to use default value instead of passing nil
-        let _ = platformPresentModalForm_L1(
+        let view = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )

@@ -91,7 +91,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceCanStopUpdatingLocation() async {
         // Given: LocationService
-        let _ = LocationService()
+        let service = LocationService()
         
         // When: Stopping location updates
         service.stopUpdatingLocation()
@@ -118,7 +118,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceWorksOnAllPlatforms() async {
         // Given: LocationService
-        let _ = LocationService()
+        let service = LocationService()
         
         // When: Checking platform availability
         let _ = SixLayerPlatform.current

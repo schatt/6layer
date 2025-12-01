@@ -382,7 +382,7 @@ open class ModalContainerTests: BaseTestClass {
             maxHeight: 800
         )
         
-        let _ = createTestModalStrategy(
+        let strategy = createTestModalStrategy(
             platformOptimizations: [
                 .iOS: iOSConstraint,
                 .macOS: macOSConstraint
