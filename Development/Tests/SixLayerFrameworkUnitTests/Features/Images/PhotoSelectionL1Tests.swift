@@ -68,16 +68,16 @@ open class PhotoSelectionL1Tests: BaseTestClass {
         )
         
         // Then: Should return a valid SwiftUI view
-        let mirror = Mirror(reflecting: view)
-        let viewType = String(describing: mirror.subjectType)
+        let viewMirror = Mirror(reflecting: view)
+        let viewType = String(describing: viewMirror.subjectType)
         #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
                 "View should be a SwiftUI view type for different purpose")
         
         // Test that the view can actually be hosted
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         // Verify hosting view is a valid SwiftUI view type
-        let mirror = Mirror(reflecting: hostingView)
-        let hostingType = String(describing: mirror.subjectType)
+        let hostingMirror = Mirror(reflecting: hostingView)
+        let hostingType = String(describing: hostingMirror.subjectType)
         #expect(hostingType.lowercased().contains("view") || hostingType.contains("ModifiedContent"), 
                 "Hosting view should be a SwiftUI view type")
     }
