@@ -96,36 +96,6 @@ public enum DocumentType: String, CaseIterable, Sendable {
         case .legalDocument: return "Legal Document"
         }
     }
-    
-    /// Maps DocumentType to Core Data entity name for hints file loading
-    /// Hints files should be named after entity names, not DTO names
-    /// Example: .fuelReceipt -> "FuelPurchase" (entity name)
-    public var entityName: String? {
-        switch self {
-        case .fuelReceipt:
-            return "FuelPurchase"
-        case .invoice:
-            return "Expense" // Could also be "MaintenanceRecord" based on context
-        case .businessCard:
-            return "Contact"
-        case .idDocument:
-            return "IDDocument"
-        case .medicalRecord:
-            return "MedicalRecord"
-        case .legalDocument:
-            return "LegalDocument"
-        case .receipt:
-            return "Receipt"
-        case .form:
-            return "Form"
-        case .license:
-            return "License"
-        case .passport:
-            return "Passport"
-        case .general:
-            return nil // No specific entity for general documents
-        }
-    }
 }
 
 // MARK: - Extraction Mode
@@ -161,6 +131,19 @@ public struct OCRContext: Sendable {
     public let documentType: DocumentType
     public let extractionMode: ExtractionMode
     
+    /// Entity/model name for hints file loading
+    /// Specifies which .hints file to load (e.g., "FuelPurchase", "Expense", "Address", etc.)
+    /// The framework will automatically load "{entityName}.hints" from the Hints/ folder
+    /// This is the primary way to specify which data model's hints to use for OCR extraction
+    /// 
+    /// If nil, no hints file will be loaded automatically. The framework will:
+    /// - Use built-in patterns (if available for the documentType)
+    /// - Use custom extractionHints (if provided)
+    /// - Skip automatic ocrHints conversion and calculation groups
+    /// 
+    /// This allows developers to opt out of hints-based extraction if they don't need it.
+    public let entityName: String?
+    
     public init(
         textTypes: [TextType] = [.general],
         language: OCRLanguage = .english,
@@ -170,7 +153,8 @@ public struct OCRContext: Sendable {
         extractionHints: [String: String] = [:],
         requiredFields: [String] = [],
         documentType: DocumentType = .general,
-        extractionMode: ExtractionMode = .automatic
+        extractionMode: ExtractionMode = .automatic,
+        entityName: String? = nil
     ) {
         self.textTypes = textTypes
         self.language = language
@@ -181,6 +165,7 @@ public struct OCRContext: Sendable {
         self.requiredFields = requiredFields
         self.documentType = documentType
         self.extractionMode = extractionMode
+        self.entityName = entityName
     }
 }
 

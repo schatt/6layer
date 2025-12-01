@@ -107,13 +107,6 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     
     public init() {}
     
-    // MARK: - DocumentType to Entity Name Mapping
-    
-    /// Maps DocumentType to Core Data entity name (for hints file loading)
-    /// Uses the entityName property from DocumentType extension
-    static func entityName(for documentType: DocumentType) -> String? {
-        return documentType.entityName
-    }
     
     // MARK: - Public Methods
     
@@ -245,9 +238,12 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     
     /// Load hints file and convert ocrHints to regex patterns
     private func loadHintsPatterns(for documentType: DocumentType, context: OCRContext) -> [String: String] {
-        guard let entityName = Self.entityName(for: documentType) else {
-            return [:] // No entity mapping for this document type
+        // Use entityName from context - projects specify which data model's hints to use
+        // If nil, return empty patterns (developer opted out of hints-based extraction)
+        guard let entityName = context.entityName else {
+            return [:] // No hints file loading - developer doesn't need/want hints
         }
+        
         let loader = FileBasedDataHintsLoader()
         let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
         
@@ -283,9 +279,13 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     /// Apply calculation groups to derive missing field values
     private func applyCalculationGroups(to structuredData: [String: String], documentType: DocumentType, context: OCRContext) -> [String: String] {
         var result = structuredData
-        guard let entityName = Self.entityName(for: documentType) else {
-            return result // No entity mapping for this document type
+        
+        // Use entityName from context - projects specify which data model's hints to use
+        // If nil, return data unchanged (developer opted out of hints-based extraction)
+        guard let entityName = context.entityName else {
+            return result // No calculation groups - developer doesn't need/want hints
         }
+        
         let loader = FileBasedDataHintsLoader()
         let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
         

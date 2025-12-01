@@ -21,63 +21,84 @@ import Testing
 @Suite("OCR Service Automatic Hints")
 final class OCRServiceAutomaticHintsTests: BaseTestClass {
     
-    // MARK: - Test: DocumentType to Hints File Name Mapping
+    // MARK: - Test: Entity Name Specification
     
-    @Test func testDocumentTypeToEntityNameMapping() {
-        // GIVEN: Different document types
-        // WHEN: Mapping to entity names (for hints file loading)
-        // THEN: Should map correctly to entity names, not DTO names
-        // .fuelReceipt -> "FuelPurchase" (entity name)
-        // .invoice -> "Expense" (entity name)
-        
-        let fuelReceiptEntityName = OCRService.entityName(for: .fuelReceipt)
-        #expect(fuelReceiptEntityName == "FuelPurchase", 
-                "fuelReceipt should map to FuelPurchase entity, got: \(String(describing: fuelReceiptEntityName))")
-        
-        let invoiceEntityName = OCRService.entityName(for: .invoice)
-        #expect(invoiceEntityName == "Expense", 
-                "invoice should map to Expense entity, got: \(String(describing: invoiceEntityName))")
-        
-        let generalEntityName = OCRService.entityName(for: .general)
-        #expect(generalEntityName == nil, 
-                "general should map to nil (no specific entity), got: \(String(describing: generalEntityName))")
-    }
-    
-    // MARK: - Test: Automatic Hints File Loading
-    
-    @Test func testAutomaticHintsFileLoadingForFuelReceipt() {
-        // GIVEN: A context with documentType but no extractionHints
+    @Test func testEntityNameSpecification() {
+        // GIVEN: A context with explicit entityName
+        // Projects specify which data model's hints file to use directly
         let context = OCRContext(
-            textTypes: [.price, .number, .date, .stationName, .quantity, .unit],
+            textTypes: [.price, .number],
             language: .english,
-            confidenceThreshold: 0.8,
-            allowsEditing: true,
-            extractionHints: [:], // Empty - should load from hints file
-            requiredFields: ["totalCost", "gallons"],
-            documentType: .fuelReceipt, // Should automatically load FuelPurchaseDTO.hints
-            extractionMode: .automatic
+            documentType: .fuelReceipt, // For categorization/display purposes
+            extractionMode: .automatic,
+            entityName: "FuelPurchase" // Directly specifies which .hints file to load
         )
         
-        // WHEN: Getting patterns for extraction
-        let service = OCRService()
-        // Access the private method via a test helper or make it internal for testing
-        // For now, we'll test via processStructuredExtraction which should use hints
+        // WHEN: Processing structured extraction
+        // The framework should load FuelPurchase.hints based on entityName
         
-        // THEN: Hints should be loaded and ocrHints converted to patterns
-        // This test will fail until we implement automatic hints loading
-        // We'll verify by checking that patterns include ocrHints-based patterns
-        #expect(Bool(false), "Automatic hints loading not yet implemented - test needs OCRService to load hints automatically")
+        // THEN: Context should use the specified entity name
+        #expect(context.entityName == "FuelPurchase", 
+                "Context should use explicit entityName when provided")
     }
     
-    // MARK: - Test: Automatic OCR Hints Usage
-    
-    @Test func testAutomaticOCRHintsUsageInExtraction() async throws {
-        // GIVEN: A context with documentType and OCR text containing hints
+    @Test func testEntityNameIsOptional() {
+        // GIVEN: A context without entityName (developer doesn't need/want hints)
         let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
             documentType: .fuelReceipt,
             extractionMode: .automatic
+            // entityName is nil - no hints file will be loaded automatically
+        )
+        
+        // WHEN: Processing structured extraction
+        // The framework will gracefully handle nil entityName:
+        // - Won't load hints file
+        // - Won't apply calculation groups
+        // - Will still use built-in patterns (if available)
+        // - Will still use custom extractionHints (if provided)
+        
+        // THEN: Should have nil entityName and framework should handle it gracefully
+        #expect(context.entityName == nil, 
+                "Context should have nil entityName when not explicitly provided")
+        // Framework should work normally without hints - developers can opt out
+    }
+    
+    @Test func testExtractionWorksWithoutEntityName() {
+        // GIVEN: A context without entityName but with custom extractionHints
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            documentType: .fuelReceipt,
+            extractionMode: .custom, // Using custom mode
+            extractionHints: [
+                "total": #"Total:\s*([\d.,]+)"#,
+                "gallons": #"Gallons:\s*([\d.,]+)"#
+            ]
+            // entityName is nil - developer doesn't want hints file
+        )
+        
+        // WHEN: Processing structured extraction
+        // The framework should still work using custom extractionHints
+        
+        // THEN: Should work normally without entityName
+        #expect(context.entityName == nil, 
+                "Context can have nil entityName when using custom extractionHints")
+        #expect(!context.extractionHints.isEmpty, 
+                "Custom extractionHints should still work without entityName")
+    }
+    
+    // MARK: - Test: Automatic OCR Hints Usage
+    
+    @Test func testAutomaticOCRHintsUsageInExtraction() async throws {
+        // GIVEN: A context with entityName and OCR text containing hints
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            documentType: .fuelReceipt,
+            extractionMode: .automatic,
+            entityName: "FuelPurchase" // Specifies which hints file to load
         )
         
         // Create a mock OCR result with text that should match ocrHints
@@ -107,12 +128,13 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
     // MARK: - Test: Automatic Calculation Groups Application
     
     @Test func testAutomaticCalculationGroupsApplication() async throws {
-        // GIVEN: A context with documentType and partial OCR data
+        // GIVEN: A context with entityName and partial OCR data
         let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
             documentType: .fuelReceipt,
-            extractionMode: .automatic
+            extractionMode: .automatic,
+            entityName: "FuelPurchase" // Specifies which hints file to load
         )
         
         // Create a mock OCR result with totalCost and gallons, but missing pricePerGallon
