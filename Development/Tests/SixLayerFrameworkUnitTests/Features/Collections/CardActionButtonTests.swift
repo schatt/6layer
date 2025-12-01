@@ -155,7 +155,7 @@ open class CardActionButtonTests: BaseTestClass {
         }
         
         // WHEN: Creating an ExpandableCardComponent with delete callback
-        let _ = ExpandableCardComponent(
+        let card = ExpandableCardComponent(
             item: item,
             layoutDecision: CardActionButtonTests.layoutDecision,
             strategy: CardActionButtonTests.strategy,
@@ -440,7 +440,7 @@ open class CardActionButtonTests: BaseTestClass {
             )
         ]
         let item = CardActionButtonTests.sampleItems[0]
-        let _ = SixLayerPlatform.current
+        let platform = SixLayerPlatform.current
         
         // WHEN: Creating card components on different platforms
         let expandableCard = ExpandableCardComponent(

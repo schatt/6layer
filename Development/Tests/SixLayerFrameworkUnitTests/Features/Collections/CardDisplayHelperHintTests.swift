@@ -50,7 +50,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testExtractTitleWithCustomPropertyHint() async {
         // Given: Item with custom property names and hints specifying the property
         let item = CustomItem(title: "Custom Title", subtitle: "Custom Subtitle")
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "customTitle",
                 "itemSubtitleProperty": "customSubtitle"
@@ -67,7 +67,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testExtractSubtitleWithCustomPropertyHint() async {
         // Given: Item with custom property names and hints specifying the property
         let item = CustomItem(title: "Custom Title", subtitle: "Custom Subtitle")
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "customTitle",
                 "itemSubtitleProperty": "customSubtitle"
@@ -84,7 +84,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testExtractIconWithCustomPropertyHint() async {
         // Given: Item with custom icon property and hints specifying the property
         let item = CustomItem(title: "Test", icon: "custom.icon")
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemIconProperty": "customIcon"
             ]
@@ -100,7 +100,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testExtractColorWithCustomPropertyHint() async {
         // Given: Item with custom color property and hints specifying the property
         let item = CustomItem(title: "Test", color: .red)
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemColorProperty": "customColor"
             ]
@@ -116,7 +116,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testFallbackToReflectionWhenHintPropertyNotFound() async {
         // Given: Item with standard properties but hints pointing to non-existent property
         let item = StandardItem(title: "Standard Title", subtitle: "Standard Subtitle")
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "nonExistentProperty"
             ]
@@ -144,7 +144,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testCardDisplayableProtocolTakesPrecedenceOverHints() async {
         // Given: Item that conforms to CardDisplayable protocol
         let item = GenericDataItem(title: "Protocol Title", subtitle: "Protocol Subtitle")
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": "title"  // This should be ignored since item conforms to CardDisplayable
             ]
@@ -160,7 +160,7 @@ open class CardDisplayHelperHintTests: BaseTestClass {
     @Test func testEmptyHintPropertyIsIgnored() async {
         // Given: Item with custom properties but empty hint property
         let item = CustomItem(title: "Custom Title")
-        let _ = PresentationHints(
+        let hints = PresentationHints(
             customPreferences: [
                 "itemTitleProperty": ""  // Empty string should be ignored
             ]

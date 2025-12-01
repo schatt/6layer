@@ -170,7 +170,7 @@ open class ComprehensiveCapabilityMatrixTests: BaseTestClass {
         let capabilities: Set<PlatformCapability> = [.touch, .hapticFeedback, .assistiveTouch, .voiceOver, .switchControl, .vision, .ocr]
         let accessibility: Set<AccessibilityFeature> = Set(AccessibilityFeature.allCases)
         
-        let _ = TestConfiguration(
+        let config = TestConfiguration(
             platformCapabilities: capabilities,
             accessibilityFeatures: accessibility,
             expectedViewType: "ExpandableCardComponent",
@@ -203,7 +203,7 @@ open class ComprehensiveCapabilityMatrixTests: BaseTestClass {
         let capabilities: Set<PlatformCapability> = [.touch, .hapticFeedback, .assistiveTouch, .voiceOver, .switchControl, .vision, .ocr]
         let accessibility: Set<AccessibilityFeature> = []
         
-        let _ = TestConfiguration(
+        let config = TestConfiguration(
             platformCapabilities: capabilities,
             accessibilityFeatures: accessibility,
             expectedViewType: "ExpandableCardComponent",
@@ -288,7 +288,7 @@ open class ComprehensiveCapabilityMatrixTests: BaseTestClass {
         let capabilities: Set<PlatformCapability> = Set(PlatformCapability.allCases)
         let accessibility: Set<AccessibilityFeature> = Set(AccessibilityFeature.allCases)
         
-        let _ = TestConfiguration(
+        let config = TestConfiguration(
             platformCapabilities: capabilities,
             accessibilityFeatures: accessibility,
             expectedViewType: "ExpandableCardComponent",

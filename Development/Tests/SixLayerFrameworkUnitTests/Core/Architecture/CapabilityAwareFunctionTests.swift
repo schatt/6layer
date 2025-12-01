@@ -169,7 +169,7 @@ open class CapabilityAwareFunctionTests: BaseTestClass {
         RuntimeCapabilityDetection.setTestTouchSupport(false)
         RuntimeCapabilityDetection.setTestHapticFeedback(false)
         RuntimeCapabilityDetection.setTestAssistiveTouch(false)
-        let _ = getCardExpansionPlatformConfig()
+        let config = getCardExpansionPlatformConfig()
         
         // Touch should not be supported
         #expect(!config.supportsTouch, 
