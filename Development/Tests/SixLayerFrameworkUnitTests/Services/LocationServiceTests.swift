@@ -198,7 +198,7 @@ open class LocationServiceTests: BaseTestClass {
     
     @Test @MainActor func testLocationServiceNoUncheckedSendableConflict() async {
         // Given: LocationService
-        let _ = LocationService()
+        let service = LocationService()
         
         // When: Checking actor isolation
         // The service is @MainActor, not @unchecked Sendable
