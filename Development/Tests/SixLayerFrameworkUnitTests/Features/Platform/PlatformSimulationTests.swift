@@ -55,7 +55,7 @@ open class PlatformSimulationTests: BaseTestClass {
     
     @Test func testPlatformConfiguration() {
         // Test the real platform configuration using framework types
-        let _ = SixLayerPlatform.iOS
+        let platform = SixLayerPlatform.iOS
         
         // Test that the platform configuration is internally consistent
         #expect(RuntimeCapabilityDetection.supportsHapticFeedback == true || RuntimeCapabilityDetection.supportsHapticFeedback == false, 

@@ -139,7 +139,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         }
 
         // When: Creating form presentation
-        let _ = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
             dataType: standardHints.dataType,
             presentationPreference: standardHints.presentationPreference,
             complexity: standardHints.complexity,
@@ -254,10 +254,10 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form presentation with enhanced hints
-        let _ = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
+        let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
 
         // Then: Should create view with enhanced hints support
-        #expect(Bool(true), "Should create view with enhanced hints")  // view is non-optional
+        // view is non-optional
 
         let mirror = Mirror(reflecting: view)
         let viewType = String(describing: mirror.subjectType)
@@ -342,10 +342,10 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
             )
 
             // When: Creating form presentation
-            let _ = platformPresentFormData_L1(fields: crossPlatformFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
+            let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Should work across all platforms
-            #expect(Bool(true), "Should work with context: \(context)")  // view is non-optional
+            // view is non-optional
 
             let mirror = Mirror(reflecting: view)
             #expect(String(describing: mirror.subjectType) == "AsyncFormView")
