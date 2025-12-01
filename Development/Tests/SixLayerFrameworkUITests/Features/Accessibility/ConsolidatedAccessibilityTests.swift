@@ -6990,12 +6990,8 @@ open class ConsolidatedAccessibilityTests: BaseTestClass {
             
             config.generateUITestCodeToClipboard()
             
-            #if os(macOS)
-            let clipboardContent = NSPasteboard.general.string(forType: .string) ?? ""
-            #expect(!clipboardContent.isEmpty, "Clipboard should contain generated UI test content on macOS")
-            #elseif os(iOS)
-            #expect(Bool(true), "Clipboard generation should complete on iOS")
-            #endif
+            let clipboardContent = PlatformClipboard.getTextFromClipboard() ?? ""
+            #expect(!clipboardContent.isEmpty, "Clipboard should contain generated UI test content")
         }
     }
     

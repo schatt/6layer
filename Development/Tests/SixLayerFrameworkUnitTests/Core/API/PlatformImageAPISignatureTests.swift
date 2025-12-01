@@ -49,13 +49,13 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #expect(Bool(true), "Default initializer should exist")
         
         // Test 2: Data initializer
-        let sampleData = createSampleImageData()
+        let sampleData = Data([0xFF, 0xD8, 0xFF, 0xE0])  // Minimal JPEG header for testing
         let _ = PlatformImage(data: sampleData)
         #expect(Bool(true), "Data initializer should exist and work")  // dataImage is non-optional
         
         // Test 3: Platform-specific initializers
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         let uiImageInit = PlatformImage(uiImage: uiImage)
         // uiImageInit is non-optional, so no nil check needed
         #expect(Bool(true), "UIImage initializer should exist")
@@ -67,7 +67,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #expect(Bool(true), "Implicit parameter initializer should exist for backward compatibility")
         #expect(implicitInit.uiImage == uiImage, "Implicit parameter initializer should work correctly")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         let nsImageInit = PlatformImage(nsImage: nsImage)
         // nsImageInit is non-optional, so no nil check needed
         #expect(Bool(true), "NSImage initializer should exist")
@@ -86,7 +86,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test parameter label requirements
     @Test func testPlatformImageParameterLabels() {
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // Test explicit parameter label (current API)
         let explicitInit = PlatformImage(uiImage: uiImage)
@@ -101,7 +101,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // Verify both produce equivalent results
         #expect(explicitInit.uiImage == implicitInit.uiImage, "Both initializers should produce equivalent results")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // Test explicit parameter label (current API)
         let explicitInit = PlatformImage(nsImage: nsImage)
@@ -123,7 +123,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test the exact API patterns used in Layer 4 callbacks
     @Test func testPlatformImageBackwardCompatibility() {
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // Test the EXACT pattern used in Layer 4 callbacks
         // This is the pattern that was broken in 4.6.2
@@ -136,7 +136,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         let newPattern = PlatformImage(uiImage: uiImage)
         #expect(newPattern.uiImage == callbackPattern.uiImage, "Old and new patterns should be equivalent")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // Test the EXACT pattern used in Layer 4 callbacks
         let callbackPattern = PlatformImage(nsImage)
@@ -155,7 +155,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test API patterns work on all platforms
     @Test func testPlatformImageCrossPlatformConsistency() {
         // Test that data initializer works on all platforms
-        let sampleData = createSampleImageData()
+        let sampleData = Data([0xFF, 0xD8, 0xFF, 0xE0])  // Minimal JPEG header for testing
         let _ = PlatformImage(data: sampleData)
         #expect(Bool(true), "Data initializer should work on all platforms")  // dataImage is non-optional
         
@@ -166,12 +166,12 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         
         // Test that both implicit and explicit patterns work
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         let implicit = PlatformImage(uiImage)
         let explicit = PlatformImage(uiImage: uiImage)
         #expect(implicit.uiImage == explicit.uiImage, "iOS patterns should be equivalent")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         let implicit = PlatformImage(nsImage)
         let explicit = PlatformImage(nsImage: nsImage)
         #expect(implicit.nsImage == explicit.nsImage, "macOS patterns should be equivalent")
@@ -186,7 +186,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // It tests the exact API pattern that was broken
         
         #if os(iOS)
-        let uiImage = createTestUIImage()
+        let uiImage = PlatformImage.createPlaceholder().uiImage!
         
         // Test the broken pattern from Layer 4 callbacks
         // This should work with our backward compatibility fix
@@ -198,7 +198,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #expect(brokenPattern.uiImage == uiImage, "Broken pattern should produce correct result")
         #expect(brokenPattern.size == uiImage.size, "Broken pattern should preserve image properties")
         #elseif os(macOS)
-        let nsImage = createTestNSImage()
+        let nsImage = PlatformImage.createPlaceholder().nsImage!
         
         // Test the broken pattern from Layer 4 callbacks
         let brokenPattern = PlatformImage(nsImage)
@@ -218,7 +218,12 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test CGImage initializer on both platforms
     @Test func testPlatformImageCGImageInitializer() {
         // Given: A CGImage
-        let cgImage = createTestCGImage()
+        // Create a simple test CGImage
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: nil, width: 100, height: 100, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
+        context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        let cgImage = context.makeImage()!
         
         // When: Creating PlatformImage from CGImage
         #if os(iOS)
@@ -251,7 +256,12 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test cross-platform usage pattern
     @Test func testPlatformImageCGImageCrossPlatformUsage() {
         // Given: A CGImage (same on both platforms)
-        let cgImage = createTestCGImage()
+        // Create a simple test CGImage
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: nil, width: 100, height: 100, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
+        context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        let cgImage = context.makeImage()!
         let expectedSize = CGSize(width: cgImage.width, height: cgImage.height)
         
         // When: Creating PlatformImage (no platform conditionals needed in user code)
@@ -276,7 +286,12 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     @Test func testPlatformImageCGImageDefaultSize() {
         #if os(macOS)
         // Given: A CGImage
-        let cgImage = createTestCGImage()
+        // Create a simple test CGImage
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: nil, width: 100, height: 100, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
+        context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+        let cgImage = context.makeImage()!
         
         // When: Creating PlatformImage with default size (.zero)
         let _ = PlatformImage(cgImage: cgImage, size: .zero)
@@ -288,102 +303,4 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #endif
     }
     
-    // MARK: - Test Data Helpers
-    
-    private func createSampleImageData() -> Data {
-        #if os(iOS)
-        let size = CGSize(width: 100, height: 100)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let uiImage = renderer.image { context in
-            UIColor.red.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        return uiImage.jpegData(compressionQuality: 0.8) ?? Data()
-        
-        #elseif os(macOS)
-        let size = NSSize(width: 100, height: 100)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.red.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        
-        guard let tiffData = nsImage.tiffRepresentation,
-              let bitmapRep = NSBitmapImageRep(data: tiffData),
-              let jpegData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
-            return Data()
-        }
-        return jpegData
-        
-        #else
-        return Data()
-        #endif
-    }
-    
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
-    #endif
-    
-    /// Create a test CGImage for testing CGImage initializer (Issue #23)
-    private func createTestCGImage() -> CGImage {
-        #if os(iOS)
-        let size = CGSize(width: 300, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let uiImage = renderer.image { context in
-            UIColor.green.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-        guard let cgImage = uiImage.cgImage else {
-            // Fallback: create a minimal CGImage
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
-            context.setFillColor(UIColor.green.cgColor)
-            context.fill(CGRect(origin: .zero, size: size))
-            return context.makeImage()!
-        }
-        return cgImage
-        
-        #elseif os(macOS)
-        let size = NSSize(width: 300, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.green.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        
-        guard let cgImage = nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-            // Fallback: create a minimal CGImage
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
-            context.setFillColor(NSColor.green.cgColor)
-            context.fill(CGRect(origin: .zero, size: size))
-            return context.makeImage()!
-        }
-        return cgImage
-        
-        #else
-        // Fallback for other platforms
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let context = CGContext(data: nil, width: 300, height: 200, bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)!
-        context.setFillColor(CGColor(red: 0, green: 1, blue: 0, alpha: 1))
-        context.fill(CGRect(origin: .zero, size: CGSize(width: 300, height: 200)))
-        return context.makeImage()!
-        #endif
-    }
 }
