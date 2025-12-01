@@ -340,7 +340,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             customDataView: { data in
                 platformVStackContainer {
                     Text(data.label)
-                    Text("\(data.value) \(data.unit)")
+                    Text("\(String(describing: data.value)) \(data.unit ?? "")")
                 }
             }
         )
@@ -379,7 +379,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
             customDataView: { data in
                 platformVStackContainer {
                     Text(data.label)
-                    Text("\(data.value) \(data.unit)")
+                    Text("\(String(describing: data.value)) \(data.unit ?? "")")
                 }
             }
         )

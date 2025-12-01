@@ -130,7 +130,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given & When
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        var control = FloatingControl(
+        let control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -200,7 +200,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given & When
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        var menu = ContextualMenu(
+        let menu = ContextualMenu(
             items: [
                 ContextualMenuItem(title: "Edit", action: {}),
                 ContextualMenuItem(title: "Delete", action: {})
@@ -293,7 +293,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        var control = FloatingControl(
+        let control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -381,7 +381,7 @@ struct LiquidGlassDesignSystemTests {
         
         // Given
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
-        var control = FloatingControl(
+        let control = FloatingControl(
             type: .navigation,
             position: .top,
             material: liquidGlassSystem.createMaterial(.primary)
@@ -405,18 +405,21 @@ struct LiquidGlassDesignSystemTests {
         let liquidGlassSystem = LiquidGlassDesignSystem.shared
         let system = LiquidGlassDesignSystem.shared
         let material = liquidGlassSystem.createMaterial(.primary)
-        var control = FloatingControl(
+        let control = FloatingControl(
             type: .navigation,
             position: .top,
             material: material
         )
-        var menu = ContextualMenu(
+        let menu = ContextualMenu(
             items: [ContextualMenuItem(title: "Test", action: {})],
             material: liquidGlassSystem.createMaterial(.secondary)
         )
         
         // Then
         // material, control, and menu are non-optional structs, so they exist if we reach here
+        let _ = material
+        let _ = control
+        let _ = menu
         #expect(system.isLiquidGlassEnabled)
     }
     
