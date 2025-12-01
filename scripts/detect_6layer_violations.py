@@ -396,6 +396,19 @@ class Violation:
     hint: str
     priority: int
     column: int = 0
+    is_exception: bool = False
+    exception_reason: str = ""
+
+    def to_dict(self):
+        return asdict(self)
+
+@dataclass
+class AllowedException:
+    file_path: str
+    line_number: int
+    line_content: str
+    violation_type: str
+    reason: str
 
     def to_dict(self):
         return asdict(self)
@@ -558,6 +571,29 @@ def strip_string_literals_from_line(line: str) -> str:
 
     return ''.join(result)
 
+def get_exception_reason(lines: List[str], line_idx: int) -> str:
+    """
+    Get exception reason if a line has an exception comment (// 6LAYER_ALLOW: reason)
+
+    Checks the current line and the previous line for exception comments.
+    Returns the reason text after "// 6LAYER_ALLOW:" or empty string if none found.
+    """
+    if line_idx < 0 or line_idx >= len(lines):
+        return ""
+
+    current_line = lines[line_idx].strip()
+    prev_line = lines[line_idx - 1].strip() if line_idx > 0 else ""
+
+    # Check for exception comment on current line (inline)
+    if "// 6LAYER_ALLOW:" in current_line:
+        return current_line.split("// 6LAYER_ALLOW:", 1)[1].strip()
+
+    # Check for exception comment on previous line
+    if prev_line.startswith("// 6LAYER_ALLOW:"):
+        return prev_line.split("// 6LAYER_ALLOW:", 1)[1].strip()
+
+    return ""
+
 # ============================================================================
 # Detection Logic
 # ============================================================================
@@ -598,35 +634,48 @@ def is_app_code_with_reason(file_path: Path, exclude_framework: bool = True, exc
 
     return True, ""
 
-def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[List[Violation], List[Exclusion]]:
+def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[List[Violation], List[Exclusion], List[AllowedException]]:
     """Scan a single file for violations."""
     violations = []
     exclusions = []
+    exceptions = []
 
     is_app, exclusion_reason = is_app_code_with_reason(file_path, exclude_framework, exclude_tests)
     if not is_app:
         exclusions.append(Exclusion(str(file_path), exclusion_reason))
-        return violations, exclusions
-    
+        return violations, exclusions, exceptions
+
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             lines = f.readlines()
             content = ''.join(lines)
     except Exception as e:
         print(f"Warning: Could not read {file_path}: {e}", file=sys.stderr)
-        return violations, exclusions
-    
+        return violations, exclusions, exceptions
+
     # Strip comments and string literals from lines for violation detection
     # Keep original lines for display in violation reports
     lines_without_comments = strip_comments_from_lines(lines)
     lines_without_strings = strip_string_literals_from_lines(lines_without_comments)
-    
+
     # Check for platform-specific type violations (PRIORITY 1)
     for violation_name, violation_info in PLATFORM_TYPE_VIOLATIONS.items():
         pattern = violation_info['pattern']
         exclude_patterns = violation_info.get('exclude_patterns', [])
         for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_strings), start=1):
             if re.search(pattern, stripped_line):
+                # Check if this line has an exception comment
+                exception_reason = get_exception_reason(lines, line_num - 1)
+                if exception_reason:
+                    exceptions.append(AllowedException(
+                        file_path=str(file_path),
+                        line_number=line_num,
+                        line_content=original_line.rstrip(),
+                        violation_type=violation_name,
+                        reason=exception_reason
+                    ))
+                    continue
+
                 # Check if this line should be excluded based on exclude patterns
                 should_exclude = False
                 for exclude_pattern in exclude_patterns:
@@ -650,7 +699,7 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exc
                         priority=violation_info['priority'],
                         column=match.start() + 1
                     ))
-    
+
     # Check for view violations (PRIORITY 2)
     for violation_name, violation_info in VIEW_VIOLATIONS.items():
         pattern = violation_info['pattern']
@@ -664,6 +713,18 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exc
 
         for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_strings), start=1):
             if re.search(pattern, stripped_line):
+                # Check if this line has an exception comment
+                exception_reason = get_exception_reason(lines, line_num - 1)
+                if exception_reason:
+                    exceptions.append(AllowedException(
+                        file_path=str(file_path),
+                        line_number=line_num,
+                        line_content=original_line.rstrip(),
+                        violation_type=violation_name,
+                        reason=exception_reason
+                    ))
+                    continue
+
                 # Check if this line should be excluded based on exclude patterns
                 should_exclude = False
                 for exclude_pattern in exclude_patterns:
@@ -701,25 +762,27 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exc
                         column=match.start() + 1
                     ))
 
-    return violations, exclusions
+    return violations, exclusions, exceptions
 
-def scan_directory(directory: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[List[Violation], List[Exclusion]]:
+def scan_directory(directory: Path, exclude_framework: bool = True, exclude_tests: bool = False) -> Tuple[List[Violation], List[Exclusion], List[AllowedException]]:
     """Scan a directory tree for violations."""
     all_violations = []
     all_exclusions = []
+    all_exceptions = []
 
     if not directory.exists():
         print(f"Error: Directory {directory} does not exist", file=sys.stderr)
-        return all_violations, all_exclusions
+        return all_violations, all_exclusions, all_exceptions
 
     swift_files = list(directory.rglob('*.swift'))
 
     print(f"Scanning {len(swift_files)} Swift files...", file=sys.stderr)
 
     for swift_file in swift_files:
-        violations, exclusions = find_violations_in_file(swift_file, exclude_framework, exclude_tests)
+        violations, exclusions, exceptions = find_violations_in_file(swift_file, exclude_framework, exclude_tests)
         all_violations.extend(violations)
         all_exclusions.extend(exclusions)
+        all_exceptions.extend(exceptions)
 
     # Warn if all files were excluded - might indicate incorrect exclusion settings
     if len(all_exclusions) == len(swift_files) and len(swift_files) > 0:
@@ -727,18 +790,20 @@ def scan_directory(directory: Path, exclude_framework: bool = True, exclude_test
         print(f"   This might indicate that the exclusion settings are too restrictive for this directory.", file=sys.stderr)
         print(f"   Consider using --include-framework or --include-tests if you want to scan these files.", file=sys.stderr)
 
-    return all_violations, all_exclusions
+    return all_violations, all_exclusions, all_exceptions
 
 # ============================================================================
 # Output Formatting
 # ============================================================================
 
-def print_console_report(violations: List[Violation], exclusions: List[Exclusion] = None):
-    """Print violations and exclusions to console."""
+def print_console_report(violations: List[Violation], exclusions: List[Exclusion] = None, exceptions: List[AllowedException] = None):
+    """Print violations, exclusions, and exceptions to console."""
     if exclusions is None:
         exclusions = []
+    if exceptions is None:
+        exceptions = []
 
-    if not violations and not exclusions:
+    if not violations and not exclusions and not exceptions:
         print("✅ No violations found!")
         return
 
@@ -761,6 +826,9 @@ def print_console_report(violations: List[Violation], exclusions: List[Exclusion
         print(f"  Priority 2 (View usage): {len(priority_2)}")
     else:
         print("Total violations: 0")
+
+    if exceptions:
+        print(f"Total allowed exceptions: {len(exceptions)}")
 
     if exclusions:
         print(f"Total files excluded: {len(exclusions)}")
@@ -790,10 +858,22 @@ def print_console_report(violations: List[Violation], exclusions: List[Exclusion
             print(f"💡 Hint: {violation.hint}")
             print(f"✅ Use: {violation.replacement}")
 
-def generate_json_report(violations: List[Violation], exclusions: List[Exclusion] = None) -> Dict:
+    # Print allowed exceptions
+    if exceptions:
+        print("\n🟢 ALLOWED EXCEPTIONS: Intentionally Allowed Violations")
+        print("-" * 80)
+        for exception in exceptions:
+            print(f"\nFile: {exception.file_path}:{exception.line_number}")
+            print(f"Type: {exception.violation_type}")
+            print(f"Line: {exception.line_content}")
+            print(f"📝 Reason: {exception.reason}")
+
+def generate_json_report(violations: List[Violation], exclusions: List[Exclusion] = None, exceptions: List[AllowedException] = None) -> Dict:
     """Generate JSON report."""
     if exclusions is None:
         exclusions = []
+    if exceptions is None:
+        exceptions = []
 
     # Group exclusions by reason
     exclusion_reasons = {}
@@ -807,9 +887,11 @@ def generate_json_report(violations: List[Violation], exclusions: List[Exclusion
         'priority_1_count': len([v for v in violations if v.priority == 1]),
         'priority_2_count': len([v for v in violations if v.priority == 2]),
         'total_exclusions': len(exclusions),
+        'total_exceptions': len(exceptions),
         'exclusion_reasons': exclusion_reasons,
         'violations': [v.to_dict() for v in violations],
-        'exclusions': [e.to_dict() for e in exclusions]
+        'exclusions': [e.to_dict() for e in exclusions],
+        'exceptions': [e.to_dict() for e in exceptions]
     }
 
 # ============================================================================
@@ -862,20 +944,20 @@ def main():
     path = Path(args.directory).resolve()
     if path.is_file():
         # Single file
-        violations, exclusions = find_violations_in_file(path, args.exclude_framework, args.exclude_tests)
+        violations, exclusions, exceptions = find_violations_in_file(path, args.exclude_framework, args.exclude_tests)
     else:
         # Directory
-        violations, exclusions = scan_directory(path, exclude_framework=args.exclude_framework, exclude_tests=args.exclude_tests)
+        violations, exclusions, exceptions = scan_directory(path, exclude_framework=args.exclude_framework, exclude_tests=args.exclude_tests)
     
     # Sort violations by priority, then by file
     violations.sort(key=lambda v: (v.priority, v.file_path, v.line_number))
     
     # Print console report
-    print_console_report(violations, exclusions)
+    print_console_report(violations, exclusions, exceptions)
     
     # Generate JSON report if requested
     if args.json:
-        json_report = generate_json_report(violations, exclusions)
+        json_report = generate_json_report(violations, exclusions, exceptions)
         with open(args.json, 'w') as f:
             json.dump(json_report, f, indent=2)
         print(f"\n📄 JSON report written to: {args.json}", file=sys.stderr)
