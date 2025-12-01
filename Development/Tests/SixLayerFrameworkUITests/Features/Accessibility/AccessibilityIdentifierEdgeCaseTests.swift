@@ -167,8 +167,8 @@ open class AccessibilityIdentifierEdgeCaseTests: BaseTestClass {
                     
                     // Second button should not have accessibility identifier modifier
                     // (We can't inspect for accessibility identifier when disabled)
-                    // Just verify the button exists
-                    #expect(buttons[1] != nil, "Disabled button should still exist")
+                    // Just verify the button exists (buttons[1] is non-optional, so it exists if we reach here)
+                    #expect(Bool(true), "Disabled button should still exist")
                     
                 }
             } catch {

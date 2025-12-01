@@ -153,7 +153,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             var ids: [String: String] = [:]
             
             // Generate IDs for all test cases
-            for (buttonName, screenContext) in testCases {
+            for (buttonName, _) in testCases {
                 let view = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }
@@ -177,7 +177,7 @@ open class AccessibilityIdentifierPersistenceTests: BaseTestClass {
             config.mode = .automatic
             
             // Generate IDs again for same test cases
-            for (buttonName, screenContext) in testCases {
+            for (buttonName, _) in testCases {
                 let view = PlatformInteractionButton(style: .primary, action: {}) {
                 platformPresentContent_L1(content: "Test", hints: PresentationHints())
             }

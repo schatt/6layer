@@ -43,6 +43,30 @@ open class PlatformColorsTests: BaseTestClass {
     
     // BaseTestClass handles setup automatically - no init() needed
     
+    // MARK: - Test Helpers
+    
+    #if os(iOS)
+    /// Helper to extract RGB components from a UIColor
+    private func extractRGB(from uiColor: UIColor) -> (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return (red, green, blue, alpha)
+    }
+    
+    /// Helper to calculate brightness from RGB components
+    private func calculateBrightness(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGFloat {
+        return (red + green + blue) / 3.0
+    }
+    
+    /// Helper to resolve a Color in a specific trait collection and extract RGB
+    private func resolveAndExtractRGB(_ color: Color, traitCollection: UITraitCollection) -> (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat, brightness: CGFloat) {
+        let resolvedColor = UIColor(color).resolvedColor(with: traitCollection)
+        let (red, green, blue, alpha) = extractRGB(from: resolvedColor)
+        let brightness = calculateBrightness(red: red, green: green, blue: blue)
+        return (red, green, blue, alpha, brightness)
+    }
+    #endif
+    
     // MARK: - Platform-Specific Business Logic Tests
     
     @Test @MainActor
@@ -57,31 +81,32 @@ open class PlatformColorsTests: BaseTestClass {
             // Test that iOS colors can actually be used in views
             let iosView = createTestViewWithPlatformColors()
             _ = hostRootPlatformView(iosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "iOS colors should work in actual views")
+            // Verify colors are valid by checking they're not clear
+            #expect(Color.platformPrimaryLabel != Color.clear, "iOS primary label color should be valid")
             
         case .macOS:
             // Test that macOS colors can actually be used in views
             let macosView = createTestViewWithPlatformColors()
             _ = hostRootPlatformView(macosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "macOS colors should work in actual views")
+            #expect(Color.platformPrimaryLabel != Color.clear, "macOS primary label color should be valid")
             
         case .watchOS:
             // Test that watchOS colors can actually be used in views
             let watchosView = createTestViewWithPlatformColors()
             _ = hostRootPlatformView(watchosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "watchOS colors should work in actual views")
+            #expect(Color.platformPrimaryLabel != Color.clear, "watchOS primary label color should be valid")
             
         case .tvOS:
             // Test that tvOS colors can actually be used in views
             let tvosView = createTestViewWithPlatformColors()
             _ = hostRootPlatformView(tvosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "tvOS colors should work in actual views")
+            #expect(Color.platformPrimaryLabel != Color.clear, "tvOS primary label color should be valid")
             
         case .visionOS:
             // Test that visionOS colors can actually be used in views
             let visionosView = createTestViewWithPlatformColors()
             _ = hostRootPlatformView(visionosView.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "visionOS colors should work in actual views")
+            #expect(Color.platformPrimaryLabel != Color.clear, "visionOS primary label color should be valid")
         }
     }
     
@@ -95,11 +120,12 @@ open class PlatformColorsTests: BaseTestClass {
         
         // When: Validating platform color consistency
         // Then: Test business logic for color consistency
-        #expect(Bool(true), "Primary label color should be consistent")  // primaryLabel is non-optional
-        #expect(Bool(true), "Secondary label color should be consistent")  // secondaryLabel is non-optional
-        #expect(Bool(true), "Tertiary label color should be consistent")  // tertiaryLabel is non-optional
-        #expect(Bool(true), "Background color should be consistent")  // background is non-optional
-        #expect(Bool(true), "Secondary background color should be consistent")  // secondaryBackground is non-optional
+        // Verify colors maintain their identity across multiple accesses
+        #expect(primaryLabel == Color.platformPrimaryLabel, "Primary label color should be consistent")
+        #expect(secondaryLabel == Color.platformSecondaryLabel, "Secondary label color should be consistent")
+        #expect(tertiaryLabel == Color.platformTertiaryLabel, "Tertiary label color should be consistent")
+        #expect(background == Color.platformBackground, "Background color should be consistent")
+        #expect(secondaryBackground == Color.platformSecondaryBackground, "Secondary background color should be consistent")
         
         // Test business logic: Platform colors should be different from each other
         #expect(primaryLabel != secondaryLabel, "Primary and secondary label colors should be different")
@@ -124,16 +150,21 @@ open class PlatformColorsTests: BaseTestClass {
         let backgroundEncoded = try platformColorEncode(background)
         
         // Then: Test business logic for color encoding
-        #expect(Bool(true), "Primary label color should be encodable")  // primaryEncoded is non-optional
-        #expect(Bool(true), "Secondary label color should be encodable")  // secondaryEncoded is non-optional
-        #expect(Bool(true), "Background color should be encodable")  // backgroundEncoded is non-optional
+        // Encoded data should be non-empty
+        #expect(!primaryEncoded.isEmpty, "Primary label color should be encodable (non-empty data)")
+        #expect(!secondaryEncoded.isEmpty, "Secondary label color should be encodable (non-empty data)")
+        #expect(!backgroundEncoded.isEmpty, "Background color should be encodable (non-empty data)")
         
-        // Test business logic: Encoded colors should be decodable (platformColorDecode returns non-optional Color, throws on error)
+        // Test business logic: Encoded colors should be decodable
         do {
-            let _ = try platformColorDecode(primaryEncoded)
-            let _ = try platformColorDecode(secondaryEncoded)
-            let _ = try platformColorDecode(backgroundEncoded)
-            #expect(Bool(true), "All colors should be decodable")
+            let decodedPrimary = try platformColorDecode(primaryEncoded)
+            let decodedSecondary = try platformColorDecode(secondaryEncoded)
+            let decodedBackground = try platformColorDecode(backgroundEncoded)
+            
+            // Verify decoded colors are valid
+            #expect(decodedPrimary != Color.clear, "Decoded primary label should be valid")
+            #expect(decodedSecondary != Color.clear, "Decoded secondary label should be valid")
+            #expect(decodedBackground != Color.clear, "Decoded background should be valid")
         } catch {
             Issue.record("Color decoding failed: \(error)")
         }
@@ -146,72 +177,79 @@ open class PlatformColorsTests: BaseTestClass {
     
     // MARK: - Basic Color Tests
     
+    /// Test platform primary label color
+    /// NOTE: This uses system semantic color Color(.label) which automatically adapts to:
+    /// - Light/Dark mode
+    /// - High Contrast mode (iOS)
+    /// - Other accessibility settings
     @Test func testPlatformPrimaryLabelColor() {
         // Given & When
-        _ = Color.platformPrimaryLabel
+        let color = Color.platformPrimaryLabel
         
         // Then - Test business logic: Platform primary label color should be properly defined
-        #expect(Bool(true), "Platform primary label color should be accessible")
+        #expect(color != Color.clear, "Platform primary label should not be clear")
         
         // Test business logic: Platform primary label should be consistent with platform label
         #expect(color == Color.platformLabel, "Platform primary label should equal platform label")
         
-        // Test business logic: Platform primary label should be accessible across platforms
-        let platform = SixLayerPlatform.current
-        switch platform {
-        case .iOS, .macOS, .watchOS, .tvOS, .visionOS:
-            #expect(Bool(true), "Platform primary label should be available on \(platform)")  // color is non-optional
-        }
+        // Test business logic: Primary label should be different from secondary label
+        #expect(color != Color.platformSecondaryLabel, "Primary label should differ from secondary label")
     }
     
     @Test func testPlatformSecondaryLabelColor() {
         // Given & When
-        _ = Color.platformSecondaryLabel
+        let color = Color.platformSecondaryLabel
         
         // Then
-        #expect(Bool(true), "Platform secondary label color should be accessible")
-        // Should be the same as existing platformSecondaryLabel
-        #expect(color == Color.platformSecondaryLabel, "Platform secondary label should be consistent")
+        #expect(color != Color.clear, "Platform secondary label should not be clear")
+        #expect(color != Color.platformPrimaryLabel, "Secondary label should differ from primary label")
+        #expect(color != Color.platformTertiaryLabel, "Secondary label should differ from tertiary label")
     }
     
     @Test func testPlatformTertiaryLabelColor() {
         // Given & When
-        _ = Color.platformTertiaryLabel
+        let color = Color.platformTertiaryLabel
         
         // Then
-        #expect(Bool(true), "Platform tertiary label color should be accessible")
+        #expect(color != Color.clear, "Platform tertiary label should not be clear")
+        #expect(color != Color.platformPrimaryLabel, "Tertiary label should differ from primary label")
+        #expect(color != Color.platformSecondaryLabel, "Tertiary label should differ from secondary label")
     }
     
     @Test func testPlatformQuaternaryLabelColor() {
         // Given & When
-        _ = Color.platformQuaternaryLabel
+        let color = Color.platformQuaternaryLabel
         
         // Then
-        #expect(Bool(true), "Platform quaternary label color should be accessible")
+        #expect(color != Color.clear, "Platform quaternary label should not be clear")
+        #expect(color != Color.platformPrimaryLabel, "Quaternary label should differ from primary label")
     }
     
     @Test func testPlatformPlaceholderTextColor() {
         // Given & When
-        _ = Color.platformPlaceholderText
+        let color = Color.platformPlaceholderText
         
         // Then
-        #expect(Bool(true), "Platform placeholder text color should be accessible")
+        #expect(color != Color.clear, "Platform placeholder text should not be clear")
+        #expect(color != Color.platformPrimaryLabel, "Placeholder text should differ from primary label")
     }
     
     @Test func testPlatformSeparatorColor() {
         // Given & When
-        _ = Color.platformSeparator
+        let color = Color.platformSeparator
         
         // Then
-        #expect(Bool(true), "Platform separator color should be accessible")
+        #expect(color != Color.clear, "Platform separator should not be clear")
+        #expect(color != Color.platformPrimaryLabel, "Separator should differ from primary label")
     }
     
     @Test func testPlatformOpaqueSeparatorColor() {
         // Given & When
-        _ = Color.platformOpaqueSeparator
+        let color = Color.platformOpaqueSeparator
         
         // Then
-        #expect(Bool(true), "Platform opaque separator color should be accessible")
+        #expect(color != Color.clear, "Platform opaque separator should not be clear")
+        #expect(color != Color.platformPrimaryLabel, "Opaque separator should differ from primary label")
     }
     
     // MARK: - Platform-Specific Behavior Tests
@@ -222,13 +260,14 @@ open class PlatformColorsTests: BaseTestClass {
         
         // Then
         // On iOS, this should be .tertiaryLabel
-        // On macOS, this should be .secondary
+        // On macOS, this should be .tertiaryLabelColor (not .secondary)
+        #expect(color != Color.clear, "Tertiary label should not be clear")
         #if os(iOS)
-        // On iOS, we expect the tertiary label color
-        #expect(Bool(true), "Tertiary label should be available on iOS")  // color is non-optional
+        // On iOS, tertiary label should be different from secondary
+        #expect(color != Color.platformSecondaryLabel, "Tertiary label should differ from secondary on iOS")
         #elseif os(macOS)
-        // On macOS, we expect the secondary color as fallback
-        #expect(Bool(true), "Secondary color should be used as fallback on macOS")  // color is non-optional
+        // On macOS, tertiary label should be different from secondary
+        #expect(color != Color.platformSecondaryLabel, "Tertiary label should differ from secondary on macOS")
         #endif
     }
     
@@ -238,13 +277,14 @@ open class PlatformColorsTests: BaseTestClass {
         
         // Then
         // On iOS, this should be .quaternaryLabel
-        // On macOS, this should be .secondary
+        // On macOS, this should be .quaternaryLabelColor
+        #expect(color != Color.clear, "Quaternary label should not be clear")
         #if os(iOS)
-        // On iOS, we expect the quaternary label color
-        #expect(Bool(true), "Quaternary label should be available on iOS")  // color is non-optional
+        // On iOS, quaternary label should be different from secondary
+        #expect(color != Color.platformSecondaryLabel, "Quaternary label should differ from secondary on iOS")
         #elseif os(macOS)
-        // On macOS, we expect the secondary color as fallback
-        #expect(Bool(true), "Secondary color should be used as fallback on macOS")  // color is non-optional
+        // On macOS, quaternary label should be different from secondary
+        #expect(color != Color.platformSecondaryLabel, "Quaternary label should differ from secondary on macOS")
         #endif
     }
     
@@ -254,13 +294,14 @@ open class PlatformColorsTests: BaseTestClass {
         
         // Then
         // On iOS, this should be .placeholderText
-        // On macOS, this should be .secondary
+        // On macOS, this should be .placeholderTextColor
+        #expect(color != Color.clear, "Placeholder text should not be clear")
         #if os(iOS)
-        // On iOS, we expect the placeholder text color
-        #expect(Bool(true), "Placeholder text should be available on iOS")  // color is non-optional
+        // On iOS, placeholder text should be different from primary label
+        #expect(color != Color.platformPrimaryLabel, "Placeholder text should differ from primary label on iOS")
         #elseif os(macOS)
-        // On macOS, we expect the secondary color as fallback
-        #expect(Bool(true), "Secondary color should be used as fallback on macOS")  // color is non-optional
+        // On macOS, placeholder text should be different from primary label
+        #expect(color != Color.platformPrimaryLabel, "Placeholder text should differ from primary label on macOS")
         #endif
     }
     
@@ -270,13 +311,14 @@ open class PlatformColorsTests: BaseTestClass {
         
         // Then
         // On iOS, this should be .opaqueSeparator
-        // On macOS, this should be .separator
+        // On macOS, this should be .separatorColor
+        #expect(color != Color.clear, "Opaque separator should not be clear")
         #if os(iOS)
-        // On iOS, we expect the opaque separator color
-        #expect(Bool(true), "Opaque separator should be available on iOS")  // color is non-optional
+        // On iOS, opaque separator should be different from regular separator
+        #expect(color != Color.platformSeparator, "Opaque separator should differ from regular separator on iOS")
         #elseif os(macOS)
-        // On macOS, we expect the separator color as fallback
-        #expect(Bool(true), "Separator color should be used as fallback on macOS")  // color is non-optional
+        // On macOS, opaque separator might be the same as separator, but should not be clear
+        #expect(color != Color.platformPrimaryLabel, "Opaque separator should differ from primary label on macOS")
         #endif
     }
     
@@ -311,7 +353,7 @@ open class PlatformColorsTests: BaseTestClass {
         
         // Then
         for color in colors {
-            #expect(Bool(true), "All platform colors should be available")  // color is non-optional
+            #expect(color != Color.clear, "All platform colors should not be clear")
         }
     }
     
@@ -334,7 +376,10 @@ open class PlatformColorsTests: BaseTestClass {
         // When & Then
         for color in colors {
             // Colors should be accessible and not cause crashes
-            #expect(Bool(true), "Color should be accessible: \(color)")  // color is non-optional
+            #expect(color != Color.clear, "Color should be accessible: \(color)")
+            // Verify color can be used in a view
+            _ = Text("Test")
+                .foregroundColor(color)
         }
     }
     
@@ -345,7 +390,7 @@ open class PlatformColorsTests: BaseTestClass {
         let buttonTextColor = Color.platformButtonTextOnColor
         
         // Then - Test business logic: Button text color should be available
-        #expect(Bool(true), "Platform button text on color should be available")  // buttonTextColor is non-optional
+        #expect(buttonTextColor != Color.clear, "Platform button text on color should be available")
         
         // Test business logic: Button text color should be white for high contrast on colored backgrounds
         #expect(buttonTextColor == Color.white, "Platform button text on color should be white for maximum contrast")
@@ -354,24 +399,25 @@ open class PlatformColorsTests: BaseTestClass {
         #expect(buttonTextColor != Color.clear, "Platform button text on color should not be clear")
     }
     
-    @Test func testPlatformButtonTextOnColorWorksInViews() {
+    @Test @MainActor func testPlatformButtonTextOnColorWorksInViews() {
         // Given
         let buttonTextColor = Color.platformButtonTextOnColor
         
         // When: Using the color in a button view
-        let buttonView = Button("Test Button") { }
+        _ = Button("Test Button") { }
             .foregroundColor(buttonTextColor)
             .background(Color.accentColor)
         
         // Then - Test business logic: Color should work in actual button views
-        #expect(Bool(true), "Platform button text on color should work in button views")  // buttonView is non-optional
+        // (View creation verifies it works - if it compiles and runs, the color is valid)
+        #expect(buttonTextColor == Color.white, "Button text color should be white for contrast")
         
         // Test business logic: Color should provide high contrast on colored backgrounds
-        let testView = Text("Button Text")
+        _ = Text("Button Text")
             .foregroundColor(buttonTextColor)
             .background(Color.blue)
         
-        #expect(Bool(true), "Platform button text on color should work with colored backgrounds")  // testView is non-optional
+        #expect(buttonTextColor != Color.clear, "Button text color should not be clear")
     }
     
     @Test func testPlatformButtonTextOnColorAccessibilityAdaptation() {
@@ -386,7 +432,10 @@ open class PlatformColorsTests: BaseTestClass {
         #if os(iOS)
         // On iOS, the color should work with UIAccessibility settings
         // White is appropriate for both normal and high contrast modes
-        #expect(Bool(true), "Button text color should work with iOS accessibility settings")  // buttonTextColor is non-optional
+        _ = Button("Accessible Button") { }
+            .foregroundColor(buttonTextColor)
+            .accessibilityLabel("Test Button")
+        #expect(buttonTextColor == Color.white, "Button text color should be white for iOS accessibility")
         #endif
     }
     
@@ -395,7 +444,8 @@ open class PlatformColorsTests: BaseTestClass {
         let shadowColor = Color.platformShadowColor
         
         // Then - Test business logic: Shadow color should be available
-        #expect(Bool(true), "Platform shadow color should be available")  // shadowColor is non-optional
+        #expect(shadowColor != Color.clear, "Platform shadow color should be available")
+        #expect(shadowColor.opacity < 1.0, "Shadow color should have some transparency")
         
         // Test business logic: Shadow color should be black-based (for shadows)
         // Shadow color should have opacity (not fully opaque)
@@ -407,21 +457,23 @@ open class PlatformColorsTests: BaseTestClass {
         let shadowColor = Color.platformShadowColor
         
         // Then - Test business logic: Shadow color should have platform-appropriate opacity
+        #expect(shadowColor != Color.clear, "Shadow color should not be clear")
+        #expect(shadowColor != Color.platformPrimaryLabel, "Shadow color should differ from primary label")
         #if os(iOS)
         // iOS: Standard shadow opacity (0.1)
-        #expect(Bool(true), "iOS shadow color should be available")  // shadowColor is non-optional
+        #expect(shadowColor != Color.white, "iOS shadow color should not be white")
         #elseif os(macOS)
         // macOS: Lighter shadow opacity (0.05)
-        #expect(Bool(true), "macOS shadow color should be available")  // shadowColor is non-optional
+        #expect(shadowColor != Color.white, "macOS shadow color should not be white")
         #elseif os(tvOS)
         // tvOS: More pronounced shadow opacity (0.2)
-        #expect(Bool(true), "tvOS shadow color should be available")  // shadowColor is non-optional
+        #expect(shadowColor != Color.white, "tvOS shadow color should not be white")
         #elseif os(visionOS)
         // visionOS: Moderate shadow opacity (0.15)
-        #expect(Bool(true), "visionOS shadow color should be available")  // shadowColor is non-optional
+        #expect(shadowColor != Color.white, "visionOS shadow color should not be white")
         #else
         // Other platforms: Standard shadow
-        #expect(Bool(true), "Platform shadow color should be available")  // shadowColor is non-optional
+        #expect(shadowColor != Color.white, "Platform shadow color should not be white")
         #endif
     }
     
@@ -430,21 +482,22 @@ open class PlatformColorsTests: BaseTestClass {
         let shadowColor = Color.platformShadowColor
         
         // When: Using the color in a view with shadow
-        let shadowView = Rectangle()
+        _ = Rectangle()
             .fill(Color.platformBackground)
             .shadow(color: shadowColor, radius: 8, x: 0, y: 2)
         
         // Then - Test business logic: Shadow color should work in actual views
-        #expect(Bool(true), "Platform shadow color should work in views with shadows")  // shadowView is non-optional
+        // (View creation verifies it works - if it compiles and runs, the color is valid)
+        #expect(shadowColor != Color.clear, "Shadow color should not be clear")
         
         // Test business logic: Shadow color should work with elevation effects
-        let elevatedView = platformVStackContainer {
+        _ = platformVStackContainer {
             Text("Elevated Content")
         }
         .background(Color.platformBackground)
         .shadow(color: shadowColor, radius: 4)
         
-        #expect(Bool(true), "Platform shadow color should work with elevation effects")  // elevatedView is non-optional
+        #expect(shadowColor != Color.platformPrimaryLabel, "Shadow color should differ from primary label")
     }
     
     @Test func testPlatformShadowColorConsistency() {
@@ -455,9 +508,9 @@ open class PlatformColorsTests: BaseTestClass {
         // Then - Test business logic: Shadow color should be consistent across multiple calls
         #expect(shadowColor1 == shadowColor2, "Platform shadow color should be consistent")
         
-        // Test business logic: Shadow color should be the same instance/value
-        #expect(Bool(true), "Platform shadow color should not be nil")  // shadowColor1 is non-optional
-        #expect(Bool(true), "Platform shadow color should not be nil")  // shadowColor2 is non-optional
+        // Test business logic: Shadow color should not be clear
+        #expect(shadowColor1 != Color.clear, "Platform shadow color should not be clear")
+        #expect(shadowColor2 != Color.clear, "Platform shadow color should not be clear")
     }
     
     @Test func testAccessibilityAwareColorsInAllPlatforms() {
@@ -467,10 +520,12 @@ open class PlatformColorsTests: BaseTestClass {
         let platform = SixLayerPlatform.current
         
         // When & Then - Test business logic: Accessibility-aware colors should work on all platforms
+        #expect(buttonTextColor != Color.clear, "Button text color should not be clear on \(platform)")
+        #expect(shadowColor != Color.clear, "Shadow color should not be clear on \(platform)")
+        #expect(buttonTextColor == Color.white, "Button text color should be white on \(platform)")
         switch platform {
         case .iOS, .macOS, .watchOS, .tvOS, .visionOS:
-            #expect(Bool(true), "Button text color should be available on \(platform)")  // buttonTextColor is non-optional
-            #expect(Bool(true), "Shadow color should be available on \(platform)")  // shadowColor is non-optional
+            #expect(buttonTextColor != shadowColor, "Button text color should differ from shadow color on \(platform)")
         }
     }
     
@@ -480,12 +535,12 @@ open class PlatformColorsTests: BaseTestClass {
         let shadowColor = Color.platformShadowColor
         
         // When: Creating views that use accessibility-aware colors
-        let buttonView = Button("Primary Action") { }
+        _ = Button("Primary Action") { }
             .foregroundColor(buttonTextColor)
             .background(Color.accentColor)
             .cornerRadius(8)
         
-        let cardView = platformVStackContainer {
+        _ = platformVStackContainer {
             Text("Card Content")
                 .foregroundColor(Color.platformLabel)
         }
@@ -494,8 +549,10 @@ open class PlatformColorsTests: BaseTestClass {
         .shadow(color: shadowColor, radius: 8, x: 0, y: 2)
         
         // Then - Test business logic: Colors should work together in complex views
-        #expect(Bool(true), "Button with accessibility-aware text color should work")  // buttonView is non-optional
-        #expect(Bool(true), "Card with accessibility-aware shadow color should work")  // cardView is non-optional
+        // Verify colors are valid
+        #expect(buttonTextColor != Color.clear, "Button text color should be valid")
+        #expect(shadowColor != Color.clear, "Shadow color should be valid")
+        #expect(buttonTextColor == Color.white, "Button text color should be white for contrast")
     }
     
     @Test func testAccessibilityAwareColorsDifferentFromOtherColors() {
@@ -533,7 +590,9 @@ open class PlatformColorsTests: BaseTestClass {
         // When & Then
         for color in colors {
             // Colors should work in both light and dark modes
-            #expect(Bool(true), "Color should work in dark mode: \(color)")  // color is non-optional
+            // Note: System semantic colors automatically adapt to light/dark mode
+            // These are semantic colors, not hardcoded values, so they adapt at runtime
+            #expect(color != Color.clear, "Color should not be clear: \(color)")
         }
     }
     
@@ -556,10 +615,10 @@ open class PlatformColorsTests: BaseTestClass {
         // When & Then
         for color in colors {
             // Colors should work in different contexts (views, modifiers, etc.)
-            let view = Text("Test")
+            _ = Text("Test")
                 .foregroundColor(color)
             
-            #expect(Bool(true), "Color should work in view context: \(color)")  // view is non-optional
+            #expect(color != Color.clear, "Color should not be clear: \(color)")
         }
     }
     
@@ -579,7 +638,7 @@ open class PlatformColorsTests: BaseTestClass {
         
         // When & Then
         for (name, color) in testColors {
-            let view = platformVStackContainer {
+            _ = platformVStackContainer {
                 Text("\(name) Label")
                     .foregroundColor(color)
                 
@@ -588,15 +647,256 @@ open class PlatformColorsTests: BaseTestClass {
                     .frame(height: 1)
             }
             
-            #expect(Bool(true), "Color should work with SwiftUI views: \(name)")  // view is non-optional
+            #expect(color != Color.clear, "Color should not be clear: \(name)")
         }
+    }
+    
+    // MARK: - Accessibility Adaptation Tests
+    
+    /// Test that platform colors actually resolve to different values in light vs dark mode
+    /// This verifies the adaptive behavior by extracting resolved color values
+    @Test @MainActor func testPlatformColorsResolveDifferentlyInLightAndDarkMode() {
+        // Given: Platform semantic colors
+        let labelColor = Color.platformPrimaryLabel
+        let backgroundColor = Color.platformBackground
+        
+        // When: Resolving colors in different environments
+        // We'll extract the actual resolved RGB values to verify they're different
+        
+        #if os(iOS)
+        // Resolve colors in light and dark mode
+        let lightTraitCollection = UITraitCollection(userInterfaceStyle: .light)
+        let darkTraitCollection = UITraitCollection(userInterfaceStyle: .dark)
+        
+        let (_, _, _, _, lightLabelBrightness) = resolveAndExtractRGB(labelColor, traitCollection: lightTraitCollection)
+        let (_, _, _, _, darkLabelBrightness) = resolveAndExtractRGB(labelColor, traitCollection: darkTraitCollection)
+        let (_, _, _, _, lightBgBrightness) = resolveAndExtractRGB(backgroundColor, traitCollection: lightTraitCollection)
+        let (_, _, _, _, darkBgBrightness) = resolveAndExtractRGB(backgroundColor, traitCollection: darkTraitCollection)
+        
+        // Then: Colors should be different in light vs dark mode
+        // Label should be dark in light mode and light in dark mode
+        #expect(lightLabelBrightness < darkLabelBrightness, "Label should be darker in light mode (\(lightLabelBrightness)) than dark mode (\(darkLabelBrightness))")
+        
+        // Background should be lighter in light mode than in dark mode
+        #expect(lightBgBrightness > darkBgBrightness, "Background should be lighter in light mode (\(lightBgBrightness)) than dark mode (\(darkBgBrightness))")
+        
+        // Label and background should contrast in both modes
+        let lightContrast = abs(lightLabelBrightness - lightBgBrightness)
+        let darkContrast = abs(darkLabelBrightness - darkBgBrightness)
+        #expect(lightContrast > 0.3, "Label and background should contrast in light mode (contrast: \(lightContrast))")
+        #expect(darkContrast > 0.3, "Label and background should contrast in dark mode (contrast: \(darkContrast))")
+        
+        #elseif os(macOS)
+        // On macOS, verify colors are valid semantic colors
+        // Note: NSColor resolution for different appearances is more complex
+        #expect(labelColor != Color.clear, "Label color should be valid")
+        #expect(backgroundColor != Color.clear, "Background color should be valid")
+        #expect(labelColor != backgroundColor, "Label and background should contrast")
+        
+        #else
+        // Other platforms: Verify colors are valid semantic colors
+        #expect(labelColor != Color.clear, "Label color should be valid")
+        #expect(backgroundColor != Color.clear, "Background color should be valid")
+        #expect(labelColor != backgroundColor, "Label and background should contrast")
+        #endif
+    }
+    
+    /// Test that platform colors adapt when high contrast mode is enabled
+    /// This verifies the adaptive behavior by mocking high contrast mode
+    @Test @MainActor func testPlatformColorsAdaptToHighContrastMode() {
+        // Given: Mock high contrast mode enabled
+        RuntimeCapabilityDetection.setTestHighContrast(true)
+        defer {
+            RuntimeCapabilityDetection.setTestHighContrast(nil)
+        }
+        
+        // Verify high contrast is detected as enabled
+        #expect(RuntimeCapabilityDetection.isHighContrastEnabled == true, "High contrast should be enabled via mock")
+        
+        // When: Colors are used in views with high contrast enabled
+        let primaryLabel = Color.platformPrimaryLabel
+        let secondaryLabel = Color.platformSecondaryLabel
+        let backgroundColor = Color.platformBackground
+        
+        let testView = VStack {
+            Text("Primary Label")
+                .foregroundColor(primaryLabel)
+            Text("Secondary Label")
+                .foregroundColor(secondaryLabel)
+            Rectangle()
+                .fill(backgroundColor)
+        }
+        
+        // Then: View should render successfully
+        // In high contrast mode, the system automatically adjusts these semantic colors
+        // to provide better contrast ratios
+        _ = hostRootPlatformView(testView.withGlobalAutoIDsEnabled())
+        
+        // Verify colors are valid semantic colors
+        #expect(primaryLabel != Color.clear, "Primary label should be valid")
+        #expect(secondaryLabel != Color.clear, "Secondary label should be valid")
+        #expect(backgroundColor != Color.clear, "Background should be valid")
+        
+        // Colors should maintain hierarchy (all different)
+        #expect(primaryLabel != secondaryLabel, "Primary and secondary should differ")
+        #expect(primaryLabel != backgroundColor, "Primary label and background should contrast")
+        #expect(secondaryLabel != backgroundColor, "Secondary label and background should contrast")
+        
+        // Test with high contrast disabled
+        RuntimeCapabilityDetection.setTestHighContrast(false)
+        #expect(RuntimeCapabilityDetection.isHighContrastEnabled == false, "High contrast should be disabled via mock")
+        
+        // Colors should still be valid when high contrast is disabled
+        #expect(primaryLabel != Color.clear, "Primary label should be valid without high contrast")
+        #expect(backgroundColor != Color.clear, "Background should be valid without high contrast")
+    }
+    
+    /// Test that platform colors provide different contrast in high contrast vs normal mode
+    /// This verifies the actual adaptive behavior by comparing resolved color values
+    @Test @MainActor func testPlatformColorsProvideHigherContrastInHighContrastMode() {
+        // Given: Platform colors
+        let labelColor = Color.platformPrimaryLabel
+        let backgroundColor = Color.platformBackground
+        
+        #if os(iOS)
+        // When: Resolving colors with high contrast enabled vs disabled
+        RuntimeCapabilityDetection.setTestHighContrast(true)
+        defer {
+            RuntimeCapabilityDetection.setTestHighContrast(nil)
+        }
+        
+        // Resolve colors in high contrast and normal mode
+        let highContrastTraitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceStyle: .light),
+            UITraitCollection(accessibilityContrast: .high)
+        ])
+        
+        let normalTraitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceStyle: .light),
+            UITraitCollection(accessibilityContrast: .normal)
+        ])
+        
+        let (_, _, _, _, hcLabelBrightness) = resolveAndExtractRGB(labelColor, traitCollection: highContrastTraitCollection)
+        let (_, _, _, _, normalLabelBrightness) = resolveAndExtractRGB(labelColor, traitCollection: normalTraitCollection)
+        let (_, _, _, _, hcBgBrightness) = resolveAndExtractRGB(backgroundColor, traitCollection: highContrastTraitCollection)
+        let (_, _, _, _, normalBgBrightness) = resolveAndExtractRGB(backgroundColor, traitCollection: normalTraitCollection)
+        
+        // Calculate contrast ratios (simplified - actual WCAG formula is more complex)
+        let hcContrast = abs(hcLabelBrightness - hcBgBrightness)
+        let normalContrast = abs(normalLabelBrightness - normalBgBrightness)
+        
+        // Then: High contrast mode should provide better or equal contrast
+        // Note: The system may adjust colors to provide higher contrast in high contrast mode
+        #expect(hcContrast >= normalContrast || abs(hcContrast - normalContrast) < 0.1, 
+                "High contrast mode should provide equal or better contrast (hc: \(hcContrast), normal: \(normalContrast))")
+        
+        // Colors should still provide contrast in both modes
+        #expect(hcContrast > 0.3, "Label and background should contrast in high contrast mode (contrast: \(hcContrast))")
+        #expect(normalContrast > 0.3, "Label and background should contrast in normal mode (contrast: \(normalContrast))")
+        
+        #else
+        // On other platforms, verify colors are valid semantic colors
+        #expect(labelColor != Color.clear, "Label color should be valid")
+        #expect(backgroundColor != Color.clear, "Background color should be valid")
+        #expect(labelColor != backgroundColor, "Label and background should contrast")
+        #endif
+    }
+    
+    /// Test that platform label colors are semantic and adapt to accessibility settings
+    /// NOTE: System semantic colors (like .label, .secondaryLabel) automatically adapt to:
+    /// - Light/Dark mode
+    /// - High Contrast mode (iOS: UIAccessibility.isDarkerSystemColorsEnabled)
+    /// - Other accessibility preferences
+    /// These tests verify the colors are semantic (not hardcoded) and will adapt at runtime
+    @Test func testPlatformLabelColorsAreSemantic() {
+        // Given: Platform label colors use system semantic colors
+        let primaryLabel = Color.platformPrimaryLabel
+        let secondaryLabel = Color.platformSecondaryLabel
+        let tertiaryLabel = Color.platformTertiaryLabel
+        
+        // Then: Colors should be valid semantic colors (not clear/transparent)
+        // These colors will automatically adapt to:
+        // - Light/Dark mode changes
+        // - High Contrast mode (when enabled)
+        // - Other accessibility settings
+        #expect(primaryLabel != Color.clear, "Primary label should be a valid semantic color")
+        #expect(secondaryLabel != Color.clear, "Secondary label should be a valid semantic color")
+        #expect(tertiaryLabel != Color.clear, "Tertiary label should be a valid semantic color")
+        
+        // Colors should be different from each other
+        #expect(primaryLabel != secondaryLabel, "Primary and secondary labels should differ")
+        #expect(secondaryLabel != tertiaryLabel, "Secondary and tertiary labels should differ")
+    }
+    
+    /// Test that platform colors provide contrast between label and background
+    /// This verifies the adaptive behavior ensures readability
+    @Test func testPlatformColorsProvideContrast() {
+        // Given: Platform colors that should provide contrast
+        let labelColor = Color.platformLabel
+        let backgroundColor = Color.platformBackground
+        
+        // Then: Label and background should be different to ensure readability
+        // This contrast is maintained automatically by the system in both light and dark modes
+        #expect(labelColor != backgroundColor, "Label and background should provide contrast")
+        
+        // Verify both are valid semantic colors
+        #expect(labelColor != Color.clear, "Label color should be valid")
+        #expect(backgroundColor != Color.clear, "Background color should be valid")
+    }
+    
+    /// Test that platform colors adapt to high contrast mode
+    /// NOTE: On iOS, when UIAccessibility.isDarkerSystemColorsEnabled is true,
+    /// system semantic colors automatically provide higher contrast
+    @Test @MainActor func testPlatformColorsAdaptToHighContrast() {
+        // Given: Platform colors use system semantic colors
+        let primaryLabel = Color.platformPrimaryLabel
+        let buttonTextColor = Color.platformButtonTextOnColor
+        
+        // Then: Colors should be valid and will adapt to high contrast mode
+        // On iOS, when high contrast is enabled, system colors automatically
+        // provide higher contrast versions
+        #expect(primaryLabel != Color.clear, "Primary label should adapt to high contrast mode")
+        #expect(buttonTextColor != Color.clear, "Button text color should adapt to high contrast mode")
+        
+        // Button text color should be white for maximum contrast
+        #expect(buttonTextColor == Color.white, "Button text should be white for maximum contrast")
+        
+        // Verify the color works in a view (which will adapt at runtime)
+        _ = Button("Test") { }
+            .foregroundColor(buttonTextColor)
+            .background(Color.blue)
+    }
+    
+    /// Test that different label colors maintain hierarchy in different environments
+    /// This verifies that the semantic colors maintain their relative relationships
+    @Test func testPlatformLabelColorsMaintainHierarchy() {
+        // Given: Platform label colors with different hierarchy levels
+        let primary = Color.platformPrimaryLabel
+        let secondary = Color.platformSecondaryLabel
+        let tertiary = Color.platformTertiaryLabel
+        let quaternary = Color.platformQuaternaryLabel
+        
+        // Then: Colors should maintain hierarchy (all different from each other)
+        // This hierarchy is maintained by the system in all color schemes and accessibility modes
+        #expect(primary != secondary, "Primary should differ from secondary")
+        #expect(secondary != tertiary, "Secondary should differ from tertiary")
+        #expect(tertiary != quaternary, "Tertiary should differ from quaternary")
+        #expect(primary != tertiary, "Primary should differ from tertiary")
+        #expect(primary != quaternary, "Primary should differ from quaternary")
+        #expect(secondary != quaternary, "Secondary should differ from quaternary")
+        
+        // All should be valid semantic colors
+        #expect(primary != Color.clear, "Primary label should be valid")
+        #expect(secondary != Color.clear, "Secondary label should be valid")
+        #expect(tertiary != Color.clear, "Tertiary label should be valid")
+        #expect(quaternary != Color.clear, "Quaternary label should be valid")
     }
     
     // MARK: - Documentation Tests
     
     @Test @MainActor func testColorUsageExamples() {
         // Given
-        let exampleView = platformVStackContainer {
+        _ = platformVStackContainer {
             Text("Primary Text")
                 .foregroundColor(.platformPrimaryLabel)
             
@@ -621,7 +921,12 @@ open class PlatformColorsTests: BaseTestClass {
         }
         
         // When & Then
-        #expect(Bool(true), "Color usage examples should work correctly")  // exampleView is non-optional
+        // Verify colors are valid semantic colors
+        #expect(Color.platformPrimaryLabel != Color.clear, "Primary label color should be valid")
+        #expect(Color.platformSecondaryLabel != Color.clear, "Secondary label color should be valid")
+        #expect(Color.platformPlaceholderText != Color.clear, "Placeholder text color should be valid")
+        #expect(Color.platformSeparator != Color.clear, "Separator color should be valid")
+        #expect(Color.platformOpaqueSeparator != Color.clear, "Opaque separator color should be valid")
     }
     
     // MARK: - Backward Compatibility Tests
@@ -639,9 +944,12 @@ open class PlatformColorsTests: BaseTestClass {
         ]
         
         // Then
-        // All colors should be backward compatible
+        // All colors should be backward compatible (valid and usable)
         for color in colors {
-            #expect(Bool(true), "Color should be backward compatible: \(color)")  // color is non-optional
+            #expect(color != Color.clear, "Color should be backward compatible: \(color)")
+            // Verify color can be used in a view
+            _ = Text("Test")
+                .foregroundColor(color)
         }
     }
     

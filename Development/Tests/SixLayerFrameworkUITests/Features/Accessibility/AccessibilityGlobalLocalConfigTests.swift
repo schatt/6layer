@@ -14,11 +14,11 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // MARK: - Global Config Tests
     
-    @Test @MainActor func testAccessibilityFunctionsRespectGlobalConfigDisabled() async {
+    @Test @MainActor func testAccessibilityFunctionsRespectGlobalConfigDisabled() {
         // Test that automatic accessibility functions don't generate IDs when global config is disabled
         
         // Disable global config - use testConfig from BaseTestClass
-        await runWithTaskLocalConfig {
+        runWithTaskLocalConfig {
             guard let config = testConfig else {
                 Issue.record("testConfig is nil")
                 return
@@ -283,12 +283,13 @@ open class AccessibilityGlobalLocalConfigTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    private func generateIDForView(_ view: some View) async -> String {
+    @MainActor
+    private func generateIDForView(_ view: some View) -> String {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         do {
-            let inspectedView = try await view.inspect()
-            let button = try await inspectedView.button()
-            return try await button.accessibilityIdentifier()
+            let inspectedView = try view.inspect()
+            let button = try inspectedView.button()
+            return try button.accessibilityIdentifier()
         } catch {
             Issue.record("Failed to generate ID for view")
             return ""

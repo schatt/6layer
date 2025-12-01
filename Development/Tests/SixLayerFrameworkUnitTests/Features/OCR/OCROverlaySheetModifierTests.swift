@@ -76,18 +76,15 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         )
         
         // When: Applying modifier with callbacks
-        var editCallbackExecuted = false
-        var deleteCallbackExecuted = false
-        
         _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage,
             onTextEdit: { _, _ in
-                editCallbackExecuted = true
+                // Callback executed
             },
             onTextDelete: { _ in
-                deleteCallbackExecuted = true
+                // Callback executed
             }
         )
         
@@ -152,7 +149,7 @@ open class OCROverlaySheetModifierTests: BaseTestClass {
         let ocrResult = createTestOCRResult()
         let ocrImage = PlatformImage.createPlaceholder()
         
-        let modifiedView = testView.ocrOverlaySheet(
+        _ = testView.ocrOverlaySheet(
             isPresented: binding,
             ocrResult: ocrResult,
             ocrImage: ocrImage

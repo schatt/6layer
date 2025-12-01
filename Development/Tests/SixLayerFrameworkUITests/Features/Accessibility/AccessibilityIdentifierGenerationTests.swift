@@ -177,20 +177,15 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        do {
-            if let submitInspected = submitButton.tryInspect(),
-               let cancelInspected = cancelButton.tryInspect() {
-                let submitID = try? submitInspected.sixLayerAccessibilityIdentifier()
-                let cancelID = try? cancelInspected.sixLayerAccessibilityIdentifier()
-                
-                // TDD RED: These should FAIL - labels not currently included
-                #expect((submitID?.contains("Submit") ?? false), "Submit button identifier should include 'Submit' label")
-                #expect((cancelID?.contains("Cancel") ?? false), "Cancel button identifier should include 'Cancel' label")
-                #expect(submitID != cancelID, "Buttons with different labels should have different identifiers")
+        if let submitInspected = submitButton.tryInspect(),
+           let cancelInspected = cancelButton.tryInspect() {
+            let submitID = try? submitInspected.sixLayerAccessibilityIdentifier()
+            let cancelID = try? cancelInspected.sixLayerAccessibilityIdentifier()
             
-            }
-        } catch {
-            Issue.record("Failed to inspect views")
+            // TDD RED: These should FAIL - labels not currently included
+            #expect((submitID?.contains("Submit") ?? false), "Submit button identifier should include 'Submit' label")
+            #expect((cancelID?.contains("Cancel") ?? false), "Cancel button identifier should include 'Cancel' label")
+            #expect(submitID != cancelID, "Buttons with different labels should have different identifiers")
         }
         #else
         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
@@ -209,20 +204,15 @@ open class AccessibilityIdentifierGenerationTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
         
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        do {
-            if let inspected = button.tryInspect() {
-                let buttonID = try? inspected.sixLayerAccessibilityIdentifier()
-                
-                // TDD RED: Should FAIL - labels not sanitized
-                // Should contain sanitized version: "add-new-item" or similar
-                #expect((buttonID?.contains("add") ?? false) || (buttonID?.contains("new") ?? false) || (buttonID?.contains("item") ?? false), 
-                       "Identifier should include sanitized label text")
-                #expect(!(buttonID?.contains("Add New Item") ?? false), 
-                       "Identifier should not contain raw label with spaces")
+        if let inspected = button.tryInspect() {
+            let buttonID = try? inspected.sixLayerAccessibilityIdentifier()
             
-            }
-        } catch {
-            Issue.record("Failed to inspect view")
+            // TDD RED: Should FAIL - labels not sanitized
+            // Should contain sanitized version: "add-new-item" or similar
+            #expect((buttonID?.contains("add") ?? false) || (buttonID?.contains("new") ?? false) || (buttonID?.contains("item") ?? false), 
+                   "Identifier should include sanitized label text")
+            #expect(!(buttonID?.contains("Add New Item") ?? false), 
+                   "Identifier should not contain raw label with spaces")
         }
         #else
         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure

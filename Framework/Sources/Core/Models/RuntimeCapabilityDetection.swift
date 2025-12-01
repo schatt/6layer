@@ -62,6 +62,12 @@ public struct RuntimeCapabilityDetection {
         Thread.current.threadDictionary["testAssistiveTouch"] = value
     }
     
+    /// Override high contrast mode detection for testing
+    /// This allows tests to verify color adaptation behavior
+    public static func setTestHighContrast(_ value: Bool?) {
+        Thread.current.threadDictionary["testHighContrast"] = value
+    }
+    
     /// Clear all capability overrides for testing
     public static func clearAllCapabilityOverrides() {
         setTestTouchSupport(nil)
@@ -70,6 +76,7 @@ public struct RuntimeCapabilityDetection {
         setTestVoiceOver(nil)
         setTestSwitchControl(nil)
         setTestAssistiveTouch(nil)
+        setTestHighContrast(nil)
     }
     
     // MARK: - Private Capability Override Getters
@@ -96,6 +103,43 @@ public struct RuntimeCapabilityDetection {
     
     private static var testAssistiveTouch: Bool? {
         return Thread.current.threadDictionary["testAssistiveTouch"] as? Bool
+    }
+    
+    private static var testHighContrast: Bool? {
+        return Thread.current.threadDictionary["testHighContrast"] as? Bool
+    }
+    
+    // MARK: - High Contrast Detection
+    
+    /// Detects if high contrast mode is enabled
+    /// Respects test override if set, otherwise queries the actual system setting
+    @MainActor
+    public static var isHighContrastEnabled: Bool {
+        // Check for capability override first (thread-local, no MainActor needed for override)
+        if let testValue = testHighContrast {
+            return testValue
+        }
+        
+        // Use real runtime detection
+        #if os(iOS)
+        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
+        // while preventing crashes during parallel test execution
+        if Thread.isMainThread {
+            return MainActor.assumeIsolated {
+                UIAccessibility.isDarkerSystemColorsEnabled
+            }
+        } else {
+            // If not on main thread, return false (conservative default)
+            // This prevents crashes during parallel test execution
+            return false
+        }
+        #elseif os(macOS)
+        // macOS doesn't have a direct equivalent, but we can check system preferences
+        // For now, return false as macOS high contrast is less common
+        return false
+        #else
+        return false
+        #endif
     }
     
     // MARK: - Touch Capability Detection

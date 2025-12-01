@@ -223,7 +223,7 @@ open class TestingFailureDemonstrationTests: BaseTestClass {
         // What we SHOULD test: Actual functionality
         #expect(platformImage.uiImage != nil, "We should test actual results")
         #elseif os(macOS)
-        let testImage = placeholderImage.nsImage!
+        let testImage = placeholderImage.nsImage
         let platformImage = PlatformImage(testImage)
 
         // What we SHOULD test: Actual functionality

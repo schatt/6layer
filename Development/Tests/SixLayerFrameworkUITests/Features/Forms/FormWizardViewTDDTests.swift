@@ -133,10 +133,6 @@ open class FormWizardViewTDDTests: BaseTestClass {
             FormWizardStep(id: "step2", title: "Step 2", stepOrder: 1)
         ]
 
-        var nextCalled = false
-        var previousCalled = false
-        var finishCalled = false
-
         let wizardState = FormWizardState()
         wizardState.setSteps(steps)
 

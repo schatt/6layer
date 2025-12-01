@@ -108,14 +108,8 @@ public class HighContrastManager: ObservableObject {
     
     @MainActor
     private func checkHighContrastStatus() {
-        #if os(iOS)
-        isHighContrastEnabled = UIAccessibility.isDarkerSystemColorsEnabled
-        #endif
-        
-        #if os(macOS)
-        // macOS high contrast detection
-        isHighContrastEnabled = false
-        #endif
+        // Use RuntimeCapabilityDetection which respects test overrides
+        isHighContrastEnabled = RuntimeCapabilityDetection.isHighContrastEnabled
     }
     
     public func getHighContrastColor(_ baseColor: Color) -> Color {
