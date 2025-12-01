@@ -56,7 +56,7 @@ struct FieldHintsIntegrationTests {
     
     @Test func testFieldHintsCompleteExample() {
         // Test complete workflow: hints in metadata -> discovered by field
-        let _ = [
+        let fields = [
             DynamicFormField(
                 id: "username",
                 contentType: .text,
