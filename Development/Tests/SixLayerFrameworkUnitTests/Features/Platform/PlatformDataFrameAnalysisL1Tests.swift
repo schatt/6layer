@@ -244,7 +244,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Using custom visualization view
-        let _ = platformAnalyzeDataFrame_L1(
+        let view = platformAnalyzeDataFrame_L1(
             dataFrame: createTestDataFrame(),
             hints: hints,
             customVisualizationView: { (analysisContent: AnyView) in
@@ -270,7 +270,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         
         // When: Not providing custom visualization view (should use default)
         // Omit the parameter to use default value instead of passing nil
-        let _ = platformAnalyzeDataFrame_L1(
+        let view = platformAnalyzeDataFrame_L1(
             dataFrame: createTestDataFrame(),
             hints: hints
         )
@@ -286,7 +286,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Using custom visualization view
-        let _ = platformCompareDataFrames_L1(
+        let view = platformCompareDataFrames_L1(
             dataFrames: dataFrames,
             hints: hints,
             customVisualizationView: { (comparisonContent: AnyView) in
@@ -309,7 +309,7 @@ open class PlatformDataFrameAnalysisL1Tests: BaseTestClass {
         let hints = DataFrameAnalysisHints()
         
         // When: Using custom visualization view
-        let _ = platformAssessDataQuality_L1(
+        let view = platformAssessDataQuality_L1(
             dataFrame: createTestDataFrame(),
             hints: hints,
             customVisualizationView: { (qualityContent: AnyView) in
