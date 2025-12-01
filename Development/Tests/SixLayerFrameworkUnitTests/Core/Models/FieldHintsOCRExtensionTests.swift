@@ -280,7 +280,7 @@ struct FieldHintsOCRExtensionTests {
     
     @Test func testApplyOCRHintsToDynamicFormField() {
         // Given: Hints with OCR hints
-        let _ = FieldDisplayHints(
+        let hints = FieldDisplayHints(
             expectedLength: 10,
             ocrHints: ["gallons", "gal"]
         )
@@ -307,7 +307,7 @@ struct FieldHintsOCRExtensionTests {
             dependentFields: ["price", "quantity"],
             priority: 1
         )
-        let _ = FieldDisplayHints(
+        let hints = FieldDisplayHints(
             expectedLength: 10,
             calculationGroups: [calculationGroup]
         )
@@ -334,7 +334,7 @@ struct FieldHintsOCRExtensionTests {
             dependentFields: ["total_price", "price_per_gallon"],
             priority: 1
         )
-        let _ = FieldDisplayHints(
+        let hints = FieldDisplayHints(
             expectedLength: 10,
             ocrHints: ["gallons", "gal"],
             calculationGroups: [calculationGroup]

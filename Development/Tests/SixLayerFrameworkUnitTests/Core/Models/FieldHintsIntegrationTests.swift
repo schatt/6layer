@@ -92,8 +92,8 @@ struct FieldHintsIntegrationTests {
         
         // Verify hints are discovered from fields
         for field in fields {
-            let _ = field.displayHints
-            #expect(Bool(true), "Hints should be discovered from field metadata")  // hints is non-optional
+            let hints = field.displayHints
+            // hints is optional, so check if it exists
             
             if field.id == "username" {
                 #expect(hints?.displayWidth == "medium")

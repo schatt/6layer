@@ -76,18 +76,22 @@ open class FrameworkComponentIntegrationTests: BaseTestClass {
             context: .dashboard
         )
         
-        let _ = platformPresentItemCollection_L1(
+        let collectionView = platformPresentItemCollection_L1(
             items: mockItems,
             hints: hints
         )
         
         // Test that the component can be created and doesn't crash
-        #expect(Bool(true), "platformPresentItemCollection_L1 should be creatable")  // collectionView is non-optional
+        // collectionView is non-optional
         
         // Test that it can be used in a view hierarchy
-        let _ = platformVStackContainer {
+        let testView = platformVStackContainer {
             collectionView
         }
+        let mirror = Mirror(reflecting: testView)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View should be a SwiftUI view type, got: \(viewType)")
         
         #expect(Bool(true), "platformPresentItemCollection_L1 should work in view hierarchy")  // testView is non-optional
         print("Testing platformPresentItemCollection_L1 integration with accessibility")
