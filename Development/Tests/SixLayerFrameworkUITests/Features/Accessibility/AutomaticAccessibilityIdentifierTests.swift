@@ -784,14 +784,9 @@ open class AutomaticAccessibilityIdentifierTests: BaseTestClass {
             // Generate UI test code and copy to clipboard
             config.generateUITestCodeToClipboard()
                 
-            // Verify clipboard contains test code (platform-specific)
-            #if os(macOS)
-            let clipboardContent = NSPasteboard.general.string(forType: .string) ?? ""
-            #expect(!clipboardContent.isEmpty, "Clipboard should contain generated UI test content on macOS")
-        #elseif os(iOS)
-            // iOS clipboard access requires UIPasteboard and is more restricted
-            // For iOS, we verify the function completed without error
-            #expect(Bool(true), "Clipboard generation should complete on iOS")
+            // Verify clipboard contains test code using cross-platform API
+            let clipboardContent = PlatformClipboard.getTextFromClipboard() ?? ""
+            #expect(!clipboardContent.isEmpty, "Clipboard should contain generated UI test content")
             #endif
         }
     }

@@ -66,13 +66,19 @@ PLATFORM_TYPE_VIOLATIONS = {
         'replacement': 'PlatformImage',
         'hint': 'Use PlatformImage instead of NSImage for cross-platform compatibility',
         'priority': 1,
-        'pattern': r'\bNSImage\b'
+        'pattern': r'\bNSImage\b',
+        'exclude_patterns': [
+            r'PlatformImage\s*\(\s*nsImage\s*:',  # PlatformImage(nsImage: ...)
+        ]
     },
     'UIImage': {
         'replacement': 'PlatformImage',
         'hint': 'Use PlatformImage instead of UIImage for cross-platform compatibility',
         'priority': 1,
-        'pattern': r'\bUIImage\b'
+        'pattern': r'\bUIImage\b',
+        'exclude_patterns': [
+            r'PlatformImage\s*\(\s*uiImage\s*:',  # PlatformImage(uiImage: ...)
+        ]
     },
     
     # ============================================================================
@@ -496,6 +502,62 @@ def strip_comments_from_lines(lines: List[str]) -> List[str]:
     
     return result
 
+def strip_string_literals_from_lines(lines: List[str]) -> List[str]:
+    """
+    Strip string literals from all lines.
+
+    Returns:
+        List of lines with string literals removed (replaced with placeholders)
+    """
+    result = []
+    for line in lines:
+        stripped = strip_string_literals_from_line(line)
+        result.append(stripped)
+
+    return result
+
+def strip_string_literals_from_line(line: str) -> str:
+    """
+    Strip string literals from a single line of Swift code.
+
+    Returns:
+        Line with string literals replaced by placeholders
+    """
+    result = []
+    i = 0
+
+    while i < len(line):
+        char = line[i]
+        next_char = line[i + 1] if i + 1 < len(line) else None
+
+        # Handle string literals
+        if char == '"' or char == "'":
+            string_char = char
+            # Replace the entire string literal with a placeholder
+            result.append('"STRING_LITERAL"')
+            i += 1
+
+            # Skip to the end of the string literal
+            while i < len(line):
+                char = line[i]
+                if char == '\\' and next_char:
+                    # Escaped character, skip both
+                    i += 2
+                    next_char = line[i + 1] if i + 1 < len(line) else None
+                    continue
+                elif char == string_char:
+                    # End of string
+                    i += 1
+                    break
+                else:
+                    i += 1
+            continue
+        else:
+            result.append(char)
+            i += 1
+
+    return ''.join(result)
+
 # ============================================================================
 # Detection Logic
 # ============================================================================
@@ -554,26 +616,40 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exc
         print(f"Warning: Could not read {file_path}: {e}", file=sys.stderr)
         return violations, exclusions
     
-    # Strip comments from lines for violation detection
+    # Strip comments and string literals from lines for violation detection
     # Keep original lines for display in violation reports
     lines_without_comments = strip_comments_from_lines(lines)
+    lines_without_strings = strip_string_literals_from_lines(lines_without_comments)
     
     # Check for platform-specific type violations (PRIORITY 1)
     for violation_name, violation_info in PLATFORM_TYPE_VIOLATIONS.items():
         pattern = violation_info['pattern']
-        for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_comments), start=1):
-            matches = list(re.finditer(pattern, stripped_line))
-            for match in matches:
-                violations.append(Violation(
-                    file_path=str(file_path),
-                    line_number=line_num,
-                    line_content=original_line.rstrip(),
-                    violation_type=violation_name,
-                    replacement=violation_info['replacement'],
-                    hint=violation_info['hint'],
-                    priority=violation_info['priority'],
-                    column=match.start() + 1
-                ))
+        exclude_patterns = violation_info.get('exclude_patterns', [])
+        for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_strings), start=1):
+            if re.search(pattern, stripped_line):
+                # Check if this line should be excluded based on exclude patterns
+                should_exclude = False
+                for exclude_pattern in exclude_patterns:
+                    if re.search(exclude_pattern, stripped_line):
+                        should_exclude = True
+                        break
+
+                if should_exclude:
+                    continue
+
+                # Found a violation
+                matches = list(re.finditer(pattern, stripped_line))
+                for match in matches:
+                    violations.append(Violation(
+                        file_path=str(file_path),
+                        line_number=line_num,
+                        line_content=original_line.rstrip(),
+                        violation_type=violation_name,
+                        replacement=violation_info['replacement'],
+                        hint=violation_info['hint'],
+                        priority=violation_info['priority'],
+                        column=match.start() + 1
+                    ))
     
     # Check for view violations (PRIORITY 2)
     for violation_name, violation_info in VIEW_VIOLATIONS.items():
@@ -586,7 +662,7 @@ def find_violations_in_file(file_path: Path, exclude_framework: bool = True, exc
         if violation_info.get('exclude_in_framework', False) and 'Framework/' in str(file_path):
             continue
 
-        for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_comments), start=1):
+        for line_num, (original_line, stripped_line) in enumerate(zip(lines, lines_without_strings), start=1):
             if re.search(pattern, stripped_line):
                 # Check if this line should be excluded based on exclude patterns
                 should_exclude = False
