@@ -96,6 +96,36 @@ public enum DocumentType: String, CaseIterable, Sendable {
         case .legalDocument: return "Legal Document"
         }
     }
+    
+    /// Maps DocumentType to Core Data entity name for hints file loading
+    /// Hints files should be named after entity names, not DTO names
+    /// Example: .fuelReceipt -> "FuelPurchase" (entity name)
+    public var entityName: String? {
+        switch self {
+        case .fuelReceipt:
+            return "FuelPurchase"
+        case .invoice:
+            return "Expense" // Could also be "MaintenanceRecord" based on context
+        case .businessCard:
+            return "Contact"
+        case .idDocument:
+            return "IDDocument"
+        case .medicalRecord:
+            return "MedicalRecord"
+        case .legalDocument:
+            return "LegalDocument"
+        case .receipt:
+            return "Receipt"
+        case .form:
+            return "Form"
+        case .license:
+            return "License"
+        case .passport:
+            return "Passport"
+        case .general:
+            return nil // No specific entity for general documents
+        }
+    }
 }
 
 // MARK: - Extraction Mode

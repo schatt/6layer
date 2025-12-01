@@ -107,6 +107,14 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     
     public init() {}
     
+    // MARK: - DocumentType to Entity Name Mapping
+    
+    /// Maps DocumentType to Core Data entity name (for hints file loading)
+    /// Uses the entityName property from DocumentType extension
+    static func entityName(for documentType: DocumentType) -> String? {
+        return documentType.entityName
+    }
+    
     // MARK: - Public Methods
     
     /// Process an image for text recognition
@@ -148,7 +156,14 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         )
         
         // Perform structured extraction
-        let structuredData = extractStructuredData(from: baseResult, context: context)
+        var structuredData = extractStructuredData(from: baseResult, context: context)
+        
+        // Apply calculation groups to derive missing values
+        if context.extractionMode == .automatic || context.extractionMode == .hybrid,
+           context.documentType != .general {
+            structuredData = applyCalculationGroups(to: structuredData, documentType: context.documentType, context: context)
+        }
+        
         let extractionConfidence = calculateExtractionConfidence(structuredData, context: context)
         let missingFields = findMissingRequiredFields(structuredData, context: context)
         
@@ -179,8 +194,13 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
             if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
                 let range = NSRange(location: 0, length: result.extractedText.utf16.count)
                 if let match = regex.firstMatch(in: result.extractedText, options: [], range: range) {
-                    if let range = Range(match.range, in: result.extractedText) {
-                        structuredData[field] = String(result.extractedText[range])
+                    // Pattern should have capture group for the value (group 2)
+                    // Group 1 is the hint text, group 2 is the value
+                    if match.numberOfRanges > 2, let valueRange = Range(match.range(at: 2), in: result.extractedText) {
+                        structuredData[field] = String(result.extractedText[valueRange])
+                    } else if match.numberOfRanges > 1, let valueRange = Range(match.range(at: 1), in: result.extractedText) {
+                        // Fallback: if only one capture group, use it
+                        structuredData[field] = String(result.extractedText[valueRange])
                     }
                 }
             }
@@ -205,9 +225,43 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
             patterns = BuiltInPatterns.patterns[documentType] ?? [:]
         }
         
-        // Override with custom hints if provided
+        // Automatically load hints file if documentType is provided and extractionMode is automatic or hybrid
+        if let documentType = documentType,
+           (context.extractionMode == .automatic || context.extractionMode == .hybrid) {
+            let hintsPatterns = loadHintsPatterns(for: documentType, context: context)
+            // Hints file patterns take precedence over built-in patterns
+            for (key, value) in hintsPatterns {
+                patterns[key] = value
+            }
+        }
+        
+        // Override with custom hints if provided (highest priority)
         for (key, value) in context.extractionHints {
             patterns[key] = value
+        }
+        
+        return patterns
+    }
+    
+    /// Load hints file and convert ocrHints to regex patterns
+    private func loadHintsPatterns(for documentType: DocumentType, context: OCRContext) -> [String: String] {
+        guard let entityName = Self.entityName(for: documentType) else {
+            return [:] // No entity mapping for this document type
+        }
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
+        
+        var patterns: [String: String] = [:]
+        
+        // Convert ocrHints to regex patterns
+        for (fieldId, fieldHints) in hintsResult.fieldHints {
+            if let ocrHints = fieldHints.ocrHints, !ocrHints.isEmpty {
+                // Create regex pattern from ocrHints
+                // Pattern: (?i)(hint1|hint2|hint3)\s*[:=]?\s*([\d.,]+)
+                let escapedHints = ocrHints.map { NSRegularExpression.escapedPattern(for: $0) }
+                let pattern = "(?i)(\(escapedHints.joined(separator: "|")))\\s*[:=]?\\s*([\\d.,]+)"
+                patterns[fieldId] = pattern
+            }
         }
         
         return patterns
@@ -224,6 +278,86 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     
     private func findMissingRequiredFields(_ structuredData: [String: String], context: OCRContext) -> [String] {
         return context.requiredFields.filter { !structuredData.keys.contains($0) }
+    }
+    
+    /// Apply calculation groups to derive missing field values
+    private func applyCalculationGroups(to structuredData: [String: String], documentType: DocumentType, context: OCRContext) -> [String: String] {
+        var result = structuredData
+        guard let entityName = Self.entityName(for: documentType) else {
+            return result // No entity mapping for this document type
+        }
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
+        
+        // Collect all calculation groups, sorted by priority
+        var allGroups: [(fieldId: String, group: CalculationGroup)] = []
+        for (fieldId, fieldHints) in hintsResult.fieldHints {
+            if let calculationGroups = fieldHints.calculationGroups {
+                for group in calculationGroups {
+                    allGroups.append((fieldId: fieldId, group: group))
+                }
+            }
+        }
+        
+        // Sort by priority (lower number = higher priority)
+        allGroups.sort { $0.group.priority < $1.group.priority }
+        
+        // Apply calculation groups in priority order
+        for (fieldId, group) in allGroups {
+            // Skip if field already has a value
+            if result[fieldId] != nil {
+                continue
+            }
+            
+            // Check if all dependent fields are available
+            let allDependenciesAvailable = group.dependentFields.allSatisfy { fieldId in
+                result[fieldId] != nil
+            }
+            
+            if allDependenciesAvailable {
+                // Calculate the value
+                if let calculatedValue = evaluateCalculationGroup(group, fieldValues: result) {
+                    result[fieldId] = String(calculatedValue)
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    /// Evaluate a calculation group formula
+    private func evaluateCalculationGroup(_ group: CalculationGroup, fieldValues: [String: String]) -> Double? {
+        // Parse the formula: "target = expression"
+        let parts = group.formula.split(separator: "=", maxSplits: 1).map { $0.trimmingCharacters(in: .whitespaces) }
+        
+        guard parts.count == 2 else { return nil }
+        let expression = parts[1]
+        
+        // Replace field references with their numeric values
+        var processedExpression = expression
+        for fieldId in group.dependentFields {
+            if let valueString = fieldValues[fieldId],
+               let value = Double(valueString.replacingOccurrences(of: ",", with: "")) {
+                processedExpression = processedExpression.replacingOccurrences(of: fieldId, with: String(value))
+            } else {
+                return nil // Missing dependency or invalid value
+            }
+        }
+        
+        // Evaluate the mathematical expression
+        return evaluateMathExpression(processedExpression)
+    }
+    
+    /// Evaluate a simple mathematical expression (supports +, -, *, /, parentheses)
+    private func evaluateMathExpression(_ expression: String) -> Double? {
+        // Use NSExpression for safe evaluation
+        let expression = NSExpression(format: expression)
+        if let result = expression.expressionValue(with: nil, context: nil) as? Double {
+            return result
+        } else if let result = expression.expressionValue(with: nil, context: nil) as? Int {
+            return Double(result)
+        }
+        return nil
     }
     
     private func getFieldName(for textType: TextType) -> String {
