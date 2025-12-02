@@ -1,12 +1,51 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence** 🎯
+## 📍 **Current Release: v5.7.1 - Value Range Validation for OCR Extraction** 🎯
 
 **Release Date**: December 1, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions
-**Note**: Adds fully automated OCR hints loading, optional entity mapping via `OCRContext.entityName`, and calculation group evaluation for structured extraction workflows. Includes stability fixes for photo component integration tests.
+**Previous Release**: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence
+**Note**: Adds value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.7.1 - Value Range Validation for OCR Extraction** (December 1, 2025)
+
+### **What's New:**
+
+#### **📊 Value Ranges in Hints Files**
+- Added `expectedRange: ValueRange?` to `FieldDisplayHints` for hints file validation.
+- Hints files can now define acceptable numeric ranges (e.g., `{"min": 5.0, "max": 30.0}`).
+- Helps filter out obviously incorrect OCR readings (e.g., "150 gallons" when range is 5-30).
+
+#### **🔄 Runtime Range Overrides**
+- `OCRContext` now accepts `fieldRanges: [String: ValueRange]?` for runtime overrides.
+- Apps can override hints file ranges based on dynamic context (e.g., different ranges for trucks vs motorcycles).
+- Priority system: Runtime override > Hints file range.
+
+#### **✅ Automatic Validation**
+- `OCRService.processStructuredExtraction` automatically validates extracted numeric values against ranges.
+- Out-of-range values are removed (not flagged) to allow calculation groups to fill in correct values.
+- Only numeric values are validated (non-numeric values skip range checks).
+
+#### **🧪 Testing & Quality**
+- Comprehensive range validation tests in `OCRServiceAutomaticHintsTests`.
+- Tests cover boundary conditions, override precedence, and edge cases.
+
+### **Why It Matters**
+- Improves OCR accuracy by filtering out-of-range values automatically.
+- Enables dynamic range adjustment based on app context without modifying hints files.
+- Works seamlessly with calculation groups to fill in correct values when extraction fails.
+
+### **Documentation & Files Updated**
+- `OCRServiceAutomaticHintsTests.swift`, `OCRService.swift`, `DataHintsLoader.swift`
+- `PlatformTypes.swift`, `PlatformOCRTypes.swift`
+- `Framework/docs/FieldHintsGuide.md`, `Framework/docs/HintsFileOCRAndCalculationsGuide.md`
+- `README.md`, `Framework/README.md`, `Framework/Examples/README.md`
+- `Development/RELEASES.md`, `Development/PROJECT_STATUS.md`, `Development/todo.md`
+- `Development/RELEASE_v5.7.1.md`, `Development/AI_AGENT_v5.7.1.md` (new)
+- `Package.swift` comment updated to reference v5.7.1 release headline
 
 ---
 

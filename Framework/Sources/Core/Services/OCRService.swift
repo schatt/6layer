@@ -151,10 +151,12 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         // Perform structured extraction
         var structuredData = extractStructuredData(from: baseResult, context: context)
         
+        // Validate extracted values against expected ranges
+        structuredData = validateFieldRanges(in: structuredData, context: context)
+        
         // Apply calculation groups to derive missing values
-        if context.extractionMode == .automatic || context.extractionMode == .hybrid,
-           context.documentType != .general {
-            structuredData = applyCalculationGroups(to: structuredData, documentType: context.documentType, context: context)
+        if context.extractionMode == .automatic || context.extractionMode == .hybrid {
+            structuredData = applyCalculationGroups(to: structuredData, context: context)
         }
         
         let extractionConfidence = calculateExtractionConfidence(structuredData, context: context)
@@ -169,8 +171,7 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
             language: baseResult.language,
             structuredData: structuredData,
             extractionConfidence: extractionConfidence,
-            missingRequiredFields: missingFields,
-            documentType: context.documentType
+            missingRequiredFields: missingFields
         )
     }
     
@@ -179,8 +180,8 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     private func extractStructuredData(from result: OCRResult, context: OCRContext) -> [String: String] {
         var structuredData: [String: String] = [:]
         
-        // Get patterns for the document type
-        let patterns = getPatterns(for: context.documentType, context: context)
+        // Get patterns for extraction
+        let patterns = getPatterns(for: context)
         
         // Extract data using patterns
         for (field, pattern) in patterns {
@@ -210,19 +211,13 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         return structuredData
     }
     
-    private func getPatterns(for documentType: DocumentType?, context: OCRContext) -> [String: String] {
+    private func getPatterns(for context: OCRContext) -> [String: String] {
         var patterns: [String: String] = [:]
         
-        // Use built-in patterns for known document types
-        if let documentType = documentType {
-            patterns = BuiltInPatterns.patterns[documentType] ?? [:]
-        }
-        
-        // Automatically load hints file if documentType is provided and extractionMode is automatic or hybrid
-        if let documentType = documentType,
-           (context.extractionMode == .automatic || context.extractionMode == .hybrid) {
-            let hintsPatterns = loadHintsPatterns(for: documentType, context: context)
-            // Hints file patterns take precedence over built-in patterns
+        // Automatically load hints file if extractionMode is automatic or hybrid
+        if context.extractionMode == .automatic || context.extractionMode == .hybrid {
+            let hintsPatterns = loadHintsPatterns(for: context)
+            // Hints file patterns are the base patterns
             for (key, value) in hintsPatterns {
                 patterns[key] = value
             }
@@ -237,7 +232,7 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     }
     
     /// Load hints file and convert ocrHints to regex patterns
-    private func loadHintsPatterns(for documentType: DocumentType, context: OCRContext) -> [String: String] {
+    private func loadHintsPatterns(for context: OCRContext) -> [String: String] {
         // Use entityName from context - projects specify which data model's hints to use
         // If nil, return empty patterns (developer opted out of hints-based extraction)
         guard let entityName = context.entityName else {
@@ -276,8 +271,69 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         return context.requiredFields.filter { !structuredData.keys.contains($0) }
     }
     
+    /// Validate extracted field values against expected ranges
+    /// Returns structured data with out-of-range values removed or flagged
+    /// Priority: context.fieldRanges (override) > hints file expectedRange
+    private func validateFieldRanges(in structuredData: [String: String], context: OCRContext) -> [String: String] {
+        var validatedData = structuredData
+        
+        // Get hints file ranges if entityName is provided
+        var hintsRanges: [String: ValueRange] = [:]
+        if let entityName = context.entityName {
+            let loader = FileBasedDataHintsLoader()
+            let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
+            for (fieldId, fieldHints) in hintsResult.fieldHints {
+                if let range = fieldHints.expectedRange {
+                    hintsRanges[fieldId] = range
+                }
+            }
+        }
+        
+        // Validate each extracted value
+        for (fieldId, valueString) in structuredData {
+            // Try to parse as numeric value
+            guard let numericValue = Double(valueString.replacingOccurrences(of: ",", with: "")) else {
+                continue // Not a numeric value, skip range validation
+            }
+            
+            // Get range: override first, then hints file
+            let range: ValueRange?
+            if let overrideRange = context.fieldRanges?[fieldId] {
+                range = overrideRange
+            } else {
+                range = hintsRanges[fieldId]
+            }
+            
+            // If range is defined and value is outside range, remove it
+            if let range = range, !range.contains(numericValue) {
+                validatedData.removeValue(forKey: fieldId)
+                // Note: We remove out-of-range values rather than flagging them
+                // This allows calculation groups to potentially fill in the correct value
+            }
+        }
+        
+        return validatedData
+    }
+    
+    /// Get the expected range for a field (override first, then hints file)
+    private func getExpectedRange(for fieldId: String, context: OCRContext) -> ValueRange? {
+        // Check override first
+        if let overrideRange = context.fieldRanges?[fieldId] {
+            return overrideRange
+        }
+        
+        // Check hints file
+        guard let entityName = context.entityName else {
+            return nil
+        }
+        
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
+        return hintsResult.fieldHints[fieldId]?.expectedRange
+    }
+    
     /// Apply calculation groups to derive missing field values
-    private func applyCalculationGroups(to structuredData: [String: String], documentType: DocumentType, context: OCRContext) -> [String: String] {
+    private func applyCalculationGroups(to structuredData: [String: String], context: OCRContext) -> [String: String] {
         var result = structuredData
         
         // Use entityName from context - projects specify which data model's hints to use
@@ -690,19 +746,14 @@ public class MockOCRService: OCRServiceProtocol {
         
         switch context.extractionMode {
         case .automatic:
-            // Use built-in patterns for document type
-            if let builtInPatterns = BuiltInPatterns.patterns[context.documentType] {
-                patterns = builtInPatterns
-            }
+            // Automatic mode uses hints file patterns (loaded via entityName) or custom hints
+            patterns = context.extractionHints
         case .custom:
             // Use custom extraction hints
             patterns = context.extractionHints
         case .hybrid:
-            // Combine built-in and custom patterns
-            if let builtInPatterns = BuiltInPatterns.patterns[context.documentType] {
-                patterns = builtInPatterns
-            }
-            // Custom patterns override built-in ones
+            // Hybrid mode uses hints file patterns with custom hints as overrides
+            // Custom patterns override hints file patterns
             for (key, value) in context.extractionHints {
                 patterns[key] = value
             }

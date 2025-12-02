@@ -964,6 +964,22 @@ public enum ContentComplexity: String, CaseIterable, Sendable {
     case advanced = "advanced"
 }
 
+/// Value range for numeric field validation
+public struct ValueRange: Sendable {
+    public let min: Double
+    public let max: Double
+    
+    public init(min: Double, max: Double) {
+        self.min = min
+        self.max = max
+    }
+    
+    /// Check if a value is within this range
+    public func contains(_ value: Double) -> Bool {
+        return value >= min && value <= max
+    }
+}
+
 /// Field-level display hints for individual form fields
 public struct FieldDisplayHints: Sendable {
     /// Expected maximum length of the field (for display sizing)
@@ -981,6 +997,10 @@ public struct FieldDisplayHints: Sendable {
     /// Minimum allowed length (for validation)
     public let minLength: Int?
     
+    /// Expected value range for numeric fields (for OCR validation)
+    /// When specified, OCR-extracted numeric values outside this range will be flagged or rejected
+    public let expectedRange: ValueRange?
+    
     /// Additional field-specific metadata
     public let metadata: [String: String]
     
@@ -996,6 +1016,7 @@ public struct FieldDisplayHints: Sendable {
         showCharacterCounter: Bool = false,
         maxLength: Int? = nil,
         minLength: Int? = nil,
+        expectedRange: ValueRange? = nil,
         metadata: [String: String] = [:],
         ocrHints: [String]? = nil,
         calculationGroups: [CalculationGroup]? = nil
@@ -1005,6 +1026,7 @@ public struct FieldDisplayHints: Sendable {
         self.showCharacterCounter = showCharacterCounter
         self.maxLength = maxLength
         self.minLength = minLength
+        self.expectedRange = expectedRange
         self.metadata = metadata
         self.ocrHints = ocrHints
         self.calculationGroups = calculationGroups

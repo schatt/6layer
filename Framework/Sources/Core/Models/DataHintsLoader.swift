@@ -150,11 +150,14 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 let minLength = (properties["minLength"] as? String).flatMap(Int.init) ?? 
                                (properties["minLength"] as? Int)
                 
+                // Parse expected range for numeric validation
+                let expectedRange = parseExpectedRange(from: properties)
+                
                 // Extract metadata (all string properties that aren't special keys)
                 var metadata: [String: String] = [:]
                 for (propKey, propValue) in properties {
                     if !["expectedLength", "displayWidth", "showCharacterCounter", "maxLength", "minLength", 
-                         "ocrHints", "calculationGroups"].contains(propKey) &&
+                         "expectedRange", "ocrHints", "calculationGroups"].contains(propKey) &&
                        !propKey.hasPrefix("ocrHints.") {
                         if let stringValue = propValue as? String {
                             metadata[propKey] = stringValue
@@ -174,6 +177,7 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                     showCharacterCounter: showCharacterCounter,
                     maxLength: maxLength,
                     minLength: minLength,
+                    expectedRange: expectedRange,
                     metadata: metadata,
                     ocrHints: ocrHints,
                     calculationGroups: calculationGroups
@@ -187,6 +191,42 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         }
         
         return DataHintsResult(fieldHints: fieldHints, sections: sections)
+    }
+    
+    /// Parse expected range from properties (supports {"min": 5, "max": 30} format)
+    private func parseExpectedRange(from properties: [String: Any]) -> ValueRange? {
+        guard let rangeDict = properties["expectedRange"] as? [String: Any] else {
+            return nil
+        }
+        
+        // Support both numeric and string values
+        let minValue: Double?
+        if let minNum = rangeDict["min"] as? Double {
+            minValue = minNum
+        } else if let minNum = rangeDict["min"] as? Int {
+            minValue = Double(minNum)
+        } else if let minStr = rangeDict["min"] as? String {
+            minValue = Double(minStr)
+        } else {
+            minValue = nil
+        }
+        
+        let maxValue: Double?
+        if let maxNum = rangeDict["max"] as? Double {
+            maxValue = maxNum
+        } else if let maxNum = rangeDict["max"] as? Int {
+            maxValue = Double(maxNum)
+        } else if let maxStr = rangeDict["max"] as? String {
+            maxValue = Double(maxStr)
+        } else {
+            maxValue = nil
+        }
+        
+        guard let min = minValue, let max = maxValue else {
+            return nil
+        }
+        
+        return ValueRange(min: min, max: max)
     }
     
     /// Parse OCR hints with language-specific fallback: ocrHints.{language} -> ocrHints -> nil
@@ -288,12 +328,17 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         var hints: [String: FieldDisplayHints] = [:]
         
         for (fieldName, properties) in json {
+            // Convert to [String: Any] for parseExpectedRange
+            let propertiesAny = properties.mapValues { $0 as Any }
+            let expectedRange = parseExpectedRange(from: propertiesAny)
+            
             hints[fieldName] = FieldDisplayHints(
                 expectedLength: properties["expectedLength"].flatMap(Int.init),
                 displayWidth: properties["displayWidth"],
                 showCharacterCounter: properties["showCharacterCounter"] == "true",
                 maxLength: properties["maxLength"].flatMap(Int.init),
                 minLength: properties["minLength"].flatMap(Int.init),
+                expectedRange: expectedRange,
                 metadata: properties
             )
         }

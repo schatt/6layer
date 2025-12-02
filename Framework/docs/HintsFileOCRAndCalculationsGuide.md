@@ -541,6 +541,148 @@ Ensure formulas reference valid field IDs:
 }
 ```
 
+## Value Ranges (NEW in v5.7.1)
+
+### Purpose
+
+Value ranges define **acceptable numeric ranges** for OCR-extracted field values. This helps filter out obviously incorrect OCR readings (e.g., "150 gallons" when the expected range is 5-30 gallons).
+
+### Format
+
+Value ranges are specified using `expectedRange` with `min` and `max` values:
+
+```json
+{
+  "gallons": {
+    "expectedLength": 10,
+    "ocrHints": ["gallons", "gal"],
+    "expectedRange": {
+      "min": 5.0,
+      "max": 30.0
+    }
+  }
+}
+```
+
+### How It Works
+
+1. **OCR extracts values** from scanned document
+2. **Framework validates** numeric values against `expectedRange`
+3. **Out-of-range values are removed** from structured data
+4. **Calculation groups can fill in** correct values if extraction failed
+
+### Example: Fuel Receipt with Ranges
+
+**FuelPurchase.hints**:
+```json
+{
+  "gallons": {
+    "expectedLength": 10,
+    "displayWidth": "medium",
+    "ocrHints": ["gallons", "gal", "fuel quantity"],
+    "expectedRange": {
+      "min": 5.0,
+      "max": 30.0
+    }
+  },
+  "pricePerGallon": {
+    "expectedLength": 10,
+    "displayWidth": "medium",
+    "ocrHints": ["price per gallon", "price/gal", "ppg"],
+    "expectedRange": {
+      "min": 2.0,
+      "max": 10.0
+    }
+  },
+  "totalPrice": {
+    "expectedLength": 10,
+    "displayWidth": "medium",
+    "ocrHints": ["total", "total price", "amount"],
+    "expectedRange": {
+      "min": 10.0,
+      "max": 300.0
+    }
+  }
+}
+```
+
+### Runtime Overrides
+
+Apps can override hints file ranges at runtime using `OCRContext.fieldRanges`. This is useful when acceptable ranges depend on dynamic context (e.g., vehicle type, user preferences).
+
+```swift
+let context = OCRContext(
+    textTypes: [.number],
+    language: .english,
+    extractionMode: .automatic,
+    entityName: "FuelPurchase",
+    fieldRanges: [
+        "gallons": ValueRange(min: 20.0, max: 100.0)  // Override for trucks
+    ]
+)
+```
+
+**Priority**: Runtime override > Hints file range
+
+### Validation Behavior
+
+- **Numeric values only**: Non-numeric values skip range validation
+- **Inclusive boundaries**: `min <= value <= max`
+- **Out-of-range handling**: Values outside range are **removed** (not flagged)
+- **Calculation groups**: Removed values allow calculation groups to compute correct values
+
+### Best Practices
+
+1. **Set realistic ranges**: Use ranges that cover 95% of expected values
+   ```json
+   "expectedRange": {"min": 5, "max": 30}  // ✅ Good - covers most cars
+   "expectedRange": {"min": 0, "max": 1000}  // ❌ Too broad - not useful
+   ```
+
+2. **Combine with calculation groups**: If extraction fails, let calculations fill in
+   ```json
+   {
+     "gallons": {
+       "expectedRange": {"min": 5, "max": 30},
+       "calculationGroups": [
+         {
+           "id": "from_price_total",
+           "formula": "gallons = total_price / price_per_gallon",
+           "dependentFields": ["total_price", "price_per_gallon"],
+           "priority": 1
+         }
+       ]
+     }
+   }
+   ```
+
+3. **Use runtime overrides for dynamic contexts**: Different vehicle types, user preferences, etc.
+   ```swift
+   func createContext(for vehicle: VehicleType) -> OCRContext {
+       let ranges: [String: ValueRange]
+       switch vehicle {
+       case .motorcycle:
+           ranges = ["gallons": ValueRange(min: 2.0, max: 5.0)]
+       case .truck:
+           ranges = ["gallons": ValueRange(min: 20.0, max: 100.0)]
+       default:
+           ranges = [:]  // Use hints file ranges
+       }
+       
+       return OCRContext(
+           entityName: "FuelPurchase",
+           fieldRanges: ranges
+       )
+   }
+   ```
+
+4. **Test edge cases**: Verify boundary values (min, max) work correctly
+   ```json
+   "expectedRange": {"min": 5.0, "max": 30.0}
+   // Values 5.0 and 30.0 are accepted (inclusive)
+   // Values 4.9 and 30.1 are rejected
+   ```
+
 ## Related Documentation
 
 - **[Field Hints Guide](FieldHintsGuide.md)** - Complete field hints reference
@@ -551,10 +693,15 @@ Ensure formulas reference valid field IDs:
 ## Summary
 
 **v5.4.0** brings OCR hints and calculation groups to hints files:
-
 ✅ **OCR Hints**: Define keywords for better OCR field identification  
 ✅ **Calculation Groups**: Define mathematical relationships between fields  
 ✅ **Internationalization**: Language-specific OCR hints with automatic fallback  
+
+**v5.7.1** adds value range validation:
+✅ **Value Ranges**: Define acceptable numeric ranges for OCR validation  
+✅ **Runtime Overrides**: Override hints file ranges based on dynamic context  
+✅ **Automatic Filtering**: Out-of-range values automatically removed  
+
 ✅ **Backward Compatible**: Existing hints files continue to work  
 ✅ **DRY**: Define once in hints files, use everywhere  
 

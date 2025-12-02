@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence
+// SixLayerFramework v5.7.1 - Value Range Validation for OCR Extraction
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

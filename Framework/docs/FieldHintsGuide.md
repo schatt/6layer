@@ -55,7 +55,9 @@ Create a file named `{YourModelName}.hints` in your project:
 }
 ```
 
-**NEW in v5.4.0**: You can also include OCR hints and calculation groups in hints files! See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.
+**NEW in v5.4.0**: You can also include OCR hints and calculation groups in hints files!  
+**NEW in v5.7.1**: Value range validation for OCR-extracted numeric fields!  
+See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.
 
 ### Using Field Hints
 
@@ -139,6 +141,11 @@ public struct FieldDisplayHints: Sendable {
     /// Minimum allowed length (for validation)
     public let minLength: Int?
     
+    /// Expected value range for numeric fields (for OCR validation) (NEW in v5.7.1)
+    /// When specified, OCR-extracted numeric values outside this range will be filtered out
+    /// Format: {"min": 5.0, "max": 30.0} in hints files
+    public let expectedRange: ValueRange?
+    
     /// Additional metadata
     public let metadata: [String: String]
     
@@ -150,8 +157,8 @@ public struct FieldDisplayHints: Sendable {
 }
 ```
 
-**📚 For complete OCR hints and calculation groups documentation, see:**
-- **[Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints and calculations in hints files
+**📚 For complete OCR hints, calculation groups, and value ranges documentation, see:**
+- **[Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints, calculations, and value ranges in hints files
 
 ## Display Width Guidelines
 

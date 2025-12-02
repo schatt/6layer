@@ -1,11 +1,11 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence** 🎯
+## 📍 **Current Status: v5.7.1 - Value Range Validation for OCR Extraction** 🎯
 
-**Last Release**: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence  
-**Current Phase**: Minor Release (OCR structured extraction automation)  
+**Last Release**: v5.7.1 - Value Range Validation for OCR Extraction  
+**Current Phase**: Minor Release (OCR value range validation)  
 **Next Phase**: Continue framework evolution and stability improvements  
-**Note**: v5.7.0 adds `OCRContext.entityName`, automatic hints loading, calculation group evaluation, and stabilized PlatformPhotoComponents integration tests. Previous release v5.6.0 delivered enhanced Layer 1 custom view support plus keyboard extensions, and v5.5.0 completed the Swift 6/test infrastructure overhaul.
+**Note**: v5.7.1 adds value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction. Previous release v5.7.0 added `OCRContext.entityName`, automatic hints loading, and calculation group evaluation.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 

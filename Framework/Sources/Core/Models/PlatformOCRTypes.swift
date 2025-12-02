@@ -128,7 +128,6 @@ public struct OCRContext: Sendable {
     // New structured extraction properties
     public let extractionHints: [String: String] // field name -> regex pattern
     public let requiredFields: [String]
-    public let documentType: DocumentType
     public let extractionMode: ExtractionMode
     
     /// Entity/model name for hints file loading
@@ -137,12 +136,20 @@ public struct OCRContext: Sendable {
     /// This is the primary way to specify which data model's hints to use for OCR extraction
     /// 
     /// If nil, no hints file will be loaded automatically. The framework will:
-    /// - Use built-in patterns (if available for the documentType)
     /// - Use custom extractionHints (if provided)
     /// - Skip automatic ocrHints conversion and calculation groups
     /// 
     /// This allows developers to opt out of hints-based extraction if they don't need it.
     public let entityName: String?
+    
+    /// Runtime override for field value ranges
+    /// Maps field names to value ranges that override hints file values
+    /// This allows app-level logic to dynamically adjust expected ranges based on context
+    /// (e.g., different ranges for trucks vs motorcycles, even though hints file is static)
+    /// 
+    /// Example: ["gallons": ValueRange(min: 20, max: 100)] to override hints file range
+    /// If a field is not in this dictionary, the hints file range (if any) will be used
+    public let fieldRanges: [String: ValueRange]?
     
     public init(
         textTypes: [TextType] = [.general],
@@ -152,9 +159,9 @@ public struct OCRContext: Sendable {
         maxImageSize: CGSize? = nil,
         extractionHints: [String: String] = [:],
         requiredFields: [String] = [],
-        documentType: DocumentType = .general,
         extractionMode: ExtractionMode = .automatic,
-        entityName: String? = nil
+        entityName: String? = nil,
+        fieldRanges: [String: ValueRange]? = nil
     ) {
         self.textTypes = textTypes
         self.language = language
@@ -163,9 +170,9 @@ public struct OCRContext: Sendable {
         self.maxImageSize = maxImageSize
         self.extractionHints = extractionHints
         self.requiredFields = requiredFields
-        self.documentType = documentType
         self.extractionMode = extractionMode
         self.entityName = entityName
+        self.fieldRanges = fieldRanges
     }
 }
 
@@ -217,7 +224,6 @@ public struct OCRResult: Sendable {
     public let structuredData: [String: String]
     public let extractionConfidence: Float
     public let missingRequiredFields: [String]
-    public let documentType: DocumentType?
     
     // Validation properties
     public let isValid: Bool
@@ -233,7 +239,6 @@ public struct OCRResult: Sendable {
         structuredData: [String: String] = [:],
         extractionConfidence: Float = 0.0,
         missingRequiredFields: [String] = [],
-        documentType: DocumentType? = nil,
         isValid: Bool? = nil,
         validationReason: String? = nil
     ) {
@@ -246,7 +251,6 @@ public struct OCRResult: Sendable {
         self.structuredData = structuredData
         self.extractionConfidence = extractionConfidence
         self.missingRequiredFields = missingRequiredFields
-        self.documentType = documentType
         
         // Set validation properties - use provided value or compute from confidence
         self.isValid = isValid ?? (confidence >= 0.5)
@@ -268,7 +272,6 @@ public struct OCRResult: Sendable {
                 structuredData: [:],
                 extractionConfidence: extractionConfidence,
                 missingRequiredFields: missingRequiredFields,
-                documentType: documentType,
                 isValid: false,
                 validationReason: "Confidence below threshold (\(threshold))"
             )

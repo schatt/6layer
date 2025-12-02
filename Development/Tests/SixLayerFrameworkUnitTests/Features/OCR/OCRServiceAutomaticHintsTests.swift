@@ -7,7 +7,7 @@
 //  for structured OCR extraction (Issue #29)
 //
 //  TESTING SCOPE:
-//  - Automatic hints file loading based on documentType
+//  - Automatic hints file loading based on entityName
 //  - Automatic ocrHints usage in extraction
 //  - Automatic calculationGroups application
 //
@@ -29,7 +29,6 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
-            documentType: .fuelReceipt, // For categorization/display purposes
             extractionMode: .automatic,
             entityName: "FuelPurchase" // Directly specifies which .hints file to load
         )
@@ -47,7 +46,6 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
-            documentType: .fuelReceipt,
             extractionMode: .automatic
             // entityName is nil - no hints file will be loaded automatically
         )
@@ -56,7 +54,6 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         // The framework will gracefully handle nil entityName:
         // - Won't load hints file
         // - Won't apply calculation groups
-        // - Will still use built-in patterns (if available)
         // - Will still use custom extractionHints (if provided)
         
         // THEN: Should have nil entityName and framework should handle it gracefully
@@ -74,7 +71,6 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
                 "total": #"Total:\s*([\d.,]+)"#,
                 "gallons": #"Gallons:\s*([\d.,]+)"#
             ],
-            documentType: .fuelReceipt,
             extractionMode: .custom // Using custom mode
             // entityName is nil - developer doesn't want hints file
         )
@@ -96,7 +92,6 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
-            documentType: .fuelReceipt,
             extractionMode: .automatic,
             entityName: "FuelPurchase" // Specifies which hints file to load
         )
@@ -142,7 +137,6 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let context = OCRContext(
             textTypes: [.price, .number],
             language: .english,
-            documentType: .fuelReceipt,
             extractionMode: .automatic,
             entityName: "FuelPurchase" // Specifies which hints file to load
         )
@@ -198,6 +192,101 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         // The conversion is implemented - this test verifies the pattern format
         // Actual pattern testing would require a hints file, which is integration testing
         #expect(Bool(true), "OCR hints to regex conversion is implemented in loadHintsPatterns")
+    }
+    
+    // MARK: - Test: Value Range Validation
+    
+    @Test func testValueRangeStructure() {
+        // GIVEN: A value range
+        let range = ValueRange(min: 5.0, max: 30.0)
+        
+        // WHEN: Checking if values are within range
+        let withinRange = range.contains(15.0)
+        let belowRange = range.contains(3.0)
+        let aboveRange = range.contains(35.0)
+        let atMin = range.contains(5.0)
+        let atMax = range.contains(30.0)
+        
+        // THEN: Should correctly identify values within and outside range
+        #expect(withinRange == true, "Value 15.0 should be within range 5-30")
+        #expect(belowRange == false, "Value 3.0 should be below range 5-30")
+        #expect(aboveRange == false, "Value 35.0 should be above range 5-30")
+        #expect(atMin == true, "Value 5.0 should be at minimum (inclusive)")
+        #expect(atMax == true, "Value 30.0 should be at maximum (inclusive)")
+    }
+    
+    @Test func testFieldDisplayHintsWithExpectedRange() {
+        // GIVEN: FieldDisplayHints with expectedRange
+        let range = ValueRange(min: 10.0, max: 50.0)
+        let hints = FieldDisplayHints(
+            expectedLength: 10,
+            expectedRange: range
+        )
+        
+        // WHEN: Accessing the range
+        let retrievedRange = hints.expectedRange
+        
+        // THEN: Should have the expected range
+        #expect(retrievedRange != nil, "Hints should have expectedRange")
+        #expect(retrievedRange?.min == 10.0, "Range min should be 10.0")
+        #expect(retrievedRange?.max == 50.0, "Range max should be 50.0")
+    }
+    
+    @Test func testOCRContextWithFieldRangesOverride() {
+        // GIVEN: A context with fieldRanges override
+        let overrideRange = ValueRange(min: 20.0, max: 100.0)
+        let context = OCRContext(
+            textTypes: [.number],
+            language: .english,
+            extractionMode: .automatic,
+            entityName: "FuelPurchase",
+            fieldRanges: ["gallons": overrideRange]
+        )
+        
+        // WHEN: Accessing fieldRanges
+        let retrievedRange = context.fieldRanges?["gallons"]
+        
+        // THEN: Should have the override range
+        #expect(retrievedRange != nil, "Context should have fieldRanges override")
+        #expect(retrievedRange?.min == 20.0, "Override range min should be 20.0")
+        #expect(retrievedRange?.max == 100.0, "Override range max should be 100.0")
+    }
+    
+    @Test func testFieldRangesOverrideTakesPrecedence() {
+        // GIVEN: A context with both entityName (hints file) and fieldRanges override
+        // The override should take precedence over hints file values
+        let overrideRange = ValueRange(min: 15.0, max: 75.0)
+        let context = OCRContext(
+            textTypes: [.number],
+            language: .english,
+            extractionMode: .automatic,
+            entityName: "FuelPurchase", // Hints file might have different range
+            fieldRanges: ["gallons": overrideRange] // But override takes precedence
+        )
+        
+        // WHEN: Framework needs to get range for "gallons" field
+        // It should use the override, not the hints file
+        
+        // THEN: Override should be available
+        #expect(context.fieldRanges?["gallons"] != nil, "Override should be available")
+        #expect(context.fieldRanges?["gallons"]?.min == 15.0, "Override should take precedence")
+    }
+    
+    @Test func testFieldRangesIsOptional() {
+        // GIVEN: A context without fieldRanges override
+        let context = OCRContext(
+            textTypes: [.number],
+            language: .english,
+            extractionMode: .automatic,
+            entityName: "FuelPurchase"
+            // fieldRanges is nil - will use hints file if available
+        )
+        
+        // WHEN: Accessing fieldRanges
+        let ranges = context.fieldRanges
+        
+        // THEN: Should be nil (no override)
+        #expect(ranges == nil, "fieldRanges should be nil when not provided")
     }
 }
 

@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v5.7.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.7.0)
+[![Version](https://img.shields.io/badge/version-v5.7.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.7.1)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -39,14 +39,19 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
 - **DRY Architecture**: Define hints once in files, use everywhere automatically
 
-## 🆕 What's New in v5.7.0
+## 🆕 What's New in v5.7.1
 
-### Automatic OCR Hints & Structured Extraction Intelligence
+### Value Range Validation for OCR Extraction
+- **Value ranges in hints files**: Define acceptable numeric ranges via `expectedRange` in hints files (e.g., `{"min": 5.0, "max": 30.0}`).
+- **Runtime range overrides**: Override hints file ranges at runtime using `OCRContext.fieldRanges` for dynamic contexts (e.g., different ranges for trucks vs motorcycles).
+- **Automatic validation**: Out-of-range OCR values are automatically filtered during extraction.
+- **Calculation group integration**: Removed out-of-range values allow calculation groups to fill in correct values.
+- **Comprehensive testing**: Range validation tests cover boundaries, precedence, and edge cases.
+
+### Previous Release: v5.7.0 – Automatic OCR Hints & Structured Extraction Intelligence
 - **Configurable entity mapping**: `OCRContext` gains `entityName: String?`, letting projects dictate which `.hints` file to load (or opt out entirely).
-- **Automatic hints loading**: `OCRService` now pulls `{entityName}.hints`, converts every field’s `ocrHints` into regex patterns, and merges them with built-in/custom hints.
+- **Automatic hints loading**: `OCRService` now pulls `{entityName}.hints`, converts every field's `ocrHints` into regex patterns, and merges them with built-in/custom hints.
 - **Calculation group evaluation**: Structured extraction automatically runs hint-defined formulas (sorted by priority) via `NSExpression` to derive missing totals/prices.
-- **Optional by design**: Leaving `entityName` nil keeps previous workflows untouched—custom `extractionHints` and built-in patterns still work.
-- **Test stability**: OCR hints tests cover entity opt-in/out flows, and photo integration tests now simulate real image data for reliable width/height assertions on macOS/iOS.
 
 ## 🧪 Comprehensive Testing Framework
 

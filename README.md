@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.7.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.7.1")
 ]
 ```
 
@@ -41,14 +41,19 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.7.0
+## 🆕 Latest Release: v5.7.1
 
-### **Automatic OCR Hints & Structured Extraction Intelligence**
+### **Value Range Validation for OCR Extraction**
+📊 **Value ranges in hints files**: Define acceptable numeric ranges via `expectedRange` in hints files (e.g., `{"min": 5.0, "max": 30.0}`).  
+🔄 **Runtime range overrides**: Override hints file ranges at runtime using `OCRContext.fieldRanges` for dynamic contexts (e.g., different ranges for trucks vs motorcycles).  
+✅ **Automatic validation**: Out-of-range OCR values are automatically filtered during extraction.  
+🧮 **Calculation group integration**: Removed out-of-range values allow calculation groups to fill in correct values.  
+🧪 **Comprehensive testing**: Range validation tests cover boundaries, precedence, and edge cases.
+
+### **Previous Release: v5.7.0 – Automatic OCR Hints & Structured Extraction Intelligence**
 📄 **Configurable entity mapping**: `OCRContext` now accepts `entityName` so projects choose which `.hints` file to load.  
 🤖 **Automatic hints loading**: `OCRService` loads `{entityName}.hints`, converts `ocrHints` to regex patterns, and merges them with built-in/custom hints.  
-🧮 **Calculation group evaluation**: Structured extraction automatically derives missing values (e.g., price-per-gallon) using hint-defined formulas.  
-🛠 **Hints remain optional**: Leave `entityName` nil to opt out and keep using custom or built-in patterns.  
-🧪 **Test stability**: OCR hints tests cover opt-in/out flows and photo component integration tests now use real simulated image data.
+🧮 **Calculation group evaluation**: Structured extraction automatically derives missing values (e.g., price-per-gallon) using hint-defined formulas.
 
 ### **Previous Release: v5.6.0 – Enhanced Layer 1 Functions & KeyboardType Extensions**
 🎨 **Custom View Support**: Layer 1 functions gained optional custom view wrappers while preserving framework benefits.  
@@ -99,7 +104,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.7.0 (Automatic OCR Hints & Structured Extraction Intelligence)  
+**Version**: v5.7.1 (Value Range Validation for OCR Extraction)  
 **Phase**: Minor Release  
 **Next**: Continue framework development and stability improvements
 
