@@ -250,31 +250,23 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     git tag -a "v$VERSION" -m "Release v$VERSION"
 
     # Push tag to all remotes
-    echo "📤 Pushing tag to GitHub..."
-    git push github --tags
-
-    echo "📤 Pushing tag to Codeberg..."
-    git push codeberg --tags
-
-    echo "📤 Pushing tag to GitLab..."
-    git push gitlab --tags
+    echo "📤 Pushing tag to all remotes..."
+    git push all --tags
 
     echo "📤 Pushing commits to all remotes..."
-    git push github main
-    git push codeberg main
-    git push gitlab main
+    git push all main
 
     echo ""
     echo "🎉 Release v$VERSION completed successfully!"
     echo "📦 Tag: v$VERSION"
-    echo "🌐 Pushed to: GitHub, Codeberg, GitLab"
+    echo "🌐 Pushed to all remotes (GitHub, Codeberg, GitLab)"
 else
     echo "🚀 Ready to create release tag v$VERSION"
     echo ""
     echo "Manual steps:"
     echo "1. git tag -a v$VERSION -m \"Release v$VERSION\""
-    echo "2. git push github --tags && git push codeberg --tags && git push gitlab --tags"
-    echo "3. git push github main && git push codeberg main && git push gitlab main"
+    echo "2. git push all --tags"
+    echo "3. git push all main"
 fi
 
 echo ""
