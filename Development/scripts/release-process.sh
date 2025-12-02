@@ -60,24 +60,31 @@ echo "✅ Unit test suite validation passed"
 
 # Step 2: Check git is clean (no uncommitted changes)
 echo "📋 Step 2: Checking git repository status..."
+ERRORS_BEFORE_GIT=$ERRORS_FOUND
 if [ -n "$(git status --porcelain)" ]; then
     log_error "Git repository has uncommitted changes! Please commit or stash all changes before creating a release."
     echo ""
     echo "Uncommitted changes:"
     git status --short
 fi
-echo "✅ Git repository is clean"
+if [ $ERRORS_BEFORE_GIT -eq $ERRORS_FOUND ]; then
+    echo "✅ Git repository is clean"
+fi
 
 # Step 2.5: Check we're on main branch
 echo "📋 Step 2.5: Checking current branch..."
+ERRORS_BEFORE_BRANCH=$ERRORS_FOUND
 CURRENT_BRANCH=$(git branch --show-current)
 if [ "$CURRENT_BRANCH" != "main" ]; then
     log_error "Not on main branch! Current branch: $CURRENT_BRANCH. Please switch to main branch before creating a release."
 fi
-echo "✅ On main branch"
+if [ $ERRORS_BEFORE_BRANCH -eq $ERRORS_FOUND ]; then
+    echo "✅ On main branch"
+fi
 
 # Step 3: Check if RELEASES.md needs updating
 echo "📋 Step 3: Checking RELEASES.md..."
+ERRORS_BEFORE_RELEASES=$ERRORS_FOUND
 if ! grep -q "v$VERSION" Development/RELEASES.md; then
     log_error "RELEASES.md missing v$VERSION entry! Please update Development/RELEASES.md with the new release information"
 fi
@@ -92,7 +99,9 @@ if ! grep -q "^## 🎯 \*\*v$VERSION" Development/RELEASES.md; then
     log_error "RELEASES.md missing proper v$VERSION section header! Expected format: ## 🎯 **v$VERSION - ..."
 fi
 
-echo "✅ RELEASES.md correctly updated with v$VERSION"
+if [ $ERRORS_BEFORE_RELEASES -eq $ERRORS_FOUND ]; then
+    echo "✅ RELEASES.md correctly updated with v$VERSION"
+fi
 
 # Step 4: Check for individual release file
 echo "📋 Step 4: Checking for individual release file..."
@@ -115,6 +124,7 @@ fi
 # Step 7: Check README files
 echo "📋 Step 7: Checking README files..."
 
+ERRORS_BEFORE_README=$ERRORS_FOUND
 # Check main README.md - verify version appears in key locations
 if ! grep -q "v$VERSION" README.md; then
     log_error "Main README missing v$VERSION!"
@@ -135,14 +145,19 @@ if ! grep -A 2 "^## 📋 Current Status" README.md | grep -q "v$VERSION"; then
     log_error "README.md Current Status section does not list v$VERSION! Please update the 'Current Status' section in README.md"
 fi
 
-echo "✅ Main README correctly updated with v$VERSION"
+if [ $ERRORS_BEFORE_README -eq $ERRORS_FOUND ]; then
+    echo "✅ Main README correctly updated with v$VERSION"
+fi
 
 # Step 7.5: Check Package.swift version consistency
 echo "📋 Step 7.5: Checking Package.swift version consistency..."
+ERRORS_BEFORE_PACKAGE=$ERRORS_FOUND
 if ! grep -q "v$VERSION" Package.swift; then
     log_error "Package.swift missing v$VERSION in version comment! Please update the version comment in Package.swift to match v$VERSION. Expected format: // SixLayerFramework v$VERSION - [Description]"
 fi
-echo "✅ Package.swift version comment correctly updated with v$VERSION"
+if [ $ERRORS_BEFORE_PACKAGE -eq $ERRORS_FOUND ]; then
+    echo "✅ Package.swift version comment correctly updated with v$VERSION"
+fi
 
 if grep -q "v$VERSION" Framework/README.md; then
     echo "✅ Framework README updated"
