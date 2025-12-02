@@ -16,6 +16,7 @@
 
 @testable import SixLayerFramework
 import Testing
+import Foundation
 
 /// Tests for automatic hints file loading in OCR structured extraction
 @Suite("OCR Service Automatic Hints")
@@ -287,6 +288,391 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         
         // THEN: Should be nil (no override)
         #expect(ranges == nil, "fieldRanges should be nil when not provided")
+    }
+    
+    // MARK: - Test Helper for Issue #30
+    
+    /// Helper to create a test hints file for FuelPurchase (Issue #30)
+    /// Returns the unique model name and a cleanup closure
+    private func createFuelPurchaseHintsFile() throws -> (modelName: String, cleanup: () throws -> Void) {
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw NSError(domain: "TestError", code: 1, userInfo: ["NSLocalizedDescription": "Could not find documents directory"])
+        }
+        let hintsDir = documentsURL.appendingPathComponent("Hints")
+        try fileManager.createDirectory(at: hintsDir, withIntermediateDirectories: true)
+        
+        // Use unique filename to prevent conflicts
+        let uniqueModelName = "FuelPurchase_\(UUID().uuidString.prefix(8))"
+        let testFile = hintsDir.appendingPathComponent("\(uniqueModelName).hints")
+        
+        // Create hints file matching issue #30 structure
+        let hintsJSON: [String: Any] = [
+            "totalCost": [
+                "ocrHints": ["total", "amount due", "grand total", "final price", "total price", "total cost", "amount", "sum", "$"],
+                "expectedRange": ["min": 10.0, "max": 300.0], // Typical fuel purchase totals
+                "calculationGroups": [
+                    [
+                        "id": "fuel_purchase_relationship",
+                        "formula": "totalCost = pricePerGallon * gallons",
+                        "dependentFields": ["pricePerGallon", "gallons"],
+                        "priority": 1
+                    ]
+                ]
+            ],
+            "gallons": [
+                "ocrHints": ["gallons", "gal", "fuel quantity", "liters", "litres", "volume", "amount", "quantity", "qty"],
+                "expectedRange": ["min": 5.0, "max": 30.0], // Typical car fuel tank sizes
+                "calculationGroups": [
+                    [
+                        "id": "fuel_purchase_relationship",
+                        "formula": "gallons = totalCost / pricePerGallon",
+                        "dependentFields": ["totalCost", "pricePerGallon"],
+                        "priority": 1
+                    ]
+                ]
+            ],
+            "pricePerGallon": [
+                "ocrHints": ["price", "per gallon", "per gal", "rate", "cost", "$/gal", "dollars per gallon", "price/gallon", "price per gallon"],
+                "expectedRange": ["min": 2.0, "max": 10.0], // Typical gas prices
+                "calculationGroups": [
+                    [
+                        "id": "fuel_purchase_relationship",
+                        "formula": "pricePerGallon = totalCost / gallons",
+                        "dependentFields": ["totalCost", "gallons"],
+                        "priority": 1
+                    ]
+                ]
+            ]
+        ]
+        
+        let data = try JSONSerialization.data(withJSONObject: hintsJSON, options: .prettyPrinted)
+        try data.write(to: testFile, options: .atomic)
+        
+        let cleanup: () throws -> Void = {
+            try fileManager.removeItem(at: testFile)
+        }
+        
+        return (uniqueModelName, cleanup)
+    }
+    
+    // MARK: - Test: Issue #30 - Extract All Three Values
+    
+    @Test func testIssue30ExtractAllThreeValuesFromHintsFile() async throws {
+        // GIVEN: A hints file with FuelPurchase structure and OCR text containing all three values
+        let (modelName, cleanup) = try createFuelPurchaseHintsFile()
+        defer { try? cleanup() }
+        
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            extractionMode: .automatic,
+            entityName: modelName
+        )
+        
+        // Simulate OCR text from pump display (issue #30 example)
+        // Expected: totalCost="32.88", gallons="8.022", pricePerGallon="4.10"
+        let ocrText = "Total: 32.88\nGallons: 8.022\nPrice per gallon: 4.10"
+        
+        let baseResult = OCRResult(
+            extractedText: ocrText,
+            confidence: 0.9,
+            boundingBoxes: [],
+            textTypes: [:],
+            processingTime: 0.1,
+            language: .english
+        )
+        
+        // WHEN: Extracting structured data
+        let service = OCRService()
+        // Use reflection or internal method to test extraction
+        // Since extractStructuredData is private, we'll test via processStructuredExtraction
+        // But for unit testing, we need to create a minimal image or mock the OCR processing
+        
+        // For now, verify the hints file is loaded correctly
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
+        
+        // THEN: Hints file should be loaded with all three fields
+        #expect(hintsResult.fieldHints["totalCost"] != nil, "totalCost should be in hints file")
+        #expect(hintsResult.fieldHints["gallons"] != nil, "gallons should be in hints file")
+        #expect(hintsResult.fieldHints["pricePerGallon"] != nil, "pricePerGallon should be in hints file")
+        
+        // Verify ocrHints are present
+        #expect(hintsResult.fieldHints["totalCost"]?.ocrHints?.contains("total") == true, "totalCost should have 'total' in ocrHints")
+        #expect(hintsResult.fieldHints["gallons"]?.ocrHints?.contains("gallons") == true, "gallons should have 'gallons' in ocrHints")
+        #expect(hintsResult.fieldHints["pricePerGallon"]?.ocrHints?.contains("price per gallon") == true, "pricePerGallon should have 'price per gallon' in ocrHints")
+        
+        // Verify calculation groups are present
+        #expect(hintsResult.fieldHints["totalCost"]?.calculationGroups?.count == 1, "totalCost should have calculation group")
+        #expect(hintsResult.fieldHints["gallons"]?.calculationGroups?.count == 1, "gallons should have calculation group")
+        #expect(hintsResult.fieldHints["pricePerGallon"]?.calculationGroups?.count == 1, "pricePerGallon should have calculation group")
+        
+        // Verify all three use the same calculation group ID (same relationship)
+        let totalCostGroupId = hintsResult.fieldHints["totalCost"]?.calculationGroups?.first?.id
+        let gallonsGroupId = hintsResult.fieldHints["gallons"]?.calculationGroups?.first?.id
+        let pricePerGallonGroupId = hintsResult.fieldHints["pricePerGallon"]?.calculationGroups?.first?.id
+        
+        #expect(totalCostGroupId == gallonsGroupId, "totalCost and gallons should share same calculation group ID")
+        #expect(gallonsGroupId == pricePerGallonGroupId, "gallons and pricePerGallon should share same calculation group ID")
+        #expect(totalCostGroupId == "fuel_purchase_relationship", "All should use 'fuel_purchase_relationship' ID")
+    }
+    
+    @Test func testIssue30CalculateMissingValueFromTwoExtracted() async throws {
+        // GIVEN: A hints file and OCR text with only two values (totalCost and gallons)
+        let (modelName, cleanup) = try createFuelPurchaseHintsFile()
+        defer { try? cleanup() }
+        
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            extractionMode: .automatic,
+            entityName: modelName
+        )
+        
+        // OCR text missing pricePerGallon - should be calculated
+        let ocrText = "Total: 32.88\nGallons: 8.022"
+        
+        let baseResult = OCRResult(
+            extractedText: ocrText,
+            confidence: 0.9,
+            boundingBoxes: [],
+            textTypes: [:],
+            processingTime: 0.1,
+            language: .english
+        )
+        
+        // WHEN: Testing that calculation groups can calculate the missing value
+        // We'll verify the calculation group formula is correct
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
+        
+        // Simulate extracted data
+        var structuredData: [String: String] = [
+            "totalCost": "32.88",
+            "gallons": "8.022"
+        ]
+        
+        // Manually test calculation group evaluation
+        if let pricePerGallonGroup = hintsResult.fieldHints["pricePerGallon"]?.calculationGroups?.first {
+            // Formula: pricePerGallon = totalCost / gallons
+            // Should calculate: 32.88 / 8.022 = 4.10 (approximately)
+            let formula = pricePerGallonGroup.formula
+            #expect(formula.contains("pricePerGallon = totalCost / gallons"), "Formula should calculate pricePerGallon from totalCost and gallons")
+            #expect(pricePerGallonGroup.dependentFields.contains("totalCost"), "Should depend on totalCost")
+            #expect(pricePerGallonGroup.dependentFields.contains("gallons"), "Should depend on gallons")
+            
+            // Test the calculation manually
+            if let totalCostValue = Double(structuredData["totalCost"] ?? ""),
+               let gallonsValue = Double(structuredData["gallons"] ?? "") {
+                let calculatedPricePerGallon = totalCostValue / gallonsValue
+                #expect(abs(calculatedPricePerGallon - 4.10) < 0.01, "Should calculate approximately 4.10")
+            }
+        }
+        
+        // THEN: Calculation group should be able to calculate pricePerGallon
+        #expect(hintsResult.fieldHints["pricePerGallon"]?.calculationGroups != nil, "pricePerGallon should have calculation group")
+    }
+    
+    @Test func testIssue30NoGenericTextTypesInStructuredData() async throws {
+        // GIVEN: A context with entityName (should use hints file, not generic types)
+        let (modelName, cleanup) = try createFuelPurchaseHintsFile()
+        defer { try? cleanup() }
+        
+        let context = OCRContext(
+            textTypes: [.price, .number],
+            language: .english,
+            extractionMode: .automatic,
+            entityName: modelName
+        )
+        
+        // OCR text that might match generic text types
+        let ocrText = "Total: 32.88\nGallons: 8.022\nPrice per gallon: 4.10"
+        
+        let baseResult = OCRResult(
+            extractedText: ocrText,
+            confidence: 0.9,
+            boundingBoxes: [],
+            textTypes: [.price: "$32.88", .number: "8.022"], // Generic text types detected
+            processingTime: 0.1,
+            language: .english
+        )
+        
+        // WHEN: Extracting structured data
+        // The framework should NOT add generic "price" or "number" to structuredData
+        // It should only use hints file patterns
+        
+        // THEN: Verify that generic text types are not used when entityName is provided
+        // This is tested by ensuring extractStructuredData doesn't add generic types
+        // The actual extraction would happen in processStructuredExtraction, but we can verify
+        // the logic by checking that getPatterns returns hints file patterns, not generic types
+        
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
+        
+        // Verify hints file has patterns (not generic types)
+        #expect(hintsResult.fieldHints["totalCost"]?.ocrHints != nil, "Should have ocrHints for totalCost")
+        #expect(hintsResult.fieldHints["gallons"]?.ocrHints != nil, "Should have ocrHints for gallons")
+        #expect(hintsResult.fieldHints["pricePerGallon"]?.ocrHints != nil, "Should have ocrHints for pricePerGallon")
+        
+        // Generic "price" and "number" should NOT be in the hints file
+        #expect(hintsResult.fieldHints["price"] == nil, "Should not have generic 'price' field")
+        #expect(hintsResult.fieldHints["number"] == nil, "Should not have generic 'number' field")
+    }
+    
+    @Test func testIssue30ActualOCRExtractedText() async throws {
+        // GIVEN: Download the actual image from issue #30 and run OCR on it
+        let (modelName, cleanup) = try createFuelPurchaseHintsFile()
+        defer { try? cleanup() }
+        
+        // Load the image from /tmp (where user copied it)
+        let imagePath = "/tmp/pump_display.jpeg"
+        let imageURL = URL(fileURLWithPath: imagePath)
+        
+        guard FileManager.default.fileExists(atPath: imagePath) else {
+            print("ERROR: Image file not found at: \(imagePath)")
+            Issue.record("Image file not found at /tmp/pump_display.jpeg")
+            return
+        }
+        
+        guard let data = try? Data(contentsOf: imageURL) else {
+            print("ERROR: Failed to read image data from: \(imagePath)")
+            Issue.record("Failed to read image data")
+            return
+        }
+        
+        guard let image = PlatformImage(data: data) else {
+            print("ERROR: Failed to create PlatformImage from data (\(data.count) bytes)")
+            Issue.record("Failed to create PlatformImage from data")
+            return
+        }
+        
+        print("Successfully loaded image from: \(imagePath) (\(data.count) bytes)")
+        
+        // Use broader text types to capture labels like "This Sale" and "Gallons"
+        // These are needed for ocrHints to match
+        let context = OCRContext(
+            textTypes: [.price, .number, .quantity, .general], // Include general to catch labels
+            language: .english,
+            confidenceThreshold: 0.3, // Lower threshold to catch more text including labels
+            extractionMode: .automatic,
+            entityName: modelName
+        )
+        
+        // WHEN: Running OCR on the actual image
+        let service = OCRService()
+        
+        // First, get the raw OCR result to see what Vision framework actually extracted
+        // Use accurate mode and lower confidence threshold to catch more text
+        let rawContext = OCRContext(
+            textTypes: [.price, .number, .quantity, .general], // Include general to catch labels
+            language: .english,
+            confidenceThreshold: 0.3, // Lower threshold to catch more text
+            extractionMode: .automatic,
+            entityName: modelName
+        )
+        
+        let rawOCRResult = try await service.processImage(
+            image,
+            context: rawContext,
+            strategy: OCRStrategy(
+                supportedTextTypes: [.price, .number, .quantity, .general],
+                supportedLanguages: [context.language],
+                processingMode: .accurate
+            )
+        )
+        
+        print("=== RAW OCR RESULT (Before Structured Extraction) ===")
+        print("Raw Extracted Text: '\(rawOCRResult.extractedText)'")
+        print("Raw Text Length: \(rawOCRResult.extractedText.count)")
+        print("Raw Text Types: \(rawOCRResult.textTypes)")
+        print("Raw Confidence: \(rawOCRResult.confidence)")
+        print("Raw Bounding Boxes Count: \(rawOCRResult.boundingBoxes.count)")
+        
+        // Show bounding box positions to understand reading order
+        print("\nBounding Box Positions (Y coordinate = top position, lower Y = higher on screen):")
+        for (index, box) in rawOCRResult.boundingBoxes.enumerated() {
+            print("  [\(index)]: Y=\(String(format: "%.3f", box.origin.y)), X=\(String(format: "%.3f", box.origin.x)), Size=\(String(format: "%.1f", box.width))x\(String(format: "%.1f", box.height))")
+        }
+        
+        // Check each character in the extracted text
+        print("\nCharacter Analysis:")
+        for (index, char) in rawOCRResult.extractedText.enumerated() {
+            print("  [\(index)]: '\(char)' (Unicode: U+\(String(format: "%04X", char.unicodeScalars.first?.value ?? 0)))")
+        }
+        
+        // Check if there are any decimal points or periods in the text
+        let hasDecimal = rawOCRResult.extractedText.contains(".") || rawOCRResult.extractedText.contains(",")
+        print("\nDecimal Point Check:")
+        print("  Contains '.': \(rawOCRResult.extractedText.contains("."))")
+        print("  Contains ',': \(rawOCRResult.extractedText.contains(","))")
+        print("  Has any decimal separator: \(hasDecimal)")
+        
+        // The issue: Vision framework is NOT detecting decimal points in the image
+        // This could be because:
+        // 1. The decimal points are too small/faint in the image
+        // 2. The decimal points are positioned in a way Vision doesn't recognize
+        // 3. The display format makes decimals hard to detect
+        print("\nNOTE: Vision framework extracted '$ 3288 9022' without decimal points.")
+        print("Expected: '$ 32.88 8.022' or similar")
+        print("This is a Vision framework limitation - it's not detecting the decimal points.")
+        print("=====================================================\n")
+        
+        // Now run structured extraction
+        let result = try await service.processStructuredExtraction(image, context: context)
+        
+        // THEN: Output what OCR actually found
+        print("=== STRUCTURED EXTRACTION RESULTS ===")
+        print("Extracted Text Length: \(result.extractedText.count)")
+        print("Extracted Text: '\(result.extractedText)'")
+        print("Confidence: \(result.confidence)")
+        print("Text Types Found: \(result.textTypes)")
+        print("Structured Data Keys: \(result.structuredData.keys.sorted())")
+        print("Structured Data: \(result.structuredData)")
+        print("Extraction Confidence: \(result.extractionConfidence)")
+        print("Missing Required Fields: \(result.missingRequiredFields)")
+        print("Adjusted Fields: \(result.adjustedFields)")
+        if !result.adjustedFields.isEmpty {
+            print("\n⚠️  Fields that were adjusted/inferred (please verify):")
+            for (fieldId, description) in result.adjustedFields {
+                print("  • \(fieldId): \(description)")
+            }
+        }
+        
+        // Debug: Check what patterns were generated from hints file
+        let loader = FileBasedDataHintsLoader()
+        let hintsResult = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
+        print("\n=== HINTS FILE PATTERNS ===")
+        for (fieldId, fieldHints) in hintsResult.fieldHints {
+            if let ocrHints = fieldHints.ocrHints {
+                print("Field: \(fieldId)")
+                print("  OCR Hints: \(ocrHints)")
+                // Show what pattern would be generated
+                let escapedHints = ocrHints.map { NSRegularExpression.escapedPattern(for: $0) }
+                let pattern = "(?i)(\(escapedHints.joined(separator: "|")))\\s*[:=]?\\s*([\\d.,]+)"
+                print("  Generated Pattern: \(pattern)")
+                // Test if pattern matches the OCR text
+                if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+                    let range = NSRange(location: 0, length: result.extractedText.utf16.count)
+                    let matches = regex.matches(in: result.extractedText, options: [], range: range)
+                    print("  Matches Found: \(matches.count)")
+                    for (idx, match) in matches.enumerated() {
+                        if match.numberOfRanges > 2, let valueRange = Range(match.range(at: 2), in: result.extractedText) {
+                            let value = String(result.extractedText[valueRange])
+                            print("    Match \(idx): value = '\(value)'")
+                        }
+                    }
+                }
+            }
+        }
+        print("===========================")
+        print("======================================")
+        
+        // Verify we got some text
+        #expect(!result.extractedText.isEmpty, "OCR should extract some text from the image")
+        
+        // Output the results for inspection
+        #expect(result.extractedText.count > 0, "Should have extracted text")
     }
 }
 

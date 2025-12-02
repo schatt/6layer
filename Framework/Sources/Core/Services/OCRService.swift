@@ -150,14 +150,29 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         
         // Perform structured extraction
         var structuredData = extractStructuredData(from: baseResult, context: context)
+        var adjustedFields: [String: String] = [:]
         
-        // Validate extracted values against expected ranges
-        structuredData = validateFieldRanges(in: structuredData, context: context)
+        // Apply decimal correction heuristic based on expected ranges
+        let (correctedData, decimalAdjustments) = correctDecimalPlacement(in: structuredData, context: context)
+        structuredData = correctedData
+        adjustedFields.merge(decimalAdjustments) { _, new in new }
+        
+        // Validate extracted values against expected ranges (guidelines, not hard requirements)
+        let (validatedData, rangeWarnings) = validateFieldRanges(in: structuredData, context: context)
+        structuredData = validatedData
+        adjustedFields.merge(rangeWarnings) { existing, new in
+            // Combine warnings if field already has an adjustment
+            "\(existing). \(new)"
+        }
         
         // Apply calculation groups to derive missing values
+        var calculatedFields: [String: String] = [:]
         if context.extractionMode == .automatic || context.extractionMode == .hybrid {
-            structuredData = applyCalculationGroups(to: structuredData, context: context)
+            let (calculatedData, calculatedAdjustments) = applyCalculationGroups(to: structuredData, context: context)
+            structuredData = calculatedData
+            calculatedFields = calculatedAdjustments
         }
+        adjustedFields.merge(calculatedFields) { _, new in new }
         
         let extractionConfidence = calculateExtractionConfidence(structuredData, context: context)
         let missingFields = findMissingRequiredFields(structuredData, context: context)
@@ -171,7 +186,8 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
             language: baseResult.language,
             structuredData: structuredData,
             extractionConfidence: extractionConfidence,
-            missingRequiredFields: missingFields
+            missingRequiredFields: missingFields,
+            adjustedFields: adjustedFields
         )
     }
     
@@ -183,30 +199,48 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         // Get patterns for extraction
         let patterns = getPatterns(for: context)
         
-        // Extract data using patterns
+        // Extract data using patterns (hints-based extraction or custom extractionHints)
         for (field, pattern) in patterns {
             if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
                 let range = NSRange(location: 0, length: result.extractedText.utf16.count)
-                if let match = regex.firstMatch(in: result.extractedText, options: [], range: range) {
-                    // Pattern should have capture group for the value (group 2)
-                    // Group 1 is the hint text, group 2 is the value
-                    if match.numberOfRanges > 2, let valueRange = Range(match.range(at: 2), in: result.extractedText) {
-                        structuredData[field] = String(result.extractedText[valueRange])
-                    } else if match.numberOfRanges > 1, let valueRange = Range(match.range(at: 1), in: result.extractedText) {
-                        // Fallback: if only one capture group, use it
-                        structuredData[field] = String(result.extractedText[valueRange])
+                // Try to find all matches (not just first) to handle multiple occurrences
+                let matches = regex.matches(in: result.extractedText, options: [], range: range)
+                for match in matches {
+                    // Bidirectional pattern structure:
+                    // Group 1: entire match
+                    // Group 2: hint (if hint comes first)
+                    // Group 3: number (if hint comes first)
+                    // Group 4: number (if number comes first)
+                    // Group 5: hint (if number comes first)
+                    var value: String?
+                    
+                    // Check if hint-first pattern matched (group 3 has the number)
+                    if match.numberOfRanges > 3, match.range(at: 3).location != NSNotFound {
+                        if let valueRange = Range(match.range(at: 3), in: result.extractedText) {
+                            value = String(result.extractedText[valueRange])
+                        }
+                    }
+                    // Check if number-first pattern matched (group 4 has the number)
+                    else if match.numberOfRanges > 4, match.range(at: 4).location != NSNotFound {
+                        if let valueRange = Range(match.range(at: 4), in: result.extractedText) {
+                            value = String(result.extractedText[valueRange])
+                        }
+                    }
+                    // Fallback: old pattern format (group 2 has the number)
+                    else if match.numberOfRanges > 2, let valueRange = Range(match.range(at: 2), in: result.extractedText) {
+                        value = String(result.extractedText[valueRange])
+                    }
+                    
+                    if let value = value, structuredData[field] == nil {
+                        structuredData[field] = value
                     }
                 }
             }
         }
         
-        // Also use text types from the base result
-        for (textType, value) in result.textTypes {
-            let fieldName = getFieldName(for: textType)
-            if !fieldName.isEmpty {
-                structuredData[fieldName] = value
-            }
-        }
+        // Note: We no longer add generic text types (like "price", "number") to structuredData
+        // Developers should use hints files (entityName) or custom extractionHints for explicit field mapping
+        // This prevents confusion and ensures structuredData contains only explicitly mapped fields
         
         return structuredData
     }
@@ -226,6 +260,19 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         // Override with custom hints if provided (highest priority)
         for (key, value) in context.extractionHints {
             patterns[key] = value
+        }
+        
+        // Only extract fields that are explicitly requested via extractionHints
+        // This prevents extracting unwanted fields and makes intent clear
+        // With calculation groups, fields can't be "required" since any subset can calculate the rest
+        if !context.extractionHints.isEmpty {
+            var filteredPatterns: [String: String] = [:]
+            for (key, value) in patterns {
+                if context.extractionHints.keys.contains(key) {
+                    filteredPatterns[key] = value
+                }
+            }
+            return filteredPatterns
         }
         
         return patterns
@@ -248,9 +295,25 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         for (fieldId, fieldHints) in hintsResult.fieldHints {
             if let ocrHints = fieldHints.ocrHints, !ocrHints.isEmpty {
                 // Create regex pattern from ocrHints
-                // Pattern: (?i)(hint1|hint2|hint3)\s*[:=]?\s*([\d.,]+)
+                // Pattern supports bidirectional matching: hint before number OR number before hint
+                // This handles cases where Vision reads text in different orders
+                // Pattern: (?i)((hint1|hint2|hint3)\s*[:=]?\s*([\d.,]+)|([\d.,]+)\s+(hint1|hint2|hint3))
                 let escapedHints = ocrHints.map { NSRegularExpression.escapedPattern(for: $0) }
-                let pattern = "(?i)(\(escapedHints.joined(separator: "|")))\\s*[:=]?\\s*([\\d.,]+)"
+                let hintsGroup = escapedHints.joined(separator: "|")
+                
+                // Check if any hint is a currency symbol (needs special handling)
+                let hasCurrencySymbol = ocrHints.contains { hint in
+                    ["$", "€", "£", "¥"].contains(hint)
+                }
+                
+                // For currency symbols, allow optional text between symbol and number
+                // For other hints, require closer proximity
+                let separatorPattern = hasCurrencySymbol 
+                    ? "\\s+(?:[A-Za-z]+\\s+)*"  // Allow text like " This Sale " between $ and number
+                    : "\\s*[:=]?\\s*"  // Standard: just whitespace/colon/equals
+                
+                // Bidirectional pattern: (hint separator number) OR (number separator hint)
+                let pattern = "(?i)((\(hintsGroup))\(separatorPattern)([\\d.,]+)|([\\d.,]+)\\s+(\(hintsGroup)))"
                 patterns[fieldId] = pattern
             }
         }
@@ -271,11 +334,349 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         return context.requiredFields.filter { !structuredData.keys.contains($0) }
     }
     
+    /// Correct decimal placement in extracted values using expected ranges and calculation groups as heuristics
+    /// If a value is outside its expected range and has no decimal point, try inserting decimals
+    /// at various positions. Validate corrections using:
+    /// 1. Direct range check (if expectedRange is defined)
+    /// 2. Inferred range from calculation groups (if field has no explicit range but related fields do)
+    /// 3. Calculation group validation (if related fields exist and have ranges)
+    /// Returns: (corrected data, adjustments map: fieldId -> description)
+    private func correctDecimalPlacement(in structuredData: [String: String], context: OCRContext) -> ([String: String], [String: String]) {
+        var correctedData = structuredData
+        var adjustments: [String: String] = [:]
+        
+        // Get hints file data if entityName is provided
+        var hintsRanges: [String: ValueRange] = [:]
+        var hintsCalculationGroups: [String: [CalculationGroup]] = [:]
+        if let entityName = context.entityName {
+            let loader = FileBasedDataHintsLoader()
+            let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
+            for (fieldId, fieldHints) in hintsResult.fieldHints {
+                if let range = fieldHints.expectedRange {
+                    hintsRanges[fieldId] = range
+                }
+                if let groups = fieldHints.calculationGroups {
+                    hintsCalculationGroups[fieldId] = groups
+                }
+            }
+        }
+        
+        // Infer ranges for fields that don't have explicit ranges but have calculation groups
+        // Example: totalCost = pricePerGallon * gallons
+        // If pricePerGallon has range 0-10 and gallons has range 0-32, then totalCost inferred range is 0-320
+        let inferredRanges = inferRangesFromCalculationGroups(
+            hintsRanges: hintsRanges,
+            hintsCalculationGroups: hintsCalculationGroups,
+            context: context
+        )
+        
+        // Merge explicit and inferred ranges (explicit takes precedence)
+        var allRanges = inferredRanges
+        for (fieldId, range) in hintsRanges {
+            allRanges[fieldId] = range // Explicit ranges override inferred
+        }
+        // Runtime overrides take highest precedence
+        if let overrideRanges = context.fieldRanges {
+            for (fieldId, range) in overrideRanges {
+                allRanges[fieldId] = range
+            }
+        }
+        
+        // Try to correct each extracted value
+        for (fieldId, valueString) in structuredData {
+            // Skip if value already has a decimal point or comma
+            guard !valueString.contains(".") && !valueString.contains(",") else {
+                continue
+            }
+            
+            // Try to parse as integer (no decimals)
+            guard let intValue = Int(valueString) else {
+                continue // Not a numeric value
+            }
+            
+            // Get range: override first, then hints file
+            let range: ValueRange?
+            if let overrideRange = context.fieldRanges?[fieldId] {
+                range = overrideRange
+            } else {
+                range = hintsRanges[fieldId]
+            }
+            
+            let doubleValue = Double(intValue)
+            
+            // If value is already in range, no correction needed
+            if let range = range, range.contains(doubleValue) {
+                continue
+            }
+            
+            // Try inserting decimal point at various positions
+            // For "3288", try: "32.88", "3.288", "328.8", "3288.0"
+            let valueChars = Array(valueString)
+            var candidateCorrections: [(value: String, score: Double)] = []
+            
+            // Try decimal positions from right to left (most common: 2 decimal places)
+            for decimalPos in 1..<valueChars.count {
+                var correctedChars = valueChars
+                correctedChars.insert(".", at: valueChars.count - decimalPos)
+                let correctedString = String(correctedChars)
+                
+                guard let correctedValue = Double(correctedString) else {
+                    continue
+                }
+                
+                var score: Double = 0.0
+                var isValid = false
+                
+                // Check 1: Direct range validation (if range is defined)
+                if let range = range {
+                    if range.contains(correctedValue) {
+                        isValid = true
+                        // Prefer values closer to average (if provided) or middle of range
+                        let preferredValue: Double
+                        if let average = context.fieldAverages?[fieldId] {
+                            preferredValue = average
+                        } else {
+                            preferredValue = (range.min + range.max) / 2.0
+                        }
+                        let distance = abs(correctedValue - preferredValue)
+                        let rangeSize = range.max - range.min
+                        score += (1.0 - (distance / rangeSize)) * 10.0 // Up to 10 points
+                    }
+                } else {
+                    // No direct range, but we can still try calculation validation
+                    isValid = true // Allow it if calculation validation passes
+                }
+                
+                // Check 2: Calculation group validation
+                // If this field is part of calculation groups, validate by calculating related fields
+                if let groups = hintsCalculationGroups[fieldId] {
+                    for group in groups {
+                        // Check if we can calculate a related field using this correction
+                        let testData = correctedData.merging([fieldId: correctedString]) { _, new in new }
+                        
+                        // Try to calculate each dependent field and check if result is in range
+                        for dependentField in group.dependentFields {
+                            if dependentField != fieldId, let dependentRange = allRanges[dependentField] {
+                                // Try to calculate this dependent field using the corrected value
+                                if let calculatedValue = evaluateCalculationGroupForField(
+                                    fieldId: dependentField,
+                                    group: group,
+                                    fieldValues: testData
+                                ) {
+                                    if dependentRange.contains(calculatedValue) {
+                                        isValid = true
+                                        score += 5.0 // Bonus points for calculation validation
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Also check if other fields can calculate this corrected value
+                        // (reverse calculation: if totalCost = pricePerGallon * gallons, and we have gallons and pricePerGallon,
+                        //  we can verify the corrected totalCost matches)
+                        if let calculatedValue = evaluateCalculationGroupForField(
+                            fieldId: fieldId,
+                            group: group,
+                            fieldValues: testData
+                        ) {
+                            // If calculation matches our corrected value (within tolerance), it's valid
+                            if abs(calculatedValue - correctedValue) < 0.01 {
+                                isValid = true
+                                score += 5.0
+                            }
+                        }
+                    }
+                }
+                
+                if isValid {
+                    candidateCorrections.append((correctedString, score))
+                }
+            }
+            
+            // Apply the best correction (highest score)
+            if let bestCorrection = candidateCorrections.max(by: { $0.score < $1.score }) {
+                let originalValue = valueString
+                let correctedValue = bestCorrection.value
+                correctedData[fieldId] = correctedValue
+                adjustments[fieldId] = "Decimal point corrected: '\(originalValue)' → '\(correctedValue)' (inferred from expected range)"
+            }
+        }
+        
+        return (correctedData, adjustments)
+    }
+    
+    /// Infer expected ranges for fields that don't have explicit ranges but have calculation groups
+    /// Example: If totalCost = pricePerGallon * gallons, and we know:
+    ///   - pricePerGallon range: 0-10
+    ///   - gallons range: 0-32
+    /// Then totalCost inferred range: 0-320 (10 * 32)
+    private func inferRangesFromCalculationGroups(
+        hintsRanges: [String: ValueRange],
+        hintsCalculationGroups: [String: [CalculationGroup]],
+        context: OCRContext
+    ) -> [String: ValueRange] {
+        var inferredRanges: [String: ValueRange] = [:]
+        
+        // Collect all calculation groups
+        var allGroups: [(targetField: String, group: CalculationGroup)] = []
+        for (_, groups) in hintsCalculationGroups {
+            for group in groups {
+                // Parse target field from formula: "target = expression"
+                let parts = group.formula.split(separator: "=", maxSplits: 1).map { $0.trimmingCharacters(in: .whitespaces) }
+                if parts.count == 2 {
+                    let targetField = parts[0]
+                    allGroups.append((targetField: targetField, group: group))
+                }
+            }
+        }
+        
+        // For each field that doesn't have an explicit range, try to infer from calculation groups
+        for (targetField, group) in allGroups {
+            // Skip if field already has explicit range
+            if hintsRanges[targetField] != nil || context.fieldRanges?[targetField] != nil {
+                continue
+            }
+            
+            // Check if all dependent fields have ranges
+            var dependentRanges: [String: ValueRange] = [:]
+            for dependentField in group.dependentFields {
+                if let range = hintsRanges[dependentField] ?? context.fieldRanges?[dependentField] {
+                    dependentRanges[dependentField] = range
+                } else {
+                    // Missing range for a dependent field, can't infer
+                    break
+                }
+            }
+            
+            // If we have ranges for all dependent fields, infer the target field's range
+            if dependentRanges.count == group.dependentFields.count {
+                if let inferredRange = calculateRangeFromFormula(
+                    formula: group.formula,
+                    targetField: targetField,
+                    dependentRanges: dependentRanges
+                ) {
+                    inferredRanges[targetField] = inferredRange
+                }
+            }
+        }
+        
+        return inferredRanges
+    }
+    
+    /// Calculate the range for a target field based on a formula and dependent field ranges
+    /// Supports basic operations: +, -, *, /
+    /// Example: totalCost = pricePerGallon * gallons
+    ///   If pricePerGallon: 0-10, gallons: 0-32
+    ///   Then totalCost: 0-320 (min: 0*0, max: 10*32)
+    private func calculateRangeFromFormula(
+        formula: String,
+        targetField: String,
+        dependentRanges: [String: ValueRange]
+    ) -> ValueRange? {
+        // Parse the formula: "target = expression"
+        let parts = formula.split(separator: "=", maxSplits: 1).map { $0.trimmingCharacters(in: .whitespaces) }
+        guard parts.count == 2, parts[0] == targetField else { return nil }
+        
+        let expression = parts[1]
+        
+        // Simple range calculation for basic operations
+        // For multiplication: min = min1 * min2, max = max1 * max2 (if all positive)
+        // For addition: min = min1 + min2, max = max1 + max2
+        // For subtraction: min = min1 - max2, max = max1 - min2
+        // For division: min = min1 / max2, max = max1 / min2 (if all positive)
+        
+        // Try to identify the operation and operands
+        if expression.contains("*") {
+            let operands = expression.split(separator: "*").map { $0.trimmingCharacters(in: .whitespaces) }
+            if operands.count == 2,
+               let range1 = dependentRanges[operands[0]],
+               let range2 = dependentRanges[operands[1]] {
+                // Multiplication: consider all combinations
+                let combinations = [
+                    range1.min * range2.min,
+                    range1.min * range2.max,
+                    range1.max * range2.min,
+                    range1.max * range2.max
+                ]
+                return ValueRange(min: combinations.min()!, max: combinations.max()!)
+            }
+        } else if expression.contains("+") {
+            let operands = expression.split(separator: "+").map { $0.trimmingCharacters(in: .whitespaces) }
+            if operands.count == 2,
+               let range1 = dependentRanges[operands[0]],
+               let range2 = dependentRanges[operands[1]] {
+                return ValueRange(min: range1.min + range2.min, max: range1.max + range2.max)
+            }
+        } else if expression.contains("-") {
+            let operands = expression.split(separator: "-").map { $0.trimmingCharacters(in: .whitespaces) }
+            if operands.count == 2,
+               let range1 = dependentRanges[operands[0]],
+               let range2 = dependentRanges[operands[1]] {
+                return ValueRange(min: range1.min - range2.max, max: range1.max - range2.min)
+            }
+        } else if expression.contains("/") {
+            let operands = expression.split(separator: "/").map { $0.trimmingCharacters(in: .whitespaces) }
+            if operands.count == 2,
+               let range1 = dependentRanges[operands[0]],
+               let range2 = dependentRanges[operands[1]],
+               range2.min > 0, range2.max > 0 { // Avoid division by zero
+                // Division: consider all combinations
+                let combinations = [
+                    range1.min / range2.max,
+                    range1.min / range2.min,
+                    range1.max / range2.max,
+                    range1.max / range2.min
+                ]
+                return ValueRange(min: combinations.min()!, max: combinations.max()!)
+            }
+        }
+        
+        return nil // Unsupported formula format
+    }
+    
+    /// Helper to evaluate a calculation group for a specific field
+    private func evaluateCalculationGroupForField(
+        fieldId: String,
+        group: CalculationGroup,
+        fieldValues: [String: String]
+    ) -> Double? {
+        // Parse the formula: "target = expression"
+        let parts = group.formula.split(separator: "=", maxSplits: 1).map { $0.trimmingCharacters(in: .whitespaces) }
+        guard parts.count == 2 else { return nil }
+        
+        // Check if this group can calculate the target field
+        let targetField = parts[0]
+        guard targetField == fieldId else { return nil }
+        
+        // Check if all dependent fields are available
+        let allDependenciesAvailable = group.dependentFields.allSatisfy { fieldId in
+            fieldValues[fieldId] != nil
+        }
+        guard allDependenciesAvailable else { return nil }
+        
+        // Replace field references with their values
+        var expression = parts[1]
+        for dependentField in group.dependentFields {
+            if let valueString = fieldValues[dependentField],
+               let value = Double(valueString.replacingOccurrences(of: ",", with: "")) {
+                expression = expression.replacingOccurrences(of: dependentField, with: String(value))
+            } else {
+                return nil
+            }
+        }
+        
+        // Evaluate the mathematical expression
+        return evaluateMathExpression(expression)
+    }
+    
     /// Validate extracted field values against expected ranges
-    /// Returns structured data with out-of-range values removed or flagged
+    /// Expected ranges are GUIDELINES, not hard requirements
+    /// Out-of-range values are kept but flagged as questionable
     /// Priority: context.fieldRanges (override) > hints file expectedRange
-    private func validateFieldRanges(in structuredData: [String: String], context: OCRContext) -> [String: String] {
+    /// Returns: (validated data, range warnings: fieldId -> description)
+    private func validateFieldRanges(in structuredData: [String: String], context: OCRContext) -> ([String: String], [String: String]) {
         var validatedData = structuredData
+        var rangeWarnings: [String: String] = [:]
         
         // Get hints file ranges if entityName is provided
         var hintsRanges: [String: ValueRange] = [:]
@@ -304,15 +705,67 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
                 range = hintsRanges[fieldId]
             }
             
-            // If range is defined and value is outside range, remove it
+            // Check if value is outside range or far from average (if provided)
+            var shouldFlag = false
+            var flagReason = ""
+            
             if let range = range, !range.contains(numericValue) {
-                validatedData.removeValue(forKey: fieldId)
-                // Note: We remove out-of-range values rather than flagging them
-                // This allows calculation groups to potentially fill in the correct value
+                // Outside expected range
+                shouldFlag = true
+                let rangeDescription = "\(range.min) - \(range.max)"
+                
+                // Check if calculation groups confirm this value (makes it less questionable)
+                var confirmedByCalculation = false
+                if let entityName = context.entityName {
+                    let loader = FileBasedDataHintsLoader()
+                    let hintsResult = loader.loadHintsResult(for: entityName, locale: Locale(identifier: context.language.rawValue))
+                    if let fieldHints = hintsResult.fieldHints[fieldId],
+                       let calculationGroups = fieldHints.calculationGroups {
+                        // Try to calculate this field from related fields
+                        for group in calculationGroups {
+                            if let calculatedValue = evaluateCalculationGroupForField(
+                                fieldId: fieldId,
+                                group: group,
+                                fieldValues: structuredData
+                            ) {
+                                // If calculated value matches extracted value (within tolerance), it's confirmed
+                                if abs(calculatedValue - numericValue) < 0.01 {
+                                    confirmedByCalculation = true
+                                    break
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if confirmedByCalculation {
+                    flagReason = "Value '\(valueString)' is outside expected range (\(rangeDescription)), but confirmed by calculation. Please verify."
+                } else {
+                    flagReason = "Value '\(valueString)' is outside expected range (\(rangeDescription)). Please verify."
+                }
+            } else if let average = context.fieldAverages?[fieldId] {
+                // Within range, but check if far from average
+                let deviation = abs(numericValue - average)
+                let percentDeviation = (deviation / average) * 100.0
+                
+                // Flag if more than 50% deviation from average (configurable threshold)
+                if percentDeviation > 50.0 {
+                    shouldFlag = true
+                    flagReason = "Value '\(valueString)' is within expected range but significantly different from typical value (\(String(format: "%.2f", average))). Deviation: \(String(format: "%.1f", percentDeviation))%. Please verify."
+                }
+            }
+            
+            if shouldFlag {
+                rangeWarnings[fieldId] = flagReason
+                // Note: We keep flagged values because:
+                // 1. Expected ranges are guidelines, not absolute limits
+                // 2. Calculation groups may confirm the value is correct
+                // 3. Real-world scenarios may legitimately fall outside typical ranges
+                // 4. Values far from average may still be correct (e.g., expensive gas in remote locations)
             }
         }
         
-        return validatedData
+        return (validatedData, rangeWarnings)
     }
     
     /// Get the expected range for a field (override first, then hints file)
@@ -333,13 +786,15 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     }
     
     /// Apply calculation groups to derive missing field values
-    private func applyCalculationGroups(to structuredData: [String: String], context: OCRContext) -> [String: String] {
+    /// Returns: (calculated data, adjustments map: fieldId -> description)
+    private func applyCalculationGroups(to structuredData: [String: String], context: OCRContext) -> ([String: String], [String: String]) {
         var result = structuredData
+        var adjustments: [String: String] = [:]
         
         // Use entityName from context - projects specify which data model's hints to use
         // If nil, return data unchanged (developer opted out of hints-based extraction)
         guard let entityName = context.entityName else {
-            return result // No calculation groups - developer doesn't need/want hints
+            return (result, [:]) // No calculation groups - developer doesn't need/want hints
         }
         
         let loader = FileBasedDataHintsLoader()
@@ -359,9 +814,19 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         allGroups.sort { $0.group.priority < $1.group.priority }
         
         // Apply calculation groups in priority order
+        // Only calculate fields that are explicitly requested via extractionHints
+        // This prevents calculating unwanted fields when using hints files with many fields
+        let requestedFields = Set(context.extractionHints.keys)
+        let shouldFilterCalculations = !requestedFields.isEmpty
+        
         for (fieldId, group) in allGroups {
             // Skip if field already has a value
             if result[fieldId] != nil {
+                continue
+            }
+            
+            // Only calculate fields that were explicitly requested (if extractionHints is provided)
+            if shouldFilterCalculations && !requestedFields.contains(fieldId) {
                 continue
             }
             
@@ -374,11 +839,14 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
                 // Calculate the value
                 if let calculatedValue = evaluateCalculationGroup(group, fieldValues: result) {
                     result[fieldId] = String(calculatedValue)
+                    // Format the calculation for the adjustment message
+                    let formula = group.formula
+                    adjustments[fieldId] = "Calculated from formula: \(formula) = \(String(format: "%.2f", calculatedValue))"
                 }
             }
         }
         
-        return result
+        return (result, adjustments)
     }
     
     /// Evaluate a calculation group formula
@@ -539,17 +1007,48 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
         strategy: OCRStrategy
     ) -> OCRResult {
         
+        // Sort observations by position (top to bottom, left to right) for proper reading order
+        // Vision returns observations in arbitrary order, not reading order
+        // Vision uses normalized coordinates where (0,0) is bottom-left, Y increases upward
+        // So higher Y = higher on screen = should come first in reading order
+        let sortedObservations = observations.sorted { obs1, obs2 in
+            let box1 = obs1.boundingBox
+            let box2 = obs2.boundingBox
+            // First sort by Y coordinate (top to bottom) - higher Y = higher on screen
+            if abs(box1.origin.y - box2.origin.y) > 0.05 { // Different rows (5% threshold)
+                return box1.origin.y > box2.origin.y // Higher Y = higher on screen = comes first
+            }
+            // Same row: sort by X coordinate (left to right)
+            return box1.origin.x < box2.origin.x
+        }
+        
         var extractedText = ""
         var boundingBoxes: [CGRect] = []
         var textTypes: [TextType: String] = [:]
         var totalConfidence: Float = 0.0
         var validObservations = 0
         
-        for observation in observations {
-            guard let topCandidate = observation.topCandidates(1).first else { continue }
+        for observation in sortedObservations {
+            // Get top candidate, but also check multiple candidates for better accuracy
+            // Sometimes the top candidate misses decimal points or labels
+            let candidates = observation.topCandidates(3) // Get top 3 candidates
             
-            let text = topCandidate.string
-            let confidence = topCandidate.confidence
+            guard let topCandidate = candidates.first else { continue }
+            
+            // Try to find a candidate with decimal points if available
+            var bestCandidate = topCandidate
+            for candidate in candidates {
+                // Prefer candidates that have decimal points or more complete text
+                if candidate.string.contains(".") || candidate.string.count > bestCandidate.string.count {
+                    if candidate.confidence >= context.confidenceThreshold {
+                        bestCandidate = candidate
+                        break
+                    }
+                }
+            }
+            
+            let text = bestCandidate.string
+            let confidence = bestCandidate.confidence
             
             // Check confidence threshold
             guard confidence >= context.confidenceThreshold else { continue }

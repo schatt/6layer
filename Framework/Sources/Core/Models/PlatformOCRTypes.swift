@@ -151,6 +151,16 @@ public struct OCRContext: Sendable {
     /// If a field is not in this dictionary, the hints file range (if any) will be used
     public let fieldRanges: [String: ValueRange]?
     
+    /// Typical/average values for fields (provided by application)
+    /// Used to identify values that are within expected range but unusual compared to typical usage
+    /// Helps flag values for verification even when they're technically within range
+    /// 
+    /// Example: If average gas price is 4.34, a value of 9.99 (within range 2.0-10.0) is unusual
+    /// and should be flagged for verification, even though it's within the expected range
+    /// 
+    /// This is particularly useful when expected ranges are broad but typical values are narrower
+    public let fieldAverages: [String: Double]?
+    
     public init(
         textTypes: [TextType] = [.general],
         language: OCRLanguage = .english,
@@ -161,7 +171,8 @@ public struct OCRContext: Sendable {
         requiredFields: [String] = [],
         extractionMode: ExtractionMode = .automatic,
         entityName: String? = nil,
-        fieldRanges: [String: ValueRange]? = nil
+        fieldRanges: [String: ValueRange]? = nil,
+        fieldAverages: [String: Double]? = nil
     ) {
         self.textTypes = textTypes
         self.language = language
@@ -173,6 +184,7 @@ public struct OCRContext: Sendable {
         self.extractionMode = extractionMode
         self.entityName = entityName
         self.fieldRanges = fieldRanges
+        self.fieldAverages = fieldAverages
     }
 }
 
@@ -225,6 +237,11 @@ public struct OCRResult: Sendable {
     public let extractionConfidence: Float
     public let missingRequiredFields: [String]
     
+    // Field adjustment tracking
+    /// Fields that were adjusted during extraction (e.g., decimal correction, range inference)
+    /// Maps field ID to a description of what was adjusted
+    public let adjustedFields: [String: String]
+    
     // Validation properties
     public let isValid: Bool
     public let validationReason: String?
@@ -239,6 +256,7 @@ public struct OCRResult: Sendable {
         structuredData: [String: String] = [:],
         extractionConfidence: Float = 0.0,
         missingRequiredFields: [String] = [],
+        adjustedFields: [String: String] = [:],
         isValid: Bool? = nil,
         validationReason: String? = nil
     ) {
@@ -251,6 +269,7 @@ public struct OCRResult: Sendable {
         self.structuredData = structuredData
         self.extractionConfidence = extractionConfidence
         self.missingRequiredFields = missingRequiredFields
+        self.adjustedFields = adjustedFields
         
         // Set validation properties - use provided value or compute from confidence
         self.isValid = isValid ?? (confidence >= 0.5)
@@ -272,6 +291,7 @@ public struct OCRResult: Sendable {
                 structuredData: [:],
                 extractionConfidence: extractionConfidence,
                 missingRequiredFields: missingRequiredFields,
+                adjustedFields: adjustedFields,
                 isValid: false,
                 validationReason: "Confidence below threshold (\(threshold))"
             )

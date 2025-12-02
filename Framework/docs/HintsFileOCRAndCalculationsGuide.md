@@ -568,8 +568,11 @@ Value ranges are specified using `expectedRange` with `min` and `max` values:
 
 1. **OCR extracts values** from scanned document
 2. **Framework validates** numeric values against `expectedRange`
-3. **Out-of-range values are removed** from structured data
-4. **Calculation groups can fill in** correct values if extraction failed
+3. **Out-of-range values are kept but flagged** as questionable in `OCRResult.adjustedFields`
+4. **Calculation groups can confirm** out-of-range values (if they agree, value is likely correct)
+5. **User can verify** flagged values before accepting them
+
+**Important**: Expected ranges are **guidelines**, not hard requirements. Real-world scenarios may legitimately fall outside typical ranges (e.g., expensive gas in remote locations).
 
 ### Example: Fuel Receipt with Ranges
 
@@ -610,6 +613,30 @@ Value ranges are specified using `expectedRange` with `min` and `max` values:
 
 Apps can override hints file ranges at runtime using `OCRContext.fieldRanges`. This is useful when acceptable ranges depend on dynamic context (e.g., vehicle type, user preferences).
 
+### Field Averages (NEW in v5.7.2)
+
+Apps can provide typical/average values for fields to identify values that are within expected range but unusual compared to typical usage.
+
+**Example**:
+```swift
+let context = OCRContext(
+    entityName: "FuelPurchase",
+    fieldRanges: ["pricePerGallon": ValueRange(min: 2.0, max: 10.0)],
+    fieldAverages: ["pricePerGallon": 4.34]  // Typical gas price user pays
+)
+```
+
+**How It Works**:
+- If a value is within expected range but more than 50% deviation from average, it's flagged
+- Helps catch unusual values even when technically within range
+- Particularly useful when expected ranges are broad but typical values are narrower
+
+**Use Case**:
+- Expected range: 2.0-10.0 (covers all possible gas prices)
+- Typical value: 4.34 (what user typically pays)
+- Extracted value: 9.99 (within range, but 130% deviation from average)
+- Result: Flagged for verification even though it's within range
+
 ```swift
 let context = OCRContext(
     textTypes: [.number],
@@ -628,8 +655,10 @@ let context = OCRContext(
 
 - **Numeric values only**: Non-numeric values skip range validation
 - **Inclusive boundaries**: `min <= value <= max`
-- **Out-of-range handling**: Values outside range are **removed** (not flagged)
-- **Calculation groups**: Removed values allow calculation groups to compute correct values
+- **Out-of-range handling**: Values outside range are **kept but flagged** in `OCRResult.adjustedFields`
+- **Calculation confirmation**: If calculation groups confirm an out-of-range value, it's flagged as "confirmed by calculation"
+- **Guidelines, not requirements**: Expected ranges are typical values, not absolute limits
+- **User verification**: Flagged values should be verified by the user before accepting
 
 ### Best Practices
 
@@ -683,6 +712,106 @@ let context = OCRContext(
    // Values 4.9 and 30.1 are rejected
    ```
 
+## Decimal Correction & Range Inference (NEW in v5.7.2)
+
+### Purpose
+
+When Vision framework fails to detect decimal points (e.g., extracts "3288" instead of "32.88"), the framework can automatically correct them using expected ranges and calculation groups as heuristics.
+
+### How It Works
+
+1. **Detection**: If an extracted integer value is outside its expected range, the framework tries inserting decimal points
+2. **Correction**: Tries various decimal positions (most common: 2 decimal places from right)
+3. **Validation**: Checks if corrected value is within range and validates using calculation groups
+4. **Tracking**: Records adjustments in `OCRResult.adjustedFields` for user verification
+
+### Example: Decimal Correction
+
+**FuelPurchase.hints**:
+```json
+{
+  "totalCost": {
+    "ocrHints": ["total", "amount", "$"],
+    "expectedRange": {"min": 10.0, "max": 300.0}
+  }
+}
+```
+
+If Vision extracts "3288" (outside range), the framework:
+1. Tries "32.88" → ✅ Within range (10.0 - 300.0)
+2. Validates using calculation groups (if available)
+3. Applies correction: `totalCost = "32.88"`
+4. Records: `adjustedFields["totalCost"] = "Decimal point corrected: '3288' → '32.88' (inferred from expected range)"`
+
+### Range Inference from Calculation Groups
+
+Fields without explicit ranges can have their ranges inferred from calculation groups and related field ranges.
+
+**Example**:
+```json
+{
+  "gallons": {
+    "expectedRange": {"min": 5.0, "max": 30.0},
+    "ocrHints": ["gallons", "gal"]
+  },
+  "pricePerGallon": {
+    "expectedRange": {"min": 2.0, "max": 10.0},
+    "ocrHints": ["price per gallon"]
+  },
+  "totalCost": {
+    "ocrHints": ["total", "$"],
+    "calculationGroups": [
+      {
+        "id": "fuel_purchase",
+        "formula": "totalCost = pricePerGallon * gallons",
+        "dependentFields": ["pricePerGallon", "gallons"],
+        "priority": 1
+      }
+    ]
+    // No explicit range, but inferred: 2.0*5.0 to 10.0*30.0 = 10.0 - 300.0
+  }
+}
+```
+
+The framework automatically infers `totalCost` range as **10.0 - 300.0** based on:
+- `pricePerGallon` range: 2.0 - 10.0
+- `gallons` range: 5.0 - 30.0
+- Formula: `totalCost = pricePerGallon * gallons`
+- Calculation: min = 2.0 * 5.0 = 10.0, max = 10.0 * 30.0 = 300.0
+
+### Supported Operations for Range Inference
+
+- **Multiplication**: `total = price * quantity` → range = (min1*min2 to max1*max2)
+- **Addition**: `total = subtotal + tax` → range = (min1+min2 to max1+max2)
+- **Subtraction**: `net = gross - tax` → range = (min1-max2 to max1-min2)
+- **Division**: `rate = total / quantity` → range = (min1/max2 to max1/min2)
+
+### Checking Adjusted Fields
+
+```swift
+let result = try await service.processStructuredExtraction(image, context: context)
+
+// Check if any fields were adjusted
+if !result.adjustedFields.isEmpty {
+    print("⚠️ Some fields were adjusted:")
+    for (fieldId, description) in result.adjustedFields {
+        print("  • \(fieldId): \(description)")
+    }
+}
+
+// Example output:
+// ⚠️ Some fields were adjusted:
+//   • totalCost: Decimal point corrected: '3288' → '32.88' (inferred from expected range)
+//   • pricePerGallon: Calculated from formula: pricePerGallon = totalCost / gallons = 3.64
+```
+
+### Best Practices
+
+1. **Define explicit ranges** for better decimal correction accuracy
+2. **Use range inference** when calculation groups are available (reduces duplication)
+3. **Check `adjustedFields`** in your UI to show warnings for user verification
+4. **Combine with calculation groups** for maximum accuracy
+
 ## Related Documentation
 
 - **[Field Hints Guide](FieldHintsGuide.md)** - Complete field hints reference
@@ -701,6 +830,13 @@ let context = OCRContext(
 ✅ **Value Ranges**: Define acceptable numeric ranges for OCR validation  
 ✅ **Runtime Overrides**: Override hints file ranges based on dynamic context  
 ✅ **Automatic Filtering**: Out-of-range values automatically removed  
+
+**v5.7.2** adds intelligent decimal correction:
+✅ **Decimal Correction**: Automatically corrects missing decimal points using expected ranges  
+✅ **Range Inference**: Infers ranges from calculation groups and related field ranges  
+✅ **Adjustment Tracking**: `OCRResult.adjustedFields` tracks which fields were adjusted  
+✅ **Bidirectional Matching**: Handles "Gallons 9.022" and "9.022 Gallons" patterns  
+✅ **Position Sorting**: Vision observations sorted for proper reading order  
 
 ✅ **Backward Compatible**: Existing hints files continue to work  
 ✅ **DRY**: Define once in hints files, use everywhere  

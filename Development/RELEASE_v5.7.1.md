@@ -248,3 +248,4 @@ let context = OCRContext(
 
 **Summary**: v5.7.1 adds value range validation to OCR structured extraction, enabling hints files to define acceptable ranges and apps to override them at runtime. This improves OCR accuracy by filtering out-of-range values while maintaining full backward compatibility.
 
+
