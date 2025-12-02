@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.5.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.7.0")
 ]
 ```
 
@@ -41,20 +41,19 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.5.0
+## 🆕 Latest Release: v5.7.0
 
-### **Swift 6 Compatibility and Complete Test Infrastructure Overhaul**
-🎯 **OCR Hints in Hints Files**: Define OCR hints directly in `.hints` files for intelligent form-filling
-🧮 **Calculation Groups in Hints Files**: Declarative calculation groups for automatic field computation
-🌍 **Internationalization Support**: Language-specific OCR hints with automatic fallback
-📄 **OCR Overlay Sheet Modifier**: Convenient `ocrOverlaySheet()` view modifier for presenting OCR results in a sheet (Issue #22)
-📝 **Declarative Configuration**: All OCR and calculation configuration in JSON, no code changes needed
-✅ **100% Backward Compatible**: Existing hints files continue to work without modification
+### **Automatic OCR Hints & Structured Extraction Intelligence**
+📄 **Configurable entity mapping**: `OCRContext` now accepts `entityName` so projects choose which `.hints` file to load.  
+🤖 **Automatic hints loading**: `OCRService` loads `{entityName}.hints`, converts `ocrHints` to regex patterns, and merges them with built-in/custom hints.  
+🧮 **Calculation group evaluation**: Structured extraction automatically derives missing values (e.g., price-per-gallon) using hint-defined formulas.  
+🛠 **Hints remain optional**: Leave `entityName` nil to opt out and keep using custom or built-in patterns.  
+🧪 **Test stability**: OCR hints tests cover opt-in/out flows and photo component integration tests now use real simulated image data.
 
-### **Previous Release: v5.2.1 - Runtime Capability Detection Refactoring**
-🎯 **Complete TDD Implementation**: Framework now follows strict TDD principles throughout development
-♿ **Advanced Accessibility Overhaul**: Complete accessibility system with automatic identifier generation
-🧪 **Testing Infrastructure Revolution**: Comprehensive testing with 800+ tests and full platform coverage
+### **Previous Release: v5.6.0 – Enhanced Layer 1 Functions & KeyboardType Extensions**
+🎨 **Custom View Support**: Layer 1 functions gained optional custom view wrappers while preserving framework benefits.  
+⌨️ **KeyboardType Extensions**: Cross-platform View extension for all 11 keyboard types with proper platform mappings.  
+🧪 **Comprehensive Testing**: 32+ new tests covering custom view usage and keyboard behaviors.
 
 **Highlights:**
 - ✅ **Complete TDD Implementation** - Strict Test-Driven Development throughout
@@ -100,8 +99,8 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.5.0 (Swift 6 Compatibility and Complete Test Infrastructure Overhaul)
-**Phase**: Minor Release
+**Version**: v5.7.0 (Automatic OCR Hints & Structured Extraction Intelligence)  
+**Phase**: Minor Release  
 **Next**: Continue framework development and stability improvements
 
 ## 🤝 Contributing

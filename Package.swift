@@ -1,7 +1,6 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v5.5.0 - Swift 6 Compatibility and Complete Test Infrastructure Overhaul
+// SixLayerFramework v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence
 // The swift-tools-version declares the minimum version of Swift required to build this package.
-// SixLayerFramework v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions
 
 import PackageDescription
 

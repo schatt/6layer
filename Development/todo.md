@@ -1,11 +1,11 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions** 🎯
+## 📍 **Current Status: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence** 🎯
 
-**Last Release**: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions
-**Current Phase**: Minor Release (Enhanced Layer 1 Functions & KeyboardType Extensions)
-**Next Phase**: Continue framework evolution and feature development
-**Note**: v5.6.0 adds enhanced Layer 1 functions with custom view support and cross-platform keyboard type extensions. Previous release v5.5.0 achieves complete Swift 6 compatibility with modern concurrency patterns, complete test infrastructure overhaul with clean separation between unit and UI tests, iOS 17+ API modernization, and enhanced developer experience with automated release processes. Previous release v5.4.0 adds OCR hints and calculation groups to hints files, internationalization support for language-specific OCR hints, and OCR overlay sheet modifier (Issue #22).
+**Last Release**: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence  
+**Current Phase**: Minor Release (OCR structured extraction automation)  
+**Next Phase**: Continue framework evolution and stability improvements  
+**Note**: v5.7.0 adds `OCRContext.entityName`, automatic hints loading, calculation group evaluation, and stabilized PlatformPhotoComponents integration tests. Previous release v5.6.0 delivered enhanced Layer 1 custom view support plus keyboard extensions, and v5.5.0 completed the Swift 6/test infrastructure overhaul.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 

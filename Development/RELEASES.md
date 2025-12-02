@@ -1,12 +1,50 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions** 🎯
+## 📍 **Current Release: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence** 🎯
 
-**Release Date**: November 30, 2025
+**Release Date**: December 1, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v5.5.0 - Swift 6 Compatibility and Complete Test Infrastructure Overhaul
-**Note**: Enhanced Layer 1 semantic functions with custom view support and cross-platform keyboard type extensions
+**Previous Release**: v5.6.0 - Enhanced Layer 1 Functions & KeyboardType Extensions
+**Note**: Adds fully automated OCR hints loading, optional entity mapping via `OCRContext.entityName`, and calculation group evaluation for structured extraction workflows. Includes stability fixes for photo component integration tests.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence** (December 1, 2025)
+
+### **What's New:**
+
+#### **📄 Configurable OCR Entity Mapping**
+- Added `entityName: String?` to `OCRContext` so projects explicitly declare which Core Data entity (and `.hints` file) to use for OCR extraction.
+- Developers can set `entityName` when hints should be auto-loaded or leave it `nil` to opt out entirely.
+- Removes the need for framework-owned `DocumentType` mappings, making integrations project-defined and future proof.
+
+#### **🤖 Automatic OCR Hints Loading**
+- `OCRService` now loads `{entityName}.hints` automatically during structured extraction when `entityName` is provided.
+- Converts `ocrHints` arrays to regex patterns (`(?i)(hint1|hint2|...)\\s*[:=]?\\s*([\\d.,]+)`) and merges them with built-in and custom hints.
+- Supports locale-aware loading through the existing `FileBasedDataHintsLoader`.
+
+#### **🧮 Calculation Group Application**
+- Structured extraction now invokes `applyCalculationGroups` after initial parsing to derive missing values (e.g., compute `pricePerGallon = totalCost / gallons`).
+- Honors priority ordering in hints files and evaluates formulas using `NSExpression`.
+- Safely skips groups when dependencies are unavailable or when `entityName` is nil.
+
+#### **🧪 Test & Stability Improvements**
+- New `OCRServiceAutomaticHintsTests` cover entityName opt-in/out flows, hints pattern generation, and calculation group readiness.
+- `PlatformPhotoComponentsLayer4IntegrationTests` now simulate real image data via `createRealImageData()` ensuring deterministic, non-zero `PlatformImage` dimensions.
+
+### **Why It Matters**
+- Eliminates manual hints loading boilerplate—developers just set `context.entityName`.
+- Keeps hints optional; no configuration required when hints aren’t necessary.
+- Structured extraction immediately benefits from calculation groups defined in hints, improving field completion rates.
+- Ensures integration tests remain reliable across macOS/iOS without flaky placeholder images.
+
+### **Documentation & Files Updated**
+- `OCRServiceAutomaticHintsTests.swift`, `OCRService.swift`, and `PlatformPhotoComponentsLayer4IntegrationTests.swift`
+- `README.md`, `Framework/README.md`, `Framework/Examples/README.md`
+- `Development/RELEASES.md`, `Development/PROJECT_STATUS.md`, `Development/todo.md`
+- `Development/RELEASE_v5.7.0.md`, `Development/AI_AGENT_v5.7.0.md` (new)
+- `Package.swift` comment updated to reference v5.7.0 release headline
 
 ---
 

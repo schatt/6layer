@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v5.5.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.5.0)
+[![Version](https://img.shields.io/badge/version-v5.7.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.7.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -38,6 +38,15 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Extensible**: Easy to extend with custom layers and strategies
 - **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
 - **DRY Architecture**: Define hints once in files, use everywhere automatically
+
+## 🆕 What's New in v5.7.0
+
+### Automatic OCR Hints & Structured Extraction Intelligence
+- **Configurable entity mapping**: `OCRContext` gains `entityName: String?`, letting projects dictate which `.hints` file to load (or opt out entirely).
+- **Automatic hints loading**: `OCRService` now pulls `{entityName}.hints`, converts every field’s `ocrHints` into regex patterns, and merges them with built-in/custom hints.
+- **Calculation group evaluation**: Structured extraction automatically runs hint-defined formulas (sorted by priority) via `NSExpression` to derive missing totals/prices.
+- **Optional by design**: Leaving `entityName` nil keeps previous workflows untouched—custom `extractionHints` and built-in patterns still work.
+- **Test stability**: OCR hints tests cover entity opt-in/out flows, and photo integration tests now simulate real image data for reliable width/height assertions on macOS/iOS.
 
 ## 🧪 Comprehensive Testing Framework
 

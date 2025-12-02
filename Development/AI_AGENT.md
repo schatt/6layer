@@ -11,6 +11,10 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v5.7.0.md](AI_AGENT_v5.7.0.md)** - Automatic OCR hints loading & calculation groups
+- **[AI_AGENT_v5.6.0.md](AI_AGENT_v5.6.0.md)** - Enhanced Layer 1 functions & keyboard extensions
+- **[AI_AGENT_v5.5.0.md](AI_AGENT_v5.5.0.md)** - Swift 6 compatibility & test infrastructure overhaul
+- **[AI_AGENT_v5.4.0.md](AI_AGENT_v5.4.0.md)** - OCR hints & calculation groups in hints files
 - **[AI_AGENT_v4.8.0.md](AI_AGENT_v4.8.0.md)** - Field-Level Display Hints System
 - **[AI_AGENT_v4.5.0.md](AI_AGENT_v4.5.0.md)** - CardDisplayHelper Hint System
 - **[AI_AGENT_v4.1.1.md](AI_AGENT_v4.1.1.md)** - Critical Bug Fix Release
