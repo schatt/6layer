@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.7.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.7.2")
 ]
 ```
 
@@ -41,13 +41,15 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.7.1
+## 🆕 Latest Release: v5.7.2
 
-### **Value Range Validation for OCR Extraction**
-📊 **Value ranges in hints files**: Define acceptable numeric ranges via `expectedRange` in hints files (e.g., `{"min": 5.0, "max": 30.0}`).  
-🔄 **Runtime range overrides**: Override hints file ranges at runtime using `OCRContext.fieldRanges` for dynamic contexts (e.g., different ranges for trucks vs motorcycles).  
-✅ **Automatic validation**: Out-of-range OCR values are automatically filtered during extraction.  
-🧮 **Calculation group integration**: Removed out-of-range values allow calculation groups to fill in correct values.  
+### **Intelligent Decimal Correction & Enhanced Range Validation**
+🔧 **Intelligent decimal correction**: Automatically corrects missing decimal points using expected ranges and calculation groups as heuristics.  
+📊 **Range inference**: Infers ranges from calculation groups for fields without explicit ranges.  
+⚠️ **Field adjustment tracking**: `OCRResult.adjustedFields` tracks which fields were adjusted or calculated for user verification.  
+📈 **Enhanced range validation**: Expected ranges are now guidelines (not hard requirements) - out-of-range values are kept but flagged.  
+📊 **Field averages**: Apps can provide typical/average values to flag unusual values even within range.  
+🔄 **Bidirectional pattern matching**: Handles both "Gallons 9.022" and "9.022 Gallons" patterns.  
 🧪 **Comprehensive testing**: Range validation tests cover boundaries, precedence, and edge cases.
 
 ### **Previous Release: v5.7.0 – Automatic OCR Hints & Structured Extraction Intelligence**
@@ -104,7 +106,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.7.1 (Value Range Validation for OCR Extraction)  
+**Version**: v5.7.2 (Intelligent Decimal Correction & Enhanced Range Validation)  
 **Phase**: Minor Release  
 **Next**: Continue framework development and stability improvements
 

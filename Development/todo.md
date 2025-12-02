@@ -1,11 +1,11 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v5.7.1 - Value Range Validation for OCR Extraction** 🎯
+## 📍 **Current Status: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation** 🎯
 
-**Last Release**: v5.7.1 - Value Range Validation for OCR Extraction  
-**Current Phase**: Minor Release (OCR value range validation)  
+**Last Release**: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation  
+**Current Phase**: Minor Release (Intelligent decimal correction and enhanced range validation)  
 **Next Phase**: Continue framework evolution and stability improvements  
-**Note**: v5.7.1 adds value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction. Previous release v5.7.0 added `OCRContext.entityName`, automatic hints loading, and calculation group evaluation.
+**Note**: v5.7.2 adds intelligent decimal correction using expected ranges and calculation groups, range inference for fields without explicit ranges, field adjustment tracking in `OCRResult.adjustedFields`, and enhanced range validation (ranges are now guidelines, not hard requirements). Also adds field averages for typical value detection. Previous release v5.7.1 added value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 

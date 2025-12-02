@@ -1,12 +1,47 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.7.1 - Value Range Validation for OCR Extraction** 🎯
+## 📍 **Current Release: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation** 🎯
 
-**Release Date**: December 1, 2025
+**Release Date**: December 2, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v5.7.0 - Automatic OCR Hints & Structured Extraction Intelligence
-**Note**: Adds value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction.
+**Previous Release**: v5.7.1 - Value Range Validation for OCR Extraction
+**Note**: Adds intelligent decimal correction using expected ranges and calculation groups, range inference for fields without explicit ranges, field adjustment tracking, and enhanced range validation (ranges are now guidelines, not hard requirements). Also adds field averages for typical value detection.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation** (December 2, 2025)
+
+### **What's New:**
+
+#### **🔧 Intelligent Decimal Correction**
+- Automatic decimal point correction when Vision framework fails to detect decimals
+- Uses expected ranges and calculation groups as heuristics
+- Range inference from calculation groups for fields without explicit ranges
+
+#### **⚠️ Field Adjustment Tracking**
+- `OCRResult.adjustedFields` tracks which fields were adjusted or calculated
+- Provides clear visibility into which fields need user verification
+- Includes descriptions of what was adjusted (decimal correction, calculation, etc.)
+
+#### **📊 Enhanced Range Validation**
+- Expected ranges are now **guidelines**, not hard requirements
+- Out-of-range values are kept but flagged in `adjustedFields`
+- Field averages for typical value detection (flag unusual values even within range)
+- Calculation group confirmation for out-of-range values
+
+#### **🔄 Bidirectional Pattern Matching**
+- Handles both "Gallons 9.022" and "9.022 Gallons" patterns
+- Vision observation sorting by position (top-to-bottom, left-to-right)
+
+#### **🧪 Testing & Quality**
+- Comprehensive decimal correction tests
+- Real-world OCR image testing with decimal correction scenarios
+
+### **Why It Matters**
+- Significantly improves OCR accuracy when Vision framework fails to detect decimal points
+- Handles real-world edge cases better (e.g., expensive gas in remote locations)
+- Provides clear visibility into which fields were adjusted for user verification
 
 ---
 
