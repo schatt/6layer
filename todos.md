@@ -2,14 +2,16 @@
 
 ## 🔄 Current Active Todos
 
-**Last Updated**: December 2024
+**Last Updated**: December 2, 2025
 
 ### Accessibility Test Fixes (Green Phase)
-- [ ] **Fix remaining failing accessibility test suites** (in_progress)
-- [ ] **Fix Apple HIG Compliance Component Accessibility** (19 issues) (in_progress)
-- [ ] **Fix Remaining Components Accessibility** (20 issues) (in_progress)
-- [ ] **Fix Dynamic Form View Component Accessibility** (23 issues) (in_progress)
-- [ ] **Fix framework components missing .automaticAccessibilityIdentifiers()** (pending)
+- [ ] **Fix remaining failing accessibility test suites** [#31](https://github.com/schatt/6layer/issues/31) (in_progress - 72 tests fixed, ~150+ components still need attention)
+  - **Note**: Many accessibility ID test failures on macOS are due to ViewInspector limitation (SwiftUI identifiers don't propagate to platform views). Tests pass on iOS simulator.
+- [ ] **Fix Apple HIG Compliance Component Accessibility** (in_progress - some tests fixed, remaining issues need investigation)
+- [ ] **Fix Remaining Components Accessibility** (in_progress - ~150+ components still need verification)
+- [ ] **Fix Dynamic Form View Component Accessibility** (in_progress - some tests fixed with TODO comments)
+- [ ] **Fix framework components missing .automaticAccessibilityIdentifiers()** (in_progress - ~150+ components need modifiers added)
+  - **Note**: `.automaticCompliance()` is now the recommended modifier (includes both accessibility IDs and HIG compliance), with `.automaticAccessibilityIdentifiers()` maintained for backward compatibility
 
 ### Completed Recent Work
 - [x] **Fix Intelligent Card Expansion Component Accessibility** (16 issues) ✅
@@ -106,12 +108,14 @@ image.map { parent.onImageCaptured($0) }
 - ✅ Fix Layer 4 breaking change with inline conversions
 - ✅ Create comprehensive test suite
 
-#### **Phase 2: Standardization (In Progress)**
-- 🔄 Update all framework code to use `PlatformImage` variables
-- 🔄 Replace explicit conversions with inline implicit conversions
+#### **Phase 2: Standardization (In Progress)** [#32](https://github.com/schatt/6layer/issues/32)
+- ✅ Implicit conversions implemented (`PlatformImage(UIImage)` and `PlatformImage(NSImage)`)
+- ✅ Layer 4 callbacks use `PlatformImage` (verified in tests)
+- 🔄 Update remaining framework code to use `PlatformImage` variables consistently
+- 🔄 Replace explicit conversions with inline implicit conversions where possible
 - 🔄 Ensure all system API calls use `PlatformImage()` wrapper
 
-#### **Phase 3: Enhancement (Future)**
+#### **Phase 3: Enhancement (Future)** [#33](https://github.com/schatt/6layer/issues/33)
 - ⏳ Add export methods to `PlatformImage` (PNG, JPEG, bitmap)
 - ⏳ Add image processing methods to `PlatformImage`
 - ⏳ Add metadata extraction to `PlatformImage`
@@ -305,7 +309,7 @@ coordinator.imagePickerController(UIImagePickerController(), didFinishPickingMed
 - ✅ `Layer4PlatformImageArchitectureTests.swift` - Layer 4 compliance
 - ✅ `PlatformImageImplicitConversionTests.swift` - Conversion testing
 
-#### **Phase 3: Comprehensive Coverage (Pending)**
+#### **Phase 3: Comprehensive Coverage (Pending)** [#34](https://github.com/schatt/6layer/issues/34)
 - ⏳ API signature tests for all public APIs
 - ⏳ Integration tests for all callback functions
 - ⏳ Breaking change detection for all critical patterns

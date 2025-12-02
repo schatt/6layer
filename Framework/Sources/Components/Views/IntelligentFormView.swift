@@ -116,6 +116,13 @@ public struct IntelligentFormView {
         let analysis = DataIntrospectionEngine.analyze(initialData)
         let formStrategy = determineFormStrategy(analysis: analysis)
         
+        // Load hints for the model type
+        let modelName = String(describing: type(of: initialData))
+            .components(separatedBy: ".").last ?? String(describing: type(of: initialData))
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+        let fieldHints = hintsResult.fieldHints
+        
         let content = withAnalysisContext(analysis) {
             Group {
             switch formStrategy.containerType {
@@ -140,7 +147,8 @@ public struct IntelligentFormView {
                                 dataBinder: dataBinder,
                                 inputHandlingManager: inputHandlingManager,
                                 customFieldView: customFieldView,
-                                formStrategy: formStrategy
+                                formStrategy: formStrategy,
+                                fieldHints: fieldHints
                             )
                         }
                     )
@@ -176,7 +184,8 @@ public struct IntelligentFormView {
                                 dataBinder: dataBinder,
                                 inputHandlingManager: inputHandlingManager,
                                 customFieldView: customFieldView,
-                                formStrategy: formStrategy
+                                formStrategy: formStrategy,
+                                fieldHints: fieldHints
                             )
                         }
                     )
@@ -210,6 +219,13 @@ public struct IntelligentFormView {
     ) -> some View {
         let analysis = DataIntrospectionEngine.analyze(data)
         let formStrategy = determineFormStrategy(analysis: analysis)
+        
+        // Load hints for the model type
+        let modelName = String(describing: type(of: data))
+            .components(separatedBy: ".").last ?? String(describing: type(of: data))
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+        let fieldHints = hintsResult.fieldHints
         
         return withAnalysisContext(analysis) {
             platformFormContainer_L4(
@@ -287,7 +303,8 @@ public struct IntelligentFormView {
         dataBinder: DataBinder<T>?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
-        formStrategy: FormStrategy
+        formStrategy: FormStrategy,
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
         Group {
             switch formStrategy.fieldLayout {
@@ -297,7 +314,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
-                    customFieldView: customFieldView
+                    customFieldView: customFieldView,
+                    fieldHints: fieldHints
                 )
                 
             case .horizontal:
@@ -306,7 +324,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
-                    customFieldView: customFieldView
+                    customFieldView: customFieldView,
+                    fieldHints: fieldHints
                 )
                 
             case .grid:
@@ -334,7 +353,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
-                    customFieldView: customFieldView
+                    customFieldView: customFieldView,
+                    fieldHints: fieldHints
                 )
             }
         }
@@ -346,7 +366,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         inputHandlingManager: InputHandlingManager?,
-        customFieldView: @escaping (String, Any, FieldType) -> some View
+        customFieldView: @escaping (String, Any, FieldType) -> some View,
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
         VStack(spacing: 16) {
             // Prefer explicit important fields first (e.g., title/name), avoid alphabetic-by-type
@@ -357,7 +378,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
-                    customFieldView: customFieldView
+                    customFieldView: customFieldView,
+                    fieldHints: fieldHints
                 )
             }
         }
@@ -369,7 +391,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         inputHandlingManager: InputHandlingManager?,
-        customFieldView: @escaping (String, Any, FieldType) -> some View
+        customFieldView: @escaping (String, Any, FieldType) -> some View,
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
         LazyVGrid(columns: [
             GridItem(.flexible()),
@@ -382,7 +405,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
-                    customFieldView: customFieldView
+                    customFieldView: customFieldView,
+                    fieldHints: fieldHints
                 )
             }
         }
@@ -394,7 +418,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         inputHandlingManager: InputHandlingManager?,
-        customFieldView: @escaping (String, Any, FieldType) -> some View
+        customFieldView: @escaping (String, Any, FieldType) -> some View,
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
         let columns = min(3, max(1, Int(sqrt(Double(analysis.fields.count)))))
         
@@ -406,7 +431,8 @@ public struct IntelligentFormView {
                     initialData: initialData,
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
-                    customFieldView: customFieldView
+                    customFieldView: customFieldView,
+                    fieldHints: fieldHints
                 )
             }
         }
@@ -485,7 +511,8 @@ public struct IntelligentFormView {
         initialData: T?,
         dataBinder: DataBinder<T>?,
         inputHandlingManager: InputHandlingManager?,
-        customFieldView: @escaping (String, Any, FieldType) -> some View
+        customFieldView: @escaping (String, Any, FieldType) -> some View,
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             // Field label using platform colors
@@ -495,8 +522,28 @@ public struct IntelligentFormView {
                 .foregroundColor(Color.platformLabel)
             
             // Field input
-            // Use custom field view
-            customFieldView(field.name, initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field), field.type)
+            // Use custom field view if provided, otherwise use default
+            let fieldValue = initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field)
+            let hints = fieldHints[field.name]
+            
+            // Try custom field view first
+            let customView = customFieldView(field.name, fieldValue, field.type)
+            
+            // If custom view is not EmptyView, use it; otherwise use default with hints
+            // Note: We can't easily check if customView is EmptyView at runtime in SwiftUI
+            // So we'll always try to use DefaultPlatformFieldView when hints are available
+            if hints != nil {
+                DefaultPlatformFieldView(
+                    field: field,
+                    value: fieldValue,
+                    hints: hints,
+                    onValueChange: { newValue in
+                        // Handle value change - would need data binder integration
+                    }
+                )
+            } else {
+                customView
+            }
             
             // Field description if available
             if let description = getFieldDescription(for: field) {
@@ -754,7 +801,15 @@ private struct DefaultPlatformFieldView: View {
     
     let field: DataField
     let value: Any
+    let hints: FieldDisplayHints?
     let onValueChange: (Any) -> Void
+    
+    init(field: DataField, value: Any, hints: FieldDisplayHints? = nil, onValueChange: @escaping (Any) -> Void) {
+        self.field = field
+        self.value = value
+        self.hints = hints
+        self.onValueChange = onValueChange
+    }
     
     // Computed property to get field errors
     private var fieldErrors: [String] {
@@ -783,16 +838,40 @@ private struct DefaultPlatformFieldView: View {
     private var fieldInputView: some View {
         switch field.type {
         case .string:
-            TextField("Enter \(field.name)", text: Binding(
-                get: { value as? String ?? "" },
-                set: { onValueChange($0) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
-            )
+            // Check if this should be a picker based on hints
+            if let hints = hints, hints.inputType == "picker", let options = hints.pickerOptions, !options.isEmpty {
+                // Render picker for enum fields
+                let currentValue = value as? String ?? ""
+                let selectedOption = options.first(where: { $0.value == currentValue }) ?? options.first!
+                
+                Picker(field.name.capitalized, selection: Binding(
+                    get: { selectedOption.value },
+                    set: { newValue in
+                        onValueChange(newValue)
+                    }
+                )) {
+                    ForEach(options, id: \.value) { option in
+                        Text(option.label).tag(option.value)
+                    }
+                }
+                #if os(macOS)
+                .pickerStyle(.menu)
+                #else
+                .pickerStyle(.menu)
+                #endif
+            } else {
+                // Default TextField for string fields
+                TextField("Enter \(field.name)", text: Binding(
+                    get: { value as? String ?? "" },
+                    set: { onValueChange($0) }
+                ))
+                .textFieldStyle(.roundedBorder)
+                .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(isValid ? Color.clear : Color.red, lineWidth: 1)
+                )
+            }
 
         case .number:
             HStack {

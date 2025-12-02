@@ -1388,11 +1388,11 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 ##### **10.1 Automatic HIG Compliance in Components** ✅
 - [x] ✅ **COMPLETED**: All Layer 1 functions automatically apply HIG compliance modifiers
 - [x] ✅ **COMPLETED**: Automatic accessibility identifier generation
-- [ ] **Ensure all components automatically apply HIG-compliant styling** - Visual design, spacing, typography
-- [ ] **Automatic platform-specific HIG patterns** - iOS vs macOS appropriate patterns built-in
-- [ ] **Extend `.automaticAccessibilityIdentifiers()` to include HIG compliance** - Piggyback on the existing accessibility modifier infrastructure to also automatically apply HIG compliance features (touch targets, color contrast, typography, focus indicators, motion preferences, tab order, etc.) - avoids duplicating the modifier system that took weeks to get working
+- [x] ✅ **COMPLETED**: Extended `.automaticAccessibilityIdentifiers()` to include HIG compliance (now called `.automaticCompliance()` with backward compatibility)
+- [ ] **Ensure all components automatically apply HIG-compliant styling** [#35](https://github.com/schatt/6layer/issues/35) - Visual design, spacing, typography
+- [ ] **Automatic platform-specific HIG patterns** [#35](https://github.com/schatt/6layer/issues/35) - iOS vs macOS appropriate patterns built-in
 
-##### **10.2 Visual Design Categories** 🎨
+##### **10.2 Visual Design Categories** 🎨 [#37](https://github.com/schatt/6layer/issues/37)
 - [ ] **Animation Categories** - EaseInOut, spring, custom timing functions
 - [ ] **Shadow Categories** - Elevated, floating, custom shadow styles
 - [ ] **Corner Radius Categories** - Small, medium, large, custom radius values
@@ -1408,7 +1408,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 - [ ] **Screen Reader Categories** - Announcement timing, navigation hints
 - [ ] **Switch Control Categories** - Custom actions, navigation patterns
 
-##### **10.4 Platform-Specific Detail Categories** 📱
+##### **10.4 Platform-Specific Detail Categories** 📱 [#38](https://github.com/schatt/6layer/issues/38)
 - [ ] **iOS-Specific Categories**:
   - [ ] Haptic feedback types (light, medium, heavy, success, warning, error)
   - [ ] Gesture recognition (tap, long press, swipe, pinch, rotation)
@@ -1440,7 +1440,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
   - [ ] Tab bar compliance
   - [ ] Sidebar navigation patterns
 
-##### **10.6 Automatic HIG Compliance Features** ✅
+##### **10.6 Automatic HIG Compliance Features** ✅ [#36](https://github.com/schatt/6layer/issues/36)
 - [x] ✅ **COMPLETED**: Automatic accessibility labels and hints
 - [x] ✅ **COMPLETED**: Automatic keyboard navigation support
 - [ ] **Automatic touch target sizing** - All interactive components automatically meet 44pt minimum on iOS
@@ -1582,7 +1582,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 
 ### **Integration Testing Improvements Needed**:
 
-#### **1. End-to-End Workflow Testing** 📋 **PLANNED**
+#### **1. End-to-End Workflow Testing** 📋 **PLANNED** [#39](https://github.com/schatt/6layer/issues/39)
 **Priority**: 🟡 **MEDIUM**  
 **Estimated Effort**: 2-3 days
 
@@ -1598,7 +1598,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 - [ ] Create `FormProcessingWorkflowTests.swift`
 - [ ] Create `CrossPlatformWorkflowTests.swift`
 
-#### **2. Performance Integration Testing** 📋 **PLANNED**
+#### **2. Performance Integration Testing** 📋 **PLANNED** [#39](https://github.com/schatt/6layer/issues/39)
 **Priority**: 🟡 **MEDIUM**  
 **Estimated Effort**: 1-2 days
 
@@ -1613,7 +1613,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 - [ ] Create memory profiling integration tests
 - [ ] Add battery usage monitoring for mobile tests
 
-#### **3. Error Propagation Testing** 📋 **PLANNED**
+#### **3. Error Propagation Testing** 📋 **PLANNED** [#39](https://github.com/schatt/6layer/issues/39)
 **Priority**: 🟢 **LOW**  
 **Estimated Effort**: 1-2 days
 
@@ -1628,7 +1628,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 - [ ] Add error propagation validation tests
 - [ ] Test error recovery mechanisms
 
-#### **4. OCR + Accessibility Integration** 📋 **PLANNED**
+#### **4. OCR + Accessibility Integration** 📋 **PLANNED** [#39](https://github.com/schatt/6layer/issues/39)
 **Priority**: 🟡 **MEDIUM**  
 **Estimated Effort**: 1-2 days
 
@@ -1643,7 +1643,7 @@ v1.1.2 (current) → v1.2.0 (new features) → v1.3.0 (more features)
 - [ ] Test OCR result accessibility announcements
 - [ ] Test OCR error accessibility feedback
 
-#### **5. Cross-Component Integration** 📋 **PLANNED**
+#### **5. Cross-Component Integration** 📋 **PLANNED** [#39](https://github.com/schatt/6layer/issues/39)
 **Priority**: 🟢 **LOW**  
 **Estimated Effort**: 1-2 days
 

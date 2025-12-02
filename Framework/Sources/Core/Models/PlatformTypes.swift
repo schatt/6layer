@@ -980,6 +980,20 @@ public struct ValueRange: Sendable {
     }
 }
 
+/// Picker option for enum fields with value and label
+public struct PickerOption: Sendable, Equatable {
+    /// The raw value to store in the model (e.g., "story_points", "hours")
+    public let value: String
+    
+    /// Human-readable label for display (e.g., "Story Points", "Hours")
+    public let label: String
+    
+    public init(value: String, label: String) {
+        self.value = value
+        self.label = label
+    }
+}
+
 /// Field-level display hints for individual form fields
 public struct FieldDisplayHints: Sendable {
     /// Expected maximum length of the field (for display sizing)
@@ -1010,6 +1024,14 @@ public struct FieldDisplayHints: Sendable {
     /// Calculation groups for computing field values
     public let calculationGroups: [CalculationGroup]?
     
+    /// Input type for the field: "picker", "text", etc.
+    /// When "picker" is specified, the field will be rendered as a Picker instead of TextField
+    public let inputType: String?
+    
+    /// Picker options for enum fields (only used when inputType is "picker")
+    /// Each option contains a value (stored in model) and label (displayed in UI)
+    public let pickerOptions: [PickerOption]?
+    
     public init(
         expectedLength: Int? = nil,
         displayWidth: String? = nil,
@@ -1019,7 +1041,9 @@ public struct FieldDisplayHints: Sendable {
         expectedRange: ValueRange? = nil,
         metadata: [String: String] = [:],
         ocrHints: [String]? = nil,
-        calculationGroups: [CalculationGroup]? = nil
+        calculationGroups: [CalculationGroup]? = nil,
+        inputType: String? = nil,
+        pickerOptions: [PickerOption]? = nil
     ) {
         self.expectedLength = expectedLength
         self.displayWidth = displayWidth
@@ -1030,6 +1054,8 @@ public struct FieldDisplayHints: Sendable {
         self.metadata = metadata
         self.ocrHints = ocrHints
         self.calculationGroups = calculationGroups
+        self.inputType = inputType
+        self.pickerOptions = pickerOptions
     }
     
     /// Get display width as CGFloat if a specific numeric value is provided

@@ -157,7 +157,7 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 var metadata: [String: String] = [:]
                 for (propKey, propValue) in properties {
                     if !["expectedLength", "displayWidth", "showCharacterCounter", "maxLength", "minLength", 
-                         "expectedRange", "ocrHints", "calculationGroups"].contains(propKey) &&
+                         "expectedRange", "ocrHints", "calculationGroups", "inputType", "options"].contains(propKey) &&
                        !propKey.hasPrefix("ocrHints.") {
                         if let stringValue = propValue as? String {
                             metadata[propKey] = stringValue
@@ -171,6 +171,10 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 // Parse calculation groups
                 let calculationGroups = parseCalculationGroups(from: properties)
                 
+                // Parse input type and picker options
+                let inputType = properties["inputType"] as? String
+                let pickerOptions = parsePickerOptions(from: properties)
+                
                 fieldHints[key] = FieldDisplayHints(
                     expectedLength: expectedLength,
                     displayWidth: displayWidth,
@@ -180,7 +184,9 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                     expectedRange: expectedRange,
                     metadata: metadata,
                     ocrHints: ocrHints,
-                    calculationGroups: calculationGroups
+                    calculationGroups: calculationGroups,
+                    inputType: inputType,
+                    pickerOptions: pickerOptions
                 )
             }
         }
@@ -227,6 +233,24 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         }
         
         return ValueRange(min: min, max: max)
+    }
+    
+    /// Parse picker options from properties (supports [{"value": "...", "label": "..."}] format)
+    private func parsePickerOptions(from properties: [String: Any]) -> [PickerOption]? {
+        guard let optionsArray = properties["options"] as? [[String: Any]] else {
+            return nil
+        }
+        
+        var pickerOptions: [PickerOption] = []
+        for optionDict in optionsArray {
+            guard let value = optionDict["value"] as? String,
+                  let label = optionDict["label"] as? String else {
+                continue // Skip invalid options
+            }
+            pickerOptions.append(PickerOption(value: value, label: label))
+        }
+        
+        return pickerOptions.isEmpty ? nil : pickerOptions
     }
     
     /// Parse OCR hints with language-specific fallback: ocrHints.{language} -> ocrHints -> nil
@@ -328,9 +352,15 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         var hints: [String: FieldDisplayHints] = [:]
         
         for (fieldName, properties) in json {
-            // Convert to [String: Any] for parseExpectedRange
+            // Convert to [String: Any] for parseExpectedRange and parsePickerOptions
             let propertiesAny = properties.mapValues { $0 as Any }
             let expectedRange = parseExpectedRange(from: propertiesAny)
+            
+            // For legacy format, options would be in a nested structure if present
+            // Since legacy format is [String: String], we can't parse complex options
+            // This maintains backward compatibility
+            let inputType = properties["inputType"]
+            let pickerOptions: [PickerOption]? = nil // Legacy format doesn't support nested options
             
             hints[fieldName] = FieldDisplayHints(
                 expectedLength: properties["expectedLength"].flatMap(Int.init),
@@ -339,7 +369,9 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 maxLength: properties["maxLength"].flatMap(Int.init),
                 minLength: properties["minLength"].flatMap(Int.init),
                 expectedRange: expectedRange,
-                metadata: properties
+                metadata: properties,
+                inputType: inputType,
+                pickerOptions: pickerOptions
             )
         }
         
