@@ -31,7 +31,7 @@ echo "🚀 Starting release process for v$VERSION ($RELEASE_TYPE)"
 echo "📋 Step 1: Ensuring Xcode project is up to date..."
 if command -v xcodegen &> /dev/null; then
     echo "🔧 Regenerating Xcode project with xcodegen..."
-    if xcodegen; then
+    if xcodegen -c; then
         echo "✅ Xcode project regenerated successfully"
     else
         echo "❌ Failed to regenerate Xcode project!"
