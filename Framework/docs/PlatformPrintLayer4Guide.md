@@ -327,7 +327,7 @@ The implementation includes comprehensive TDD tests in `PlatformPrintLayer4Tests
 ## Related Documentation
 
 - [Layer 4 Component Architecture](six-layer-architecture-current-status.md)
-- [Platform Share/Clipboard Guide](PlatformShareClipboardLayer4.md) - Similar implementation pattern
+- [Layer 4 Implementation Guide](README_Layer4_Implementation.md#system-actions) - System Actions (URL opening and sharing)
 - [Cross-Platform Patterns](README_UsageExamples.md)
 
 ## Implementation Details

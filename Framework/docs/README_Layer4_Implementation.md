@@ -26,6 +26,9 @@ Layer 4 is organized into multiple files, each focusing on a specific component 
 ### **Responsive Card Components**
 *`Shared/Views/Extensions/PlatformResponsiveCardsLayer4.swift`*
 
+### **System Actions & Clipboard**
+*`Shared/Views/Extensions/PlatformShareClipboardLayer4.swift`*
+
 ## 🎯 Purpose
 
 Create the actual UI components with platform-adaptive behavior, implementing the decisions and strategies from previous layers.
@@ -78,12 +81,22 @@ Create the actual UI components with platform-adaptive behavior, implementing th
 
 #### **Sheets**
 - `platformSheet(isPresented:content:)` - Platform-adaptive sheet presentation
+- `platformSheet_L4(isPresented:content:)` - Enhanced sheet with detents support (iOS 16+)
 
 #### **Alerts**
 - `platformAlert(isPresented:content:)` - Platform-adaptive alert presentation
 
 #### **Confirmation Dialogs**
 - `platformConfirmationDialog(isPresented:content:)` - Platform-adaptive confirmation dialog
+
+### **System Actions**
+
+#### **URL Opening**
+- `platformOpenURL_L4(_ url: URL) -> Bool` - Cross-platform URL opening (abstracts `UIApplication.shared.open` on iOS, `NSWorkspace.shared.open` on macOS)
+
+#### **Sharing**
+- `platformShare_L4(isPresented:items:onComplete:)` - Cross-platform share sheet with binding control
+- `platformShare_L4(items:from:)` - Convenience overload that automatically shows share sheet when items are provided
 
 ### **Responsive Card Components**
 
@@ -135,6 +148,23 @@ Create the actual UI components with platform-adaptive behavior, implementing th
 .platformSheet(isPresented: $showingSheet) {
     // Sheet content
 }
+```
+
+### **System Actions**
+```swift
+// Open URL
+Button("Open Website") {
+    if let url = URL(string: "https://example.com") {
+        platformOpenURL_L4(url)
+    }
+}
+
+// Share content
+@State private var shareItems: [Any]? = nil
+Button("Share") {
+    shareItems = ["Text to share", URL(string: "https://example.com")!]
+}
+.platformShare_L4(items: shareItems ?? [], from: nil)
 ```
 
 ## 🔄 Integration with Other Layers
