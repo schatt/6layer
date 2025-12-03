@@ -122,6 +122,84 @@ This script will:
 - Release notes must be comprehensive
 - Breaking changes must be clearly highlighted
 
+## Issue Tracking and Release Documentation
+
+### Rule 3: Resolved Issues Must Be Documented in Releases
+**MANDATORY**: All significant resolved GitHub issues must be referenced in release notes.
+
+#### What Must Be Documented
+**MANDATORY** for release notes:
+- ✅ New features (all issues implementing features)
+- ✅ Breaking changes (all issues causing breaking changes)
+- ✅ Major bug fixes (all issues fixing significant bugs)
+- ✅ Security fixes (all security-related issues)
+- ✅ Performance improvements (all performance-related issues)
+
+**OPTIONAL** (not required, but recommended if user-visible):
+- ⚠️ Minor bug fixes (document if they affect user experience)
+- ⚠️ Internal refactoring (document if it affects public API or behavior)
+
+**NOT REQUIRED**:
+- ❌ Minor typo fixes
+- ❌ Internal refactoring that doesn't affect users
+- ❌ Documentation-only changes
+
+#### During Development
+**MANDATORY**: Link commits to issues when resolving them:
+- Use "Fixes #123" or "Resolves #123" in commit messages
+- Close issues when work is complete, not when release happens
+- Use appropriate labels (bug, enhancement, feature, etc.)
+
+#### Before Release
+**MANDATORY**: Review closed issues before creating release:
+1. Check all issues closed since the last release
+2. Identify which issues are significant (see criteria above)
+3. Ensure significant issues are referenced in `Development/RELEASE_vX.X.X.md`
+4. Verify issue references use correct format
+
+#### Issue Reference Format
+**MANDATORY**: Use one of these formats in release notes:
+- `Resolves Issue #123`
+- `Fixes [Issue #123](https://github.com/schatt/6layer/issues/123)`
+- `Implements [Issue #43](https://github.com/schatt/6layer/issues/43)`
+
+#### Automated Validation
+The release script (`release-process.sh`) automatically:
+- Checks if release notes contain issue references (warns if none found)
+- Shows recently closed issues as a reminder (if GitHub CLI is available)
+- Provides manual checklist links if GitHub CLI isn't available
+
+**Note**: The automated check provides **warnings, not errors**, because:
+- Not all releases resolve issues
+- Not all issues need documentation
+- The check serves as a reminder, not a blocker
+
+#### Manual Checklist
+Before each release, manually verify:
+1. ✅ Review closed issues: https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed
+2. ✅ Check if significant issues are mentioned in `Development/RELEASE_vX.X.X.md`
+3. ✅ Verify issue references use correct format (Issue #123 or links)
+4. ✅ Ensure breaking changes are clearly marked
+5. ✅ Confirm security fixes are documented (if any)
+
+#### Rationale
+- **Transparency**: Users can see what issues were resolved
+- **Traceability**: Links between issues and releases are clear
+- **User confidence**: Users know their reported issues are being addressed
+- **Project health**: Helps maintain awareness of what's being fixed
+- **Historical record**: Creates a clear history of issue resolution
+
+#### Enforcement
+- **Significant issues are mandatory**: All issues meeting the criteria above must be documented
+- **Format is mandatory**: Issue references must use the specified formats
+- **Review is mandatory**: Must review closed issues before each release
+- **Warnings are informational**: Automated warnings help catch missed issues but don't block releases
+
+#### Additional Resources
+- See `Development/scripts/ISSUE_TRACKING_GUIDE.md` for detailed guidance
+- Use GitHub CLI (`gh`) for easier issue review: `gh issue list --state closed --limit 20`
+- Filter issues by date: `is:issue is:closed closed:>YYYY-MM-DD`
+
 ---
 
 *This document establishes mandatory quality gates for the SixLayer Framework project.*

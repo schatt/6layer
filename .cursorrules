@@ -28,6 +28,89 @@
 - Always verify test status before suggesting releases
 - If unsure about test status, run tests first
 
+## Git Commit Message Practices
+
+**MANDATORY**: All commit messages must follow these practices.
+
+### Commit Message Format Requirements
+
+1. **Link commits to issues**: When resolving GitHub issues, use one of these formats:
+   - `Fixes #123` - For bug fixes
+   - `Resolves #123` - For feature implementations or issue resolutions
+   - `Closes #123` - Alternative format for closing issues
+   - The issue number should appear in the commit message body or footer
+
+2. **Write descriptive messages**: Commit messages must clearly explain:
+   - **What** was changed
+   - **Why** it was changed (when not obvious)
+   - Use imperative mood: "Add feature" not "Added feature" or "Adds feature"
+
+3. **Structure for complex changes**:
+   ```
+   Short summary (50 chars or less)
+
+   More detailed explanation if needed. This can include:
+   - What the change does
+   - Why it was necessary
+   - Any breaking changes or migration notes
+   
+   Fixes #123
+   ```
+
+4. **Commit frequency**: Commit early and often:
+   - After completing logical units of work
+   - Small, focused commits (one cohesive change per commit)
+   - Before switching contexts or pausing work
+
+### Examples
+
+**Good commit messages:**
+```
+Add cross-platform printing API
+
+Implements platformPrint_L4 function that works on both iOS and macOS.
+Supports text, images, PDFs, and SwiftUI views.
+
+Resolves #43
+```
+
+```
+Fix accessibility identifier generation for form fields
+
+Corrects issue where form fields weren't getting proper accessibility
+identifiers in certain layout configurations.
+
+Fixes #124
+```
+
+```
+Update release script to check Framework README version badge
+
+Adds validation to ensure Framework/README.md version badge is updated
+during releases.
+
+Fixes #125
+```
+
+**Bad commit messages:**
+```
+fix stuff
+update things
+wip
+changes
+```
+
+### Enforcement
+
+- **Issue linking is mandatory** when resolving issues
+- **Descriptive messages are mandatory** - no single-word commits
+- **Imperative mood is preferred** - "Add" not "Added" or "Adds"
+- **Context matters** - explain why when it's not obvious from the what
+
+### Additional Context
+
+See `PROJECT_RULES.md` section "Git Workflow and Commit Practices" for more details on commit frequency and workflow.
+
 ## Additional Development Rules
 
 - Use functional code patterns

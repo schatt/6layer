@@ -252,6 +252,50 @@ else
     log_error "Missing Development/RELEASE_v$VERSION.md! Please create the individual release file"
 fi
 
+# Step 4.5: Check for resolved GitHub issues
+echo "📋 Step 4.5: Checking for resolved GitHub issues..."
+ERRORS_BEFORE_ISSUES=$ERRORS_FOUND
+
+RELEASE_FILE="Development/RELEASE_v$VERSION.md"
+
+if [ -f "$RELEASE_FILE" ]; then
+    # Always check for common issue reference patterns in release file
+    if ! grep -qE "#[0-9]+|Issue #[0-9]+|github\.com.*issues" "$RELEASE_FILE"; then
+        echo "⚠️  Warning: No GitHub issue references found in release notes"
+        echo "💡 Tip: Consider adding issue references for significant features/bug fixes"
+        echo "💡 Format: 'Resolves Issue #123' or 'Implements [Issue #123](https://github.com/schatt/6layer/issues/123)'"
+    else
+        echo "✅ Release notes contain issue references"
+    fi
+    
+    # If GitHub CLI is available, show recently closed issues as a reminder
+    if command -v gh &> /dev/null; then
+        echo "🔍 Checking for recently closed issues (reminder only)..."
+        # Get the 10 most recently closed issues (informational only)
+        RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq '.[] | "  - Issue #\(.number): \(.title) (closed: \(.closedAt))"' 2>/dev/null || echo "")
+        
+        if [ -n "$RECENT_CLOSED" ]; then
+            echo "ℹ️  Recently closed issues (review to ensure they're documented if significant):"
+            echo "$RECENT_CLOSED"
+            echo "💡 Review these at: https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
+            echo "💡 Add significant issues to $RELEASE_FILE if not already documented"
+        else
+            echo "ℹ️  No recently closed issues found (or GitHub CLI authentication needed)"
+        fi
+    else
+        echo "ℹ️  GitHub CLI (gh) not available"
+        echo "💡 Manual checklist: Review closed issues at https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
+        echo "💡 Ensure significant resolved issues are documented in $RELEASE_FILE"
+    fi
+else
+    echo "⚠️  Cannot check issues - release file not found yet"
+    echo "💡 After creating $RELEASE_FILE, review closed issues to ensure they're documented"
+fi
+
+if [ $ERRORS_BEFORE_ISSUES -eq $ERRORS_FOUND ]; then
+    echo "✅ Issue tracking check complete"
+fi
+
 # Step 5: Check for AI_AGENT file (for significant releases)
 if [[ "$RELEASE_TYPE" == "major" || "$RELEASE_TYPE" == "minor" ]]; then
     echo "📋 Step 5: Checking for AI_AGENT file..."
