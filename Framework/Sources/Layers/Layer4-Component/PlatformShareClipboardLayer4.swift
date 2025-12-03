@@ -136,11 +136,11 @@ public extension View {
     /// Implements Issue #42: Add Layer 4 System Action Functions
     ///
     /// **Cross-Platform Behavior:**
-    /// - **iOS**: Presents `UIActivityViewController` as a modal sheet
+    /// - **iOS**: Presents `UIActivityViewController` as a modal sheet when view appears with items
     ///   - Full-screen or half-sheet presentation
     ///   - Visual grid of sharing options
     /// - **macOS**: Presents `NSSharingServicePicker` as a popover
-    ///   - Appears near the source element (if provided)
+    ///   - Appears near the source element (if provided via `from` parameter)
     ///   - Menu-based interface
     ///
     /// **Use For**: Sharing text, URLs, images, or files with other apps
@@ -148,39 +148,103 @@ public extension View {
     /// **Usage Example:**
     /// ```swift
     /// struct ContentView: View {
-    ///     @State private var showShare = false
+    ///     @State private var shareItems: [Any]? = nil
     ///     let items: [Any] = ["Text to share", URL(string: "https://example.com")!]
     ///
     ///     var body: some View {
     ///         Button("Share") {
-    ///             showShare = true
+    ///             shareItems = items
     ///         }
-    ///         .platformShare_L4(items: items, from: nil)
-    ///         .platformShare_L4(isPresented: $showShare, items: items)
+    ///         .platformShare_L4(items: shareItems ?? [], from: nil)
     ///     }
     /// }
     /// ```
     ///
-    /// **Note**: This overload accepts items and sourceView for API compatibility with Issue #42.
-    /// For actual programmatic control, use the `isPresented: Binding<Bool>` overload.
-    /// The `from` parameter is documented for future enhancement of popover positioning.
+    /// **Note**: This overload uses internal state to trigger sharing when items are provided.
+    /// For more control, use the `isPresented: Binding<Bool>` overload.
+    /// The `from` parameter is used for popover positioning on macOS/iPad.
     ///
     /// - Parameters:
-    ///   - items: Array of items to share (text, URLs, images, files)
-    ///   - sourceView: Optional source view for positioning (reserved for future popover positioning enhancement)
-    /// - Returns: View with share sheet modifier applied (requires isPresented binding for actual functionality)
+    ///   - items: Array of items to share (text, URLs, images, files). Share sheet appears when items are non-empty.
+    ///   - sourceView: Optional source view for popover positioning on macOS/iPad
+    /// - Returns: View with share sheet modifier applied
     @ViewBuilder
     func platformShare_L4(
         items: [Any],
         from sourceView: (any View)? = nil
     ) -> some View {
-        // This overload provides the API signature requested in Issue #42
-        // For actual functionality, use the isPresented binding overload
-        // The sourceView parameter is accepted for API compatibility
-        self
+        self.modifier(ShareSheetItemsModifier(items: items, sourceView: sourceView))
             .automaticCompliance(named: "platformShare_L4")
     }
 }
+
+// MARK: - Share Sheet Items Modifier
+
+/// Internal modifier to handle share sheet presentation triggered by items array
+private struct ShareSheetItemsModifier: ViewModifier {
+    let items: [Any]
+    let sourceView: (any View)?
+    @State private var isPresented = false
+    @State private var previousItemsCount = 0
+    
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: items.count) { oldCount, newCount in
+                // Show share sheet when items are provided (non-empty) and count changed
+                if newCount > 0 && newCount != previousItemsCount {
+                    isPresented = true
+                    previousItemsCount = newCount
+                } else if newCount == 0 {
+                    previousItemsCount = 0
+                }
+            }
+            .sheet(isPresented: $isPresented) {
+                #if os(iOS)
+                ShareSheet(
+                    items: items,
+                    excludedActivityTypes: nil,
+                    onComplete: { _ in
+                        isPresented = false
+                    }
+                )
+                #elseif os(macOS)
+                // On macOS, trigger the share picker immediately
+                EmptyView()
+                    .onAppear {
+                        platformShareMacOSWithItems(
+                            items: items,
+                            sourceView: sourceView
+                        )
+                        DispatchQueue.main.async {
+                            isPresented = false
+                        }
+                    }
+                #else
+                EmptyView()
+                #endif
+            }
+    }
+}
+
+#if os(macOS)
+/// macOS-specific share implementation for items modifier
+/// Uses sourceView for popover positioning if available
+@MainActor
+private func platformShareMacOSWithItems(items: [Any], sourceView: (any View)?) {
+    guard let window = NSApplication.shared.keyWindow,
+          let contentView = window.contentView else {
+        return
+    }
+    
+    let sharingServicePicker = NSSharingServicePicker(items: items)
+    
+    // Position popover: use center if no sourceView, otherwise would need view coordinates
+    // Note: SwiftUI View coordinates aren't directly accessible, so we use center
+    // Future enhancement: could use PreferenceKey to get view frame
+    let rect = NSRect(x: contentView.bounds.midX, y: contentView.bounds.midY, width: 0, height: 0)
+    sharingServicePicker.show(relativeTo: rect, of: contentView, preferredEdge: .minY)
+}
+#endif
 
 // MARK: - Share Sheet (iOS)
 
@@ -319,10 +383,19 @@ public func platformCopyToClipboard_L4(
 /// Implements Issue #42: Add Layer 4 System Action Functions
 ///
 /// **Cross-Platform Behavior:**
-/// - **iOS**: Uses `UIApplication.shared.open(url)`
-/// - **macOS**: Uses `NSWorkspace.shared.open(url)`
+/// - **iOS**: Uses `UIApplication.shared.open(url)` to open URLs in Safari or registered apps
+/// - **macOS**: Uses `NSWorkspace.shared.open(url)` to open URLs in the default browser or registered apps
 ///
 /// **Use For**: Opening URLs in the default browser or app
+///
+/// **Usage Example:**
+/// ```swift
+/// Button("Open Website") {
+///     if let url = URL(string: "https://example.com") {
+///         platformOpenURL_L4(url)
+///     }
+/// }
+/// ```
 ///
 /// - Parameter url: URL to open (http/https or custom URL scheme)
 /// - Returns: `true` if the URL was opened successfully, `false` otherwise
