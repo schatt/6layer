@@ -51,13 +51,29 @@ Create a file named `{YourModelName}.hints` in your project:
     "expectedLength": 10,
     "displayWidth": "narrow",
     "maxLength": 10
+  },
+  "sizeUnit": {
+    "displayWidth": "medium",
+    "expectedLength": 15,
+    "inputType": "picker",
+    "options": [
+      {"value": "story_points", "label": "Story Points"},
+      {"value": "hours", "label": "Hours"},
+      {"value": "days", "label": "Days"},
+      {"value": "weeks", "label": "Weeks"},
+      {"value": "t_shirt", "label": "T-Shirt Size"}
+    ]
   }
 }
 ```
 
 **NEW in v5.4.0**: You can also include OCR hints and calculation groups in hints files!  
 **NEW in v5.7.1**: Value range validation for OCR-extracted numeric fields!  
-See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.
+**NEW in v5.8.0**: Picker options for enum fields with human-readable labels!  
+**NEW in v5.8.0**: Automatic DataBinder creation for real-time model updates!  
+
+See the [Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md) for complete documentation.  
+See the [IntelligentFormView Auto-Binding Guide](IntelligentFormViewAutoBindingGuide.md) for automatic data binding documentation.
 
 ### Using Field Hints
 
@@ -117,8 +133,11 @@ struct CreateUserView: View {
 - Applies display widths to each field
 - Uses expected lengths for sizing
 - Shows character counters when configured
+- Creates a `DataBinder` for real-time model updates (v5.8.0+)
 
 **No manual hint passing needed!** The hints describe your data model.
+
+**📚 Data Binding**: For information about automatic `DataBinder` creation and real-time model updates, see the [IntelligentFormView Auto-Binding Guide](IntelligentFormViewAutoBindingGuide.md).
 
 ## Field Hints Properties
 
@@ -159,6 +178,53 @@ public struct FieldDisplayHints: Sendable {
 
 **📚 For complete OCR hints, calculation groups, and value ranges documentation, see:**
 - **[Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints, calculations, and value ranges in hints files
+
+## Picker Options for Enum Fields
+
+**NEW in v5.8.0**: You can now specify enum fields as pickers with human-readable labels!
+
+### When to Use Pickers
+
+Use pickers when a field represents an enum or a fixed set of values. This provides better UX than requiring users to type raw enum values.
+
+### Picker Configuration
+
+Add `inputType: "picker"` and an `options` array to your field definition:
+
+```json
+{
+  "sizeUnit": {
+    "displayWidth": "medium",
+    "expectedLength": 15,
+    "inputType": "picker",
+    "options": [
+      {"value": "story_points", "label": "Story Points"},
+      {"value": "hours", "label": "Hours"},
+      {"value": "days", "label": "Days"},
+      {"value": "weeks", "label": "Weeks"},
+      {"value": "t_shirt", "label": "T-Shirt Size"}
+    ]
+  }
+}
+```
+
+### How It Works
+
+- **Display**: The picker shows human-readable `label` values (e.g., "Story Points", "Hours")
+- **Storage**: The model stores the raw `value` (e.g., "story_points", "hours")
+- **Platform Support**: Works on both macOS (menu style) and iOS (menu style)
+- **Backward Compatible**: Fields without `inputType` continue to render as TextFields
+
+### Example
+
+```swift
+struct Task {
+    let sizeUnit: String  // Will use picker if hints specify inputType: "picker"
+    let name: String      // Will use TextField (default)
+}
+```
+
+With the hints file above, `sizeUnit` will render as a picker with labels, while `name` remains a text field.
 
 ## Display Width Guidelines
 

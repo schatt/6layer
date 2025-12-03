@@ -41,7 +41,7 @@ open class IntelligentFormViewPickerTests: BaseTestClass {
     }
     
     /// TDD RED PHASE: Test that DataHintsLoader parses inputType from hints file
-    @Test func testDataHintsLoaderParsesInputType() throws {
+    @Test @MainActor func testDataHintsLoaderParsesInputType() throws {
         initializeTestConfig()
         
         let json: [String: Any] = [
@@ -65,7 +65,7 @@ open class IntelligentFormViewPickerTests: BaseTestClass {
     }
     
     /// TDD RED PHASE: Test that DataHintsLoader parses picker options array
-    @Test func testDataHintsLoaderParsesPickerOptions() throws {
+    @Test @MainActor func testDataHintsLoaderParsesPickerOptions() throws {
         initializeTestConfig()
         
         let json: [String: Any] = [
@@ -98,7 +98,7 @@ open class IntelligentFormViewPickerTests: BaseTestClass {
     }
     
     /// TDD RED PHASE: Test that picker options have correct value and label
-    @Test func testPickerOptionsHaveValueAndLabel() {
+    @Test @MainActor func testPickerOptionsHaveValueAndLabel() {
         initializeTestConfig()
         
         let option = PickerOption(value: "story_points", label: "Story Points")
@@ -110,7 +110,7 @@ open class IntelligentFormViewPickerTests: BaseTestClass {
     // MARK: - FieldDisplayHints Tests
     
     /// TDD RED PHASE: Test that FieldDisplayHints includes inputType and pickerOptions
-    @Test func testFieldDisplayHintsIncludesPickerProperties() {
+    @Test @MainActor func testFieldDisplayHintsIncludesPickerProperties() {
         initializeTestConfig()
         
         let options = [
@@ -132,7 +132,7 @@ open class IntelligentFormViewPickerTests: BaseTestClass {
     // MARK: - Backward Compatibility Tests
     
     /// TDD RED PHASE: Test that hints files without inputType still work (backward compatibility)
-    @Test func testBackwardCompatibilityWithoutInputType() throws {
+    @Test @MainActor func testBackwardCompatibilityWithoutInputType() throws {
         initializeTestConfig()
         
         let json: [String: Any] = [

@@ -5,14 +5,155 @@
 
 set -e
 
-VERSION=$1
-RELEASE_TYPE=${2:-"patch"}  # major, minor, patch
+# Function to extract current version from Package.swift
+extract_version_from_package() {
+    if [ -f "Package.swift" ]; then
+        # Look for version in comment: // SixLayerFramework v5.7.2 - ...
+        local version_line=$(grep -E "^//.*SixLayerFramework v[0-9]+\.[0-9]+\.[0-9]+" Package.swift | head -1)
+        if [ -n "$version_line" ]; then
+            echo "$version_line" | sed -E 's/.*v([0-9]+\.[0-9]+\.[0-9]+).*/\1/'
+            return 0
+        fi
+    fi
+    return 1
+}
 
-if [ -z "$VERSION" ]; then
-    echo "❌ Error: Version required"
-    echo "Usage: $0 <version> [release_type]"
-    echo "Example: $0 4.2.0 minor"
+# Function to extract current version from README.md
+extract_version_from_readme() {
+    if [ -f "README.md" ]; then
+        # Look for version in: ## 🆕 Latest Release: v5.7.2
+        local version_line=$(grep -E "^## 🆕 Latest Release: v[0-9]+\.[0-9]+\.[0-9]+" README.md | head -1)
+        if [ -n "$version_line" ]; then
+            echo "$version_line" | sed -E 's/.*v([0-9]+\.[0-9]+\.[0-9]+).*/\1/'
+            return 0
+        fi
+    fi
+    return 1
+}
+
+# Function to get current version (tries Package.swift first, then README.md)
+get_current_version() {
+    local version=$(extract_version_from_package)
+    if [ -n "$version" ]; then
+        echo "$version"
+        return 0
+    fi
+    
+    version=$(extract_version_from_readme)
+    if [ -n "$version" ]; then
+        echo "$version"
+        return 0
+    fi
+    
+    return 1
+}
+
+# Function to increment version based on release type
+increment_version() {
+    local current_version=$1
+    local release_type=$2
+    
+    # Parse version into major.minor.patch
+    IFS='.' read -r major minor patch <<< "$current_version"
+    
+    case "$release_type" in
+        major)
+            major=$((major + 1))
+            minor=0
+            patch=0
+            ;;
+        minor)
+            minor=$((minor + 1))
+            patch=0
+            ;;
+        patch)
+            patch=$((patch + 1))
+            ;;
+        *)
+            echo "❌ Error: Invalid release type '$release_type'. Must be 'major', 'minor', or 'patch'" >&2
+            return 1
+            ;;
+    esac
+    
+    echo "$major.$minor.$patch"
+}
+
+# Function to check if a string looks like a version number (X.Y.Z)
+is_version_number() {
+    [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+}
+
+# Parse arguments with smart detection
+# Order: [release_type] [version]
+# If first arg looks like a version (X.Y.Z), treat it as version
+# Otherwise, treat it as release_type
+ARG1=$1
+ARG2=$2
+
+if [ -z "$ARG1" ]; then
+    # No arguments: auto-detect version, use patch default
+    RELEASE_TYPE="patch"
+    VERSION=""
+elif is_version_number "$ARG1"; then
+    # First arg is a version number: treat as [version] [release_type]
+    VERSION=$ARG1
+    RELEASE_TYPE=${ARG2:-"patch"}
+else
+    # First arg is not a version: treat as [release_type] [version]
+    RELEASE_TYPE=$ARG1
+    VERSION=$ARG2
+fi
+
+# Validate release type early
+if [[ ! "$RELEASE_TYPE" =~ ^(major|minor|patch)$ ]]; then
+    echo "❌ Error: Invalid release type '$RELEASE_TYPE'. Must be 'major', 'minor', or 'patch'"
+    echo "Usage: $0 [release_type] [version]"
+    echo "       $0 [version] [release_type]"
+    echo "Examples:"
+    echo "  $0 minor              # Auto-detect version, minor release"
+    echo "  $0 5.8.0              # Explicit version, patch release (default)"
+    echo "  $0 minor 5.8.0        # Explicit type and version"
+    echo "  $0 5.8.0 minor        # Version first, then type (also works)"
     exit 1
+fi
+
+# If version not provided, suggest one based on current version
+if [ -z "$VERSION" ]; then
+    CURRENT_VERSION=$(get_current_version)
+    if [ $? -eq 0 ] && [ -n "$CURRENT_VERSION" ]; then
+        SUGGESTED_VERSION=$(increment_version "$CURRENT_VERSION" "$RELEASE_TYPE")
+        if [ $? -eq 0 ]; then
+            echo "📋 Current version detected: v$CURRENT_VERSION"
+            echo "💡 Suggested next version (${RELEASE_TYPE}): v$SUGGESTED_VERSION"
+            echo ""
+            read -p "Use suggested version v$SUGGESTED_VERSION? (Y/n): " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Nn]$ ]]; then
+                echo "❌ Error: Version required"
+                echo "Usage: $0 [release_type] [version]"
+                echo "       $0 [version] [release_type]"
+                echo "Examples:"
+                echo "  $0 minor 5.8.0        # Explicit type and version"
+                echo "  $0 5.8.0 minor        # Version first, then type"
+                exit 1
+            else
+                VERSION=$SUGGESTED_VERSION
+                echo "✅ Using suggested version: v$VERSION"
+            fi
+        else
+            echo "❌ Error: Failed to calculate suggested version"
+            echo "Usage: $0 [release_type] [version]"
+            echo "       $0 [version] [release_type]"
+            exit 1
+        fi
+    else
+        echo "❌ Error: Version required and could not detect current version"
+        echo "Usage: $0 [release_type] [version]"
+        echo "       $0 [version] [release_type]"
+        echo ""
+        echo "Could not find version in Package.swift or README.md"
+        exit 1
+    fi
 fi
 
 # Initialize error tracking
@@ -159,10 +300,19 @@ if [ $ERRORS_BEFORE_PACKAGE -eq $ERRORS_FOUND ]; then
     echo "✅ Package.swift version comment correctly updated with v$VERSION"
 fi
 
-if grep -q "v$VERSION" Framework/README.md; then
-    echo "✅ Framework README updated"
-else
+# Check Framework README - verify version badge at top
+ERRORS_BEFORE_FRAMEWORK_README=$ERRORS_FOUND
+if ! grep -q "v$VERSION" Framework/README.md; then
     log_error "Framework README missing v$VERSION!"
+fi
+
+# Check that Framework README has the version in the badge
+if ! grep -q "version-v$VERSION" Framework/README.md; then
+    log_error "Framework README version badge does not use v$VERSION! Please update the version badge at the top of Framework/README.md. Expected format: [![Version](https://img.shields.io/badge/version-v$VERSION-blue.svg)]"
+fi
+
+if [ $ERRORS_BEFORE_FRAMEWORK_README -eq $ERRORS_FOUND ]; then
+    echo "✅ Framework README correctly updated with v$VERSION"
 fi
 
 if grep -q "v$VERSION" Framework/Examples/README.md; then
@@ -187,10 +337,22 @@ fi
 
 # Step 9: Check main AI_AGENT.md file
 echo "📋 Step 9: Checking main AI_AGENT.md file..."
+ERRORS_BEFORE_AI_AGENT=$ERRORS_FOUND
 if [ -f "Development/AI_AGENT.md" ]; then
     echo "✅ Main AI_AGENT.md file exists"
 else
     log_error "Missing Development/AI_AGENT.md! Main AI_AGENT.md file is MANDATORY"
+fi
+
+# Check that main AI_AGENT.md lists the new version in Latest Versions section
+if [ -f "Development/AI_AGENT.md" ]; then
+    if ! grep -A 10 "^### Latest Versions" Development/AI_AGENT.md | grep -q "v$VERSION"; then
+        log_error "Main AI_AGENT.md does not list v$VERSION in the 'Latest Versions' section! Please add v$VERSION to the Latest Versions section in Development/AI_AGENT.md"
+    fi
+fi
+
+if [ $ERRORS_BEFORE_AI_AGENT -eq $ERRORS_FOUND ]; then
+    echo "✅ Main AI_AGENT.md correctly updated with v$VERSION"
 fi
 
 # Step 10: Check documentation files (only if features changed)

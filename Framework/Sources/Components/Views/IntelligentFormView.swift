@@ -98,10 +98,33 @@ public struct IntelligentFormView {
     // MARK: - Public API
     
     /// Generate a form for creating new data with data binding integration
+    ///
+    /// **Automatic Data Binding**:
+    /// By default (`autoBind: true`), a `DataBinder` is automatically created if:
+    /// - No `dataBinder` is explicitly provided
+    /// - The model appears to support binding (has analyzable fields)
+    ///
+    /// The automatically created `DataBinder` instance is available but fields must
+    /// be manually bound using key paths. See `DataBinder.bind(_:to:)` for details.
+    ///
+    /// **Opt-Out**: Set `autoBind: false` to disable automatic `DataBinder` creation.
+    /// This is useful for read-only forms, immutable models, or external state management.
+    ///
+    /// - Parameters:
+    ///   - dataType: The type of data model
+    ///   - initialData: Initial data instance (required for analysis)
+    ///   - dataBinder: Optional explicit DataBinder. If provided, `autoBind` is ignored.
+    ///   - autoBind: Whether to automatically create a DataBinder (default: true)
+    ///   - inputHandlingManager: Optional input handling manager
+    ///   - customFieldView: Custom view builder for field rendering
+    ///   - onSubmit: Callback when form is submitted
+    ///   - onCancel: Callback when form is cancelled
+    /// - Returns: A view representing the generated form
     public static func generateForm<T>(
         for dataType: T.Type,
         initialData: T? = nil,
         dataBinder: DataBinder<T>? = nil,
+        autoBind: Bool = true,
         inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onSubmit: @escaping (T) -> Void = { _ in },
@@ -115,6 +138,16 @@ public struct IntelligentFormView {
         }
         let analysis = DataIntrospectionEngine.analyze(initialData)
         let formStrategy = determineFormStrategy(analysis: analysis)
+        
+        // Auto-create dataBinder if enabled and not provided
+        let effectiveDataBinder: DataBinder<T>?
+        if let providedBinder = dataBinder {
+            effectiveDataBinder = providedBinder
+        } else if autoBind && supportsAutoBinding(initialData, analysis: analysis) {
+            effectiveDataBinder = createAutoDataBinder(for: initialData, analysis: analysis)
+        } else {
+            effectiveDataBinder = nil
+        }
         
         // Load hints for the model type
         let modelName = String(describing: type(of: initialData))
@@ -144,7 +177,7 @@ public struct IntelligentFormView {
                             generateFormContent(
                                 analysis: analysis,
                                 initialData: initialData,
-                                dataBinder: dataBinder,
+                                dataBinder: effectiveDataBinder,
                                 inputHandlingManager: inputHandlingManager,
                                 customFieldView: customFieldView,
                                 formStrategy: formStrategy,
@@ -181,7 +214,7 @@ public struct IntelligentFormView {
                             generateFormContent(
                                 analysis: analysis,
                                 initialData: initialData,
-                                dataBinder: dataBinder,
+                                dataBinder: effectiveDataBinder,
                                 inputHandlingManager: inputHandlingManager,
                                 customFieldView: customFieldView,
                                 formStrategy: formStrategy,
@@ -209,9 +242,31 @@ public struct IntelligentFormView {
     }
     
     /// Generate a form for updating existing data with data binding integration
+    ///
+    /// **Automatic Data Binding**:
+    /// By default (`autoBind: true`), a `DataBinder` is automatically created if:
+    /// - No `dataBinder` is explicitly provided
+    /// - The model appears to support binding (has analyzable fields)
+    ///
+    /// The automatically created `DataBinder` instance is available but fields must
+    /// be manually bound using key paths. See `DataBinder.bind(_:to:)` for details.
+    ///
+    /// **Opt-Out**: Set `autoBind: false` to disable automatic `DataBinder` creation.
+    /// This is useful for read-only forms, immutable models, or external state management.
+    ///
+    /// - Parameters:
+    ///   - data: The data model instance to edit
+    ///   - dataBinder: Optional explicit DataBinder. If provided, `autoBind` is ignored.
+    ///   - autoBind: Whether to automatically create a DataBinder (default: true)
+    ///   - inputHandlingManager: Optional input handling manager
+    ///   - customFieldView: Custom view builder for field rendering
+    ///   - onUpdate: Callback when form is updated
+    ///   - onCancel: Callback when form is cancelled
+    /// - Returns: A view representing the generated form
     public static func generateForm<T>(
         for data: T,
         dataBinder: DataBinder<T>? = nil,
+        autoBind: Bool = true,
         inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
@@ -219,6 +274,16 @@ public struct IntelligentFormView {
     ) -> some View {
         let analysis = DataIntrospectionEngine.analyze(data)
         let formStrategy = determineFormStrategy(analysis: analysis)
+        
+        // Auto-create dataBinder if enabled and not provided
+        let effectiveDataBinder: DataBinder<T>?
+        if let providedBinder = dataBinder {
+            effectiveDataBinder = providedBinder
+        } else if autoBind && supportsAutoBinding(data, analysis: analysis) {
+            effectiveDataBinder = createAutoDataBinder(for: data, analysis: analysis)
+        } else {
+            effectiveDataBinder = nil
+        }
         
         // Load hints for the model type
         let modelName = String(describing: type(of: data))
@@ -234,10 +299,11 @@ public struct IntelligentFormView {
                 generateFormContent(
                     analysis: analysis,
                     initialData: data,
-                    dataBinder: dataBinder,
+                    dataBinder: effectiveDataBinder,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView,
-                    formStrategy: formStrategy
+                    formStrategy: formStrategy,
+                    fieldHints: fieldHints
                 )
             }
             )
@@ -526,23 +592,27 @@ public struct IntelligentFormView {
             let fieldValue = initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field)
             let hints = fieldHints[field.name]
             
-            // Try custom field view first
-            let customView = customFieldView(field.name, fieldValue, field.type)
-            
-            // If custom view is not EmptyView, use it; otherwise use default with hints
-            // Note: We can't easily check if customView is EmptyView at runtime in SwiftUI
-            // So we'll always try to use DefaultPlatformFieldView when hints are available
-            if hints != nil {
-                DefaultPlatformFieldView(
-                    field: field,
-                    value: fieldValue,
-                    hints: hints,
-                    onValueChange: { newValue in
-                        // Handle value change - would need data binder integration
-                    }
-                )
-            } else {
-                customView
+            // Use custom field view if provided, otherwise use default with hints
+            // Note: We check if hints exist to determine if we should use DefaultPlatformFieldView
+            // The customFieldView parameter allows overriding the default behavior
+            Group {
+                if hints != nil {
+                    // Use default field view with hints support (includes picker rendering)
+                    DefaultPlatformFieldView(
+                        field: field,
+                        value: fieldValue,
+                        hints: hints,
+                        onValueChange: { newValue in
+                            // Update dataBinder if available for real-time model updates
+                            if let dataBinder = dataBinder {
+                                dataBinder.updateField(field.name, value: newValue)
+                            }
+                        }
+                    )
+                } else {
+                    // Use custom field view (or EmptyView if not provided)
+                    customFieldView(field.name, fieldValue, field.type)
+                }
             }
             
             // Field description if available
@@ -841,11 +911,14 @@ private struct DefaultPlatformFieldView: View {
             // Check if this should be a picker based on hints
             if let hints = hints, hints.inputType == "picker", let options = hints.pickerOptions, !options.isEmpty {
                 // Render picker for enum fields
-                let currentValue = value as? String ?? ""
-                let selectedOption = options.first(where: { $0.value == currentValue }) ?? options.first!
-                
-                Picker(field.name.capitalized, selection: Binding(
-                    get: { selectedOption.value },
+                // Use dynamic binding that reads from value and writes via onValueChange
+                Picker(field.name.capitalized, selection: Binding<String>(
+                    get: {
+                        // Get current value as String, defaulting to first option if not set
+                        let currentValue = (value as? String) ?? options.first?.value ?? ""
+                        // Ensure the value is valid (exists in options), otherwise use first option
+                        return options.contains(where: { $0.value == currentValue }) ? currentValue : (options.first?.value ?? "")
+                    },
                     set: { newValue in
                         onValueChange(newValue)
                     }
