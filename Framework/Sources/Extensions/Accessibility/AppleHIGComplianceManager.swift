@@ -391,6 +391,7 @@ public struct PlatformDesignSystem {
     public let typographySystem: HIGTypographySystem
     public let spacingSystem: HIGSpacingSystem
     public let iconSystem: HIGIconSystem
+    public let visualDesignSystem: HIGVisualDesignSystem
     
     public init(for platform: SixLayerPlatform) {
         self.platform = platform
@@ -398,6 +399,7 @@ public struct PlatformDesignSystem {
         self.typographySystem = HIGTypographySystem(for: platform)
         self.spacingSystem = HIGSpacingSystem(for: platform)
         self.iconSystem = HIGIconSystem(for: platform)
+        self.visualDesignSystem = HIGVisualDesignSystem(for: platform)
     }
 }
 
