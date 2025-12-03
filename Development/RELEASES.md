@@ -1,12 +1,52 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation** 🎯
+## 📍 **Current Release: v5.8.0 - Cross-Platform Printing Solution** 🎯
 
-**Release Date**: December 2, 2025
+**Release Date**: December 3, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v5.7.1 - Value Range Validation for OCR Extraction
-**Note**: Adds intelligent decimal correction using expected ranges and calculation groups, range inference for fields without explicit ranges, field adjustment tracking, and enhanced range validation (ranges are now guidelines, not hard requirements). Also adds field averages for typical value detection.
+**Previous Release**: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation
+**Note**: Adds unified cross-platform printing API supporting text, images, PDFs, and SwiftUI views. Resolves Priority 1 violations for platform-specific printing code. Includes photo-quality printing support for iOS and comprehensive TDD test suite.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v5.8.0 - Cross-Platform Printing Solution** (December 3, 2025)
+
+### **What's New:**
+
+#### **🖨️ Cross-Platform Printing API**
+- Unified printing API that works identically on iOS and macOS
+- View modifier: `platformPrint_L4(isPresented:content:options:onComplete:)`
+- Direct function: `platformPrint_L4(content:options:)`
+- Supports text, images, PDFs, and SwiftUI views
+
+#### **📸 Photo-Quality Printing (iOS)**
+- Automatic photo-quality printing for images
+- Configurable output type: `.general`, `.photo`, or `.grayscale`
+- Perfect for insurance cards, photos, and high-quality image printing
+
+#### **🔧 Platform Implementations**
+- **iOS**: Uses `UIPrintInteractionController` with modal sheet presentation
+- **macOS**: Uses `NSPrintOperation` with standard print dialog
+- Error handling for no printer available scenarios
+- Graceful fallbacks for older OS versions
+
+#### **♿ Accessibility & Testing**
+- Automatic accessibility identifiers via `.automaticCompliance()`
+- Comprehensive TDD test suite (12 tests, all passing)
+- Tests cover API consistency, all content types, platform implementations, options, callbacks, and error handling
+
+#### **📚 Documentation**
+- Complete guide: `Framework/docs/PlatformPrintLayer4Guide.md`
+- Usage examples for all content types
+- Insurance card printing example (photo-quality)
+- Platform-specific notes and best practices
+
+### **Why It Matters**
+- Eliminates need for platform-specific printing code
+- Resolves Priority 1 violations (`UIPrintInteractionController`, `NSPrintOperation`)
+- Accepts `PlatformImage` directly (no manual `.uiImage`/`.nsImage` conversion)
+- Provides consistent API across iOS and macOS
 
 ---
 

@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation
+// SixLayerFramework v5.8.0 - Cross-Platform Printing Solution
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

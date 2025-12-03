@@ -30,6 +30,7 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Cross-Platform**: Write once, run on iOS and macOS
 - **Intelligent Layout**: AI-driven layout decisions based on content and context
 - **Field-Level Display Hints (v4.8.0)**: Declarative `.hints` files for data presentation
+- **Automatic Data Binding (v5.8.0)**: `DataBinder` automatically created for real-time model updates
 - **Layout Reasoning**: Transparent decision-making with detailed reasoning for debugging and analytics
 - **Performance Optimized**: Native performance with intelligent caching
 - **Accessibility First**: Built-in accessibility enhancements with automatic identifier generation
@@ -38,6 +39,38 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Extensible**: Easy to extend with custom layers and strategies
 - **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
 - **DRY Architecture**: Define hints once in files, use everywhere automatically
+
+## 🆕 What's New in v5.8.0
+
+### Cross-Platform Printing Solution
+- **Unified printing API**: Single API works on both iOS and macOS via `platformPrint_L4`
+- **Multiple content types**: Supports text, images, PDFs, and SwiftUI views
+- **Photo-quality printing**: Automatic photo-quality printing for images (iOS)
+- **PlatformImage integration**: Accepts `PlatformImage` directly (no manual conversion needed)
+- **Error handling**: Graceful handling when no printer is available
+- **Accessibility**: Automatic accessibility identifiers and full VoiceOver support
+- **Comprehensive testing**: 12 tests covering all functionality
+- **Complete documentation**: Full guide with usage examples
+
+See the [Platform Print Layer 4 Guide](Framework/docs/PlatformPrintLayer4Guide.md) for complete documentation.
+
+### Automatic Data Binding for IntelligentFormView
+- **Automatic DataBinder creation**: `DataBinder` is automatically created when generating forms (opt-out available)
+- **Real-time model updates**: Form field changes automatically update bound models via `dataBinder.updateField()`
+- **Picker field integration**: Picker fields now integrate with `DataBinder` for enum field updates
+- **Opt-out support**: Set `autoBind: false` to disable automatic binding for read-only forms, immutable models, or external state management
+- **Backward compatible**: Existing code continues to work without changes
+- **Comprehensive documentation**: Full guide with examples, limitations, and troubleshooting
+
+See the [IntelligentFormView Auto-Binding Guide](Framework/docs/IntelligentFormViewAutoBindingGuide.md) for complete documentation.
+
+### Enum Picker Support in Hints Files
+- **Picker options**: Add `inputType: "picker"` and `options` array to hints files for enum fields
+- **Human-readable labels**: Display labels in UI while storing raw enum values in model
+- **Cross-platform**: Works on both macOS (menu style) and iOS (menu style)
+- **Backward compatible**: Existing hints files without `inputType` continue to work
+
+See [Issue #40](https://github.com/schatt/6layer/issues/40) for details.
 
 ## 🆕 What's New in v5.7.1
 

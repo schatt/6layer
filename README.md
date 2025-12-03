@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.7.2")
+    .package(url: "https://github.com/schatt/6layer.git", from: "5.8.0")
 ]
 ```
 
@@ -41,9 +41,17 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.7.2
+## 🆕 Latest Release: v5.8.0
 
-### **Intelligent Decimal Correction & Enhanced Range Validation**
+### **Cross-Platform Printing Solution**
+🖨️ **Unified printing API**: Single API works on both iOS and macOS.  
+📸 **Photo-quality printing**: Automatic photo-quality printing for images (iOS).  
+🔧 **Multiple content types**: Supports text, images, PDFs, and SwiftUI views.  
+♿ **Accessibility**: Automatic accessibility identifiers and full VoiceOver support.  
+🧪 **Comprehensive testing**: 12 tests covering all functionality.  
+📚 **Complete documentation**: Full guide with usage examples and best practices.
+
+### **Previous Release: v5.7.2 – Intelligent Decimal Correction & Enhanced Range Validation**
 🔧 **Intelligent decimal correction**: Automatically corrects missing decimal points using expected ranges and calculation groups as heuristics.  
 📊 **Range inference**: Infers ranges from calculation groups for fields without explicit ranges.  
 ⚠️ **Field adjustment tracking**: `OCRResult.adjustedFields` tracks which fields were adjusted or calculated for user verification.  
@@ -106,7 +114,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.7.2 (Intelligent Decimal Correction & Enhanced Range Validation)  
+**Version**: v5.8.0 (Cross-Platform Printing Solution)  
 **Phase**: Minor Release  
 **Next**: Continue framework development and stability improvements
 
