@@ -43,13 +43,14 @@ The framework is distributed as a Swift Package from the `Framework/` directory.
 
 ## 🆕 Latest Release: v5.8.0
 
-### **Cross-Platform Printing Solution**
+### **Cross-Platform Printing Solution & Automatic Data Binding**
 🖨️ **Unified printing API**: Single API works on both iOS and macOS.  
 📸 **Photo-quality printing**: Automatic photo-quality printing for images (iOS).  
 🔧 **Multiple content types**: Supports text, images, PDFs, and SwiftUI views.  
+🔗 **Automatic data binding**: `DataBinder` automatically created for `IntelligentFormView` with real-time model updates.  
 ♿ **Accessibility**: Automatic accessibility identifiers and full VoiceOver support.  
-🧪 **Comprehensive testing**: 12 tests covering all functionality.  
-📚 **Complete documentation**: Full guide with usage examples and best practices.
+🧪 **Comprehensive testing**: 12 printing tests + 10 auto-binding tests covering all functionality.  
+📚 **Complete documentation**: Full guides with usage examples and best practices.
 
 ### **Previous Release: v5.7.2 – Intelligent Decimal Correction & Enhanced Range Validation**
 🔧 **Intelligent decimal correction**: Automatically corrects missing decimal points using expected ranges and calculation groups as heuristics.  

@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v5.7.2-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.7.2)
+[![Version](https://img.shields.io/badge/version-v5.8.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.8.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -53,6 +53,17 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Complete documentation**: Full guide with usage examples
 
 See the [Platform Print Layer 4 Guide](Framework/docs/PlatformPrintLayer4Guide.md) for complete documentation.
+
+### Automatic Data Binding for IntelligentFormView
+- **Automatic DataBinder creation**: `DataBinder` is automatically created when generating forms (opt-out available)
+- **Real-time model updates**: Form field changes automatically update bound models via `dataBinder.updateField()`
+- **Picker field integration**: Picker fields now integrate with `DataBinder` for enum field updates
+- **Opt-out support**: Set `autoBind: false` to disable automatic binding for read-only forms, immutable models, or external state management
+- **Backward compatible**: Existing code continues to work without changes
+- **Comprehensive testing**: 10 tests covering all auto-binding functionality
+- **Complete documentation**: Full guide with examples, limitations, and troubleshooting
+
+See the [IntelligentFormView Auto-Binding Guide](Framework/docs/IntelligentFormViewAutoBindingGuide.md) for complete documentation.
 
 ### Automatic Data Binding for IntelligentFormView
 - **Automatic DataBinder creation**: `DataBinder` is automatically created when generating forms (opt-out available)

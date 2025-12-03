@@ -347,7 +347,7 @@ fi
 # Check that main AI_AGENT.md lists the new version in Latest Versions section
 if [ -f "Development/AI_AGENT.md" ]; then
     if ! grep -A 10 "^### Latest Versions" Development/AI_AGENT.md | grep -q "v$VERSION"; then
-        log_error "Main AI_AGENT.md does not list v$VERSION in the 'Latest Versions' section! Please add v$VERSION to the Latest Versions section in Development/AI_AGENT.md"
+        log_error "Main AI_AGENT.md does not list v$VERSION in the 'Latest Versions (Recommended)' section! Please add v$VERSION to the Latest Versions section in Development/AI_AGENT.md"
     fi
 fi
 

@@ -1,6 +1,6 @@
 # 🚀 SixLayer Framework v5.8.0 Release Notes
 
-## 🎯 **Cross-Platform Printing Solution**
+## 🎯 **Cross-Platform Printing Solution & Automatic Data Binding**
 
 **Release Date**: December 3, 2025  
 **Status**: ✅ **COMPLETE**  
@@ -11,14 +11,17 @@
 
 ## 📋 **Release Summary**
 
-SixLayer Framework v5.8.0 adds a **unified cross-platform printing API** that eliminates the need for platform-specific printing code. The framework now provides a single API that works identically on both iOS and macOS, supporting text, images, PDFs, and SwiftUI views. This release resolves Priority 1 violations for platform-specific printing code and includes photo-quality printing support for iOS.
+SixLayer Framework v5.8.0 adds a **unified cross-platform printing API** that eliminates the need for platform-specific printing code, and **automatic data binding** for `IntelligentFormView` that reduces boilerplate and provides real-time model updates. The framework now provides a single printing API that works identically on both iOS and macOS, supporting text, images, PDFs, and SwiftUI views. Additionally, forms now automatically create `DataBinder` instances for real-time model updates.
 
 ### **Key Achievements**
 - ✅ Unified printing API (`platformPrint_L4`) for iOS and macOS
 - ✅ Support for text, images, PDFs, and SwiftUI views
 - ✅ Photo-quality printing support (iOS)
+- ✅ Automatic `DataBinder` creation for `IntelligentFormView`
+- ✅ Real-time model updates via automatic data binding
+- ✅ Opt-out support for automatic binding
 - ✅ Automatic error handling for no printer available scenarios
-- ✅ Comprehensive TDD test suite (12 tests, all passing)
+- ✅ Comprehensive TDD test suites (12 printing tests + 10 auto-binding tests, all passing)
 - ✅ Complete documentation with usage examples
 - ✅ Resolves Priority 1 violations for `UIPrintInteractionController` and `NSPrintOperation`
 
@@ -158,10 +161,72 @@ The implementation gracefully handles error scenarios:
 
 ---
 
+## 🆕 **Automatic Data Binding for IntelligentFormView**
+
+### **Overview**
+
+`IntelligentFormView` now automatically creates a `DataBinder` instance when generating forms, reducing boilerplate and providing real-time model updates by default.
+
+### **Key Features**
+
+- **Automatic DataBinder Creation**: `DataBinder` is automatically created when generating forms (opt-out available)
+- **Real-time Model Updates**: Form field changes automatically update bound models via `dataBinder.updateField()`
+- **Picker Field Integration**: Picker fields now integrate with `DataBinder` for enum field updates
+- **Opt-out Support**: Set `autoBind: false` to disable automatic binding for read-only forms, immutable models, or external state management
+- **Backward Compatible**: Existing code continues to work without changes
+
+### **Usage Example**
+
+```swift
+struct Task {
+    var title: String
+    var status: String
+    var priority: Int
+}
+
+let task = Task(title: "Fix bug", status: "In Progress", priority: 2)
+
+// DataBinder is automatically created
+let form = IntelligentFormView.generateForm(
+    for: Task.self,
+    initialData: task,
+    onSubmit: { updatedTask in
+        // Task is automatically updated as fields change
+        print("Updated: \(updatedTask)")
+    }
+)
+```
+
+### **When to Use Automatic Binding**
+
+- ✅ You want real-time model updates
+- ✅ Your model has mutable properties (var, not let)
+- ✅ You're willing to manually bind key paths for full functionality
+
+### **When to Opt Out**
+
+- ❌ Read-only forms (display only)
+- ❌ Immutable models (all let properties)
+- ❌ External state management (Redux, Combine publishers)
+- ❌ Batch updates (collect changes, apply on submit)
+- ❌ Performance concerns (too many real-time updates)
+
+### **Documentation**
+
+Complete documentation is available in `Framework/docs/IntelligentFormViewAutoBindingGuide.md`, including:
+- Quick start guide
+- How automatic binding works
+- When to use vs. opt out
+- Manual field binding
+- Examples and migration guide
+- Troubleshooting
+
+---
+
 ## 🧪 **Testing**
 
-### **Test Coverage**
-- ✅ **12 comprehensive tests** covering all functionality
+### **Printing Test Coverage**
+- ✅ **12 comprehensive tests** covering all printing functionality
 - ✅ API consistency across platforms
 - ✅ All content types (text, image, PDF, view)
 - ✅ Platform-specific implementations
@@ -170,11 +235,24 @@ The implementation gracefully handles error scenarios:
 - ✅ Accessibility compliance
 - ✅ Error handling
 
+### **Auto-Binding Test Coverage**
+- ✅ **10 comprehensive tests** covering all auto-binding functionality
+- ✅ Automatic DataBinder creation
+- ✅ Opt-out behavior
+- ✅ Integration with field updates
+- ✅ Picker field integration
+- ✅ Immutable model handling
+- ✅ Backward compatibility
+- ✅ Core Data integration
+
 ### **Test Results**
 All tests pass successfully:
 ```
 ✔ Suite "Platform Print Layer 4" passed after 0.053 seconds.
 ✔ Test run with 12 tests in 1 suite passed after 0.053 seconds.
+
+✔ Suite "Intelligent Form View Auto Binding" passed after 0.047 seconds.
+✔ Test run with 10 tests in 1 suite passed after 0.048 seconds.
 ```
 
 ---

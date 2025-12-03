@@ -1,16 +1,16 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.8.0 - Cross-Platform Printing Solution** 🎯
+## 📍 **Current Release: v5.8.0 - Cross-Platform Printing Solution & Automatic Data Binding** 🎯
 
 **Release Date**: December 3, 2025
 **Status**: ✅ **COMPLETE**
 **Previous Release**: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation
-**Note**: Adds unified cross-platform printing API supporting text, images, PDFs, and SwiftUI views. Resolves Priority 1 violations for platform-specific printing code. Includes photo-quality printing support for iOS and comprehensive TDD test suite.
+**Note**: Adds unified cross-platform printing API supporting text, images, PDFs, and SwiftUI views. Resolves Priority 1 violations for platform-specific printing code. Includes photo-quality printing support for iOS. Also adds automatic DataBinder creation for IntelligentFormView with real-time model updates, opt-out support, and comprehensive TDD test suites (12 printing tests + 10 auto-binding tests).
 **Next Release**: TBD
 
 ---
 
-## 🎯 **v5.8.0 - Cross-Platform Printing Solution** (December 3, 2025)
+## 🎯 **v5.8.0 - Cross-Platform Printing Solution & Automatic Data Binding** (December 3, 2025)
 
 ### **What's New:**
 
@@ -42,11 +42,21 @@
 - Insurance card printing example (photo-quality)
 - Platform-specific notes and best practices
 
+#### **🔗 Automatic Data Binding for IntelligentFormView**
+- **Automatic DataBinder creation**: `DataBinder` is automatically created when generating forms (opt-out available)
+- **Real-time model updates**: Form field changes automatically update bound models via `dataBinder.updateField()`
+- **Picker field integration**: Picker fields now integrate with `DataBinder` for enum field updates
+- **Opt-out support**: Set `autoBind: false` to disable automatic binding for read-only forms, immutable models, or external state management
+- **Backward compatible**: Existing code continues to work without changes
+- **Comprehensive testing**: 10 tests covering all auto-binding functionality
+
 ### **Why It Matters**
 - Eliminates need for platform-specific printing code
 - Resolves Priority 1 violations (`UIPrintInteractionController`, `NSPrintOperation`)
 - Accepts `PlatformImage` directly (no manual `.uiImage`/`.nsImage` conversion)
 - Provides consistent API across iOS and macOS
+- Reduces boilerplate for form data binding
+- Enables real-time model updates with minimal code
 
 ---
 
