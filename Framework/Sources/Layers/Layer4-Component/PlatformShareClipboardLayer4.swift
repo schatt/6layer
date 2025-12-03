@@ -184,17 +184,21 @@ public enum PlatformClipboard {
     }
     
     /// Copy image to clipboard
-    /// - Parameter image: Image to copy
+    /// - Parameter image: Image to copy (PlatformImage - standardized cross-platform type)
     /// - Returns: Success status
+    /// 
+    /// System boundary conversion: PlatformImage → UIImage/NSImage at clipboard API
     @MainActor
-    public static func copyToClipboard(_ image: ClipboardImage) -> Bool {
+    public static func copyToClipboard(_ image: PlatformImage) -> Bool {
         #if os(iOS)
-        UIPasteboard.general.image = image
+        // System boundary conversion: PlatformImage → UIImage
+        UIPasteboard.general.image = image.uiImage
         return UIPasteboard.general.image != nil
         #elseif os(macOS)
+        // System boundary conversion: PlatformImage → NSImage
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
-        if let tiffData = image.tiffRepresentation {
+        if let tiffData = image.nsImage.tiffRepresentation {
             return pasteboard.setData(tiffData, forType: .tiff)
         }
         return false
@@ -225,14 +229,6 @@ public enum PlatformClipboard {
     }
 }
 
-#if os(iOS)
-public typealias ClipboardImage = UIImage
-#elseif os(macOS)
-public typealias ClipboardImage = NSImage
-#else
-public typealias ClipboardImage = Any
-#endif
-
 /// Unified clipboard copy operation helper
 /// - Parameters:
 ///   - content: Content to copy (text, image, or URL)
@@ -249,7 +245,8 @@ public func platformCopyToClipboard_L4(
         success = PlatformClipboard.copyToClipboard(text)
     } else if let url = content as? URL {
         success = PlatformClipboard.copyToClipboard(url)
-    } else if let image = content as? ClipboardImage {
+    } else if let image = content as? PlatformImage {
+        // Framework uses PlatformImage (standardized type)
         success = PlatformClipboard.copyToClipboard(image)
     } else {
         // Try to convert to string
