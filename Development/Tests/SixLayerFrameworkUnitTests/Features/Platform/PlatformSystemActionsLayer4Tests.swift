@@ -37,7 +37,11 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
     
     /// BUSINESS PURPOSE: Verify unified URL opening API has consistent signature across platforms
     /// TESTING SCOPE: Tests that the API signature is identical on iOS and macOS
-    /// METHODOLOGY: Verify compile-time API consistency
+    /// METHODOLOGY: Verify compile-time API consistency and that function exists
+    /// 
+    /// NOTE: This test verifies API signature only. Actual URL opening behavior cannot be
+    /// tested without mocking platform APIs (UIApplication/NSWorkspace), which would require
+    /// dependency injection not currently implemented in the framework.
     @Test @MainActor func testPlatformOpenURL_ConsistentAPI() {
         // Given: Valid URL
         guard let url = URL(string: "https://example.com") else {
@@ -46,16 +50,24 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         }
         
         // When: Call platformOpenURL_L4
+        // NOTE: This will actually attempt to open the URL in the test environment.
+        // The return value may be true/false depending on system state, but we can't
+        // verify the actual platform API was called without dependency injection.
         let result = platformOpenURL_L4(url)
         
-        // Then: Should return Bool (success status)
+        // Then: Should return Bool (API signature verification)
+        // This is a compile-time and basic runtime check, not a behavior verification
         #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should return Bool")
     }
     
-    /// BUSINESS PURPOSE: Verify URL opening works with HTTP URLs
-    /// TESTING SCOPE: Tests that HTTP URLs are handled correctly
-    /// METHODOLOGY: Test with valid HTTP URL
-    @Test @MainActor func testPlatformOpenURL_HTTPURL() {
+    /// BUSINESS PURPOSE: Verify URL opening API accepts different URL types
+    /// TESTING SCOPE: Tests that the API accepts HTTP, HTTPS, and custom schemes
+    /// METHODOLOGY: Test API signature with different URL types
+    /// 
+    /// NOTE: These tests verify the API accepts different URL formats, not that they
+    /// actually open correctly. Actual opening behavior depends on system state and
+    /// cannot be reliably tested without mocking.
+    @Test @MainActor func testPlatformOpenURL_AcceptsHTTPURL() {
         // Given: HTTP URL
         guard let url = URL(string: "http://example.com") else {
             Issue.record("Failed to create test URL")
@@ -65,14 +77,11 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         // When: Call platformOpenURL_L4
         let result = platformOpenURL_L4(url)
         
-        // Then: Should return Bool (may be false in test environment if can't actually open)
-        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should return Bool for HTTP URLs")
+        // Then: Should return Bool (API accepts HTTP URLs)
+        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should accept HTTP URLs")
     }
     
-    /// BUSINESS PURPOSE: Verify URL opening works with HTTPS URLs
-    /// TESTING SCOPE: Tests that HTTPS URLs are handled correctly
-    /// METHODOLOGY: Test with valid HTTPS URL
-    @Test @MainActor func testPlatformOpenURL_HTTPSURL() {
+    @Test @MainActor func testPlatformOpenURL_AcceptsHTTPSURL() {
         // Given: HTTPS URL
         guard let url = URL(string: "https://example.com") else {
             Issue.record("Failed to create test URL")
@@ -82,14 +91,11 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         // When: Call platformOpenURL_L4
         let result = platformOpenURL_L4(url)
         
-        // Then: Should return Bool
-        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should return Bool for HTTPS URLs")
+        // Then: Should return Bool (API accepts HTTPS URLs)
+        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should accept HTTPS URLs")
     }
     
-    /// BUSINESS PURPOSE: Verify URL opening works with app-specific URL schemes
-    /// TESTING SCOPE: Tests that custom URL schemes are handled correctly
-    /// METHODOLOGY: Test with app-specific URL scheme
-    @Test @MainActor func testPlatformOpenURL_CustomScheme() {
+    @Test @MainActor func testPlatformOpenURL_AcceptsCustomScheme() {
         // Given: Custom URL scheme
         guard let url = URL(string: "myapp://action") else {
             Issue.record("Failed to create test URL")
@@ -99,14 +105,19 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         // When: Call platformOpenURL_L4
         let result = platformOpenURL_L4(url)
         
-        // Then: Should return Bool (may be false if scheme not registered)
-        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should return Bool for custom schemes")
+        // Then: Should return Bool (API accepts custom schemes)
+        // Note: Result may be false if scheme not registered, but API accepts it
+        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should accept custom URL schemes")
     }
     
-    /// BUSINESS PURPOSE: Verify iOS implementation uses UIApplication.shared.open
-    /// TESTING SCOPE: Tests that iOS uses correct URL opening API
-    /// METHODOLOGY: Verify platform-specific implementation selection
-    @Test @MainActor func testPlatformOpenURL_iOSImplementation() {
+    /// BUSINESS PURPOSE: Verify platform-specific code paths compile correctly
+    /// TESTING SCOPE: Tests that iOS and macOS implementations compile and have correct signatures
+    /// METHODOLOGY: Verify function exists and returns correct type on each platform
+    /// 
+    /// NOTE: This does NOT verify that UIApplication.shared.open or NSWorkspace.shared.open
+    /// are actually called - that would require dependency injection/mocking which is not
+    /// implemented. This only verifies the function exists and has the correct signature.
+    @Test @MainActor func testPlatformOpenURL_iOSCodePathCompiles() {
         #if os(iOS)
         // Given: Valid URL
         guard let url = URL(string: "https://example.com") else {
@@ -114,21 +125,19 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
             return
         }
         
-        // When: Call platformOpenURL_L4
+        // When: Call platformOpenURL_L4 on iOS
         let result = platformOpenURL_L4(url)
         
-        // Then: Should use iOS implementation (returns Bool)
-        #expect(type(of: result) == Bool.self, "iOS should use UIApplication.shared.open implementation")
+        // Then: Should return Bool (iOS code path compiles and has correct signature)
+        // NOTE: We cannot verify UIApplication.shared.open was called without mocking
+        #expect(type(of: result) == Bool.self, "iOS implementation should return Bool")
         #else
         // Skip on non-iOS platforms
         #expect(Bool(true), "Test only runs on iOS")
         #endif
     }
     
-    /// BUSINESS PURPOSE: Verify macOS implementation uses NSWorkspace.shared.open
-    /// TESTING SCOPE: Tests that macOS uses correct URL opening API
-    /// METHODOLOGY: Verify platform-specific implementation selection
-    @Test @MainActor func testPlatformOpenURL_macOSImplementation() {
+    @Test @MainActor func testPlatformOpenURL_macOSCodePathCompiles() {
         #if os(macOS)
         // Given: Valid URL
         guard let url = URL(string: "https://example.com") else {
@@ -136,33 +145,42 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
             return
         }
         
-        // When: Call platformOpenURL_L4
+        // When: Call platformOpenURL_L4 on macOS
         let result = platformOpenURL_L4(url)
         
-        // Then: Should use macOS implementation (returns Bool)
-        #expect(type(of: result) == Bool.self, "macOS should use NSWorkspace.shared.open implementation")
+        // Then: Should return Bool (macOS code path compiles and has correct signature)
+        // NOTE: We cannot verify NSWorkspace.shared.open was called without mocking
+        #expect(type(of: result) == Bool.self, "macOS implementation should return Bool")
         #else
         // Skip on non-macOS platforms
         #expect(Bool(true), "Test only runs on macOS")
         #endif
     }
     
-    /// BUSINESS PURPOSE: Verify error handling for invalid URLs
-    /// TESTING SCOPE: Tests that invalid URLs are handled gracefully
-    /// METHODOLOGY: Test with invalid URL
-    @Test @MainActor func testPlatformOpenURL_InvalidURL() {
-        // Given: Invalid URL (empty string)
-        guard let url = URL(string: "") else {
-            // URL(string: "") returns nil, which is expected
-            // When: Try to call with nil (shouldn't compile, but test the API)
-            // Then: API should handle gracefully
-            #expect(Bool(true), "Invalid URL should be handled gracefully")
+    /// BUSINESS PURPOSE: Verify function handles edge cases gracefully
+    /// TESTING SCOPE: Tests that the API doesn't crash with edge case inputs
+    /// METHODOLOGY: Test with edge case URLs
+    @Test @MainActor func testPlatformOpenURL_HandlesInvalidURL() {
+        // Given: Invalid URL (empty string returns nil)
+        // When: URL creation fails
+        guard URL(string: "") == nil else {
+            Issue.record("URL(string: \"\") should return nil")
             return
         }
         
-        // If URL creation succeeded, test opening it
+        // Then: API should handle nil URLs gracefully (compiler prevents passing nil)
+        // This test verifies our understanding of URL(string:) behavior
+        #expect(Bool(true), "Invalid URL strings should return nil from URL(string:)")
+        
+        // Test with a valid but potentially problematic URL
+        guard let url = URL(string: "file:///nonexistent") else {
+            Issue.record("Failed to create test URL")
+            return
+        }
+        
+        // Function should not crash even if URL can't be opened
         let result = platformOpenURL_L4(url)
-        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should return Bool even for invalid URLs")
+        #expect(type(of: result) == Bool.self, "platformOpenURL_L4 should return Bool even for problematic URLs")
     }
     
     // MARK: - platformShare_L4 Tests
