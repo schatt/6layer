@@ -236,7 +236,9 @@ Text("Content")
     .higCornerRadiusCategory(.medium)
 ```
 
-## Complete Example
+## Complete Examples
+
+### Basic Card Example
 
 ```swift
 struct CardView: View {
@@ -251,6 +253,146 @@ struct CardView: View {
         .higShadowCategory(.elevated)
         .higCornerRadiusCategory(.medium)
         .higBorderWidthCategory(.thin, color: .separator)
+        .background(Color.systemBackground)
+    }
+}
+```
+
+### Animated View with State Changes
+
+```swift
+struct AnimatedCardView: View {
+    @State private var isExpanded = false
+    
+    var body: some View {
+        VStack {
+            Text("Tap to expand")
+                .font(.headline)
+            
+            if isExpanded {
+                Text("Expanded content")
+                    .font(.body)
+                    .higOpacityCategory(.secondary)
+            }
+        }
+        .padding()
+        .higCornerRadiusCategory(.medium)
+        .higShadowCategory(isExpanded ? .floating : .elevated)
+        .higAnimationCategory(.spring) // iOS default
+        .onTapGesture {
+            withAnimation {
+                isExpanded.toggle()
+            }
+        }
+    }
+}
+```
+
+### Blurred Overlay Example
+
+```swift
+struct BlurredOverlayView: View {
+    var body: some View {
+        ZStack {
+            // Background content
+            Image("background")
+                .resizable()
+                .scaledToFill()
+            
+            // Blurred overlay
+            Color.black
+                .higOpacityCategory(.tertiary)
+                .higBlurCategory(.medium)
+            
+            // Foreground content
+            VStack {
+                Text("Content on Blur")
+                    .font(.headline)
+                    .foregroundColor(.white)
+            }
+        }
+    }
+}
+```
+
+### Complete Form Card with All Categories
+
+```swift
+struct FormCardView: View {
+    @State private var isFocused = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Form Title")
+                .font(.headline)
+                .higOpacityCategory(.primary)
+            
+            TextField("Enter text", text: .constant(""))
+                .padding()
+                .higCornerRadiusCategory(.small)
+                .higBorderWidthCategory(
+                    isFocused ? .medium : .thin,
+                    color: isFocused ? .blue : .separator
+                )
+                .higShadowCategory(isFocused ? .floating : .elevated)
+                .onTapGesture {
+                    withAnimation {
+                        isFocused = true
+                    }
+                }
+            
+            Button("Submit") {
+                // Action
+            }
+            .padding()
+            .higCornerRadiusCategory(.medium)
+            .higShadowCategory(.elevated)
+        }
+        .padding()
+        .higCornerRadiusCategory(.large)
+        .higShadowCategory(.elevated)
+        .background(Color.systemBackground)
+        .higAnimationCategory(.spring)
+    }
+}
+```
+
+### Configuration-Based Automatic Application
+
+```swift
+struct AppView: View {
+    @StateObject private var complianceManager = AppleHIGComplianceManager()
+    
+    var body: some View {
+        VStack {
+            Text("Automatically Styled Content")
+                .visualConsistency()
+        }
+        .onAppear {
+            // Configure automatic visual design category application
+            complianceManager.visualDesignConfig.applyShadows = true
+            complianceManager.visualDesignConfig.applyCornerRadius = true
+            complianceManager.visualDesignConfig.defaultShadowCategory = .elevated
+            complianceManager.visualDesignConfig.defaultCornerRadiusCategory = .medium
+        }
+    }
+}
+```
+
+### Platform-Specific Example
+
+```swift
+struct PlatformAwareCardView: View {
+    var body: some View {
+        VStack {
+            Text("Platform-Aware Card")
+                .font(.headline)
+        }
+        .padding()
+        // Automatically uses platform-appropriate defaults
+        .higShadowCategory(.elevated) // iOS: larger radius, macOS: smaller radius
+        .higCornerRadiusCategory(.medium) // iOS: 12pt, macOS: 8pt
+        .higAnimationCategory(.spring) // iOS default, but can override
         .background(Color.systemBackground)
     }
 }

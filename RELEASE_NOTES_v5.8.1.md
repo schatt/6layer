@@ -218,25 +218,59 @@ Button("Share") {
 
 #### Usage Examples
 
+**Basic Usage:**
 ```swift
 // Apply visual design categories
 Card()
     .higShadowCategory(.elevated)
     .higCornerRadiusCategory(.medium)
     .higBorderWidthCategory(.thin, color: .separator)
-
-// Apply animation category
-AnimatedView()
-    .higAnimationCategory(.spring)  // iOS default
-
-// Apply opacity category
-SecondaryText()
-    .higOpacityCategory(.secondary)
-
-// Apply blur category
-BlurredBackground()
-    .higBlurCategory(.light)
 ```
+
+**With State-Based Animations:**
+```swift
+struct AnimatedCard: View {
+    @State private var isExpanded = false
+    
+    var body: some View {
+        VStack {
+            Text("Tap to expand")
+            if isExpanded {
+                Text("Expanded content")
+                    .higOpacityCategory(.secondary)
+            }
+        }
+        .higShadowCategory(isExpanded ? .floating : .elevated)
+        .higAnimationCategory(.spring) // iOS default
+        .onTapGesture {
+            withAnimation { isExpanded.toggle() }
+        }
+    }
+}
+```
+
+**Blurred Overlay:**
+```swift
+ZStack {
+    Image("background")
+    Color.black
+        .higOpacityCategory(.tertiary)
+        .higBlurCategory(.medium)
+    Text("Content on Blur")
+}
+```
+
+**Configuration-Based Automatic Application:**
+```swift
+let manager = AppleHIGComplianceManager()
+manager.visualDesignConfig.applyShadows = true
+manager.visualDesignConfig.applyCornerRadius = true
+
+Text("Content")
+    .visualConsistency() // Automatically applies configured categories
+```
+
+See [HIGVisualDesignCategoriesGuide.md](../Framework/docs/HIGVisualDesignCategoriesGuide.md) for more comprehensive examples.
 
 #### Platform-Appropriate Defaults
 
@@ -293,9 +327,78 @@ The visual design system implementation was refactored for better maintainabilit
 - **Test Fixes**: Fixed test syntax issues (enum comparisons, CGSize property access)
 - **Net Reduction**: 60 lines of code removed while maintaining all functionality
 
+### Automatic HIG-Compliant Styling (Issue #35)
+
+**COMPLETED**: Implemented automatic HIG-compliant styling for all components - visual design, spacing, and typography are now automatically applied when using `.automaticCompliance()`.
+
+#### Key Features
+
+- **Automatic Visual Design**: Colors, spacing, and typography are automatically applied
+- **Platform-Specific Styling**: iOS vs macOS patterns are automatically detected and applied
+- **Zero Configuration**: No manual styling required for basic HIG compliance
+- **Opt-In for Custom Views**: Custom views can use `.automaticCompliance()` to get automatic styling
+
+#### What's Applied Automatically
+
+When you use `.automaticCompliance()` (or any Layer 1 function that calls it), components automatically receive:
+
+- **System Colors**: Platform-specific system colors via `SystemColorModifier`
+- **Typography**: Platform-appropriate typography via `SystemTypographyModifier`
+- **Spacing**: HIG-compliant spacing following Apple's 8pt grid via `SpacingModifier`
+- **Platform Patterns**: Platform-specific styling patterns via `PlatformStylingModifier`
+
+#### Usage
+
+```swift
+// Layer 1 functions automatically get styling
+let collectionView = platformPresentItemCollection_L1(
+    items: items,
+    hints: hints
+)
+// Styling is automatically applied!
+
+// Custom views can opt-in
+struct CustomView: View {
+    var body: some View {
+        VStack {
+            Text("Custom Content")
+        }
+        .automaticCompliance()  // Gets automatic styling
+    }
+}
+```
+
+#### Implementation Details
+
+The automatic styling is implemented in `applyHIGComplianceFeatures()` which:
+
+1. Creates a `PlatformDesignSystem` for the current platform
+2. Applies system colors automatically
+3. Applies typography system automatically
+4. Applies spacing system (8pt grid) automatically
+5. Applies platform-specific styling patterns automatically
+
+#### Benefits
+
+1. **Consistency**: All components automatically get consistent, HIG-compliant styling
+2. **Platform-Aware**: Automatically adapts to iOS vs macOS patterns
+3. **Zero Boilerplate**: No need to manually apply styling modifiers
+4. **Future-Proof**: New styling improvements automatically benefit all components
+5. **Developer-Friendly**: Custom views can easily opt-in with `.automaticCompliance()`
+
+#### Integration
+
+This feature extends the existing automatic compliance system:
+
+- **Builds on**: Existing `.automaticCompliance()` modifier
+- **Works with**: All Layer 1 functions (already call `.automaticCompliance()`)
+- **Complements**: HIG Visual Design Categories (Issue #37)
+- **Enhances**: Automatic accessibility features
+
 ## 🔄 Related Issues
 
 - **Issue #32**: Complete PlatformImage standardization (Phase 2) - ✅ COMPLETED
+- **Issue #35**: Implement automatic HIG-compliant styling for all components - ✅ COMPLETED
 - **Issue #37**: Implement HIG-compliant visual design category system - ✅ COMPLETED
 - **Issue #42**: Add Layer 4 System Action Functions - ✅ COMPLETED
 - **Issue #23**: PlatformImage initializer from CGImage - ✅ Already completed
@@ -306,5 +409,5 @@ The visual design system implementation was refactored for better maintainabilit
 **Version**: 5.8.1
 **Release Date**: [Date TBD]
 **Previous Version**: 5.8.0
-**Issues**: #32 (PlatformImage Standardization Phase 2), #37 (HIG Visual Design Categories), #42 (Layer 4 System Actions)
+**Issues**: #32 (PlatformImage Standardization Phase 2), #35 (Automatic HIG Styling), #37 (HIG Visual Design Categories), #42 (Layer 4 System Actions)
 
