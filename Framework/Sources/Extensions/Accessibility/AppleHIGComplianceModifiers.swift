@@ -30,7 +30,13 @@ public struct AppleHIGComplianceModifier: ViewModifier {
             .modifier(InteractionPatternModifier(
                 platform: manager.currentPlatform,
                 accessibilityState: manager.accessibilityState,
-                iOSConfig: manager.currentPlatform == .iOS ? manager.iOSCategoryConfig : nil
+                iOSConfig: manager.currentPlatform == .iOS ? manager.iOSCategoryConfig : nil,
+                macOSConfig: manager.currentPlatform == .macOS ? manager.macOSCategoryConfig : nil
+            ))
+            .modifier(PlatformSpecificCategoryModifier(
+                platform: manager.currentPlatform,
+                iOSConfig: manager.currentPlatform == .iOS ? manager.iOSCategoryConfig : nil,
+                macOSConfig: manager.currentPlatform == .macOS ? manager.macOSCategoryConfig : nil
             ))
             .automaticCompliance()
     }
@@ -219,20 +225,23 @@ public struct InteractionPatternModifier: ViewModifier {
     let platform: SixLayerPlatform
     let accessibilityState: AccessibilitySystemState
     let iOSConfig: HIGiOSCategoryConfig?
+    let macOSConfig: HIGmacOSCategoryConfig?
     
     public init(
         platform: SixLayerPlatform,
         accessibilityState: AccessibilitySystemState,
-        iOSConfig: HIGiOSCategoryConfig? = nil
+        iOSConfig: HIGiOSCategoryConfig? = nil,
+        macOSConfig: HIGmacOSCategoryConfig? = nil
     ) {
         self.platform = platform
         self.accessibilityState = accessibilityState
         self.iOSConfig = iOSConfig
+        self.macOSConfig = macOSConfig
     }
     
     public func body(content: Content) -> some View {
         content
-            .modifier(PlatformInteractionModifier(platform: platform))
+            .modifier(PlatformInteractionModifier(platform: platform, macOSConfig: macOSConfig))
             .modifier(HapticFeedbackModifier(platform: platform, iOSConfig: iOSConfig))
             .modifier(GestureRecognitionModifier(platform: platform, iOSConfig: iOSConfig))
             .automaticCompliance()
@@ -578,12 +587,86 @@ public struct TouchTargetModifier: ViewModifier {
     }
 }
 
-/// Platform interaction modifier
-public struct PlatformInteractionModifier: ViewModifier {
+// MARK: - Safe Area Compliance Modifier
+
+/// Safe area compliance modifier ensuring proper safe area handling on iOS
+/// Automatically applies safe area insets to respect device notches, status bars, and home indicators
+public struct SafeAreaComplianceModifier: ViewModifier {
     let platform: SixLayerPlatform
+    let iOSConfig: HIGiOSCategoryConfig?
+    
+    public init(platform: SixLayerPlatform, iOSConfig: HIGiOSCategoryConfig? = nil) {
+        self.platform = platform
+        self.iOSConfig = iOSConfig
+    }
     
     public func body(content: Content) -> some View {
-        applyPlatformInteraction(to: content, platform: platform)
+        applySafeAreaCompliance(to: content, platform: platform, iOSConfig: iOSConfig)
+    }
+    
+    // MARK: - Cross-Platform Implementation
+    
+    /// Apply platform-specific safe area compliance
+    private func applySafeAreaCompliance<Content: View>(
+        to content: Content,
+        platform: SixLayerPlatform,
+        iOSConfig: HIGiOSCategoryConfig?
+    ) -> some View {
+        switch platform {
+        case .iOS, .watchOS:
+            #if os(iOS) || os(watchOS)
+            let config = iOSConfig ?? HIGiOSCategoryConfig()
+            return AnyView(iosSafeAreaCompliance(to: content, config: config))
+            #else
+            return AnyView(fallbackSafeAreaCompliance(to: content))
+            #endif
+        default:
+            return AnyView(fallbackSafeAreaCompliance(to: content))
+        }
+    }
+    
+    // MARK: - Platform-Specific Implementations
+    
+    #if os(iOS) || os(watchOS)
+    /// iOS/watchOS: Apply safe area insets automatically
+    private func iosSafeAreaCompliance<Content: View>(
+        to content: Content,
+        config: HIGiOSCategoryConfig
+    ) -> some View {
+        guard config.enableSafeAreaCompliance else {
+            return AnyView(content.automaticCompliance())
+        }
+        
+        // Safe area is automatically handled by SwiftUI when using proper container views
+        // This modifier ensures content respects safe areas by using safeAreaInset when needed
+        // For most cases, SwiftUI's automatic safe area handling is sufficient
+        return AnyView(
+            content
+                .ignoresSafeArea(.container, edges: []) // Respect all safe areas
+                .automaticCompliance()
+        )
+    }
+    #endif
+    
+    /// Fallback for platforms without safe area requirements
+    private func fallbackSafeAreaCompliance<Content: View>(to content: Content) -> some View {
+        AnyView(content.automaticCompliance())
+    }
+}
+
+/// Platform interaction modifier
+/// Applies platform-specific interaction patterns (touch for iOS, mouse for macOS)
+public struct PlatformInteractionModifier: ViewModifier {
+    let platform: SixLayerPlatform
+    let macOSConfig: HIGmacOSCategoryConfig?
+    
+    public init(platform: SixLayerPlatform, macOSConfig: HIGmacOSCategoryConfig? = nil) {
+        self.platform = platform
+        self.macOSConfig = macOSConfig
+    }
+    
+    public func body(content: Content) -> some View {
+        applyPlatformInteraction(to: content, platform: platform, macOSConfig: macOSConfig)
     }
     
     // MARK: - Cross-Platform Implementation
@@ -591,7 +674,8 @@ public struct PlatformInteractionModifier: ViewModifier {
     /// Apply platform-specific interaction patterns
     private func applyPlatformInteraction<Content: View>(
         to content: Content,
-        platform: SixLayerPlatform
+        platform: SixLayerPlatform,
+        macOSConfig: HIGmacOSCategoryConfig?
     ) -> some View {
         switch platform {
         case .iOS:
@@ -602,7 +686,8 @@ public struct PlatformInteractionModifier: ViewModifier {
             #endif
         case .macOS:
             #if os(macOS)
-            return AnyView(macOSPlatformInteraction(to: content))
+            let config = macOSConfig ?? HIGmacOSCategoryConfig()
+            return AnyView(macOSPlatformInteraction(to: content, config: config))
             #else
             return AnyView(fallbackPlatformInteraction(to: content))
             #endif
@@ -621,13 +706,23 @@ public struct PlatformInteractionModifier: ViewModifier {
     #endif
     
     #if os(macOS)
-    /// macOS: Mouse-based interactions with hover states
-    private func macOSPlatformInteraction<Content: View>(to content: Content) -> some View {
-        AnyView(
+    /// macOS: Mouse-based interactions with hover states and click patterns
+    private func macOSPlatformInteraction<Content: View>(
+        to content: Content,
+        config: HIGmacOSCategoryConfig
+    ) -> some View {
+        guard config.enableMouseInteractions else {
+            return AnyView(content.buttonStyle(.bordered).automaticCompliance())
+        }
+        
+        // Apply macOS-appropriate mouse interaction patterns
+        // Hover states, click patterns, and cursor changes
+        return AnyView(
             content
                 .buttonStyle(.bordered)
-                .onHover { _ in
-                    // Handle hover state
+                .onHover { isHovering in
+                    // Handle hover state - cursor changes are automatic in SwiftUI
+                    // Additional hover effects can be added here
                 }
                 .automaticCompliance()
         )
@@ -897,6 +992,82 @@ public extension View {
             iOSConfig: HIGiOSCategoryConfig()
         ))
     }
+}
 
+// MARK: - Platform-Specific Category Modifier
 
+/// Applies platform-specific HIG compliance categories (iOS, macOS, visionOS)
+/// Handles categories that are specific to each platform's interaction patterns
+public struct PlatformSpecificCategoryModifier: ViewModifier {
+    let platform: SixLayerPlatform
+    let iOSConfig: HIGiOSCategoryConfig?
+    let macOSConfig: HIGmacOSCategoryConfig?
+    
+    public init(
+        platform: SixLayerPlatform,
+        iOSConfig: HIGiOSCategoryConfig? = nil,
+        macOSConfig: HIGmacOSCategoryConfig? = nil
+    ) {
+        self.platform = platform
+        self.iOSConfig = iOSConfig
+        self.macOSConfig = macOSConfig
+    }
+    
+    public func body(content: Content) -> some View {
+        applyPlatformSpecificCategories(to: content, platform: platform, iOSConfig: iOSConfig, macOSConfig: macOSConfig)
+    }
+    
+    // MARK: - Cross-Platform Implementation
+    
+    /// Apply platform-specific categories
+    private func applyPlatformSpecificCategories<Content: View>(
+        to content: Content,
+        platform: SixLayerPlatform,
+        iOSConfig: HIGiOSCategoryConfig?,
+        macOSConfig: HIGmacOSCategoryConfig?
+    ) -> some View {
+        switch platform {
+        case .iOS, .watchOS:
+            #if os(iOS) || os(watchOS)
+            // iOS categories are already handled by other modifiers
+            return AnyView(content.automaticCompliance())
+            #else
+            return AnyView(content.automaticCompliance())
+            #endif
+        case .macOS:
+            #if os(macOS)
+            let config = macOSConfig ?? HIGmacOSCategoryConfig()
+            return AnyView(macOSPlatformSpecificCategories(to: content, config: config))
+            #else
+            return AnyView(content.automaticCompliance())
+            #endif
+        default:
+            return AnyView(content.automaticCompliance())
+        }
+    }
+    
+    // MARK: - Platform-Specific Implementations
+    
+    #if os(macOS)
+    /// macOS: Apply window management, keyboard shortcuts, and mouse interactions
+    private func macOSPlatformSpecificCategories<Content: View>(
+        to content: Content,
+        config: HIGmacOSCategoryConfig
+    ) -> some View {
+        var modifiedContent: AnyView = AnyView(content)
+        
+        // Note: Window management (resize, minimize, maximize, fullscreen) is typically
+        // handled at the App/Window level via NSWindow or SwiftUI WindowGroup, not at the view level.
+        // This modifier focuses on view-level macOS HIG compliance.
+        
+        // Keyboard shortcuts are applied via .keyboardShortcut() modifier when needed
+        // Mouse interactions (hover states, click patterns) are handled by PlatformInteractionModifier
+        // Menu bar integration requires App-level configuration and is opt-in via config
+        
+        // Additional macOS-specific view-level enhancements can be added here
+        // For now, the existing modifiers handle the core functionality
+        
+        return AnyView(modifiedContent.automaticCompliance())
+    }
+    #endif
 }

@@ -111,7 +111,8 @@ public class AppleHIGComplianceManager: ObservableObject {
             .modifier(VisualConsistencyModifier(
                 designSystem: designSystem,
                 platform: currentPlatform,
-                visualDesignConfig: visualDesignConfig
+                visualDesignConfig: visualDesignConfig,
+                iOSConfig: currentPlatform == .iOS ? iOSCategoryConfig : nil
             ))
     }
     
@@ -218,18 +219,94 @@ public class AppleHIGComplianceManager: ObservableObject {
     
     private func checkPlatformCompliance<Content: View>(_ content: Content) -> Double {
         var score = 0.0
+        var maxScore = 0.0
         
         // Check for platform-specific patterns
         if followsPlatformPatterns(content) {
-            score += 50.0
+            score += 25.0
         }
+        maxScore += 25.0
         
         // Check for platform-appropriate styling
         if usesPlatformAppropriateStyling(content) {
-            score += 50.0
+            score += 25.0
+        }
+        maxScore += 25.0
+        
+        // Check platform-specific category compliance
+        switch currentPlatform {
+        case .iOS, .watchOS:
+            let iOSScore = checkiOSCategoryCompliance()
+            score += iOSScore
+            maxScore += 50.0
+        case .macOS:
+            let macOSScore = checkmacOSCategoryCompliance()
+            score += macOSScore
+            maxScore += 50.0
+        default:
+            // Other platforms don't have specific category checks yet
+            maxScore += 50.0
         }
         
-        return score
+        // Normalize to 0-100 scale
+        return maxScore > 0 ? (score / maxScore) * 100.0 : 0.0
+    }
+    
+    // MARK: - Platform-Specific Category Compliance Checking
+    
+    /// Check iOS-specific category compliance
+    private func checkiOSCategoryCompliance() -> Double {
+        var score = 0.0
+        var maxScore = 0.0
+        
+        // Check haptic feedback configuration
+        if iOSCategoryConfig.enableHapticFeedback {
+            score += 12.5
+        }
+        maxScore += 12.5
+        
+        // Check gesture recognition configuration
+        if iOSCategoryConfig.enableGestureRecognition {
+            score += 12.5
+        }
+        maxScore += 12.5
+        
+        // Check touch target validation
+        if iOSCategoryConfig.enableTouchTargetValidation {
+            score += 12.5
+        }
+        maxScore += 12.5
+        
+        // Check safe area compliance
+        if iOSCategoryConfig.enableSafeAreaCompliance {
+            score += 12.5
+        }
+        maxScore += 12.5
+        
+        return maxScore > 0 ? score : 0.0
+    }
+    
+    /// Check macOS-specific category compliance
+    private func checkmacOSCategoryCompliance() -> Double {
+        var score = 0.0
+        var maxScore = 0.0
+        
+        // Check mouse interactions configuration
+        if macOSCategoryConfig.enableMouseInteractions {
+            score += 25.0
+        }
+        maxScore += 25.0
+        
+        // Check keyboard shortcuts configuration
+        if macOSCategoryConfig.enableKeyboardShortcuts {
+            score += 25.0
+        }
+        maxScore += 25.0
+        
+        // Note: Window management and menu bar integration are App-level concerns
+        // and are documented but not validated at the view level
+        
+        return maxScore > 0 ? score : 0.0
     }
     
     // MARK: - Helper Methods

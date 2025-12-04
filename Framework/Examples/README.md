@@ -50,6 +50,15 @@ Complete example of the 6-layer NavigationStack implementation:
 - **Modal navigation** - Modal presentation pattern
 - **Complete 6-layer flow** - Demonstrates L1 → L2 → L3 → L4 → L5 → L6
 
+### **AutomaticHIGStylingExample.swift** (v5.8.1)
+Demonstrates automatic HIG-compliant styling (Issue #35):
+
+- **Layer 1 automatic styling** - All Layer 1 functions automatically get styling
+- **Custom view opt-in** - How to use `.automaticCompliance()` with custom views
+- **Before/after comparison** - Shows the difference between manual and automatic styling
+- **Platform-specific styling** - Automatic platform detection and appropriate styling
+- **Component examples** - Text, buttons, toggles, and layout components with automatic styling
+
 ## How to Use Examples
 
 1. **Copy the example files** you need into your project

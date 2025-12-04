@@ -293,14 +293,19 @@ public struct AutomaticComplianceModifier: ViewModifier {
     // MARK: - HIG Compliance Features (Phase 1)
     
     /// Apply all Phase 1 HIG compliance features to a view
+    /// Includes automatic visual styling (colors, spacing, typography) and platform-specific HIG patterns
     /// - Parameters:
     ///   - view: The view to apply HIG compliance to
     ///   - elementType: The element type hint (e.g., "Button", "Link", "TextField")
-    /// - Returns: View with all Phase 1 HIG compliance features applied
+    /// - Returns: View with all Phase 1 HIG compliance features applied, including automatic styling
     private func applyHIGComplianceFeatures<V: View>(to view: V, elementType: String?) -> some View {
         // Cache platform values to avoid MainActor blocking
         // These are safe to access from any context - they use thread-local storage
         let platform = RuntimeCapabilityDetection.currentPlatform
+        
+        // Create platform design system for automatic styling
+        let designSystem = PlatformDesignSystem(for: platform)
+        
         // minTouchTarget is @MainActor, but we can compute it safely from platform
         let minTouchTarget: CGFloat = {
             switch platform {
@@ -315,26 +320,39 @@ public struct AutomaticComplianceModifier: ViewModifier {
         let isInteractive = isInteractiveElement(elementType: elementType)
         
         return view
-            // 1. Touch Target Sizing (iOS/watchOS) - minimum 44pt
+            // AUTOMATIC VISUAL STYLING (Issue #35: Automatic HIG-compliant styling)
+            // 1. Automatic Colors - Apply platform-specific system colors
+            .modifier(SystemColorModifier(colorSystem: designSystem.colorSystem))
+            // 2. Automatic Typography - Apply platform-specific typography system
+            .modifier(SystemTypographyModifier(typographySystem: designSystem.typographySystem))
+            // 3. Automatic Spacing - Apply HIG-compliant spacing following 8pt grid
+            .modifier(SpacingModifier(spacingSystem: designSystem.spacingSystem))
+            
+            // ACCESSIBILITY & INTERACTION FEATURES
+            // 4. Touch Target Sizing (iOS/watchOS) - minimum 44pt
             .modifier(AutomaticHIGTouchTargetModifier(
                 minSize: minTouchTarget,
                 isInteractive: isInteractive,
                 platform: platform
             ))
-            // 2. Color Contrast (WCAG) - Use system colors that automatically meet contrast requirements
+            // 5. Color Contrast (WCAG) - Use system colors that automatically meet contrast requirements
             .modifier(AutomaticHIGColorContrastModifier(platform: platform))
-            // 3. Typography Scaling (Dynamic Type) - Support accessibility text sizes
+            // 6. Typography Scaling (Dynamic Type) - Support accessibility text sizes
             .modifier(AutomaticHIGTypographyScalingModifier(platform: platform))
-            // 4. Focus Indicators - Visible and accessible focus rings
+            // 7. Focus Indicators - Visible and accessible focus rings
             .modifier(AutomaticHIGFocusIndicatorModifier(
                 isInteractive: isInteractive,
                 platform: platform
             ))
-            // 5. Motion Preferences - Respect reduced motion
+            // 8. Motion Preferences - Respect reduced motion
             .modifier(AutomaticHIGMotionPreferenceModifier(platform: platform))
-            // 6. Tab Order - Logical navigation order (handled by focusable modifier)
-            // 7. Light/Dark Mode - Use system colors that adapt automatically
+            // 9. Tab Order - Logical navigation order (handled by focusable modifier)
+            // 10. Light/Dark Mode - Use system colors that adapt automatically
             .modifier(AutomaticHIGLightDarkModeModifier(platform: platform))
+            
+            // PLATFORM-SPECIFIC HIG PATTERNS (Issue #35: Platform-specific patterns)
+            // Apply platform-specific styling patterns automatically
+            .modifier(PlatformStylingModifier(designSystem: designSystem))
     }
     
     /// Determine if an element type is interactive (needs touch target sizing, focus indicators, etc.)
