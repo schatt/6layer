@@ -64,8 +64,8 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         let iOSDefault = HIGAnimationCategory.default(for: .iOS)
         let macOSDefault = HIGAnimationCategory.default(for: .macOS)
         
-        #expect(iOSDefault == .spring) // iOS prefers spring animations
-        #expect(macOSDefault == .easeInOut) // macOS prefers easeInOut
+        #expect(iOSDefault == HIGAnimationCategory.spring) // iOS prefers spring animations
+        #expect(macOSDefault == HIGAnimationCategory.easeInOut) // macOS prefers easeInOut
     }
     
     // MARK: - Shadow Categories Tests
@@ -96,7 +96,7 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         let shadowSystem = HIGShadowSystem(for: .iOS)
         let shadow = shadowSystem.shadow(for: .elevated)
         #expect(shadow.radius > 0)
-        #expect(shadow.offset.y > 0)
+        #expect(shadow.offset.height > 0)
     }
     
     @Test @MainActor func testFloatingShadowCategory() {
@@ -106,7 +106,7 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         let shadowSystem = HIGShadowSystem(for: .iOS)
         let shadow = shadowSystem.shadow(for: .floating)
         #expect(shadow.radius > 0)
-        #expect(shadow.offset.y > 0)
+        #expect(shadow.offset.height > 0)
     }
     
     @Test @MainActor func testCustomShadowStyleCategory() {
@@ -484,7 +484,8 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         let designSystem = PlatformDesignSystem(for: .iOS)
         let view = Text("Test").modifier(VisualConsistencyModifier(
             designSystem: designSystem,
-            platform: .iOS
+            platform: .iOS,
+            visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: .iOS)
         ))
         #expect(view != nil)
     }
