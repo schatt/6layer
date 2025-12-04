@@ -54,7 +54,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         // This would have FAILED in version 4.6.2 before our fix
         
         #if os(iOS)
-        let testUIImage = createTestUIImage()
+        let testUIImage = Layer4APITestHelpers.createTestUIImage()
         
         // This is the EXACT pattern used in Layer 4 camera callbacks
         // Pattern: info[.originalImage] as? UIImage -> PlatformImage(image)
@@ -69,7 +69,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
             #expect(platformImage.size == image.size, "Production pattern should preserve image properties")
         }
         #elseif os(macOS)
-        let testNSImage = createTestNSImage()
+        let testNSImage = Layer4APITestHelpers.createTestNSImage()
         
         // macOS equivalent pattern
         let platformImage = PlatformImage(testNSImage)  // Implicit conversion pattern
@@ -86,7 +86,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         // This would have FAILED in version 4.6.2 before our fix
         
         #if os(iOS)
-        let testUIImage = createTestUIImage()
+        let testUIImage = Layer4APITestHelpers.createTestUIImage()
         
         // This is the EXACT pattern used in Layer 4 photo picker callbacks
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
@@ -99,7 +99,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
             #expect(platformImage.uiImage == image, "Production pattern should work correctly")
         }
         #elseif os(macOS)
-        let testNSImage = createTestNSImage()
+        let testNSImage = Layer4APITestHelpers.createTestNSImage()
         
         // macOS equivalent pattern
         let platformImage = PlatformImage(testNSImage)  // Implicit conversion pattern
@@ -123,7 +123,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         }
         
         let coordinator = cameraView.makeCoordinator()
-        let testUIImage = createTestUIImage()
+        let testUIImage = Layer4APITestHelpers.createTestUIImage()
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
             .originalImage: testUIImage
         ]
@@ -156,13 +156,9 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         }
         
         // Execute callback with test data
-        let mockResult = OCRResult(
+        let mockResult = Layer4APITestHelpers.createMockOCRResult(
             extractedText: "Test",
-            confidence: 0.9,
-            boundingBoxes: [],
-            textTypes: [:],
-            processingTime: 0.1,
-            language: .english
+            confidence: 0.9
         )
         
         callback(mockResult)
@@ -182,12 +178,8 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         // This test would fail if OCRResult type changed
         
         let testImage = PlatformImage.createPlaceholder()
-        let context = OCRContext()
-        let strategy = OCRStrategy(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard
-        )
+        let context = Layer4APITestHelpers.createTestOCRContext()
+        let strategy = Layer4APITestHelpers.createTestOCRStrategy()
         
         // Verify callback accepts OCRResult
         let callback: (OCRResult) -> Void = { result in
@@ -196,13 +188,9 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         }
         
         // Test callback with actual OCRResult
-        let mockResult = OCRResult(
+        let mockResult = Layer4APITestHelpers.createMockOCRResult(
             extractedText: "Test",
-            confidence: 0.9,
-            boundingBoxes: [],
-            textTypes: [:],
-            processingTime: 0.1,
-            language: .english
+            confidence: 0.9
         )
         
         callback(mockResult)
@@ -257,10 +245,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         // This test verifies the EXACT pattern used in production navigation stack calls
         
         let content = Text("Test")
-        let strategy = NavigationStackStrategy(
-            implementation: nil,
-            reasoning: nil
-        )
+        let strategy = Layer4APITestHelpers.createTestNavigationStackStrategy()
         
         // This is the exact production code pattern
         let _ = platformImplementNavigationStack_L4(
@@ -302,10 +287,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
             AnyView(Text("Detail: \(item.name)"))
         }
         
-        let strategy = NavigationStackStrategy(
-            implementation: nil,
-            reasoning: nil
-        )
+        let strategy = Layer4APITestHelpers.createTestNavigationStackStrategy()
         
         // This is the exact production code pattern
         let _ = platformImplementNavigationStackItems_L4(
@@ -447,12 +429,8 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         // This test would fail if parameter labels changed
         
         let testImage = PlatformImage.createPlaceholder()
-        let context = OCRContext()
-        let strategy = OCRStrategy(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard
-        )
+        let context = Layer4APITestHelpers.createTestOCRContext()
+        let strategy = Layer4APITestHelpers.createTestOCRStrategy()
         
         // Test exact parameter labels used in production
         let _ = platformOCRImplementation_L4(
@@ -492,28 +470,5 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         #expect(Bool(true), "All photo APIs should return View types")
     }
     
-    // MARK: - Helper Methods
-    
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
-    #endif
 }
 

@@ -156,22 +156,14 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         var callbackExecuted = false
         
         let testImage = PlatformImage.createPlaceholder()
-        let context = OCRContext()
-        let strategy = OCRStrategy(
-            supportedTextTypes: [.general],
-            supportedLanguages: [.english],
-            processingMode: .standard
-        )
+        let context = Layer4APITestHelpers.createTestOCRContext()
+        let strategy = Layer4APITestHelpers.createTestOCRStrategy()
         
         // The view calls the callback in onAppear, so we need to trigger that
         // Since we can't easily trigger onAppear in unit tests, we test the callback directly
-        let mockResult = OCRResult(
+        let mockResult = Layer4APITestHelpers.createMockOCRResult(
             extractedText: "Test OCR Result",
-            confidence: 0.95,
-            boundingBoxes: [],
-            textTypes: [:],
-            processingTime: 0.1,
-            language: .english
+            confidence: 0.95
         )
         
         // Execute callback directly to verify it works
@@ -213,13 +205,9 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         }
         
         // Execute success callback
-        let mockResult = OCRResult(
+        let mockResult = Layer4APITestHelpers.createMockOCRResult(
             extractedText: "Success",
-            confidence: 0.9,
-            boundingBoxes: [],
-            textTypes: [:],
-            processingTime: 0.1,
-            language: .english
+            confidence: 0.9
         )
         successCallback(mockResult)
         
@@ -397,7 +385,7 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         // This would have FAILED in version 4.6.2 before our fix
         
         #if os(iOS)
-        let testUIImage = createTestUIImage()
+        let testUIImage = Layer4APITestHelpers.createTestUIImage()
         
         // This is the EXACT pattern used in Layer 4 callbacks
         // This would have broken if PlatformImage initializer changed
@@ -411,7 +399,7 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         #expect(result.uiImage == testUIImage, "Callback pattern should work correctly")
         #expect(result.size == testUIImage.size, "Callback result should preserve image properties")
         #elseif os(macOS)
-        let testNSImage = createTestNSImage()
+        let testNSImage = Layer4APITestHelpers.createTestNSImage()
         
         // macOS equivalent pattern
         let callback: (NSImage) -> PlatformImage = { image in
@@ -426,28 +414,5 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         #endif
     }
     
-    // MARK: - Helper Methods
-    
-    #if os(iOS)
-    private func createTestUIImage() -> UIImage {
-        let size = CGSize(width: 200, height: 200)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            UIColor.blue.setFill()
-            context.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-    #endif
-    
-    #if os(macOS)
-    private func createTestNSImage() -> NSImage {
-        let size = NSSize(width: 200, height: 200)
-        let nsImage = NSImage(size: size)
-        nsImage.lockFocus()
-        NSColor.blue.drawSwatch(in: NSRect(origin: .zero, size: size))
-        nsImage.unlockFocus()
-        return nsImage
-    }
-    #endif
 }
 
