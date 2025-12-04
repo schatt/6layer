@@ -203,9 +203,80 @@ Button("Share") {
 3. **Consistent API** - Same interface regardless of platform
 4. **Follows framework patterns** - Aligns with existing Layer 4 component implementation
 
+### HIG-Compliant Visual Design Category System (Issue #37)
+
+**COMPLETED**: Implemented comprehensive visual design category system providing HIG-compliant visual design options for animations, shadows, corner radius, border width, opacity, and blur effects.
+
+#### Key Features
+
+- **Animation Categories**: EaseInOut, spring, and custom timing functions with platform-appropriate defaults
+- **Shadow Categories**: Elevated, floating, and custom shadow styles with platform-specific rendering
+- **Corner Radius Categories**: Small, medium, large, and custom radius values following platform conventions
+- **Border Width Categories**: Thin, medium, and thick border widths with platform-appropriate defaults
+- **Opacity Categories**: Primary, secondary, tertiary, and custom opacity levels for visual hierarchy
+- **Blur Categories**: Light, medium, heavy, and custom blur effects with platform-specific implementations
+
+#### Usage Examples
+
+```swift
+// Apply visual design categories
+Card()
+    .higShadowCategory(.elevated)
+    .higCornerRadiusCategory(.medium)
+    .higBorderWidthCategory(.thin, color: .separator)
+
+// Apply animation category
+AnimatedView()
+    .higAnimationCategory(.spring)  // iOS default
+
+// Apply opacity category
+SecondaryText()
+    .higOpacityCategory(.secondary)
+
+// Apply blur category
+BlurredBackground()
+    .higBlurCategory(.light)
+```
+
+#### Platform-Appropriate Defaults
+
+All categories automatically provide platform-appropriate defaults:
+
+- **iOS**: Optimized for touch interfaces (spring animations, larger corner radius, etc.)
+- **macOS**: Optimized for pointer interfaces (easeInOut animations, smaller corner radius, etc.)
+- **Other Platforms**: Sensible defaults that adapt to platform capabilities
+
+#### Integration
+
+The visual design system is automatically integrated into `PlatformDesignSystem`:
+
+```swift
+let designSystem = PlatformDesignSystem(for: .iOS)
+let visualDesign = designSystem.visualDesignSystem
+
+// Access individual systems
+let shadowSystem = visualDesign.shadowSystem
+let cornerRadiusSystem = visualDesign.cornerRadiusSystem
+```
+
+The `VisualConsistencyModifier` automatically includes the visual design system, making it available for use throughout the framework.
+
+#### Benefits
+
+1. **HIG Compliance**: All values follow Apple's Human Interface Guidelines
+2. **Platform-Aware**: Automatic platform-appropriate defaults eliminate platform-specific code
+3. **Easy to Use**: Simple view modifiers for applying visual design categories
+4. **Consistent Styling**: Ensures visual consistency across all components
+5. **Customizable**: Support for custom values when needed
+
+#### Documentation
+
+See [HIGVisualDesignCategoriesGuide.md](../Framework/docs/HIGVisualDesignCategoriesGuide.md) for complete documentation and examples.
+
 ## 🔄 Related Issues
 
 - **Issue #32**: Complete PlatformImage standardization (Phase 2) - ✅ COMPLETED
+- **Issue #37**: Implement HIG-compliant visual design category system - ✅ COMPLETED
 - **Issue #42**: Add Layer 4 System Action Functions - ✅ COMPLETED
 - **Issue #23**: PlatformImage initializer from CGImage - ✅ Already completed
 - **Issue #33**: PlatformImage enhancements (Phase 3) - ⏳ Future work
@@ -215,5 +286,5 @@ Button("Share") {
 **Version**: 5.8.1
 **Release Date**: [Date TBD]
 **Previous Version**: 5.8.0
-**Issues**: #32 (PlatformImage Standardization Phase 2), #42 (Layer 4 System Actions)
+**Issues**: #32 (PlatformImage Standardization Phase 2), #37 (HIG Visual Design Categories), #42 (Layer 4 System Actions)
 
