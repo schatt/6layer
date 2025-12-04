@@ -273,6 +273,15 @@ The `VisualConsistencyModifier` automatically includes the visual design system,
 
 See [HIGVisualDesignCategoriesGuide.md](../Framework/docs/HIGVisualDesignCategoriesGuide.md) for complete documentation and examples.
 
+#### Integration with Automatic Compliance
+
+The visual design system is fully integrated with the existing automatic compliance system:
+
+- **Configuration Support**: `HIGVisualDesignCategoryConfig` allows developers to control which categories are automatically applied
+- **Automatic Application**: Visual design categories can be applied automatically through `VisualConsistencyModifier` based on configuration
+- **Manager Integration**: `AppleHIGComplianceManager` includes `visualDesignConfig` for centralized control
+- **Explicit Application**: Individual categories can still be applied explicitly using view modifiers (`.higShadowCategory()`, etc.)
+
 #### Code Quality Improvements
 
 The visual design system implementation was refactored for better maintainability:
@@ -281,6 +290,7 @@ The visual design system implementation was refactored for better maintainabilit
 - **Reduced Duplication**: Extracted `platformValue()` helper method to eliminate repetitive platform switch statements
 - **Code Simplification**: Removed redundant platform checks (e.g., `thinWidth` always 0.5 across platforms)
 - **Documentation**: Added clarifying comments explaining design decisions
+- **Test Fixes**: Fixed test syntax issues (enum comparisons, CGSize property access)
 - **Net Reduction**: 60 lines of code removed while maintaining all functionality
 
 ## 🔄 Related Issues
