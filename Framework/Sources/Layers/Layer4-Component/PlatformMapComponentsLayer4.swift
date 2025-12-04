@@ -157,6 +157,7 @@ private struct MapViewWithLocationService: View {
         .onChange(of: currentLocation) {
             updateCameraPosition()
         }
+        .automaticCompliance(named: "MapViewWithLocationService")
     }
     
     private var allAnnotations: [MapAnnotationData] {
@@ -234,6 +235,7 @@ private struct UnsupportedPlatformMapView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
+        .automaticCompliance(named: "UnsupportedPlatformMapView")
     }
 }
 
