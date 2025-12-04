@@ -99,6 +99,7 @@ public struct ExampleProjectList<Item: Identifiable, Content: View>: View {
             }
         }
         .padding()
+        .automaticCompliance(named: "ExampleProjectList")
     }
 }
 
@@ -134,6 +135,7 @@ public struct ExampleProjectFormField: View {
             TextField(placeholder, text: $text)
                 .textFieldStyle(.roundedBorder)
         }
+        .automaticCompliance(named: "ExampleProjectFormField")
     }
 }
 
