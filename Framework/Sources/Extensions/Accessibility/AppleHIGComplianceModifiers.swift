@@ -23,11 +23,14 @@ public struct AppleHIGComplianceModifier: ViewModifier {
             ))
             .modifier(VisualConsistencyModifier(
                 designSystem: manager.designSystem,
-                platform: manager.currentPlatform
+                platform: manager.currentPlatform,
+                visualDesignConfig: manager.visualDesignConfig,
+                iOSConfig: manager.currentPlatform == .iOS ? manager.iOSCategoryConfig : nil
             ))
             .modifier(InteractionPatternModifier(
                 platform: manager.currentPlatform,
-                accessibilityState: manager.accessibilityState
+                accessibilityState: manager.accessibilityState,
+                iOSConfig: manager.currentPlatform == .iOS ? manager.iOSCategoryConfig : nil
             ))
             .automaticCompliance()
     }
@@ -82,29 +85,130 @@ public struct PlatformPatternModifier: ViewModifier {
 public struct VisualConsistencyModifier: ViewModifier {
     let designSystem: PlatformDesignSystem
     let platform: SixLayerPlatform
+    let visualDesignConfig: HIGVisualDesignCategoryConfig
+    let iOSConfig: HIGiOSCategoryConfig?
     
     public func body(content: Content) -> some View {
         content
             .modifier(SystemColorModifier(colorSystem: designSystem.colorSystem))
             .modifier(SystemTypographyModifier(typographySystem: designSystem.typographySystem))
             .modifier(SpacingModifier(spacingSystem: designSystem.spacingSystem))
-            .modifier(TouchTargetModifier(platform: platform))
-            .modifier(VisualDesignCategoryModifier(visualDesignSystem: designSystem.visualDesignSystem))
+            .modifier(TouchTargetModifier(
+                platform: platform,
+                iOSConfig: iOSConfig
+            ))
+            .modifier(SafeAreaComplianceModifier(
+                platform: platform,
+                iOSConfig: iOSConfig
+            ))
+            .modifier(VisualDesignCategoryModifier(
+                visualDesignSystem: designSystem.visualDesignSystem,
+                config: visualDesignConfig
+            ))
             .automaticCompliance()
     }
 }
 
 // MARK: - Visual Design Category Modifier
 
-/// Applies visual design categories from the visual design system
+/// Applies visual design categories from the visual design system based on configuration
+/// 
+/// This modifier automatically applies visual design categories according to the
+/// configuration set in `AppleHIGComplianceManager.visualDesignConfig`. Developers
+/// can control which categories are applied automatically:
+///
+/// ```swift
+/// // Configure at app startup
+/// let manager = AppleHIGComplianceManager()
+/// manager.visualDesignConfig.applyShadows = true
+/// manager.visualDesignConfig.applyCornerRadius = true
+/// ```
+///
+/// Individual categories can still be applied explicitly using:
+/// - `.higAnimationCategory()` for animations
+/// - `.higShadowCategory()` for shadows
+/// - `.higCornerRadiusCategory()` for corner radius
+/// - `.higBorderWidthCategory()` for borders
+/// - `.higOpacityCategory()` for opacity
+/// - `.higBlurCategory()` for blur
 public struct VisualDesignCategoryModifier: ViewModifier {
     let visualDesignSystem: HIGVisualDesignSystem
+    let config: HIGVisualDesignCategoryConfig
+    
+    public init(visualDesignSystem: HIGVisualDesignSystem, config: HIGVisualDesignCategoryConfig) {
+        self.visualDesignSystem = visualDesignSystem
+        self.config = config
+    }
     
     public func body(content: Content) -> some View {
-        // Apply default visual design categories
-        // Components can override these with specific category modifiers
-        content
-            .automaticCompliance()
+        applyVisualDesignCategories(to: content, visualDesignSystem: visualDesignSystem, config: config)
+    }
+    
+    // MARK: - Cross-Platform Implementation
+    
+    /// Apply visual design categories based on configuration
+    private func applyVisualDesignCategories<Content: View>(
+        to content: Content,
+        visualDesignSystem: HIGVisualDesignSystem,
+        config: HIGVisualDesignCategoryConfig
+    ) -> some View {
+        var modifiedContent: AnyView = AnyView(content)
+        
+        // Note: Animations are not applied automatically because SwiftUI animations
+        // should be tied to specific state changes, not applied globally.
+        // Use `.higAnimationCategory()` or `.animation(_:value:)` with state changes instead.
+        // The `applyAnimations` config flag is reserved for future use when we have
+        // a better way to apply animations automatically.
+        
+        if config.applyShadows {
+            let shadow = visualDesignSystem.shadowSystem.shadow(for: config.defaultShadowCategory)
+            modifiedContent = AnyView(
+                modifiedContent
+                    .shadow(
+                        color: shadow.color,
+                        radius: shadow.radius,
+                        x: shadow.offset.width,
+                        y: shadow.offset.height
+                    )
+            )
+        }
+        
+        if config.applyCornerRadius {
+            let radius = visualDesignSystem.cornerRadiusSystem.radius(for: config.defaultCornerRadiusCategory)
+            modifiedContent = AnyView(
+                modifiedContent
+                    .clipShape(RoundedRectangle(cornerRadius: radius))
+            )
+        }
+        
+        if config.applyBorders {
+            let borderWidth = visualDesignSystem.borderWidthSystem.width(for: config.defaultBorderWidthCategory)
+            modifiedContent = AnyView(
+                modifiedContent
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 0)
+                            .stroke(Color.separator, lineWidth: borderWidth)
+                    )
+            )
+        }
+        
+        if config.applyOpacity {
+            let opacity = visualDesignSystem.opacitySystem.opacity(for: config.defaultOpacityCategory)
+            modifiedContent = AnyView(
+                modifiedContent
+                    .opacity(opacity)
+            )
+        }
+        
+        if config.applyBlur {
+            let blur = visualDesignSystem.blurSystem.blur(for: config.defaultBlurCategory)
+            modifiedContent = AnyView(
+                modifiedContent
+                    .blur(radius: blur.radius)
+            )
+        }
+        
+        return AnyView(modifiedContent.automaticCompliance())
     }
 }
 
@@ -114,12 +218,23 @@ public struct VisualDesignCategoryModifier: ViewModifier {
 public struct InteractionPatternModifier: ViewModifier {
     let platform: SixLayerPlatform
     let accessibilityState: AccessibilitySystemState
+    let iOSConfig: HIGiOSCategoryConfig?
+    
+    public init(
+        platform: SixLayerPlatform,
+        accessibilityState: AccessibilitySystemState,
+        iOSConfig: HIGiOSCategoryConfig? = nil
+    ) {
+        self.platform = platform
+        self.accessibilityState = accessibilityState
+        self.iOSConfig = iOSConfig
+    }
     
     public func body(content: Content) -> some View {
         content
             .modifier(PlatformInteractionModifier(platform: platform))
-            .modifier(HapticFeedbackModifier(platform: platform))
-            .modifier(GestureRecognitionModifier(platform: platform))
+            .modifier(HapticFeedbackModifier(platform: platform, iOSConfig: iOSConfig))
+            .modifier(GestureRecognitionModifier(platform: platform, iOSConfig: iOSConfig))
             .automaticCompliance()
     }
 }
@@ -405,11 +520,18 @@ public struct SpacingModifier: ViewModifier {
 }
 
 /// Touch target modifier ensuring proper touch targets
+/// Enforces Apple HIG requirement: 44pt minimum touch target on iOS/watchOS
 public struct TouchTargetModifier: ViewModifier {
     let platform: SixLayerPlatform
+    let iOSConfig: HIGiOSCategoryConfig?
+    
+    public init(platform: SixLayerPlatform, iOSConfig: HIGiOSCategoryConfig? = nil) {
+        self.platform = platform
+        self.iOSConfig = iOSConfig
+    }
     
     public func body(content: Content) -> some View {
-        applyTouchTarget(to: content, platform: platform)
+        applyTouchTarget(to: content, platform: platform, iOSConfig: iOSConfig)
     }
     
     // MARK: - Cross-Platform Implementation
@@ -417,12 +539,14 @@ public struct TouchTargetModifier: ViewModifier {
     /// Apply platform-specific touch target requirements
     private func applyTouchTarget<Content: View>(
         to content: Content,
-        platform: SixLayerPlatform
+        platform: SixLayerPlatform,
+        iOSConfig: HIGiOSCategoryConfig?
     ) -> some View {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            return AnyView(iosTouchTarget(to: content))
+            let config = iOSConfig ?? HIGiOSCategoryConfig()
+            return AnyView(iosTouchTarget(to: content, config: config))
             #else
             return AnyView(fallbackTouchTarget(to: content))
             #endif
@@ -435,8 +559,16 @@ public struct TouchTargetModifier: ViewModifier {
     
     #if os(iOS) || os(watchOS)
     /// iOS/watchOS: Enforce 44pt minimum touch target (Apple HIG requirement)
-    private func iosTouchTarget<Content: View>(to content: Content) -> some View {
-        AnyView(content.frame(minHeight: 44).automaticCompliance())
+    private func iosTouchTarget<Content: View>(
+        to content: Content,
+        config: HIGiOSCategoryConfig
+    ) -> some View {
+        guard config.enableTouchTargetValidation else {
+            return AnyView(content.automaticCompliance())
+        }
+        
+        // Apple HIG: Minimum 44pt touch target for interactive elements
+        return AnyView(content.frame(minHeight: 44, minWidth: 44).automaticCompliance())
     }
     #endif
     
@@ -508,11 +640,18 @@ public struct PlatformInteractionModifier: ViewModifier {
 }
 
 /// Haptic feedback modifier
+/// Applies platform-specific haptic feedback based on configuration
 public struct HapticFeedbackModifier: ViewModifier {
     let platform: SixLayerPlatform
+    let iOSConfig: HIGiOSCategoryConfig?
+    
+    public init(platform: SixLayerPlatform, iOSConfig: HIGiOSCategoryConfig? = nil) {
+        self.platform = platform
+        self.iOSConfig = iOSConfig
+    }
     
     public func body(content: Content) -> some View {
-        applyHapticFeedback(to: content, platform: platform)
+        applyHapticFeedback(to: content, platform: platform, iOSConfig: iOSConfig)
     }
     
     // MARK: - Cross-Platform Implementation
@@ -520,12 +659,14 @@ public struct HapticFeedbackModifier: ViewModifier {
     /// Apply platform-specific haptic feedback
     private func applyHapticFeedback<Content: View>(
         to content: Content,
-        platform: SixLayerPlatform
+        platform: SixLayerPlatform,
+        iOSConfig: HIGiOSCategoryConfig?
     ) -> some View {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            return AnyView(iosHapticFeedback(to: content))
+            let config = iOSConfig ?? HIGiOSCategoryConfig()
+            return AnyView(iosHapticFeedback(to: content, config: config))
             #else
             return AnyView(fallbackHapticFeedback(to: content))
             #endif
@@ -543,17 +684,66 @@ public struct HapticFeedbackModifier: ViewModifier {
     // MARK: - Platform-Specific Implementations
     
     #if os(iOS) || os(watchOS)
-    /// iOS/watchOS: Native haptic feedback on tap
-    private func iosHapticFeedback<Content: View>(to content: Content) -> some View {
-        AnyView(
+    /// iOS/watchOS: Native haptic feedback on tap with configurable type
+    private func iosHapticFeedback<Content: View>(
+        to content: Content,
+        config: HIGiOSCategoryConfig
+    ) -> some View {
+        guard config.enableHapticFeedback else {
+            return AnyView(content.automaticCompliance())
+        }
+        
+        let hapticType = config.defaultHapticFeedbackType
+        
+        return AnyView(
             content
                 .onTapGesture {
-                    // Add haptic feedback
-                    let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-                    impactFeedback.impactOccurred()
+                    triggerIOSHapticFeedback(type: hapticType)
                 }
                 .automaticCompliance()
         )
+    }
+    
+    /// Trigger iOS haptic feedback based on type
+    private func triggerIOSHapticFeedback(type: PlatformHapticFeedback) {
+        #if os(iOS)
+        switch type {
+        case .light:
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        case .medium:
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+        case .heavy:
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+        case .soft:
+            if #available(iOS 13.0, *) {
+                let generator = UIImpactFeedbackGenerator(style: .soft)
+                generator.impactOccurred()
+            } else {
+                let generator = UIImpactFeedbackGenerator(style: .light)
+                generator.impactOccurred()
+            }
+        case .rigid:
+            if #available(iOS 13.0, *) {
+                let generator = UIImpactFeedbackGenerator(style: .rigid)
+                generator.impactOccurred()
+            } else {
+                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                generator.impactOccurred()
+            }
+        case .success:
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+        case .warning:
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.warning)
+        case .error:
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.error)
+        }
+        #endif
     }
     #endif
     
@@ -573,11 +763,18 @@ public struct HapticFeedbackModifier: ViewModifier {
 }
 
 /// Gesture recognition modifier
+/// Applies platform-specific gesture recognition based on configuration
 public struct GestureRecognitionModifier: ViewModifier {
     let platform: SixLayerPlatform
+    let iOSConfig: HIGiOSCategoryConfig?
+    
+    public init(platform: SixLayerPlatform, iOSConfig: HIGiOSCategoryConfig? = nil) {
+        self.platform = platform
+        self.iOSConfig = iOSConfig
+    }
     
     public func body(content: Content) -> some View {
-        applyGestureRecognition(to: content, platform: platform)
+        applyGestureRecognition(to: content, platform: platform, iOSConfig: iOSConfig)
     }
     
     // MARK: - Cross-Platform Implementation
@@ -585,12 +782,14 @@ public struct GestureRecognitionModifier: ViewModifier {
     /// Apply platform-specific gesture recognition
     private func applyGestureRecognition<Content: View>(
         to content: Content,
-        platform: SixLayerPlatform
+        platform: SixLayerPlatform,
+        iOSConfig: HIGiOSCategoryConfig?
     ) -> some View {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            return AnyView(iosGestureRecognition(to: content))
+            let config = iOSConfig ?? HIGiOSCategoryConfig()
+            return AnyView(iosGestureRecognition(to: content, config: config))
             #else
             return AnyView(fallbackGestureRecognition(to: content))
             #endif
@@ -608,14 +807,24 @@ public struct GestureRecognitionModifier: ViewModifier {
     // MARK: - Platform-Specific Implementations
     
     #if os(iOS) || os(watchOS)
-    /// iOS/watchOS: Touch-based gesture recognition
-    private func iosGestureRecognition<Content: View>(to content: Content) -> some View {
-        AnyView(
+    /// iOS/watchOS: Touch-based gesture recognition (tap, long press, swipe, pinch, rotation)
+    private func iosGestureRecognition<Content: View>(
+        to content: Content,
+        config: HIGiOSCategoryConfig
+    ) -> some View {
+        guard config.enableGestureRecognition else {
+            return AnyView(content.automaticCompliance())
+        }
+        
+        // Apply basic tap gesture recognition
+        // Additional gestures (long press, swipe, pinch, rotation) can be added
+        // via explicit gesture modifiers when needed
+        return AnyView(
             content
                 .gesture(
                     TapGesture()
                         .onEnded { _ in
-                            // Handle tap gesture
+                            // Tap gesture handled - additional gestures can be added explicitly
                         }
                 )
                 .automaticCompliance()
@@ -674,7 +883,9 @@ public extension View {
     func visualConsistency() -> some View {
         self.modifier(VisualConsistencyModifier(
             designSystem: PlatformDesignSystem(for: .iOS),
-            platform: .iOS
+            platform: .iOS,
+            visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: .iOS),
+            iOSConfig: HIGiOSCategoryConfig()
         ))
     }
     
@@ -682,7 +893,8 @@ public extension View {
     func interactionPatterns() -> some View {
         self.modifier(InteractionPatternModifier(
             platform: .iOS,
-            accessibilityState: AccessibilitySystemState()
+            accessibilityState: AccessibilitySystemState(),
+            iOSConfig: HIGiOSCategoryConfig()
         ))
     }
 

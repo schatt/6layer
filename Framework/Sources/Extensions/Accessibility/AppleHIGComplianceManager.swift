@@ -26,6 +26,15 @@ public class AppleHIGComplianceManager: ObservableObject {
     /// Current platform
     @Published public var currentPlatform: SixLayerPlatform = .iOS
     
+    /// Visual design category configuration
+    @Published public var visualDesignConfig: HIGVisualDesignCategoryConfig = HIGVisualDesignCategoryConfig()
+    
+    /// iOS-specific category configuration
+    @Published public var iOSCategoryConfig: HIGiOSCategoryConfig = HIGiOSCategoryConfig()
+    
+    /// macOS-specific category configuration
+    @Published public var macOSCategoryConfig: HIGmacOSCategoryConfig = HIGmacOSCategoryConfig()
+    
     // MARK: - Private Properties
     
     private var cancellables = Set<AnyCancellable>()
@@ -101,7 +110,8 @@ public class AppleHIGComplianceManager: ObservableObject {
         return content
             .modifier(VisualConsistencyModifier(
                 designSystem: designSystem,
-                platform: currentPlatform
+                platform: currentPlatform,
+                visualDesignConfig: visualDesignConfig
             ))
     }
     
@@ -535,4 +545,169 @@ public enum HIGPriority: String, CaseIterable {
     case medium = "medium"
     case high = "high"
     case critical = "critical"
+}
+
+// MARK: - Visual Design Category Configuration
+
+/// Configuration for automatic visual design category application
+/// Controls which visual design categories are automatically applied to views
+public struct HIGVisualDesignCategoryConfig {
+    /// Apply default animations automatically
+    /// Note: Currently not implemented - animations should be applied to state changes
+    /// using `.animation(_:value:)` or `.higAnimationCategory()` with explicit state tracking
+    public var applyAnimations: Bool = false
+    
+    /// Apply default shadows automatically (elevated shadow for cards/containers)
+    public var applyShadows: Bool = false
+    
+    /// Apply default corner radius automatically (medium radius for cards/containers)
+    public var applyCornerRadius: Bool = false
+    
+    /// Apply default border width automatically
+    public var applyBorders: Bool = false
+    
+    /// Apply default opacity automatically
+    public var applyOpacity: Bool = false
+    
+    /// Apply default blur automatically
+    public var applyBlur: Bool = false
+    
+    /// Default animation category to apply
+    public var defaultAnimationCategory: HIGAnimationCategory? = nil // nil = use platform default
+    
+    /// Default shadow category to apply
+    public var defaultShadowCategory: HIGShadowCategory = .elevated
+    
+    /// Default corner radius category to apply
+    public var defaultCornerRadiusCategory: HIGCornerRadiusCategory = .medium
+    
+    /// Default border width category to apply
+    public var defaultBorderWidthCategory: HIGBorderWidthCategory = .thin
+    
+    /// Default opacity category to apply
+    public var defaultOpacityCategory: HIGOpacityCategory = .primary
+    
+    /// Default blur category to apply
+    public var defaultBlurCategory: HIGBlurCategory = .light
+    
+    public init(
+        applyAnimations: Bool = true,
+        applyShadows: Bool = false,
+        applyCornerRadius: Bool = false,
+        applyBorders: Bool = false,
+        applyOpacity: Bool = false,
+        applyBlur: Bool = false,
+        defaultAnimationCategory: HIGAnimationCategory? = nil,
+        defaultShadowCategory: HIGShadowCategory = .elevated,
+        defaultCornerRadiusCategory: HIGCornerRadiusCategory = .medium,
+        defaultBorderWidthCategory: HIGBorderWidthCategory = .thin,
+        defaultOpacityCategory: HIGOpacityCategory = .primary,
+        defaultBlurCategory: HIGBlurCategory = .light
+    ) {
+        self.applyAnimations = applyAnimations
+        self.applyShadows = applyShadows
+        self.applyCornerRadius = applyCornerRadius
+        self.applyBorders = applyBorders
+        self.applyOpacity = applyOpacity
+        self.applyBlur = applyBlur
+        self.defaultAnimationCategory = defaultAnimationCategory
+        self.defaultShadowCategory = defaultShadowCategory
+        self.defaultCornerRadiusCategory = defaultCornerRadiusCategory
+        self.defaultBorderWidthCategory = defaultBorderWidthCategory
+        self.defaultOpacityCategory = defaultOpacityCategory
+        self.defaultBlurCategory = defaultBlurCategory
+    }
+    
+    /// Platform-specific default configuration
+    public static func `default`(for platform: SixLayerPlatform) -> HIGVisualDesignCategoryConfig {
+        switch platform {
+        case .iOS, .watchOS:
+            // iOS: Visual design categories disabled by default
+            // Developers can enable specific categories via configuration
+            return HIGVisualDesignCategoryConfig(
+                applyAnimations: false, // Animations should be applied to state changes, not globally
+                applyShadows: false, // Shadows applied per-component, not globally
+                applyCornerRadius: false,
+                applyBorders: false,
+                applyOpacity: false,
+                applyBlur: false
+            )
+        case .macOS:
+            // macOS: Visual design categories disabled by default
+            // Developers can enable specific categories via configuration
+            return HIGVisualDesignCategoryConfig(
+                applyAnimations: false, // Animations should be applied to state changes, not globally
+                applyShadows: false,
+                applyCornerRadius: false,
+                applyBorders: false,
+                applyOpacity: false,
+                applyBlur: false
+            )
+        default:
+            return HIGVisualDesignCategoryConfig()
+        }
+    }
+}
+
+// MARK: - iOS-Specific Category Configuration
+
+/// Configuration for iOS-specific HIG compliance categories
+public struct HIGiOSCategoryConfig {
+    /// Default haptic feedback type for interactive elements
+    public var defaultHapticFeedbackType: PlatformHapticFeedback = .medium
+    
+    /// Enable haptic feedback for button taps
+    public var enableHapticFeedback: Bool = true
+    
+    /// Enable gesture recognition (tap, long press, swipe, pinch, rotation)
+    public var enableGestureRecognition: Bool = true
+    
+    /// Enable touch target validation (44pt minimum enforcement)
+    public var enableTouchTargetValidation: Bool = true
+    
+    /// Enable safe area compliance (automatic safe area handling)
+    public var enableSafeAreaCompliance: Bool = true
+    
+    public init(
+        defaultHapticFeedbackType: PlatformHapticFeedback = .medium,
+        enableHapticFeedback: Bool = true,
+        enableGestureRecognition: Bool = true,
+        enableTouchTargetValidation: Bool = true,
+        enableSafeAreaCompliance: Bool = true
+    ) {
+        self.defaultHapticFeedbackType = defaultHapticFeedbackType
+        self.enableHapticFeedback = enableHapticFeedback
+        self.enableGestureRecognition = enableGestureRecognition
+        self.enableTouchTargetValidation = enableTouchTargetValidation
+        self.enableSafeAreaCompliance = enableSafeAreaCompliance
+    }
+}
+
+// MARK: - macOS-Specific Category Configuration
+
+/// Configuration for macOS-specific HIG compliance categories
+public struct HIGmacOSCategoryConfig {
+    /// Enable window management (resize, minimize, maximize, fullscreen)
+    public var enableWindowManagement: Bool = true
+    
+    /// Enable menu bar integration (status items, menu actions)
+    public var enableMenuBarIntegration: Bool = false // Opt-in feature
+    
+    /// Enable keyboard shortcuts (Command+key combinations)
+    public var enableKeyboardShortcuts: Bool = true
+    
+    /// Enable mouse interactions (hover states, click patterns)
+    public var enableMouseInteractions: Bool = true
+    
+    public init(
+        enableWindowManagement: Bool = true,
+        enableMenuBarIntegration: Bool = false,
+        enableKeyboardShortcuts: Bool = true,
+        enableMouseInteractions: Bool = true
+    ) {
+        self.enableWindowManagement = enableWindowManagement
+        self.enableMenuBarIntegration = enableMenuBarIntegration
+        self.enableKeyboardShortcuts = enableKeyboardShortcuts
+        self.enableMouseInteractions = enableMouseInteractions
+    }
 }
