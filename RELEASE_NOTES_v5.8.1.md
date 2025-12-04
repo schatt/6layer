@@ -156,9 +156,57 @@ The framework now fully implements the currency exchange model:
 4. **Architecture Compliance**: Full adherence to currency exchange model
 5. **Future-Proof**: Ready for additional platforms (visionOS, watchOS, etc.)
 
+## 🎉 New Features
+
+### Layer 4 System Actions (Issue #42)
+
+**COMPLETED**: Added cross-platform system action functions to eliminate platform-specific code in shared modules.
+
+#### New Functions
+
+##### URL Opening
+- `platformOpenURL_L4(_ url: URL) -> Bool` - Cross-platform URL opening
+  - **iOS**: Uses `UIApplication.shared.open(url)`
+  - **macOS**: Uses `NSWorkspace.shared.open(url)`
+  - Handles HTTP, HTTPS, and custom URL schemes
+  - Returns success/failure status
+
+##### Sharing
+- `platformShare_L4(isPresented:items:onComplete:)` - Share sheet with binding control
+- `platformShare_L4(items:from:)` - Convenience overload with automatic presentation
+  - **iOS**: Uses `UIActivityViewController` as modal sheet
+  - **macOS**: Uses `NSSharingServicePicker` as popover
+  - Supports text, URLs, images, and files
+
+#### Usage Examples
+
+```swift
+// Open URL
+Button("Open Website") {
+    if let url = URL(string: "https://example.com") {
+        platformOpenURL_L4(url)
+    }
+}
+
+// Share content
+@State private var shareItems: [Any]? = nil
+Button("Share") {
+    shareItems = ["Text to share", URL(string: "https://example.com")!]
+}
+.platformShare_L4(items: shareItems ?? [], from: nil)
+```
+
+#### Benefits
+
+1. **Eliminates platform-specific code** - No need for `#if os(iOS)` blocks
+2. **Reduces violations** - Helps codebases avoid platform-specific type violations
+3. **Consistent API** - Same interface regardless of platform
+4. **Follows framework patterns** - Aligns with existing Layer 4 component implementation
+
 ## 🔄 Related Issues
 
 - **Issue #32**: Complete PlatformImage standardization (Phase 2) - ✅ COMPLETED
+- **Issue #42**: Add Layer 4 System Action Functions - ✅ COMPLETED
 - **Issue #23**: PlatformImage initializer from CGImage - ✅ Already completed
 - **Issue #33**: PlatformImage enhancements (Phase 3) - ⏳ Future work
 
@@ -167,5 +215,5 @@ The framework now fully implements the currency exchange model:
 **Version**: 5.8.1
 **Release Date**: [Date TBD]
 **Previous Version**: 5.8.0
-**Issues**: #32 (PlatformImage Standardization Phase 2)
+**Issues**: #32 (PlatformImage Standardization Phase 2), #42 (Layer 4 System Actions)
 
