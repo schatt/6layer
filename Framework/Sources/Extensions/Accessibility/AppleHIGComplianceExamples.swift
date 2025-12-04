@@ -214,6 +214,7 @@ public struct SettingsSection: View {
         .background(.gray)
         .cornerRadius(12)
         .shadow(radius: 2)
+        .automaticCompliance(named: "SettingsSection")
     }
 }
 
@@ -246,6 +247,7 @@ public struct SettingsItemView: View {
         }
         .padding(.vertical, 4)
         .appleHIGCompliant()
+        .automaticCompliance(named: "SettingsItemView")
     }
 }
 
@@ -277,6 +279,7 @@ public struct FrameworkIntegrationExample: View {
             }
             .navigationTitle("Framework Integration")
         }
+        .automaticCompliance(named: "FrameworkIntegrationExample")
     }
     
     private func createFormFields() -> [DynamicFormField] {

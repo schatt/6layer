@@ -291,6 +291,7 @@ public struct ThemedLoadingIndicator: View {
                     }
             }
         }
+        .automaticCompliance(named: "ThemedLoadingIndicator")
     }
 }
 
@@ -307,6 +308,7 @@ public struct ThemedProgressBar: View {
     public var body: some View {
         // CRITICAL: Access environment values lazily using a helper view to avoid SwiftUI warnings
         ThemedProgressBarEnvironmentAccessor(progress: progress, variant: variant)
+        .automaticCompliance(named: "ThemedProgressBar")
     }
     
     // Helper view that defers environment access until view is installed

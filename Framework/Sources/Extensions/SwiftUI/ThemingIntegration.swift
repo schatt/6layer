@@ -24,6 +24,7 @@ public struct ThemedFrameworkView<Content: View>: View {
             .environment(\.typographySystem, TypographySystem(platform: designSystem.platformStyle, accessibility: designSystem.accessibilitySettings))
             .environment(\.accessibilitySettings, designSystem.accessibilitySettings)
             .preferredColorScheme(designSystem.currentTheme == .dark ? .dark : .light)
+            .automaticCompliance(named: "ThemedFrameworkView")
     }
 }
 
@@ -185,6 +186,7 @@ public struct ThemedGenericFormView: View {
             .background(colors.surface)
         }
         .themedCard()
+        .automaticCompliance(named: "ThemedGenericFormView")
     }
     
     private func createFieldView(for field: GenericFormField) -> some View {
@@ -460,6 +462,7 @@ public struct ThemedResponsiveCardView: View {
         }
         .padding()
         .themedCard()
+        .automaticCompliance(named: "ThemedResponsiveCardView")
     }
 }
 
@@ -519,6 +522,7 @@ public struct ThemedGenericItemCollectionView: View {
         }
         .padding()
         .themedCard()
+        .automaticCompliance(named: "ThemedGenericItemCollectionView")
     }
     
     private var gridColumns: [GridItem] {
@@ -598,6 +602,7 @@ public struct ThemedGenericNumericDataView: View {
         }
         .padding()
         .themedCard()
+        .automaticCompliance(named: "ThemedGenericNumericDataView")
     }
 }
 

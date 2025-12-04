@@ -210,6 +210,7 @@ private struct DataFrameAnalysisView: View {
         .onAppear {
             performAnalysis()
         }
+        .automaticCompliance(named: "DataFrameAnalysisView")
     }
     
     private func performAnalysis() {
@@ -253,6 +254,7 @@ private struct DataFrameAnalysisContentView: View {
             }
             .padding()
         }
+        .automaticCompliance(named: "DataFrameAnalysisContentView")
     }
 }
 
@@ -286,6 +288,7 @@ private struct DataFrameOverviewSection: View {
         .padding()
         .background(Color.platformSecondaryBackground)
         .cornerRadius(8)
+        .automaticCompliance(named: "DataFrameOverviewSection")
     }
     
     private func qualityColor(_ score: Double) -> Color {
@@ -332,6 +335,7 @@ private struct DataQualitySection: View {
         .padding()
         .background(Color.platformSecondaryBackground)
         .cornerRadius(8)
+        .automaticCompliance(named: "DataQualitySection")
     }
 }
 
@@ -365,6 +369,7 @@ private struct StatisticalAnalysisSection: View {
         .padding()
         .background(Color.platformSecondaryBackground)
         .cornerRadius(8)
+        .automaticCompliance(named: "StatisticalAnalysisSection")
     }
 }
 
@@ -406,6 +411,7 @@ private struct PatternRecognitionSection: View {
         .padding()
         .background(Color.platformSecondaryBackground)
         .cornerRadius(8)
+        .automaticCompliance(named: "PatternRecognitionSection")
     }
 }
 
@@ -432,6 +438,7 @@ private struct VisualizationRecommendationsSection: View {
         .padding()
         .background(Color.platformSecondaryBackground)
         .cornerRadius(8)
+        .automaticCompliance(named: "VisualizationRecommendationsSection")
     }
 }
 
@@ -464,6 +471,7 @@ private struct QualityMetricRow: View {
                     .frame(width: 100)
             }
         }
+        .automaticCompliance(named: "QualityMetricRow")
     }
     
     private func qualityColor(_ score: Double) -> Color {
@@ -493,6 +501,7 @@ private struct PatternRow: View {
             
             Spacer()
         }
+        .automaticCompliance(named: "PatternRow")
     }
 }
 
@@ -522,6 +531,7 @@ private struct VisualizationRecommendationRow: View {
                     .foregroundColor(.secondary)
             }
         }
+        .automaticCompliance(named: "VisualizationRecommendationRow")
     }
 }
 
@@ -545,6 +555,7 @@ private struct DataFrameComparisonView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
+        .automaticCompliance(named: "DataFrameComparisonView")
     }
 }
 
@@ -572,6 +583,7 @@ private struct DataQualityAssessmentView: View {
         .onAppear {
             performAnalysis()
         }
+        .automaticCompliance(named: "DataQualityAssessmentView")
     }
     
     private func performAnalysis() {
