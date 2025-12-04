@@ -99,7 +99,7 @@ public struct HIGAnimationSystem {
 }
 
 /// Animation category enum
-public enum HIGAnimationCategory {
+public enum HIGAnimationCategory: Equatable {
     case easeInOut
     case spring
     case custom(TimingFunction)
@@ -118,7 +118,7 @@ public enum HIGAnimationCategory {
 }
 
 /// Timing function for custom animations
-public struct TimingFunction: Sendable {
+public struct TimingFunction: Sendable, Equatable {
     public let controlPoint1: CGPoint
     public let controlPoint2: CGPoint
     
@@ -217,6 +217,7 @@ public struct HIGShadowSystem {
 }
 
 /// Shadow category enum
+/// Note: Color does not conform to Equatable, so custom cases cannot be compared
 public enum HIGShadowCategory {
     case elevated
     case floating
@@ -250,52 +251,31 @@ public struct HIGCornerRadiusSystem {
     public func radius(for category: HIGCornerRadiusCategory) -> CGFloat {
         switch category {
         case .small:
-            return smallRadius
+            return platformValue(iOS: 8, macOS: 4, default: 8)
         case .medium:
-            return mediumRadius
+            return platformValue(iOS: 12, macOS: 8, default: 12)
         case .large:
-            return largeRadius
+            return platformValue(iOS: 16, macOS: 12, default: 16)
         case .custom(let value):
             return value
         }
     }
     
-    private var smallRadius: CGFloat {
+    /// Helper to get platform-specific CGFloat values
+    private func platformValue(iOS: CGFloat, macOS: CGFloat, default defaultValue: CGFloat) -> CGFloat {
         switch platform {
         case .iOS:
-            return 8
+            return iOS
         case .macOS:
-            return 4
+            return macOS
         default:
-            return 8
-        }
-    }
-    
-    private var mediumRadius: CGFloat {
-        switch platform {
-        case .iOS:
-            return 12
-        case .macOS:
-            return 8
-        default:
-            return 12
-        }
-    }
-    
-    private var largeRadius: CGFloat {
-        switch platform {
-        case .iOS:
-            return 16
-        case .macOS:
-            return 12
-        default:
-            return 16
+            return defaultValue
         }
     }
 }
 
 /// Corner radius category enum
-public enum HIGCornerRadiusCategory {
+public enum HIGCornerRadiusCategory: Equatable {
     case small
     case medium
     case large
@@ -316,50 +296,29 @@ public struct HIGBorderWidthSystem {
     public func width(for category: HIGBorderWidthCategory) -> CGFloat {
         switch category {
         case .thin:
-            return thinWidth
+            return 0.5 // Consistent across all platforms
         case .medium:
-            return mediumWidth
+            return platformValue(iOS: 0.5, macOS: 1.0, default: 0.5)
         case .thick:
-            return thickWidth
+            return platformValue(iOS: 1.0, macOS: 2.0, default: 1.0)
         }
     }
     
-    private var thinWidth: CGFloat {
+    /// Helper to get platform-specific CGFloat values
+    private func platformValue(iOS: CGFloat, macOS: CGFloat, default defaultValue: CGFloat) -> CGFloat {
         switch platform {
         case .iOS:
-            return 0.5
+            return iOS
         case .macOS:
-            return 0.5
+            return macOS
         default:
-            return 0.5
-        }
-    }
-    
-    private var mediumWidth: CGFloat {
-        switch platform {
-        case .iOS:
-            return 0.5
-        case .macOS:
-            return 1.0
-        default:
-            return 0.5
-        }
-    }
-    
-    private var thickWidth: CGFloat {
-        switch platform {
-        case .iOS:
-            return 1.0
-        case .macOS:
-            return 2.0
-        default:
-            return 1.0
+            return defaultValue
         }
     }
 }
 
 /// Border width category enum
-public enum HIGBorderWidthCategory: CaseIterable {
+public enum HIGBorderWidthCategory: CaseIterable, Equatable {
     case thin
     case medium
     case thick
@@ -368,11 +327,11 @@ public enum HIGBorderWidthCategory: CaseIterable {
 // MARK: - Opacity System
 
 /// Opacity category system providing HIG-compliant opacity levels
+/// Note: Opacity values are consistent across platforms, so platform parameter is not used
 public struct HIGOpacitySystem {
-    public let platform: SixLayerPlatform
-    
     public init(for platform: SixLayerPlatform) {
-        self.platform = platform
+        // Opacity values are platform-independent, but we accept platform for consistency
+        // with other design systems
     }
     
     /// Get opacity for a specific category
@@ -391,7 +350,7 @@ public struct HIGOpacitySystem {
 }
 
 /// Opacity category enum
-public enum HIGOpacityCategory {
+public enum HIGOpacityCategory: Equatable {
     case primary
     case secondary
     case tertiary
@@ -412,52 +371,31 @@ public struct HIGBlurSystem {
     public func blur(for category: HIGBlurCategory) -> HIGBlur {
         switch category {
         case .light:
-            return lightBlur
+            return HIGBlur(radius: platformValue(iOS: 5, macOS: 4, default: 5))
         case .medium:
-            return mediumBlur
+            return HIGBlur(radius: platformValue(iOS: 10, macOS: 8, default: 10))
         case .heavy:
-            return heavyBlur
+            return HIGBlur(radius: platformValue(iOS: 20, macOS: 16, default: 20))
         case .custom(let radius):
             return HIGBlur(radius: radius)
         }
     }
     
-    private var lightBlur: HIGBlur {
+    /// Helper to get platform-specific CGFloat values
+    private func platformValue(iOS: CGFloat, macOS: CGFloat, default defaultValue: CGFloat) -> CGFloat {
         switch platform {
         case .iOS:
-            return HIGBlur(radius: 5)
+            return iOS
         case .macOS:
-            return HIGBlur(radius: 4)
+            return macOS
         default:
-            return HIGBlur(radius: 5)
-        }
-    }
-    
-    private var mediumBlur: HIGBlur {
-        switch platform {
-        case .iOS:
-            return HIGBlur(radius: 10)
-        case .macOS:
-            return HIGBlur(radius: 8)
-        default:
-            return HIGBlur(radius: 10)
-        }
-    }
-    
-    private var heavyBlur: HIGBlur {
-        switch platform {
-        case .iOS:
-            return HIGBlur(radius: 20)
-        case .macOS:
-            return HIGBlur(radius: 16)
-        default:
-            return HIGBlur(radius: 20)
+            return defaultValue
         }
     }
 }
 
 /// Blur category enum
-public enum HIGBlurCategory {
+public enum HIGBlurCategory: Equatable {
     case light
     case medium
     case heavy

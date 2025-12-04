@@ -9,8 +9,10 @@ public struct HIGAnimationCategoryModifier: ViewModifier {
     let animationSystem: HIGAnimationSystem
     
     public func body(content: Content) -> some View {
+        // Note: Animation is applied but requires a value change to trigger
+        // In practice, animations should be applied with explicit value changes
         content
-            .animation(animationSystem.animation(for: category), value: UUID())
+            .animation(animationSystem.animation(for: category))
             .automaticCompliance()
     }
 }
