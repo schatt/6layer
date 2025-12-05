@@ -28,7 +28,8 @@ let package = Package(
             path: "Framework/Sources",
             exclude: [
                 "Core/ExampleHelpers.swift",
-                "Core/ExtensibleHintsExample.swift"
+                "Core/ExtensibleHintsExample.swift",
+                "Core/Models/DataHintsLoader_REFACTOR_PROPOSAL.md"
             ],
             sources: [
                 "Core",

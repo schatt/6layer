@@ -391,14 +391,19 @@ public actor DataHintsRegistry {
     // Shared cache for synchronous access
     // File-based hints are immutable, so cached values are safe to access without actor isolation
     // Code-provided hints (like layoutSpec) are handled separately and not cached here
-    // After preload, this is read-only - no writes allowed, so no synchronization needed for reads
-    nonisolated private static var sharedResultCache: [String: DataHintsResult] = [:]
+    // All access (reads and writes) is protected by preloadLock for thread safety
+    // Using nonisolated(unsafe) because Swift 6 requires it for mutable static properties,
+    // even when protected by external synchronization (the lock)
+    nonisolated(unsafe) private static var sharedResultCache: [String: DataHintsResult] = [:]
     
     // Flag to track if hints have been preloaded (prevents redundant loading)
     // Once true, sharedResultCache is read-only and no writes are allowed
-    nonisolated private static var hintsPreloaded = false
-    // Lock for synchronizing preload operations (shared across all threads)
-    // Only used during preload phase - after preload, cache is read-only and lock-free
+    // All access is protected by preloadLock for thread safety
+    // Using nonisolated(unsafe) because Swift 6 requires it for mutable static properties,
+    // even when protected by external synchronization (the lock)
+    nonisolated(unsafe) private static var hintsPreloaded = false
+    // Lock for synchronizing all cache operations (reads and writes)
+    // Protects both sharedResultCache and hintsPreloaded
     nonisolated private static let preloadLock = NSLock()
     
     public init(loader: DataHintsLoader = FileBasedDataHintsLoader()) {
