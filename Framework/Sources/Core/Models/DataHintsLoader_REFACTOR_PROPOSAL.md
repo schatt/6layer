@@ -253,3 +253,4 @@ But this loses the ability to have a global instance easily accessible.
 - Concurrent reads from an immutable dictionary are safe in practice
 - Swift compiler allows `nonisolated` (not unsafe) because we're not using unsafe features
 
+
