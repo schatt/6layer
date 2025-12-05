@@ -1,4 +1,4 @@
-# SixLayer Framework v5.8.1 Release Notes
+# SixLayer Framework v5.9.0 Release Notes
 
 ## 🎉 Major Features
 
@@ -93,7 +93,7 @@ let clipboardImage: ClipboardImage = someNSImage
 #endif
 PlatformClipboard.copyToClipboard(clipboardImage)
 
-// After (v5.8.1+)
+// After (v5.9.0+)
 let platformImage = PlatformImage(someUIImage) // or PlatformImage(someNSImage)
 PlatformClipboard.copyToClipboard(platformImage)
 ```
@@ -105,7 +105,7 @@ PlatformClipboard.copyToClipboard(platformImage)
 let content: Any = ClipboardImage(...)
 platformCopyToClipboard_L4(content: content)
 
-// After (v5.8.1+)
+// After (v5.9.0+)
 let content: Any = PlatformImage(...)
 platformCopyToClipboard_L4(content: content)
 ```
@@ -395,19 +395,65 @@ This feature extends the existing automatic compliance system:
 - **Complements**: HIG Visual Design Categories (Issue #37)
 - **Enhances**: Automatic accessibility features
 
+### Enum Picker Support in Hints Files (Issues #40, #41)
+
+**COMPLETED**: Added enum picker support in hints files for `IntelligentFormView`, allowing fields to be rendered as pickers with human-readable labels instead of text fields.
+
+#### Key Features
+
+- **Picker Options**: Add `inputType: "picker"` and `options` array to hints files for enum fields
+- **Human-Readable Labels**: Display labels in UI while storing raw enum values in model
+- **Cross-Platform**: Works on both macOS (menu style) and iOS (menu style)
+- **DataBinder Integration**: Picker fields automatically integrate with `DataBinder` for real-time model updates
+- **Backward Compatible**: Existing hints files without `inputType` continue to work
+
+#### Usage Example
+
+```swift
+// Hints file format
+{
+  "sizeUnit": {
+    "displayWidth": "medium",
+    "expectedLength": 15,
+    "inputType": "picker",
+    "options": [
+      {"value": "story_points", "label": "Story Points"},
+      {"value": "hours", "label": "Hours"},
+      {"value": "days", "label": "Days"}
+    ]
+  }
+}
+
+// Usage
+IntelligentFormView.generateForm(
+    for: Task.self,
+    initialData: task
+    // sizeUnit renders as picker with labels
+)
+```
+
+#### Benefits
+
+1. **Better UX**: Users see human-readable labels instead of raw enum values
+2. **Prevents Errors**: Invalid enum values cannot be entered
+3. **Type-Safe**: Values are validated against options
+4. **Maintainable**: Update options in one place (hints file)
+
 ## 🔄 Related Issues
 
 - **Issue #32**: Complete PlatformImage standardization (Phase 2) - ✅ COMPLETED
 - **Issue #35**: Implement automatic HIG-compliant styling for all components - ✅ COMPLETED
 - **Issue #37**: Implement HIG-compliant visual design category system - ✅ COMPLETED
+- **Issue #40**: Support enum picker options in hints files for IntelligentFormView - ✅ COMPLETED
+- **Issue #41**: Integrate dataBinder with Picker Field Value Updates - ✅ COMPLETED
 - **Issue #42**: Add Layer 4 System Action Functions - ✅ COMPLETED
 - **Issue #23**: PlatformImage initializer from CGImage - ✅ Already completed
 - **Issue #33**: PlatformImage enhancements (Phase 3) - ⏳ Future work
 
 ---
 
-**Version**: 5.8.1
+**Version**: 5.9.0
 **Release Date**: [Date TBD]
 **Previous Version**: 5.8.0
-**Issues**: #32 (PlatformImage Standardization Phase 2), #35 (Automatic HIG Styling), #37 (HIG Visual Design Categories), #42 (Layer 4 System Actions)
+**Issues**: #32 (PlatformImage Standardization Phase 2), #35 (Automatic HIG Styling), #37 (HIG Visual Design Categories), #40 (Enum Picker Support), #41 (Picker DataBinder Integration), #42 (Layer 4 System Actions)
 

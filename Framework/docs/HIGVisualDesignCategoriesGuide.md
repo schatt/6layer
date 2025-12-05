@@ -434,7 +434,7 @@ struct PlatformAwareCardView: View {
 
 ---
 
-**Version**: 5.8.1  
+**Version**: 5.9.0  
 **Issue**: #37  
 **Status**: ✅ Implemented
 

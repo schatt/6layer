@@ -485,7 +485,8 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         let view = Text("Test").modifier(VisualConsistencyModifier(
             designSystem: designSystem,
             platform: .iOS,
-            visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: .iOS)
+            visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: .iOS),
+            iOSConfig: HIGiOSCategoryConfig()
         ))
         #expect(view != nil)
     }
