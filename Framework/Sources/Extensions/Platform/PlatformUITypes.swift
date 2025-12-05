@@ -1,6 +1,31 @@
 import SwiftUI
 
-// Platform-specific navigation title display mode
+/// Platform-specific navigation title display mode
+///
+/// Cross-platform abstraction for navigation bar title display modes.
+/// Use this enum with `platformNavigationTitleDisplayMode()` to eliminate
+/// platform-specific conditional compilation.
+///
+/// ## Available Modes
+///
+/// - `.inline` - Compact inline title (iOS only, no-op on macOS)
+/// - `.large` - Large title style (iOS only, no-op on macOS)
+/// - `.automatic` - Platform-determined style (iOS only, no-op on macOS)
+///
+/// ## Usage
+///
+/// ```swift
+/// Text("Content")
+///     .platformNavigationTitle("My Title")
+///     .platformNavigationTitleDisplayMode(.inline)
+/// ```
+///
+/// This eliminates the need for:
+/// ```swift
+/// #if os(iOS)
+/// .navigationBarTitleDisplayMode(.inline)
+/// #endif
+/// ```
 public enum PlatformTitleDisplayMode {
     case inline
     case large

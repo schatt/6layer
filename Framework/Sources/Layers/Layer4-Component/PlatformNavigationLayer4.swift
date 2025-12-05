@@ -133,6 +133,37 @@ public extension View {
     }
 
     /// Platform-specific navigation title display mode
+    ///
+    /// Applies navigation title display mode consistently across platforms, eliminating
+    /// the need for platform-specific conditional compilation.
+    ///
+    /// - **iOS**: Applies `.navigationBarTitleDisplayMode()` with the specified mode
+    /// - **macOS**: No-op (macOS doesn't have this concept)
+    /// - **Other platforms**: No-op
+    ///
+    /// Available modes via `PlatformTitleDisplayMode`:
+    /// - `.inline` - Compact inline title
+    /// - `.large` - Large title style
+    /// - `.automatic` - Platform-determined style
+    ///
+    /// ## Usage
+    ///
+    /// ```swift
+    /// // ✅ Good: Use platform abstraction (no conditional compilation needed)
+    /// Text("Content")
+    ///     .platformNavigationTitle("My Title")
+    ///     .platformNavigationTitleDisplayMode(.inline)
+    ///
+    /// // ❌ Avoid: Platform-specific conditional compilation
+    /// Text("Content")
+    ///     .navigationTitle("My Title")
+    ///     #if os(iOS)
+    ///     .navigationBarTitleDisplayMode(.inline)
+    ///     #endif
+    /// ```
+    ///
+    /// - Parameter displayMode: The display mode to apply (`.inline`, `.large`, or `.automatic`)
+    /// - Returns: A view with the platform-appropriate navigation title display mode applied
     func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)

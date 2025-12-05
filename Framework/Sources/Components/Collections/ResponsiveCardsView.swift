@@ -61,9 +61,7 @@ public struct ResponsiveCardsView: View {
         }
         .navigationTitle("Responsive Cards Demo")
         // Layer 6: Platform-specific navigation optimizations
-        #if os(iOS)
-        .navigationBarTitleDisplayMode(.large)
-        #endif
+        .platformNavigationTitleDisplayMode(.large)
         .automaticCompliance(named: "ResponsiveCardsView")
     }
     

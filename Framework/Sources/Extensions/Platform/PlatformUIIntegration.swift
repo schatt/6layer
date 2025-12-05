@@ -50,9 +50,7 @@ public struct PlatformUIIntegration {
                 }
             }
             .navigationTitle(title)
-            #if os(iOS)
-            .navigationBarTitleDisplayMode(adaptiveTitleDisplayMode)
-            #endif
+            .platformNavigationTitleDisplayMode(adaptiveTitleDisplayMode)
         }
         
         private var shouldShowHeader: Bool {
@@ -92,22 +90,16 @@ public struct PlatformUIIntegration {
             )
         }
         
-        #if os(iOS)
-        private var adaptiveTitleDisplayMode: NavigationBarItem.TitleDisplayMode {
+        /// Adaptive title display mode based on platform and context
+        /// Returns appropriate display mode: inline for compact contexts, large for spacious contexts
+        private var adaptiveTitleDisplayMode: PlatformTitleDisplayMode {
             switch platform {
             case .ios:
                 return context.isCompact ? .inline : .large
-            case .macOS:
-                return .inline
-            case .watchOS:
-                return .inline
-            case .tvOS:
-                return .inline
-            case .visionOS:
+            case .macOS, .watchOS, .tvOS, .visionOS:
                 return .inline
             }
         }
-        #endif
     }
     
     // MARK: - Smart Modal Container
