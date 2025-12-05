@@ -32,15 +32,17 @@ public struct UnifiedImagePicker: View {
     }
     
     public var body: some View {
-        #if os(iOS)
-        iOSImagePicker(onImageSelected: onImageSelected)
-        #elseif os(macOS)
-        macOSImagePicker(onImageSelected: onImageSelected)
-        #else
-        Text("Image picker not available on this platform")
-        #endif
+        Group {
+            #if os(iOS)
+            iOSImagePicker(onImageSelected: onImageSelected)
+            #elseif os(macOS)
+            macOSImagePicker(onImageSelected: onImageSelected)
+            #else
+            Text("Image picker not available on this platform")
+            #endif
+        }
+        .automaticCompliance(named: "UnifiedImagePicker")
     }
-    .automaticCompliance(named: "UnifiedImagePicker")
 }
 
 // MARK: - iOS Implementation

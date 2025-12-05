@@ -102,13 +102,15 @@ public struct PhotoPickerView: View {
     let onImageSelected: (PlatformImage) -> Void
     
     public var body: some View {
-        if #available(iOS 14.0, *) {
-            ModernPhotoPickerView(onImageSelected: onImageSelected)
-        } else {
-            LegacyPhotoPickerView(onImageSelected: onImageSelected)
+        Group {
+            if #available(iOS 14.0, *) {
+                ModernPhotoPickerView(onImageSelected: onImageSelected)
+            } else {
+                LegacyPhotoPickerView(onImageSelected: onImageSelected)
+            }
         }
+        .automaticCompliance(named: "PhotoPickerView")
     }
-    .automaticCompliance(named: "PhotoPickerView")
 }
 
 // MARK: - Modern PHPickerViewController Implementation (iOS 14+)
