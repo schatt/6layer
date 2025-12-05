@@ -848,6 +848,36 @@ public struct PlatformImage: @unchecked Sendable {
     }
 }
 
+// MARK: - Cross-Platform File System Utilities
+
+/// Returns the home directory URL for the current user in a cross-platform manner.
+///
+/// This function abstracts platform-specific home directory access:
+/// - **macOS**: Uses `FileManager.default.homeDirectoryForCurrentUser`
+/// - **iOS**: Uses `NSHomeDirectory()` converted to a file URL
+///
+/// This eliminates the need for conditional compilation in consuming applications:
+/// ```swift
+/// // Instead of platform-specific code:
+/// // #if os(macOS)
+/// // let homeDir = FileManager.default.homeDirectoryForCurrentUser
+/// // #else
+/// // let homeDir = URL(fileURLWithPath: NSHomeDirectory())
+/// // #endif
+///
+/// // Use the cross-platform function:
+/// let homeDir = platformHomeDirectory()
+/// ```
+///
+/// - Returns: A `URL` representing the home directory for the current user.
+public func platformHomeDirectory() -> URL {
+    #if os(macOS)
+    return FileManager.default.homeDirectoryForCurrentUser
+    #else
+    return URL(fileURLWithPath: NSHomeDirectory())
+    #endif
+}
+
 // MARK: - Content Analysis Types
 
 /// Represents content analysis results for layout decisions
