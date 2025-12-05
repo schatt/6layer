@@ -48,7 +48,9 @@ final class CrossComponentIntegrationTests: BaseTestClass {
         let value: Double
     }
     
-    /// Creates test collection items
+    /// Creates test collection items for collection testing scenarios
+    /// - Parameter count: Number of test items to generate. Defaults to 5 for standard collection testing.
+    /// - Returns: Array of TestCollectionItem with sequential IDs, titles, and varying subtitles
     func createTestCollectionItems(count: Int = 5) -> [TestCollectionItem] {
         return (0..<count).map { index in
             TestCollectionItem(
@@ -60,7 +62,12 @@ final class CrossComponentIntegrationTests: BaseTestClass {
         }
     }
     
-    /// Creates OCR-enabled form field
+    /// Creates an OCR-enabled form field for testing OCR integration with forms
+    /// - Parameters:
+    ///   - id: Unique identifier for the form field, used for value tracking and validation
+    ///   - label: Display label for the field shown to users and used for accessibility
+    ///   - textType: The TextType hint for OCR to identify what type of text to extract (e.g., .price, .date)
+    /// - Returns: DynamicFormField configured with OCR support and validation types
     func createOCRFormField(
         id: String,
         label: String,

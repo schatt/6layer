@@ -42,9 +42,9 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
     
     /// Creates a test OCR context for workflow testing
     /// - Parameters:
-    ///   - textTypes: The text types to extract
-    ///   - language: The language for OCR
-    /// - Returns: Configured OCRContext
+    ///   - textTypes: Array of text types to extract (e.g., .price, .date, .general). Defaults to [.general] for basic text extraction.
+    ///   - language: The OCR language to use for text recognition. Defaults to .english for English text processing.
+    /// - Returns: Configured OCRContext with standard testing parameters
     func createTestOCRContext(
         textTypes: [TextType] = [.general],
         language: OCRLanguage = .english
@@ -59,9 +59,9 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
     
     /// Creates a mock OCR result for testing
     /// - Parameters:
-    ///   - text: The extracted text
-    ///   - confidence: Confidence score
-    /// - Returns: Mock OCRResult
+    ///   - text: The extracted text content to include in the result. Defaults to "Test OCR result" for basic testing scenarios.
+    ///   - confidence: The confidence score (0.0-1.0) for the OCR extraction. Defaults to 0.95 representing high confidence.
+    /// - Returns: Mock OCRResult with configured text, confidence, and default bounding boxes
     func createMockOCRResult(
         text: String = "Test OCR result",
         confidence: Double = 0.95

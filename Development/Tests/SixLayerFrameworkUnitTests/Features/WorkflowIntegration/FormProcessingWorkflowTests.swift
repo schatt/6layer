@@ -121,12 +121,12 @@ final class FormProcessingWorkflowTests: BaseTestClass {
         ]
     }
     
-    /// Creates a form section for testing
+    /// Creates a form section for testing multi-section workflows
     /// - Parameters:
-    ///   - id: Section identifier
-    ///   - title: Section title
-    ///   - fields: Fields in the section
-    /// - Returns: DynamicFormSection
+    ///   - id: Unique identifier for the section, used for tracking validation status
+    ///   - title: Display title for the section header shown to users
+    ///   - fields: Array of DynamicFormField objects to include in this section
+    /// - Returns: DynamicFormSection configured for testing with collapsible behavior
     func createTestSection(
         id: String,
         title: String,
