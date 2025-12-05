@@ -452,18 +452,18 @@ public struct PlatformNavigationModifier: ViewModifier {
     private func applyPlatformNavigation<Content: View>(
         to content: Content,
         platform: SixLayerPlatform
-    ) -> some View {
+    ) -> AnyView {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return AnyView(iosPlatformNavigation(to: content))
+            return iosPlatformNavigation(to: content).wrappedWithCompliance()
             #else
-            return AnyView(fallbackPlatformNavigation(to: content))
+            return fallbackPlatformNavigation(to: content)
             #endif
         case .macOS:
-            return AnyView(macOSPlatformNavigation(to: content))
+            return macOSPlatformNavigation(to: content).wrappedWithCompliance()
         default:
-            return AnyView(fallbackPlatformNavigation(to: content))
+            return fallbackPlatformNavigation(to: content)
         }
     }
     
@@ -471,12 +471,12 @@ public struct PlatformNavigationModifier: ViewModifier {
     
     #if os(iOS)
     private func iosPlatformNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.navigationBarTitleDisplayMode(.inline).automaticCompliance())
+        content.navigationBarTitleDisplayMode(.inline)
     }
     #endif
     
     private func macOSPlatformNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.navigationTitle("").automaticCompliance())
+        content.navigationTitle("")
     }
     
     private func fallbackPlatformNavigation<Content: View>(to content: Content) -> AnyView {

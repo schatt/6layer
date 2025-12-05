@@ -226,32 +226,24 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     @Test @MainActor func testAutomaticMotionPreferences_RespectsSystemSettings() {
         initializeTestConfig()
         // GIVEN: A view with automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: Animations should respect system reduced motion preferences
         // SwiftUI automatically respects UIAccessibility.isReduceMotionEnabled
         // The AutomaticHIGMotionPreferenceModifier ensures this is handled
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View with automatic compliance should respect motion preferences")
+        verifyViewIsHostable(view, description: "View with automatic compliance respecting motion preferences")
     }
     
     @Test @MainActor func testAutomaticMotionPreferences_GracefulDegradation() {
         initializeTestConfig()
         // GIVEN: A view with animations and automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: Reduced motion is enabled
         // THEN: Animations should gracefully degrade (disable or simplify)
         // SwiftUI's animation system automatically handles reduced motion
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View should gracefully degrade animations when reduced motion is enabled")
+        verifyViewIsHostable(view, description: "View gracefully degrading animations when reduced motion is enabled")
     }
     
     // MARK: - 6. Automatic Tab Order Tests
