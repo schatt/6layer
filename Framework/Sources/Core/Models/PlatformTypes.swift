@@ -854,7 +854,7 @@ public struct PlatformImage: @unchecked Sendable {
 ///
 /// This function abstracts platform-specific home directory access:
 /// - **macOS**: Uses `FileManager.default.homeDirectoryForCurrentUser`
-/// - **iOS**: Uses `NSHomeDirectory()` converted to a file URL
+/// - **All other platforms (iOS, watchOS, tvOS, visionOS)**: Uses `NSHomeDirectory()` converted to a file URL
 ///
 /// This eliminates the need for conditional compilation in consuming applications:
 /// ```swift
