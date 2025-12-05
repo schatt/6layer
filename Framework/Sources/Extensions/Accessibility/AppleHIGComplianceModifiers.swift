@@ -233,7 +233,7 @@ public struct VisualDesignCategoryModifier: ViewModifier {
             )
         }
         
-        return AnyView(modifiedContent.automaticCompliance())
+        return modifiedContent.wrappedWithCompliance()
     }
 }
 
@@ -319,17 +319,17 @@ public struct KeyboardNavigationModifier: ViewModifier {
         to content: Content,
         hasKeyboardSupport: Bool,
         hasFullKeyboardAccess: Bool
-    ) -> some View {
+    ) -> AnyView {
         guard hasKeyboardSupport else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         #if os(macOS)
-        return AnyView(macOSKeyboardNavigation(to: content, hasFullKeyboardAccess: hasFullKeyboardAccess))
+        return macOSKeyboardNavigation(to: content, hasFullKeyboardAccess: hasFullKeyboardAccess).wrappedWithCompliance()
         #elseif os(iOS) || os(tvOS) || os(watchOS)
-        return AnyView(iosKeyboardNavigation(to: content))
+        return iosKeyboardNavigation(to: content).wrappedWithCompliance()
         #else
-        return AnyView(fallbackKeyboardNavigation(to: content))
+        return fallbackKeyboardNavigation(to: content)
         #endif
     }
     
@@ -341,27 +341,24 @@ public struct KeyboardNavigationModifier: ViewModifier {
         to content: Content,
         hasFullKeyboardAccess: Bool
     ) -> some View {
-        AnyView(
-            content
-                .focusable()
-                .onKeyPress(.return) {
-                    // Handle keyboard activation
-                    return .handled
-                }
-                .automaticCompliance()
-        )
+        content
+            .focusable()
+            .onKeyPress(.return) {
+                // Handle keyboard activation
+                return .handled
+            }
     }
     #endif
     
     #if os(iOS) || os(tvOS) || os(watchOS)
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     private func iosKeyboardNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.focusable().automaticCompliance())
+        content.focusable()
     }
     #endif
     
-    private func fallbackKeyboardNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackKeyboardNavigation<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -376,17 +373,17 @@ public struct HighContrastModifier: ViewModifier {
     // MARK: - Cross-Platform Implementation
     
     /// Apply high contrast with platform-specific behavior
-    private func applyHighContrast<Content: View>(to content: Content, isEnabled: Bool) -> some View {
+    private func applyHighContrast<Content: View>(to content: Content, isEnabled: Bool) -> AnyView {
         guard isEnabled else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         #if canImport(UIKit)
-        return AnyView(iosHighContrast(to: content))
+        return iosHighContrast(to: content).wrappedWithCompliance()
         #elseif os(macOS)
-        return AnyView(macOSHighContrast(to: content))
+        return macOSHighContrast(to: content).wrappedWithCompliance()
         #else
-        return AnyView(fallbackHighContrast(to: content))
+        return fallbackHighContrast(to: content)
         #endif
     }
     
@@ -394,28 +391,22 @@ public struct HighContrastModifier: ViewModifier {
     
     #if canImport(UIKit)
     private func iosHighContrast<Content: View>(to content: Content) -> some View {
-        AnyView(
-            content
-                .foregroundColor(.primary)
-                .background(Color(UIColor.systemBackground))
-                .automaticCompliance()
-        )
+        content
+            .foregroundColor(.primary)
+            .background(Color(UIColor.systemBackground))
     }
     #endif
     
     #if os(macOS)
     private func macOSHighContrast<Content: View>(to content: Content) -> some View {
-        AnyView(
-            content
-                .foregroundColor(.primary)
-                .background(.gray)
-                .automaticCompliance()
-        )
+        content
+            .foregroundColor(.primary)
+            .background(.gray)
     }
     #endif
     
-    private func fallbackHighContrast<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackHighContrast<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -458,18 +449,18 @@ public struct PlatformNavigationModifier: ViewModifier {
     private func applyPlatformNavigation<Content: View>(
         to content: Content,
         platform: SixLayerPlatform
-    ) -> some View {
+    ) -> AnyView {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return AnyView(iosPlatformNavigation(to: content))
+            return iosPlatformNavigation(to: content).wrappedWithCompliance()
             #else
-            return AnyView(fallbackPlatformNavigation(to: content))
+            return fallbackPlatformNavigation(to: content)
             #endif
         case .macOS:
-            return AnyView(macOSPlatformNavigation(to: content))
+            return macOSPlatformNavigation(to: content).wrappedWithCompliance()
         default:
-            return AnyView(fallbackPlatformNavigation(to: content))
+            return fallbackPlatformNavigation(to: content)
         }
     }
     
@@ -477,16 +468,16 @@ public struct PlatformNavigationModifier: ViewModifier {
     
     #if os(iOS)
     private func iosPlatformNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.navigationBarTitleDisplayMode(.inline).automaticCompliance())
+        content.navigationBarTitleDisplayMode(.inline)
     }
     #endif
     
     private func macOSPlatformNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.navigationTitle("").automaticCompliance())
+        content.navigationTitle("")
     }
     
-    private func fallbackPlatformNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackPlatformNavigation<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -1050,9 +1041,9 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
             // iOS categories are already handled by other modifiers
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
             #else
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
             #endif
         case .macOS:
             #if os(macOS)
@@ -1069,7 +1060,7 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
             return content.wrappedWithCompliance()
             #endif
         default:
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
     }
     

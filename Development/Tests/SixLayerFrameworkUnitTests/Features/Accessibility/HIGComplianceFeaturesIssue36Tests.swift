@@ -32,6 +32,37 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     
     // No shared instance variables - tests run in parallel and should be isolated
     
+    // MARK: - Test Helpers
+    
+    /// Creates an interactive button view with automatic compliance for testing
+    private func createInteractiveButton(_ title: String = "Test Button") -> some View {
+        Button(title) {
+            // Action
+        }
+        .automaticCompliance()
+        .environment(\.accessibilityIdentifierElementType, "Button")
+    }
+    
+    /// Creates a non-interactive text view with automatic compliance for testing
+    private func createNonInteractiveTextView(_ text: String = "Test Text") -> some View {
+        Text(text)
+            .automaticCompliance()
+    }
+    
+    /// Verifies a view can be hosted and has automatic compliance applied
+    private func verifyViewIsHostable<V: View>(_ view: V, description: String) {
+        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        #expect(Bool(true), "\(description) should be hostable with automatic compliance")
+    }
+    
+    /// Verifies platform-specific touch target requirements
+    private func verifyTouchTargetRequirements(platform: SixLayerPlatform) {
+        #expect(RuntimeCapabilityDetection.currentPlatform == platform, "Platform should be \(platform)")
+        if platform == .iOS || platform == .watchOS {
+            #expect(RuntimeCapabilityDetection.minTouchTarget >= 44.0, "Minimum touch target should be at least 44pt on \(platform)")
+        }
+    }
+    
     // MARK: - 1. Automatic Touch Target Sizing Tests
     
     /**
@@ -45,21 +76,13 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
         setCapabilitiesForPlatform(.iOS)
         
         // WHEN: Creating a button with automatic compliance
-        let button = Button("Test Button") {
-            // Action
-        }
-        .automaticCompliance()
-        .environment(\.accessibilityIdentifierElementType, "Button")
+        let button = createInteractiveButton()
         
         // THEN: Button should have minimum 44pt touch target on iOS
         // Note: ViewInspector limitations prevent direct frame inspection
         // We verify by checking that the modifier is applied and platform is iOS
-        #expect(RuntimeCapabilityDetection.currentPlatform == .iOS, "Platform should be iOS")
-        #expect(RuntimeCapabilityDetection.minTouchTarget >= 44.0, "Minimum touch target should be at least 44pt on iOS")
-        
-        // Verify button is created successfully (indirect verification that modifiers apply)
-        let hostingView = hostRootPlatformView(button.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Button with automatic compliance should be hostable")
+        verifyTouchTargetRequirements(platform: .iOS)
+        verifyViewIsHostable(button, description: "Button with automatic compliance")
     }
     
     @Test @MainActor func testAutomaticTouchTargetSizing_NonInteractiveElementOnIOS() {
@@ -68,16 +91,12 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
         setCapabilitiesForPlatform(.iOS)
         
         // WHEN: Creating a text view (non-interactive) with automatic compliance
-        let textView = Text("Test Text")
-            .automaticCompliance()
+        let textView = createNonInteractiveTextView()
         
         // THEN: Non-interactive elements should not have touch target requirements
         // (Touch target sizing only applies to interactive elements)
         #expect(RuntimeCapabilityDetection.currentPlatform == .iOS, "Platform should be iOS")
-        
-        // Verify text view is created successfully
-        let hostingView = hostRootPlatformView(textView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Text view with automatic compliance should be hostable")
+        verifyViewIsHostable(textView, description: "Text view with automatic compliance")
     }
     
     @Test @MainActor func testAutomaticTouchTargetSizing_NoRequirementOnMacOS() {
@@ -86,19 +105,12 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
         setCapabilitiesForPlatform(.macOS)
         
         // WHEN: Creating a button with automatic compliance
-        let button = Button("Test Button") {
-            // Action
-        }
-        .automaticCompliance()
-        .environment(\.accessibilityIdentifierElementType, "Button")
+        let button = createInteractiveButton()
         
         // THEN: macOS should not enforce touch target requirements
         #expect(RuntimeCapabilityDetection.currentPlatform == .macOS, "Platform should be macOS")
         // macOS doesn't have touch target requirements (minTouchTarget should be 0 or not enforced)
-        
-        // Verify button is created successfully
-        let hostingView = hostRootPlatformView(button.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Button with automatic compliance should be hostable on macOS")
+        verifyViewIsHostable(button, description: "Button with automatic compliance on macOS")
     }
     
     // MARK: - 2. Automatic Color Contrast Tests
@@ -111,32 +123,24 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     @Test @MainActor func testAutomaticColorContrast_SystemColorsUsed() {
         initializeTestConfig()
         // GIVEN: A view with automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: System colors should be used (which automatically meet WCAG contrast requirements)
         // System colors (Color.primary, Color.secondary, etc.) automatically meet WCAG AA contrast
         // in both light and dark mode
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View with automatic compliance should use system colors")
+        verifyViewIsHostable(view, description: "View with automatic compliance using system colors")
     }
     
     @Test @MainActor func testAutomaticColorContrast_LightDarkModeSupport() {
         initializeTestConfig()
         // GIVEN: A view with automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: System colors should automatically adapt to light/dark mode
         // System colors automatically adapt, ensuring contrast in both modes
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View with automatic compliance should support light/dark mode")
+        verifyViewIsHostable(view, description: "View with automatic compliance supporting light/dark mode")
     }
     
     // MARK: - 3. Automatic Typography Scaling Tests
@@ -149,31 +153,23 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     @Test @MainActor func testAutomaticTypographyScaling_DynamicTypeSupport() {
         initializeTestConfig()
         // GIVEN: A text view with automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: Text should support Dynamic Type scaling up to accessibility5
         // The AutomaticHIGTypographyScalingModifier applies .dynamicTypeSize(...DynamicTypeSize.accessibility5)
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View with automatic compliance should support Dynamic Type")
+        verifyViewIsHostable(view, description: "View with automatic compliance supporting Dynamic Type")
     }
     
     @Test @MainActor func testAutomaticTypographyScaling_AccessibilitySizes() {
         initializeTestConfig()
         // GIVEN: A text view with automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: Text should support accessibility text sizes (accessibility1 through accessibility5)
         // This ensures text remains readable at maximum accessibility sizes
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View with automatic compliance should support accessibility text sizes")
+        verifyViewIsHostable(view, description: "View with automatic compliance supporting accessibility text sizes")
     }
     
     // MARK: - 4. Automatic Focus Indicators Tests
@@ -186,34 +182,23 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     @Test @MainActor func testAutomaticFocusIndicators_InteractiveElement() {
         initializeTestConfig()
         // GIVEN: An interactive button element
-        let button = Button("Test Button") {
-            // Action
-        }
-        .automaticCompliance()
-        .environment(\.accessibilityIdentifierElementType, "Button")
+        let button = createInteractiveButton()
         
         // WHEN: View is created with automatic compliance
         // THEN: Interactive elements should be focusable with visible focus indicators
         // The AutomaticHIGFocusIndicatorModifier applies .focusable() to interactive elements
-        
-        // Verify button is created successfully
-        let hostingView = hostRootPlatformView(button.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Interactive element with automatic compliance should have focus indicators")
+        verifyViewIsHostable(button, description: "Interactive element with automatic compliance having focus indicators")
     }
     
     @Test @MainActor func testAutomaticFocusIndicators_NonInteractiveElement() {
         initializeTestConfig()
         // GIVEN: A non-interactive text element
-        let textView = Text("Test Text")
-            .automaticCompliance()
+        let textView = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: Non-interactive elements should not have focus indicators
         // (Focus indicators only apply to interactive elements)
-        
-        // Verify text view is created successfully
-        let hostingView = hostRootPlatformView(textView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Non-interactive element should not have focus indicators")
+        verifyViewIsHostable(textView, description: "Non-interactive element without focus indicators")
     }
     
     @Test @MainActor func testAutomaticFocusIndicators_PlatformSpecific() {
@@ -223,18 +208,11 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
             setCapabilitiesForPlatform(platform)
             
             // WHEN: Creating interactive button with automatic compliance
-            let button = Button("Test Button") {
-                // Action
-            }
-            .automaticCompliance()
-            .environment(\.accessibilityIdentifierElementType, "Button")
+            let button = createInteractiveButton()
             
             // THEN: Focus indicators should be platform-appropriate
             // iOS 17+ and macOS 14+ use .focusable(), older platforms have default focus behavior
-            
-            // Verify button is created successfully
-            let hostingView = hostRootPlatformView(button.withGlobalAutoIDsEnabled())
-            #expect(Bool(true), "Button should have platform-appropriate focus indicators on \(platform)")
+            verifyViewIsHostable(button, description: "Button with platform-appropriate focus indicators on \(platform)")
         }
     }
     
@@ -248,32 +226,24 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     @Test @MainActor func testAutomaticMotionPreferences_RespectsSystemSettings() {
         initializeTestConfig()
         // GIVEN: A view with automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: Animations should respect system reduced motion preferences
         // SwiftUI automatically respects UIAccessibility.isReduceMotionEnabled
         // The AutomaticHIGMotionPreferenceModifier ensures this is handled
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View with automatic compliance should respect motion preferences")
+        verifyViewIsHostable(view, description: "View with automatic compliance respecting motion preferences")
     }
     
     @Test @MainActor func testAutomaticMotionPreferences_GracefulDegradation() {
         initializeTestConfig()
         // GIVEN: A view with animations and automatic compliance
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: Reduced motion is enabled
         // THEN: Animations should gracefully degrade (disable or simplify)
         // SwiftUI's animation system automatically handles reduced motion
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View should gracefully degrade animations when reduced motion is enabled")
+        verifyViewIsHostable(view, description: "View gracefully degrading animations when reduced motion is enabled")
     }
     
     // MARK: - 6. Automatic Tab Order Tests
@@ -286,64 +256,45 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     @Test @MainActor func testAutomaticTabOrder_InteractiveElements() {
         initializeTestConfig()
         // GIVEN: Multiple interactive elements with automatic compliance
-        let button1 = Button("Button 1") { }
-            .automaticCompliance()
-            .environment(\.accessibilityIdentifierElementType, "Button")
-        
-        let button2 = Button("Button 2") { }
-            .automaticCompliance()
-            .environment(\.accessibilityIdentifierElementType, "Button")
+        let button1 = createInteractiveButton("Button 1")
+        let button2 = createInteractiveButton("Button 2")
         
         // WHEN: Views are created with automatic compliance
         // THEN: Interactive elements should participate in logical tab order
         // The .focusable() modifier applied by AutomaticHIGFocusIndicatorModifier
         // ensures elements participate in keyboard navigation
-        
-        // Verify buttons are created successfully
-        let hostingView1 = hostRootPlatformView(button1.withGlobalAutoIDsEnabled())
-        let hostingView2 = hostRootPlatformView(button2.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Interactive elements should participate in tab order")
+        verifyViewIsHostable(button1, description: "First interactive element participating in tab order")
+        verifyViewIsHostable(button2, description: "Second interactive element participating in tab order")
     }
     
     @Test @MainActor func testAutomaticTabOrder_LogicalNavigationFlow() {
         initializeTestConfig()
         // GIVEN: A view hierarchy with multiple interactive elements
+        let button1 = createInteractiveButton("First Button")
+        let button2 = createInteractiveButton("Second Button")
+        let button3 = createInteractiveButton("Third Button")
+        
         let view = VStack {
-            Button("First Button") { }
-                .automaticCompliance()
-                .environment(\.accessibilityIdentifierElementType, "Button")
-            
-            Button("Second Button") { }
-                .automaticCompliance()
-                .environment(\.accessibilityIdentifierElementType, "Button")
-            
-            Button("Third Button") { }
-                .automaticCompliance()
-                .environment(\.accessibilityIdentifierElementType, "Button")
+            AnyView(button1)
+            AnyView(button2)
+            AnyView(button3)
         }
         
         // WHEN: View hierarchy is created with automatic compliance
         // THEN: Tab order should follow logical visual flow (top to bottom, left to right)
         // SwiftUI's default focus order follows view hierarchy order
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "View hierarchy should have logical tab order")
+        verifyViewIsHostable(view, description: "View hierarchy with logical tab order")
     }
     
     @Test @MainActor func testAutomaticTabOrder_NonInteractiveElements() {
         initializeTestConfig()
         // GIVEN: Non-interactive elements with automatic compliance
-        let textView = Text("Test Text")
-            .automaticCompliance()
+        let textView = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: Non-interactive elements should not participate in tab order
         // (Only interactive elements participate in keyboard navigation)
-        
-        // Verify text view is created successfully
-        let hostingView = hostRootPlatformView(textView.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Non-interactive elements should not participate in tab order")
+        verifyViewIsHostable(textView, description: "Non-interactive element not participating in tab order")
     }
     
     // MARK: - Integration Tests
@@ -359,11 +310,7 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
         setCapabilitiesForPlatform(.iOS)
         
         // WHEN: Creating a button with automatic compliance
-        let button = Button("Test Button") {
-            // Action
-        }
-        .automaticCompliance()
-        .environment(\.accessibilityIdentifierElementType, "Button")
+        let button = createInteractiveButton()
         
         // THEN: All HIG compliance features should be applied:
         // 1. Touch target sizing (44pt minimum on iOS) ✅
@@ -372,27 +319,19 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
         // 4. Focus indicators (visible focus rings) ✅
         // 5. Motion preferences (reduced motion support) ✅
         // 6. Tab order (logical navigation flow) ✅
-        
-        // Verify button is created successfully with all features
-        let hostingView = hostRootPlatformView(button.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "Button should have all HIG compliance features applied")
-        #expect(RuntimeCapabilityDetection.currentPlatform == .iOS, "Platform should be iOS")
-        #expect(RuntimeCapabilityDetection.minTouchTarget >= 44.0, "Minimum touch target should be at least 44pt on iOS")
+        verifyTouchTargetRequirements(platform: .iOS)
+        verifyViewIsHostable(button, description: "Button with all HIG compliance features applied")
     }
     
     @Test @MainActor func testAllHIGComplianceFeatures_NoConfigurationRequired() {
         initializeTestConfig()
         // GIVEN: A view without any manual configuration
-        let view = Text("Test Text")
-            .automaticCompliance()
+        let view = createNonInteractiveTextView()
         
         // WHEN: View is created with automatic compliance
         // THEN: All HIG compliance features should be applied automatically
         // without requiring any developer configuration
-        
-        // Verify view is created successfully
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
-        #expect(Bool(true), "HIG compliance features should be applied automatically without configuration")
+        verifyViewIsHostable(view, description: "HIG compliance features applied automatically without configuration")
     }
 }
 
