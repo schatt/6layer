@@ -27,6 +27,12 @@ import UIKit
 #elseif os(macOS)
 import AppKit
 #endif
+#if canImport(MapKit)
+import MapKit
+#endif
+#if canImport(CoreLocation)
+import CoreLocation
+#endif
 @testable import SixLayerFramework
 
 
@@ -91,7 +97,7 @@ open class Layer4APITestHelpers {
     ) -> OCRResult {
         return OCRResult(
             extractedText: extractedText,
-            confidence: confidence,
+            confidence: Float(confidence),
             boundingBoxes: [],
             textTypes: [:],
             processingTime: 0.1,

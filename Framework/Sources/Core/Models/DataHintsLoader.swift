@@ -391,13 +391,14 @@ public actor DataHintsRegistry {
     // Shared cache for synchronous access
     // File-based hints are immutable, so cached values are safe to access without actor isolation
     // Code-provided hints (like layoutSpec) are handled separately and not cached here
-    // After initialization, this is read-only, so no synchronization needed for reads
-    nonisolated(unsafe) private static var sharedResultCache: [String: DataHintsResult] = [:]
+    // After preload, this is read-only - no writes allowed, so no synchronization needed for reads
+    nonisolated private static var sharedResultCache: [String: DataHintsResult] = [:]
     
     // Flag to track if hints have been preloaded (prevents redundant loading)
-    // Once true, sharedResultCache is effectively read-only
-    nonisolated(unsafe) private static var hintsPreloaded = false
+    // Once true, sharedResultCache is read-only and no writes are allowed
+    nonisolated private static var hintsPreloaded = false
     // Lock for synchronizing preload operations (shared across all threads)
+    // Only used during preload phase - after preload, cache is read-only and lock-free
     nonisolated private static let preloadLock = NSLock()
     
     public init(loader: DataHintsLoader = FileBasedDataHintsLoader()) {
@@ -407,7 +408,7 @@ public actor DataHintsRegistry {
     /// Synchronously check if file-based hints are cached (nonisolated for fast access)
     /// File-based hints are immutable, so cached values are safe to access without actor isolation
     /// Note: Code-provided hints (like layoutSpec) are not cached and handled separately
-    /// After preloading, cache is read-only, so no synchronization needed
+    /// After preloading, cache is read-only - lock-free reads are safe
     nonisolated public static func hasCachedHints(for modelName: String) -> Bool {
         return sharedResultCache[modelName] != nil
     }
@@ -416,7 +417,7 @@ public actor DataHintsRegistry {
     /// Returns nil if not cached - caller should use async loadHintsResult if nil
     /// File-based hints are immutable, so cached values are safe to access without actor isolation
     /// Note: Code-provided hints (like layoutSpec) are not cached and handled separately
-    /// After preloading, cache is read-only, so no synchronization needed
+    /// After preloading, cache is read-only - lock-free reads are safe
     nonisolated public static func getCachedHints(for modelName: String) -> DataHintsResult? {
         return sharedResultCache[modelName]
     }
@@ -428,18 +429,22 @@ public actor DataHintsRegistry {
     
     /// Load complete hints result including field hints and sections
     public func loadHintsResult(for modelName: String) -> DataHintsResult {
-        // Check cache first (both actor-local and shared)
+        // Check actor-local cache first
         if let cached = resultCache[modelName] {
-            // Update shared cache if not already there (for synchronous access)
-            // After preload, this should already be set, but safe to check
-            if Self.sharedResultCache[modelName] == nil {
-                Self.sharedResultCache[modelName] = cached
+            // Only update shared cache if NOT preloaded (before preload, can write)
+            // After preload, shared cache is read-only - lazy-loaded hints stay in actor-local cache only
+            if !Self.hintsPreloaded {
+                Self.preloadLock.lock()
+                if Self.sharedResultCache[modelName] == nil {
+                    Self.sharedResultCache[modelName] = cached
+                }
+                Self.preloadLock.unlock()
             }
             return cached
         }
         
         // Check shared cache (might have been preloaded)
-        // After preload, cache is read-only, so direct access is safe
+        // After preload, cache is read-only, so direct access is safe (lock-free)
         if let sharedCached = Self.sharedResultCache[modelName] {
             resultCache[modelName] = sharedCached
             cache[modelName] = sharedCached.fieldHints
@@ -449,15 +454,18 @@ public actor DataHintsRegistry {
         // Load from file (fallback if not preloaded - should be rare in tests)
         let result = loader.loadHintsResult(for: modelName)
         
-        // Cache for future use (both actor-local and shared)
+        // Cache for future use (actor-local cache always, shared cache only before preload)
         // Only cache file-based hints - code-provided hints are handled separately
         if !result.fieldHints.isEmpty || !result.sections.isEmpty {
             resultCache[modelName] = result
             cache[modelName] = result.fieldHints
-            // Update shared cache for synchronous access (file-based hints are immutable)
-            // If preload already happened, this is a no-op (cache is read-only)
+            
+            // Update shared cache only if NOT preloaded (with lock protection)
+            // After preload, lazy-loaded hints stay in actor-local cache only
             if !Self.hintsPreloaded {
+                Self.preloadLock.lock()
                 Self.sharedResultCache[modelName] = result
+                Self.preloadLock.unlock()
             }
         }
         
@@ -491,7 +499,7 @@ public actor DataHintsRegistry {
     /// Preload hints for a model to ensure they're cached before use
     /// This is useful for eager loading to avoid delays during view instantiation
     /// Returns immediately if already cached, otherwise loads and caches
-    /// NOTE: This updates both actor-local and shared cache for cross-thread access
+    /// NOTE: Only updates shared cache if NOT preloaded - after preload, shared cache is read-only
     public func preloadHints(for modelName: String) {
         // Check shared cache first (nonisolated, accessible from any thread)
         if Self.sharedResultCache[modelName] != nil {
@@ -503,10 +511,26 @@ public actor DataHintsRegistry {
             return
         }
         
-        // Check actor-local cache
+        // If already preloaded, don't write to shared cache (it's read-only)
+        // Just update actor-local cache if needed
+        if Self.hintsPreloaded {
+            if resultCache[modelName] == nil {
+                let result = loader.loadHintsResult(for: modelName)
+                if !result.fieldHints.isEmpty || !result.sections.isEmpty {
+                    resultCache[modelName] = result
+                    cache[modelName] = result.fieldHints
+                }
+            }
+            return
+        }
+        
+        // Before preload: can write to shared cache (with lock protection)
+        // Check actor-local cache first
         if resultCache[modelName] != nil {
             // Update shared cache so other threads can access it synchronously
+            Self.preloadLock.lock()
             Self.sharedResultCache[modelName] = resultCache[modelName]
+            Self.preloadLock.unlock()
             return
         }
         
@@ -515,25 +539,26 @@ public actor DataHintsRegistry {
         if !result.fieldHints.isEmpty || !result.sections.isEmpty {
             resultCache[modelName] = result
             cache[modelName] = result.fieldHints
-            // CRITICAL: Update shared cache for synchronous cross-thread access
-            // Since hints are immutable, this is safe even without actor isolation
+            
+            // Update shared cache (with lock protection, only before preload)
+            Self.preloadLock.lock()
             Self.sharedResultCache[modelName] = result
+            Self.preloadLock.unlock()
         }
     }
     
     /// Preload all hints files once at test suite startup
     /// This should be called once before any tests run to load all hints files
-    /// After this, the cache is read-only and all accesses are lock-free
-    /// Thread-safe: Uses a simple flag to ensure it only runs once
+    /// After this, the shared cache is read-only and all reads are lock-free
+    /// Thread-safe: Uses a lock during preload, then cache becomes immutable
     nonisolated public static func preloadAllHintsSync(modelNames: [String]) {
         // If already preloaded, skip (idempotent)
         if hintsPreloaded {
             return
         }
         
-        // Simple synchronization: use a lock just for the preload phase
-        // After preload, cache is read-only so no locking needed
-        // Use static lock to ensure proper synchronization across all threads
+        // Use lock during preload phase (writes happening)
+        // After preload, cache is read-only so no locking needed for reads
         preloadLock.lock()
         defer { preloadLock.unlock() }
         
@@ -562,7 +587,8 @@ public actor DataHintsRegistry {
             // If hints don't exist, skip loading (avoids slow file system checks for non-existent files)
         }
         
-        // Mark as preloaded - cache is now read-only
+        // Mark as preloaded - shared cache is now read-only (no more writes allowed)
+        // All future reads are lock-free and safe
         hintsPreloaded = true
     }
     

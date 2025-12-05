@@ -35,6 +35,7 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     // MARK: - Test Helpers
     
     /// Creates an interactive button view with automatic compliance for testing
+    @MainActor
     private func createInteractiveButton(_ title: String = "Test Button") -> some View {
         Button(title) {
             // Action
@@ -44,12 +45,14 @@ open class HIGComplianceFeaturesIssue36Tests: BaseTestClass {
     }
     
     /// Creates a non-interactive text view with automatic compliance for testing
+    @MainActor
     private func createNonInteractiveTextView(_ text: String = "Test Text") -> some View {
         Text(text)
             .automaticCompliance()
     }
     
     /// Verifies a view can be hosted and has automatic compliance applied
+    @MainActor
     private func verifyViewIsHostable<V: View>(_ view: V, description: String) {
         let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "\(description) should be hostable with automatic compliance")
