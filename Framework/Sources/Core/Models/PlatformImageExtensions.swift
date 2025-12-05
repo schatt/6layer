@@ -172,11 +172,10 @@ public extension PlatformImage {
     
     // size property is now defined in PlatformTypes.swift
     
-    // MARK: - Phase 3: Export Methods (Stub Implementations)
-    // TODO: Implement full Phase 3 export methods (Issue #33)
+    // MARK: - Phase 3: Export Methods
     
     /// Export image to PNG format
-    /// Phase 3: Full implementation pending (Issue #33)
+    /// Phase 3: Implements Issue #33
     func exportPNG() -> Data? {
         #if os(iOS)
         return self.uiImage.pngData()
@@ -216,13 +215,13 @@ public extension PlatformImage {
     }
     
     /// Export image to JPEG format (alias for exportJPEG)
-    /// Phase 3: Full implementation pending (Issue #33)
+    /// Phase 3: Implements Issue #33
     func exportJPG(quality: Double = 0.8) -> Data? {
         return exportJPEG(quality: quality)
     }
     
     /// Export image to bitmap format
-    /// Phase 3: Full implementation pending (Issue #33)
+    /// Phase 3: Implements Issue #33
     func exportBitmap() -> Data? {
         #if os(iOS)
         return self.uiImage.pngData()
@@ -233,8 +232,7 @@ public extension PlatformImage {
         #endif
     }
     
-    // MARK: - Phase 3: Image Processing Methods (Stub Implementations)
-    // TODO: Implement full Phase 3 processing methods (Issue #33)
+    // MARK: - Phase 3: Image Processing Methods
     
     /// Rotate image by specified angle in degrees
     /// Phase 3: Implements Issue #33
@@ -450,7 +448,7 @@ public extension PlatformImage {
     // MARK: - Phase 3: Image Properties
     
     /// Image properties structure for Phase 3
-    /// Phase 3: Full implementation pending (Issue #33)
+    /// Phase 3: Implements Issue #33
     struct ImageProperties {
         let width: CGFloat
         let height: CGFloat

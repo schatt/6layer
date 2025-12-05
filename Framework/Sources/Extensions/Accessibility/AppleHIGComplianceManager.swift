@@ -35,6 +35,9 @@ public class AppleHIGComplianceManager: ObservableObject {
     /// macOS-specific category configuration
     @Published public var macOSCategoryConfig: HIGmacOSCategoryConfig = HIGmacOSCategoryConfig()
     
+    /// visionOS-specific category configuration
+    @Published public var visionOSCategoryConfig: HIGvisionOSCategoryConfig = HIGvisionOSCategoryConfig()
+    
     // MARK: - Private Properties
     
     private var cancellables = Set<AnyCancellable>()
@@ -243,6 +246,10 @@ public class AppleHIGComplianceManager: ObservableObject {
             let macOSScore = checkmacOSCategoryCompliance()
             score += macOSScore
             maxScore += 50.0
+        case .visionOS:
+            let visionOSScore = checkvisionOSCategoryCompliance()
+            score += visionOSScore
+            maxScore += 50.0
         default:
             // Other platforms don't have specific category checks yet
             maxScore += 50.0
@@ -256,55 +263,51 @@ public class AppleHIGComplianceManager: ObservableObject {
     
     /// Check iOS-specific category compliance
     private func checkiOSCategoryCompliance() -> Double {
-        var score = 0.0
-        var maxScore = 0.0
-        
-        // Check haptic feedback configuration
-        if iOSCategoryConfig.enableHapticFeedback {
-            score += 12.5
-        }
-        maxScore += 12.5
-        
-        // Check gesture recognition configuration
-        if iOSCategoryConfig.enableGestureRecognition {
-            score += 12.5
-        }
-        maxScore += 12.5
-        
-        // Check touch target validation
-        if iOSCategoryConfig.enableTouchTargetValidation {
-            score += 12.5
-        }
-        maxScore += 12.5
-        
-        // Check safe area compliance
-        if iOSCategoryConfig.enableSafeAreaCompliance {
-            score += 12.5
-        }
-        maxScore += 12.5
-        
-        return maxScore > 0 ? score : 0.0
+        let checks: [(Bool, Double)] = [
+            (iOSCategoryConfig.enableHapticFeedback, 12.5),
+            (iOSCategoryConfig.enableGestureRecognition, 12.5),
+            (iOSCategoryConfig.enableTouchTargetValidation, 12.5),
+            (iOSCategoryConfig.enableSafeAreaCompliance, 12.5)
+        ]
+        return calculateComplianceScore(checks: checks)
     }
     
     /// Check macOS-specific category compliance
     private func checkmacOSCategoryCompliance() -> Double {
-        var score = 0.0
-        var maxScore = 0.0
+        let checks: [(Bool, Double)] = [
+            (macOSCategoryConfig.enableMouseInteractions, 25.0),
+            (macOSCategoryConfig.enableKeyboardShortcuts, 25.0)
+            // Note: Window management and menu bar integration are App-level concerns
+            // and are documented but not validated at the view level
+        ]
+        return calculateComplianceScore(checks: checks)
+    }
+    
+    /// Check visionOS-specific category compliance
+    private func checkvisionOSCategoryCompliance() -> Double {
+        let checks: [(Bool, Double)] = [
+            (visionOSCategoryConfig.enableHandTracking, 33.0),
+            (visionOSCategoryConfig.enableSpatialUI, 33.0),
+            (visionOSCategoryConfig.enableSpatialAudio, 34.0)
+            // Note: Eye tracking is not available via public API
+        ]
+        return calculateComplianceScore(checks: checks)
+    }
+    
+    /// Helper function to calculate compliance score from a list of checks
+    /// - Parameter checks: Array of (isEnabled, weight) tuples
+    /// - Returns: Calculated score (0.0 if no checks provided)
+    private func calculateComplianceScore(checks: [(Bool, Double)]) -> Double {
+        guard !checks.isEmpty else { return 0.0 }
         
-        // Check mouse interactions configuration
-        if macOSCategoryConfig.enableMouseInteractions {
-            score += 25.0
+        let (score, maxScore) = checks.reduce((0.0, 0.0)) { result, check in
+            let (currentScore, currentMax) = result
+            let (isEnabled, weight) = check
+            return (
+                currentScore + (isEnabled ? weight : 0.0),
+                currentMax + weight
+            )
         }
-        maxScore += 25.0
-        
-        // Check keyboard shortcuts configuration
-        if macOSCategoryConfig.enableKeyboardShortcuts {
-            score += 25.0
-        }
-        maxScore += 25.0
-        
-        // Note: Window management and menu bar integration are App-level concerns
-        // and are documented but not validated at the view level
         
         return maxScore > 0 ? score : 0.0
     }
@@ -413,15 +416,91 @@ public class AppleHIGComplianceManager: ObservableObject {
         }
         
         if platform < 75.0 {
-            recommendations.append(HIGRecommendation(
+            let platformRecommendation = generatePlatformRecommendation()
+            recommendations.append(platformRecommendation)
+        }
+        
+        return recommendations
+    }
+    
+    /// Generate platform-specific recommendations based on current platform and configuration
+    private func generatePlatformRecommendation() -> HIGRecommendation {
+        switch currentPlatform {
+        case .iOS, .watchOS:
+            var suggestions: [String] = []
+            
+            if !iOSCategoryConfig.enableHapticFeedback {
+                suggestions.append("Enable haptic feedback for better user interaction feedback")
+            }
+            if !iOSCategoryConfig.enableGestureRecognition {
+                suggestions.append("Enable gesture recognition for standard iOS gestures")
+            }
+            if !iOSCategoryConfig.enableTouchTargetValidation {
+                suggestions.append("Enable touch target validation to ensure 44pt minimum touch targets")
+            }
+            if !iOSCategoryConfig.enableSafeAreaCompliance {
+                suggestions.append("Enable safe area compliance to respect device notches and home indicators")
+            }
+            
+            let suggestion = suggestions.isEmpty
+                ? "Follow iOS-specific design patterns and styling"
+                : suggestions.joined(separator: ". ")
+            
+            return HIGRecommendation(
+                category: .platform,
+                priority: .high,
+                description: "Improve iOS platform compliance",
+                suggestion: suggestion
+            )
+        case .macOS:
+            var suggestions: [String] = []
+            
+            if !macOSCategoryConfig.enableMouseInteractions {
+                suggestions.append("Enable mouse interactions for hover states and click patterns")
+            }
+            if !macOSCategoryConfig.enableKeyboardShortcuts {
+                suggestions.append("Enable keyboard shortcuts for Command+key combinations")
+            }
+            
+            let suggestion = suggestions.isEmpty
+                ? "Follow macOS-specific design patterns and styling"
+                : suggestions.joined(separator: ". ")
+            
+            return HIGRecommendation(
+                category: .platform,
+                priority: .high,
+                description: "Improve macOS platform compliance",
+                suggestion: suggestion
+            )
+        case .visionOS:
+            var suggestions: [String] = []
+            
+            if !visionOSCategoryConfig.enableHandTracking {
+                suggestions.append("Enable hand tracking for spatial interactions")
+            }
+            if !visionOSCategoryConfig.enableSpatialUI {
+                suggestions.append("Enable spatial UI for immersive experiences")
+            }
+            // Note: Spatial audio is opt-in, so we don't suggest it as required
+            
+            let suggestion = suggestions.isEmpty
+                ? "Follow visionOS-specific design patterns and styling"
+                : suggestions.joined(separator: ". ")
+            
+            return HIGRecommendation(
+                category: .platform,
+                priority: .high,
+                description: "Improve visionOS platform compliance",
+                suggestion: suggestion
+            )
+        default:
+            return HIGRecommendation(
                 category: .platform,
                 priority: .high,
                 description: "Improve platform compliance",
                 suggestion: "Follow platform-specific design patterns and styling"
-            ))
+            )
         }
-        
-        return recommendations
     }
 }
 
@@ -786,5 +865,36 @@ public struct HIGmacOSCategoryConfig {
         self.enableMenuBarIntegration = enableMenuBarIntegration
         self.enableKeyboardShortcuts = enableKeyboardShortcuts
         self.enableMouseInteractions = enableMouseInteractions
+    }
+}
+
+// MARK: - visionOS-Specific Category Configuration
+
+/// Configuration for visionOS-specific HIG compliance categories
+/// Note: Some features (like eye tracking) don't have public APIs yet
+public struct HIGvisionOSCategoryConfig {
+    /// Enable spatial audio positioning
+    /// Note: Requires AVAudioEngine and spatial audio APIs
+    public var enableSpatialAudio: Bool = false // Opt-in due to complexity
+    
+    /// Enable hand tracking interactions
+    /// Note: Hand tracking is available through SwiftUI gestures and RealityKit
+    public var enableHandTracking: Bool = true
+    
+    /// Enable spatial UI positioning
+    /// Note: Spatial UI is handled through SwiftUI's WindowGroup and RealityKit
+    public var enableSpatialUI: Bool = true
+    
+    /// Note: Eye tracking is not available via public API as of visionOS 1.0
+    /// This is reserved for future use when Apple provides a public API
+    
+    public init(
+        enableSpatialAudio: Bool = false,
+        enableHandTracking: Bool = true,
+        enableSpatialUI: Bool = true
+    ) {
+        self.enableSpatialAudio = enableSpatialAudio
+        self.enableHandTracking = enableHandTracking
+        self.enableSpatialUI = enableSpatialUI
     }
 }

@@ -4,6 +4,24 @@ import SwiftUI
 import UIKit
 #endif
 
+// MARK: - Helper Extensions for Platform-Specific Modifiers
+
+/// Helper extension to reduce code duplication in platform-specific modifiers
+private extension View {
+    /// Wraps content in AnyView with automatic compliance
+    func wrappedWithCompliance() -> AnyView {
+        AnyView(self.automaticCompliance())
+    }
+}
+
+/// Helper function to get platform config with default fallback
+private func getConfigOrDefault<T>(
+    _ config: T?,
+    default: @autoclosure () -> T
+) -> T {
+    config ?? `default`()
+}
+
 // MARK: - Apple HIG Compliance Modifier
 
 /// Main modifier that applies comprehensive Apple HIG compliance
@@ -36,7 +54,8 @@ public struct AppleHIGComplianceModifier: ViewModifier {
             .modifier(PlatformSpecificCategoryModifier(
                 platform: manager.currentPlatform,
                 iOSConfig: manager.currentPlatform == .iOS ? manager.iOSCategoryConfig : nil,
-                macOSConfig: manager.currentPlatform == .macOS ? manager.macOSCategoryConfig : nil
+                macOSConfig: manager.currentPlatform == .macOS ? manager.macOSCategoryConfig : nil,
+                visionOSConfig: manager.currentPlatform == .visionOS ? manager.visionOSCategoryConfig : nil
             ))
             .automaticCompliance()
     }
@@ -554,13 +573,13 @@ public struct TouchTargetModifier: ViewModifier {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            let config = iOSConfig ?? HIGiOSCategoryConfig()
-            return AnyView(iosTouchTarget(to: content, config: config))
+            let config = getConfigOrDefault(iOSConfig, default: HIGiOSCategoryConfig())
+            return iosTouchTarget(to: content, config: config).wrappedWithCompliance()
             #else
-            return AnyView(fallbackTouchTarget(to: content))
+            return fallbackTouchTarget(to: content)
             #endif
         default:
-            return AnyView(fallbackTouchTarget(to: content))
+            return fallbackTouchTarget(to: content)
         }
     }
     
@@ -573,17 +592,17 @@ public struct TouchTargetModifier: ViewModifier {
         config: HIGiOSCategoryConfig
     ) -> some View {
         guard config.enableTouchTargetValidation else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         // Apple HIG: Minimum 44pt touch target for interactive elements
-        return AnyView(content.frame(minHeight: 44, minWidth: 44).automaticCompliance())
+        return content.frame(minHeight: 44, minWidth: 44).wrappedWithCompliance()
     }
     #endif
     
     /// Fallback for platforms without touch target requirements
-    private func fallbackTouchTarget<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackTouchTarget<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -615,13 +634,13 @@ public struct SafeAreaComplianceModifier: ViewModifier {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            let config = iOSConfig ?? HIGiOSCategoryConfig()
-            return AnyView(iosSafeAreaCompliance(to: content, config: config))
+            let config = getConfigOrDefault(iOSConfig, default: HIGiOSCategoryConfig())
+            return iosSafeAreaCompliance(to: content, config: config).wrappedWithCompliance()
             #else
-            return AnyView(fallbackSafeAreaCompliance(to: content))
+            return fallbackSafeAreaCompliance(to: content)
             #endif
         default:
-            return AnyView(fallbackSafeAreaCompliance(to: content))
+            return fallbackSafeAreaCompliance(to: content)
         }
     }
     
@@ -634,23 +653,21 @@ public struct SafeAreaComplianceModifier: ViewModifier {
         config: HIGiOSCategoryConfig
     ) -> some View {
         guard config.enableSafeAreaCompliance else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         // Safe area is automatically handled by SwiftUI when using proper container views
         // This modifier ensures content respects safe areas by using safeAreaInset when needed
         // For most cases, SwiftUI's automatic safe area handling is sufficient
-        return AnyView(
-            content
-                .ignoresSafeArea(.container, edges: []) // Respect all safe areas
-                .automaticCompliance()
-        )
+        return content
+            .ignoresSafeArea(.container, edges: []) // Respect all safe areas
+            .wrappedWithCompliance()
     }
     #endif
     
     /// Fallback for platforms without safe area requirements
-    private func fallbackSafeAreaCompliance<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackSafeAreaCompliance<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -680,19 +697,19 @@ public struct PlatformInteractionModifier: ViewModifier {
         switch platform {
         case .iOS:
             #if os(iOS)
-            return AnyView(iosPlatformInteraction(to: content))
+            return iosPlatformInteraction(to: content)
             #else
-            return AnyView(fallbackPlatformInteraction(to: content))
+            return fallbackPlatformInteraction(to: content)
             #endif
         case .macOS:
             #if os(macOS)
-            let config = macOSConfig ?? HIGmacOSCategoryConfig()
-            return AnyView(macOSPlatformInteraction(to: content, config: config))
+            let config = getConfigOrDefault(macOSConfig, default: HIGmacOSCategoryConfig())
+            return macOSPlatformInteraction(to: content, config: config)
             #else
-            return AnyView(fallbackPlatformInteraction(to: content))
+            return fallbackPlatformInteraction(to: content)
             #endif
         default:
-            return AnyView(fallbackPlatformInteraction(to: content))
+            return fallbackPlatformInteraction(to: content)
         }
     }
     
@@ -700,8 +717,8 @@ public struct PlatformInteractionModifier: ViewModifier {
     
     #if os(iOS)
     /// iOS: Touch-based interactions with button styling
-    private func iosPlatformInteraction<Content: View>(to content: Content) -> some View {
-        AnyView(content.buttonStyle(.bordered).automaticCompliance())
+    private func iosPlatformInteraction<Content: View>(to content: Content) -> AnyView {
+        content.buttonStyle(.bordered).wrappedWithCompliance()
     }
     #endif
     
@@ -710,27 +727,26 @@ public struct PlatformInteractionModifier: ViewModifier {
     private func macOSPlatformInteraction<Content: View>(
         to content: Content,
         config: HIGmacOSCategoryConfig
-    ) -> some View {
+    ) -> AnyView {
+        let baseContent = content.buttonStyle(.bordered)
+        
         guard config.enableMouseInteractions else {
-            return AnyView(content.buttonStyle(.bordered).automaticCompliance())
+            return baseContent.wrappedWithCompliance()
         }
         
         // Apply macOS-appropriate mouse interaction patterns
         // Hover states, click patterns, and cursor changes
-        return AnyView(
-            content
-                .buttonStyle(.bordered)
-                .onHover { isHovering in
-                    // Handle hover state - cursor changes are automatic in SwiftUI
-                    // Additional hover effects can be added here
-                }
-                .automaticCompliance()
-        )
+        return baseContent
+            .onHover { isHovering in
+                // Handle hover state - cursor changes are automatic in SwiftUI
+                // Additional hover effects can be added here
+            }
+            .wrappedWithCompliance()
     }
     #endif
     
-    private func fallbackPlatformInteraction<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackPlatformInteraction<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -760,19 +776,19 @@ public struct HapticFeedbackModifier: ViewModifier {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            let config = iOSConfig ?? HIGiOSCategoryConfig()
-            return AnyView(iosHapticFeedback(to: content, config: config))
+            let config = getConfigOrDefault(iOSConfig, default: HIGiOSCategoryConfig())
+            return iosHapticFeedback(to: content, config: config).wrappedWithCompliance()
             #else
-            return AnyView(fallbackHapticFeedback(to: content))
+            return fallbackHapticFeedback(to: content)
             #endif
         case .macOS:
             #if os(macOS)
-            return AnyView(macOSHapticFeedback(to: content))
+            return macOSHapticFeedback(to: content).wrappedWithCompliance()
             #else
-            return AnyView(fallbackHapticFeedback(to: content))
+            return fallbackHapticFeedback(to: content)
             #endif
         default:
-            return AnyView(fallbackHapticFeedback(to: content))
+            return fallbackHapticFeedback(to: content)
         }
     }
     
@@ -783,20 +799,18 @@ public struct HapticFeedbackModifier: ViewModifier {
     private func iosHapticFeedback<Content: View>(
         to content: Content,
         config: HIGiOSCategoryConfig
-    ) -> some View {
+    ) -> AnyView {
         guard config.enableHapticFeedback else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         let hapticType = config.defaultHapticFeedbackType
         
-        return AnyView(
-            content
-                .onTapGesture {
-                    triggerIOSHapticFeedback(type: hapticType)
-                }
-                .automaticCompliance()
-        )
+        return content
+            .onTapGesture {
+                triggerIOSHapticFeedback(type: hapticType)
+            }
+            .wrappedWithCompliance()
     }
     
     /// Trigger iOS haptic feedback based on type
@@ -844,16 +858,16 @@ public struct HapticFeedbackModifier: ViewModifier {
     
     #if os(macOS)
     /// macOS: Sound feedback instead of haptics (macOS doesn't support haptics)
-    private func macOSHapticFeedback<Content: View>(to content: Content) -> some View {
+    private func macOSHapticFeedback<Content: View>(to content: Content) -> AnyView {
         // macOS doesn't have haptic feedback, so we return content unchanged
         // In a full implementation, this could trigger sound feedback
-        AnyView(content.automaticCompliance())
+        content.wrappedWithCompliance()
     }
     #endif
     
     /// Fallback for platforms without haptic feedback support
-    private func fallbackHapticFeedback<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackHapticFeedback<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -883,19 +897,19 @@ public struct GestureRecognitionModifier: ViewModifier {
         switch platform {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
-            let config = iOSConfig ?? HIGiOSCategoryConfig()
-            return AnyView(iosGestureRecognition(to: content, config: config))
+            let config = getConfigOrDefault(iOSConfig, default: HIGiOSCategoryConfig())
+            return iosGestureRecognition(to: content, config: config).wrappedWithCompliance()
             #else
-            return AnyView(fallbackGestureRecognition(to: content))
+            return fallbackGestureRecognition(to: content)
             #endif
         case .macOS:
             #if os(macOS)
-            return AnyView(macOSGestureRecognition(to: content))
+            return macOSGestureRecognition(to: content).wrappedWithCompliance()
             #else
-            return AnyView(fallbackGestureRecognition(to: content))
+            return fallbackGestureRecognition(to: content)
             #endif
         default:
-            return AnyView(fallbackGestureRecognition(to: content))
+            return fallbackGestureRecognition(to: content)
         }
     }
     
@@ -906,43 +920,39 @@ public struct GestureRecognitionModifier: ViewModifier {
     private func iosGestureRecognition<Content: View>(
         to content: Content,
         config: HIGiOSCategoryConfig
-    ) -> some View {
+    ) -> AnyView {
         guard config.enableGestureRecognition else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         // Apply basic tap gesture recognition
         // Additional gestures (long press, swipe, pinch, rotation) can be added
         // via explicit gesture modifiers when needed
-        return AnyView(
-            content
-                .gesture(
-                    TapGesture()
-                        .onEnded { _ in
-                            // Tap gesture handled - additional gestures can be added explicitly
-                        }
-                )
-                .automaticCompliance()
-        )
+        return content
+            .gesture(
+                TapGesture()
+                    .onEnded { _ in
+                        // Tap gesture handled - additional gestures can be added explicitly
+                    }
+            )
+            .wrappedWithCompliance()
     }
     #endif
     
     #if os(macOS)
     /// macOS: Mouse-based gesture recognition
-    private func macOSGestureRecognition<Content: View>(to content: Content) -> some View {
-        AnyView(
-            content
-                .onTapGesture {
-                    // Handle click gesture
-                }
-                .automaticCompliance()
-        )
+    private func macOSGestureRecognition<Content: View>(to content: Content) -> AnyView {
+        content
+            .onTapGesture {
+                // Handle click gesture
+            }
+            .wrappedWithCompliance()
     }
     #endif
     
     /// Fallback for platforms without gesture recognition
-    private func fallbackGestureRecognition<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackGestureRecognition<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -1002,19 +1012,28 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
     let platform: SixLayerPlatform
     let iOSConfig: HIGiOSCategoryConfig?
     let macOSConfig: HIGmacOSCategoryConfig?
+    let visionOSConfig: HIGvisionOSCategoryConfig?
     
     public init(
         platform: SixLayerPlatform,
         iOSConfig: HIGiOSCategoryConfig? = nil,
-        macOSConfig: HIGmacOSCategoryConfig? = nil
+        macOSConfig: HIGmacOSCategoryConfig? = nil,
+        visionOSConfig: HIGvisionOSCategoryConfig? = nil
     ) {
         self.platform = platform
         self.iOSConfig = iOSConfig
         self.macOSConfig = macOSConfig
+        self.visionOSConfig = visionOSConfig
     }
     
     public func body(content: Content) -> some View {
-        applyPlatformSpecificCategories(to: content, platform: platform, iOSConfig: iOSConfig, macOSConfig: macOSConfig)
+        applyPlatformSpecificCategories(
+            to: content,
+            platform: platform,
+            iOSConfig: iOSConfig,
+            macOSConfig: macOSConfig,
+            visionOSConfig: visionOSConfig
+        )
     }
     
     // MARK: - Cross-Platform Implementation
@@ -1024,7 +1043,8 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
         to content: Content,
         platform: SixLayerPlatform,
         iOSConfig: HIGiOSCategoryConfig?,
-        macOSConfig: HIGmacOSCategoryConfig?
+        macOSConfig: HIGmacOSCategoryConfig?,
+        visionOSConfig: HIGvisionOSCategoryConfig?
     ) -> some View {
         switch platform {
         case .iOS, .watchOS:
@@ -1036,10 +1056,17 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
             #endif
         case .macOS:
             #if os(macOS)
-            let config = macOSConfig ?? HIGmacOSCategoryConfig()
-            return AnyView(macOSPlatformSpecificCategories(to: content, config: config))
+            let config = getConfigOrDefault(macOSConfig, default: HIGmacOSCategoryConfig())
+            return macOSPlatformSpecificCategories(to: content, config: config)
             #else
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
+            #endif
+        case .visionOS:
+            #if os(visionOS)
+            let config = getConfigOrDefault(visionOSConfig, default: HIGvisionOSCategoryConfig())
+            return visionOSPlatformSpecificCategories(to: content, config: config)
+            #else
+            return content.wrappedWithCompliance()
             #endif
         default:
             return AnyView(content.automaticCompliance())
@@ -1053,9 +1080,7 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
     private func macOSPlatformSpecificCategories<Content: View>(
         to content: Content,
         config: HIGmacOSCategoryConfig
-    ) -> some View {
-        var modifiedContent: AnyView = AnyView(content)
-        
+    ) -> AnyView {
         // Note: Window management (resize, minimize, maximize, fullscreen) is typically
         // handled at the App/Window level via NSWindow or SwiftUI WindowGroup, not at the view level.
         // This modifier focuses on view-level macOS HIG compliance.
@@ -1067,7 +1092,28 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
         // Additional macOS-specific view-level enhancements can be added here
         // For now, the existing modifiers handle the core functionality
         
-        return AnyView(modifiedContent.automaticCompliance())
+        return content.wrappedWithCompliance()
+    }
+    #endif
+    
+    #if os(visionOS)
+    /// visionOS: Apply spatial UI, hand tracking, and spatial audio
+    /// Note: Eye tracking is not available via public API
+    private func visionOSPlatformSpecificCategories<Content: View>(
+        to content: Content,
+        config: HIGvisionOSCategoryConfig
+    ) -> AnyView {
+        // Hand tracking is handled through SwiftUI gestures (tap, pinch, rotate)
+        // Spatial UI is handled through WindowGroup and RealityKit
+        // Spatial audio requires AVAudioEngine setup (not handled at view level)
+        
+        // Additional visionOS-specific enhancements can be added here
+        // For now, the existing modifiers handle the core functionality
+        
+        // Note: Eye tracking is not available via public API as of visionOS 1.0
+        // This is reserved for future use when Apple provides a public API
+        
+        return content.wrappedWithCompliance()
     }
     #endif
 }

@@ -117,10 +117,12 @@ image.map { parent.onImageCaptured($0) }
 - ✅ Remove `ClipboardImage` typealias (removed platform-specific type exposure)
 - ✅ Standardize `PlatformClipboard.copyToClipboard` to accept `PlatformImage`
 
-#### **Phase 3: Enhancement (Future)** [#33](https://github.com/schatt/6layer/issues/33)
-- ⏳ Add export methods to `PlatformImage` (PNG, JPEG, bitmap)
-- ⏳ Add image processing methods to `PlatformImage`
-- ⏳ Add metadata extraction to `PlatformImage`
+#### **Phase 3: Enhancement (Completed)** [#33](https://github.com/schatt/6layer/issues/33)
+- ✅ Add export methods to `PlatformImage` (PNG, JPEG, bitmap)
+- ✅ Add image processing methods to `PlatformImage` (resize, crop, rotate, color adjustments, filters)
+- ✅ Add metadata extraction to `PlatformImage` (properties, color space, pixel format)
+- ✅ Comprehensive documentation: `Framework/docs/PlatformImagePhase3Guide.md`
+- ✅ Code examples: `Framework/Examples/PlatformImagePhase3Examples.swift`
 
 ### **Code Examples**
 

@@ -59,6 +59,17 @@ Demonstrates automatic HIG-compliant styling (Issue #35):
 - **Platform-specific styling** - Automatic platform detection and appropriate styling
 - **Component examples** - Text, buttons, toggles, and layout components with automatic styling
 
+### **PlatformImagePhase3Examples.swift** (Issue #33)
+Comprehensive examples of PlatformImage Phase 3 features:
+
+- **Export methods** - PNG, JPEG, and Bitmap export examples
+- **Image processing** - Resize, crop, rotate, color adjustments, and filters
+- **Metadata extraction** - Image properties and analysis
+- **Complete pipelines** - End-to-end image processing workflows
+- **Image editor class** - Full-featured editor with undo capability
+- **Optimization examples** - Image optimization for upload and thumbnails
+- **Cross-platform usage** - Consistent processing across iOS and macOS
+
 ## How to Use Examples
 
 1. **Copy the example files** you need into your project
