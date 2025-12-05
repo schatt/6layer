@@ -53,8 +53,8 @@ public struct PlatformUIExamples {
                     }
                 }
             }
+            .automaticCompliance(named: "AdaptiveNavigationExample")
         }
-        .automaticCompliance(named: "AdaptiveNavigationExample")
     }
     
     /// Example of split view navigation for larger screens
@@ -109,8 +109,8 @@ public struct PlatformUIExamples {
                     }
                 }
             }
+            .automaticCompliance(named: "SplitViewNavigationExample")
         }
-        .automaticCompliance(named: "SplitViewNavigationExample")
     }
     
     // MARK: - Modal Examples
@@ -162,8 +162,8 @@ public struct PlatformUIExamples {
                     .padding()
                 }
             }
+            .automaticCompliance(named: "AdaptiveModalExample")
         }
-        .automaticCompliance(named: "AdaptiveModalExample")
     }
     
     // MARK: - List Examples
@@ -214,8 +214,8 @@ public struct PlatformUIExamples {
                     }
                 }
             }
+            .automaticCompliance(named: "AdaptiveListExample")
         }
-        .automaticCompliance(named: "AdaptiveListExample")
     }
     
     // MARK: - Button Examples
@@ -335,8 +335,8 @@ public struct PlatformUIExamples {
                     .padding()
                 }
             }
+            .automaticCompliance(named: "AdaptiveButtonExample")
         }
-        .automaticCompliance(named: "AdaptiveButtonExample")
     }
     
     // MARK: - Form Examples
@@ -401,8 +401,8 @@ public struct PlatformUIExamples {
                     }
                 }
             }
+            .automaticCompliance(named: "AdaptiveFormExample")
         }
-        .automaticCompliance(named: "AdaptiveFormExample")
     }
     
     // MARK: - Card Examples
@@ -460,8 +460,8 @@ public struct PlatformUIExamples {
                     .padding()
                 }
             }
+            .automaticCompliance(named: "AdaptiveCardExample")
         }
-        .automaticCompliance(named: "AdaptiveCardExample")
     }
 }
 

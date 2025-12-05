@@ -374,13 +374,15 @@ private struct EyeTrackingFeedbackOverlay: View {
     @ObservedObject var manager: EyeTrackingManager
     
     var body: some View {
-        if manager.isEnabled && manager.config.visualFeedback {
-            Circle()
-                .fill(Color.blue.opacity(0.3))
-                .frame(width: 20, height: 20)
-                .position(manager.currentGaze)
-                .opacity(manager.isTracking ? 1.0 : 0.0)
-                .animation(.easeInOut(duration: 0.2), value: manager.currentGaze)
+        Group {
+            if manager.isEnabled && manager.config.visualFeedback {
+                Circle()
+                    .fill(Color.blue.opacity(0.3))
+                    .frame(width: 20, height: 20)
+                    .position(manager.currentGaze)
+                    .opacity(manager.isTracking ? 1.0 : 0.0)
+                    .animation(.easeInOut(duration: 0.2), value: manager.currentGaze)
+            }
         }
         .automaticCompliance(named: "EyeTrackingFeedbackOverlay")
     }
