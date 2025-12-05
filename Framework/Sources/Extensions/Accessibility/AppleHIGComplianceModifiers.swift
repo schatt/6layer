@@ -319,17 +319,17 @@ public struct KeyboardNavigationModifier: ViewModifier {
         to content: Content,
         hasKeyboardSupport: Bool,
         hasFullKeyboardAccess: Bool
-    ) -> some View {
+    ) -> AnyView {
         guard hasKeyboardSupport else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         #if os(macOS)
-        return AnyView(macOSKeyboardNavigation(to: content, hasFullKeyboardAccess: hasFullKeyboardAccess))
+        return macOSKeyboardNavigation(to: content, hasFullKeyboardAccess: hasFullKeyboardAccess).wrappedWithCompliance()
         #elseif os(iOS) || os(tvOS) || os(watchOS)
-        return AnyView(iosKeyboardNavigation(to: content))
+        return iosKeyboardNavigation(to: content).wrappedWithCompliance()
         #else
-        return AnyView(fallbackKeyboardNavigation(to: content))
+        return fallbackKeyboardNavigation(to: content)
         #endif
     }
     
@@ -360,8 +360,8 @@ public struct KeyboardNavigationModifier: ViewModifier {
     }
     #endif
     
-    private func fallbackKeyboardNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackKeyboardNavigation<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -376,17 +376,17 @@ public struct HighContrastModifier: ViewModifier {
     // MARK: - Cross-Platform Implementation
     
     /// Apply high contrast with platform-specific behavior
-    private func applyHighContrast<Content: View>(to content: Content, isEnabled: Bool) -> some View {
+    private func applyHighContrast<Content: View>(to content: Content, isEnabled: Bool) -> AnyView {
         guard isEnabled else {
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
         
         #if canImport(UIKit)
-        return AnyView(iosHighContrast(to: content))
+        return iosHighContrast(to: content).wrappedWithCompliance()
         #elseif os(macOS)
-        return AnyView(macOSHighContrast(to: content))
+        return macOSHighContrast(to: content).wrappedWithCompliance()
         #else
-        return AnyView(fallbackHighContrast(to: content))
+        return fallbackHighContrast(to: content)
         #endif
     }
     
@@ -394,28 +394,22 @@ public struct HighContrastModifier: ViewModifier {
     
     #if canImport(UIKit)
     private func iosHighContrast<Content: View>(to content: Content) -> some View {
-        AnyView(
-            content
-                .foregroundColor(.primary)
-                .background(Color(UIColor.systemBackground))
-                .automaticCompliance()
-        )
+        content
+            .foregroundColor(.primary)
+            .background(Color(UIColor.systemBackground))
     }
     #endif
     
     #if os(macOS)
     private func macOSHighContrast<Content: View>(to content: Content) -> some View {
-        AnyView(
-            content
-                .foregroundColor(.primary)
-                .background(.gray)
-                .automaticCompliance()
-        )
+        content
+            .foregroundColor(.primary)
+            .background(.gray)
     }
     #endif
     
-    private func fallbackHighContrast<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackHighContrast<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
@@ -485,8 +479,8 @@ public struct PlatformNavigationModifier: ViewModifier {
         AnyView(content.navigationTitle("").automaticCompliance())
     }
     
-    private func fallbackPlatformNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.automaticCompliance())
+    private func fallbackPlatformNavigation<Content: View>(to content: Content) -> AnyView {
+        content.wrappedWithCompliance()
     }
 }
 
