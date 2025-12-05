@@ -233,7 +233,7 @@ public struct VisualDesignCategoryModifier: ViewModifier {
             )
         }
         
-        return AnyView(modifiedContent.automaticCompliance())
+        return modifiedContent.wrappedWithCompliance()
     }
 }
 
@@ -341,22 +341,19 @@ public struct KeyboardNavigationModifier: ViewModifier {
         to content: Content,
         hasFullKeyboardAccess: Bool
     ) -> some View {
-        AnyView(
-            content
-                .focusable()
-                .onKeyPress(.return) {
-                    // Handle keyboard activation
-                    return .handled
-                }
-                .automaticCompliance()
-        )
+        content
+            .focusable()
+            .onKeyPress(.return) {
+                // Handle keyboard activation
+                return .handled
+            }
     }
     #endif
     
     #if os(iOS) || os(tvOS) || os(watchOS)
     @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
     private func iosKeyboardNavigation<Content: View>(to content: Content) -> some View {
-        AnyView(content.focusable().automaticCompliance())
+        content.focusable()
     }
     #endif
     
@@ -1044,9 +1041,9 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
         case .iOS, .watchOS:
             #if os(iOS) || os(watchOS)
             // iOS categories are already handled by other modifiers
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
             #else
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
             #endif
         case .macOS:
             #if os(macOS)
@@ -1063,7 +1060,7 @@ public struct PlatformSpecificCategoryModifier: ViewModifier {
             return content.wrappedWithCompliance()
             #endif
         default:
-            return AnyView(content.automaticCompliance())
+            return content.wrappedWithCompliance()
         }
     }
     
