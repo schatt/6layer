@@ -468,7 +468,7 @@ public struct PlatformNavigationModifier: ViewModifier {
     
     #if os(iOS)
     private func iosPlatformNavigation<Content: View>(to content: Content) -> some View {
-        content.navigationBarTitleDisplayMode(.inline)
+        content.platformNavigationTitleDisplayMode(.inline)
     }
     #endif
     

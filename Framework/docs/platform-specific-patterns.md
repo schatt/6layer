@@ -82,6 +82,35 @@ Text("Content")
     .platformNavigationTitle("My Title")
 ```
 
+#### `platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode)`
+
+Applies navigation title display mode consistently across platforms. **Eliminates the need for platform-specific conditional compilation.**
+
+- **iOS**: Applies `.navigationBarTitleDisplayMode()` with the specified mode
+- **macOS**: No-op (macOS doesn't have this concept)
+- **Other platforms**: No-op
+
+**Available modes** (via `PlatformTitleDisplayMode` enum):
+- `.inline` - Compact inline title
+- `.large` - Large title style
+- `.automatic` - Platform-determined style
+
+```swift
+// ✅ Good: Use platform abstraction (no conditional compilation needed)
+Text("Content")
+    .platformNavigationTitle("My Title")
+    .platformNavigationTitleDisplayMode(.inline)
+
+// ❌ Avoid: Platform-specific conditional compilation
+Text("Content")
+    .navigationTitle("My Title")
+    #if os(iOS)
+    .navigationBarTitleDisplayMode(.inline)
+    #endif
+```
+
+**Migration Note**: If you have existing code using conditional compilation for `.navigationBarTitleDisplayMode()`, replace it with `.platformNavigationTitleDisplayMode()` to eliminate platform conditionals.
+
 #### `platformFrame(minWidth: CGFloat?, minHeight: CGFloat?, maxWidth: CGFloat?, maxHeight: CGFloat?)`
 
 Applies frame constraints only on macOS. No effect on iOS.

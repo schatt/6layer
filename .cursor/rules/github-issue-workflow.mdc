@@ -1,0 +1,67 @@
+---
+description: GitHub issue workflow rules for using temporary files when posting comments with special characters
+globs: **/*
+alwaysApply: true
+---
+
+# GitHub Issue Workflow Rules
+
+## **Core Principle**
+
+When updating GitHub issues with comments that contain backticks, code blocks, or special characters, always use a temporary file to avoid shell interpretation issues.
+
+## **MANDATORY Workflow**
+
+### **For Issue Comments:**
+
+1. **Write message to temporary file** - Create a temp file with the comment body
+
+2. **Use `--body-file` flag** - Use `gh issue comment <number> --body-file <file>` to add the comment
+
+3. **Close issue if needed** - Use `gh issue close <number> --reason completed` to close
+
+4. **Clean up** - Always remove the temporary file after use
+
+### **Example:**
+
+```bash
+# Write comment to temp file
+cat > /tmp/issue_comment.txt << 'EOF'
+✅ Issue completed!
+
+**Implementation Details:**
+
+- Added `ColorUtilities` for generating colors
+- Updated `TaskItem.cardColor` to show user colors
+EOF
+
+# Add comment and close issue
+gh issue comment 3 --body-file /tmp/issue_comment.txt
+gh issue close 3 --reason completed
+
+# Clean up
+rm /tmp/issue_comment.txt
+```
+
+## **Why This Matters**
+
+- Prevents shell interpretation of backticks as command substitution
+- Allows proper formatting with code blocks and special characters
+- Ensures comments are posted correctly without parsing errors
+- Maintains clean terminal output
+
+## **When to Use**
+
+- **Always** when issue comments contain:
+  - Backticks (`` `code` ``)
+  - Code blocks (```swift```)
+  - Special shell characters ($, `, \, etc.)
+  - Multi-line formatted text
+  - Markdown formatting
+
+## **Benefits**
+
+- **Reliable** - No shell interpretation issues
+- **Clean** - Proper formatting preserved
+- **Consistent** - Same workflow every time
+- **Safe** - No accidental command execution

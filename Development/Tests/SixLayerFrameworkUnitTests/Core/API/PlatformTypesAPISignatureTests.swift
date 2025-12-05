@@ -48,6 +48,37 @@ open class PlatformTypesAPISignatureTests: BaseTestClass {
         let deviceType = DeviceType.current
         let _ = deviceType
     }
+    
+    // MARK: - platformHomeDirectory API
+    
+    @Test func testPlatformHomeDirectoryReturnsURL() {
+        // Test that the function exists and returns a URL
+        let homeDir = platformHomeDirectory()
+        // Verify it returns a valid URL (not nil since it's not optional)
+        #expect(!homeDir.path.isEmpty)
+    }
+    
+    @Test func testPlatformHomeDirectoryReturnsFileURL() {
+        // Test that the returned URL is a file URL
+        let homeDir = platformHomeDirectory()
+        #expect(homeDir.isFileURL)
+    }
+    
+    @Test func testPlatformHomeDirectoryReturnsExistingDirectory() {
+        // Test that the home directory actually exists
+        let homeDir = platformHomeDirectory()
+        var isDirectory: ObjCBool = false
+        let exists = FileManager.default.fileExists(atPath: homeDir.path, isDirectory: &isDirectory)
+        #expect(exists)
+        #expect(isDirectory.boolValue)
+    }
+    
+    @Test func testPlatformHomeDirectoryConsistentReturns() {
+        // Test that multiple calls return the same path
+        let homeDir1 = platformHomeDirectory()
+        let homeDir2 = platformHomeDirectory()
+        #expect(homeDir1.path == homeDir2.path)
+    }
 }
 
 

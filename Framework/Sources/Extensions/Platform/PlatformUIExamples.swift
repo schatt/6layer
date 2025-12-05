@@ -488,9 +488,7 @@ private struct DetailView: View {
         }
         .padding()
         .navigationTitle(item)
-        #if os(iOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .platformNavigationTitleDisplayMode(.inline)
         .automaticCompliance(named: "DetailView")
     }
 }
