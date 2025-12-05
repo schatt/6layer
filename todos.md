@@ -5,12 +5,13 @@
 **Last Updated**: December 2, 2025
 
 ### Accessibility Test Fixes (Green Phase)
-- [ ] **Fix remaining failing accessibility test suites** [#31](https://github.com/schatt/6layer/issues/31) (in_progress - 72 tests fixed, ~150+ components still need attention)
+- [ ] **Fix remaining failing accessibility test suites** [#31](https://github.com/schatt/6layer/issues/31) (in_progress - PR #44 merged: 50+ components now have .automaticCompliance() modifiers, ~28 components remaining)
   - **Note**: Many accessibility ID test failures on macOS are due to ViewInspector limitation (SwiftUI identifiers don't propagate to platform views). Tests pass on iOS simulator.
+  - **Progress**: PR #44 added `.automaticCompliance()` to 138 components total (up from 88), with 28 remaining (mostly internal helpers)
 - [ ] **Fix Apple HIG Compliance Component Accessibility** (in_progress - some tests fixed, remaining issues need investigation)
-- [ ] **Fix Remaining Components Accessibility** (in_progress - ~150+ components still need verification)
+- [ ] **Fix Remaining Components Accessibility** (in_progress - ~28 components still need verification, mostly internal helpers)
 - [ ] **Fix Dynamic Form View Component Accessibility** (in_progress - some tests fixed with TODO comments)
-- [ ] **Fix framework components missing .automaticAccessibilityIdentifiers()** (in_progress - ~150+ components need modifiers added)
+- [x] **Fix framework components missing .automaticCompliance() modifiers** ✅ (PR #44 merged - 50+ components fixed)
   - **Note**: `.automaticCompliance()` is now the recommended modifier (includes both accessibility IDs and HIG compliance), with `.automaticAccessibilityIdentifiers()` maintained for backward compatibility
 
 ### Completed Recent Work
