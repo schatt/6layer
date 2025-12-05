@@ -183,6 +183,7 @@ public struct PlatformColorExamples: View {
         }
         .background(Color.platformGroupedBackground)
         .navigationTitle("Platform Colors")
+        .automaticCompliance(named: "PlatformColorExamples")
     }
 }
 
@@ -206,6 +207,7 @@ private struct ColorSwatch: View {
                 .font(.caption2)
                 .foregroundColor(.platformSecondaryLabel)
         }
+        .automaticCompliance(named: "ColorSwatch")
     }
 }
 
@@ -250,6 +252,7 @@ public struct PlatformColorFormExamples: View {
             }
         }
         .background(Color.platformGroupedBackground)
+        .automaticCompliance(named: "PlatformColorFormExamples")
     }
 }
 
@@ -277,6 +280,7 @@ public struct PlatformColorListExamples: View {
         }
         .background(Color.platformGroupedBackground)
         .listStyle(PlainListStyle())
+        .automaticCompliance(named: "PlatformColorListExamples")
     }
 }
 
@@ -306,6 +310,7 @@ public struct PlatformColorCardExamples: View {
         }
         .padding()
         .background(Color.platformGroupedBackground)
+        .automaticCompliance(named: "PlatformColorCardExamples")
     }
 }
 
@@ -332,6 +337,7 @@ private struct CardView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.platformSeparator, lineWidth: 1)
         )
+        .automaticCompliance(named: "CardView")
     }
 }
 

@@ -108,6 +108,7 @@ public struct PhotoPickerView: View {
             LegacyPhotoPickerView(onImageSelected: onImageSelected)
         }
     }
+    .automaticCompliance(named: "PhotoPickerView")
 }
 
 // MARK: - Modern PHPickerViewController Implementation (iOS 14+)
@@ -280,6 +281,7 @@ struct PhotoDisplayView: View {
             .resizable()
             .aspectRatio(contentMode: aspectRatioForStyle(style))
             .clipShape(clipShapeForStyle(style))
+            .automaticCompliance(named: "PhotoDisplayView")
     }
     
     private func aspectRatioForStyle(_ style: PhotoDisplayStyle) -> ContentMode {
@@ -315,6 +317,7 @@ struct PlaceholderPhotoView: View {
         .frame(width: sizeForStyle(style).width, height: sizeForStyle(style).height)
         .background(Color.gray.opacity(0.1))
         .clipShape(clipShapeForStyle(style))
+        .automaticCompliance(named: "PlaceholderPhotoView")
     }
     
     private func sizeForStyle(_ style: PhotoDisplayStyle) -> CGSize {

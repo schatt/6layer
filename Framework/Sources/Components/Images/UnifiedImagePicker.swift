@@ -40,6 +40,7 @@ public struct UnifiedImagePicker: View {
         Text("Image picker not available on this platform")
         #endif
     }
+    .automaticCompliance(named: "UnifiedImagePicker")
 }
 
 // MARK: - iOS Implementation

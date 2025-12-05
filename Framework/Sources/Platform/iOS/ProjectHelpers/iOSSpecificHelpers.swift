@@ -48,6 +48,7 @@ public struct iOSOptimizedCard<Content: View>: View {
         .cornerRadius(16) // iOS standard corner radius
         .shadow(radius: 3, y: 2)
         .contentShape(Rectangle()) // Better touch handling
+        .automaticCompliance(named: "iOSOptimizedCard")
     }
 }
 
@@ -81,6 +82,7 @@ public struct iOSTouchListItem<Content: View>: View {
         .onTapGesture {
             action?()
         }
+        .automaticCompliance(named: "iOSTouchListItem")
     }
 }
 
@@ -133,6 +135,7 @@ public struct iOSTouchFormField: View {
                 .font(.body)
                 .dynamicTypeSize(.large...(.accessibility3))
         }
+        .automaticCompliance(named: "iOSTouchFormField")
     }
 }
 

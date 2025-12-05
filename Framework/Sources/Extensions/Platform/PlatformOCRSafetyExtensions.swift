@@ -179,6 +179,7 @@ struct SafeVisionOCRView: View {
         .onAppear {
             performSafeOCR()
         }
+        .automaticCompliance(named: "SafeVisionOCRView")
     }
     
     private func performSafeOCR() {
@@ -336,6 +337,7 @@ struct FallbackOCRView: View {
         .onAppear {
             performFallbackOCR()
         }
+        .automaticCompliance(named: "FallbackOCRView")
     }
     
     private func performFallbackOCR() {

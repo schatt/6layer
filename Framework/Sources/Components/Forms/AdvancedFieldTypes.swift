@@ -145,6 +145,7 @@ public struct RichTextToolbar: View {
         .padding(.vertical, 4)
         .background(Color.tertiaryBackground)
         .cornerRadius(6)
+        .automaticCompliance(named: "RichTextToolbar")
     }
     
     private func formatBold() {
@@ -192,6 +193,7 @@ public struct FormatButton: View {
             .background(Color.accentColor)
             .foregroundColor(.platformButtonTextOnColor)
             .cornerRadius(4)
+            .automaticCompliance(named: "FormatButton")
     }
 }
 
@@ -208,6 +210,7 @@ public struct RichTextPreview: View {
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .automaticCompliance(named: "RichTextPreview")
     }
 }
 
@@ -416,6 +419,7 @@ public struct FileUploadArea: View {
         }
         .accessibilityLabel("File upload area")
         .accessibilityHint("Drag and drop files here or tap to browse")
+        .automaticCompliance(named: "FileUploadArea")
     }
     
     private func selectFiles() {

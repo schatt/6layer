@@ -66,6 +66,7 @@ public struct macOSDesktopCard: View {
                 // Could add hover state styling
             }
         }
+        .automaticCompliance(named: "macOSDesktopCard")
     }
 }
 
@@ -104,6 +105,7 @@ public struct macOSDesktopListItem<Content: View>: View {
         .onTapGesture {
             action?()
         }
+        .automaticCompliance(named: "macOSDesktopListItem")
     }
 }
 
@@ -134,6 +136,7 @@ public struct macOSDesktopFormField: View {
                 .frame(height: 32) // macOS standard height
                 .font(.body)
         }
+        .automaticCompliance(named: "macOSDesktopFormField")
     }
 }
 

@@ -96,6 +96,7 @@ public struct LiquidGlassExampleUsage: View {
             Spacer()
         }
         .padding()
+        .automaticCompliance(named: "LiquidGlassExampleUsage")
     }
 }
 
@@ -119,6 +120,7 @@ public struct ConditionalLiquidGlassExample: View {
                 FallbackUIView()
             }
         }
+        .automaticCompliance(named: "ConditionalLiquidGlassExample")
     }
 }
 
@@ -139,6 +141,7 @@ private struct FullLiquidGlassView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(.ultraThinMaterial)
         )
+        .automaticCompliance(named: "FullLiquidGlassView")
     }
 }
 
@@ -158,6 +161,7 @@ private struct FallbackUIView: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.blue.opacity(0.1))
         )
+        .automaticCompliance(named: "FallbackUIView")
     }
 }
 

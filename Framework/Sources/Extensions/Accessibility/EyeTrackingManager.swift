@@ -382,6 +382,7 @@ private struct EyeTrackingFeedbackOverlay: View {
                 .opacity(manager.isTracking ? 1.0 : 0.0)
                 .animation(.easeInOut(duration: 0.2), value: manager.currentGaze)
         }
+        .automaticCompliance(named: "EyeTrackingFeedbackOverlay")
     }
 }
 

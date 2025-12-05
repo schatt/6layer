@@ -54,6 +54,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "AdaptiveNavigationExample")
     }
     
     /// Example of split view navigation for larger screens
@@ -109,6 +110,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "SplitViewNavigationExample")
     }
     
     // MARK: - Modal Examples
@@ -161,6 +163,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "AdaptiveModalExample")
     }
     
     // MARK: - List Examples
@@ -212,6 +215,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "AdaptiveListExample")
     }
     
     // MARK: - Button Examples
@@ -332,6 +336,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "AdaptiveButtonExample")
     }
     
     // MARK: - Form Examples
@@ -397,6 +402,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "AdaptiveFormExample")
     }
     
     // MARK: - Card Examples
@@ -455,6 +461,7 @@ public struct PlatformUIExamples {
                 }
             }
         }
+        .automaticCompliance(named: "AdaptiveCardExample")
     }
 }
 
@@ -484,6 +491,7 @@ private struct DetailView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+        .automaticCompliance(named: "DetailView")
     }
 }
 
@@ -540,6 +548,7 @@ public struct PlatformUIExampleApp: View {
                 .tag(5)
         }
         .withThemedFramework()
+        .automaticCompliance(named: "PlatformUIExampleApp")
     }
 }
 
@@ -636,6 +645,7 @@ public struct LayoutDecisionReasoningExample: View {
             Spacer()
         }
         .padding()
+        .automaticCompliance(named: "LayoutDecisionReasoningExample")
     }
     
     // MARK: - Example Methods
@@ -729,6 +739,7 @@ public struct LayoutReasoningAnalyticsExample: View {
             Spacer()
         }
         .padding()
+        .automaticCompliance(named: "LayoutReasoningAnalyticsExample")
     }
     
     private func simulateLayoutDecisions() {
@@ -851,6 +862,7 @@ public struct LayoutReasoningTransparencyExample: View {
         }
         .padding()
         .animation(.easeInOut, value: showReasoning)
+        .automaticCompliance(named: "LayoutReasoningTransparencyExample")
     }
     
     private func generateLayoutWithReasoning() {
