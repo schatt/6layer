@@ -413,8 +413,10 @@ public actor DataHintsRegistry {
     /// Synchronously check if file-based hints are cached (nonisolated for fast access)
     /// File-based hints are immutable, so cached values are safe to access without actor isolation
     /// Note: Code-provided hints (like layoutSpec) are not cached and handled separately
-    /// After preloading, cache is read-only - lock-free reads are safe
+    /// All access is protected by lock for thread safety
     nonisolated public static func hasCachedHints(for modelName: String) -> Bool {
+        preloadLock.lock()
+        defer { preloadLock.unlock() }
         return sharedResultCache[modelName] != nil
     }
     
@@ -422,8 +424,10 @@ public actor DataHintsRegistry {
     /// Returns nil if not cached - caller should use async loadHintsResult if nil
     /// File-based hints are immutable, so cached values are safe to access without actor isolation
     /// Note: Code-provided hints (like layoutSpec) are not cached and handled separately
-    /// After preloading, cache is read-only - lock-free reads are safe
+    /// All access is protected by lock for thread safety
     nonisolated public static func getCachedHints(for modelName: String) -> DataHintsResult? {
+        preloadLock.lock()
+        defer { preloadLock.unlock() }
         return sharedResultCache[modelName]
     }
     
@@ -449,8 +453,12 @@ public actor DataHintsRegistry {
         }
         
         // Check shared cache (might have been preloaded)
-        // After preload, cache is read-only, so direct access is safe (lock-free)
-        if let sharedCached = Self.sharedResultCache[modelName] {
+        // Access is protected by lock for thread safety
+        Self.preloadLock.lock()
+        let sharedCached = Self.sharedResultCache[modelName]
+        Self.preloadLock.unlock()
+        
+        if let sharedCached = sharedCached {
             resultCache[modelName] = sharedCached
             cache[modelName] = sharedCached.fieldHints
             return sharedCached
@@ -506,19 +514,22 @@ public actor DataHintsRegistry {
     /// Returns immediately if already cached, otherwise loads and caches
     /// NOTE: Only updates shared cache if NOT preloaded - after preload, shared cache is read-only
     public func preloadHints(for modelName: String) {
-        // Check shared cache first (nonisolated, accessible from any thread)
-        if Self.sharedResultCache[modelName] != nil {
+        // Check shared cache first (protected by lock)
+        Self.preloadLock.lock()
+        let existingCached = Self.sharedResultCache[modelName]
+        let isPreloaded = Self.hintsPreloaded
+        Self.preloadLock.unlock()
+        
+        if let sharedCached = existingCached {
             // Already in shared cache - update actor-local cache for consistency
-            if let sharedCached = Self.sharedResultCache[modelName] {
-                resultCache[modelName] = sharedCached
-                cache[modelName] = sharedCached.fieldHints
-            }
+            resultCache[modelName] = sharedCached
+            cache[modelName] = sharedCached.fieldHints
             return
         }
         
         // If already preloaded, don't write to shared cache (it's read-only)
         // Just update actor-local cache if needed
-        if Self.hintsPreloaded {
+        if isPreloaded {
             if resultCache[modelName] == nil {
                 let result = loader.loadHintsResult(for: modelName)
                 if !result.fieldHints.isEmpty || !result.sections.isEmpty {
@@ -534,7 +545,9 @@ public actor DataHintsRegistry {
         if resultCache[modelName] != nil {
             // Update shared cache so other threads can access it synchronously
             Self.preloadLock.lock()
-            Self.sharedResultCache[modelName] = resultCache[modelName]
+            if !Self.hintsPreloaded {
+                Self.sharedResultCache[modelName] = resultCache[modelName]
+            }
             Self.preloadLock.unlock()
             return
         }
@@ -547,7 +560,9 @@ public actor DataHintsRegistry {
             
             // Update shared cache (with lock protection, only before preload)
             Self.preloadLock.lock()
-            Self.sharedResultCache[modelName] = result
+            if !Self.hintsPreloaded {
+                Self.sharedResultCache[modelName] = result
+            }
             Self.preloadLock.unlock()
         }
     }
