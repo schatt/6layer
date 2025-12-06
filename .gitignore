@@ -29,7 +29,6 @@ build/
 # Package.resolved
 
 # Xcode (if using Xcode to edit the package)
-*.xcworkspace/
 xcuserdata/
 
 # macOS
