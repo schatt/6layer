@@ -281,8 +281,8 @@ if [ -f "$RELEASE_FILE" ]; then
             MILESTONE_NUMBER=$(echo "$MILESTONE_DATA" | jq -r '.number' 2>/dev/null || echo "")
             
             if [ -n "$MILESTONE_NUMBER" ] && [ "$MILESTONE_NUMBER" != "null" ]; then
-                # Get all issues in this milestone
-                MILESTONE_ISSUES=$(gh api repos/:owner/:repo/issues --jq ".[] | select(.milestone != null and .milestone.number == $MILESTONE_NUMBER) | .number" 2>/dev/null || echo "")
+                # Get all issues in this milestone (both open and closed)
+                MILESTONE_ISSUES=$(gh api "repos/:owner/:repo/issues?state=all" --jq ".[] | select(.milestone != null and .milestone.number == $MILESTONE_NUMBER) | .number" 2>/dev/null || echo "")
             
                 if [ -n "$MILESTONE_ISSUES" ]; then
                     echo "✅ Found milestone $MILESTONE_TITLE with issues"
