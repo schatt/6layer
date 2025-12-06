@@ -7,13 +7,15 @@ public struct PlatformSpacing {
     /// Small spacing value (4pt on all platforms)
     /// Follows 8pt grid: 0.5 * 8 = 4
     public static let small: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 4
         #elseif os(macOS)
         return 4
+        #elseif os(watchOS)
+        return 4
         #elseif os(tvOS)
         return 4
-        #else
+        #elseif os(visionOS)
         return 4
         #endif
     }()
@@ -21,13 +23,15 @@ public struct PlatformSpacing {
     /// Medium spacing value
     /// Follows 8pt grid: 1 * 8 = 8
     public static let medium: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 8
         #elseif os(macOS)
         return 8
+        #elseif os(watchOS)
+        return 8
         #elseif os(tvOS)
         return 8
-        #else
+        #elseif os(visionOS)
         return 8
         #endif
     }()
@@ -35,13 +39,15 @@ public struct PlatformSpacing {
     /// Large spacing value
     /// Follows 8pt grid: iOS uses 2 * 8 = 16, macOS uses 1.5 * 8 = 12
     public static let large: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 16
         #elseif os(macOS)
         return 12
+        #elseif os(watchOS)
+        return 16
         #elseif os(tvOS)
         return 16
-        #else
+        #elseif os(visionOS)
         return 16
         #endif
     }()
@@ -49,13 +55,15 @@ public struct PlatformSpacing {
     /// Extra large spacing value
     /// Follows 8pt grid: iOS uses 3 * 8 = 24, macOS uses 2.5 * 8 = 20
     public static let extraLarge: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 24
         #elseif os(macOS)
         return 20
+        #elseif os(watchOS)
+        return 24
         #elseif os(tvOS)
         return 24
-        #else
+        #elseif os(visionOS)
         return 24
         #endif
     }()
@@ -63,13 +71,15 @@ public struct PlatformSpacing {
     /// Standard padding value
     /// Follows 8pt grid: iOS uses 2 * 8 = 16, macOS uses 1.5 * 8 = 12
     public static let padding: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 16
         #elseif os(macOS)
         return 12
+        #elseif os(watchOS)
+        return 16
         #elseif os(tvOS)
         return 16
-        #else
+        #elseif os(visionOS)
         return 16
         #endif
     }()
@@ -77,41 +87,47 @@ public struct PlatformSpacing {
     /// Reduced padding value
     /// Follows 8pt grid: 1 * 8 = 8
     public static let reducedPadding: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 8
         #elseif os(macOS)
         return 8
+        #elseif os(watchOS)
+        return 8
         #elseif os(tvOS)
         return 8
-        #else
+        #elseif os(visionOS)
         return 8
         #endif
     }()
 
     /// Standard corner radius
-    /// iOS: 12pt (1.5 * 8), macOS: 8pt (1 * 8)
+    /// iOS/watchOS/visionOS: 12pt (1.5 * 8), macOS/tvOS: 8pt (1 * 8)
     public static let cornerRadius: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 12
         #elseif os(macOS)
         return 8
+        #elseif os(watchOS)
+        return 12
         #elseif os(tvOS)
         return 8
-        #else
-        return 8
+        #elseif os(visionOS)
+        return 12
         #endif
     }()
 
     /// Small corner radius
-    /// Follows 8pt grid: 1 * 8 = 8
+    /// iOS/watchOS/tvOS/visionOS: 8pt (1 * 8), macOS: 6pt
     public static let smallCornerRadius: CGFloat = {
-        #if os(iOS) || os(watchOS) || os(visionOS)
+        #if os(iOS)
         return 8
         #elseif os(macOS)
         return 6
+        #elseif os(watchOS)
+        return 8
         #elseif os(tvOS)
         return 8
-        #else
+        #elseif os(visionOS)
         return 8
         #endif
     }()
