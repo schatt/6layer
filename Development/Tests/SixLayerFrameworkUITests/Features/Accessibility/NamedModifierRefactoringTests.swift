@@ -1,6 +1,5 @@
 import Testing
 
-
 import SwiftUI
 @testable import SixLayerFramework
 
@@ -11,6 +10,9 @@ import SwiftUI
 /// DESIRED BEHAVIOR: 
 /// - .named: Replace current hierarchy level + generate full hierarchy path (default case)
 /// - .exactNamed: Apply exact name only, no hierarchy modification (explicit case)
+/// 
+/// TESTING SCOPE: UI tests verify that modifiers correctly apply accessibility identifiers
+/// to rendered views. These tests belong in UI tests because they verify rendering behavior.
 @Suite("Named Modifier Refactoring")
 open class NamedModifierRefactoringTDDTests: BaseTestClass {
     

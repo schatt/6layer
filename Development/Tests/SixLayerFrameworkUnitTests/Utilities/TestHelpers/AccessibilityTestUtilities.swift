@@ -75,6 +75,9 @@ private final class HostingControllerStorage {
 /// NOTE: This version does not include ViewInspector inspection - it's for unit tests only.
 @MainActor
 public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
+    // NOTE: This function is only used as a fallback when ViewInspector is not available.
+    // ViewInspector can inspect SwiftUI views without rendering, which is preferred for unit tests.
+    // Platform view hosting should only be used when ViewInspector cannot inspect the view.
     #if canImport(UIKit)
     let hosting = UIHostingController(rootView: view)
     let root = hosting.view
