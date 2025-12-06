@@ -326,7 +326,6 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testAccessibilityEnhancedViewModifier() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view and accessibility config
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -344,19 +343,13 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
         let enhancedView = testView.accessibilityEnhanced(config: config)
         
         // THEN: Should return modified view with accessibility identifier
-        // enhancedView is non-optional View, used below
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
-            // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
+        // Unit tests use platform view hosting (UIKit/AppKit) directly, not ViewInspector
         #expect(testComponentComplianceSinglePlatform(
             enhancedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedViewModifier"
-        ) , "Enhanced view should have accessibility identifier")
+        ), "Enhanced view should have accessibility identifier")
     }
     
     /**
@@ -367,7 +360,6 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
      */
     @Test @MainActor func testAccessibilityEnhancedViewModifierDefaultConfig() {
         initializeTestConfig()
-        let navigationManager = KeyboardNavigationManager()
         // GIVEN: A view
         let testView = platformPresentContent_L1(
             content: "Test",
@@ -378,19 +370,13 @@ open class AccessibilityFeaturesLayer5Tests: BaseTestClass {
         let enhancedView = testView.accessibilityEnhanced()
         
         // THEN: Should return modified view with accessibility identifier
-        #expect(Bool(true), "Should return accessibility enhanced view with default config")  // enhancedView is non-optional
-            // TODO: ViewInspector Detection Issue - VERIFIED: Framework function (e.g., platformPresentContent_L1) DOES have .automaticCompliance() 
-            // modifier applied. The componentName "Framework Function" is a test label, not a framework component.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-            // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
-            // Remove this workaround once ViewInspector detection is fixed
+        // Unit tests use platform view hosting (UIKit/AppKit) directly, not ViewInspector
         #expect(testComponentComplianceSinglePlatform(
             enhancedView, 
             expectedPattern: "*.main.element.accessibility-enhanced-*", 
             platform: SixLayerPlatform.iOS,
             componentName: "AccessibilityEnhancedViewModifierDefaultConfig"
-        ) , "Enhanced view with default config should have accessibility identifier")
+        ), "Enhanced view with default config should have accessibility identifier")
     }
     
     /**
