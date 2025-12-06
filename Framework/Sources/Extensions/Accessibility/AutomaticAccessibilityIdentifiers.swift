@@ -501,11 +501,9 @@ public struct NamedModifier: ViewModifier {
                 config: AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared,
                 name: name
             )
-        // Apply identifier directly to content and again at outermost level to ensure override
-        let inner = content
+        // Apply identifier directly to content
+        return content
             .environment(\.accessibilityIdentifierName, name)
-            .accessibilityIdentifier(newId)
-            return ZStack { inner }
             .accessibilityIdentifier(newId)
     }
         
@@ -587,10 +585,8 @@ public struct ExactNamedModifier: ViewModifier {
                 config: AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared,
                 name: name
             )
-        // Apply exact identifier directly to content and again at outermost level to ensure override
-        let inner = content.accessibilityIdentifier(exactId)
-            return ZStack { inner }
-            .accessibilityIdentifier(exactId)
+        // Apply exact identifier directly to content
+        return content.accessibilityIdentifier(exactId)
     }
         
         private static func generateExactNamedAccessibilityIdentifier(config: AccessibilityIdentifierConfig, name: String) -> String {
