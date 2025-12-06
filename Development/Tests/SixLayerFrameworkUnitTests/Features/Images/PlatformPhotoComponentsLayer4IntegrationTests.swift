@@ -204,7 +204,7 @@ open class PlatformPhotoComponentsLayer4IntegrationTests: BaseTestClass {
         let placeholderImage = PlatformImage.createPlaceholder()
 
         #if os(iOS)
-        let uiImage = placeholderImage.uiImage!
+        let uiImage = placeholderImage.uiImage
 
         // Test the exact pattern used in Layer 4 callbacks
         // This is the code that was broken: PlatformImage(image)

@@ -1,6 +1,4 @@
 import Testing
-
-
 import SwiftUI
 @testable import SixLayerFramework
 /// Tests for PlatformInternationalizationL1.swift
@@ -24,7 +22,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             )
         
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
+            let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedContent_L1",
@@ -51,7 +49,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             )
         
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
+            let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedContent_L1",
@@ -76,7 +74,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
         
             let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
+            let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedText_L1",
@@ -99,7 +97,7 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
         
             let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
             #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-            let hasAccessibilityID = testAccessibilityIdentifiersCrossPlatform(
+            let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedText_L1",

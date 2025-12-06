@@ -55,7 +55,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         
         // Test 3: Platform-specific initializers
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage! // 6LAYER_ALLOW: testing PlatformImage boundary API access
+        let uiImage = PlatformImage.createPlaceholder().uiImage // 6LAYER_ALLOW: testing PlatformImage boundary API access
         let uiImageInit = PlatformImage(uiImage: uiImage) // 6LAYER_ALLOW: testing PlatformImage construction from platform-specific image
         // uiImageInit is non-optional, so no nil check needed
         #expect(Bool(true), "UIImage initializer should exist")
@@ -86,7 +86,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test parameter label requirements
     @Test func testPlatformImageParameterLabels() {
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // Test explicit parameter label (current API)
         let explicitInit = PlatformImage(uiImage: uiImage)
@@ -123,7 +123,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test the exact API patterns used in Layer 4 callbacks
     @Test func testPlatformImageBackwardCompatibility() {
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // Test the EXACT pattern used in Layer 4 callbacks
         // This is the pattern that was broken in 4.6.2
@@ -166,7 +166,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         
         // Test that both implicit and explicit patterns work
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         let implicit = PlatformImage(uiImage)
         let explicit = PlatformImage(uiImage: uiImage)
         #expect(implicit.uiImage == explicit.uiImage, "iOS patterns should be equivalent")
@@ -186,7 +186,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // It tests the exact API pattern that was broken
         
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // Test the broken pattern from Layer 4 callbacks
         // This should work with our backward compatibility fix

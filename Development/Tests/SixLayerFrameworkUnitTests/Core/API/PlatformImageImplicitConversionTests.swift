@@ -49,7 +49,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         #if os(iOS)
         // Given: PlatformImage placeholder (framework-compliant test image)
         let placeholderImage = PlatformImage.createPlaceholder()
-        let uiImage = placeholderImage.uiImage!
+        let uiImage = placeholderImage.uiImage
 
         // When: Use implicit conversion
         let platformImage = PlatformImage(uiImage)  // Implicit conversion
@@ -96,7 +96,7 @@ open class PlatformImageImplicitConversionTests: BaseTestClass {
         #if os(iOS)
         // Given: PlatformImage placeholder and Layer 4 components
         let placeholderImage = PlatformImage.createPlaceholder()
-        let uiImage = placeholderImage.uiImage!
+        let uiImage = placeholderImage.uiImage
         
         
         // When: Use implicit conversion in callback

@@ -26,7 +26,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
     @Test func testPlatformImageFix_ExactBrokenPattern() {
         #if os(iOS)
         // Given: The exact code that was broken in 4.6.2
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // When: Use the exact pattern that was broken
         // This is the EXACT code from the bug report: PlatformImage(image)
@@ -51,7 +51,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
     /// METHODOLOGY: Test both API patterns to ensure backward compatibility
     @Test func testPlatformImageFix_BothPatternsWork() {
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // Test both patterns
         let oldPattern = PlatformImage(uiImage)        // Old pattern (was broken)
@@ -76,7 +76,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
     /// METHODOLOGY: Test the exact callback execution that was broken
     @Test func testPlatformImageFix_Layer4CallbackCode() {
         #if os(iOS)
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // This is the EXACT code that was broken in Layer 4 callbacks:
         // parent.onImageCaptured(PlatformImage(image))

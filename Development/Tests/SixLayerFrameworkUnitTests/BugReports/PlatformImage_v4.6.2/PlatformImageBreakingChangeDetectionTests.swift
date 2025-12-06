@@ -53,7 +53,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         // This is the EXACT code path that was broken in 4.6.2
         // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: PlatformImage.createPlaceholder().uiImage!
+            .originalImage: PlatformImage.createPlaceholder().uiImage
         ]
         
         // This would have FAILED in 4.6.2 before our fix
@@ -102,7 +102,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         // This is the EXACT code path that was broken in 4.6.2
         // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: PlatformImage.createPlaceholder().uiImage!
+            .originalImage: PlatformImage.createPlaceholder().uiImage
         ]
         
         // This would have FAILED in 4.6.2 before our fix
@@ -139,7 +139,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
     @Test @MainActor func testPlatformImageImplicitParameter_ExactBrokenPattern() {
         #if os(iOS)
         // Given: The exact API pattern that was broken
-        let uiImage = PlatformImage.createPlaceholder().uiImage!
+        let uiImage = PlatformImage.createPlaceholder().uiImage
         
         // When: Use the exact pattern that was broken in 4.6.2
         // This is the EXACT code that was broken: PlatformImage(image)
@@ -189,7 +189,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         
         // When: Execute the exact callback code that was broken
         // This simulates the actual callback execution in Layer 4
-        let testUIImage = PlatformImage.createPlaceholder().uiImage! // 6LAYER_ALLOW: boundary testing PlatformImage.uiImage property access
+        let testUIImage = PlatformImage.createPlaceholder().uiImage // 6LAYER_ALLOW: boundary testing PlatformImage.uiImage property access
 
         // This is the EXACT code that was broken in the callbacks:
         // parent.onImageCaptured(PlatformImage(image))
@@ -243,7 +243,7 @@ open class PlatformImageBreakingChangeDetectionTests: BaseTestClass {
         // This is where the broken PlatformImage(image) code would be executed
         // 6LAYER_ALLOW: testing framework boundary with deprecated platform image picker APIs
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
-            .originalImage: PlatformImage.createPlaceholder().uiImage!
+            .originalImage: PlatformImage.createPlaceholder().uiImage
         ]
         
         // Execute the delegate methods that contain the broken code
