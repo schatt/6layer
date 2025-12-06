@@ -416,6 +416,43 @@ public extension View {
         }
     }
     
+    /// Helper to create sidebar sheet content with platform-appropriate navigation wrapper
+    @ViewBuilder
+    private func createSidebarSheetContent<SidebarContent: View>(
+        sidebarContent: SidebarContent
+    ) -> some View {
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                sidebarContent
+            }
+        } else {
+            NavigationView {
+                sidebarContent
+            }
+        }
+        #elseif os(macOS)
+        sidebarContent
+            .frame(minWidth: 400, minHeight: 300)
+        #else
+        sidebarContent
+        #endif
+    }
+    
+    /// Helper to create detail-only view with sidebar sheet
+    @ViewBuilder
+    private func createDetailOnlyWithSheet<DetailContent: View, SidebarContent: View>(
+        showingNavigationSheet: Binding<Bool>?,
+        @ViewBuilder detail: () -> DetailContent,
+        sidebarContent: SidebarContent
+    ) -> some View {
+        detail()
+            .sheet(isPresented: showingNavigationSheet ?? Binding(get: { false }, set: { _ in })) {
+                createSidebarSheetContent(sidebarContent: sidebarContent)
+            }
+            .automaticCompliance(named: "platformAppNavigation_L4")
+    }
+    
     /// Platform-specific app navigation with intelligent device-aware pattern selection
     /// Automatically chooses between NavigationSplitView and detail-only based on device capabilities
     ///
@@ -457,13 +494,11 @@ public extension View {
                 // iOS 15 fallback: Use detail-only with sheet
                 // Capture sidebar content before using in escaping closure
                 let sidebarContent = sidebar()
-                detail()
-                    .sheet(isPresented: showingNavigationSheet ?? Binding(get: { false }, set: { _ in })) {
-                        NavigationView {
-                            sidebarContent
-                        }
-                    }
-                    .automaticCompliance(named: "platformAppNavigation_L4")
+                createDetailOnlyWithSheet(
+                    showingNavigationSheet: showingNavigationSheet,
+                    detail: detail,
+                    sidebarContent: sidebarContent
+                )
             }
             #elseif os(macOS)
             if #available(macOS 13.0, *) {
@@ -491,26 +526,11 @@ public extension View {
             // Use detail-only view with optional sheet for sidebar
             // Capture sidebar content before using in escaping closure
             let sidebarContent = sidebar()
-            detail()
-                .sheet(isPresented: showingNavigationSheet ?? Binding(get: { false }, set: { _ in })) {
-                    #if os(iOS)
-                    if #available(iOS 16.0, *) {
-                        NavigationStack {
-                            sidebarContent
-                        }
-                    } else {
-                        NavigationView {
-                            sidebarContent
-                        }
-                    }
-                    #elseif os(macOS)
-                    sidebarContent
-                        .frame(minWidth: 400, minHeight: 300)
-                    #else
-                    sidebarContent
-                    #endif
-                }
-                .automaticCompliance(named: "platformAppNavigation_L4")
+            createDetailOnlyWithSheet(
+                showingNavigationSheet: showingNavigationSheet,
+                detail: detail,
+                sidebarContent: sidebarContent
+            )
         }
     }
     

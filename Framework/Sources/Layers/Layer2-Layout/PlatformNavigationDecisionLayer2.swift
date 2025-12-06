@@ -145,6 +145,52 @@ public struct AppNavigationDecision: Sendable {
     }
 }
 
+// MARK: - App Navigation Decision Constants
+
+/// Minimum screen width (in landscape) to consider split view for iPhone
+private let iPhoneLandscapeSplitViewThreshold: CGFloat = 900
+
+// MARK: - App Navigation Decision Helpers
+
+/// Check if orientation is landscape
+private func isLandscapeOrientation(_ orientation: DeviceOrientation) -> Bool {
+    return orientation == .landscape || 
+           orientation == .landscapeLeft || 
+           orientation == .landscapeRight
+}
+
+/// Determine if iPhone landscape should use split view based on screen dimensions
+private func shouldUseSplitViewForiPhoneLandscape(
+    maxDimension: CGFloat,
+    sizeCategory: iPhoneSizeCategory?
+) -> (useSplitView: Bool, reasoning: String) {
+    if maxDimension >= iPhoneLandscapeSplitViewThreshold {
+        if let category = sizeCategory {
+            return (
+                useSplitView: true,
+                reasoning: "iPhone \(category.rawValue) landscape with width >= \(Int(iPhoneLandscapeSplitViewThreshold)): Split view utilizes larger screen effectively"
+            )
+        } else {
+            return (
+                useSplitView: true,
+                reasoning: "iPhone landscape with width >= \(Int(iPhoneLandscapeSplitViewThreshold)): Split view utilizes larger screen effectively"
+            )
+        }
+    } else {
+        if let category = sizeCategory {
+            return (
+                useSplitView: false,
+                reasoning: "iPhone \(category.rawValue) landscape: Detail-only view maintains mobile-first experience"
+            )
+        } else {
+            return (
+                useSplitView: false,
+                reasoning: "iPhone landscape: Detail-only view maintains mobile-first experience"
+            )
+        }
+    }
+}
+
 /// Determine optimal app navigation pattern based on device capabilities and orientation
 /// Analyzes device type, orientation, and screen size to decide between split view and detail-only
 /// This is DEVICE-AWARE and ORIENTATION-AWARE but NOT platform-aware (platform decisions happen in Layer 3)
@@ -181,44 +227,35 @@ public func determineAppNavigationStrategy_L2(
     
     // iPhone: Decision depends on orientation and screen size
     if deviceType == .phone {
-        let isLandscape = orientation == .landscape || 
-                         orientation == .landscapeLeft || 
-                         orientation == .landscapeRight
-        
         // iPhone in portrait: Always detail-only (sidebar as sheet)
-        if !isLandscape {
+        if !isLandscapeOrientation(orientation) {
             return AppNavigationDecision(
                 useSplitView: false,
                 reasoning: "iPhone portrait: Detail-only view with sidebar as sheet provides optimal mobile experience"
             )
         }
         
-        // iPhone in landscape: Consider screen size
-        // Large iPhones (Plus, Pro Max) can benefit from split view in landscape
+        // iPhone in landscape: Consider screen size and category
+        let maxDimension = max(screenSize.width, screenSize.height)
+        
         if let sizeCategory = iPhoneSizeCategory {
             switch sizeCategory {
             case .plus, .proMax:
-                // Large iPhones in landscape: Use split view
+                // Large iPhones in landscape: Always use split view
                 return AppNavigationDecision(
                     useSplitView: true,
                     reasoning: "iPhone \(sizeCategory.rawValue) landscape: Split view utilizes larger screen effectively"
                 )
             case .pro:
-                // Pro models: Could go either way, but prefer split view for consistency
-                // Check actual screen width to be more precise
-                let maxDimension = max(screenSize.width, screenSize.height)
-                // In landscape, width is the larger dimension
-                if maxDimension >= 900 {
-                    return AppNavigationDecision(
-                        useSplitView: true,
-                        reasoning: "iPhone Pro landscape with sufficient width: Split view provides better navigation"
-                    )
-                } else {
-                    return AppNavigationDecision(
-                        useSplitView: false,
-                        reasoning: "iPhone Pro landscape: Detail-only view maintains mobile-first experience"
-                    )
-                }
+                // Pro models: Check screen width threshold
+                let decision = shouldUseSplitViewForiPhoneLandscape(
+                    maxDimension: maxDimension,
+                    sizeCategory: sizeCategory
+                )
+                return AppNavigationDecision(
+                    useSplitView: decision.useSplitView,
+                    reasoning: decision.reasoning
+                )
             case .standard, .mini:
                 // Standard and mini iPhones: Detail-only even in landscape
                 return AppNavigationDecision(
@@ -227,35 +264,25 @@ public func determineAppNavigationStrategy_L2(
                 )
             case .unknown:
                 // Unknown size: Use screen dimensions as fallback
-                let maxDimension = max(screenSize.width, screenSize.height)
-                // In landscape, if width >= 900, consider split view
-                if maxDimension >= 900 {
-                    return AppNavigationDecision(
-                        useSplitView: true,
-                        reasoning: "iPhone landscape with width >= 900: Split view utilizes larger screen effectively"
-                    )
-                } else {
-                    return AppNavigationDecision(
-                        useSplitView: false,
-                        reasoning: "iPhone landscape: Detail-only view maintains mobile-first experience"
-                    )
-                }
+                let decision = shouldUseSplitViewForiPhoneLandscape(
+                    maxDimension: maxDimension,
+                    sizeCategory: nil
+                )
+                return AppNavigationDecision(
+                    useSplitView: decision.useSplitView,
+                    reasoning: decision.reasoning
+                )
             }
         } else {
             // No size category available: Use screen dimensions as fallback
-            let maxDimension = max(screenSize.width, screenSize.height)
-            // In landscape, if width >= 900, consider split view
-            if maxDimension >= 900 {
-                return AppNavigationDecision(
-                    useSplitView: true,
-                    reasoning: "iPhone landscape with width >= 900: Split view utilizes larger screen effectively"
-                )
-            } else {
-                return AppNavigationDecision(
-                    useSplitView: false,
-                    reasoning: "iPhone landscape: Detail-only view maintains mobile-first experience"
-                )
-            }
+            let decision = shouldUseSplitViewForiPhoneLandscape(
+                maxDimension: maxDimension,
+                sizeCategory: nil
+            )
+            return AppNavigationDecision(
+                useSplitView: decision.useSplitView,
+                reasoning: decision.reasoning
+            )
         }
     }
     
