@@ -49,6 +49,14 @@ tasks:
     log_file: build/logs/generate-file-list.log
     always_run: false
     requires: []
+  - name: xcodegen
+    description: "Generates the Xcode project from project.yml and all project files. (uses cache)"
+    command: "xcodegen -c"
+    dependencies:
+      - generate-file-list
+    inputs:
+      - project.yml
+      - all_project_files.txt
   - name: commit-changes
     description: "Commit all changes with version message (optional platform argument)"
     command: "./Scripts/commit_and_tag.sh commit $arg1"
@@ -74,15 +82,19 @@ build_groups:
       - iOS_tests
   mac:
     targets:
+      - xcodegen
       - macOS
       - macOS_tests
   mac_test:
     targets:
+      - xcodegen
       - macOS_tests
   iOS:
     targets:
+      - xcodegen
       - iOS_build
       - iOS_tests
   iOS_test:
     targets:
+      - xcodegen
       - iOS_tests

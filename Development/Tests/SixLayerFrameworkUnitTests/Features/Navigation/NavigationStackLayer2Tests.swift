@@ -206,5 +206,121 @@ open class NavigationStackLayer2Tests: BaseTestClass {
         #expect(decision.reasoning != nil, "Should provide reasoning")
         #expect(!decision.reasoning!.isEmpty, "Reasoning should not be empty")
     }
+    
+    // MARK: - App Navigation Decision Tests
+    
+    @Test @MainActor func testDetermineAppNavigationStrategy_L2_iPad_UsesSplitView() {
+        // Given: iPad device
+        let deviceType = DeviceType.pad
+        let orientation = DeviceOrientation.portrait
+        let screenSize = CGSize(width: 1024, height: 768)
+        
+        // When: Determining app navigation strategy
+        let decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: nil
+        )
+        
+        // Then: Should recommend split view for iPad
+        #expect(decision.useSplitView == true, "iPad should use split view")
+        #expect(decision.reasoning.contains("iPad"), "Reasoning should mention iPad")
+    }
+    
+    @Test @MainActor func testDetermineAppNavigationStrategy_L2_macOS_UsesSplitView() {
+        // Given: macOS device
+        let deviceType = DeviceType.mac
+        let orientation = DeviceOrientation.landscape
+        let screenSize = CGSize(width: 1920, height: 1080)
+        
+        // When: Determining app navigation strategy
+        let decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: nil
+        )
+        
+        // Then: Should recommend split view for macOS
+        #expect(decision.useSplitView == true, "macOS should use split view")
+        #expect(decision.reasoning.contains("macOS"), "Reasoning should mention macOS")
+    }
+    
+    @Test @MainActor func testDetermineAppNavigationStrategy_L2_iPhonePortrait_UsesDetailOnly() {
+        // Given: iPhone in portrait
+        let deviceType = DeviceType.phone
+        let orientation = DeviceOrientation.portrait
+        let screenSize = CGSize(width: 390, height: 844)
+        
+        // When: Determining app navigation strategy
+        let decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: .standard
+        )
+        
+        // Then: Should recommend detail-only for iPhone portrait
+        #expect(decision.useSplitView == false, "iPhone portrait should use detail-only")
+        #expect(decision.reasoning.contains("portrait"), "Reasoning should mention portrait")
+    }
+    
+    @Test @MainActor func testDetermineAppNavigationStrategy_L2_iPhonePlusLandscape_UsesSplitView() {
+        // Given: iPhone Plus in landscape
+        let deviceType = DeviceType.phone
+        let orientation = DeviceOrientation.landscape
+        let screenSize = CGSize(width: 896, height: 414)
+        
+        // When: Determining app navigation strategy
+        let decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: .plus
+        )
+        
+        // Then: Should recommend split view for large iPhone in landscape
+        #expect(decision.useSplitView == true, "iPhone Plus landscape should use split view")
+        #expect(decision.reasoning.contains("landscape"), "Reasoning should mention landscape")
+    }
+    
+    @Test @MainActor func testDetermineAppNavigationStrategy_L2_iPhoneProMaxLandscape_UsesSplitView() {
+        // Given: iPhone Pro Max in landscape
+        let deviceType = DeviceType.phone
+        let orientation = DeviceOrientation.landscape
+        let screenSize = CGSize(width: 926, height: 428)
+        
+        // When: Determining app navigation strategy
+        let decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: .proMax
+        )
+        
+        // Then: Should recommend split view for Pro Max in landscape
+        #expect(decision.useSplitView == true, "iPhone Pro Max landscape should use split view")
+        #expect(decision.reasoning.contains("landscape"), "Reasoning should mention landscape")
+    }
+    
+    @Test @MainActor func testDetermineAppNavigationStrategy_L2_iPhoneStandardLandscape_UsesDetailOnly() {
+        // Given: iPhone standard in landscape
+        let deviceType = DeviceType.phone
+        let orientation = DeviceOrientation.landscape
+        let screenSize = CGSize(width: 844, height: 390)
+        
+        // When: Determining app navigation strategy
+        let decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: .standard
+        )
+        
+        // Then: Should recommend detail-only for standard iPhone in landscape
+        #expect(decision.useSplitView == false, "iPhone standard landscape should use detail-only")
+        #expect(decision.reasoning.contains("landscape"), "Reasoning should mention landscape")
+    }
 }
 

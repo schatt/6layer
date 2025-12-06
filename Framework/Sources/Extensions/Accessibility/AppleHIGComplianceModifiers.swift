@@ -587,7 +587,7 @@ public struct TouchTargetModifier: ViewModifier {
         }
         
         // Apple HIG: Minimum 44pt touch target for interactive elements
-        return content.frame(minHeight: 44, minWidth: 44).wrappedWithCompliance()
+        return content.frame(minWidth: 44, minHeight: 44).wrappedWithCompliance()
     }
     #endif
     

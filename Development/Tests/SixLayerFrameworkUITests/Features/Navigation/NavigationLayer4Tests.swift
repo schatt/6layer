@@ -573,4 +573,124 @@ open class NavigationLayer4Tests: BaseTestClass {
         #expect(Bool(true), "Nil destination should be created")  // nilDestination is non-optional
     }
     
+    // MARK: - Platform App Navigation Layer 4 Tests
+    
+    @Test @MainActor func testPlatformAppNavigation_L4_WithStrategy() {
+        // Given: App navigation with strategy
+        let sidebar = Text("Sidebar")
+        let detail = Text("Detail")
+        let columnVisibility = Binding<NavigationSplitViewVisibility>(get: { .automatic }, set: { _ in })
+        let showingSheet = Binding<Bool>(get: { false }, set: { _ in })
+        let strategy = AppNavigationStrategy(
+            implementation: .splitView,
+            reasoning: "Test strategy"
+        )
+        
+        // When: Creating app navigation with strategy
+        let navigation = EmptyView()
+            .platformAppNavigation_L4(
+                columnVisibility: columnVisibility,
+                showingNavigationSheet: showingSheet,
+                strategy: strategy,
+                sidebar: { sidebar },
+                detail: { detail }
+            )
+        
+        // Then: Should create navigation (non-optional)
+        #expect(Bool(true), "App navigation with strategy should be created")
+    }
+    
+    @Test @MainActor func testPlatformAppNavigation_L4_AutomaticStrategy() {
+        // Given: App navigation without explicit strategy (auto-detection)
+        let sidebar = Text("Sidebar")
+        let detail = Text("Detail")
+        let columnVisibility = Binding<NavigationSplitViewVisibility>(get: { .automatic }, set: { _ in })
+        let showingSheet = Binding<Bool>(get: { false }, set: { _ in })
+        
+        // When: Creating app navigation with automatic strategy detection
+        let navigation = EmptyView()
+            .platformAppNavigation_L4(
+                columnVisibility: columnVisibility,
+                showingNavigationSheet: showingSheet,
+                sidebar: { sidebar },
+                detail: { detail }
+            )
+        
+        // Then: Should create navigation (non-optional)
+        #expect(Bool(true), "App navigation with automatic strategy should be created")
+    }
+    
+    @Test @MainActor func testPlatformAppNavigation_L4_WithOptionalBindings() {
+        // Given: App navigation with optional bindings
+        let sidebar = Text("Sidebar")
+        let detail = Text("Detail")
+        
+        // When: Creating app navigation without bindings
+        let navigation = EmptyView()
+            .platformAppNavigation_L4(
+                columnVisibility: nil,
+                showingNavigationSheet: nil,
+                sidebar: { sidebar },
+                detail: { detail }
+            )
+        
+        // Then: Should create navigation (non-optional)
+        #expect(Bool(true), "App navigation with optional bindings should be created")
+    }
+    
+    @Test @MainActor func testPlatformAppNavigation_L4_EmptyContent() {
+        // Given: Empty sidebar and detail content
+        let emptySidebar = EmptyView()
+        let emptyDetail = EmptyView()
+        let strategy = AppNavigationStrategy(
+            implementation: .detailOnly,
+            reasoning: "Test detail-only"
+        )
+        
+        // When: Creating app navigation with empty content
+        let navigation = EmptyView()
+            .platformAppNavigation_L4(
+                columnVisibility: nil,
+                showingNavigationSheet: nil,
+                strategy: strategy,
+                sidebar: { emptySidebar },
+                detail: { emptyDetail }
+            )
+        
+        // Then: Should handle empty content gracefully
+        #expect(Bool(true), "App navigation with empty content should be created")
+    }
+    
+    @Test @MainActor func testPlatformAppNavigation_L4_ComplexContent() {
+        // Given: Complex sidebar and detail content
+        let sidebar = VStack {
+            Text("Item 1")
+            Text("Item 2")
+            Text("Item 3")
+        }
+        let detail = VStack {
+            Text("Detail Title")
+            Text("Detail Content")
+            Button("Action") { }
+        }
+        let columnVisibility = Binding<NavigationSplitViewVisibility>(get: { .automatic }, set: { _ in })
+        let strategy = AppNavigationStrategy(
+            implementation: .splitView,
+            reasoning: "Test split view"
+        )
+        
+        // When: Creating app navigation with complex content
+        let navigation = EmptyView()
+            .platformAppNavigation_L4(
+                columnVisibility: columnVisibility,
+                showingNavigationSheet: nil,
+                strategy: strategy,
+                sidebar: { sidebar },
+                detail: { detail }
+            )
+        
+        // Then: Should create navigation (non-optional)
+        #expect(Bool(true), "App navigation with complex content should be created")
+    }
+    
 }

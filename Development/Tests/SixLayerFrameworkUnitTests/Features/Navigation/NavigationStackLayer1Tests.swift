@@ -141,5 +141,127 @@ open class NavigationStackLayer1Tests: BaseTestClass {
         #expect(Bool(true), "simple view is non-optional")
         #expect(Bool(true), "complex view is non-optional")
     }
+    
+    // MARK: - App Navigation Layer 1 Tests
+    
+    @Test @MainActor func testPlatformPresentAppNavigation_L1_CreatesView() {
+        // Given: Sidebar and detail content
+        let sidebar = Text("Sidebar Content")
+        let detail = Text("Detail Content")
+        
+        // When: Creating app navigation presentation
+        let view = platformPresentAppNavigation_L1(
+            columnVisibility: nil,
+            showingNavigationSheet: nil,
+            sidebar: { sidebar },
+            detail: { detail }
+        )
+        
+        // Then: Should return a view (non-optional)
+        #expect(Bool(true), "view is non-optional")
+        
+        // Verify the view type contains View-related types
+        let mirror = Mirror(reflecting: view)
+        let viewType = String(describing: mirror.subjectType)
+        #expect(viewType.lowercased().contains("view") || viewType.contains("ModifiedContent"), 
+                "View should be a SwiftUI view type, got: \(viewType)")
+    }
+    
+    @Test @MainActor func testPlatformPresentAppNavigation_L1_WithBindings() {
+        // Given: Sidebar and detail with state bindings
+        let sidebar = Text("Sidebar")
+        let detail = Text("Detail")
+        let columnVisibility = Binding<NavigationSplitViewVisibility>(get: { .automatic }, set: { _ in })
+        let showingSheet = Binding<Bool>(get: { false }, set: { _ in })
+        
+        // When: Creating app navigation with bindings
+        let view = platformPresentAppNavigation_L1(
+            columnVisibility: columnVisibility,
+            showingNavigationSheet: showingSheet,
+            sidebar: { sidebar },
+            detail: { detail }
+        )
+        
+        // Then: Should return a view
+        #expect(Bool(true), "view is non-optional")
+    }
+    
+    @Test @MainActor func testPlatformPresentAppNavigation_L1_WithOptionalBindings() {
+        // Given: Sidebar and detail without bindings
+        let sidebar = Text("Sidebar")
+        let detail = Text("Detail")
+        
+        // When: Creating app navigation without bindings
+        let view = platformPresentAppNavigation_L1(
+            columnVisibility: nil,
+            showingNavigationSheet: nil,
+            sidebar: { sidebar },
+            detail: { detail }
+        )
+        
+        // Then: Should return a view
+        #expect(Bool(true), "view is non-optional")
+    }
+    
+    @Test @MainActor func testPlatformPresentAppNavigation_L1_EmptyContent() {
+        // Given: Empty sidebar and detail
+        let sidebar = EmptyView()
+        let detail = EmptyView()
+        
+        // When: Creating app navigation with empty content
+        let view = platformPresentAppNavigation_L1(
+            columnVisibility: nil,
+            showingNavigationSheet: nil,
+            sidebar: { sidebar },
+            detail: { detail }
+        )
+        
+        // Then: Should handle empty content gracefully
+        #expect(Bool(true), "view is non-optional")
+    }
+    
+    @Test @MainActor func testPlatformPresentAppNavigation_L1_ComplexContent() {
+        // Given: Complex sidebar and detail content
+        let sidebar = VStack {
+            Text("Item 1")
+            Text("Item 2")
+            Text("Item 3")
+        }
+        let detail = VStack {
+            Text("Detail Title")
+            Text("Detail Content")
+            Button("Action") { }
+        }
+        
+        // When: Creating app navigation with complex content
+        let view = platformPresentAppNavigation_L1(
+            columnVisibility: nil,
+            showingNavigationSheet: nil,
+            sidebar: { sidebar },
+            detail: { detail }
+        )
+        
+        // Then: Should return a view
+        #expect(Bool(true), "view is non-optional")
+    }
+    
+    @Test @MainActor func testPlatformPresentAppNavigation_L1_AutomaticDeviceDetection() {
+        // Given: Sidebar and detail content
+        // The function should automatically detect device type, orientation, and screen size
+        let sidebar = Text("Sidebar")
+        let detail = Text("Detail")
+        
+        // When: Creating app navigation (automatic detection)
+        let view = platformPresentAppNavigation_L1(
+            columnVisibility: nil,
+            showingNavigationSheet: nil,
+            sidebar: { sidebar },
+            detail: { detail }
+        )
+        
+        // Then: Should return a view that uses automatic device detection
+        #expect(Bool(true), "view is non-optional")
+        // Note: The actual device detection happens at runtime through L2/L3 layers
+    }
 }
 

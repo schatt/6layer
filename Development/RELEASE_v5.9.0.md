@@ -319,6 +319,61 @@ The framework now fully implements the currency exchange model:
 
 ---
 
+### **Platform File System Utilities (Issue #48)**
+
+**COMPLETED**: Added cross-platform file system utility functions for accessing standard directories, eliminating verbose `FileManager` API usage in consuming applications.
+
+#### New Functions
+
+- `platformApplicationSupportDirectory(createIfNeeded: Bool = false) -> URL?` - Returns Application Support directory URL
+- `platformDocumentsDirectory(createIfNeeded: Bool = false) -> URL?` - Returns Documents directory URL
+
+#### Key Features
+
+- **Optional Return Type**: Returns `URL?` to avoid fatal errors - returns `nil` if directory cannot be located or created
+- **Directory Creation**: `createIfNeeded` parameter (defaults to `false`) creates directory if it doesn't exist when set to `true`
+- **Safe Error Handling**: Gracefully handles all error cases without crashing
+- **Consistent API**: Matches existing `platformHomeDirectory()` pattern in same utility file
+
+#### Usage Examples
+
+```swift
+// Without creation (returns nil if doesn't exist)
+guard let appSupport = platformApplicationSupportDirectory() else {
+    // Handle error
+    return
+}
+
+// With creation (creates if needed)
+guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true) else {
+    // Handle error (creation failed or can't locate)
+    return
+}
+
+// Documents directory
+guard let documentsURL = platformDocumentsDirectory(createIfNeeded: true) else {
+    // Handle error
+    return
+}
+```
+
+#### Benefits
+
+1. **Reduces Code Verbosity** - Eliminates repetitive `FileManager.default.urls(for:in:)` calls
+2. **Consistent API** - Matches framework's abstraction pattern
+3. **Safe Error Handling** - No fatal errors, returns optional for graceful handling
+4. **Future Extensibility** - Enables platform-specific enhancements (iCloud Drive, sandbox handling)
+5. **Complements Existing Utilities** - Works alongside `platformHomeDirectory()` (issue #46)
+
+#### Implementation Details
+
+- **Location**: `Framework/Sources/Core/Utilities/PlatformFileSystemUtilities.swift` (same file as `platformHomeDirectory()`)
+- **Testing**: 10 comprehensive tests covering basic functionality, consistency, and `createIfNeeded` behavior
+- **Error Handling**: Returns `nil` if:
+  - `FileManager.urls(for:in:)` returns empty array
+  - Directory doesn't exist and `createIfNeeded` is `false`
+  - Directory creation fails when `createIfNeeded` is `true`
+
 ### **Enum Picker Support in Hints Files (Issues #40, #41)**
 
 **COMPLETED**: Added enum picker support in hints files for `IntelligentFormView`, allowing fields to be rendered as pickers with human-readable labels instead of text fields.
@@ -356,6 +411,7 @@ The framework now fully implements the currency exchange model:
 - **Issue #40**: Support enum picker options in hints files for IntelligentFormView - ✅ COMPLETED
 - **Issue #41**: Integrate dataBinder with Picker Field Value Updates - ✅ COMPLETED
 - **Issue #42**: Add Layer 4 System Action Functions - ✅ COMPLETED
+- **Issue #48**: Add platformApplicationSupportDirectory() and platformDocumentsDirectory() functions - ✅ COMPLETED
 - **Issue #23**: PlatformImage initializer from CGImage - ✅ Already completed
 - **Issue #33**: PlatformImage enhancements (Phase 3) - ⏳ Future work
 
@@ -364,6 +420,6 @@ The framework now fully implements the currency exchange model:
 **Version**: 5.9.0
 **Release Date**: [Date TBD]
 **Previous Version**: 5.8.0
-**Issues**: #32 (PlatformImage Standardization Phase 2), #35 (Automatic HIG Styling), #37 (HIG Visual Design Categories), #40 (Enum Picker Support), #41 (Picker DataBinder Integration), #42 (Layer 4 System Actions)
+**Issues**: #32 (PlatformImage Standardization Phase 2), #35 (Automatic HIG Styling), #37 (HIG Visual Design Categories), #40 (Enum Picker Support), #41 (Picker DataBinder Integration), #42 (Layer 4 System Actions), #48 (Platform File System Utilities)
 
 

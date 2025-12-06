@@ -159,3 +159,94 @@ public func selectNavigationStackStrategy_L3(
     )
 }
 
+// MARK: - App Navigation Strategy Selection
+
+/// App navigation implementation strategy for Layer 4
+public enum AppNavigationImplementationStrategy: String, CaseIterable, Sendable {
+    case splitView = "splitView"           // NavigationSplitView (iPad, macOS, large iPhone landscape)
+    case detailOnly = "detailOnly"         // Detail-only view with sidebar as sheet (iPhone portrait, small iPhone landscape)
+}
+
+/// App navigation strategy result from Layer 3 selection
+public struct AppNavigationStrategy: Sendable {
+    public let implementation: AppNavigationImplementationStrategy
+    public let reasoning: String
+    
+    public init(
+        implementation: AppNavigationImplementationStrategy,
+        reasoning: String
+    ) {
+        self.implementation = implementation
+        self.reasoning = reasoning
+    }
+}
+
+/// Select optimal app navigation implementation strategy based on Layer 2 decision and platform
+/// This is PLATFORM-AWARE (unlike Layer 2 which is device/orientation-aware)
+///
+/// - Parameters:
+///   - decision: Layer 2 app navigation decision
+///   - platform: Target platform
+///   - iosVersion: Optional iOS version (defaults to current)
+/// - Returns: App navigation strategy with implementation details
+@MainActor
+public func selectAppNavigationStrategy_L3(
+    decision: AppNavigationDecision,
+    platform: SixLayerPlatform,
+    iosVersion: Double? = nil
+) -> AppNavigationStrategy {
+    
+    // Get actual iOS version if not provided
+    let actualIOSVersion: Double
+    if let version = iosVersion {
+        actualIOSVersion = version
+    } else {
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            actualIOSVersion = 16.0
+        } else {
+            actualIOSVersion = 15.0
+        }
+        #else
+        actualIOSVersion = 15.0 // Default for non-iOS
+        #endif
+    }
+    
+    // If Layer 2 recommends split view, check platform support
+    if decision.useSplitView {
+        // Split view requires NavigationSplitView (iOS 16+ or macOS 13+)
+        if platform == .iOS {
+            if actualIOSVersion >= 16.0 {
+                return AppNavigationStrategy(
+                    implementation: .splitView,
+                    reasoning: "Split view selected: \(decision.reasoning)"
+                )
+            } else {
+                // iOS 15 and earlier: Fallback to detail-only (NavigationSplitView not available)
+                return AppNavigationStrategy(
+                    implementation: .detailOnly,
+                    reasoning: "Split view recommended but NavigationSplitView not available on iOS \(actualIOSVersion), using detail-only: \(decision.reasoning)"
+                )
+            }
+        } else if platform == .macOS {
+            // macOS 13+ has NavigationSplitView, but we'll use it even on older versions with fallback
+            return AppNavigationStrategy(
+                implementation: .splitView,
+                reasoning: "Split view selected for macOS: \(decision.reasoning)"
+            )
+        } else {
+            // Other platforms: Use detail-only as safe fallback
+            return AppNavigationStrategy(
+                implementation: .detailOnly,
+                reasoning: "Split view recommended but not supported on \(platform), using detail-only: \(decision.reasoning)"
+            )
+        }
+    } else {
+        // Layer 2 recommends detail-only
+        return AppNavigationStrategy(
+            implementation: .detailOnly,
+            reasoning: "Detail-only selected: \(decision.reasoning)"
+        )
+    }
+}
+

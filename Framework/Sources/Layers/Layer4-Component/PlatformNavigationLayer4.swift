@@ -391,6 +391,182 @@ public extension View {
 
     // Note: platformNavigationViewStyle moved to PlatformSpecificViewExtensions.swift
     // to consolidate with existing platform-specific logic and avoid naming conflicts
+    
+    // MARK: - App Navigation Layer 4
+    
+    /// Helper to create NavigationSplitView with optional column visibility
+    @ViewBuilder
+    private func createNavigationSplitView<SidebarContent: View, DetailContent: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>?,
+        @ViewBuilder sidebar: () -> SidebarContent,
+        @ViewBuilder detail: () -> DetailContent
+    ) -> some View {
+        if let columnVisibility = columnVisibility {
+            NavigationSplitView(columnVisibility: columnVisibility) {
+                sidebar()
+            } detail: {
+                detail()
+            }
+        } else {
+            NavigationSplitView {
+                sidebar()
+            } detail: {
+                detail()
+            }
+        }
+    }
+    
+    /// Platform-specific app navigation with intelligent device-aware pattern selection
+    /// Automatically chooses between NavigationSplitView and detail-only based on device capabilities
+    ///
+    /// **Device-Aware Behavior:**
+    /// - **iPad**: Always uses NavigationSplitView
+    /// - **macOS**: Always uses NavigationSplitView
+    /// - **iPhone Portrait**: Detail-only view (sidebar presented as sheet)
+    /// - **iPhone Landscape (Large models)**: NavigationSplitView for Plus/Pro Max models
+    /// - **iPhone Landscape (Standard models)**: Detail-only view
+    ///
+    /// - Parameters:
+    ///   - columnVisibility: Optional binding for NavigationSplitView column visibility
+    ///   - showingNavigationSheet: Optional binding for sheet presentation (iPhone detail-only mode)
+    ///   - strategy: App navigation strategy from Layer 3
+    ///   - sidebar: View builder for sidebar content
+    ///   - detail: View builder for detail content
+    /// - Returns: A view with platform-appropriate navigation pattern
+    @MainActor
+    @ViewBuilder
+    func platformAppNavigation_L4<SidebarContent: View, DetailContent: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>? = nil,
+        showingNavigationSheet: Binding<Bool>? = nil,
+        strategy: AppNavigationStrategy,
+        @ViewBuilder sidebar: () -> SidebarContent,
+        @ViewBuilder detail: () -> DetailContent
+    ) -> some View {
+        switch strategy.implementation {
+        case .splitView:
+            // Use NavigationSplitView
+            #if os(iOS)
+            if #available(iOS 16.0, *) {
+                createNavigationSplitView(
+                    columnVisibility: columnVisibility,
+                    sidebar: sidebar,
+                    detail: detail
+                )
+                .automaticCompliance(named: "platformAppNavigation_L4")
+            } else {
+                // iOS 15 fallback: Use detail-only with sheet
+                // Capture sidebar content before using in escaping closure
+                let sidebarContent = sidebar()
+                detail()
+                    .sheet(isPresented: showingNavigationSheet ?? Binding(get: { false }, set: { _ in })) {
+                        NavigationView {
+                            sidebarContent
+                        }
+                    }
+                    .automaticCompliance(named: "platformAppNavigation_L4")
+            }
+            #elseif os(macOS)
+            if #available(macOS 13.0, *) {
+                createNavigationSplitView(
+                    columnVisibility: columnVisibility,
+                    sidebar: sidebar,
+                    detail: detail
+                )
+                .automaticCompliance(named: "platformAppNavigation_L4")
+            } else {
+                // macOS 12 fallback: Use HStack layout
+                HStack(spacing: 0) {
+                    sidebar()
+                    detail()
+                }
+                .automaticCompliance(named: "platformAppNavigation_L4")
+            }
+            #else
+            // Other platforms: Use detail-only
+            detail()
+                .automaticCompliance(named: "platformAppNavigation_L4")
+            #endif
+            
+        case .detailOnly:
+            // Use detail-only view with optional sheet for sidebar
+            // Capture sidebar content before using in escaping closure
+            let sidebarContent = sidebar()
+            detail()
+                .sheet(isPresented: showingNavigationSheet ?? Binding(get: { false }, set: { _ in })) {
+                    #if os(iOS)
+                    if #available(iOS 16.0, *) {
+                        NavigationStack {
+                            sidebarContent
+                        }
+                    } else {
+                        NavigationView {
+                            sidebarContent
+                        }
+                    }
+                    #elseif os(macOS)
+                    sidebarContent
+                        .frame(minWidth: 400, minHeight: 300)
+                    #else
+                    sidebarContent
+                    #endif
+                }
+                .automaticCompliance(named: "platformAppNavigation_L4")
+        }
+    }
+    
+    /// Platform-specific app navigation with automatic strategy detection
+    /// Convenience function that automatically determines strategy from device capabilities
+    ///
+    /// - Parameters:
+    ///   - columnVisibility: Optional binding for NavigationSplitView column visibility
+    ///   - showingNavigationSheet: Optional binding for sheet presentation (iPhone detail-only mode)
+    ///   - sidebar: View builder for sidebar content
+    ///   - detail: View builder for detail content
+    /// - Returns: A view with platform-appropriate navigation pattern
+    @MainActor
+    @ViewBuilder
+    func platformAppNavigation_L4<SidebarContent: View, DetailContent: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>? = nil,
+        showingNavigationSheet: Binding<Bool>? = nil,
+        @ViewBuilder sidebar: () -> SidebarContent,
+        @ViewBuilder detail: () -> DetailContent
+    ) -> some View {
+        // Get current device capabilities
+        let deviceType = DeviceType.current
+        let deviceCapabilities = DeviceCapabilities()
+        let orientation = deviceCapabilities.orientation
+        let screenSize = deviceCapabilities.screenSize
+        
+        // Get iPhone size category if applicable
+        #if os(iOS)
+        let iPhoneSizeCategory: iPhoneSizeCategory? = deviceType == .phone ? iPhoneSizeCategory.from(screenSize: screenSize) : nil
+        #else
+        let iPhoneSizeCategory: iPhoneSizeCategory? = nil
+        #endif
+        
+        // Layer 2: Device and orientation-aware decision making
+        let l2Decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: iPhoneSizeCategory
+        )
+        
+        // Layer 3: Platform-aware strategy selection
+        let l3Strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: SixLayerPlatform.current
+        )
+        
+        // Use strategy-based implementation
+        platformAppNavigation_L4(
+            columnVisibility: columnVisibility,
+            showingNavigationSheet: showingNavigationSheet,
+            strategy: l3Strategy,
+            sidebar: sidebar,
+            detail: detail
+        )
+    }
 }
 
 

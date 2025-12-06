@@ -580,6 +580,93 @@ public func platformPresentNavigationStack_L1<Item: Identifiable & Hashable, Ite
     .automaticCompliance()
 }
 
+// MARK: - App Navigation Layer 1 Functions
+
+/// Layer 1 semantic function for presenting app navigation with sidebar and detail
+/// Expresses intent to use app navigation pattern without knowing implementation details
+///
+/// This function allows developers to express WHAT they want (app navigation with sidebar/detail)
+/// without knowing HOW it's implemented (NavigationSplitView vs detail-only with sheet,
+/// device-specific decisions, orientation handling, etc.)
+///
+/// The framework automatically:
+/// - Detects device type (iPad, iPhone, macOS)
+/// - Considers orientation (portrait, landscape)
+/// - Analyzes screen size (large iPhone models in landscape)
+/// - Chooses optimal navigation pattern (split view vs detail-only)
+/// - Handles state management (column visibility, sheet presentation)
+///
+/// - Parameters:
+///   - sidebar: View builder for sidebar content
+///   - detail: View builder for detail content
+///   - columnVisibility: Optional binding for NavigationSplitView column visibility
+///   - showingNavigationSheet: Optional binding for sheet presentation (iPhone)
+/// - Returns: A view that presents app navigation with intelligent pattern selection
+@MainActor
+public func platformPresentAppNavigation_L1<SidebarContent: View, DetailContent: View>(
+    columnVisibility: Binding<NavigationSplitViewVisibility>? = nil,
+    showingNavigationSheet: Binding<Bool>? = nil,
+    @ViewBuilder sidebar: @escaping () -> SidebarContent,
+    @ViewBuilder detail: @escaping () -> DetailContent
+) -> some View {
+    return AppNavigationWrapper<SidebarContent, DetailContent>(
+        columnVisibility: columnVisibility,
+        showingNavigationSheet: showingNavigationSheet,
+        sidebar: { AnyView(sidebar()) },
+        detail: { AnyView(detail()) }
+    )
+    .environment(\.accessibilityIdentifierName, "platformPresentAppNavigation_L1")
+    .automaticCompliance()
+}
+
+/// Internal wrapper view for app navigation
+/// This view implements the full 6-layer flow: L1 -> L2 -> L3 -> L4
+private struct AppNavigationWrapper<SidebarContent: View, DetailContent: View>: View {
+    let columnVisibility: Binding<NavigationSplitViewVisibility>?
+    let showingNavigationSheet: Binding<Bool>?
+    let sidebar: () -> AnyView
+    let detail: () -> AnyView
+    
+    var body: some View {
+        // Get current device capabilities
+        let deviceType = DeviceType.current
+        let deviceCapabilities = DeviceCapabilities()
+        let orientation = deviceCapabilities.orientation
+        let screenSize = deviceCapabilities.screenSize
+        
+        // Get iPhone size category if applicable
+        #if os(iOS)
+        let iPhoneSizeCategory: iPhoneSizeCategory? = deviceType == .phone ? iPhoneSizeCategory.from(screenSize: screenSize) : nil
+        #else
+        let iPhoneSizeCategory: iPhoneSizeCategory? = nil
+        #endif
+        
+        // Layer 2: Device and orientation-aware decision making
+        let l2Decision = determineAppNavigationStrategy_L2(
+            deviceType: deviceType,
+            orientation: orientation,
+            screenSize: screenSize,
+            iPhoneSizeCategory: iPhoneSizeCategory
+        )
+        
+        // Layer 3: Platform-aware strategy selection
+        let l3Strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: SixLayerPlatform.current
+        )
+        
+        // Layer 4: Component implementation
+        EmptyView()
+            .platformAppNavigation_L4(
+                columnVisibility: columnVisibility,
+                showingNavigationSheet: showingNavigationSheet,
+                strategy: l3Strategy,
+                sidebar: { sidebar() },
+                detail: { detail() }
+            )
+    }
+}
+
 /// Generic function for presenting temporal data with custom views and enhanced hints
 @MainActor
 public func platformPresentTemporalData_L1(

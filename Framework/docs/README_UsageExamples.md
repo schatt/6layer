@@ -470,6 +470,106 @@ func applyOptimizations<Content: View>(
 }
 ```
 
+## 🔧 File System Utilities Examples
+
+### **Basic Directory Access**
+
+```swift
+// Application Support directory
+guard let appSupport = platformApplicationSupportDirectory() else {
+    print("Could not locate Application Support directory")
+    return
+}
+
+// Documents directory
+guard let documentsURL = platformDocumentsDirectory() else {
+    print("Could not locate Documents directory")
+    return
+}
+```
+
+### **Directory Access with Creation**
+
+```swift
+// Create Application Support directory if it doesn't exist
+guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true) else {
+    print("Failed to create or locate Application Support directory")
+    return
+}
+
+// Create Documents directory if it doesn't exist
+guard let documentsURL = platformDocumentsDirectory(createIfNeeded: true) else {
+    print("Failed to create or locate Documents directory")
+    return
+}
+```
+
+### **Core Data Store Location**
+
+```swift
+// Store Core Data in Application Support directory
+guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true) else {
+    fatalError("Could not set up Application Support directory")
+}
+
+let storeURL = appSupport.appendingPathComponent("MyApp.sqlite")
+// Use storeURL for Core Data persistent store
+```
+
+### **File Storage**
+
+```swift
+// Save file to Documents directory
+guard let documentsURL = platformDocumentsDirectory(createIfNeeded: true) else {
+    print("Could not access Documents directory")
+    return
+}
+
+let fileURL = documentsURL.appendingPathComponent("data.json")
+try data.write(to: fileURL)
+```
+
+### **ML Model Storage**
+
+```swift
+// Store ML model in Application Support directory
+guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true) else {
+    print("Could not set up Application Support directory for ML models")
+    return
+}
+
+let modelURL = appSupport.appendingPathComponent("MyModel.mlmodel")
+// Load or save ML model at modelURL
+```
+
+### **Error Handling Pattern**
+
+```swift
+func setupApplicationDirectories() -> Bool {
+    // Ensure Application Support directory exists
+    guard platformApplicationSupportDirectory(createIfNeeded: true) != nil else {
+        print("Failed to set up Application Support directory")
+        return false
+    }
+    
+    // Ensure Documents directory exists
+    guard platformDocumentsDirectory(createIfNeeded: true) != nil else {
+        print("Failed to set up Documents directory")
+        return false
+    }
+    
+    return true
+}
+```
+
+### **Home Directory (Existing Utility)**
+
+```swift
+// Get home directory (non-optional, always available)
+let homeDir = platformHomeDirectory()
+print("Home directory: \(homeDir.path)")
+```
+
 ## 📚 Related Documentation
 
 - **Architecture Overview:** [README_6LayerArchitecture.md](README_6LayerArchitecture.md)

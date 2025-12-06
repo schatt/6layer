@@ -200,5 +200,98 @@ open class NavigationStackLayer3Tests: BaseTestClass {
         #expect(iOSStrategy.implementation != nil, "iOS should have implementation")
         #expect(macOSStrategy.implementation != nil, "macOS should have implementation")
     }
+    
+    // MARK: - App Navigation Strategy Selection Tests
+    
+    @Test @MainActor func testSelectAppNavigationStrategy_L3_SplitView_iOS16() {
+        // Given: Layer 2 decision recommending split view
+        let l2Decision = AppNavigationDecision(
+            useSplitView: true,
+            reasoning: "iPad should use split view"
+        )
+        
+        // When: Selecting strategy for iOS 16+
+        let strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: .iOS,
+            iosVersion: 16.0
+        )
+        
+        // Then: Should use split view on iOS 16+
+        #expect(strategy.implementation == .splitView, "iOS 16+ should support split view")
+        #expect(strategy.reasoning.contains("Split view"), "Reasoning should mention split view")
+    }
+    
+    @Test @MainActor func testSelectAppNavigationStrategy_L3_SplitView_iOS15_Fallback() {
+        // Given: Layer 2 decision recommending split view
+        let l2Decision = AppNavigationDecision(
+            useSplitView: true,
+            reasoning: "iPad should use split view"
+        )
+        
+        // When: Selecting strategy for iOS 15
+        let strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: .iOS,
+            iosVersion: 15.0
+        )
+        
+        // Then: Should fallback to detail-only on iOS 15
+        #expect(strategy.implementation == .detailOnly, "iOS 15 should fallback to detail-only")
+        #expect(strategy.reasoning.contains("not available"), "Reasoning should mention fallback")
+    }
+    
+    @Test @MainActor func testSelectAppNavigationStrategy_L3_SplitView_macOS() {
+        // Given: Layer 2 decision recommending split view
+        let l2Decision = AppNavigationDecision(
+            useSplitView: true,
+            reasoning: "macOS should use split view"
+        )
+        
+        // When: Selecting strategy for macOS
+        let strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: .macOS
+        )
+        
+        // Then: Should use split view on macOS
+        #expect(strategy.implementation == .splitView, "macOS should support split view")
+        #expect(strategy.reasoning.contains("macOS"), "Reasoning should mention macOS")
+    }
+    
+    @Test @MainActor func testSelectAppNavigationStrategy_L3_DetailOnly() {
+        // Given: Layer 2 decision recommending detail-only
+        let l2Decision = AppNavigationDecision(
+            useSplitView: false,
+            reasoning: "iPhone portrait should use detail-only"
+        )
+        
+        // When: Selecting strategy
+        let strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: .iOS
+        )
+        
+        // Then: Should use detail-only
+        #expect(strategy.implementation == .detailOnly, "Should use detail-only")
+        #expect(strategy.reasoning.contains("Detail-only"), "Reasoning should mention detail-only")
+    }
+    
+    @Test @MainActor func testSelectAppNavigationStrategy_L3_ProvidesReasoning() {
+        // Given: Layer 2 decision
+        let l2Decision = AppNavigationDecision(
+            useSplitView: true,
+            reasoning: "Test decision"
+        )
+        
+        // When: Selecting strategy
+        let strategy = selectAppNavigationStrategy_L3(
+            decision: l2Decision,
+            platform: .iOS
+        )
+        
+        // Then: Should provide reasoning
+        #expect(!strategy.reasoning.isEmpty, "Should provide reasoning")
+    }
 }
 

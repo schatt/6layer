@@ -410,7 +410,11 @@ public func platformOpenURL_L4(_ url: URL) -> Bool {
     #endif
     
     #if os(iOS)
-    return UIApplication.shared.open(url)
+    // iOS 16+: Use async API (deployment target is iOS 17, so always use async)
+    Task { @MainActor in
+        await UIApplication.shared.open(url)
+    }
+    return true
     #elseif os(macOS)
     return NSWorkspace.shared.open(url)
     #else
