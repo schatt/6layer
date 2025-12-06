@@ -1,3 +1,0 @@
-[submodule ".build-clean/checkouts/ViewInspector"]
-	path = .build-clean/checkouts/ViewInspector
-	url = https://github.com/nalexn/ViewInspector.git
