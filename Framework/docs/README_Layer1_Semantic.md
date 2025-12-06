@@ -52,6 +52,9 @@ Define the user's intent in platform-agnostic terms that can be interpreted by t
 - `platformPresentNavigationStack_L1(content:title:hints:)` - Express intent to present content in a navigation stack
 - `platformPresentNavigationStack_L1(items:hints:itemView:destination:)` - Express intent to present items in a navigation stack with list-detail pattern
 
+### **App Navigation**
+- `platformPresentAppNavigation_L1(sidebar:detail:columnVisibility:showingNavigationSheet:)` - Express intent for device-aware app navigation with sidebar and detail views. Automatically selects optimal pattern (NavigationSplitView vs detail-only) based on device type, orientation, and screen size.
+
 ## 🎨 Custom View Support
 
 Many Layer 1 functions support custom view wrappers that allow you to customize the visual presentation while maintaining all framework benefits (accessibility, platform adaptation, intelligent layout).
@@ -216,6 +219,32 @@ platformPresentNavigationStack_L1(
 ```
 
 **See [NavigationStackGuide.md](NavigationStackGuide.md) for complete documentation.**
+
+### **App Navigation with Device-Aware Pattern Selection**
+```swift
+platformPresentAppNavigation_L1(
+    columnVisibility: $columnVisibility,
+    showingNavigationSheet: $showingNavigationSheet
+) {
+    SidebarView()
+} detail: {
+    DetailView()
+}
+```
+
+**Automatic Pattern Selection:**
+- **iPad**: Always uses `NavigationSplitView`
+- **macOS**: Always uses `NavigationSplitView`
+- **iPhone Portrait**: Detail-only view with sidebar as sheet
+- **iPhone Landscape (Large models)**: `NavigationSplitView` for Plus/Pro Max models
+- **iPhone Landscape (Standard models)**: Detail-only view
+
+**State Management:**
+- Framework handles state automatically if bindings are `nil`
+- `columnVisibility`: Controls NavigationSplitView column visibility (split view mode)
+- `showingNavigationSheet`: Controls sheet presentation (detail-only mode)
+
+**See [RELEASE_NOTES_v6.0.0.md](../../RELEASE_NOTES_v6.0.0.md) for complete documentation.**
 
 ### **Modal Form with Custom Container**
 
