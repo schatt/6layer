@@ -9,10 +9,13 @@ public struct HIGAnimationCategoryModifier: ViewModifier {
     let animationSystem: HIGAnimationSystem
     
     public func body(content: Content) -> some View {
-        // Note: Animation is applied but requires a value change to trigger
-        // In practice, animations should be applied with explicit value changes
+        // Use transaction modifier to set animation configuration
+        // Note: Animations still require value changes to trigger
+        // In practice, use withAnimation or .animation(_:value:) for explicit animations
         content
-            .animation(animationSystem.animation(for: category))
+            .transaction { transaction in
+                transaction.animation = animationSystem.animation(for: category)
+            }
             .automaticCompliance()
     }
 }
