@@ -270,6 +270,9 @@ if [ -f "$RELEASE_FILE" ]; then
     
     # If GitHub CLI is available, check milestone and validate issue documentation
     if command -v gh &> /dev/null; then
+        # Initialize milestone issues list (used for filtering recently closed issues)
+        ALL_MILESTONE_ISSUES=""
+        
         # Check for milestone matching this version
         MILESTONE_TITLE="v$VERSION"
         echo "🔍 Checking for milestone: $MILESTONE_TITLE..."
@@ -291,6 +294,7 @@ if [ -f "$RELEASE_FILE" ]; then
                     # Separate closed and open issues
                     CLOSED_ISSUES=""
                     OPEN_ISSUES=""
+                    ALL_MILESTONE_ISSUES=""  # Track all milestone issues for filtering
                     CLOSED_COUNT=0
                     OPEN_COUNT=0
                     
@@ -301,6 +305,13 @@ if [ -f "$RELEASE_FILE" ]; then
                             ISSUE_STATE=$(echo "$ISSUE_LINE" | cut -d'|' -f2)
                             
                             if [ -n "$ISSUE_NUM" ] && [ "$ISSUE_NUM" != "null" ]; then
+                                # Add to all milestone issues list
+                                if [ -z "$ALL_MILESTONE_ISSUES" ]; then
+                                    ALL_MILESTONE_ISSUES="$ISSUE_NUM"
+                                else
+                                    ALL_MILESTONE_ISSUES="$ALL_MILESTONE_ISSUES $ISSUE_NUM"
+                                fi
+                                
                                 if [ "$ISSUE_STATE" = "closed" ]; then
                                     CLOSED_COUNT=$((CLOSED_COUNT + 1))
                                     if [ -z "$CLOSED_ISSUES" ]; then
@@ -392,13 +403,36 @@ if [ -f "$RELEASE_FILE" ]; then
         
         # Also show recently closed issues as a reminder (for issues not in milestone)
         echo "🔍 Checking for recently closed issues (reminder only)..."
-        RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq '.[] | "  - Issue #\(.number): \(.title) (closed: \(.closedAt))"' 2>/dev/null || echo "")
+        
+        # Build jq filter to exclude milestone issues
+        if [ -n "$ALL_MILESTONE_ISSUES" ]; then
+            # Build array of milestone issue numbers for jq
+            MILESTONE_ARRAY="["
+            FIRST=true
+            for ISSUE_NUM in $ALL_MILESTONE_ISSUES; do
+                if [ "$FIRST" = true ]; then
+                    MILESTONE_ARRAY="${MILESTONE_ARRAY}$ISSUE_NUM"
+                    FIRST=false
+                else
+                    MILESTONE_ARRAY="${MILESTONE_ARRAY},$ISSUE_NUM"
+                fi
+            done
+            MILESTONE_ARRAY="${MILESTONE_ARRAY}]"
+            
+            # Filter out milestone issues using jq (exclude if number is in milestone array)
+            RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq ".[] | select(.number as \$n | ($MILESTONE_ARRAY | index(\$n)) == null) | \"  - Issue #\(.number): \(.title) (closed: \(.closedAt))\"" 2>/dev/null || echo "")
+        else
+            # No milestone issues to filter, show all recently closed
+            RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq '.[] | "  - Issue #\(.number): \(.title) (closed: \(.closedAt))"' 2>/dev/null || echo "")
+        fi
         
         if [ -n "$RECENT_CLOSED" ]; then
-            echo "ℹ️  Recently closed issues (review to ensure they're documented if significant):"
+            echo "ℹ️  Recently closed issues (excluding milestone issues - review to ensure they're documented if significant):"
             echo "$RECENT_CLOSED"
             echo "💡 Review these at: https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
             echo "💡 Add significant issues to $RELEASE_FILE if not already documented"
+        else
+            echo "ℹ️  No recently closed issues found (excluding milestone issues)"
         fi
     else
         echo "ℹ️  GitHub CLI (gh) not available"
