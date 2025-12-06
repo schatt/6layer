@@ -33,18 +33,13 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         })
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformInteractionButton"
         )
- #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers ")
     }
     
     // MARK: - InputHandlingManager Tests
@@ -63,7 +58,6 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         // VERIFIED: Framework function has .automaticCompliance() modifier applied
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = hasAccessibilityIdentifierWithPattern(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -71,10 +65,6 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
             componentName: "InputHandlingManager"
         )
         #expect(hasAccessibilityID, "InputHandlingManager should generate accessibility identifiers")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - KeyboardShortcutManager Tests
@@ -88,18 +78,13 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "KeyboardShortcutManager"
         )
- #expect(hasAccessibilityID, "KeyboardShortcutManager should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "KeyboardShortcutManager should generate accessibility identifiers ")
     }
     
     // MARK: - HapticFeedbackManager Tests
@@ -113,18 +98,13 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "HapticFeedbackManager"
         )
- #expect(hasAccessibilityID, "HapticFeedbackManager should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "HapticFeedbackManager should generate accessibility identifiers ")
     }
     
     // MARK: - DragDropManager Tests
@@ -137,18 +117,13 @@ open class InputHandlingInteractionsComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "DragDropManager"
         )
- #expect(hasAccessibilityID, "DragDropManager should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "DragDropManager should generate accessibility identifiers ")
     }
 }
 

@@ -524,7 +524,6 @@ extension Optional: AnyOptional {
          customCreateView: nil
      )
 
-     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
      let testPassed = testComponentAccessibility(
          componentName: "CollectionEmptyStateView",
          createComponent: { view }
@@ -533,7 +532,6 @@ extension Optional: AnyOptional {
         #else
      // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
      // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-     #endif
 
      // Cleanup
      cleanupTestEnvironment()
@@ -552,7 +550,6 @@ extension Optional: AnyOptional {
          customCreateView: nil
      )
 
-     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
      let testPassed = testComponentAccessibilityDisabled(
          componentName: "CollectionEmptyStateView",
          createComponent: { view }
@@ -561,7 +558,6 @@ extension Optional: AnyOptional {
         #else
      // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
      // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-     #endif
 
      // Cleanup
      cleanupTestEnvironment()
@@ -595,7 +591,6 @@ extension Optional: AnyOptional {
 
      // Test semantic mode
      setupTestEnvironment(mode: .semantic)
-     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
      let semanticPassed = testComponentAccessibilitySemantic(
          componentName: "CollectionEmptyStateView-Semantic",
          createComponent: { view }
@@ -604,7 +599,6 @@ extension Optional: AnyOptional {
         #else
      // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
      // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-     #endif
      #expect(disabledPassed, "CollectionEmptyStateView should work in disabled mode")
  }
  

@@ -32,18 +32,13 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 )
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.main.ui.*", 
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ExpandableCardCollectionView"
             )
- #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on iOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on iOS ")
         }
     }
 
@@ -68,18 +63,13 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 )
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.main.ui.*", 
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
                 platform: .macOS,
                 componentName: "ExpandableCardCollectionView"
             )
- #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView should generate accessibility identifiers on macOS ")
         }
     }
 
@@ -100,18 +90,13 @@ open class IntelligentCardExpansionLayer4Tests: BaseTestClass {
                 )
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.main.ui.*", 
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ExpandableCardCollectionView"
             )
- #expect(hasAccessibilityID, "ExpandableCardCollectionView empty state should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ExpandableCardCollectionView empty state should generate accessibility identifiers ")
         }
     }
 

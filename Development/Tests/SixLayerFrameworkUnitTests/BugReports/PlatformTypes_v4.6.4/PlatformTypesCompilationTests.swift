@@ -519,7 +519,7 @@ struct PlatformTypesCompilationTests {
         let convertedNSSize = platformSizeFromCG.asNSSize
         #expect(convertedNSSize.width == 150)
         #expect(convertedNSSize.height == 250)
-        #endif
+    #endif
     }
     
     @Test @MainActor func testPlatformImageCompilation() {

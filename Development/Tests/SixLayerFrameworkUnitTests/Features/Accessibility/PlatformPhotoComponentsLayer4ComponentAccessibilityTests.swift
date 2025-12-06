@@ -25,18 +25,13 @@ open class PlatformPhotoComponentsLayer4ComponentAccessibilityTests: BaseTestCla
         let testView = PlatformPhotoComponentsLayer4.platformPhotoPicker_L4(onImageSelected: { _ in })
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPhotoComponentsLayer4"
         )
- #expect(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformPhotoComponentsLayer4 should generate accessibility identifiers ")
     }
 }
 

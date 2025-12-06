@@ -75,7 +75,7 @@ public extension View {
     @available(*, deprecated, message: "Use platformNavigation_L4() instead. This function has no clear use case and may be removed in a future version.")
     @ViewBuilder
     func platformNavigationContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
-        return platformNavigationContainer_L4(content: content)
+        platformNavigationContainer_L4(content: content)
     }
 
     /// Platform-conditional navigation destination hook
@@ -107,7 +107,7 @@ public extension View {
         item: Binding<Item?>,
         @ViewBuilder destination: @escaping (Item) -> Destination
     ) -> some View {
-        return platformNavigationDestination_L4(item: item, destination: destination)
+        platformNavigationDestination_L4(item: item, destination: destination)
     }
 
     /// Platform-specific navigation button with consistent styling and accessibility
@@ -665,6 +665,313 @@ public extension View {
             sidebar: sidebar,
             detail: detail
         )
+    }
+    
+    // MARK: - Settings Container Layer 4
+    
+    /// Helper to create settings container for iPad (NavigationSplitView)
+    /// - Parameters:
+    ///   - columnVisibility: Optional binding for NavigationSplitView column visibility
+    ///   - sidebar: View builder for sidebar content
+    ///   - detail: View builder for detail content
+    /// - Returns: NavigationSplitView on iOS 16+, NavigationView on iOS 15
+    @ViewBuilder
+    private func createSettingsContainerForiPad<Sidebar: View, Detail: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>?,
+        @ViewBuilder sidebar: () -> Sidebar,
+        @ViewBuilder detail: () -> Detail
+    ) -> some View {
+        if #available(iOS 16.0, *) {
+            // Use existing helper to avoid duplication
+            createNavigationSplitView(
+                columnVisibility: columnVisibility,
+                sidebar: sidebar,
+                detail: detail
+            )
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        } else {
+            // iOS 15 fallback: Use NavigationView with columns style for iPad
+            NavigationView {
+                sidebar()
+                detail()
+            }
+            .navigationViewStyle(.columns)
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        }
+    }
+    
+    /// Helper to create settings container for iPhone (NavigationStack with conditional display)
+    /// - Parameters:
+    ///   - selectedCategory: Binding to track category selection (controls detail display)
+    ///   - sidebar: View builder for sidebar content
+    ///   - detail: View builder for detail content
+    /// - Returns: NavigationStack on iOS 16+, NavigationView on iOS 15
+    @ViewBuilder
+    private func createSettingsContainerForiPhone<Sidebar: View, Detail: View>(
+        selectedCategory: Binding<AnyHashable?>?,
+        @ViewBuilder sidebar: () -> Sidebar,
+        @ViewBuilder detail: () -> Detail
+    ) -> some View {
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                if let selectedCategory = selectedCategory, selectedCategory.wrappedValue != nil {
+                    // Show detail when category is selected
+                    detail()
+                } else {
+                    // Show sidebar when no category is selected
+                    sidebar()
+                }
+            }
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        } else {
+            // iOS 15 fallback: Use NavigationView
+            NavigationView {
+                if let selectedCategory = selectedCategory, selectedCategory.wrappedValue != nil {
+                    detail()
+                } else {
+                    sidebar()
+                }
+            }
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        }
+    }
+    
+    /// Helper to create settings container for macOS (NavigationSplitView)
+    /// - Parameters:
+    ///   - columnVisibility: Optional binding for NavigationSplitView column visibility
+    ///   - sidebar: View builder for sidebar content
+    ///   - detail: View builder for detail content
+    /// - Returns: NavigationSplitView on macOS 13+, HStack on macOS 12
+    @ViewBuilder
+    private func createSettingsContainerForMacOS<Sidebar: View, Detail: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>?,
+        @ViewBuilder sidebar: () -> Sidebar,
+        @ViewBuilder detail: () -> Detail
+    ) -> some View {
+        if #available(macOS 13.0, *) {
+            // Use existing helper to avoid duplication
+            createNavigationSplitView(
+                columnVisibility: columnVisibility,
+                sidebar: sidebar,
+                detail: detail
+            )
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        } else {
+            // macOS 12 fallback: Use HStack layout
+            HStack(spacing: 0) {
+                sidebar()
+                detail()
+            }
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        }
+    }
+    
+    /// Platform-specific settings container with intelligent device-aware pattern selection
+    /// Automatically chooses between NavigationSplitView and NavigationStack based on device capabilities
+    ///
+    /// **Semantic Purpose**: Create settings views with sidebar + detail panes that adapt to device capabilities
+    ///
+    /// ## Cross-Platform Behavior
+    ///
+    /// ### iPad Settings Container
+    /// **Semantic Purpose**: Settings with sidebar and detail in split view
+    /// - **iOS 16+**: Uses `NavigationSplitView` for side-by-side sidebar and detail
+    ///   - Both panes visible simultaneously
+    ///   - User can adjust column visibility
+    ///   - Optimal for larger screen real estate
+    /// - **iOS 15**: Uses `NavigationView` with columns style as fallback
+    ///   - Shows both sidebar and detail in column layout
+    ///   - Maintains split view appearance on iPad
+    ///
+    /// **When to Use**: Settings screens, preferences, configuration views on iPad
+    ///
+    /// ### iPhone Settings Container
+    /// **Semantic Purpose**: Settings with conditional detail display
+    /// - **iOS 16+**: Uses `NavigationStack` with conditional display
+    ///   - Shows sidebar when `selectedCategory` is `nil`
+    ///   - Shows detail when `selectedCategory` is set
+    ///   - Push/pop navigation pattern
+    /// - **iOS 15**: Uses `NavigationView` as fallback
+    ///   - Standard navigation pattern
+    ///
+    /// **When to Use**: Settings screens, preferences on iPhone
+    ///
+    /// ### macOS Settings Container
+    /// **Semantic Purpose**: Settings with sidebar and detail in split view
+    /// - **macOS 13+**: Uses `NavigationSplitView` for side-by-side sidebar and detail
+    ///   - Both panes visible simultaneously
+    ///   - User can adjust column visibility
+    ///   - Native macOS split view behavior
+    /// - **macOS 12**: Uses `HStack` as fallback
+    ///   - Simple horizontal layout
+    ///
+    /// **When to Use**: Settings screens, preferences, configuration views on macOS
+    ///
+    /// ## Platform Mapping
+    ///
+    /// | Device | iOS Version | Implementation | Behavior |
+    /// |--------|------------|----------------|----------|
+    /// | iPad | iOS 16+ | NavigationSplitView | Side-by-side sidebar + detail |
+    /// | iPad | iOS 15 | NavigationView (.columns) | Side-by-side sidebar + detail |
+    /// | iPhone | iOS 16+ | NavigationStack | Conditional: sidebar or detail |
+    /// | iPhone | iOS 15 | NavigationView | Standard navigation |
+    /// | macOS | macOS 13+ | NavigationSplitView | Side-by-side sidebar + detail |
+    /// | macOS | macOS 12 | HStack | Simple horizontal layout |
+    ///
+    /// **Note**: The unified API automatically uses the appropriate container for each platform.
+    /// Developers don't need to handle platform differences - the framework adapts automatically.
+    ///
+    /// ## Usage Examples
+    ///
+    /// ### Basic Usage (Automatic Device Detection)
+    ///
+    /// ```swift
+    /// struct SettingsView: View {
+    ///     @State private var columnVisibility = NavigationSplitViewVisibility.automatic
+    ///     @State private var selectedCategory: String? = nil
+    ///
+    ///     var body: some View {
+    ///         EmptyView()
+    ///             .platformSettingsContainer_L4(
+    ///                 columnVisibility: $columnVisibility,
+    ///                 selectedCategory: $selectedCategory
+    ///             ) {
+    ///                 // Sidebar: List of settings categories
+    ///                 SettingsCategoryList(selectedCategory: $selectedCategory)
+    ///             } detail: {
+    ///                 // Detail: Settings for selected category
+    ///                 SettingsDetailView(category: selectedCategory)
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ### iPhone-Specific Usage (Category Selection)
+    ///
+    /// ```swift
+    /// struct SettingsView: View {
+    ///     @State private var selectedCategory: String? = nil
+    ///
+    ///     var body: some View {
+    ///         EmptyView()
+    ///             .platformSettingsContainer_L4(
+    ///                 selectedCategory: $selectedCategory
+    ///             ) {
+    ///                 // Sidebar shown when selectedCategory is nil
+    ///                 List {
+    ///                     Button("General") { selectedCategory = "general" }
+    ///                     Button("Privacy") { selectedCategory = "privacy" }
+    ///                     Button("Notifications") { selectedCategory = "notifications" }
+    ///                 }
+    ///             } detail: {
+    ///                 // Detail shown when selectedCategory is set
+    ///                 if let category = selectedCategory {
+    ///                     SettingsDetailView(category: category)
+    ///                 }
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ### iPad/macOS Usage (Column Visibility Control)
+    ///
+    /// ```swift
+    /// struct SettingsView: View {
+    ///     @State private var columnVisibility = NavigationSplitViewVisibility.automatic
+    ///
+    ///     var body: some View {
+    ///         EmptyView()
+    ///             .platformSettingsContainer_L4(
+    ///                 columnVisibility: $columnVisibility
+    ///             ) {
+    ///                 // Sidebar always visible on iPad/macOS
+    ///                 SettingsCategoryList()
+    ///             } detail: {
+    ///                 // Detail pane
+    ///                 SettingsDetailView()
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ### Minimal Usage (No Bindings)
+    ///
+    /// ```swift
+    /// struct SettingsView: View {
+    ///     var body: some View {
+    ///         EmptyView()
+    ///             .platformSettingsContainer_L4 {
+    ///                 // Sidebar
+    ///                 SettingsCategoryList()
+    ///             } detail: {
+    ///                 // Detail
+    ///                 SettingsDetailView()
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ## Integration with Other Framework Components
+    ///
+    /// This function works seamlessly with:
+    /// - `DeviceType.current` - Device detection
+    /// - `PlatformDeviceCapabilities` - Capability assessment
+    /// - `platformAppNavigation_L4` - Similar navigation pattern
+    /// - `platformNavigationAction` - Navigation state management
+    ///
+    /// - Parameters:
+    ///   - columnVisibility: Optional binding for NavigationSplitView column visibility (iPad/macOS)
+    ///   - selectedCategory: Optional binding to track category selection (iPhone - controls detail display)
+    ///   - sidebar: View builder for sidebar content
+    ///   - detail: View builder for detail content
+    /// - Returns: A view with platform-appropriate settings container pattern
+    /// Layer 4: Component Implementation
+    /// Implements Issue #58: Add platformSettingsContainer_L4 for Settings Views (Layer 4)
+    @MainActor
+    @ViewBuilder
+    func platformSettingsContainer_L4<Sidebar: View, Detail: View>(
+        columnVisibility: Binding<NavigationSplitViewVisibility>? = nil,
+        selectedCategory: Binding<AnyHashable?>? = nil,
+        @ViewBuilder sidebar: () -> Sidebar,
+        @ViewBuilder detail: () -> Detail
+    ) -> some View {
+        let deviceType = DeviceType.current
+        
+        #if os(iOS)
+        switch deviceType {
+        case .pad:
+            // iPad: Use NavigationSplitView
+            createSettingsContainerForiPad(
+                columnVisibility: columnVisibility,
+                sidebar: sidebar,
+                detail: detail
+            )
+            
+        case .phone:
+            // iPhone: Use NavigationStack with conditional detail display
+            createSettingsContainerForiPhone(
+                selectedCategory: selectedCategory,
+                sidebar: sidebar,
+                detail: detail
+            )
+            
+        default:
+            // Other device types: Default to sidebar
+            sidebar()
+                .automaticCompliance(named: "platformSettingsContainer_L4")
+        }
+        #elseif os(macOS)
+        // macOS: Always use NavigationSplitView
+        createSettingsContainerForMacOS(
+            columnVisibility: columnVisibility,
+            sidebar: sidebar,
+            detail: detail
+        )
+        #else
+        // Other platforms: Default to sidebar
+        sidebar()
+            .automaticCompliance(named: "platformSettingsContainer_L4")
+        #endif
     }
 }
 

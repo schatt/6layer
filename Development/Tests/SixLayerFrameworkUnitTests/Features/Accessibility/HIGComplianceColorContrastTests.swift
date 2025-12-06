@@ -42,17 +42,12 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: Color combination should meet WCAG AA contrast ratio (4.5:1 for normal text) on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "TextWithContrast"
             )
- #expect(passed, "Text should meet WCAG AA contrast ratio (4.5:1) on all platforms") 
-            #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Text should meet WCAG AA contrast ratio (4.5:1) on all platforms")
         }
     }
     
@@ -69,17 +64,12 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: Large text should meet WCAG AA contrast ratio (3:1 for large text) on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "LargeTextWithContrast"
             )
- #expect(passed, "Large text should meet WCAG AA contrast ratio (3:1) on all platforms") 
-            #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Large text should meet WCAG AA contrast ratio (3:1) on all platforms")
         }
     }
     
@@ -95,17 +85,12 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: Button text should meet WCAG AA contrast ratio on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "ButtonWithContrast"
             )
- #expect(passed, "Button text should meet WCAG AA contrast ratio on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Button text should meet WCAG AA contrast ratio on all platforms")
         }
     }
     
@@ -123,17 +108,12 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: Colors should be automatically adjusted to meet contrast requirements on all platforms
             // RED PHASE: This will fail until automatic color adjustment is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "AutoAdjustedContrast"
             )
- #expect(passed, "Low contrast colors should be automatically adjusted on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Low contrast colors should be automatically adjusted on all platforms")
         }
     }
     
@@ -151,17 +131,12 @@ open class HIGComplianceColorContrastTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: System colors should meet contrast requirements on all platforms
             // RED PHASE: This will fail until color contrast validation is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "SystemColorContrast"
             )
- #expect(passed, "System colors should meet contrast requirements on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "System colors should meet contrast requirements on all platforms")
         }
     }
 }

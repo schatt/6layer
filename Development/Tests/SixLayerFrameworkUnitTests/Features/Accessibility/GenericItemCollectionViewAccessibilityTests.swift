@@ -53,17 +53,12 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #expect(testComponentComplianceSinglePlatform(
             collectionView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "ExpandableCardCollectionView"
         ) , "ExpandableCardCollectionView should generate standard accessibility ID")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
         
         // MANDATORY: Test iOS-specific behavior by inspecting the view structure
         let viewDescription = String(describing: collectionView)
@@ -71,7 +66,6 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         
         // MANDATORY: Test iOS-specific behavior in simulator
         testIOSSimulatorBehavior(collectionView)
-        
     }
     
     @Test @MainActor func testExpandableCardCollectionView_AppliesCorrectModifiersOnMacOS() {
@@ -110,17 +104,12 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #expect(testComponentComplianceSinglePlatform(
             collectionView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.macOS,
             componentName: "ExpandableCardCollectionView"
         ) , "ExpandableCardCollectionView should generate standard accessibility ID")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
         
         // MANDATORY: Test macOS-specific behavior by inspecting the view structure
         let viewDescription = String(describing: collectionView)
@@ -128,7 +117,6 @@ open class GenericItemCollectionViewRealAccessibilityTDDTests: BaseTestClass {  
         
         // MANDATORY: Test macOS-specific behavior in simulator
         testMacOSSimulatorBehavior(collectionView)
-        
     }
     
     // MARK: - Simulator Testing Methods

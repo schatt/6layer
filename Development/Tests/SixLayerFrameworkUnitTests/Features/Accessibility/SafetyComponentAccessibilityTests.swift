@@ -24,7 +24,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         // VERIFIED: VisionSafety DOES have .automaticCompliance() modifier applied
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
@@ -32,10 +31,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "VisionSafety"
         )
         #expect(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     @Test @MainActor func testPlatformSafetyGeneratesAccessibilityIdentifiers() async {
@@ -45,7 +40,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         // VERIFIED: PlatformSafety DOES have .automaticCompliance() modifier applied
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
@@ -53,10 +47,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSafety"
         )
         #expect(hasAccessibilityID, "PlatformSafety should generate accessibility identifiers")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     @Test @MainActor func testPlatformSecurityGeneratesAccessibilityIdentifiers() async {
@@ -66,7 +56,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         // VERIFIED: PlatformSecurity DOES have .automaticCompliance() modifier applied
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
@@ -74,10 +63,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformSecurity"
         )
         #expect(hasAccessibilityID, "PlatformSecurity should generate accessibility identifiers")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     @Test @MainActor func testPlatformPrivacyGeneratesAccessibilityIdentifiers() async {
@@ -87,7 +72,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
         
         // Then: Should generate accessibility identifiers
         // VERIFIED: PlatformPrivacy DOES have .automaticCompliance() modifier applied
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
@@ -95,10 +79,6 @@ open class SafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPrivacy"
         )
         #expect(hasAccessibilityID, "PlatformPrivacy should generate accessibility identifiers")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
 }
 

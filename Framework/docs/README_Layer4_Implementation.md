@@ -47,6 +47,9 @@ Create the actual UI components with platform-adaptive behavior, implementing th
 #### **Navigation Links**
 - `platformNavigationLink(title:destination:)` - Platform-adaptive navigation link
 
+#### **Settings Container**
+- `platformSettingsContainer_L4(columnVisibility:selectedCategory:sidebar:detail:)` - Device-aware settings container (iPad: NavigationSplitView, iPhone: NavigationStack, macOS: NavigationSplitView)
+
 ### **Button Components**
 
 #### **Button Styles**
@@ -148,6 +151,24 @@ Create the actual UI components with platform-adaptive behavior, implementing th
 .platformSheet(isPresented: $showingSheet) {
     // Sheet content
 }
+```
+
+### **Settings Container**
+```swift
+@State private var columnVisibility = NavigationSplitViewVisibility.automatic
+@State private var selectedCategory: String? = nil
+
+EmptyView()
+    .platformSettingsContainer_L4(
+        columnVisibility: $columnVisibility,
+        selectedCategory: $selectedCategory
+    ) {
+        // Sidebar: List of settings categories
+        SettingsCategoryList(selectedCategory: $selectedCategory)
+    } detail: {
+        // Detail: Settings for selected category
+        SettingsDetailView(category: selectedCategory)
+    }
 ```
 
 ### **System Actions**

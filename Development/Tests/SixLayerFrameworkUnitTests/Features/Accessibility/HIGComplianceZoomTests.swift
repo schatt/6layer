@@ -45,17 +45,12 @@ open class HIGComplianceZoomTests: BaseTestClass {
             // WHEN: View is created with system zoom enabled
             // THEN: View should scale appropriately while maintaining usability
             // RED PHASE: This will fail until zoom support is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "ViewWithZoom"
             )
- #expect(passed, "View should scale appropriately with system zoom on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "View should scale appropriately with system zoom on all platforms")
         }
     }
     
@@ -69,17 +64,12 @@ open class HIGComplianceZoomTests: BaseTestClass {
             // WHEN: View is created with system zoom enabled
             // THEN: Text should remain readable at all zoom levels
             // RED PHASE: This will fail until zoom support is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "TextWithZoom"
             )
- #expect(passed, "Text should remain readable at all zoom levels on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Text should remain readable at all zoom levels on all platforms")
         }
     }
     
@@ -93,17 +83,12 @@ open class HIGComplianceZoomTests: BaseTestClass {
             // WHEN: View is created with system zoom enabled
             // THEN: Button should remain usable (proper size, readable text) at all zoom levels
             // RED PHASE: This will fail until zoom support is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "ButtonWithZoom"
             )
- #expect(passed, "Button should remain usable at all zoom levels on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Button should remain usable at all zoom levels on all platforms")
         }
     }
     
@@ -129,17 +114,12 @@ open class HIGComplianceZoomTests: BaseTestClass {
             // WHEN: View is created with system zoom enabled
             // THEN: Layout should maintain integrity (no overlapping, proper spacing) at all zoom levels
             // RED PHASE: This will fail until zoom support is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "LayoutWithZoom"
             )
- #expect(passed, "Layout should maintain integrity at all zoom levels on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Layout should maintain integrity at all zoom levels on all platforms")
         }
     }
     
@@ -155,17 +135,12 @@ open class HIGComplianceZoomTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: Zoom support should work on all platforms
             // RED PHASE: This will fail until zoom support is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "CrossPlatformZoom"
             )
- #expect(passed, "Zoom support should work on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Zoom support should work on all platforms")
         }
     }
 }

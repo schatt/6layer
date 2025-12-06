@@ -30,18 +30,13 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
             .automaticCompliance()
             
             // Then: Should generate accessibility identifiers
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "CrossPlatformOptimizationManager"
             )
- #expect(hasAccessibilityID, "View with CrossPlatformOptimizationManager should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "View with CrossPlatformOptimizationManager should generate accessibility identifiers ")
         }
     }
     
@@ -57,18 +52,13 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformOptimizationSettings"
         )
- #expect(hasAccessibilityID, "PlatformOptimizationSettings should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformOptimizationSettings should generate accessibility identifiers ")
     }
     
     // MARK: - CrossPlatformPerformanceMetrics Tests
@@ -84,18 +74,13 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         .environmentObject(metrics)
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformPerformanceMetrics"
         )
- #expect(hasAccessibilityID, "CrossPlatformPerformanceMetrics should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "CrossPlatformPerformanceMetrics should generate accessibility identifiers ")
     }
     
     // MARK: - PlatformUIPatterns Tests
@@ -110,18 +95,13 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformUIPatterns"
         )
- #expect(hasAccessibilityID, "PlatformUIPatterns should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformUIPatterns should generate accessibility identifiers ")
     }
     
     // MARK: - PlatformRecommendationEngine Tests
@@ -138,18 +118,13 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformRecommendationEngine"
         )
- #expect(hasAccessibilityID, "PlatformRecommendationEngine should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformRecommendationEngine should generate accessibility identifiers ")
     }
     */
     
@@ -165,18 +140,13 @@ open class CrossPlatformOptimizationLayer6ComponentAccessibilityTests: BaseTestC
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformTesting"
         )
- #expect(hasAccessibilityID, "CrossPlatformTesting should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "CrossPlatformTesting should generate accessibility identifiers ")
     }
 }
 

@@ -30,22 +30,14 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.appleHIGCompliance()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: AppleHIGComplianceModifier DOES have .automaticCompliance() 
-            // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:32.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        // Note: Unit tests use platform view hosting, not ViewInspector
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "AppleHIGComplianceModifier"
         )
- #expect(hasAccessibilityID, "AppleHIGComplianceModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "AppleHIGComplianceModifier should generate accessibility identifiers")
     }
     
     // MARK: - SystemAccessibilityModifier Tests
@@ -61,22 +53,14 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
         let view = testContent.systemAccessibility()
         
         // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: SystemAccessibilityModifier DOES have .automaticCompliance() 
-            // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:59.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        // Note: Unit tests use platform view hosting, not ViewInspector
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
             platform: SixLayerPlatform.iOS,
             componentName: "SystemAccessibilityModifier"
         )
- #expect(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "SystemAccessibilityModifier should generate accessibility identifiers")
     }
     
     // MARK: - PlatformPatternModifier Tests
@@ -96,7 +80,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:75.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -104,10 +87,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformPatternModifier"
         )
  #expect(hasAccessibilityID, "PlatformPatternModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - VisualConsistencyModifier Tests
@@ -127,7 +106,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:92.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -135,10 +113,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "VisualConsistencyModifier"
         )
  #expect(hasAccessibilityID, "VisualConsistencyModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - InteractionPatternModifier Tests
@@ -158,7 +132,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:108.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -166,10 +139,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "InteractionPatternModifier"
         )
  #expect(hasAccessibilityID, "InteractionPatternModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - VoiceOverSupportModifier Tests
@@ -189,7 +158,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:124.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -197,10 +165,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "VoiceOverSupportModifier"
         )
  #expect(hasAccessibilityID, "VoiceOverSupportModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - KeyboardNavigationModifier Tests
@@ -220,7 +184,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:179.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -228,10 +191,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "KeyboardNavigationModifier"
         )
  #expect(hasAccessibilityID, "KeyboardNavigationModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - HighContrastModifier Tests
@@ -251,7 +210,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:196.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -259,10 +217,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "HighContrastModifier"
         )
  #expect(hasAccessibilityID, "HighContrastModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - ReducedMotionModifier Tests
@@ -282,7 +236,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:212.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -290,10 +243,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "ReducedMotionModifier"
         )
  #expect(hasAccessibilityID, "ReducedMotionModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - DynamicTypeModifier Tests
@@ -313,7 +262,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:225.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -321,42 +269,16 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "DynamicTypeModifier"
         )
  #expect(hasAccessibilityID, "DynamicTypeModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - PlatformNavigationModifier Tests
     
-    @Test @MainActor func testPlatformNavigationModifierGeneratesAccessibilityIdentifiers() async {
-        // Given: Test content
-        let testContent = platformVStackContainer {
-            Text("Platform Navigation Content")
-            Button("Test Button") { }
-        }
-        
-        // When: Applying PlatformNavigationModifier
-        let view = testContent.platformNavigation()
-        
-        // Then: Should generate accessibility identifiers
-            // TODO: ViewInspector Detection Issue - VERIFIED: platformNavigation() function DOES have .automaticCompliance() 
-            // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformNavigationLayer4.swift:29.
-            // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
-            // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testComponentComplianceSinglePlatform(
-            view,
-            expectedPattern: "SixLayer.main.ui.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "PlatformNavigationModifier"
-        )
- #expect(hasAccessibilityID, "PlatformNavigationModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-    }
+    // NOTE: testPlatformNavigationModifierGeneratesAccessibilityIdentifiers moved to UI tests
+    // NavigationStack/NavigationView cannot be reliably tested in unit tests because:
+    // 1. ViewInspector's inspect() hangs indefinitely on NavigationStack/NavigationView
+    // 2. hostRootPlatformView()'s layoutIfNeeded() hangs when hosting NavigationStack/NavigationView
+    // 3. Navigation views require a proper window/view hierarchy to initialize correctly
+    // See: Development/Tests/SixLayerFrameworkUITests/Features/Navigation/NavigationLayer4Tests.swift
     
     // MARK: - PlatformStylingModifier Tests
     
@@ -375,7 +297,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:257.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -383,10 +304,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformStylingModifier"
         )
  #expect(hasAccessibilityID, "PlatformStylingModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - PlatformIconModifier Tests
@@ -406,7 +323,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:268.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -414,10 +330,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformIconModifier"
         )
  #expect(hasAccessibilityID, "PlatformIconModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - SystemColorModifier Tests
@@ -437,7 +349,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:280.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -445,10 +356,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SystemColorModifier"
         )
  #expect(hasAccessibilityID, "SystemColorModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - SystemTypographyModifier Tests
@@ -468,7 +375,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:291.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -476,10 +382,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SystemTypographyModifier"
         )
  #expect(hasAccessibilityID, "SystemTypographyModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - SpacingModifier Tests
@@ -499,7 +401,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:302.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -507,10 +408,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "SpacingModifier"
         )
  #expect(hasAccessibilityID, "SpacingModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - TouchTargetModifier Tests
@@ -530,7 +427,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:317.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -538,10 +434,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "TouchTargetModifier"
         )
  #expect(hasAccessibilityID, "TouchTargetModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - PlatformInteractionModifier Tests
@@ -561,7 +453,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:341.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -569,10 +460,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "PlatformInteractionModifier"
         )
  #expect(hasAccessibilityID, "PlatformInteractionModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - HapticFeedbackModifier Tests
@@ -592,7 +479,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:358.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -600,10 +486,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "HapticFeedbackModifier"
         )
  #expect(hasAccessibilityID, "HapticFeedbackModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - GestureRecognitionModifier Tests
@@ -623,7 +505,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/AppleHIGComplianceModifiers.swift:382.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -631,10 +512,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "GestureRecognitionModifier"
         )
  #expect(hasAccessibilityID, "GestureRecognitionModifier should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
     
     // MARK: - AppleHIGComplianceManager Tests
@@ -651,7 +528,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             .environmentObject(manager)
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.main.ui.*",
@@ -659,10 +535,6 @@ open class AppleHIGComplianceComponentAccessibilityTests: BaseTestClass {
             componentName: "AppleHIGComplianceManager"
         )
  #expect(hasAccessibilityID, "AppleHIGComplianceManager should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
 }
 

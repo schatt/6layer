@@ -75,7 +75,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         let platformImage = PlatformImage(testNSImage)  // Implicit conversion pattern
         #expect(platformImage.nsImage == testNSImage, "Production pattern should work correctly")
         #expect(platformImage.size == testNSImage.size, "Production pattern should preserve image properties")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Test exact production pattern for photo picker callback
@@ -104,7 +104,7 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
         // macOS equivalent pattern
         let platformImage = PlatformImage(testNSImage)  // Implicit conversion pattern
         #expect(platformImage.nsImage == testNSImage, "Production pattern should work correctly")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Test delegate method callback parameter type

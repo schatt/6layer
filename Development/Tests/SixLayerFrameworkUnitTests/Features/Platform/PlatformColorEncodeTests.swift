@@ -149,7 +149,7 @@ open class PlatformColorEncodeTests: BaseTestClass {
             #expect(encodedData.count > 0, "iOS encoding should produce data")
         #elseif os(macOS)
             #expect(encodedData.count > 0, "macOS encoding should produce data")
-            #endif
+        #endif
             
         } catch {
             Issue.record("Failed to encode color: \(error)")

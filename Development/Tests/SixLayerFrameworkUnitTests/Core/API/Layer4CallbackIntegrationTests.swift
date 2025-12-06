@@ -62,7 +62,7 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         let coordinator = cameraView.makeCoordinator()
         
         // When: Execute the delegate method that triggers the callback
-        let testUIImage = createTestUIImage()
+        let testUIImage = Layer4APITestHelpers.createTestUIImage()
         let mockInfo: [UIImagePickerController.InfoKey: Any] = [
             .originalImage: testUIImage
         ]

@@ -37,18 +37,13 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
             )
             
             // Then: Should generate accessibility identifiers
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "IntelligentFormView"
             )
- #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "IntelligentFormView should generate accessibility identifiers ")
         }
     }
     
@@ -69,18 +64,13 @@ open class IntelligentFormViewComponentAccessibilityTests: BaseTestClass {
             let view = IntelligentDetailView.platformDetailView(for: detailData)
             
             // Then: Should generate accessibility identifiers
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "IntelligentDetailView"
             )
- #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "IntelligentDetailView should generate accessibility identifiers ")
         }
     }
 }

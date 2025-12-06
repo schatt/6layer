@@ -36,18 +36,13 @@ open class OCROverlayViewTests: BaseTestClass {
         )
         
         // OCROverlayView generates "SixLayer.main.ui.*OCROverlayView.*" pattern (with component name)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*OCROverlayView.*", 
+            view,
+            expectedPattern: "SixLayer.main.ui.*OCROverlayView.*",
             platform: SixLayerPlatform.iOS,
             componentName: "OCROverlayView"
         )
- #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on iOS ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on iOS ")
     }
     
     @Test @MainActor func testOCROverlayViewGeneratesAccessibilityIdentifiersOnMacOS() async {
@@ -71,18 +66,13 @@ open class OCROverlayViewTests: BaseTestClass {
         )
         
         // OCROverlayView generates "SixLayer.main.ui.*OCROverlayView.*" pattern (with component name)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
-            view, 
-            expectedPattern: "SixLayer.main.ui.*OCROverlayView.*", 
+            view,
+            expectedPattern: "SixLayer.main.ui.*OCROverlayView.*",
             platform: SixLayerPlatform.macOS,
             componentName: "OCROverlayView"
         )
- #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on macOS ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "OCROverlayView should generate accessibility identifiers with component name on macOS ")
     }
 }
 

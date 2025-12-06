@@ -25,7 +25,6 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
         // Then: Should generate accessibility identifiers
         // VERIFIED: VisionSafety DOES have .automaticCompliance() 
         // modifier applied in Framework/Sources/Components/Views/VisionSafety.swift:15.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",
@@ -33,9 +32,5 @@ open class VisionSafetyComponentAccessibilityTests: BaseTestClass {
             componentName: "VisionSafety"
         )
         #expect(hasAccessibilityID, "VisionSafety should generate accessibility identifiers")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
     }
 }

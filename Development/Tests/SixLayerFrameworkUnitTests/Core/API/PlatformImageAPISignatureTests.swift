@@ -115,7 +115,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         
         // Verify both produce equivalent results
         #expect(explicitInit.nsImage == implicitInit.nsImage, "Both initializers should produce equivalent results")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify backward compatibility with old API patterns
@@ -147,7 +147,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // Test that both old and new patterns work
         let newPattern = PlatformImage(nsImage: nsImage)
         #expect(newPattern.nsImage == callbackPattern.nsImage, "Old and new patterns should be equivalent")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify cross-platform API consistency
@@ -175,7 +175,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         let implicit = PlatformImage(nsImage)
         let explicit = PlatformImage(nsImage: nsImage)
         #expect(implicit.nsImage == explicit.nsImage, "macOS patterns should be equivalent")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify API breaking change detection
@@ -208,7 +208,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // Test that the result is usable
         #expect(brokenPattern.nsImage == nsImage, "Broken pattern should produce correct result")
         #expect(brokenPattern.size == nsImage.size, "Broken pattern should preserve image properties")
-        #endif
+    #endif
     }
     
     // MARK: - CGImage Initializer Tests (Issue #23)
@@ -248,7 +248,7 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         #expect(platformImage.size.width > 0, "PlatformImage should have valid width")
         #expect(platformImage.size.height > 0, "PlatformImage should have valid height")
         #expect(platformImage.size == expectedSize, "Size should match provided size")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify CGImage initializer eliminates platform-specific code (Issue #23)
@@ -273,11 +273,11 @@ open class PlatformImageAPISignatureTests: BaseTestClass {
         // macOS: size parameter required
         let platformImage = PlatformImage(cgImage: cgImage, size: expectedSize)
         #expect(platformImage.size == expectedSize, "macOS should use provided size")
-        #endif
         
         // Then: Both platforms produce usable PlatformImage
         #expect(platformImage.size.width > 0, "PlatformImage should be valid")
         #expect(platformImage.size.height > 0, "PlatformImage should be valid")
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify CGImage initializer with default size on macOS (Issue #23)

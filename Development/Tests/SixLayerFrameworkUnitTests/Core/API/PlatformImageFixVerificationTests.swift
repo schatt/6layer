@@ -43,7 +43,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         
         // Then: Verify it works (would have failed in 4.6.2)
         #expect(platformImage.nsImage == nsImage, "Broken pattern should now work")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify both old and new API patterns work
@@ -68,7 +68,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         
         // Both should work and produce equivalent results
         #expect(oldPattern.nsImage == newPattern.nsImage, "Both patterns should work")
-        #endif
+    #endif
     }
     
     /// BUSINESS PURPOSE: Verify the Layer 4 callback code now works
@@ -97,7 +97,7 @@ open class PlatformImageFixVerificationTests: BaseTestClass {
         // Both should work (would have failed in 4.6.2)
         #expect(capturedImage.nsImage == nsImage, "macOS camera callback should work")
         #expect(selectedImage.nsImage == nsImage, "macOS photo picker callback should work")
-        #endif
+    #endif
     }
     
 }

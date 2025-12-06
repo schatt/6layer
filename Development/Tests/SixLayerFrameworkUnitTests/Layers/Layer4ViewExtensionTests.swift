@@ -17,18 +17,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Field Content")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFormField"
         )
- #expect(hasAccessibilityID, "platformFormField with label should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFormField with label should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformFormField_WithoutLabel() async {
@@ -38,18 +33,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Field Content")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFormField"
         )
- #expect(hasAccessibilityID, "platformFormField without label should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFormField without label should generate accessibility identifiers ")
     }
     
     // MARK: - platformFormFieldGroup Tests
@@ -60,18 +50,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Group Content")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFormFieldGroup"
         )
- #expect(hasAccessibilityID, "platformFormFieldGroup with title should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFormFieldGroup with title should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformFormFieldGroup_WithoutTitle() async {
@@ -80,18 +65,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Group Content")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFormFieldGroup"
         )
- #expect(hasAccessibilityID, "platformFormFieldGroup without title should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFormFieldGroup without title should generate accessibility identifiers ")
     }
     
     // MARK: - platformValidationMessage Tests
@@ -100,18 +80,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Test")
             .platformValidationMessage("Error message", type: .error)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformValidationMessage"
         )
- #expect(hasAccessibilityID, "platformValidationMessage error should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformValidationMessage error should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformValidationMessage_AllTypes() async {
@@ -121,17 +96,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             let view = Text("Test")
                 .platformValidationMessage("Message", type: type)
             
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
                 componentName: "platformValidationMessage"
             )
- #expect(hasAccessibilityID, "platformValidationMessage \(type) should generate accessibility identifiers ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformValidationMessage \(type) should generate accessibility identifiers ")
         }
     }
     
@@ -141,18 +112,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Test")
             .platformFormDivider()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFormDivider"
         )
- #expect(hasAccessibilityID, "platformFormDivider should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFormDivider should generate accessibility identifiers ")
     }
     
     // MARK: - platformFormSpacing Tests
@@ -164,17 +130,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             let view = Text("Test")
                 .platformFormSpacing(size)
             
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
                 componentName: "platformFormSpacing"
             )
- #expect(hasAccessibilityID, "platformFormSpacing \(size) should generate accessibility identifiers ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformFormSpacing \(size) should generate accessibility identifiers ")
         }
     }
     
@@ -186,18 +148,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Content")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformNavigation"
         )
- #expect(hasAccessibilityID, "platformNavigation should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformNavigation should generate accessibility identifiers ")
     }
     
     // MARK: - platformNavigationContainer Tests
@@ -208,18 +165,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Content")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformNavigationContainer"
         )
- #expect(hasAccessibilityID, "platformNavigationContainer should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformNavigationContainer should generate accessibility identifiers ")
     }
     
     // MARK: - platformNavigationDestination Tests
@@ -235,18 +187,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 Text("Destination")
             }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformNavigationDestination"
         )
- #expect(hasAccessibilityID, "platformNavigationDestination should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformNavigationDestination should generate accessibility identifiers ")
     }
     
     // MARK: - platformNavigationButton Tests
@@ -262,18 +209,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
                 action: { buttonPressed = true }
             )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformNavigationButton"
         )
- #expect(hasAccessibilityID, "platformNavigationButton should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformNavigationButton should generate accessibility identifiers ")
     }
     
     // MARK: - platformNavigationTitle Tests
@@ -282,18 +224,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformNavigationTitle("Test Title")
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformNavigationTitle"
         )
- #expect(hasAccessibilityID, "platformNavigationTitle should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformNavigationTitle should generate accessibility identifiers ")
     }
     
     // MARK: - platformNavigationTitleDisplayMode Tests
@@ -305,17 +242,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             let view = Text("Content")
                 .platformNavigationTitleDisplayMode(mode)
             
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
                 componentName: "platformNavigationTitleDisplayMode"
             )
- #expect(hasAccessibilityID, "platformNavigationTitleDisplayMode \(mode) should generate accessibility identifiers ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformNavigationTitleDisplayMode \(mode) should generate accessibility identifiers ")
         }
     }
     
@@ -328,17 +261,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             let view = Text("Content")
                 .platformNavigationBarTitleDisplayMode(mode)
             
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
                 componentName: "platformNavigationBarTitleDisplayMode"
             )
- #expect(hasAccessibilityID, "platformNavigationBarTitleDisplayMode \(mode) should generate accessibility identifiers ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformNavigationBarTitleDisplayMode \(mode) should generate accessibility identifiers ")
         }
     }
     
@@ -349,18 +278,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformBackground()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformBackground"
         )
- #expect(hasAccessibilityID, "platformBackground default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformBackground default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformBackground_CustomColor() async {
@@ -368,18 +292,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformBackground(.blue)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformBackground"
         )
- #expect(hasAccessibilityID, "platformBackground custom color should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformBackground custom color should generate accessibility identifiers ")
     }
     
     // MARK: - platformPadding Tests
@@ -389,18 +308,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformPadding()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPadding"
         )
- #expect(hasAccessibilityID, "platformPadding default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPadding default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformPadding_Edges() async {
@@ -408,18 +322,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformPadding(.horizontal, 16)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPadding"
         )
- #expect(hasAccessibilityID, "platformPadding edges should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPadding edges should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformPadding_Value() async {
@@ -427,18 +336,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformPadding(20)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPadding"
         )
- #expect(hasAccessibilityID, "platformPadding value should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPadding value should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformReducedPadding() async {
@@ -446,18 +350,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformReducedPadding()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformReducedPadding"
         )
- #expect(hasAccessibilityID, "platformReducedPadding should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformReducedPadding should generate accessibility identifiers ")
     }
     
     // MARK: - platformCornerRadius Tests
@@ -467,36 +366,26 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformCornerRadius()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformCornerRadius"
         )
- #expect(hasAccessibilityID, "platformCornerRadius default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformCornerRadius default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformCornerRadius_Custom() async {
         let view = Text("Content")
             .platformCornerRadius(16)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformCornerRadius"
         )
- #expect(hasAccessibilityID, "platformCornerRadius custom should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformCornerRadius custom should generate accessibility identifiers ")
     }
     
     // MARK: - platformShadow Tests
@@ -505,36 +394,26 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformShadow()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformShadow"
         )
- #expect(hasAccessibilityID, "platformShadow default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformShadow default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformShadow_Custom() async {
         let view = Text("Content")
             .platformShadow(color: .gray, radius: 8, x: 2, y: 2)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformShadow"
         )
- #expect(hasAccessibilityID, "platformShadow custom should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformShadow custom should generate accessibility identifiers ")
     }
     
     // MARK: - platformBorder Tests
@@ -543,36 +422,26 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformBorder()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformBorder"
         )
- #expect(hasAccessibilityID, "platformBorder default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformBorder default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformBorder_Custom() async {
         let view = Text("Content")
             .platformBorder(color: .blue, width: 2)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformBorder"
         )
- #expect(hasAccessibilityID, "platformBorder custom should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformBorder custom should generate accessibility identifiers ")
     }
     
     // MARK: - platformFont Tests
@@ -581,36 +450,26 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformFont()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFont"
         )
- #expect(hasAccessibilityID, "platformFont default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFont default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformFont_Custom() async {
         let view = Text("Content")
             .platformFont(.headline)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFont"
         )
- #expect(hasAccessibilityID, "platformFont custom should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFont custom should generate accessibility identifiers ")
     }
     
     // MARK: - platformAnimation Tests
@@ -619,36 +478,26 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformAnimation()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformAnimation"
         )
- #expect(hasAccessibilityID, "platformAnimation default should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformAnimation default should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformAnimation_Custom() async {
         let view = Text("Content")
             .platformAnimation(.easeInOut, value: true)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformAnimation"
         )
- #expect(hasAccessibilityID, "platformAnimation custom should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformAnimation custom should generate accessibility identifiers ")
     }
     
     // MARK: - platformFrame Tests
@@ -657,72 +506,52 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformMinFrame()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformMinFrame"
         )
- #expect(hasAccessibilityID, "platformMinFrame should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformMinFrame should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformMaxFrame() async {
         let view = Text("Content")
             .platformMaxFrame()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformMaxFrame"
         )
- #expect(hasAccessibilityID, "platformMaxFrame should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformMaxFrame should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformIdealFrame() async {
         let view = Text("Content")
             .platformIdealFrame()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformIdealFrame"
         )
- #expect(hasAccessibilityID, "platformIdealFrame should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformIdealFrame should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformAdaptiveFrame() async {
         let view = Text("Content")
             .platformAdaptiveFrame()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformAdaptiveFrame"
         )
- #expect(hasAccessibilityID, "platformAdaptiveFrame should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformAdaptiveFrame should generate accessibility identifiers ")
     }
     
     // MARK: - platformFormStyle Tests
@@ -731,18 +560,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformFormStyle()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformFormStyle"
         )
- #expect(hasAccessibilityID, "platformFormStyle should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformFormStyle should generate accessibility identifiers ")
     }
     
     // MARK: - platformContentSpacing Tests
@@ -751,18 +575,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         let view = Text("Content")
             .platformContentSpacing()
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformContentSpacing"
         )
- #expect(hasAccessibilityID, "platformContentSpacing should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformContentSpacing should generate accessibility identifiers ")
     }
     
     // MARK: - platformPhotoPicker_L4 Tests
@@ -773,18 +592,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             imageSelected = image
         }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoPicker_L4"
         )
- #expect(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPhotoPicker_L4 should generate accessibility identifiers ")
     }
     
     // MARK: - platformCameraInterface_L4 Tests
@@ -795,18 +609,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             imageCaptured = image
         }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformCameraInterface_L4"
         )
- #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformCameraInterface_L4 should generate accessibility identifiers ")
     }
     
     // MARK: - platformPhotoDisplay_L4 Tests
@@ -818,35 +627,26 @@ open class Layer4ViewExtensionTests: BaseTestClass {
         for style in styles {
             let view = platformPhotoDisplay_L4(image: testImage, style: style)
             
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 platform: SixLayerPlatform.iOS,
                 componentName: "platformPhotoDisplay_L4"
             )
- #expect(hasAccessibilityID, "platformPhotoDisplay_L4 \(style) should generate accessibility identifiers ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformPhotoDisplay_L4 \(style) should generate accessibility identifiers ")
         }
     }
     
     @Test @MainActor func testPlatformPhotoDisplay_L4_NilImage() async {
         let view = platformPhotoDisplay_L4(image: nil, style: .thumbnail)
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformPhotoDisplay_L4"
         )
- #expect(hasAccessibilityID, "platformPhotoDisplay_L4 with nil image should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPhotoDisplay_L4 with nil image should generate accessibility identifiers ")
     }
     
     // MARK: - platformOCRImplementation_L4 Tests (Deprecated but still needs tests)
@@ -874,18 +674,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             resultReceived = result
         }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformOCRImplementation_L4"
         )
- #expect(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformOCRImplementation_L4 should generate accessibility identifiers ")
     }
     
     // MARK: - platformTextExtraction_L4 Tests (Deprecated but still needs tests)
@@ -926,18 +721,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             resultReceived = result
         }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformTextExtraction_L4"
         )
- #expect(hasAccessibilityID, "platformTextExtraction_L4 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformTextExtraction_L4 should generate accessibility identifiers ")
     }
     
     // MARK: - platformTextRecognition_L4 Tests (Deprecated but still needs tests)
@@ -959,18 +749,13 @@ open class Layer4ViewExtensionTests: BaseTestClass {
             resultReceived = result
         }
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "platformTextRecognition_L4"
         )
- #expect(hasAccessibilityID, "platformTextRecognition_L4 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformTextRecognition_L4 should generate accessibility identifiers ")
     }
 }
 

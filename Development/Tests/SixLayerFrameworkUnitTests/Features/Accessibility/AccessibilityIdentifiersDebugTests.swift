@@ -22,18 +22,12 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #expect(testComponentComplianceSinglePlatform(
             testView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "DirectAutomaticAccessibilityIdentifiers"
         ) , "Direct .automaticCompliance() should generate button-specific accessibility ID")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-        print("🔍 Testing direct .automaticCompliance()")
     }
     
     @Test @MainActor func testNamedModifierWorks() {
@@ -52,18 +46,12 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #expect(testComponentComplianceSinglePlatform(
             testView, 
             expectedPattern: "SixLayer.*TestButton", 
             platform: SixLayerPlatform.iOS,
             componentName: "NamedModifier"
         ) , ".named() + .automaticCompliance() should generate named button-specific accessibility ID")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-        print("🔍 Testing .named() + .automaticCompliance()")
     }
     
     @Test @MainActor func testAutomaticAccessibilityModifierWorks() {
@@ -84,18 +72,12 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #expect(testComponentComplianceSinglePlatform(
             testView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityModifier"
         ) , "AutomaticAccessibilityModifier should generate modifier-specific accessibility ID")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-        print("🔍 Testing AutomaticAccessibilityModifier directly")
     }
     
     @Test @MainActor func testAutomaticAccessibilityExtensionWorks() {
@@ -113,18 +95,12 @@ open class AccessibilityIdentifiersDebugTests: BaseTestClass {
             // This is a ViewInspector limitation, not a missing modifier issue.
             // TODO: Temporarily passing test - framework function HAS modifier but ViewInspector can't detect it
             // Remove this workaround once ViewInspector detection is fixed
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         #expect(testComponentComplianceSinglePlatform(
             testView, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "AutomaticAccessibilityExtension"
         ) , ".automaticAccessibility() should generate extension-specific accessibility ID")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-        print("🔍 Testing .automaticAccessibility() extension")
     }
     
     // MARK: - Helper Methods

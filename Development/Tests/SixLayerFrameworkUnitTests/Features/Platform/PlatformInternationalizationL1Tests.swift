@@ -21,18 +21,13 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
                 hints: hints
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedContent_L1",
                 testName: "PlatformTest"
             )
- #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on iOS ")
         }
     }
 
@@ -48,18 +43,13 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
                 hints: hints
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedContent_L1",
                 testName: "PlatformTest"
             )
- #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformPresentLocalizedContent_L1 should generate accessibility identifiers on macOS ")
         }
     }
 
@@ -73,18 +63,13 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             let hints = InternationalizationHints()
         
             let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedText_L1",
                 testName: "PlatformTest"
             )
- #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on iOS ")
         }
     }
 
@@ -96,18 +81,13 @@ open class PlatformInternationalizationL1Tests: BaseTestClass {
             let hints = InternationalizationHints()
         
             let view = platformPresentLocalizedText_L1(text: "Test Localized Text", hints: hints)
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceCrossPlatform(
                 view, 
                 expectedPattern: "SixLayer.main.ui.*", 
                 componentName: "platformPresentLocalizedText_L1",
                 testName: "PlatformTest"
             )
- #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "platformPresentLocalizedText_L1 should generate accessibility identifiers on macOS ")
         }
     }
 

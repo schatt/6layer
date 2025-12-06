@@ -67,6 +67,24 @@ open class PlatformColorsTests: BaseTestClass {
     }
     #endif
     
+    // MARK: - Helper Functions
+    
+    /// Create a test view using platform colors to verify they work functionally
+    @MainActor
+    private func createTestViewWithPlatformColors() -> some View {
+        return platformVStackContainer {
+            Text("Primary Label")
+                .foregroundColor(Color.platformPrimaryLabel)
+            Text("Secondary Label")
+                .foregroundColor(Color.platformSecondaryLabel)
+            Text("Tertiary Label")
+                .foregroundColor(Color.platformTertiaryLabel)
+        }
+        .background(Color.platformBackground)
+        .accessibilityLabel("Test view using platform colors")
+        .accessibilityHint("Tests that platform colors can be used in actual views")
+    }
+    
     // MARK: - Platform-Specific Business Logic Tests
     
     @Test @MainActor
@@ -461,10 +479,10 @@ open class PlatformColorsTests: BaseTestClass {
         #else
         // On other platforms, just verify color is valid
         #expect(shadowColor != Color.clear, "Platform shadow color should not be clear")
-        #endif
         
         // Test business logic: Shadow color should be black-based (for shadows)
         #expect(shadowColor != Color.clear, "Platform shadow color should not be clear")
+        #endif
     }
     
     @Test func testPlatformShadowColorPlatformBehavior() {
@@ -989,23 +1007,5 @@ open class PlatformColorsTests: BaseTestClass {
                 _ = color
             } }
         }
-    }
-    
-    // MARK: - Helper Functions
-    
-    /// Create a test view using platform colors to verify they work functionally
-    @MainActor
-    public func createTestViewWithPlatformColors() -> some View {
-        return platformVStackContainer {
-            Text("Primary Label")
-                .foregroundColor(Color.platformPrimaryLabel)
-            Text("Secondary Label")
-                .foregroundColor(Color.platformSecondaryLabel)
-            Text("Tertiary Label")
-                .foregroundColor(Color.platformTertiaryLabel)
-        }
-        .background(Color.platformBackground)
-        .accessibilityLabel("Test view using platform colors")
-        .accessibilityHint("Tests that platform colors can be used in actual views")
     }
 }

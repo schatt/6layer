@@ -47,8 +47,9 @@ extension View {
 // MARK: - Cross-platform hosting and accessibility utilities
 
 /// Thread-local storage for hosting controllers to prevent deallocation during test execution
+/// Made internal for navigation view tests that need to host views directly
 @MainActor
-private final class HostingControllerStorage {
+final class HostingControllerStorage {
     private static var storage: [ObjectIdentifier: Any] = [:]
     private static let lock = NSLock()
     
@@ -193,8 +194,9 @@ public func firstAccessibilityIdentifier(inHosted root: Any?) -> String? {
 
 /// Find ALL accessibility identifiers in a platform view hierarchy (not just the first one)
 /// This is used as a fallback when ViewInspector is not available
+/// Made public for navigation view tests that must bypass ViewInspector
 @MainActor
-private func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [String] {
+public func findAllAccessibilityIdentifiersFromPlatformView(_ root: Any?) -> [String] {
     var identifiers: Set<String> = []
     
     #if canImport(UIKit)

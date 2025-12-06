@@ -28,23 +28,13 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         // Note: Element-level IDs are implemented at the function level
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-
-        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
         )
- #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS ")
-        #else
-
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-
-        #endif
-
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on iOS ")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 generates proper accessibility identifiers
@@ -66,23 +56,13 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         // Note: Element-level IDs are implemented at the function level
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-
-        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
         )
- #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS ")
-        #else
-
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-
-        #endif
-
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 should generate accessibility identifiers on macOS ")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
@@ -104,23 +84,13 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         // Note: Element-level IDs are implemented at the function level
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-
-        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
         )
- #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS ")
-        #else
-
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-
-        #endif
-
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on iOS ")
     }
     
     /// BUSINESS PURPOSE: Validates that platformOCRWithVisualCorrection_L1 (array version) generates proper accessibility identifiers
@@ -142,22 +112,12 @@ open class PlatformOCRSemanticLayer1AccessibilityTests: BaseTestClass {    // MA
         
         // When & Then
         // Note: Element-level IDs are implemented at the function level
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-
-        let hasAccessibilityID =         testComponentComplianceSinglePlatform(
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformOCRWithVisualCorrection_L1"
         )
- #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS ")
-        #else
-
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-
-        #endif
-
+        #expect(hasAccessibilityID, "platformOCRWithVisualCorrection_L1 (array) should generate accessibility identifiers on macOS ")
     }
 }

@@ -25,18 +25,13 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
         let optimizedView = crossPlatformOptimization.optimizeView(testView)
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "CrossPlatformOptimizationLayer6"
         )
- #expect(hasAccessibilityID, "CrossPlatformOptimizationLayer6 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "CrossPlatformOptimizationLayer6 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testCrossPlatformOptimizationLayer6PlatformSpecificOptimizations() async {
@@ -51,18 +46,13 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSpecificOptimizations"
         )
- #expect(hasAccessibilityID, "Platform-specific optimizations should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform-specific optimizations should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testCrossPlatformOptimizationLayer6PerformanceOptimizations() async {
@@ -78,18 +68,13 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PerformanceOptimizations"
         )
- #expect(hasAccessibilityID, "Performance optimizations should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Performance optimizations should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testCrossPlatformOptimizationLayer6UIPatternOptimizations() async {
@@ -105,18 +90,13 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/CrossPlatformOptimizationLayer6.swift:652.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             optimizedView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "UIPatternOptimizations"
         )
- #expect(hasAccessibilityID, "UI pattern optimizations should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "UI pattern optimizations should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testCrossPlatformOptimizationLayer6GetPlatformRecommendations() async {
@@ -144,18 +124,13 @@ open class Layer6ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer6-Optimization/PlatformPerformanceLayer6.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             performanceView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPerformanceLayer6"
         )
- #expect(hasAccessibilityID, "PlatformPerformanceLayer6 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformPerformanceLayer6 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformPerformanceLayer6PerformanceMetrics() async {

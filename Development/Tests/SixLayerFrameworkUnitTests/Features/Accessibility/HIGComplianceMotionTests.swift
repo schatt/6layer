@@ -40,17 +40,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with reduced motion enabled
             // THEN: Animations should be disabled or simplified
             // RED PHASE: This will fail until motion preference handling is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "AnimatedViewWithReducedMotion"
             )
- #expect(passed, "Animations should respect reduced motion preference on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Animations should respect reduced motion preference on all platforms")
         }
     }
     
@@ -65,17 +60,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with reduced motion enabled
             // THEN: Transitions should be disabled or simplified
             // RED PHASE: This will fail until motion preference handling is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "TransitioningViewWithReducedMotion"
             )
- #expect(passed, "Transitions should respect reduced motion preference on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Transitions should respect reduced motion preference on all platforms")
         }
     }
     
@@ -89,17 +79,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with reduced motion enabled
             // THEN: Button animations should be disabled or simplified
             // RED PHASE: This will fail until motion preference handling is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 button,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "AnimatedButtonWithReducedMotion"
             )
- #expect(passed, "Button animations should respect reduced motion preference on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Button animations should respect reduced motion preference on all platforms")
         }
     }
     
@@ -115,17 +100,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created with normal motion (reduced motion disabled)
             // THEN: Animations should work normally
             // RED PHASE: This will fail until motion preference handling is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "AnimatedViewWithNormalMotion"
             )
- #expect(passed, "Animations should work with normal motion preference on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Animations should work with normal motion preference on all platforms")
         }
     }
     
@@ -141,17 +121,12 @@ open class HIGComplianceMotionTests: BaseTestClass {
             // WHEN: View is created on all platforms
             // THEN: Motion preferences should be respected on all platforms
             // RED PHASE: This will fail until motion preference handling is implemented
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let passed = testComponentComplianceCrossPlatform(
                 view,
                 expectedPattern: "SixLayer.*ui",
                 componentName: "CrossPlatformMotion"
             )
- #expect(passed, "Motion preferences should be respected on all platforms")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(passed, "Motion preferences should be respected on all platforms")
         }
     }
 }

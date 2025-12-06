@@ -44,18 +44,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
         
         // TDD RED PHASE: Test accessibility identifiers across both platforms
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasSpecificAccessibilityID = testComponentComplianceCrossPlatform(
             view, 
             expectedPattern: "*.main.ui.element.*", 
             componentName: "ItemCollection",
             testName: "platformPresentItemCollection_L1"
         )
- #expect(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasSpecificAccessibilityID, "platformPresentItemCollection_L1 should generate accessibility identifiers with current pattern ")
         
         print("🔍 Testing platformPresentItemCollection_L1 accessibility identifier generation")
     }
@@ -80,18 +75,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             hints: enhancedHints
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
- #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
     }
     
     /// Test platformPresentItemCollection_L1 with custom view variant
@@ -113,18 +103,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
- #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentItemCollection_L1 with enhanced hints and custom view variant
@@ -153,18 +138,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
- #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with enhanced hints and custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with enhanced hints and custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentItemCollection_L1 with all custom views variant
@@ -192,18 +172,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
- #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with all custom views should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentItemCollection_L1 with all custom views should generate accessibility identifiers ")
     }
     
     /// Test platformPresentFormData_L1 single-field variant (delegates to array version)
@@ -216,18 +191,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             hints: PresentationHints()
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentFormData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentFormData_L1 single-field variant should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentFormData_L1 single-field variant should generate accessibility identifiers ")
     }
     
     /// TDD RED PHASE: platformPresentFormData_L1 should generate accessibility identifiers
@@ -247,18 +217,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
         
         // TDD RED PHASE: Test accessibility identifiers across both platforms (platform-dependent behavior)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasSpecificAccessibilityID = testComponentComplianceCrossPlatform(
             view, 
             expectedPattern: "*.main.ui.element.*", 
             componentName: "FormField",
             testName: "platformPresentFormData_L1"
         )
- #expect(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasSpecificAccessibilityID, "platformPresentFormData_L1 should generate accessibility identifiers with new hierarchical naming ")
         
         print("🔍 Testing platformPresentFormData_L1 accessibility identifier generation")
     }
@@ -280,18 +245,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
         
         // TDD RED PHASE: Test accessibility identifiers (representative sampling on iOS)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasSpecificAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "*.main.ui.element.*", 
             platform: SixLayerPlatform.iOS,
             componentName: "NumericData"
         )
- #expect(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasSpecificAccessibilityID, "platformPresentNumericData_L1 should generate accessibility identifiers with current pattern ")
         
         print("🔍 Testing platformPresentNumericData_L1 accessibility identifier generation")
     }
@@ -315,18 +275,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             hints: enhancedHints
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentNumericData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentNumericData_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
     }
     
     /// Test platformPresentNumericData_L1 with custom view variant
@@ -345,18 +300,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentNumericData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentNumericData_L1 with custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 with custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentNumericData_L1 with enhanced hints and custom view variant
@@ -384,18 +334,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentNumericData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentNumericData_L1 with enhanced hints and custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 with enhanced hints and custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentNumericData_L1 single-item variant (delegates to array version)
@@ -408,18 +353,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             hints: PresentationHints()
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentNumericData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentNumericData_L1 single-item variant should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentNumericData_L1 single-item variant should generate accessibility identifiers ")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentMediaData_L1 generates proper accessibility identifiers
@@ -440,19 +380,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
         // view is a non-optional View, so it exists if we reach here
         
         // TDD GREEN PHASE: platformPresentMediaData_L1 should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasSpecificAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentMediaData_L1"
         )
- #expect(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-        
+        #expect(hasSpecificAccessibilityID, "platformPresentMediaData_L1 should generate accessibility identifiers ")
     }
     
     /// Test platformPresentMediaData_L1 with EnhancedPresentationHints variant
@@ -474,18 +408,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             hints: enhancedHints
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentMediaData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentMediaData_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 with EnhancedPresentationHints should generate accessibility identifiers ")
     }
     
     /// Test platformPresentMediaData_L1 with custom view variant
@@ -504,18 +433,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentMediaData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentMediaData_L1 with custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 with custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentMediaData_L1 with enhanced hints and custom view variant
@@ -543,18 +467,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentMediaData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentMediaData_L1 with enhanced hints and custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 with enhanced hints and custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentMediaData_L1 single-item variant (delegates to array version)
@@ -567,18 +486,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             hints: PresentationHints()
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentMediaData_L1"
         )
- #expect(hasAccessibilityID, "platformPresentMediaData_L1 single-item variant should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentMediaData_L1 single-item variant should generate accessibility identifiers ")
     }
     
     /// BUSINESS PURPOSE: Validates that platformPresentSettings_L1 generates proper accessibility identifiers
@@ -607,19 +521,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
         // #expect(Bool(true), "platformPresentSettings_L1 should create a view")  // view is non-optional
         
         // TDD GREEN PHASE: platformPresentSettings_L1 should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasSpecificAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentSettings_L1"
         )
- #expect(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-        
+        #expect(hasSpecificAccessibilityID, "platformPresentSettings_L1 should generate accessibility identifiers ")
     }
     
     /// Test platformPresentSettings_L1 with custom view variant
@@ -647,18 +555,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentSettings_L1"
         )
- #expect(hasAccessibilityID, "platformPresentSettings_L1 with custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 with custom view should generate accessibility identifiers ")
     }
     
     /// Test platformPresentSettings_L1 with enhanced hints and custom view variant
@@ -695,18 +598,13 @@ open class Layer1AccessibilityTests: BaseTestClass {
             }
         )
         
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             view, 
             expectedPattern: "SixLayer.*ui", 
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentSettings_L1"
         )
- #expect(hasAccessibilityID, "platformPresentSettings_L1 with enhanced hints and custom view should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "platformPresentSettings_L1 with enhanced hints and custom view should generate accessibility identifiers ")
     }
 }
 

@@ -82,26 +82,27 @@ public func hostRootPlatformView<V: View>(_ view: V) -> Any? {
     if let root = root {
         HostingControllerStorage.store(hosting, for: root)
     }
-    root?.setNeedsLayout()
-    root?.layoutIfNeeded()
+    // CRITICAL: Skip layoutIfNeeded() - it hangs indefinitely on NavigationStack/NavigationView.
+    // Accessibility identifiers can be found without forcing layout.
+    // root?.setNeedsLayout()
+    // root?.layoutIfNeeded()
     
-    // Force accessibility update
+    // Force accessibility update (doesn't require layout)
     root?.accessibilityElementsHidden = false
     root?.isAccessibilityElement = true
     
-    // Force another layout pass to ensure accessibility is updated
-    root?.setNeedsLayout()
-    root?.layoutIfNeeded()
     return root
     #elseif canImport(AppKit)
     let hosting = NSHostingController(rootView: view)
     let root = hosting.view
     // CRITICAL: Store the hosting controller to prevent deallocation
     HostingControllerStorage.store(hosting, for: root)
-    root.needsLayout = true
-    root.layoutSubtreeIfNeeded()
+    // CRITICAL: Skip layoutSubtreeIfNeeded() - it hangs indefinitely on NavigationStack/NavigationView.
+    // Accessibility identifiers can be found without forcing layout.
+    // root.needsLayout = true
+    // root.layoutSubtreeIfNeeded()
     
-    // Force accessibility update
+    // Force accessibility update (doesn't require layout)
     root.setAccessibilityElement(true)
     return root
     #else

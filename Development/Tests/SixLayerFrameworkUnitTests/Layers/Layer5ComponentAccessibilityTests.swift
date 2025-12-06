@@ -28,18 +28,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             alertButtonView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformMessagingLayer5"
         )
- #expect(hasAccessibilityID, "PlatformMessagingLayer5 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformMessagingLayer5 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformMessagingLayer5ToastGeneratesAccessibilityIdentifiers() async {
@@ -53,18 +48,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             toastView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformMessagingLayer5Toast"
         )
- #expect(hasAccessibilityID, "PlatformMessagingLayer5 toast should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformMessagingLayer5 toast should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformResourceLayer5GeneratesAccessibilityIdentifiers() async {
@@ -78,18 +68,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             resourceButtonView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformResourceLayer5"
         )
- #expect(hasAccessibilityID, "PlatformResourceLayer5 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformResourceLayer5 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformResourceLayer5ImageGeneratesAccessibilityIdentifiers() async {
@@ -103,18 +88,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             imageView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformResourceLayer5Image"
         )
- #expect(hasAccessibilityID, "PlatformResourceLayer5 image should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformResourceLayer5 image should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformNotificationLayer5GeneratesAccessibilityIdentifiers() async {
@@ -129,18 +109,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformNotificationLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             notificationView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformNotificationLayer5"
         )
- #expect(hasAccessibilityID, "PlatformNotificationLayer5 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformNotificationLayer5 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformOptimizationLayer5GeneratesAccessibilityIdentifiers() async {
@@ -155,18 +130,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformOptimizationLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             optimizationView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformOptimizationLayer5"
         )
- #expect(hasAccessibilityID, "PlatformOptimizationLayer5 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformOptimizationLayer5 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformSafetyLayer5GeneratesAccessibilityIdentifiers() async {
@@ -181,18 +151,13 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformSafetyLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             safetyView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSafetyLayer5"
         )
- #expect(hasAccessibilityID, "PlatformSafetyLayer5 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformSafetyLayer5 should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformPrivacyLayer5GeneratesAccessibilityIdentifiers() async {
@@ -207,17 +172,12 @@ open class Layer5ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer5-Platform/PlatformPrivacyLayer5.swift:16.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             privacyView,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPrivacyLayer5"
         )
- #expect(hasAccessibilityID, "PlatformPrivacyLayer5 should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "PlatformPrivacyLayer5 should generate accessibility identifiers ")
     }
 }

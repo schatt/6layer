@@ -190,10 +190,10 @@ open class PlatformImageArchitectureTests: BaseTestClass {
         // Verify we can't accidentally get NSImage from framework
         let nsImage = platformImage.nsImage  // This is OK - it's a property access
         #expect(nsImage.size.width > 0, "PlatformImage should provide valid NSImage access")
-        #endif
         
         // Verify framework components work
         #expect(platformImage.size.width > 0, "Framework should work with PlatformImage")
+        #endif
     }
     
     // MARK: - Test Data Helpers

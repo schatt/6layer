@@ -40,18 +40,13 @@ open class ModalFormViewTests: BaseTestClass {
                 )
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.main.ui.*", 
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ModalFormView"
             )
- #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on iOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on iOS ")
         }
     }
 
@@ -84,18 +79,13 @@ open class ModalFormViewTests: BaseTestClass {
                 )
             )
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.main.ui.*", 
+                view,
+                expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.macOS,
                 componentName: "ModalFormView"
             )
- #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on macOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ModalFormView should generate accessibility identifiers on macOS ")
         }
     }
 

@@ -27,18 +27,13 @@ open class FormUsageExampleComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Forms/FormUsageExample.swift:33.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.*ui",
             platform: SixLayerPlatform.iOS,
             componentName: "FormUsageExample"
         )
- #expect(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "FormUsageExample should generate accessibility identifiers ")
     }
 }
 

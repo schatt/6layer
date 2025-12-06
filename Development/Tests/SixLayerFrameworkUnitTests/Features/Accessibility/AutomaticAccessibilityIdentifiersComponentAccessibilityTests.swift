@@ -18,17 +18,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentContent_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentContent_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testComprehensiveAccessibilityModifierGeneratesAccessibilityIdentifiers() async {
@@ -40,17 +36,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testGlobalAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
@@ -62,17 +54,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicArray_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentBasicArray_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicArray_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testDisableAutomaticAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
@@ -84,18 +72,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
- #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
     }
     
     @Test @MainActor func testAccessibilityIdentifierAssignmentModifierGeneratesAccessibilityIdentifiers() async {
@@ -107,18 +90,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
- #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
     }
     
     // MARK: - Test Support Types
@@ -139,17 +117,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentItemCollection_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentItemCollection_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testScreenContextModifierGeneratesAccessibilityIdentifiers() async {
@@ -160,17 +134,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentNumericData_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentNumericData_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentNumericData_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testWorkingAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
@@ -181,18 +151,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
- #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
     }
     
     @Test @MainActor func testExactAccessibilityIdentifierModifierGeneratesAccessibilityIdentifiers() async {
@@ -204,17 +169,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentContent_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentContent_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testHierarchicalNamedModifierGeneratesAccessibilityIdentifiers() async {
@@ -226,18 +187,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentContent_L1"
         )
- #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
     }
     
     @Test @MainActor func testAccessibilityLabelAssignmentModifierGeneratesAccessibilityIdentifiers() async {
@@ -249,17 +205,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testAccessibilityHintAssignmentModifierGeneratesAccessibilityIdentifiers() async {
@@ -271,17 +223,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicArray_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentBasicArray_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicArray_L1) should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testAccessibilityTraitsAssignmentModifierGeneratesAccessibilityIdentifiers() async {
@@ -293,18 +241,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Should automatically generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Automatic ID pattern
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentItemCollection_L1"
         )
- #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component should automatically generate accessibility identifiers ")
     }
     
     @Test @MainActor func testAccessibilityValueAssignmentModifierGeneratesAccessibilityIdentifiers() async {
@@ -315,17 +258,13 @@ open class AutomaticAccessibilityIdentifiersComponentAccessibilityTests: BaseTes
         )
         
         // Then: Framework component should generate accessibility identifiers (framework applies modifier)
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             testView,
             expectedPattern: "SixLayer.main.ui.*",  // Pattern matches generated format (SixLayer.main.ui.element.View)
             platform: SixLayerPlatform.iOS,
             componentName: "platformPresentBasicValue_L1"
         )
- #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers ")         #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Framework component (platformPresentBasicValue_L1) should generate accessibility identifiers ")
     }
 }
 

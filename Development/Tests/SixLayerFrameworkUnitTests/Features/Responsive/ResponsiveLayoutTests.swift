@@ -20,18 +20,13 @@ open class ResponsiveLayoutTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
             }
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
+                view,
+                expectedPattern: "SixLayer.*ui",
                 platform: .iOS,
                 componentName: "ResponsiveLayout"
             )
- #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on iOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on iOS ")
         }
     }
 
@@ -44,18 +39,13 @@ open class ResponsiveLayoutTests: BaseTestClass {
                 platformPresentContent_L1(content: "Test Content", hints: PresentationHints())
             }
         
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
-                view, 
-                expectedPattern: "SixLayer.*ui", 
+                view,
+                expectedPattern: "SixLayer.*ui",
                 platform: .macOS,
                 componentName: "ResponsiveLayout"
             )
- #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on macOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveLayout should generate accessibility identifiers on macOS ")
         }
     }
 

@@ -54,7 +54,7 @@ public func platformImplementNavigationStack_L4<Content: View>(
 ) -> AnyView {
     let contentWithTitle: AnyView = {
         if let title = title {
-            return AnyView(content.platformNavigationTitle(title))
+            return AnyView(content.platformNavigationTitle_L4(title))
         } else {
             return AnyView(content)
         }

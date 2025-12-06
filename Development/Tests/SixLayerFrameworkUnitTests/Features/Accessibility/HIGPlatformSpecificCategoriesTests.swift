@@ -314,11 +314,11 @@ open class HIGPlatformSpecificCategoriesTests: BaseTestClass {
                 visionOSConfig: visionOSConfig
             ))
         #expect(visionOSConfig.enableHandTracking == true)
-        #endif
         
         // When: Modifier is applied
         // Then: Should use correct platform configuration
         // (Configuration values verified above)
+        #endif
     }
     
     // MARK: - Configuration Default Tests

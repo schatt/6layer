@@ -206,10 +206,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(nameField.textContentType == SixLayerTextContentType.name, "Name field should use name content type")
         #else
         #expect(nameField.textContentType == SixLayerTextContentType.name, "Name field should use name content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(nameField.contentType == nil, "Name field should not have custom contentType")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Username fields provide appropriate keyboard configuration for username input
@@ -240,10 +240,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(usernameField.textContentType == SixLayerTextContentType.username, "Username field should use username content type")
         #else
         #expect(usernameField.textContentType == SixLayerTextContentType.username, "Username field should use username content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(usernameField.contentType == nil, "Username field should not have custom contentType")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Postal code fields provide appropriate keyboard configuration for postal code input
@@ -274,10 +274,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(postalCodeField.textContentType == SixLayerTextContentType.postalCode, "Postal code field should use postalCode content type")
         #else
         #expect(postalCodeField.textContentType == SixLayerTextContentType.postalCode, "Postal code field should use postalCode content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(postalCodeField.contentType == nil, "Postal code field should not have custom contentType")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Credit card fields provide appropriate keyboard configuration for credit card input
@@ -308,10 +308,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(creditCardField.textContentType == SixLayerTextContentType.creditCardNumber, "Credit card field should use creditCardNumber content type")
         #else
         #expect(creditCardField.textContentType == SixLayerTextContentType.creditCardNumber, "Credit card field should use creditCardNumber content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(creditCardField.contentType == nil, "Credit card field should not have custom contentType")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Address fields provide appropriate keyboard configuration for address input
@@ -342,10 +342,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(addressField.textContentType == SixLayerTextContentType.fullStreetAddress, "Address field should use fullStreetAddress content type")
         #else
         #expect(addressField.textContentType == SixLayerTextContentType.fullStreetAddress, "Address field should use fullStreetAddress content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(addressField.contentType == nil, "Address field should not have custom contentType")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Job title fields provide appropriate keyboard configuration for job title input
@@ -376,10 +376,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(jobTitleField.textContentType == SixLayerTextContentType.jobTitle, "Job title field should use jobTitle content type")
         #else
         #expect(jobTitleField.textContentType == SixLayerTextContentType.jobTitle, "Job title field should use jobTitle content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(jobTitleField.contentType == nil, "Job title field should not have custom contentType")
+        #endif
     }
     
     /// BUSINESS PURPOSE: Organization name fields provide appropriate keyboard configuration for organization input
@@ -410,10 +410,10 @@ open class TextContentTypeTests: BaseTestClass {
         #expect(organizationField.textContentType == SixLayerTextContentType.organizationName, "Organization field should use organizationName content type")
         #else
         #expect(organizationField.textContentType == SixLayerTextContentType.organizationName, "Organization field should use organizationName content type")
-        #endif
         
         // And: Should not have custom contentType
         #expect(organizationField.contentType == nil, "Organization field should not have custom contentType")
+        #endif
     }
     
     // MARK: - Cross-Platform Compatibility Tests

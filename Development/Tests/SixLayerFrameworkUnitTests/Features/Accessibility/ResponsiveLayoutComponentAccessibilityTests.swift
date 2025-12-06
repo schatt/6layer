@@ -39,18 +39,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             }
         
             // Then: Should generate accessibility identifiers
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ResponsiveGrid"
             )
- #expect(hasAccessibilityID, "ResponsiveGrid should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveGrid should generate accessibility identifiers ")
         }
     }
 
@@ -74,18 +69,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // When: Creating ResponsiveNavigation
             let view = ResponsiveNavigation(content: navigationContent)
             // Then: Should generate accessibility identifiers
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ResponsiveNavigation"
             )
- #expect(hasAccessibilityID, "ResponsiveNavigation should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveNavigation should generate accessibility identifiers ")
         }
     }
 
@@ -108,18 +98,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // When: Creating ResponsiveStack
             let view = ResponsiveStack(content: stackContent)
             // Then: Should generate accessibility identifiers
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ResponsiveStack"
             )
- #expect(hasAccessibilityID, "ResponsiveStack should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveStack should generate accessibility identifiers ")
         }
     }
 
@@ -138,18 +123,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:207.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ResponsiveLayoutExample"
             )
- #expect(hasAccessibilityID, "ResponsiveLayoutExample should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveLayoutExample should generate accessibility identifiers ")
         }
     }
 
@@ -168,18 +148,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:233.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ResponsiveNavigationExample"
             )
- #expect(hasAccessibilityID, "ResponsiveNavigationExample should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsiveNavigationExample should generate accessibility identifiers ")
         }
     }
 
@@ -203,18 +178,13 @@ open class ResponsiveLayoutComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Components/Views/ResponsiveLayout.swift:100.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "ResponsivePadding"
             )
- #expect(hasAccessibilityID, "ResponsivePadding modifier should generate accessibility identifiers ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "ResponsivePadding modifier should generate accessibility identifiers ")
         }
     }
 

@@ -196,8 +196,8 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         #else
             // KeyEquivalent Equatable conformance requires iOS 17+, use character comparison instead
             #expect(shortcut.key.character == key.character)
-            #endif
             #expect(shortcut.modifiers == modifiers)
+        #endif
         }
     }
     
@@ -223,8 +223,8 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         #else
             // KeyEquivalent Equatable conformance requires iOS 17+, use character comparison instead
             #expect(shortcut.key.character == key.character)
-            #endif
             #expect(shortcut.modifiers == []) // iOS should have empty modifiers
+        #endif
         }
     }
     
@@ -715,9 +715,8 @@ open class InputHandlingInteractionsTests: BaseTestClass {
         #else
                 // KeyEquivalent Equatable conformance requires iOS 17+, use character comparison instead
                 #expect(shortcut.key.character == key.character)
-                #endif
                 #expect(shortcut.modifiers == modifier)
-        }
+        #endif
             }
     }
     
@@ -785,18 +784,13 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             }
             
             // When & Then
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.iOS,
                 componentName: "PlatformInteractionButton"
             )
- #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on iOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on iOS ")
         }
     }
     
@@ -811,18 +805,13 @@ open class InputHandlingInteractionsTests: BaseTestClass {
             }
             
             // When & Then
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view, 
                 expectedPattern: "SixLayer.*ui", 
                 platform: SixLayerPlatform.macOS,
                 componentName: "PlatformInteractionButton"
             )
- #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS ")
-        #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "PlatformInteractionButton should generate accessibility identifiers on macOS ")
         }
     }
 }

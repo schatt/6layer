@@ -28,17 +28,13 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/EyeTrackingManager.swift:367.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.iOS,
                 componentName: "EyeTrackingModifier"
             )
- #expect(hasAccessibilityID, "View with EyeTrackingModifier (using EyeTrackingManager) should generate accessibility identifiers on iOS ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "View with EyeTrackingModifier (using EyeTrackingManager) should generate accessibility identifiers on iOS ")
         }
     }
     
@@ -59,17 +55,13 @@ open class EyeTrackingManagerAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Extensions/Accessibility/EyeTrackingManager.swift:367.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
             let hasAccessibilityID = testComponentComplianceSinglePlatform(
                 view,
                 expectedPattern: "SixLayer.main.ui.*",
                 platform: SixLayerPlatform.macOS,
                 componentName: "EyeTrackingModifier"
             )
- #expect(hasAccessibilityID, "View with EyeTrackingModifier (using EyeTrackingManager) should generate accessibility identifiers on macOS ")             #else
-            // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-            // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-            #endif
+            #expect(hasAccessibilityID, "View with EyeTrackingModifier (using EyeTrackingManager) should generate accessibility identifiers on macOS ")
         }
     }
 }

@@ -28,18 +28,13 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
             // modifier applied in Framework/Sources/Layers/Layer4-Component/PlatformButtonsLayer4.swift:28.
             // The test needs to be updated to handle ViewInspector's inability to detect these modifiers reliably.
             // This is a ViewInspector limitation, not a missing modifier issue.
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             styledButton,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformPrimaryButtonStyle"
         )
- #expect(hasAccessibilityID, "Platform primary button style should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform primary button style should generate accessibility identifiers")
     }
     
     @Test @MainActor func testPlatformSecondaryButtonStyleGeneratesAccessibilityIdentifiers() async {
@@ -50,18 +45,13 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let styledButton = testButton.platformSecondaryButtonStyle()
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             styledButton,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSecondaryButtonStyle"
         )
- #expect(hasAccessibilityID, "Platform secondary button style should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform secondary button style should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformFormFieldGeneratesAccessibilityIdentifiers() async {
@@ -74,18 +64,13 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             formField,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformFormField"
         )
- #expect(hasAccessibilityID, "Platform form field should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform form field should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformListRowGeneratesAccessibilityIdentifiers() async {
@@ -98,18 +83,13 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             listRow,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformListRow"
         )
- #expect(hasAccessibilityID, "Platform list row should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform list row should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformCardStyleGeneratesAccessibilityIdentifiers() async {
@@ -123,18 +103,13 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let styledCard = testCard.platformCardStyle()
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             styledCard,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformCardStyle"
         )
- #expect(hasAccessibilityID, "Platform card style should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform card style should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformSheetGeneratesAccessibilityIdentifiers() async {
@@ -153,44 +128,21 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         }
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             sheet,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformSheet"
         )
- #expect(hasAccessibilityID, "Platform sheet should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform sheet should generate accessibility identifiers ")
     }
     
-    @Test @MainActor func testPlatformNavigationGeneratesAccessibilityIdentifiers() async {
-        // Given: A test navigation content
-        let testNavigationContent = platformVStackContainer {
-            Text("Test Navigation Title")
-            Text("Test Navigation Content")
-        }
-        
-        // When: Applying platform navigation wrapper
-        let navigation = testNavigationContent.platformNavigation()
-        
-        // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        let hasAccessibilityID = testComponentComplianceSinglePlatform(
-            navigation,
-            expectedPattern: "*.main.ui.element.*",
-            platform: SixLayerPlatform.iOS,
-            componentName: "platformNavigation"
-        )
- #expect(hasAccessibilityID, "Platform navigation should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
-    }
+    // NOTE: testPlatformNavigationGeneratesAccessibilityIdentifiers moved to UI tests
+    // NavigationStack/NavigationView cannot be reliably tested in unit tests because:
+    // 1. ViewInspector's inspect() hangs indefinitely on NavigationStack/NavigationView
+    // 2. hostRootPlatformView()'s layoutIfNeeded() hangs when hosting NavigationStack/NavigationView
+    // 3. Navigation views require a proper window/view hierarchy to initialize correctly
+    // See: Development/Tests/SixLayerFrameworkUITests/Features/Navigation/NavigationLayer4Tests.swift
     
     @Test @MainActor func testPlatformCardGridGeneratesAccessibilityIdentifiers() async {
         // Given: Test card items
@@ -208,18 +160,13 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         )
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             cardGrid,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformCardGrid"
         )
- #expect(hasAccessibilityID, "Platform card grid should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform card grid should generate accessibility identifiers ")
     }
     
     @Test @MainActor func testPlatformBackgroundGeneratesAccessibilityIdentifiers() async {
@@ -230,17 +177,12 @@ open class Layer4ComponentAccessibilityTests: BaseTestClass {
         let backgroundText = testText.platformBackground()
         
         // Then: Should generate accessibility identifiers
-        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         let hasAccessibilityID = testComponentComplianceSinglePlatform(
             backgroundText,
             expectedPattern: "*.main.ui.element.*",
             platform: SixLayerPlatform.iOS,
             componentName: "PlatformBackground"
         )
- #expect(hasAccessibilityID, "Platform background should generate accessibility identifiers ")
-        #else
-        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
-        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
-        #endif
+        #expect(hasAccessibilityID, "Platform background should generate accessibility identifiers ")
     }
 }
