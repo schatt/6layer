@@ -718,6 +718,7 @@ open class InputHandlingInteractionsTests: BaseTestClass {
                 #expect(shortcut.modifiers == modifier)
         #endif
             }
+        }
     }
     
     /// BUSINESS PURPOSE: Validate haptic feedback with all types functionality

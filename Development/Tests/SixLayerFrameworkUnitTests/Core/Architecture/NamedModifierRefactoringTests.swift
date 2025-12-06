@@ -154,6 +154,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                     platform: defaultPlatform,
                     componentName: "IndependentNamedModifier"
                 ), ".named() should work independently of global automatic accessibility settings")
+                return true
             }) != nil else {
                 return
             }
@@ -294,6 +295,7 @@ open class NamedModifierRefactoringTDDTests: BaseTestClass {
                     platform: defaultPlatform,
                     componentName: "IndependentExactNamedModifier"
                 ), ".exactNamed() should work independently of global settings")
+                return true
             }) != nil else {
                 return
             }
