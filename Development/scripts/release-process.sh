@@ -491,7 +491,7 @@ if [ $ERRORS_FOUND -gt 0 ]; then
     echo "❌ RELEASE CHECKS FAILED!"
     echo ""
     echo "Found $ERRORS_FOUND error(s) that need to be fixed:"
-    echo "$ERROR_MESSAGES"
+    echo -e "$ERROR_MESSAGES"
     echo ""
     echo "Please fix all errors and run the release script again."
     echo "💡 Tip: The script now reports ALL errors at once for efficient fixing!"
