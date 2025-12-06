@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v5.8.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v5.8.0)
+[![Version](https://img.shields.io/badge/version-v6.0.0-blue.svg)](https://github.com/schatt/6layer/releases/tag/v6.0.0)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -39,6 +39,68 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Extensible**: Easy to extend with custom layers and strategies
 - **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
 - **DRY Architecture**: Define hints once in files, use everywhere automatically
+
+## 🆕 What's New in v6.0.0
+
+### Intelligent Device-Aware App Navigation
+- **Complete 6-layer implementation**: Automatic navigation pattern selection based on device type, orientation, and screen size
+- **Semantic intent API**: Express navigation intent without device detection code via `platformPresentAppNavigation_L1()`
+- **Intelligent automation**: Framework automatically chooses between `NavigationSplitView` and detail-only navigation
+- **Platform-aware**: Handles iPad, iPhone, macOS with optimal patterns for each
+- **State management**: Optional bindings with automatic defaults
+- **Comprehensive testing**: 22 tests across all 4 layers
+
+See the [Release Notes](../Development/RELEASE_v6.0.0.md) for complete documentation.
+
+### Platform Toolbar Placement Helpers
+- **Cross-platform toolbar abstraction**: Four helper functions eliminate platform-specific toolbar placement code
+- **Semantic placements**: iOS/watchOS/visionOS use semantic placements (`.confirmationAction`, `.cancellationAction`, `.primaryAction`, `.secondaryAction`)
+- **Version handling**: iOS 16+/watchOS 9+ availability checks with fallbacks
+- **All platforms supported**: Explicit handling for iOS, macOS, watchOS, tvOS, and visionOS
+
+```swift
+.toolbar {
+    ToolbarItem(placement: platformConfirmationActionPlacement()) {
+        Button("Save") { save() }
+    }
+    ToolbarItem(placement: platformCancellationActionPlacement()) {
+        Button("Cancel") { cancel() }
+    }
+}
+```
+
+### PlatformSpacing HIG Alignment
+- **8pt grid system**: All spacing values follow Apple's Human Interface Guidelines with 8pt grid
+- **Platform-specific values**: macOS uses slightly tighter spacing (12, 20) while maintaining grid alignment
+- **Explicit platform handling**: All platforms (iOS, macOS, watchOS, tvOS, visionOS) handled explicitly
+- **Consistent API**: Single source of truth for spacing, padding, and corner radius values
+
+```swift
+VStack(spacing: PlatformSpacing.medium) {
+    Text("Title")
+    Text("Subtitle")
+}
+.padding(PlatformSpacing.padding)
+.cornerRadius(PlatformSpacing.cornerRadius)
+```
+
+See the [Platform-Specific Patterns Guide](docs/platform-specific-patterns.md#platform-specific-spacing) for complete documentation.
+
+### Platform Settings Container
+- **Device-aware settings views**: `platformSettingsContainer_L4()` automatically chooses optimal presentation pattern
+- **Intelligent selection**: iPad/macOS use split view, iPhone uses NavigationStack with conditional detail
+- **State management**: Handles column visibility and category selection automatically
+
+### Cross-Platform File System Utilities
+- **Home directory access**: `platformHomeDirectory()` for cross-platform home directory
+- **Application Support**: `platformApplicationSupportDirectory(createIfNeeded:)` with optional directory creation
+- **Documents directory**: `platformDocumentsDirectory(createIfNeeded:)` for user documents
+- **iCloud Drive integration**: Optional iCloud container support
+- **Safe error handling**: All functions return `URL?` for graceful error handling
+
+### Platform Navigation Extensions
+- **Navigation title display mode**: `platformNavigationTitleDisplayMode()` eliminates platform conditionals
+- **Cross-platform API**: iOS applies the mode, macOS is no-op
 
 ## 🆕 What's New in v5.8.0
 
