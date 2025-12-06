@@ -11,9 +11,10 @@ import SwiftUI
 public extension View {
     
     /// Platform-specific navigation wrapper that provides consistent navigation patterns
-    /// across iOS and macOS. On iOS, this wraps content in a NavigationView.
-    /// On macOS, this returns the content directly.
-    func platformNavigation<Content: View>(
+    /// across iOS and macOS. On iOS 16+, wraps content in NavigationStack; iOS 15, wraps in NavigationView.
+    /// On macOS, returns the content directly.
+    /// Layer 4: Component Implementation
+    func platformNavigation_L4<Content: View>(
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         let baseView: AnyView = {
@@ -34,48 +35,83 @@ public extension View {
             #endif
         }()
         return baseView
-            .automaticCompliance(named: "platformNavigation")
+            .automaticCompliance(named: "platformNavigation_L4")
+    }
+    
+    /// Platform-specific navigation wrapper (deprecated - use platformNavigation_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, renamed: "platformNavigation_L4", message: "Use platformNavigation_L4() for consistency with Layer 4 naming convention")
+    func platformNavigation<Content: View>(
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+        return platformNavigation_L4(content: content)
     }
 
     /// Wraps nested navigation in a platform-appropriate container
     /// iOS: NavigationStack; macOS: identity
+    /// Layer 4: Component Implementation
+    /// 
+    /// - Warning: This function is deprecated. Use `platformNavigation_L4()` instead.
+    ///   This function has no clear use case and may be removed in a future version.
+    @available(*, deprecated, message: "Use platformNavigation_L4() instead. This function has no clear use case and may be removed in a future version.")
     @ViewBuilder
-    func platformNavigationContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    func platformNavigationContainer_L4<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         #if os(iOS)
         if #available(iOS 16.0, *) {
             NavigationStack { content() }
-                .automaticCompliance(named: "platformNavigationContainer")
+                .automaticCompliance(named: "platformNavigationContainer_L4")
         } else {
             content()
-                .automaticCompliance(named: "platformNavigationContainer")
+                .automaticCompliance(named: "platformNavigationContainer_L4")
         }
         #else
         content()
-            .automaticCompliance(named: "platformNavigationContainer")
+            .automaticCompliance(named: "platformNavigationContainer_L4")
         #endif
+    }
+    
+    /// Wraps nested navigation in a platform-appropriate container (deprecated - use platformNavigation_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, message: "Use platformNavigation_L4() instead. This function has no clear use case and may be removed in a future version.")
+    @ViewBuilder
+    func platformNavigationContainer<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        return platformNavigationContainer_L4(content: content)
     }
 
     /// Platform-conditional navigation destination hook
     /// iOS: forwards to .navigationDestination; macOS: no-op passthrough
+    /// Layer 4: Component Implementation
     @ViewBuilder
-    func platformNavigationDestination<Item: Identifiable & Hashable, Destination: View>(
+    func platformNavigationDestination_L4<Item: Identifiable & Hashable, Destination: View>(
         item: Binding<Item?>,
         @ViewBuilder destination: @escaping (Item) -> Destination
     ) -> some View {
         #if os(iOS)
         if #available(iOS 17.0, *) {
             self.navigationDestination(item: item, destination: destination)
-                .automaticCompliance(named: "platformNavigationDestination")
+                .automaticCompliance(named: "platformNavigationDestination_L4")
         } else {
             // iOS 15-16 fallback: no navigation destination support
-            self.automaticCompliance(named: "platformNavigationDestination")
+            self.automaticCompliance(named: "platformNavigationDestination_L4")
         }
         #else
-        self.automaticCompliance(named: "platformNavigationDestination")
+        self.automaticCompliance(named: "platformNavigationDestination_L4")
         #endif
+    }
+    
+    /// Platform-conditional navigation destination hook (deprecated - use platformNavigationDestination_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, renamed: "platformNavigationDestination_L4", message: "Use platformNavigationDestination_L4() for consistency with Layer 4 naming convention")
+    @ViewBuilder
+    func platformNavigationDestination<Item: Identifiable & Hashable, Destination: View>(
+        item: Binding<Item?>,
+        @ViewBuilder destination: @escaping (Item) -> Destination
+    ) -> some View {
+        return platformNavigationDestination_L4(item: item, destination: destination)
     }
 
     /// Platform-specific navigation button with consistent styling and accessibility
+    /// Layer 4: Component Implementation
     /// - Parameters:
     ///   - title: The button title text
     ///   - systemImage: The SF Symbol name for the button icon
@@ -83,7 +119,7 @@ public extension View {
     ///   - accessibilityHint: Accessibility hint for screen readers
     ///   - action: The action to perform when the button is tapped
     /// - Returns: A view with platform-specific navigation button styling
-    func platformNavigationButton(
+    func platformNavigationButton_L4(
         title: String,
         systemImage: String,
         accessibilityLabel: String,
@@ -112,24 +148,51 @@ public extension View {
         .accessibilityHint(accessibilityHint)
         .accessibilityAddTraits(.isButton)
         .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-        .automaticCompliance()
+        .automaticCompliance(named: "platformNavigationButton_L4")
+    }
+    
+    /// Platform-specific navigation button (deprecated - use platformNavigationButton_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, renamed: "platformNavigationButton_L4", message: "Use platformNavigationButton_L4() for consistency with Layer 4 naming convention")
+    func platformNavigationButton(
+        title: String,
+        systemImage: String,
+        accessibilityLabel: String,
+        accessibilityHint: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        return platformNavigationButton_L4(
+            title: title,
+            systemImage: systemImage,
+            accessibilityLabel: accessibilityLabel,
+            accessibilityHint: accessibilityHint,
+            action: action
+        )
     }
 
     /// Platform-specific navigation title configuration
-    func platformNavigationTitle(_ title: String) -> some View {
+    /// Layer 4: Component Implementation
+    func platformNavigationTitle_L4(_ title: String) -> some View {
         #if os(iOS)
         return self.navigationTitle(title)
             .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-            .automaticCompliance(named: "platformNavigationTitle")
+            .automaticCompliance(named: "platformNavigationTitle_L4")
         #elseif os(macOS)
         return self.navigationTitle(title)
             .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-            .automaticCompliance(named: "platformNavigationTitle")
+            .automaticCompliance(named: "platformNavigationTitle_L4")
         #else
         return self.navigationTitle(title)
             .environment(\.accessibilityIdentifierLabel, title) // TDD GREEN: Pass label to identifier generation
-            .automaticCompliance(named: "platformNavigationTitle")
+            .automaticCompliance(named: "platformNavigationTitle_L4")
         #endif
+    }
+    
+    /// Platform-specific navigation title configuration (deprecated - use platformNavigationTitle_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, renamed: "platformNavigationTitle_L4", message: "Use platformNavigationTitle_L4() for consistency with Layer 4 naming convention")
+    func platformNavigationTitle(_ title: String) -> some View {
+        return platformNavigationTitle_L4(title)
     }
 
     /// Platform-specific navigation title display mode
@@ -151,8 +214,8 @@ public extension View {
     /// ```swift
     /// // ✅ Good: Use platform abstraction (no conditional compilation needed)
     /// Text("Content")
-    ///     .platformNavigationTitle("My Title")
-    ///     .platformNavigationTitleDisplayMode(.inline)
+    ///     .platformNavigationTitle_L4("My Title")
+    ///     .platformNavigationTitleDisplayMode_L4(.inline)
     ///
     /// // ❌ Avoid: Platform-specific conditional compilation
     /// Text("Content")
@@ -164,25 +227,41 @@ public extension View {
     ///
     /// - Parameter displayMode: The display mode to apply (`.inline`, `.large`, or `.automatic`)
     /// - Returns: A view with the platform-appropriate navigation title display mode applied
-    func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
+    /// Layer 4: Component Implementation
+    func platformNavigationTitleDisplayMode_L4(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
-            .automaticCompliance(named: "platformNavigationTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationTitleDisplayMode_L4")
         #else
         return self
-            .automaticCompliance(named: "platformNavigationTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationTitleDisplayMode_L4")
         #endif
+    }
+    
+    /// Platform-specific navigation title display mode (deprecated - use platformNavigationTitleDisplayMode_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, renamed: "platformNavigationTitleDisplayMode_L4", message: "Use platformNavigationTitleDisplayMode_L4() for consistency with Layer 4 naming convention")
+    func platformNavigationTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
+        return platformNavigationTitleDisplayMode_L4(displayMode)
     }
 
     /// Platform-specific navigation bar title display mode
-    func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
+    /// Layer 4: Component Implementation
+    func platformNavigationBarTitleDisplayMode_L4(_ displayMode: PlatformTitleDisplayMode) -> some View {
         #if os(iOS)
         return self.navigationBarTitleDisplayMode(displayMode.navigationBarDisplayMode)
-            .automaticCompliance(named: "platformNavigationBarTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationBarTitleDisplayMode_L4")
         #else
         return self
-            .automaticCompliance(named: "platformNavigationBarTitleDisplayMode")
+            .automaticCompliance(named: "platformNavigationBarTitleDisplayMode_L4")
         #endif
+    }
+    
+    /// Platform-specific navigation bar title display mode (deprecated - use platformNavigationBarTitleDisplayMode_L4)
+    /// Layer 4: Component Implementation
+    @available(*, deprecated, renamed: "platformNavigationBarTitleDisplayMode_L4", message: "Use platformNavigationBarTitleDisplayMode_L4() for consistency with Layer 4 naming convention")
+    func platformNavigationBarTitleDisplayMode(_ displayMode: PlatformTitleDisplayMode) -> some View {
+        return platformNavigationBarTitleDisplayMode_L4(displayMode)
     }
 
     // Note: platformNavigationBarBackButtonHidden moved to PlatformSpecificViewExtensions.swift

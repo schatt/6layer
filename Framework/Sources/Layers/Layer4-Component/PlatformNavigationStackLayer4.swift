@@ -63,7 +63,7 @@ public func platformImplementNavigationStack_L4<Content: View>(
     // Implement based on Layer 3 strategy
     guard let implementation = strategy.implementation else {
         // No strategy - use default
-        return AnyView(contentWithTitle.platformNavigation {
+        return AnyView(contentWithTitle.platformNavigation_L4 {
             contentWithTitle
         })
     }

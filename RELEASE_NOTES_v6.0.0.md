@@ -342,6 +342,27 @@ public struct AppNavigationStrategy: Sendable {
 
 None - this is a new feature addition.
 
+### Deprecations
+
+#### `platformNavigationContainer_L4()` and `platformNavigationContainer()`
+
+**Deprecated**: `platformNavigationContainer_L4()` and its alias `platformNavigationContainer()` are now deprecated and may be removed in a future version.
+
+**Reason**: This function has no clear use case. It only wraps content in `NavigationStack` on iOS 16+, but does nothing on iOS 15 or macOS. If you need navigation context, use `platformNavigation_L4()` instead, which always provides appropriate navigation wrapping.
+
+**Migration**:
+```swift
+// ❌ Deprecated
+content.platformNavigationContainer_L4 {
+    NestedView()
+}
+
+// ✅ Use instead
+content.platformNavigation_L4 {
+    NestedView()
+}
+```
+
 ### Migration Guide
 
 No migration required - this is a new feature. Existing code continues to work.
