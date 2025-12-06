@@ -617,6 +617,117 @@ Color.secondaryBackground
 Color.tertiaryBackground
 ```
 
+## Platform-Specific Spacing
+
+The `PlatformSpacing` struct provides consistent spacing constants that follow Apple's Human Interface Guidelines (HIG) with an 8pt grid system. All platforms are explicitly handled (iOS, macOS, watchOS, tvOS, visionOS) with no fallback clauses.
+
+### Spacing Values
+
+All spacing values follow the 8pt grid system:
+
+```swift
+// Small spacing (4pt on all platforms - 0.5 * 8)
+VStack(spacing: PlatformSpacing.small) {
+    Text("Item 1")
+    Text("Item 2")
+}
+
+// Medium spacing (8pt on all platforms - 1 * 8)
+VStack(spacing: PlatformSpacing.medium) {
+    Text("Item 1")
+    Text("Item 2")
+}
+
+// Large spacing
+// iOS/watchOS/tvOS/visionOS: 16pt (2 * 8)
+// macOS: 12pt (1.5 * 8)
+VStack(spacing: PlatformSpacing.large) {
+    Text("Item 1")
+    Text("Item 2")
+}
+
+// Extra large spacing
+// iOS/watchOS/tvOS/visionOS: 24pt (3 * 8)
+// macOS: 20pt (2.5 * 8)
+VStack(spacing: PlatformSpacing.extraLarge) {
+    Text("Item 1")
+    Text("Item 2")
+}
+```
+
+### Padding Values
+
+```swift
+// Standard padding
+// iOS/watchOS/tvOS/visionOS: 16pt (2 * 8)
+// macOS: 12pt (1.5 * 8)
+VStack {
+    Text("Content")
+}
+.padding(PlatformSpacing.padding)
+
+// Reduced padding (8pt on all platforms - 1 * 8)
+VStack {
+    Text("Content")
+}
+.padding(PlatformSpacing.reducedPadding)
+```
+
+### Corner Radius Values
+
+```swift
+// Standard corner radius
+// iOS/watchOS/visionOS: 12pt (1.5 * 8)
+// macOS/tvOS: 8pt (1 * 8)
+RoundedRectangle(cornerRadius: PlatformSpacing.cornerRadius)
+
+// Small corner radius
+// iOS/watchOS/tvOS/visionOS: 8pt (1 * 8)
+// macOS: 6pt
+RoundedRectangle(cornerRadius: PlatformSpacing.smallCornerRadius)
+```
+
+### Complete Example
+
+```swift
+struct MyView: View {
+    var body: some View {
+        VStack(spacing: PlatformSpacing.medium) {
+            Text("Title")
+                .font(.title)
+            
+            Text("Subtitle")
+                .font(.subheadline)
+        }
+        .padding(PlatformSpacing.padding)
+        .background(Color.cardBackground)
+        .cornerRadius(PlatformSpacing.cornerRadius)
+    }
+}
+```
+
+### Benefits
+
+- **HIG Compliance**: All values follow Apple's 8pt grid system
+- **Platform Awareness**: Automatically adapts to iOS/macOS conventions
+- **Type Safety**: Compile-time constants prevent runtime errors
+- **Explicit Platform Handling**: All platforms handled explicitly (no fallback)
+- **Consistency**: Single source of truth for spacing values
+- **Maintainability**: Easy to update spacing values across the app
+
+### Platform-Specific Values Summary
+
+| Property | iOS | macOS | watchOS | tvOS | visionOS |
+|----------|-----|-------|---------|------|----------|
+| `small` | 4pt | 4pt | 4pt | 4pt | 4pt |
+| `medium` | 8pt | 8pt | 8pt | 8pt | 8pt |
+| `large` | 16pt | 12pt | 16pt | 16pt | 16pt |
+| `extraLarge` | 24pt | 20pt | 24pt | 24pt | 24pt |
+| `padding` | 16pt | 12pt | 16pt | 16pt | 16pt |
+| `reducedPadding` | 8pt | 8pt | 8pt | 8pt | 8pt |
+| `cornerRadius` | 12pt | 8pt | 12pt | 8pt | 12pt |
+| `smallCornerRadius` | 8pt | 6pt | 8pt | 8pt | 8pt |
+
 ## Platform-Specific Utilities
 
 The `PlatformUtils` struct provides utility functions:
