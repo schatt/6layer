@@ -74,6 +74,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
+      ENABLE_TESTING_SEARCH_PATHS: YES
       # Inherit DEVELOPMENT_TEAM from project settings
     dependencies:
       - target: SixLayerFramework_iOS
@@ -92,6 +93,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
+      ENABLE_TESTING_SEARCH_PATHS: YES
       # Inherit DEVELOPMENT_TEAM from project settings
       DEAD_CODE_STRIPPING: YES
     dependencies:
@@ -110,6 +112,7 @@ targets:
       SWIFT_STRICT_CONCURRENCY: disabled
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
+      ENABLE_TESTING_SEARCH_PATHS: YES
       # Inherit DEVELOPMENT_TEAM from project settings
     dependencies:
       - target: SixLayerFramework_iOS
@@ -130,6 +133,7 @@ targets:
       OTHER_SWIFT_FLAGS: -Xfrontend -warn-concurrency -Xfrontend -disable-availability-checking
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
+      ENABLE_TESTING_SEARCH_PATHS: YES
       # Inherit DEVELOPMENT_TEAM from project settings
       DEAD_CODE_STRIPPING: YES
     dependencies:
@@ -150,6 +154,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
+      ENABLE_TESTING_SEARCH_PATHS: YES
       # Inherit DEVELOPMENT_TEAM from project settings
     dependencies:
       - target: SixLayerFramework_iOS
@@ -167,6 +172,7 @@ targets:
       SWIFT_VERSION: "6.0"
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
+      ENABLE_TESTING_SEARCH_PATHS: YES
       # Inherit DEVELOPMENT_TEAM from project settings
       DEAD_CODE_STRIPPING: YES
     dependencies:

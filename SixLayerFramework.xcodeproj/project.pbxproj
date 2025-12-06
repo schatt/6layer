@@ -379,6 +379,7 @@
 		5D09C97E99CFCF5AFF23461F /* PlatformPhotoComponentsLayer4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDD4C3EAD17422EDFAD7B67 /* PlatformPhotoComponentsLayer4.swift */; };
 		5D497783344EE065ACB483B0 /* PlatformInternationalizationL1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D7901BDC281C56409893B4 /* PlatformInternationalizationL1.swift */; };
 		5DE73CF0B19FD369D08E5539 /* PlatformAccessibilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71997B40CEA5F546B35AF408 /* PlatformAccessibilityExtensions.swift */; };
+		5E8745728AECE58B7767816E /* PlatformToolbarPlacementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27619B6C54618A5A1BBBFE43 /* PlatformToolbarPlacementTests.swift */; };
 		5EFFAB611354D8AD107C255B /* DynamicFormViewComponentAccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193DC5118C06D471F230104 /* DynamicFormViewComponentAccessibilityTests.swift */; };
 		5F77AD972F23645239B17DAF /* TestPatterns.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE5BF599E0166E0D25B7335 /* TestPatterns.swift */; };
 		5F7817C0159AD09270063D38 /* IntelligentCardExpansionLayer2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEAAB236351B68057C864ECC /* IntelligentCardExpansionLayer2Tests.swift */; };
@@ -487,6 +488,7 @@
 		7872646F4CF616158765F938 /* CustomItemCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A92CBD3B5AC66F840E5595 /* CustomItemCollectionViewTests.swift */; };
 		78876FAA1F1FF7C7F26AADDB /* PlatformColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD34BB63BF332AB9CB8D585 /* PlatformColorsTests.swift */; };
 		78C0956D6DCAE6119F8D845F /* PlatformMacOSNavigationStackEnhancementsLayer6.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0A4860E5F479B7BC75895B /* PlatformMacOSNavigationStackEnhancementsLayer6.swift */; };
+		78DF528D4A7F6E9CE5EA123F /* PlatformToolbarPlacementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27619B6C54618A5A1BBBFE43 /* PlatformToolbarPlacementTests.swift */; };
 		7931C3131F82BDBFE0130BF6 /* TestSetupUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C4B88F886923A3D30FD677 /* TestSetupUtilities.swift */; };
 		79566D275D5C68E2DCADFD05 /* PlatformIOSOptimizationsLayer5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D940A9E24796B88BFEC095D /* PlatformIOSOptimizationsLayer5.swift */; };
 		79783DD2ACF37EF89C9A72A4 /* ViewGenerationVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5DDFA43C3FEA4E9FCAEAE0 /* ViewGenerationVerificationTests.swift */; };
@@ -1190,6 +1192,7 @@
 		25EBAD0C7A4A68798836E562 /* OCROverlayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCROverlayTests.swift; sourceTree = "<group>"; };
 		263A35F12E3456464CB32A7F /* PlatformImageFixVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformImageFixVerificationTests.swift; sourceTree = "<group>"; };
 		26A711CEC8558677DB4273DB /* Layer5PlatformOptimizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer5PlatformOptimizationTests.swift; sourceTree = "<group>"; };
+		27619B6C54618A5A1BBBFE43 /* PlatformToolbarPlacementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformToolbarPlacementTests.swift; sourceTree = "<group>"; };
 		27FFFF642D6993C525230D91 /* SixLayerFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SixLayerFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28754605478BC396694FA796 /* PlatformColorSystemExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformColorSystemExtensions.swift; sourceTree = "<group>"; };
 		28B6AC17046E4EC31EBA88BC /* CrossPlatformOptimization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformOptimization.swift; sourceTree = "<group>"; };
@@ -2762,6 +2765,7 @@
 				14DB81837C08FAD90394DD8F /* PlatformSplitViewStateManagementLayer4Tests.swift */,
 				44B42C6BBE23B51151EBD8F4 /* PlatformSplitViewStylesLayer4Tests.swift */,
 				E0DB29867EEB045EEBCFBBD5 /* PlatformStylingLayer4Tests.swift */,
+				27619B6C54618A5A1BBBFE43 /* PlatformToolbarPlacementTests.swift */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -3540,6 +3544,7 @@
 				E6A9F9EAC197F9924D89E952 /* PlatformSplitViewStylesLayer4Tests.swift in Sources */,
 				EF0F537A3C76847741828211 /* PlatformStylingLayer4Tests.swift in Sources */,
 				93B6673CE603D4643090D31C /* PlatformTestUtilities.swift in Sources */,
+				78DF528D4A7F6E9CE5EA123F /* PlatformToolbarPlacementTests.swift in Sources */,
 				95E2CAF53F2D03A3A4A259ED /* ResponsiveCardsViewTests.swift in Sources */,
 				46C54CBD37869F99CACDCB3F /* ResponsiveContainerTests.swift in Sources */,
 				69346031CC3D8147C3D434DB /* ResponsiveLayoutComponentAccessibilityTests.swift in Sources */,
@@ -3686,6 +3691,7 @@
 				389F63F89CECDAC6EB4DF2DB /* PlatformSplitViewStylesLayer4Tests.swift in Sources */,
 				1DD5C96E771D984B9E356B3C /* PlatformStylingLayer4Tests.swift in Sources */,
 				130FE5C441DEECA441EB7906 /* PlatformTestUtilities.swift in Sources */,
+				5E8745728AECE58B7767816E /* PlatformToolbarPlacementTests.swift in Sources */,
 				524CFCFC0CAC06FC907B0422 /* ResponsiveCardsViewTests.swift in Sources */,
 				893F935D2B8D5D5B77A398D3 /* ResponsiveContainerTests.swift in Sources */,
 				14FBAD596220A89FB208B524 /* ResponsiveLayoutComponentAccessibilityTests.swift in Sources */,
@@ -4342,6 +4348,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4424,6 +4431,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4444,6 +4452,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4463,6 +4472,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4480,6 +4490,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4566,6 +4577,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4583,6 +4595,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4603,6 +4616,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4656,6 +4670,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4673,6 +4688,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4752,6 +4768,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4772,6 +4789,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
