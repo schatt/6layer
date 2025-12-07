@@ -26,6 +26,7 @@ public extension View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: onAdd) {
                     Image(systemName: addButtonIcon)
+                        .accessibilityLabel(addButtonTitle)
                 }
             }
         }
@@ -34,6 +35,7 @@ public extension View {
             ToolbarItem(placement: .automatic) {
                 Button(action: onAdd) {
                     Image(systemName: addButtonIcon)
+                        .accessibilityLabel(addButtonTitle)
                 }
             }
         }
