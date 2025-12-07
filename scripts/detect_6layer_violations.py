@@ -10,6 +10,20 @@ Usage:
     python scripts/detect_6layer_violations.py [directory]
     python scripts/detect_6layer_violations.py --json output.json
     python scripts/detect_6layer_violations.py --exclude-framework
+
+Marking Exceptions:
+    If a violation is necessary and intentional, mark it with a comment:
+    
+    // 6LAYER_ALLOW: reason for exception
+    
+    Examples:
+        let color = UIColor.red  // 6LAYER_ALLOW: Legacy code migration in progress
+        // 6LAYER_ALLOW: Required for platform-specific integration
+        let image = UIImage(named: "icon")
+    
+    The comment can be on the same line (inline) or on the line immediately before
+    the violation. The scanner will recognize these exceptions and report them
+    separately as "allowed exceptions" rather than violations.
 """
 
 import re
@@ -133,14 +147,14 @@ PLATFORM_TYPE_VIOLATIONS = {
     # Window Types
     # ============================================================================
     'NSWindow': {
-        'replacement': 'Use SwiftUI window management',
-        'hint': 'Use SwiftUI window management instead of NSWindow. Consider platform-specific window extensions',
+        'replacement': 'Use WindowGroup in @main App struct, or platformSheet_L4() for modal windows',
+        'hint': 'Use SwiftUI WindowGroup in your @main App struct instead of NSWindow. For modal windows, use platformSheet_L4(). For document-based apps, use DocumentGroup. For window state detection, use UnifiedWindowDetection.',
         'priority': 1,
         'pattern': r'\bNSWindow\b'
     },
     'UIWindow': {
-        'replacement': 'Use SwiftUI window management',
-        'hint': 'Use SwiftUI window management instead of UIWindow. Consider platform-specific window extensions',
+        'replacement': 'Use WindowGroup in @main App struct, or platformSheet_L4() for modal windows',
+        'hint': 'Use SwiftUI WindowGroup in your @main App struct instead of UIWindow. For modal windows, use platformSheet_L4(). For document-based apps, use DocumentGroup. For window state detection, use UnifiedWindowDetection.',
         'priority': 1,
         'pattern': r'\bUIWindow\b'
     },
@@ -846,6 +860,7 @@ def print_console_report(violations: List[Violation], exclusions: List[Exclusion
             print(f"Line: {violation.line_content}")
             print(f"💡 Hint: {violation.hint}")
             print(f"✅ Use: {violation.replacement}")
+            print(f"📝 To mark as exception: Add // 6LAYER_ALLOW: reason on this line or line above")
     
     # Print Priority 2 violations
     if priority_2:
@@ -857,16 +872,37 @@ def print_console_report(violations: List[Violation], exclusions: List[Exclusion
             print(f"Line: {violation.line_content}")
             print(f"💡 Hint: {violation.hint}")
             print(f"✅ Use: {violation.replacement}")
+            print(f"📝 To mark as exception: Add // 6LAYER_ALLOW: reason on this line or line above")
 
     # Print allowed exceptions
     if exceptions:
         print("\n🟢 ALLOWED EXCEPTIONS: Intentionally Allowed Violations")
         print("-" * 80)
+        print("These violations are marked with // 6LAYER_ALLOW: comments and are intentionally allowed.")
         for exception in exceptions:
             print(f"\nFile: {exception.file_path}:{exception.line_number}")
             print(f"Type: {exception.violation_type}")
             print(f"Line: {exception.line_content}")
             print(f"📝 Reason: {exception.reason}")
+    
+    # Print footer with exception instructions if violations found
+    if violations:
+        print("\n" + "="*80)
+        print("💡 HOW TO MARK EXCEPTIONS:")
+        print("="*80)
+        print("If a violation is necessary and intentional, add a comment:")
+        print("")
+        print("  // 6LAYER_ALLOW: reason for exception")
+        print("")
+        print("Examples:")
+        print("  let color = UIColor.red  // 6LAYER_ALLOW: Legacy code migration in progress")
+        print("  // 6LAYER_ALLOW: Required for platform-specific integration")
+        print("  let image = UIImage(named: \"icon\")")
+        print("")
+        print("The comment can be on the same line (inline) or on the line immediately")
+        print("before the violation. The scanner will recognize these exceptions and")
+        print("report them separately as 'allowed exceptions' rather than violations.")
+        print("="*80)
 
 def generate_json_report(violations: List[Violation], exclusions: List[Exclusion] = None, exceptions: List[AllowedException] = None) -> Dict:
     """Generate JSON report."""

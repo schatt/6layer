@@ -1303,13 +1303,91 @@ open class DynamicFormViewTests: BaseTestClass {
     }
 
     // MARK: - Auto-Loading Hints Tests (Issue #71)
+    
+    /// Helper to write a test hints file to the documents directory
+    /// Returns the unique model name used (to avoid conflicts during parallel test execution)
+    private func writeHintsFile(modelName: String, json: [String: Any]) throws -> (fileURL: URL, uniqueModelName: String) {
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            throw NSError(domain: "TestError", code: 1, userInfo: ["NSLocalizedDescription": "Could not find documents directory"])
+        }
+        let hintsDir = documentsURL.appendingPathComponent("Hints")
+        try fileManager.createDirectory(at: hintsDir, withIntermediateDirectories: true)
+        // Use unique filename to prevent conflicts during parallel test execution
+        let uniqueModelName = "\(modelName)_\(UUID().uuidString.prefix(8))"
+        let testFile = hintsDir.appendingPathComponent("\(uniqueModelName).hints")
+        let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        try data.write(to: testFile, options: .atomic)
+        // Verify file exists
+        guard fileManager.fileExists(atPath: testFile.path) else {
+            throw NSError(domain: "TestError", code: 2, userInfo: ["NSLocalizedDescription": "File was not created"])
+        }
+        return (testFile, uniqueModelName)
+    }
+    
+    /// Helper to apply hints to a configuration (same logic as DynamicFormView.init)
+    private func applyHintsToConfiguration(_ configuration: DynamicFormConfiguration) -> DynamicFormConfiguration {
+        guard let modelName = configuration.modelName else {
+            return configuration
+        }
+        
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+        let fieldHints = hintsResult.fieldHints
+        
+        // Apply hints to fields in sections
+        let sectionsWithHints = configuration.sections.map { section in
+            DynamicFormSection(
+                id: section.id,
+                title: section.title,
+                description: section.description,
+                fields: section.fields.map { field in
+                    if let hints = fieldHints[field.id] {
+                        return field.applying(hints: hints)
+                    }
+                    return field
+                },
+                isCollapsible: section.isCollapsible,
+                isCollapsed: section.isCollapsed,
+                metadata: section.metadata,
+                layoutStyle: section.layoutStyle
+            )
+        }
+        
+        // Create configuration with hints-applied sections
+        return DynamicFormConfiguration(
+            id: configuration.id,
+            title: configuration.title,
+            description: configuration.description,
+            sections: sectionsWithHints,
+            submitButtonText: configuration.submitButtonText,
+            cancelButtonText: configuration.cancelButtonText,
+            metadata: configuration.metadata,
+            modelName: configuration.modelName
+        )
+    }
 
-    @Test @MainActor func testDynamicFormViewAutoLoadsHintsWhenModelNameProvided() async {
+    @Test @MainActor func testDynamicFormViewAutoLoadsHintsWhenModelNameProvided() async throws {
         initializeTestConfig()
         // TDD: DynamicFormView should auto-load hints from .hints files when modelName is provided
         // 1. When modelName is provided, hints should be loaded from file
         // 2. Hints should be applied to fields using field.applying(hints:)
         // 3. Fields without hints in file should remain unchanged
+
+        // Create a hints file with OCR hints for username field
+        let hintsJSON: [String: Any] = [
+            "username": [
+                "ocrHints": ["username", "user name", "login"]
+            ],
+            "email": [
+                "ocrHints": ["email", "e-mail", "email address"]
+            ]
+        ]
+        
+        let (fileURL, uniqueModelName) = try writeHintsFile(modelName: "TestModel", json: hintsJSON)
+        defer {
+            try? FileManager.default.removeItem(at: fileURL)
+        }
 
         // Create fields without hints in metadata
         let usernameField = DynamicFormField(
@@ -1323,39 +1401,58 @@ open class DynamicFormViewTests: BaseTestClass {
             contentType: .email,
             label: "Email"
         )
+        
+        let fieldWithoutHints = DynamicFormField(
+            id: "password",
+            contentType: .password,
+            label: "Password"
+        )
 
         let section = DynamicFormSection(
             id: "test-section",
             title: "Test Section",
-            fields: [usernameField, emailField]
+            fields: [usernameField, emailField, fieldWithoutHints]
         )
 
         // Create configuration with modelName (Issue #71)
-        // Note: This will attempt to load TestModel.hints from bundle
-        // If file doesn't exist, hints will be empty but functionality is tested
         let configuration = DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form",
             sections: [section],
-            modelName: "TestModel"  // Triggers auto-loading
+            modelName: uniqueModelName  // Triggers auto-loading
         )
 
-        // Create DynamicFormView - should auto-load and apply hints
+        // Apply hints manually (same logic as DynamicFormView.init)
+        let effectiveConfiguration = applyHintsToConfiguration(configuration)
+        
+        // Verify hints were applied to username field
+        let updatedUsernameField = effectiveConfiguration.sections.first?.fields.first { $0.id == "username" }
+        #expect(updatedUsernameField != nil, "Username field should exist")
+        #expect(updatedUsernameField?.supportsOCR == true, "Username field should support OCR after hints applied")
+        #expect(updatedUsernameField?.ocrHints?.count == 3, "Username field should have 3 OCR hints")
+        #expect(updatedUsernameField?.ocrHints?.contains("username") == true, "Should contain 'username' hint")
+        #expect(updatedUsernameField?.ocrHints?.contains("user name") == true, "Should contain 'user name' hint")
+        
+        // Verify hints were applied to email field
+        let updatedEmailField = effectiveConfiguration.sections.first?.fields.first { $0.id == "email" }
+        #expect(updatedEmailField != nil, "Email field should exist")
+        #expect(updatedEmailField?.supportsOCR == true, "Email field should support OCR after hints applied")
+        #expect(updatedEmailField?.ocrHints?.count == 3, "Email field should have 3 OCR hints")
+        
+        // Verify field without hints remains unchanged
+        let updatedPasswordField = effectiveConfiguration.sections.first?.fields.first { $0.id == "password" }
+        #expect(updatedPasswordField != nil, "Password field should exist")
+        #expect(updatedPasswordField?.supportsOCR == false, "Password field should not support OCR (no hints in file)")
+        #expect(updatedPasswordField?.ocrHints == nil, "Password field should have nil OCR hints")
+        
+        // Verify DynamicFormView can be created with this configuration
         let view = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )
-
+        
         // Verify view was created successfully
         #expect(Bool(true), "View should be created successfully")
-        
-        // Verify configuration has modelName set
-        #expect(configuration.modelName == "TestModel", "Configuration should have modelName set")
-        
-        // Note: We can't easily verify hints were applied without accessing internal state,
-        // but the fact that the view was created without errors and the configuration
-        // has modelName set verifies the basic functionality.
-        // Full integration test would require a test hints file in the bundle.
     }
 
     @Test @MainActor func testDynamicFormViewWorksWithoutModelName() async {
@@ -1398,20 +1495,32 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(configuration.modelName == nil, "Configuration should have nil modelName by default")
     }
 
-    @Test @MainActor func testDynamicFormViewAppliesHintsFromMetadataWhenModelNameProvided() async {
+    @Test @MainActor func testDynamicFormViewAppliesHintsFromMetadataWhenModelNameProvided() async throws {
         initializeTestConfig()
         // TDD: When modelName is provided, hints from .hints file should override or merge with metadata hints
         // 1. Hints from file should be applied to fields
         // 2. Fields with metadata hints should have file hints applied on top
         // 3. This tests the hints application mechanism
 
-        // Create field with metadata hints
+        // Create a hints file with OCR hints
+        let hintsJSON: [String: Any] = [
+            "username": [
+                "ocrHints": ["username", "login", "user id"]
+            ]
+        ]
+        
+        let (fileURL, uniqueModelName) = try writeHintsFile(modelName: "TestModel", json: hintsJSON)
+        defer {
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+
+        // Create field with metadata hints (metadata is preserved, OCR hints are added)
         let fieldWithMetadata = DynamicFormField(
             id: "username",
             contentType: .text,
             label: "Username",
             metadata: [
-                "displayWidth": "narrow",  // Will be overridden if file has different value
+                "displayWidth": "narrow",
                 "maxLength": "50"
             ]
         )
@@ -1427,19 +1536,212 @@ open class DynamicFormViewTests: BaseTestClass {
             id: "test-form",
             title: "Test Form",
             sections: [section],
-            modelName: "TestModel"
+            modelName: uniqueModelName
         )
 
-        // Create DynamicFormView - should load hints and apply them
+        // Apply hints manually to verify behavior
+        let effectiveConfiguration = applyHintsToConfiguration(configuration)
+        let updatedField = effectiveConfiguration.sections.first?.fields.first
+        
+        // Verify metadata is preserved
+        #expect(updatedField?.metadata?["displayWidth"] == "narrow", "Metadata should be preserved")
+        #expect(updatedField?.metadata?["maxLength"] == "50", "Metadata should be preserved")
+        
+        // Verify OCR hints from file are applied
+        #expect(updatedField?.supportsOCR == true, "Field should support OCR after hints applied")
+        #expect(updatedField?.ocrHints?.count == 3, "Field should have 3 OCR hints from file")
+        
+        // Verify DynamicFormView can be created
         let view = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )
-
-        // Verify view was created successfully
-        #expect(Bool(true), "View should be created successfully with hints applied")
         
-        // The actual hints application happens internally in DynamicFormView.init()
-        // This test verifies the mechanism works without errors
+        #expect(Bool(true), "View should be created successfully with hints applied")
+    }
+    
+    @Test @MainActor func testDynamicFormViewAppliesCalculationHints() async throws {
+        initializeTestConfig()
+        // TDD: DynamicFormView should apply calculation hints from .hints files
+        // 1. Calculation hints should enable isCalculated on fields
+        // 2. Calculation groups should be applied to fields
+
+        // Create a hints file with calculation hints
+        let hintsJSON: [String: Any] = [
+            "total": [
+                "calculationGroups": [
+                    [
+                        "id": "price_calc",
+                        "dependentFields": ["quantity", "price"],
+                        "formula": "quantity * price",
+                        "priority": 1
+                    ]
+                ]
+            ]
+        ]
+        
+        let (fileURL, uniqueModelName) = try writeHintsFile(modelName: "TestModel", json: hintsJSON)
+        defer {
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+
+        let totalField = DynamicFormField(
+            id: "total",
+            contentType: .number,
+            label: "Total"
+        )
+
+        let section = DynamicFormSection(
+            id: "test-section",
+            title: "Test Section",
+            fields: [totalField]
+        )
+
+        let configuration = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            sections: [section],
+            modelName: uniqueModelName
+        )
+
+        // Apply hints manually to verify behavior
+        let effectiveConfiguration = applyHintsToConfiguration(configuration)
+        let updatedField = effectiveConfiguration.sections.first?.fields.first
+        
+        // Verify calculation hints were applied
+        #expect(updatedField?.isCalculated == true, "Field should be marked as calculated")
+        #expect(updatedField?.calculationGroups?.count == 1, "Field should have 1 calculation group")
+        #expect(updatedField?.calculationGroups?.first?.id == "price_calc", "Calculation group should have correct ID")
+        
+        // Verify DynamicFormView can be created
+        let view = DynamicFormView(
+            configuration: configuration,
+            onSubmit: { _ in }
+        )
+        
+        #expect(Bool(true), "View should be created successfully with calculation hints")
+    }
+    
+    @Test @MainActor func testDynamicFormViewHandlesMissingHintsFile() async {
+        initializeTestConfig()
+        // TDD: DynamicFormView should handle missing hints files gracefully
+        // 1. When hints file doesn't exist, should not crash
+        // 2. Fields should remain unchanged when no hints file exists
+        // 3. View should still be created successfully
+
+        let field = DynamicFormField(
+            id: "username",
+            contentType: .text,
+            label: "Username"
+        )
+
+        let section = DynamicFormSection(
+            id: "test-section",
+            title: "Test Section",
+            fields: [field]
+        )
+
+        // Use a model name that definitely doesn't have a hints file
+        let uniqueModelName = "NonExistentModel_\(UUID().uuidString.prefix(8))"
+        let configuration = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            sections: [section],
+            modelName: uniqueModelName
+        )
+
+        // Apply hints manually - should return original configuration when no hints found
+        let effectiveConfiguration = applyHintsToConfiguration(configuration)
+        
+        // Verify field remains unchanged
+        let updatedField = effectiveConfiguration.sections.first?.fields.first
+        #expect(updatedField?.id == "username", "Field should remain unchanged")
+        #expect(updatedField?.supportsOCR == false, "Field should not support OCR (no hints)")
+        #expect(updatedField?.ocrHints == nil, "Field should have nil OCR hints")
+        
+        // Verify DynamicFormView can be created
+        let view = DynamicFormView(
+            configuration: configuration,
+            onSubmit: { _ in }
+        )
+        
+        #expect(Bool(true), "View should be created successfully even without hints file")
+    }
+    
+    @Test @MainActor func testDynamicFormViewAppliesHintsToMultipleSections() async throws {
+        initializeTestConfig()
+        // TDD: DynamicFormView should apply hints to fields across multiple sections
+        // 1. Hints should be applied to matching fields in all sections
+        // 2. Each section should have its fields updated independently
+
+        // Create a hints file with hints for fields in different sections
+        let hintsJSON: [String: Any] = [
+            "firstName": [
+                "ocrHints": ["first name", "given name"]
+            ],
+            "lastName": [
+                "ocrHints": ["last name", "surname", "family name"]
+            ],
+            "email": [
+                "ocrHints": ["email", "e-mail"]
+            ]
+        ]
+        
+        let (fileURL, uniqueModelName) = try writeHintsFile(modelName: "TestModel", json: hintsJSON)
+        defer {
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+
+        let section1 = DynamicFormSection(
+            id: "section1",
+            title: "Section 1",
+            fields: [
+                DynamicFormField(id: "firstName", contentType: .text, label: "First Name"),
+                DynamicFormField(id: "lastName", contentType: .text, label: "Last Name")
+            ]
+        )
+        
+        let section2 = DynamicFormSection(
+            id: "section2",
+            title: "Section 2",
+            fields: [
+                DynamicFormField(id: "email", contentType: .email, label: "Email")
+            ]
+        )
+
+        let configuration = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            sections: [section1, section2],
+            modelName: uniqueModelName
+        )
+
+        // Apply hints manually to verify behavior
+        let effectiveConfiguration = applyHintsToConfiguration(configuration)
+        
+        // Verify hints applied to section 1 fields
+        let section1Fields = effectiveConfiguration.sections.first { $0.id == "section1" }?.fields ?? []
+        let firstNameField = section1Fields.first { $0.id == "firstName" }
+        let lastNameField = section1Fields.first { $0.id == "lastName" }
+        
+        #expect(firstNameField?.supportsOCR == true, "First name field should support OCR")
+        #expect(firstNameField?.ocrHints?.count == 2, "First name should have 2 OCR hints")
+        #expect(lastNameField?.supportsOCR == true, "Last name field should support OCR")
+        #expect(lastNameField?.ocrHints?.count == 3, "Last name should have 3 OCR hints")
+        
+        // Verify hints applied to section 2 fields
+        let section2Fields = effectiveConfiguration.sections.first { $0.id == "section2" }?.fields ?? []
+        let emailField = section2Fields.first { $0.id == "email" }
+        
+        #expect(emailField?.supportsOCR == true, "Email field should support OCR")
+        #expect(emailField?.ocrHints?.count == 2, "Email should have 2 OCR hints")
+        
+        // Verify DynamicFormView can be created
+        let view = DynamicFormView(
+            configuration: configuration,
+            onSubmit: { _ in }
+        )
+        
+        #expect(Bool(true), "View should be created successfully with hints in multiple sections")
     }
 }
