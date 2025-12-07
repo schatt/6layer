@@ -880,12 +880,9 @@ public enum DirectoryValidationError: Error, LocalizedError, Sendable {
 /// - Returns: `true` if the directory exists, is a directory, and is readable by the current process
 public func validateDirectoryAccess(at url: URL) -> Bool {
     let path = url.path
+    let (exists, isDirectory) = pathExistsAndIsDirectory(path)
     
-    // Check if path exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
-    
-    guard exists && isDirectory.boolValue else {
+    guard exists && isDirectory else {
         return false
     }
     
@@ -927,16 +924,13 @@ public func validateDirectoryAccess(at url: URL) -> Bool {
 @discardableResult
 public func validateDirectoryAccessThrowing(at url: URL) throws -> Bool {
     let path = url.path
-    
-    // Check if path exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+    let (exists, isDirectory) = pathExistsAndIsDirectory(path)
     
     guard exists else {
         throw DirectoryValidationError.doesNotExist
     }
     
-    guard isDirectory.boolValue else {
+    guard isDirectory else {
         throw DirectoryValidationError.notADirectory
     }
     
@@ -989,14 +983,11 @@ public func validateDirectoryAccessThrowing(at url: URL) throws -> Bool {
 /// - Returns: `DirectoryPermissions` structure with detailed permission information
 public func checkDirectoryPermissions(at url: URL) -> DirectoryPermissions {
     let path = url.path
+    let (exists, isDirectory) = pathExistsAndIsDirectory(path)
     
-    // Check if path exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+    let isFile = exists && !isDirectory
     
-    let isFile = exists && !isDirectory.boolValue
-    
-    guard exists && isDirectory.boolValue else {
+    guard exists && isDirectory else {
         return DirectoryPermissions(
             readable: false,
             writable: false,
@@ -1219,11 +1210,9 @@ public func safeAppendPathComponent(_ url: URL, _ component: String) -> URL? {
 /// - Note: Returns `0` for empty directories
 public func calculateDirectorySize(at url: URL) -> Int64? {
     let path = url.path
+    let (exists, isDirectory) = pathExistsAndIsDirectory(path)
     
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory),
-          isDirectory.boolValue else {
+    guard exists && isDirectory else {
         return nil
     }
     
@@ -1306,11 +1295,9 @@ public func calculateDirectorySize(at url: URL) -> Int64? {
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public func calculateDirectorySizeAsync(at url: URL) async -> Int64? {
     let path = url.path
+    let (exists, isDirectory) = pathExistsAndIsDirectory(path)
     
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory),
-          isDirectory.boolValue else {
+    guard exists && isDirectory else {
         return nil
     }
     
@@ -1370,6 +1357,47 @@ public func calculateDirectorySizeAsync(at url: URL) async -> Int64? {
 
 // MARK: - Path Sanitization
 
+// MARK: - Internal Sanitization Helpers
+
+/// Unicode scalars for zero-width characters that should be removed
+private let zeroWidthCharacters: [Unicode.Scalar] = [
+    Unicode.Scalar(0x200B)!, // Zero-width space
+    Unicode.Scalar(0x200C)!, // Zero-width non-joiner
+    Unicode.Scalar(0x200D)!, // Zero-width joiner
+    Unicode.Scalar(0xFEFF)! // Zero-width no-break space
+]
+
+/// Unicode scalars for bidirectional override characters that should be removed
+private let bidirectionalOverrideCharacters: [Unicode.Scalar] = [
+    Unicode.Scalar(0x202E)!, // Right-to-left override
+    Unicode.Scalar(0x202D)!  // Left-to-right override
+]
+
+/// Removes control characters from a string (0x00-0x1F, 0x7F)
+private func removeControlCharacters(_ string: String) -> String {
+    return string.unicodeScalars.filter { scalar in
+        let value = scalar.value
+        return !(value <= 0x1F || value == 0x7F)
+    }.reduce("") { $0 + String($1) }
+}
+
+/// Removes zero-width characters from a string
+private func removeZeroWidthCharacters(_ string: String) -> String {
+    return string.unicodeScalars.filter { !zeroWidthCharacters.contains($0) }.reduce("") { $0 + String($1) }
+}
+
+/// Removes bidirectional override characters from a string
+private func removeBidirectionalOverrideCharacters(_ string: String) -> String {
+    return string.unicodeScalars.filter { !bidirectionalOverrideCharacters.contains($0) }.reduce("") { $0 + String($1) }
+}
+
+/// Checks if a path exists and is a directory
+private func pathExistsAndIsDirectory(_ path: String) -> (exists: Bool, isDirectory: Bool) {
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+    return (exists, isDirectory.boolValue)
+}
+
 /// Sanitizes a path string to prevent security vulnerabilities.
 ///
 /// **What it does:**
@@ -1421,26 +1449,13 @@ public func sanitizePath(_ path: String) -> String {
     result = result.precomposedStringWithCanonicalMapping
     
     // 2. Remove control characters (0x00-0x1F, 0x7F)
-    result = result.unicodeScalars.filter { scalar in
-        let value = scalar.value
-        return !(value <= 0x1F || value == 0x7F)
-    }.reduce("") { $0 + String($1) }
+    result = removeControlCharacters(result)
     
     // 3. Remove zero-width characters
-    let zeroWidthChars: [Unicode.Scalar] = [
-        Unicode.Scalar(0x200B)!, // Zero-width space
-        Unicode.Scalar(0x200C)!, // Zero-width non-joiner
-        Unicode.Scalar(0x200D)!, // Zero-width joiner
-        Unicode.Scalar(0xFEFF)! // Zero-width no-break space
-    ]
-    result = result.unicodeScalars.filter { !zeroWidthChars.contains($0) }.reduce("") { $0 + String($1) }
+    result = removeZeroWidthCharacters(result)
     
     // 4. Remove bidirectional override characters
-    let bidirectionalChars: [Unicode.Scalar] = [
-        Unicode.Scalar(0x202E)!, // Right-to-left override
-        Unicode.Scalar(0x202D)!  // Left-to-right override
-    ]
-    result = result.unicodeScalars.filter { !bidirectionalChars.contains($0) }.reduce("") { $0 + String($1) }
+    result = removeBidirectionalOverrideCharacters(result)
     
     // 5. Convert backslashes to forward slashes
     result = result.replacingOccurrences(of: "\\", with: "/")
@@ -1577,26 +1592,13 @@ public func sanitizeFilename(
     result = result.precomposedStringWithCanonicalMapping
     
     // 2. Remove control characters (0x00-0x1F, 0x7F)
-    result = result.unicodeScalars.filter { scalar in
-        let value = scalar.value
-        return !(value <= 0x1F || value == 0x7F)
-    }.reduce("") { $0 + String($1) }
+    result = removeControlCharacters(result)
     
     // 3. Remove zero-width characters
-    let zeroWidthChars: [Unicode.Scalar] = [
-        Unicode.Scalar(0x200B)!, // Zero-width space
-        Unicode.Scalar(0x200C)!, // Zero-width non-joiner
-        Unicode.Scalar(0x200D)!, // Zero-width joiner
-        Unicode.Scalar(0xFEFF)! // Zero-width no-break space
-    ]
-    result = result.unicodeScalars.filter { !zeroWidthChars.contains($0) }.reduce("") { $0 + String($1) }
+    result = removeZeroWidthCharacters(result)
     
     // 4. Remove bidirectional override characters
-    let bidirectionalChars: [Unicode.Scalar] = [
-        Unicode.Scalar(0x202E)!, // Right-to-left override
-        Unicode.Scalar(0x202D)!  // Left-to-right override
-    ]
-    result = result.unicodeScalars.filter { !bidirectionalChars.contains($0) }.reduce("") { $0 + String($1) }
+    result = removeBidirectionalOverrideCharacters(result)
     
     // 5. Replace path separators (not allowed in filenames)
     result = result.replacingOccurrences(of: "/", with: String(replacementCharacter))
