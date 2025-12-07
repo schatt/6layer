@@ -808,13 +808,31 @@ public struct IntelligentFormView {
     }
     #endif
     
-    /// Extract field value from an object using reflection
+    /// Extract field value from an object using reflection or KVC
+    /// Supports both regular Swift types (via Mirror) and CoreData entities (via KVC)
     private static func extractFieldValue(from object: Any, fieldName: String) -> Any {
+        #if canImport(CoreData)
+        // Check if this is a Core Data managed object
+        if let managedObject = object as? NSManagedObject {
+            // Use Core Data value extraction via KVC
+            if let value = managedObject.value(forKey: fieldName), !(value is NSNull) {
+                return value
+            }
+            return "N/A"
+        }
+        #endif
+        
+        // Use Mirror for non-Core Data objects
         let mirror = Mirror(reflecting: object)
         
         for child in mirror.children {
             if child.label == fieldName {
-                return child.value
+                let value = child.value
+                // Return "N/A" for nil values wrapped as Optional.none
+                if String(describing: value) == "nil" {
+                    return "N/A"
+                }
+                return value
             }
         }
         
