@@ -1,6 +1,9 @@
 import Foundation
 import SwiftUI
 import Combine
+#if canImport(CoreData)
+import CoreData
+#endif
 
 // MARK: - DataBinder
 
@@ -36,12 +39,54 @@ public final class DataBinder<T> {
     ///   - keyPath: The key path to the model property
     func bind<Value>(_ fieldName: String, to keyPath: WritableKeyPath<T, Value>) {
         let binding = FieldBinding(keyPath: keyPath)
-        bindings[fieldName] = binding
-        
-        // Initialize change tracking with current value
         let currentValue = model[keyPath: keyPath]
-        changeTracker.initializeField(fieldName, value: currentValue)
+        registerBinding(fieldName, binding: binding, initialValue: currentValue)
     }
+    
+    #if canImport(CoreData)
+    /// Bind a form field using KVC (Key-Value Coding) for CoreData entities
+    /// This method is required because @NSManaged properties don't support WritableKeyPath assignment.
+    /// Use this method when binding to NSManagedObject instances.
+    /// - Parameter fieldName: The name of the form field (must match the CoreData attribute name)
+    func bindKVC(_ fieldName: String) {
+        guard let managedObject = model as? NSManagedObject else {
+            // Not a CoreData entity, this method shouldn't be called
+            return
+        }
+        
+        let binding = FieldBinding<T>(managedObject: managedObject, fieldName: fieldName)
+        // Get current value, using NSNull() as placeholder for nil to preserve type information
+        let currentValue = managedObject.value(forKey: fieldName) ?? NSNull()
+        registerBinding(fieldName, binding: binding, initialValue: currentValue)
+    }
+    
+    /// Auto-detect model type and use appropriate binding method
+    /// - For NSManagedObject: Uses KVC binding
+    /// - For regular Swift types: Requires keyPath parameter
+    /// - Parameters:
+    ///   - fieldName: The name of the form field
+    ///   - keyPath: Optional key path for non-CoreData types (required for non-CoreData)
+    func bindAuto(_ fieldName: String) {
+        if isCoreDataEntity {
+            bindKVC(fieldName)
+        }
+        // For non-CoreData types, use bind(_:to:) directly with key path
+    }
+    
+    /// Auto-detect model type and use appropriate binding method with key path
+    /// - For NSManagedObject: Uses KVC binding (keyPath is ignored)
+    /// - For regular Swift types: Uses the provided key path
+    /// - Parameters:
+    ///   - fieldName: The name of the form field
+    ///   - keyPath: Key path for regular Swift types (ignored for CoreData)
+    func bindAuto<Value>(_ fieldName: String, keyPath: WritableKeyPath<T, Value>) {
+        if isCoreDataEntity {
+            bindKVC(fieldName)
+        } else {
+            bind(fieldName, to: keyPath)
+        }
+    }
+    #endif
     
     /// Unbind a form field
     /// - Parameter fieldName: The name of the field to unbind
@@ -140,6 +185,25 @@ public final class DataBinder<T> {
         changeTracker.clearChanges()
         dirtyStateManager.clearAll()
     }
+    
+    // MARK: - Private Helpers
+    
+    /// Register a binding and initialize change tracking
+    /// - Parameters:
+    ///   - fieldName: The name of the field
+    ///   - binding: The field binding to register
+    ///   - initialValue: The initial value for change tracking
+    private func registerBinding(_ fieldName: String, binding: FieldBinding<T>, initialValue: Any) {
+        bindings[fieldName] = binding
+        changeTracker.initializeField(fieldName, value: initialValue)
+    }
+    
+    #if canImport(CoreData)
+    /// Check if the model is a CoreData entity
+    private var isCoreDataEntity: Bool {
+        return model is NSManagedObject
+    }
+    #endif
 }
 
 // MARK: - Field Binding
@@ -160,6 +224,27 @@ public class FieldBinding<T> {
             }
         }
     }
+    
+    #if canImport(CoreData)
+    /// Initialize binding using KVC (Key-Value Coding) for CoreData entities
+    /// This is required because @NSManaged properties don't support WritableKeyPath assignment
+    /// - Parameters:
+    ///   - managedObject: The NSManagedObject instance to bind to
+    ///   - fieldName: The name of the CoreData attribute
+    init(managedObject: NSManagedObject, fieldName: String) {
+        self.getValueClosure = { _ in
+            // Return the actual value from CoreData (may be nil)
+            return managedObject.value(forKey: fieldName) ?? NSNull()
+        }
+        
+        self.setValueClosure = { value, _ in
+            // Convert NSNull back to nil for proper CoreData handling
+            // Otherwise use the value directly
+            let valueToSet = (value is NSNull) ? nil : value
+            managedObject.setValue(valueToSet, forKey: fieldName)
+        }
+    }
+    #endif
     
     func getValue(from model: T) -> Any {
         return getValueClosure(model)

@@ -573,6 +573,8 @@ let form = IntelligentFormView.generateForm(
 
 ### Example 6: Core Data with Automatic Binding
 
+**Important**: CoreData `@NSManaged` properties don't support `WritableKeyPath` assignment. Use KVC-based binding instead.
+
 ```swift
 #if canImport(CoreData)
 import CoreData
@@ -587,16 +589,38 @@ class Task: NSManagedObject {
 
 let task: Task = // ... get from context
 
-// Automatic binding works with Core Data
+// Option 1: Use bindKVC for CoreData entities
+let dataBinder = DataBinder(task)
+dataBinder.bindKVC("title")
+dataBinder.bindKVC("status")
+dataBinder.bindKVC("priority")
+
 let form = IntelligentFormView.generateForm(
     for: task,
+    dataBinder: dataBinder,
     onSubmit: { updatedTask in
         // Core Data auto-save happens (see Issue #9)
-        // Model is updated as fields change (if bound)
+        // Model is updated as fields change via KVC binding
+    }
+)
+
+// Option 2: Use bindAuto for automatic detection
+let dataBinder2 = DataBinder(task)
+dataBinder2.bindAuto("title")  // Auto-detects CoreData and uses KVC
+dataBinder2.bindAuto("status")
+dataBinder2.bindAuto("priority")
+
+let form2 = IntelligentFormView.generateForm(
+    for: task,
+    dataBinder: dataBinder2,
+    onSubmit: { updatedTask in
+        // Core Data auto-save happens
     }
 )
 #endif
 ```
+
+**Note**: The `bindKVC()` and `bindAuto()` methods are only available when `CoreData` is imported. For regular Swift types, continue using `bind(_:to:)` with key paths.
 
 ---
 
@@ -625,6 +649,24 @@ extension DataBinder where T == YourModel {
 **Impact**: Fields for immutable properties will not update the model, even if bound.
 
 **Workaround**: Use `var` for properties that need to be editable, or opt out of automatic binding.
+
+### Limitation 3: CoreData @NSManaged Properties Require KVC Binding
+
+**Issue**: CoreData `@NSManaged` properties don't support `WritableKeyPath` assignment.
+
+**Impact**: Using `bind(_:to:)` with key paths won't work for CoreData entities.
+
+**Solution**: Use `bindKVC(_:)` or `bindAuto(_:)` for CoreData entities:
+
+```swift
+#if canImport(CoreData)
+let dataBinder = DataBinder(coreDataEntity)
+dataBinder.bindKVC("title")  // Use KVC instead of key path
+dataBinder.bindAuto("status") // Auto-detects CoreData and uses KVC
+#endif
+```
+
+**Note**: This limitation was addressed in Issue #72. The framework now provides KVC-based binding specifically for CoreData entities.
 
 ### Limitation 3: Auto-Created Binder Not Easily Accessible
 
