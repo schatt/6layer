@@ -26,114 +26,128 @@ public enum PlatformHapticFeedback: CaseIterable {
     case error
 }
 
+// MARK: - Haptic Feedback Triggering
+
+/// Platform-specific haptic feedback triggering logic
+private func triggerHapticFeedback(_ feedback: PlatformHapticFeedback) {
+    #if os(iOS)
+    switch feedback {
+    case .light:
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+    case .medium:
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+    case .heavy:
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+    case .soft:
+        if #available(iOS 13.0, *) {
+            let generator = UIImpactFeedbackGenerator(style: .soft)
+            generator.impactOccurred()
+        } else {
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        }
+    case .rigid:
+        if #available(iOS 13.0, *) {
+            let generator = UIImpactFeedbackGenerator(style: .rigid)
+            generator.impactOccurred()
+        } else {
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+        }
+    case .success:
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+    case .warning:
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+    case .error:
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.error)
+    }
+    #else
+    // macOS and other platforms: No-op (graceful fallback)
+    #endif
+}
+
+// MARK: - Haptic Feedback View Modifiers
+
+/// View modifier that triggers haptic feedback on tap
+private struct PlatformHapticFeedbackTapModifier: ViewModifier {
+    let feedback: PlatformHapticFeedback
+    
+    func body(content: Content) -> some View {
+        content
+            .onTapGesture {
+                triggerHapticFeedback(feedback)
+            }
+    }
+}
+
+/// View modifier that triggers haptic feedback and executes action on tap
+private struct PlatformHapticFeedbackWithActionModifier: ViewModifier {
+    let feedback: PlatformHapticFeedback
+    let action: () -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .onTapGesture {
+                triggerHapticFeedback(feedback)
+                action()
+            }
+    }
+}
+
 /// Platform-specific haptic feedback extensions that provide consistent behavior
 /// across iOS and macOS while handling platform differences appropriately
 public extension View {
 
     /// Platform haptic feedback trigger
-    /// iOS: Triggers haptic feedback; macOS: No-op (graceful fallback)
+    /// iOS: Triggers haptic feedback on tap; macOS: No-op (graceful fallback)
     ///
     /// - Parameter feedback: The type of haptic feedback to trigger
-    /// - Returns: The view unchanged (for chaining)
+    /// - Returns: The view with haptic feedback on tap
     ///
     /// ## Usage Example
     /// ```swift
     /// Button("Tap me") { }
     ///     .platformHapticFeedback(.light)
     /// ```
+    ///
+    /// **Note**: Haptic feedback triggers when the view is tapped, not when the modifier is applied.
     func platformHapticFeedback(_ feedback: PlatformHapticFeedback) -> some View {
-        #if os(iOS)
-        // Trigger haptic feedback on iOS
-        switch feedback {
-        case .light:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-            impactFeedback.impactOccurred()
-        case .medium:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-            impactFeedback.impactOccurred()
-        case .heavy:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
-            impactFeedback.impactOccurred()
-        case .soft:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
-            impactFeedback.impactOccurred()
-        case .rigid:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .rigid)
-            impactFeedback.impactOccurred()
-        case .success:
-            let notificationFeedback = UINotificationFeedbackGenerator()
-            notificationFeedback.notificationOccurred(.success)
-        case .warning:
-            let notificationFeedback = UINotificationFeedbackGenerator()
-            notificationFeedback.notificationOccurred(.warning)
-        case .error:
-            let notificationFeedback = UINotificationFeedbackGenerator()
-            notificationFeedback.notificationOccurred(.error)
-        }
-        #endif
-
-        return self
+        self
+            .modifier(PlatformHapticFeedbackTapModifier(feedback: feedback))
             .automaticCompliance()
     }
 
     /// Platform haptic feedback trigger with custom action
-    /// iOS: Triggers haptic feedback and executes action; macOS: Executes action only
+    /// iOS: Triggers haptic feedback and executes action on tap; macOS: Executes action only
     ///
     /// - Parameters:
     ///   - feedback: The type of haptic feedback to trigger
     ///   - action: The action to execute after haptic feedback
-    /// - Returns: The view unchanged (for chaining)
+    /// - Returns: The view with haptic feedback and action on tap
     ///
     /// ## Usage Example
     /// ```swift
-    /// Button("Tap me") {
-    ///     // This will trigger haptic feedback on iOS and execute the action
+    /// Button("Save") {
+    ///     save()
     /// }
-    /// .platformHapticFeedback(.light) {
-    ///     // Custom action after haptic feedback
-    ///     print("Button tapped with haptic feedback")
+    /// .platformHapticFeedback(.success) {
+    ///     print("Save completed")
     /// }
     /// ```
+    ///
+    /// **Note**: Haptic feedback and action trigger when the view is tapped, not when the modifier is applied.
     func platformHapticFeedback(
         _ feedback: PlatformHapticFeedback,
         action: @escaping () -> Void
     ) -> some View {
-        #if os(iOS)
-        // Trigger haptic feedback on iOS
-        switch feedback {
-        case .light:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
-            impactFeedback.impactOccurred()
-        case .medium:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
-            impactFeedback.impactOccurred()
-        case .heavy:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
-            impactFeedback.impactOccurred()
-        case .soft:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .soft)
-            impactFeedback.impactOccurred()
-        case .rigid:
-            let impactFeedback = UIImpactFeedbackGenerator(style: .rigid)
-            impactFeedback.impactOccurred()
-        case .success:
-            let notificationFeedback = UINotificationFeedbackGenerator()
-            notificationFeedback.notificationOccurred(.success)
-        case .warning:
-            let notificationFeedback = UINotificationFeedbackGenerator()
-            notificationFeedback.notificationOccurred(.warning)
-        case .error:
-            let notificationFeedback = UINotificationFeedbackGenerator()
-            notificationFeedback.notificationOccurred(.error)
-        }
-        #endif
-
-        // Execute the action on both platforms
-        DispatchQueue.main.async {
-            action()
-        }
-
-        return self
+        self
+            .modifier(PlatformHapticFeedbackWithActionModifier(feedback: feedback, action: action))
             .automaticCompliance()
     }
 }
