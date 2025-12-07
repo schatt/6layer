@@ -1578,39 +1578,8 @@ public func calculateDirectorySizeAsync(at url: URL) async -> Int64? {
 
 // MARK: - Path Sanitization
 
-// MARK: - Internal Sanitization Helpers
-
-/// Unicode scalars for zero-width characters that should be removed
-private let zeroWidthCharacters: [Unicode.Scalar] = [
-    Unicode.Scalar(0x200B)!, // Zero-width space
-    Unicode.Scalar(0x200C)!, // Zero-width non-joiner
-    Unicode.Scalar(0x200D)!, // Zero-width joiner
-    Unicode.Scalar(0xFEFF)! // Zero-width no-break space
-]
-
-/// Unicode scalars for bidirectional override characters that should be removed
-private let bidirectionalOverrideCharacters: [Unicode.Scalar] = [
-    Unicode.Scalar(0x202E)!, // Right-to-left override
-    Unicode.Scalar(0x202D)!  // Left-to-right override
-]
-
-/// Removes control characters from a string (0x00-0x1F, 0x7F)
-private func removeControlCharacters(_ string: String) -> String {
-    return string.unicodeScalars.filter { scalar in
-        let value = scalar.value
-        return !(value <= 0x1F || value == 0x7F)
-    }.reduce("") { $0 + String($1) }
-}
-
-/// Removes zero-width characters from a string
-private func removeZeroWidthCharacters(_ string: String) -> String {
-    return string.unicodeScalars.filter { !zeroWidthCharacters.contains($0) }.reduce("") { $0 + String($1) }
-}
-
-/// Removes bidirectional override characters from a string
-private func removeBidirectionalOverrideCharacters(_ string: String) -> String {
-    return string.unicodeScalars.filter { !bidirectionalOverrideCharacters.contains($0) }.reduce("") { $0 + String($1) }
-}
+// Note: Sanitization helper functions are defined in StringSanitizationHelpers.swift
+// to avoid code duplication with StringUtilities.swift
 
 /// Checks if a path exists and is a directory
 private func pathExistsAndIsDirectory(_ path: String) -> (exists: Bool, isDirectory: Bool) {
@@ -1669,8 +1638,8 @@ public func sanitizePath(_ path: String) -> String {
     // 1. Unicode normalization to NFC
     result = result.precomposedStringWithCanonicalMapping
     
-    // 2. Remove control characters (0x00-0x1F, 0x7F)
-    result = removeControlCharacters(result)
+    // 2. Remove control characters (0x00-0x1F, 0x7F), including newlines/tabs for filesystem
+    result = removeControlCharacters(result, preserveWhitespace: false)
     
     // 3. Remove zero-width characters
     result = removeZeroWidthCharacters(result)
@@ -1812,8 +1781,8 @@ public func sanitizeFilename(
     // 1. Unicode normalization to NFC
     result = result.precomposedStringWithCanonicalMapping
     
-    // 2. Remove control characters (0x00-0x1F, 0x7F)
-    result = removeControlCharacters(result)
+    // 2. Remove control characters (0x00-0x1F, 0x7F), including newlines/tabs for filesystem
+    result = removeControlCharacters(result, preserveWhitespace: false)
     
     // 3. Remove zero-width characters
     result = removeZeroWidthCharacters(result)
