@@ -103,3 +103,44 @@ private func fallbackSidebar<Content: View>(
 ) -> some View {
     return content()
 }
+
+// MARK: - Platform Sidebar Pull Indicator
+
+/// Platform-specific sidebar pull indicator
+/// Displays a visual indicator on macOS (where sidebars are resizable) and returns EmptyView on iOS
+///
+/// - Parameter isVisible: Whether the indicator should be visible
+/// - Returns: A view with the pull indicator on macOS when visible, EmptyView otherwise
+///
+/// ## Usage Example
+/// ```swift
+/// HStack {
+///     platformSidebarPullIndicator(isVisible: sidebarIsResizable)
+///     SidebarContent()
+/// }
+/// ```
+@MainActor
+@ViewBuilder
+public func platformSidebarPullIndicator(isVisible: Bool) -> some View {
+    #if os(macOS)
+    if isVisible {
+        HStack {
+            HStack(spacing: 2) {
+                ForEach(0..<2, id: \.self) { _ in
+                    Rectangle()
+                        .fill(Color.secondary)
+                        .frame(width: 3, height: 22)
+                        .cornerRadius(1)
+                }
+            }
+            .padding(.leading, 8)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    } else {
+        EmptyView()
+    }
+    #else
+    EmptyView()
+    #endif
+}
