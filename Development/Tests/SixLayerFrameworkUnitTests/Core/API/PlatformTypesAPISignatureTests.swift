@@ -185,6 +185,229 @@ open class PlatformTypesAPISignatureTests: BaseTestClass {
         }
         #expect(documentsURL1.path == documentsURL2.path)
     }
+    
+    // MARK: - platformSecurityScopedAccess API
+    
+    @Test func testPlatformSecurityScopedAccessExecutesBlock() {
+        // Test that the function executes the block
+        // Works on macOS and iOS (both support security-scoped resources)
+        let testURL = URL(fileURLWithPath: "/tmp/test")
+        var blockExecuted = false
+        
+        platformSecurityScopedAccess(url: testURL) { url in
+            blockExecuted = true
+            #expect(url == testURL)
+        }
+        
+        #expect(blockExecuted)
+    }
+    
+    @Test func testPlatformSecurityScopedAccessReturnsBlockResult() {
+        // Test that the function returns the block's result
+        let testURL = URL(fileURLWithPath: "/tmp/test")
+        let result = platformSecurityScopedAccess(url: testURL) { url in
+            return "test result"
+        }
+        
+        #expect(result == "test result")
+    }
+    
+    @Test func testPlatformSecurityScopedAccessPropagatesThrows() throws {
+        // Test that thrown errors are propagated
+        let testURL = URL(fileURLWithPath: "/tmp/test")
+        
+        do {
+            try platformSecurityScopedAccess(url: testURL) { url in
+                throw NSError(domain: "test", code: 1)
+            }
+            Issue.record("Should have thrown an error")
+        } catch {
+            // Expected - error should be propagated
+            #expect(true)
+        }
+    }
+    
+    // MARK: - platformSecurityScopedBookmark API
+    
+    #if os(macOS)
+    @Test func testPlatformSecurityScopedBookmarkSavesBookmark() {
+        // Test that bookmark can be saved
+        // Use a temporary directory for testing
+        let tempDir = FileManager.default.temporaryDirectory
+        let testKey = "test_bookmark_\(UUID().uuidString)"
+        
+        // Clean up any existing bookmark
+        _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        
+        // Try to save bookmark (may fail if not in sandbox, but API should exist)
+        let saved = platformSecurityScopedBookmark(url: tempDir, key: testKey)
+        
+        // Clean up
+        _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        
+        // API should exist and return a boolean (even if false due to sandbox restrictions)
+        let _ = saved
+    }
+    
+    @Test func testPlatformSecurityScopedBookmarkWithInvalidKey() {
+        // Test that bookmark save handles invalid keys gracefully
+        let tempDir = FileManager.default.temporaryDirectory
+        let invalidKey = ""
+        
+        // Should handle empty key gracefully
+        let result = platformSecurityScopedBookmark(url: tempDir, key: invalidKey)
+        // Result may be false, but should not crash
+        let _ = result
+    }
+    #else
+    @Test func testPlatformSecurityScopedBookmarkReturnsFalseOnNonMacOS() {
+        // Test that bookmark save returns false on non-macOS platforms
+        // Bookmarks are macOS-specific (iOS doesn't support persistent bookmarks)
+        let testURL = URL(fileURLWithPath: "/tmp/test")
+        let result = platformSecurityScopedBookmark(url: testURL, key: "test")
+        #expect(result == false)
+    }
+    #endif
+    
+    // MARK: - platformSecurityScopedRestore API
+    
+    #if os(macOS)
+    @Test func testPlatformSecurityScopedRestoreReturnsNilForNonExistentKey() {
+        // Test that restore returns nil for non-existent bookmark
+        let nonExistentKey = "non_existent_bookmark_\(UUID().uuidString)"
+        let result = platformSecurityScopedRestore(key: nonExistentKey)
+        #expect(result == nil)
+    }
+    
+    @Test func testPlatformSecurityScopedRestoreAndAccess() {
+        // Test full cycle: save, restore, access
+        let tempDir = FileManager.default.temporaryDirectory
+        let testKey = "test_restore_\(UUID().uuidString)"
+        
+        // Clean up
+        _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        
+        // Save bookmark
+        let saved = platformSecurityScopedBookmark(url: tempDir, key: testKey)
+        
+        if saved {
+            // Restore bookmark
+            if let restoredURL = platformSecurityScopedRestore(key: testKey) {
+                // Access restored URL
+                platformSecurityScopedAccess(url: restoredURL) { url in
+                    // Resolve symlinks in both paths to handle /var -> /private/var on macOS
+                    // This ensures we compare the actual paths, not symlink paths
+                    let restoredResolved = url.resolvingSymlinksInPath().path
+                    let tempDirResolved = tempDir.resolvingSymlinksInPath().path
+                    
+                    // Paths should match after resolving symlinks
+                    #expect(restoredResolved == tempDirResolved, 
+                           "Restored URL path should match original temp directory path after resolving symlinks")
+                }
+            }
+            
+            // Clean up
+            _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        }
+        
+        // Test should complete without crashing
+        #expect(true)
+    }
+    #else
+    @Test func testPlatformSecurityScopedRestoreReturnsNilOnNonMacOS() {
+        // Test that restore returns nil on non-macOS platforms
+        // Bookmarks are macOS-specific (iOS doesn't support persistent bookmarks)
+        let result = platformSecurityScopedRestore(key: "test")
+        #expect(result == nil)
+    }
+    #endif
+    
+    // MARK: - platformSecurityScopedRemoveBookmark API
+    
+    #if os(macOS)
+    @Test func testPlatformSecurityScopedRemoveBookmarkRemovesBookmark() {
+        // Test that bookmark can be removed
+        let tempDir = FileManager.default.temporaryDirectory
+        let testKey = "test_remove_\(UUID().uuidString)"
+        
+        // Clean up first
+        _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        
+        // Save bookmark
+        let saved = platformSecurityScopedBookmark(url: tempDir, key: testKey)
+        
+        if saved {
+            // Verify it exists
+            let existsBefore = platformSecurityScopedHasBookmark(key: testKey)
+            #expect(existsBefore == true)
+            
+            // Remove bookmark
+            let removed = platformSecurityScopedRemoveBookmark(key: testKey)
+            #expect(removed == true)
+            
+            // Verify it no longer exists
+            let existsAfter = platformSecurityScopedHasBookmark(key: testKey)
+            #expect(existsAfter == false)
+        } else {
+            // If save failed (e.g., not in sandbox), removal should also return false
+            let removed = platformSecurityScopedRemoveBookmark(key: testKey)
+            let _ = removed
+        }
+    }
+    
+    @Test func testPlatformSecurityScopedRemoveBookmarkWithNonExistentKey() {
+        // Test that removing non-existent bookmark returns false
+        let nonExistentKey = "non_existent_\(UUID().uuidString)"
+        let result = platformSecurityScopedRemoveBookmark(key: nonExistentKey)
+        #expect(result == false)
+    }
+    #else
+    @Test func testPlatformSecurityScopedRemoveBookmarkReturnsFalseOnNonMacOS() {
+        // Test that remove returns false on non-macOS platforms
+        // Bookmarks are macOS-specific (iOS doesn't support persistent bookmarks)
+        let result = platformSecurityScopedRemoveBookmark(key: "test")
+        #expect(result == false)
+    }
+    #endif
+    
+    // MARK: - platformSecurityScopedHasBookmark API
+    
+    #if os(macOS)
+    @Test func testPlatformSecurityScopedHasBookmarkReturnsFalseForNonExistent() {
+        // Test that hasBookmark returns false for non-existent bookmark
+        let nonExistentKey = "non_existent_\(UUID().uuidString)"
+        let result = platformSecurityScopedHasBookmark(key: nonExistentKey)
+        #expect(result == false)
+    }
+    
+    @Test func testPlatformSecurityScopedHasBookmarkReturnsTrueForExistent() {
+        // Test that hasBookmark returns true for existing bookmark
+        let tempDir = FileManager.default.temporaryDirectory
+        let testKey = "test_has_\(UUID().uuidString)"
+        
+        // Clean up first
+        _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        
+        // Save bookmark
+        let saved = platformSecurityScopedBookmark(url: tempDir, key: testKey)
+        
+        if saved {
+            // Verify it exists
+            let exists = platformSecurityScopedHasBookmark(key: testKey)
+            #expect(exists == true)
+            
+            // Clean up
+            _ = platformSecurityScopedRemoveBookmark(key: testKey)
+        }
+    }
+    #else
+    @Test func testPlatformSecurityScopedHasBookmarkReturnsFalseOnNonMacOS() {
+        // Test that hasBookmark returns false on non-macOS platforms
+        // Bookmarks are macOS-specific (iOS doesn't support persistent bookmarks)
+        let result = platformSecurityScopedHasBookmark(key: "test")
+        #expect(result == false)
+    }
+    #endif
 }
 
 

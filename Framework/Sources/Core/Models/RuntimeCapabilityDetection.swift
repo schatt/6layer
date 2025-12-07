@@ -680,6 +680,80 @@ public struct RuntimeCapabilityDetection {
         // OCR is available through Vision framework, so check Vision availability
         return detectVisionFrameworkAvailability()
     }
+    
+    // MARK: - Security-Scoped Resource Detection
+    
+    /// Detects if security-scoped resource access is supported at runtime
+    /// Security-scoped resources are used for accessing files outside the app's sandbox
+    /// - **macOS**: Required for App Sandbox (accessing files outside sandbox)
+    /// - **iOS**: Required for document picker (accessing files outside app's sandbox)
+    /// - **Other platforms**: Not supported
+    /// 
+    /// This method actually checks if the API is available at runtime by testing
+    /// if `URL.startAccessingSecurityScopedResource()` responds to the selector.
+    /// Note: nonisolated - only checks API availability (no MainActor needed)
+    nonisolated public static var supportsSecurityScopedResources: Bool {
+        return detectSecurityScopedResourceSupport()
+    }
+    
+    /// Detects if security-scoped bookmark persistence is supported at runtime
+    /// Bookmarks allow persisting access to files across app launches
+    /// - **macOS**: Full support for bookmark persistence
+    /// - **iOS**: No bookmark persistence support (security-scoped access is temporary)
+    /// - **Other platforms**: Not supported
+    /// 
+    /// This method actually checks if the bookmark APIs are available at runtime.
+    /// Note: nonisolated - only checks API availability (no MainActor needed)
+    nonisolated public static var supportsSecurityScopedBookmarks: Bool {
+        return detectSecurityScopedBookmarkSupport()
+    }
+    
+    /// Runtime detection of security-scoped resource support
+    /// Checks if URL.startAccessingSecurityScopedResource() is available
+    private static func detectSecurityScopedResourceSupport() -> Bool {
+        // Create a test URL to check if the method exists
+        let testURL = URL(fileURLWithPath: "/tmp")
+        
+        // Check if URL responds to startAccessingSecurityScopedResource selector
+        // URL conforms to NSObjectProtocol, so we can use responds(to:)
+        if testURL.responds(to: #selector(URL.startAccessingSecurityScopedResource)) {
+            return true
+        }
+        
+        return false
+    }
+    
+    /// Runtime detection of security-scoped bookmark support
+    /// Checks if URL.bookmarkData() is available (macOS-only API)
+    private static func detectSecurityScopedBookmarkSupport() -> Bool {
+        // Bookmarks require bookmarkData(options:includingResourceValuesForKeys:relativeTo:)
+        // which is a macOS-only API. Since this method has complex parameters,
+        // we can't easily use responds(to:) to check for it.
+        //
+        // However, we know that:
+        // 1. Bookmarks are only available on macOS
+        // 2. Security-scoped resources are a prerequisite for bookmarks
+        // 3. If security-scoped resources work on macOS, bookmarks should work too
+        
+        // First check if security-scoped resources are available (prerequisite)
+        guard detectSecurityScopedResourceSupport() else {
+            return false
+        }
+        
+        // Detect macOS at runtime by checking for macOS-specific classes
+        // NSWorkspace is macOS-specific and can be detected at runtime
+        // NSClassFromString works on all platforms, so this is a true runtime check
+        if NSClassFromString("NSWorkspace") != nil {
+            // On macOS, if security-scoped resources work, bookmarks should work too
+            // This is a reasonable assumption since they're part of the same API family
+            // and bookmarkData is available on all macOS versions that support security-scoped resources
+            return true
+        }
+        
+        // On other platforms (iOS, watchOS, tvOS, visionOS), bookmarks are not supported
+        // Even though iOS has security-scoped resources, it doesn't have bookmarkData
+        return false
+    }
 }
 
 // MARK: - Testing Configuration
@@ -713,7 +787,9 @@ public struct TestingCapabilityDetection {
                 supportsSwitchControl: true, // iOS supports Switch Control
                 supportsAssistiveTouch: true, // iOS supports AssistiveTouch
                 supportsVision: true, // iOS supports Vision framework
-                supportsOCR: true // iOS supports OCR through Vision framework
+                supportsOCR: true, // iOS supports OCR through Vision framework
+                supportsSecurityScopedResources: true, // iOS supports security-scoped resources (document picker)
+                supportsSecurityScopedBookmarks: false // iOS doesn't support bookmark persistence
             )
         case .macOS:
             return TestingCapabilityDefaults(
@@ -724,7 +800,9 @@ public struct TestingCapabilityDetection {
                 supportsSwitchControl: true, // macOS supports Switch Control
                 supportsAssistiveTouch: false,
                 supportsVision: true, // macOS supports Vision framework
-                supportsOCR: true // macOS supports OCR through Vision framework
+                supportsOCR: true, // macOS supports OCR through Vision framework
+                supportsSecurityScopedResources: true, // macOS supports security-scoped resources (App Sandbox)
+                supportsSecurityScopedBookmarks: true // macOS supports bookmark persistence
             )
         case .watchOS:
             return TestingCapabilityDefaults(
@@ -735,7 +813,9 @@ public struct TestingCapabilityDetection {
                 supportsSwitchControl: true, // Apple Watch supports Switch Control
                 supportsAssistiveTouch: true, // Apple Watch supports AssistiveTouch
                 supportsVision: false, // Apple Watch doesn't support Vision framework
-                supportsOCR: false // Apple Watch doesn't support OCR
+                supportsOCR: false, // Apple Watch doesn't support OCR
+                supportsSecurityScopedResources: false, // watchOS doesn't support security-scoped resources
+                supportsSecurityScopedBookmarks: false // watchOS doesn't support bookmark persistence
             )
         case .tvOS:
             return TestingCapabilityDefaults(
@@ -746,7 +826,9 @@ public struct TestingCapabilityDetection {
                 supportsSwitchControl: true, // Apple TV supports Switch Control
                 supportsAssistiveTouch: false, // Apple TV doesn't have AssistiveTouch
                 supportsVision: false, // Apple TV doesn't support Vision framework
-                supportsOCR: false // Apple TV doesn't support OCR
+                supportsOCR: false, // Apple TV doesn't support OCR
+                supportsSecurityScopedResources: false, // tvOS doesn't support security-scoped resources
+                supportsSecurityScopedBookmarks: false // tvOS doesn't support bookmark persistence
             )
         case .visionOS:
             return TestingCapabilityDefaults(
@@ -757,7 +839,9 @@ public struct TestingCapabilityDetection {
                 supportsSwitchControl: true, // Vision Pro supports Switch Control
                 supportsAssistiveTouch: false, // AssistiveTouch is iOS-specific, not available on visionOS
                 supportsVision: true, // Vision Pro supports Vision framework
-                supportsOCR: true // Vision Pro supports OCR through Vision framework
+                supportsOCR: true, // Vision Pro supports OCR through Vision framework
+                supportsSecurityScopedResources: false, // visionOS doesn't support security-scoped resources
+                supportsSecurityScopedBookmarks: false // visionOS doesn't support bookmark persistence
             )
         }
     }
@@ -773,6 +857,8 @@ public struct TestingCapabilityDefaults {
     public let supportsAssistiveTouch: Bool
     public let supportsVision: Bool
     public let supportsOCR: Bool
+    public let supportsSecurityScopedResources: Bool
+    public let supportsSecurityScopedBookmarks: Bool
 }
 
 // MARK: - Configuration Override

@@ -2134,11 +2134,8 @@ public extension View {
                 switch result {
                 case .success(let urls):
                     if let url = urls.first {
-                        if url.startAccessingSecurityScopedResource() {
-                            defer { url.stopAccessingSecurityScopedResource() }
-                            onFileSelected(url)
-                        } else {
-                            print("Failed to access security-scoped resource for \(url)")
+                        platformSecurityScopedAccess(url: url) { accessibleURL in
+                            onFileSelected(accessibleURL)
                         }
                     }
                 case .failure(let error):
@@ -2442,10 +2439,8 @@ private func handleFilePickerFallbackAsync(
         await withCheckedContinuation { continuation in
             panel.beginSheetModal(for: window) { response in
                 if response == .OK, let url = panel.url {
-                    let shouldStopAccess = url.startAccessingSecurityScopedResource()
-                    onFileSelected(url)
-                    if shouldStopAccess {
-                        url.stopAccessingSecurityScopedResource()
+                    platformSecurityScopedAccess(url: url) { accessibleURL in
+                        onFileSelected(accessibleURL)
                     }
                 }
                 isPresented.wrappedValue = false
@@ -2456,10 +2451,8 @@ private func handleFilePickerFallbackAsync(
         // Fallback to runModal only if no key window is available
         let response = panel.runModal()
         if response == .OK, let url = panel.url {
-            let shouldStopAccess = url.startAccessingSecurityScopedResource()
-            onFileSelected(url)
-            if shouldStopAccess {
-                url.stopAccessingSecurityScopedResource()
+            platformSecurityScopedAccess(url: url) { accessibleURL in
+                onFileSelected(accessibleURL)
             }
         }
         isPresented.wrappedValue = false

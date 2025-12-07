@@ -234,20 +234,15 @@ private struct macOSImagePicker: NSViewControllerRepresentable {
         
         @MainActor
         func handleFileSelection(url: URL) {
-            // System boundary conversion: File URL → NSImage → PlatformImage
-            let shouldStartAccess = url.startAccessingSecurityScopedResource()
-            defer {
-                if shouldStartAccess {
-                    url.stopAccessingSecurityScopedResource()
+            // System boundary conversion: File URL → Data → PlatformImage
+            platformSecurityScopedAccess(url: url) { accessibleURL in
+                guard let data = try? Data(contentsOf: accessibleURL),
+                      let platformImage = PlatformImage(data: data) else {
+                    return
                 }
+                
+                parent.onImageSelected(platformImage)
             }
-            
-            guard let nsImage = NSImage(contentsOf: url) else {
-                return
-            }
-            
-            let platformImage = PlatformImage(nsImage)
-            parent.onImageSelected(platformImage)
         }
         
         // For testing
