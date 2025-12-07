@@ -453,7 +453,7 @@ final class FormProcessingWorkflowTests: BaseTestClass {
             
             // Given: Form fields and presentation hints
             let fields = createStandardTestForm()
-            let hints = PresentationHints(
+            let hints = EnhancedPresentationHints(
                 dataType: .form,
                 presentationPreference: .form,
                 complexity: .moderate,
@@ -461,7 +461,7 @@ final class FormProcessingWorkflowTests: BaseTestClass {
             )
             
             // When: Creating form view
-            let formView = platformPresentFormData_L1(
+            let _ = platformPresentFormData_L1(
                 fields: fields,
                 hints: hints
             )
@@ -488,14 +488,14 @@ final class FormProcessingWorkflowTests: BaseTestClass {
             
             // Given: Accessible form configuration
             let fields = createStandardTestForm()
-            let hints = PresentationHints(
+            let hints = EnhancedPresentationHints(
                 dataType: .form,
                 presentationPreference: .form,
                 complexity: .simple
             )
             
             // When: Creating form with accessibility
-            let formView = platformPresentFormData_L1(
+            let _ = platformPresentFormData_L1(
                 fields: fields,
                 hints: hints
             )
@@ -554,7 +554,7 @@ final class FormProcessingWorkflowTests: BaseTestClass {
             setCapabilitiesForPlatform(platform)
             
             // Given: Form with initial and modified state
-            let fields = createStandardTestForm()
+            let _ = createStandardTestForm()
             let initialValues: [String: String] = [
                 "email": "",
                 "password": "",

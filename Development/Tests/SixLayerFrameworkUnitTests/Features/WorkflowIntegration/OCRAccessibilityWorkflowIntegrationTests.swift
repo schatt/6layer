@@ -68,7 +68,7 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
     ) -> OCRResult {
         return OCRResult(
             extractedText: text,
-            confidence: confidence,
+            confidence: Float(confidence),
             boundingBoxes: [CGRect(x: 0, y: 0, width: 100, height: 20)],
             textTypes: [.general: text],
             processingTime: 0.5,
@@ -90,14 +90,14 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
             
             // Given: OCR context configured for accessibility
             let context = createTestOCRContext(textTypes: [.price, .date, .general])
-            var receivedResult: OCRResult?
+            var _: OCRResult?
             
             // When: Creating OCR view with visual correction (applies .automaticCompliance())
             let ocrView = platformOCRWithVisualCorrection_L1(
                 image: PlatformImage(),
                 context: context
-            ) { result in
-                receivedResult = result
+            ) { _ in
+                // Result received
             }
             
             // Then: View should have accessibility compliance applied
@@ -105,7 +105,7 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
             #expect(Bool(true), "OCR view should be created successfully on \(platform)")
             
             // Verify the view can be placed in a hierarchy
-            let containerView = platformVStackContainer {
+            let _ = platformVStackContainer {
                 ocrView
             }
             
@@ -155,13 +155,12 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
             
             // When: Creating OCR view with custom configuration
             let configuration = OCROverlayConfiguration(
-                showConfidenceIndicators: true,
                 allowsEditing: true,
-                highlightColor: .blue,
-                overlayOpacity: 0.3
+                showConfidenceIndicators: true,
+                highlightColor: .blue
             )
             
-            let ocrView = platformOCRWithVisualCorrection_L1(
+            let _ = platformOCRWithVisualCorrection_L1(
                 image: PlatformImage(),
                 context: context,
                 configuration: configuration
@@ -224,13 +223,11 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
             #expect(context.confidenceThreshold <= 0.7, "Threshold should allow more results on \(platform)")
             
             // Step 3: Create OCR view with accessibility compliance
-            var workflowCompleted = false
             let ocrView = platformOCRWithVisualCorrection_L1(
                 image: PlatformImage(),
                 context: context
             ) { result in
                 // Step 4: Process result with accessibility in mind
-                workflowCompleted = true
                 // Verify result has necessary properties for accessibility
                 #expect(!result.extractedText.isEmpty || result.confidence < context.confidenceThreshold,
                        "Result should have text or be filtered by threshold")
@@ -304,7 +301,7 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
             }
             
             // Then: View should have accessibility compliance
-            let containerView = platformVStackContainer {
+            let _ = platformVStackContainer {
                 extractionView
             }
             
@@ -334,7 +331,7 @@ final class OCRAccessibilityWorkflowIntegrationTests: BaseTestClass {
                 let result = createMockOCRResult(text: "Test", confidence: confidence)
                 
                 // Then: Confidence should be available for accessibility announcements
-                #expect(result.confidence == confidence,
+                #expect(result.confidence == Float(confidence),
                        "Confidence \(description) (\(confidence)) should be accessible on \(platform)")
                 
                 // Confidence can be used to adjust VoiceOver announcements

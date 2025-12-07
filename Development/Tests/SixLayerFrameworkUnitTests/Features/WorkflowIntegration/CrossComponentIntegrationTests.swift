@@ -185,13 +185,13 @@ final class CrossComponentIntegrationTests: BaseTestClass {
             ]
             
             // When: Creating accessible form
-            let hints = PresentationHints(
+            let hints = EnhancedPresentationHints(
                 dataType: .form,
                 presentationPreference: .form,
                 complexity: .simple
             )
             
-            let formView = platformPresentFormData_L1(
+            let _ = platformPresentFormData_L1(
                 fields: fields,
                 hints: hints
             )
@@ -262,7 +262,7 @@ final class CrossComponentIntegrationTests: BaseTestClass {
             let items = createTestCollectionItems(count: 5)
             
             // When: Creating collection presentation hints
-            let hints = PresentationHints(
+            let _ = PresentationHints(
                 dataType: .collection,
                 presentationPreference: .automatic,
                 complexity: .moderate,
@@ -353,7 +353,7 @@ final class CrossComponentIntegrationTests: BaseTestClass {
             let labels = ["Jan", "Feb", "Mar", "Apr", "May"]
             
             // When: Creating presentation hints
-            let hints = PresentationHints(
+            let _ = PresentationHints(
                 dataType: .numeric,
                 presentationPreference: .automatic,
                 complexity: .moderate
