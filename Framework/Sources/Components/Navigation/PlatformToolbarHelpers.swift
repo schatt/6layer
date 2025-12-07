@@ -6,8 +6,8 @@ import SwiftUI
 public extension View {
     
     /// Platform-specific confirmation action placement (Done, Save, etc.)
-    /// iOS/watchOS/visionOS: .confirmationAction (iOS 16+), .navigationBarTrailing (older)
-    /// macOS/tvOS: .automatic
+    /// iOS/watchOS/visionOS/tvOS: .confirmationAction (iOS 16+/tvOS 16+), .navigationBarTrailing (older)
+    /// macOS: .automatic
     func platformConfirmationActionPlacement() -> ToolbarItemPlacement {
         #if os(iOS) || os(watchOS) || os(visionOS)
         if #available(iOS 16.0, watchOS 9.0, *) {
@@ -15,9 +15,13 @@ public extension View {
         } else {
             return .navigationBarTrailing
         }
-        #elseif os(macOS)
-        return .automatic
         #elseif os(tvOS)
+        if #available(tvOS 16.0, *) {
+            return .confirmationAction
+        } else {
+            return .automatic
+        }
+        #elseif os(macOS)
         return .automatic
         #else
         return .automatic
@@ -25,8 +29,8 @@ public extension View {
     }
     
     /// Platform-specific cancellation action placement (Cancel, etc.)
-    /// iOS/watchOS/visionOS: .cancellationAction (iOS 16+), .navigationBarTrailing (older)
-    /// macOS/tvOS: .automatic
+    /// iOS/watchOS/visionOS/tvOS: .cancellationAction (iOS 16+/tvOS 16+), .navigationBarTrailing (older)
+    /// macOS: .automatic
     func platformCancellationActionPlacement() -> ToolbarItemPlacement {
         #if os(iOS) || os(watchOS) || os(visionOS)
         if #available(iOS 16.0, watchOS 9.0, *) {
@@ -34,9 +38,13 @@ public extension View {
         } else {
             return .navigationBarTrailing
         }
-        #elseif os(macOS)
-        return .automatic
         #elseif os(tvOS)
+        if #available(tvOS 16.0, *) {
+            return .cancellationAction
+        } else {
+            return .automatic
+        }
+        #elseif os(macOS)
         return .automatic
         #else
         return .automatic
@@ -44,8 +52,8 @@ public extension View {
     }
     
     /// Platform-specific primary action placement (Add, etc.)
-    /// iOS/watchOS/visionOS: .primaryAction (iOS 16+), .navigationBarTrailing (older)
-    /// macOS/tvOS: .automatic
+    /// iOS/watchOS/visionOS/tvOS: .primaryAction (iOS 16+/tvOS 16+), .navigationBarTrailing (older)
+    /// macOS: .automatic
     func platformPrimaryActionPlacement() -> ToolbarItemPlacement {
         #if os(iOS) || os(watchOS) || os(visionOS)
         if #available(iOS 16.0, watchOS 9.0, *) {
@@ -53,9 +61,13 @@ public extension View {
         } else {
             return .navigationBarTrailing
         }
-        #elseif os(macOS)
-        return .automatic
         #elseif os(tvOS)
+        if #available(tvOS 16.0, *) {
+            return .primaryAction
+        } else {
+            return .automatic
+        }
+        #elseif os(macOS)
         return .automatic
         #else
         return .automatic
@@ -63,8 +75,8 @@ public extension View {
     }
     
     /// Platform-specific secondary action placement
-    /// iOS/watchOS/visionOS: .secondaryAction (iOS 16+), .navigationBarTrailing (older)
-    /// macOS/tvOS: .automatic
+    /// iOS/watchOS/visionOS/tvOS: .secondaryAction (iOS 16+/tvOS 16+), .navigationBarTrailing (older)
+    /// macOS: .automatic
     func platformSecondaryActionPlacement() -> ToolbarItemPlacement {
         #if os(iOS) || os(watchOS) || os(visionOS)
         if #available(iOS 16.0, watchOS 9.0, *) {
@@ -72,9 +84,13 @@ public extension View {
         } else {
             return .navigationBarTrailing
         }
-        #elseif os(macOS)
-        return .automatic
         #elseif os(tvOS)
+        if #available(tvOS 16.0, *) {
+            return .secondaryAction
+        } else {
+            return .automatic
+        }
+        #elseif os(macOS)
         return .automatic
         #else
         return .automatic

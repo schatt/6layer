@@ -196,6 +196,52 @@ open class PlatformToolbarPlacementTests: BaseTestClass {
         #endif
     }
     
+    // MARK: - tvOS Placement Tests
+    
+    /// BUSINESS PURPOSE: Verify confirmation action placement returns correct value on tvOS
+    /// TESTING SCOPE: Tests that tvOS returns .confirmationAction (tvOS 16+) or .automatic (older)
+    /// METHODOLOGY: Verify placement value matches expected platform behavior
+    @Test @MainActor func testConfirmationActionPlacement_tvOS() {
+        #if os(tvOS)
+        // Given: tvOS platform
+        let testView = EmptyView()
+        
+        // When: Get confirmation action placement
+        let placement = testView.platformConfirmationActionPlacement()
+        
+        // Then: Should return .confirmationAction on tvOS 16+ or .automatic on older
+        if #available(tvOS 16.0, *) {
+            #expect(placement == .confirmationAction, "tvOS 16+ should return .confirmationAction")
+        } else {
+            #expect(placement == .automatic, "tvOS <16 should return .automatic")
+        }
+        #else
+        #expect(Bool(true), "Test is tvOS-specific")
+        #endif
+    }
+    
+    /// BUSINESS PURPOSE: Verify primary action placement returns correct value on tvOS
+    /// TESTING SCOPE: Tests that tvOS returns .primaryAction (tvOS 16+) or .automatic (older)
+    /// METHODOLOGY: Verify placement value matches expected platform behavior
+    @Test @MainActor func testPrimaryActionPlacement_tvOS() {
+        #if os(tvOS)
+        // Given: tvOS platform
+        let testView = EmptyView()
+        
+        // When: Get primary action placement
+        let placement = testView.platformPrimaryActionPlacement()
+        
+        // Then: Should return .primaryAction on tvOS 16+ or .automatic on older
+        if #available(tvOS 16.0, *) {
+            #expect(placement == .primaryAction, "tvOS 16+ should return .primaryAction")
+        } else {
+            #expect(placement == .automatic, "tvOS <16 should return .automatic")
+        }
+        #else
+        #expect(Bool(true), "Test is tvOS-specific")
+        #endif
+    }
+    
     // MARK: - Cross-Platform Consistency Tests
     
     /// BUSINESS PURPOSE: Verify all placement functions return ToolbarItemPlacement type
