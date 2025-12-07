@@ -114,7 +114,7 @@ enum IntelligenceFeature {
     case adaptive
 }
 
-struct IntelligentDetailData {
+fileprivate struct IntelligentDetailData {
     let id: String
     let title: String
     let content: String

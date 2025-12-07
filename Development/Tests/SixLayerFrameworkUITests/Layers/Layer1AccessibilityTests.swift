@@ -14,7 +14,7 @@ open class Layer1AccessibilityTests: BaseTestClass {
     
     // MARK: - Helper Methods
     
-    public func createTestItems() -> [Layer1TestItem] {
+    fileprivate func createTestItems() -> [Layer1TestItem] {
         return [
             Layer1TestItem(id: "user-1", title: "Alice", subtitle: "Developer"),
             Layer1TestItem(id: "user-2", title: "Bob", subtitle: "Designer")
@@ -610,8 +610,8 @@ open class Layer1AccessibilityTests: BaseTestClass {
 
 // MARK: - Test Support Types
 
-public struct Layer1TestItem: Identifiable {
-    public let id: String
+fileprivate struct Layer1TestItem: Identifiable {
+    let id: String
     let title: String
     let subtitle: String
 }

@@ -468,7 +468,7 @@ open class IntelligentCardExpansionComponentAccessibilityTests: BaseTestClass {
 
 // MARK: - Test Data Types
 
-struct CardTestItem: Identifiable {
+fileprivate struct CardTestItem: Identifiable {
     let id: String
     let title: String
 }

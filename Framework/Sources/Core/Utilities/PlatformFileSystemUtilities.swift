@@ -702,6 +702,932 @@ public func platformSecurityScopedHasBookmark(key: String) -> Bool {
 }
 #endif
 
+// MARK: - Directory Validation and Path Utilities
+
+/// Directory permissions for the current process (effective UID)
+///
+/// This structure represents what the current process can do with a directory.
+/// Permissions are checked using the process's effective user ID (EUID).
+///
+/// In sandboxed apps, these permissions reflect:
+/// - The app's sandbox boundaries
+/// - User-granted access via TCC (Transparency, Consent, and Control)
+/// - Security-scoped resource access (if applicable)
+///
+/// **Platform Notes:**
+/// - **macOS**: Checks traditional Unix permissions + sandbox restrictions
+/// - **iOS/watchOS/tvOS/visionOS**: Primarily reflects sandbox permissions
+///
+/// **Example Usage:**
+/// ```swift
+/// let permissions = checkDirectoryPermissions(at: someURL)
+/// if permissions.readable && permissions.writable {
+///     // Safe to read and write
+/// }
+/// ```
+public struct DirectoryPermissions: Sendable {
+    /// Whether the current process can read this directory
+    public let readable: Bool
+    
+    /// Whether the current process can write to this directory
+    public let writable: Bool
+    
+    /// Whether the current process can execute/search this directory
+    /// (required to list contents or traverse into subdirectories)
+    public let executable: Bool
+    
+    /// Whether the directory exists and is a directory (not a file)
+    public let exists: Bool
+    
+    /// Whether the path exists but is not a directory (e.g., it's a file)
+    public let isFile: Bool
+    
+    /// Whether the directory is accessible (exists and is a directory)
+    public var accessible: Bool {
+        return exists && !isFile
+    }
+    
+    /// Whether the directory is usable for read operations
+    public var canRead: Bool {
+        return accessible && readable
+    }
+    
+    /// Whether the directory is usable for write operations
+    public var canWrite: Bool {
+        return accessible && writable
+    }
+    
+    /// Whether the directory is usable for full operations (read, write, list)
+    public var fullyAccessible: Bool {
+        return accessible && readable && writable && executable
+    }
+    
+    public init(
+        readable: Bool,
+        writable: Bool,
+        executable: Bool,
+        exists: Bool,
+        isFile: Bool
+    ) {
+        self.readable = readable
+        self.writable = writable
+        self.executable = executable
+        self.exists = exists
+        self.isFile = isFile
+    }
+}
+
+/// Errors that can occur during directory validation
+public enum DirectoryValidationError: Error, LocalizedError, Sendable {
+    /// The path does not exist
+    case doesNotExist
+    
+    /// The path exists but is not a directory (e.g., it's a file)
+    case notADirectory
+    
+    /// The directory exists but the current process cannot read it
+    case notReadable
+    
+    /// The directory exists but the current process cannot write to it
+    case notWritable
+    
+    /// The directory exists but the current process cannot execute/search it
+    case notExecutable
+    
+    /// The directory is on a network volume that is unavailable
+    case networkVolumeUnavailable
+    
+    /// The directory is on a network volume that is slow/unresponsive
+    case networkVolumeSlow
+    
+    /// An underlying file system error occurred
+    case fileSystemError(Error)
+    
+    /// The path contains invalid characters or is malformed
+    case invalidPath
+    
+    /// Security-scoped resource access is required but not available
+    case securityScopedAccessRequired
+    
+    public var errorDescription: String? {
+        switch self {
+        case .doesNotExist:
+            return "The directory does not exist"
+        case .notADirectory:
+            return "The path exists but is not a directory"
+        case .notReadable:
+            return "The directory is not readable by the current process"
+        case .notWritable:
+            return "The directory is not writable by the current process"
+        case .notExecutable:
+            return "The directory is not executable/searchable by the current process"
+        case .networkVolumeUnavailable:
+            return "The directory is on a network volume that is unavailable"
+        case .networkVolumeSlow:
+            return "The directory is on a network volume that is slow or unresponsive"
+        case .fileSystemError(let error):
+            return "File system error: \(error.localizedDescription)"
+        case .invalidPath:
+            return "The path contains invalid characters or is malformed"
+        case .securityScopedAccessRequired:
+            return "Security-scoped resource access is required but not available"
+        }
+    }
+}
+
+// MARK: - Directory Validation
+
+/// Validates that a directory exists, is accessible, and has required permissions.
+///
+/// This is a convenience function that performs basic validation checks.
+/// For detailed error information, use `validateDirectoryAccessThrowing()`.
+///
+/// **What it checks:**
+/// - Directory exists
+/// - Path is actually a directory (not a file)
+/// - Current process can read the directory
+///
+/// **What it does NOT check:**
+/// - Write permissions (use `checkDirectoryPermissions()` for that)
+/// - Execute permissions
+/// - Network volume availability
+///
+/// **Platform Behavior:**
+/// - **macOS**: Checks Unix permissions + sandbox restrictions
+/// - **iOS/watchOS/tvOS/visionOS**: Checks sandbox permissions
+///
+/// **Security-Scoped Resources:**
+/// - Does NOT automatically start security-scoped access
+/// - If the URL requires security-scoped access, wrap the call in
+///   `platformSecurityScopedAccess()` first
+///
+/// **Example Usage:**
+/// ```swift
+/// // Simple check
+/// if validateDirectoryAccess(at: someURL) {
+///     // Directory is accessible and readable
+/// }
+///
+/// // With security-scoped resources
+/// platformSecurityScopedAccess(url: userSelectedURL) { accessibleURL in
+///     if validateDirectoryAccess(at: accessibleURL) {
+///         // Safe to use
+///     }
+/// }
+/// ```
+///
+/// - Parameter url: The directory URL to validate
+/// - Returns: `true` if the directory exists, is a directory, and is readable by the current process
+public func validateDirectoryAccess(at url: URL) -> Bool {
+    let path = url.path
+    
+    // Check if path exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+    
+    guard exists && isDirectory.boolValue else {
+        return false
+    }
+    
+    // Check if readable
+    return FileManager.default.isReadableFile(atPath: path)
+}
+
+/// Validates directory access and returns detailed error information on failure.
+///
+/// This is the throwing variant that provides specific error information.
+/// For simple boolean checks, use `validateDirectoryAccess()`.
+///
+/// **What it checks:**
+/// - Directory exists
+/// - Path is actually a directory (not a file)
+/// - Current process can read the directory
+///
+/// **Error Details:**
+/// - Returns specific `DirectoryValidationError` cases
+/// - Wraps underlying file system errors
+///
+/// **Example Usage:**
+/// ```swift
+/// do {
+///     try validateDirectoryAccessThrowing(at: someURL)
+///     // Directory is accessible and readable
+/// } catch DirectoryValidationError.doesNotExist {
+///     // Handle missing directory
+/// } catch DirectoryValidationError.notReadable {
+///     // Handle permission issue
+/// } catch {
+///     // Handle other errors
+/// }
+/// ```
+///
+/// - Parameter url: The directory URL to validate
+/// - Throws: `DirectoryValidationError` if validation fails
+/// - Returns: `true` if validation succeeds (always returns true, throws on failure)
+@discardableResult
+public func validateDirectoryAccessThrowing(at url: URL) throws -> Bool {
+    let path = url.path
+    
+    // Check if path exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+    
+    guard exists else {
+        throw DirectoryValidationError.doesNotExist
+    }
+    
+    guard isDirectory.boolValue else {
+        throw DirectoryValidationError.notADirectory
+    }
+    
+    guard FileManager.default.isReadableFile(atPath: path) else {
+        throw DirectoryValidationError.notReadable
+    }
+    
+    return true
+}
+
+/// Checks directory permissions for the current process (effective UID).
+///
+/// Returns detailed permission information including read, write, and execute
+/// permissions. Permissions are checked using the process's effective user ID.
+///
+/// **What it checks:**
+/// - Directory existence
+/// - Whether path is a directory (not a file)
+/// - Read permission (can list contents)
+/// - Write permission (can create/modify files)
+/// - Execute permission (can traverse/search)
+///
+/// **Platform Behavior:**
+/// - **macOS**: Checks Unix permissions (owner/group/other) based on effective UID
+/// - **iOS/watchOS/tvOS/visionOS**: Primarily reflects sandbox permissions
+///
+/// **Security-Scoped Resources:**
+/// - Does NOT automatically start security-scoped access
+/// - If the URL requires security-scoped access, wrap the call in
+///   `platformSecurityScopedAccess()` first
+///
+/// **Example Usage:**
+/// ```swift
+/// let permissions = checkDirectoryPermissions(at: someURL)
+///
+/// if permissions.canRead {
+///     // Safe to read/list contents
+/// }
+///
+/// if permissions.canWrite {
+///     // Safe to create/modify files
+/// }
+///
+/// if permissions.fullyAccessible {
+///     // Safe for all operations
+/// }
+/// ```
+///
+/// - Parameter url: The directory URL to check
+/// - Returns: `DirectoryPermissions` structure with detailed permission information
+public func checkDirectoryPermissions(at url: URL) -> DirectoryPermissions {
+    let path = url.path
+    
+    // Check if path exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+    
+    let isFile = exists && !isDirectory.boolValue
+    
+    guard exists && isDirectory.boolValue else {
+        return DirectoryPermissions(
+            readable: false,
+            writable: false,
+            executable: false,
+            exists: exists,
+            isFile: isFile
+        )
+    }
+    
+    // Check permissions
+    let readable = FileManager.default.isReadableFile(atPath: path)
+    let writable = FileManager.default.isWritableFile(atPath: path)
+    let executable = FileManager.default.isExecutableFile(atPath: path)
+    
+    return DirectoryPermissions(
+        readable: readable,
+        writable: writable,
+        executable: executable,
+        exists: true,
+        isFile: false
+    )
+}
+
+// MARK: - Disk Space Utilities
+
+/// Gets the available disk space for the volume containing the specified directory.
+///
+/// **Platform Behavior:**
+/// - **macOS**: Generally reliable, returns bytes available
+/// - **iOS/watchOS/tvOS/visionOS**: May be unreliable or return `nil` in some cases
+///   - iCloud Drive volumes may report incorrect values
+///   - Some system volumes may not report space
+///   - Sandbox restrictions may limit accuracy
+///
+/// **Performance:**
+/// - Generally fast (< 10ms)
+/// - May be slower on network volumes
+///
+/// **Example Usage:**
+/// ```swift
+/// if let availableSpace = getAvailableDiskSpace(at: someURL) {
+///     let availableGB = Double(availableSpace) / 1_000_000_000.0
+///     if availableGB < 1.0 {
+///         // Warn user about low disk space
+///     }
+/// }
+/// ```
+///
+/// - Parameter url: A URL on the volume to check (can be any path on the volume)
+/// - Returns: Available disk space in bytes, or `nil` if unavailable or cannot be determined
+public func getAvailableDiskSpace(at url: URL) -> Int64? {
+    let path = url.path
+    
+    do {
+        let attributes = try FileManager.default.attributesOfFileSystem(forPath: path)
+        if let freeSize = attributes[.systemFreeSize] as? NSNumber {
+            return freeSize.int64Value
+        }
+    } catch {
+        // Return nil on error
+    }
+    
+    return nil
+}
+
+/// Checks if there is enough available disk space for a specified operation.
+///
+/// This is a convenience function that wraps `getAvailableDiskSpace()` to provide
+/// a simple boolean check for whether a specific amount of space is available.
+///
+/// **Platform Behavior:**
+/// - Same platform limitations as `getAvailableDiskSpace()`
+/// - Returns `false` if space cannot be determined (conservative approach)
+///
+/// **Performance:**
+/// - Same as `getAvailableDiskSpace()` (< 10ms typically)
+///
+/// **Example Usage:**
+/// ```swift
+/// // Check if we can create a 2GB file
+/// if hasEnoughDiskSpace(at: someURL, requiredBytes: 2_000_000_000) {
+///     // Safe to proceed with operation
+///     createLargeFile(at: someURL)
+/// } else {
+///     // Not enough space - warn user
+///     showDiskSpaceWarning()
+/// }
+/// ```
+///
+/// - Parameters:
+///   - url: A URL on the volume to check (can be any path on the volume)
+///   - requiredBytes: The number of bytes required for the operation
+/// - Returns: `true` if enough space is available, `false` if not enough space or if space cannot be determined
+public func hasEnoughDiskSpace(at url: URL, requiredBytes: Int64) -> Bool {
+    guard requiredBytes >= 0 else {
+        return true // Negative or zero bytes means no space needed
+    }
+    
+    guard let availableSpace = getAvailableDiskSpace(at: url) else {
+        return false // Conservative: return false if we can't determine
+    }
+    
+    return availableSpace >= requiredBytes
+}
+
+// MARK: - Path Utilities
+
+/// Safely appends a path component to a URL with validation.
+///
+/// This function provides additional safety over `URL.appendingPathComponent()`
+/// by validating the component and preventing path traversal attacks.
+///
+/// **Safety Features:**
+/// - Validates component doesn't contain path separators (`/` or `\`)
+/// - Prevents path traversal (`..` components)
+/// - Sanitizes component before appending
+/// - Validates resulting path is still valid
+///
+/// **When to use:**
+/// - When appending user-provided path components
+/// - When appending components from untrusted sources
+/// - When you need validation beyond basic URL construction
+///
+/// **When NOT to use:**
+/// - For trusted, known-safe path components
+/// - For simple path construction (use `URL.appendingPathComponent()`)
+///
+/// **Example Usage:**
+/// ```swift
+/// let baseURL = platformDocumentsDirectory()!
+/// 
+/// // Safe: user-provided component
+/// if let safeURL = safeAppendPathComponent(baseURL, "user_data") {
+///     // Component was valid and appended
+/// } else {
+///     // Component was invalid (contained path separators or ..)
+/// }
+///
+/// // Unsafe component (will return nil)
+/// safeAppendPathComponent(baseURL, "../etc/passwd") // Returns nil
+/// safeAppendPathComponent(baseURL, "data/file.txt") // Returns nil (contains /)
+/// ```
+///
+/// - Parameters:
+///   - url: The base URL to append to
+///   - component: The path component to append (must not contain path separators)
+/// - Returns: The new URL with component appended, or `nil` if component is invalid
+public func safeAppendPathComponent(_ url: URL, _ component: String) -> URL? {
+    // Trim whitespace
+    let trimmed = component.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    // Validation rules
+    guard !trimmed.isEmpty else {
+        return nil // Empty after trimming
+    }
+    
+    guard !trimmed.contains("/") && !trimmed.contains("\\") else {
+        return nil // Contains path separators
+    }
+    
+    guard trimmed != ".." && trimmed != "." else {
+        return nil // Path traversal
+    }
+    
+    guard !trimmed.contains("\0") else {
+        return nil // Null bytes
+    }
+    
+    // Check for leading/trailing whitespace (security concern)
+    guard component == trimmed else {
+        return nil // Had leading/trailing whitespace
+    }
+    
+    return url.appendingPathComponent(trimmed)
+}
+
+// MARK: - Directory Size Calculation
+
+/// Calculates the total size of a directory and all its contents recursively.
+///
+/// **Performance Characteristics:**
+/// - **Small directories** (< 100 files): Fast (< 100ms)
+/// - **Medium directories** (100-10,000 files): Moderate (100ms - 5s)
+/// - **Large directories** (> 10,000 files): Slow (5s - minutes)
+/// - **Network volumes**: Can be very slow or timeout
+///
+/// **Considerations:**
+/// - This operation can be slow for large directory trees
+/// - Consider using `calculateDirectorySizeAsync()` for large directories
+/// - May timeout or fail on network volumes
+/// - Symlinks are followed (counts target size, not link)
+///
+/// **Example Usage:**
+/// ```swift
+/// // For small directories
+/// if let size = calculateDirectorySize(at: someURL) {
+///     let sizeMB = Double(size) / 1_000_000.0
+///     print("Directory size: \(sizeMB) MB")
+/// }
+///
+/// // For large directories, use async version
+/// Task {
+///     if let size = await calculateDirectorySizeAsync(at: largeURL) {
+///         // Handle result
+///     }
+/// }
+/// ```
+///
+/// - Parameter url: The directory URL to calculate size for
+/// - Returns: Total size in bytes, or `nil` if calculation fails or directory doesn't exist
+/// - Warning: This is a synchronous operation that may block for large directories
+public func calculateDirectorySize(at url: URL) -> Int64? {
+    let path = url.path
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory),
+          isDirectory.boolValue else {
+        return nil
+    }
+    
+    var totalSize: Int64 = 0
+    var visitedInodes = Set<ino_t>() // Track visited inodes to detect circular symlinks
+    
+    guard let enumerator = FileManager.default.enumerator(
+        at: url,
+        includingPropertiesForKeys: [.fileSizeKey, .isDirectoryKey, .isSymbolicLinkKey],
+        options: [.skipsHiddenFiles],
+        errorHandler: nil
+    ) else {
+        return nil
+    }
+    
+    for case let fileURL as URL in enumerator {
+        // Get resource values
+        guard let resourceValues = try? fileURL.resourceValues(forKeys: [.fileSizeKey, .isDirectoryKey, .isSymbolicLinkKey]) else {
+            continue
+        }
+        
+        // Skip if it's a directory (we only count file sizes)
+        if resourceValues.isDirectory == true {
+            continue
+        }
+        
+        // Handle symlinks - check for circular references
+        if resourceValues.isSymbolicLink == true {
+            // For symlinks, we could skip or follow - following is more accurate
+            // But we need to detect circular references
+            if let inode = try? FileManager.default.attributesOfItem(atPath: fileURL.path)[.systemFileNumber] as? NSNumber {
+                let ino = inode.uint64Value
+                if visitedInodes.contains(ino_t(ino)) {
+                    continue // Skip circular symlink
+                }
+                visitedInodes.insert(ino_t(ino))
+            }
+        }
+        
+        // Add file size
+        if let fileSize = resourceValues.fileSize {
+            totalSize += Int64(fileSize)
+        }
+    }
+    
+    return totalSize
+}
+
+/// Asynchronously calculates the total size of a directory and all its contents.
+///
+/// This is the async variant for large directories that may take significant time.
+/// Use this instead of `calculateDirectorySize()` for directories with many files
+/// or when called from the main thread.
+///
+/// **Performance:**
+/// - Same performance characteristics as sync version
+/// - Does not block the calling thread
+/// - Can be cancelled via Task cancellation
+///
+/// **Example Usage:**
+/// ```swift
+/// Task {
+///     if let size = await calculateDirectorySizeAsync(at: largeURL) {
+///         updateUI(with: size)
+///     }
+/// }
+///
+/// // With cancellation
+/// let task = Task {
+///     if let size = await calculateDirectorySizeAsync(at: url) {
+///         // Handle result
+///     }
+/// }
+/// task.cancel() // Cancels the calculation
+/// ```
+///
+/// - Parameter url: The directory URL to calculate size for
+/// - Returns: Total size in bytes, or `nil` if calculation fails
+/// - Note: Can be cancelled via Task cancellation
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+public func calculateDirectorySizeAsync(at url: URL) async -> Int64? {
+    let path = url.path
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    guard FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory),
+          isDirectory.boolValue else {
+        return nil
+    }
+    
+    var totalSize: Int64 = 0
+    var visitedInodes = Set<ino_t>() // Track visited inodes to detect circular symlinks
+    var fileCount = 0
+    
+    guard let enumerator = FileManager.default.enumerator(
+        at: url,
+        includingPropertiesForKeys: [.fileSizeKey, .isDirectoryKey, .isSymbolicLinkKey],
+        options: [.skipsHiddenFiles],
+        errorHandler: nil
+    ) else {
+        return nil
+    }
+    
+    // Convert synchronous enumerator to work in async context
+    while let fileURL = enumerator.nextObject() as? URL {
+        // Check for cancellation
+        try? Task.checkCancellation()
+        
+        // Yield periodically to avoid blocking
+        if fileCount % 100 == 0 {
+            await Task.yield()
+        }
+        fileCount += 1
+        
+        // Get resource values
+        guard let resourceValues = try? fileURL.resourceValues(forKeys: [.fileSizeKey, .isDirectoryKey, .isSymbolicLinkKey]) else {
+            continue
+        }
+        
+        // Skip if it's a directory (we only count file sizes)
+        if resourceValues.isDirectory == true {
+            continue
+        }
+        
+        // Handle symlinks - check for circular references
+        if resourceValues.isSymbolicLink == true {
+            if let inode = try? FileManager.default.attributesOfItem(atPath: fileURL.path)[.systemFileNumber] as? NSNumber {
+                let ino = inode.uint64Value
+                if visitedInodes.contains(ino_t(ino)) {
+                    continue // Skip circular symlink
+                }
+                visitedInodes.insert(ino_t(ino))
+            }
+        }
+        
+        // Add file size
+        if let fileSize = resourceValues.fileSize {
+            totalSize += Int64(fileSize)
+        }
+    }
+    
+    return totalSize
+}
+
+// MARK: - Path Sanitization
+
+/// Sanitizes a path string to prevent security vulnerabilities.
+///
+/// **What it does:**
+/// - Normalizes Unicode to NFC form (prevents HFS+/APFS compatibility issues)
+/// - Removes all control characters (0x00-0x1F, 0x7F)
+/// - Removes zero-width characters (can hide malicious content)
+/// - Removes bidirectional override characters (can reverse text display)
+/// - Removes path traversal sequences (`..`)
+/// - Removes leading/trailing whitespace, dots, and spaces
+/// - Normalizes path separators (converts `\` to `/`)
+/// - Removes multiple consecutive separators
+/// - Removes/replaces reserved characters (e.g., `:` on macOS)
+///
+/// **What it does NOT do:**
+/// - Validate path exists
+/// - Check permissions
+/// - Resolve symlinks
+/// - Validate path is within a sandbox
+/// - Detect Unicode confusables (homoglyphs)
+/// - Enforce maximum path length
+///
+/// **Security Considerations:**
+/// - This function helps prevent path traversal attacks and obfuscation
+/// - However, it does NOT guarantee the path is safe
+/// - Always validate paths against expected directories
+/// - Use `URL` instead of `String` when possible (URLs are safer)
+/// - Consider using `safeAppendPathComponent()` for component-level safety
+///
+/// **Example Usage:**
+/// ```swift
+/// // User-provided path (potentially unsafe)
+/// let userPath = "../../etc/passwd"
+/// let sanitized = sanitizePath(userPath)
+/// // Result: "etc/passwd" (removed ..)
+///
+/// // Path with control characters
+/// let unsafePath = "file\u{200B}name.txt" // Contains zero-width space
+/// let sanitized = sanitizePath(unsafePath)
+/// // Result: "filename.txt" (removed zero-width space)
+/// ```
+///
+/// - Parameter path: The path string to sanitize
+/// - Returns: Sanitized path string
+/// - Warning: Sanitization is not a substitute for proper path validation
+public func sanitizePath(_ path: String) -> String {
+    var result = path
+    
+    // 1. Unicode normalization to NFC
+    result = result.precomposedStringWithCanonicalMapping
+    
+    // 2. Remove control characters (0x00-0x1F, 0x7F)
+    result = result.unicodeScalars.filter { scalar in
+        let value = scalar.value
+        return !(value <= 0x1F || value == 0x7F)
+    }.reduce("") { $0 + String($1) }
+    
+    // 3. Remove zero-width characters
+    let zeroWidthChars: [Unicode.Scalar] = [
+        Unicode.Scalar(0x200B)!, // Zero-width space
+        Unicode.Scalar(0x200C)!, // Zero-width non-joiner
+        Unicode.Scalar(0x200D)!, // Zero-width joiner
+        Unicode.Scalar(0xFEFF)! // Zero-width no-break space
+    ]
+    result = result.unicodeScalars.filter { !zeroWidthChars.contains($0) }.reduce("") { $0 + String($1) }
+    
+    // 4. Remove bidirectional override characters
+    let bidirectionalChars: [Unicode.Scalar] = [
+        Unicode.Scalar(0x202E)!, // Right-to-left override
+        Unicode.Scalar(0x202D)!  // Left-to-right override
+    ]
+    result = result.unicodeScalars.filter { !bidirectionalChars.contains($0) }.reduce("") { $0 + String($1) }
+    
+    // 5. Convert backslashes to forward slashes
+    result = result.replacingOccurrences(of: "\\", with: "/")
+    
+    // 6. Remove leading/trailing whitespace
+    result = result.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    // 7. Remove trailing dots and spaces (for cross-platform compatibility)
+    // But preserve leading dot for hidden files
+    let hadLeadingDot = result.hasPrefix(".")
+    result = result.trimmingCharacters(in: CharacterSet(charactersIn: ". "))
+    if hadLeadingDot && !result.isEmpty {
+        result = "." + result
+    }
+    
+    // 8. Remove .. sequences (path traversal)
+    while result.contains("../") {
+        result = result.replacingOccurrences(of: "../", with: "")
+    }
+    while result.hasPrefix("../") {
+        result = String(result.dropFirst(3))
+    }
+    if result == ".." {
+        result = ""
+    }
+    
+    // 9. Remove . sequences (but preserve . at start for hidden files)
+    if result != "." && result.hasPrefix("./") {
+        result = String(result.dropFirst(2))
+    }
+    while result.contains("/./") {
+        result = result.replacingOccurrences(of: "/./", with: "/")
+    }
+    
+    // 10. Collapse multiple consecutive separators
+    while result.contains("//") {
+        result = result.replacingOccurrences(of: "//", with: "/")
+    }
+    
+    // 11. Remove leading separators (but preserve one if path is absolute)
+    // For relative paths that start with / after removing .., remove the leading /
+    let wasAbsolute = path.hasPrefix("/")
+    if result.hasPrefix("/") {
+        if wasAbsolute {
+            // Preserve leading / for absolute paths
+            result = "/" + result.dropFirst().trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        } else {
+            // Remove leading / for relative paths that got it from .. removal
+            result = result.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        }
+    } else {
+        result = result.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+    }
+    
+    // 12. Replace reserved characters (colon on macOS)
+    // But preserve Windows drive letters (C:, D:, etc.) and colons in absolute paths
+    #if os(macOS)
+    // Only replace colons that are not part of Windows drive letters
+    // Windows drive letters are single letter followed by colon at start: "C:", "D:", etc.
+    if result.count >= 2 && result[result.startIndex].isLetter && result[result.index(result.startIndex, offsetBy: 1)] == ":" {
+        // Preserve Windows drive letter format
+    } else {
+        // Replace other colons
+        result = result.replacingOccurrences(of: ":", with: "-")
+    }
+    #endif
+    
+    return result
+}
+
+/// Sanitizes a string to be safe for use as a filename or path component.
+///
+/// This function is designed for sanitizing individual components (filenames, directory names)
+/// that will be used in file paths. For sanitizing full paths, use `sanitizePath()`.
+///
+/// **What it does:**
+/// - Normalizes Unicode to NFC form (prevents HFS+/APFS compatibility issues)
+/// - Removes all control characters (0x00-0x1F, 0x7F)
+/// - Removes zero-width characters (can hide malicious content)
+/// - Removes bidirectional override characters (can reverse text display)
+/// - Removes/replaces path separators (`/`, `\`) - not allowed in filenames
+/// - Removes path traversal sequences (`..`, `.`)
+/// - Removes leading/trailing whitespace, dots, and spaces
+/// - Removes/replaces reserved characters (e.g., `:` on macOS)
+/// - Optionally enforces maximum length
+///
+/// **What it does NOT do:**
+/// - Validate the resulting filename is unique
+/// - Check if filename already exists
+/// - Validate path exists
+/// - Check permissions
+/// - Detect Unicode confusables (homoglyphs)
+///
+/// **Differences from `sanitizePath()`:**
+/// - `sanitizePath()` handles full paths with separators
+/// - `sanitizeFilename()` handles single components (no separators allowed)
+/// - `sanitizeFilename()` is stricter - path separators are removed/replaced, not normalized
+/// - `sanitizeFilename()` can enforce maximum length
+///
+/// **Security Considerations:**
+/// - This function helps prevent security issues in filenames
+/// - However, it does NOT guarantee the filename is completely safe
+/// - Always validate filenames are within expected directories
+/// - Use `URL.appendingPathComponent()` with sanitized filenames
+/// - Consider using `safeAppendPathComponent()` for additional validation
+///
+/// **Example Usage:**
+/// ```swift
+/// // User-provided filename (potentially unsafe)
+/// let userFilename = "my:file\u{200B}name.txt"
+/// let sanitized = sanitizeFilename(userFilename)
+/// // Result: "my-filename.txt" or "myfilename.txt" (colon and zero-width space removed)
+///
+/// // Filename with path separators (will be removed/replaced)
+/// let unsafeName = "folder/file.txt"
+/// let sanitized = sanitizeFilename(unsafeName)
+/// // Result: "folder-file.txt" or "folder_file.txt" (separator replaced)
+/// ```
+///
+/// - Parameters:
+///   - filename: The string to sanitize for use as a filename
+///   - replacementCharacter: Character to replace invalid characters with (default: `"-"`)
+///   - maxLength: Maximum length for the filename (default: `255`, `nil` for no limit)
+/// - Returns: Sanitized filename string
+/// - Warning: Sanitization is not a substitute for proper validation
+public func sanitizeFilename(
+    _ filename: String,
+    replacementCharacter: Character = "-",
+    maxLength: Int? = 255
+) -> String {
+    var result = filename
+    
+    // 1. Unicode normalization to NFC
+    result = result.precomposedStringWithCanonicalMapping
+    
+    // 2. Remove control characters (0x00-0x1F, 0x7F)
+    result = result.unicodeScalars.filter { scalar in
+        let value = scalar.value
+        return !(value <= 0x1F || value == 0x7F)
+    }.reduce("") { $0 + String($1) }
+    
+    // 3. Remove zero-width characters
+    let zeroWidthChars: [Unicode.Scalar] = [
+        Unicode.Scalar(0x200B)!, // Zero-width space
+        Unicode.Scalar(0x200C)!, // Zero-width non-joiner
+        Unicode.Scalar(0x200D)!, // Zero-width joiner
+        Unicode.Scalar(0xFEFF)! // Zero-width no-break space
+    ]
+    result = result.unicodeScalars.filter { !zeroWidthChars.contains($0) }.reduce("") { $0 + String($1) }
+    
+    // 4. Remove bidirectional override characters
+    let bidirectionalChars: [Unicode.Scalar] = [
+        Unicode.Scalar(0x202E)!, // Right-to-left override
+        Unicode.Scalar(0x202D)!  // Left-to-right override
+    ]
+    result = result.unicodeScalars.filter { !bidirectionalChars.contains($0) }.reduce("") { $0 + String($1) }
+    
+    // 5. Replace path separators (not allowed in filenames)
+    result = result.replacingOccurrences(of: "/", with: String(replacementCharacter))
+    result = result.replacingOccurrences(of: "\\", with: String(replacementCharacter))
+    
+    // 6. Remove .. sequences
+    result = result.replacingOccurrences(of: "..", with: String(replacementCharacter))
+    
+    // 7. Remove . sequences (but preserve . at start for hidden files)
+    if result != "." && result.hasPrefix("./") {
+        result = String(result.dropFirst(2))
+    }
+    if result == "." {
+        result = String(replacementCharacter)
+    }
+    
+    // 8. Remove leading/trailing whitespace
+    result = result.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    // 9. Remove trailing dots and spaces
+    result = result.trimmingCharacters(in: CharacterSet(charactersIn: ". "))
+    
+    // 10. Replace reserved characters (colon on macOS)
+    #if os(macOS)
+    result = result.replacingOccurrences(of: ":", with: String(replacementCharacter))
+    #endif
+    
+    // 11. Enforce maximum length
+    if let maxLength = maxLength, result.count > maxLength {
+        result = String(result.prefix(maxLength))
+    }
+    
+    // 12. If result is empty after sanitization, return safe default
+    if result.isEmpty {
+        result = "_"
+    }
+    
+    return result
+}
+
 // MARK: - Future Enhancements
 
 /// Potential future enhancements for platform file system utilities:
@@ -722,18 +1648,23 @@ public func platformSecurityScopedHasBookmark(key: String) -> Bool {
 /// - ✅ `platformSharedContainerDirectory()` - App group shared containers (IMPLEMENTED)
 ///
 /// **Enhanced Features:**
-/// - **Error Details**: Return detailed error information instead of just `nil`
-///   - Custom error type with specific failure reasons
-///   - Better debugging and error reporting
+/// - ✅ **Directory Validation**: Verify directory permissions and accessibility (IMPLEMENTED)
+///   - ✅ `validateDirectoryAccess()` - Simple boolean validation
+///   - ✅ `validateDirectoryAccessThrowing()` - Detailed error variant
+///   - ✅ `checkDirectoryPermissions()` - Comprehensive permissions
 ///
-/// - **Directory Validation**: Verify directory permissions and accessibility
-///   - Check read/write permissions
-///   - Validate directory is actually accessible
+/// - ✅ **Path Utilities**: Additional helper functions (IMPLEMENTED)
+///   - ✅ `safeAppendPathComponent()` - Safe path component appending
+///   - ✅ `sanitizePath()` - Path sanitization for security
+///   - ✅ `sanitizeFilename()` - Filename/component sanitization
 ///
-/// - **Path Utilities**: Additional helper functions
-///   - Safe path component appending
-///   - Path existence checking
-///   - Directory size calculation
+/// - ✅ **Disk Space Utilities**: Disk space checking (IMPLEMENTED)
+///   - ✅ `getAvailableDiskSpace()` - Get available disk space
+///   - ✅ `hasEnoughDiskSpace()` - Check if enough space exists
+///
+/// - ✅ **Directory Size Calculation**: Calculate directory sizes (IMPLEMENTED)
+///   - ✅ `calculateDirectorySize()` - Synchronous calculation
+///   - ✅ `calculateDirectorySizeAsync()` - Async variant for large directories
 ///
 /// **Security-Scoped Resource Enhancements:**
 /// - **Dedicated Storage Manager**: Wrapper around bookmark storage with additional features

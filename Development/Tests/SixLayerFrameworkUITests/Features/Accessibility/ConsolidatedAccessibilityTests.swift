@@ -21,20 +21,20 @@ import SwiftUI
 @testable import SixLayerFramework
 
 /// Test data item for Layer 1 accessibility tests
-public struct Layer1TestItem: Identifiable {
-    public let id: String
+fileprivate struct Layer1TestItem: Identifiable {
+    let id: String
     let title: String
     let subtitle: String
 }
 
 /// Mock task item for testing
-public struct MockTaskItemReal: Identifiable {
-    public let id: String
+fileprivate struct MockTaskItemReal: Identifiable {
+    let id: String
     let title: String
 }
 
 /// Test data for intelligent detail views
-public struct IntelligentDetailData {
+fileprivate struct IntelligentDetailData {
     let id: String
     let title: String
     let content: String
@@ -42,8 +42,8 @@ public struct IntelligentDetailData {
 }
 
 /// Mock task item for baseline testing
-public struct MockTaskItemBaseline: Identifiable {
-    public let id: String
+fileprivate struct MockTaskItemBaseline: Identifiable {
+    let id: String
     let title: String
 }
 
@@ -61,8 +61,8 @@ public struct DemonstrationTestItem: Identifiable {
 }
 
 /// Test item for card components
-public struct CardTestItem: Identifiable {
-    public let id: String
+fileprivate struct CardTestItem: Identifiable {
+    let id: String
     let title: String
 }
 

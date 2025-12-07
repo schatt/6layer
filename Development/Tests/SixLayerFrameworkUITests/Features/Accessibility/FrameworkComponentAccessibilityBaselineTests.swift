@@ -5,7 +5,7 @@ import SwiftUI
 @testable import SixLayerFramework
 // MARK: - Mock Data for Testing
 
-struct MockTaskItemBaseline: Identifiable {
+fileprivate struct MockTaskItemBaseline: Identifiable {
     let id: String
     let title: String
 }

@@ -8,7 +8,7 @@ import AppKit
 
 // MARK: - Mock Data for Testing
 
-struct MockTaskItemReal: Identifiable {
+fileprivate struct MockTaskItemReal: Identifiable {
     let id: String
     let title: String
 }
