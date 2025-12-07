@@ -505,6 +505,55 @@ public struct DynamicFormConfiguration: Identifiable {
     public func getOCREnabledFields() -> [DynamicFormField] {
         return sections.flatMap { $0.fields }.filter { $0.supportsOCR }
     }
+    
+    /// Apply hints from .hints file to this configuration
+    /// If modelName is provided, loads hints and applies them to matching fields
+    /// - Parameter hintsLoader: Optional hints loader (defaults to FileBasedDataHintsLoader)
+    /// - Returns: New configuration with hints applied, or self if no modelName or no hints found
+    public func applyingHints(hintsLoader: DataHintsLoader = FileBasedDataHintsLoader()) -> DynamicFormConfiguration {
+        guard let modelName = modelName else {
+            return self
+        }
+        
+        let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+        let fieldHints = hintsResult.fieldHints
+        
+        // If no hints found, return original configuration
+        guard !fieldHints.isEmpty else {
+            return self
+        }
+        
+        // Apply hints to fields in sections
+        let sectionsWithHints = sections.map { section in
+            DynamicFormSection(
+                id: section.id,
+                title: section.title,
+                description: section.description,
+                fields: section.fields.map { field in
+                    if let hints = fieldHints[field.id] {
+                        return field.applying(hints: hints)
+                    }
+                    return field
+                },
+                isCollapsible: section.isCollapsible,
+                isCollapsed: section.isCollapsed,
+                metadata: section.metadata,
+                layoutStyle: section.layoutStyle
+            )
+        }
+        
+        // Create configuration with hints-applied sections
+        return DynamicFormConfiguration(
+            id: id,
+            title: title,
+            description: description,
+            sections: sectionsWithHints,
+            submitButtonText: submitButtonText,
+            cancelButtonText: cancelButtonText,
+            metadata: metadata,
+            modelName: modelName
+        )
+    }
 }
 
 // MARK: - Calculation Groups

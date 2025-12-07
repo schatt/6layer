@@ -1325,46 +1325,9 @@ open class DynamicFormViewTests: BaseTestClass {
         return (testFile, uniqueModelName)
     }
     
-    /// Helper to apply hints to a configuration (same logic as DynamicFormView.init)
+    /// Helper to apply hints to a configuration (uses the same method as DynamicFormView)
     private func applyHintsToConfiguration(_ configuration: DynamicFormConfiguration) -> DynamicFormConfiguration {
-        guard let modelName = configuration.modelName else {
-            return configuration
-        }
-        
-        let hintsLoader = FileBasedDataHintsLoader()
-        let hintsResult = hintsLoader.loadHintsResult(for: modelName)
-        let fieldHints = hintsResult.fieldHints
-        
-        // Apply hints to fields in sections
-        let sectionsWithHints = configuration.sections.map { section in
-            DynamicFormSection(
-                id: section.id,
-                title: section.title,
-                description: section.description,
-                fields: section.fields.map { field in
-                    if let hints = fieldHints[field.id] {
-                        return field.applying(hints: hints)
-                    }
-                    return field
-                },
-                isCollapsible: section.isCollapsible,
-                isCollapsed: section.isCollapsed,
-                metadata: section.metadata,
-                layoutStyle: section.layoutStyle
-            )
-        }
-        
-        // Create configuration with hints-applied sections
-        return DynamicFormConfiguration(
-            id: configuration.id,
-            title: configuration.title,
-            description: configuration.description,
-            sections: sectionsWithHints,
-            submitButtonText: configuration.submitButtonText,
-            cancelButtonText: configuration.cancelButtonText,
-            metadata: configuration.metadata,
-            modelName: configuration.modelName
-        )
+        return configuration.applyingHints()
     }
 
     @Test @MainActor func testDynamicFormViewAutoLoadsHintsWhenModelNameProvided() async throws {
