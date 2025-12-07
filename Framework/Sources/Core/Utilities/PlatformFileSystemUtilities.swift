@@ -1084,6 +1084,14 @@ public func getAvailableDiskSpace(at url: URL) -> Int64? {
 ///     // Not enough space - warn user
 ///     showDiskSpaceWarning()
 /// }
+///
+/// // Check before downloading
+/// let downloadSize: Int64 = 500_000_000 // 500 MB
+/// if hasEnoughDiskSpace(at: downloadDirectory, requiredBytes: downloadSize) {
+///     startDownload()
+/// } else {
+///     showInsufficientSpaceError()
+/// }
 /// ```
 ///
 /// - Parameters:
@@ -1208,6 +1216,7 @@ public func safeAppendPathComponent(_ url: URL, _ component: String) -> URL? {
 /// - Parameter url: The directory URL to calculate size for
 /// - Returns: Total size in bytes, or `nil` if calculation fails or directory doesn't exist
 /// - Warning: This is a synchronous operation that may block for large directories
+/// - Note: Returns `0` for empty directories
 public func calculateDirectorySize(at url: URL) -> Int64? {
     let path = url.path
     
