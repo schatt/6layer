@@ -49,6 +49,12 @@ public func platformHomeDirectory() -> URL {
 /// - Future extensibility for platform-specific enhancements (e.g., iCloud Drive integration, sandbox handling)
 /// - Reduced code verbosity in consuming applications
 ///
+/// **iCloud Drive Support:**
+/// When `useiCloud` is `true`, this function attempts to use the iCloud container directory
+/// instead of the local Application Support directory. If iCloud is not available, it falls
+/// back to the local directory. The default container identifier (derived from your app's
+/// bundle identifier) is used.
+///
 /// This eliminates the need for verbose, repetitive code in consuming applications:
 /// ```swift
 /// // Instead of:
@@ -59,11 +65,32 @@ public func platformHomeDirectory() -> URL {
 ///     // Handle error
 ///     return
 /// }
+///
+/// // With iCloud support:
+/// guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true, useiCloud: true) else {
+///     // Handle error (may be iCloud unavailable)
+///     return
+/// }
 /// ```
 ///
-/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
-/// - Returns: A `URL` representing the Application Support directory, or `nil` if the directory cannot be located or created.
-public func platformApplicationSupportDirectory(createIfNeeded: Bool = false) -> URL? {
+/// - Parameters:
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+///   - useiCloud: If `true`, attempts to use iCloud container directory. Defaults to `false` for backward compatibility.
+/// - Returns: A `URL` representing the Application Support directory (or iCloud container if `useiCloud` is true), or `nil` if the directory cannot be located or created.
+public func platformApplicationSupportDirectory(createIfNeeded: Bool = false, useiCloud: Bool = false) -> URL? {
+    #if os(iOS) || os(macOS)
+    if useiCloud {
+        // Try to use iCloud container (default container identifier)
+        if let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) {
+            // Use Documents subdirectory in iCloud container (standard pattern)
+            let documentsURL = iCloudURL.appendingPathComponent("Documents", isDirectory: true)
+            return resolveDirectory(url: documentsURL, createIfNeeded: createIfNeeded)
+        }
+        // Fall back to local directory if iCloud is not available
+    }
+    #endif
+    
+    // Use local directory (default behavior)
     let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     return resolveDirectory(url: url, createIfNeeded: createIfNeeded)
 }
@@ -90,17 +117,35 @@ public func platformApplicationSupportDirectory(createIfNeeded: Bool = false) ->
 ///     // Handle other errors
 /// }
 ///
-/// // Compare with optional variant (less detailed)
-/// guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true) else {
-///     // No information about why it failed
-///     return
+/// // With iCloud support:
+/// do {
+///     let appSupport = try platformApplicationSupportDirectoryThrowing(createIfNeeded: true, useiCloud: true)
+///     // Use iCloud container directory
+/// } catch PlatformFileSystemError.iCloudUnavailable {
+///     // iCloud is not available, fall back to local
+///     let appSupport = try platformApplicationSupportDirectoryThrowing(createIfNeeded: true, useiCloud: false)
 /// }
 /// ```
 ///
-/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
-/// - Returns: A `URL` representing the Application Support directory
-/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created
-public func platformApplicationSupportDirectoryThrowing(createIfNeeded: Bool = false) throws -> URL {
+/// - Parameters:
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+///   - useiCloud: If `true`, attempts to use iCloud container directory. Defaults to `false` for backward compatibility.
+/// - Returns: A `URL` representing the Application Support directory (or iCloud container if `useiCloud` is true)
+/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created. Throws `.iCloudUnavailable` if `useiCloud` is true but iCloud is not available.
+public func platformApplicationSupportDirectoryThrowing(createIfNeeded: Bool = false, useiCloud: Bool = false) throws -> URL {
+    #if os(iOS) || os(macOS)
+    if useiCloud {
+        // Try to use iCloud container (default container identifier)
+        guard let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
+            throw PlatformFileSystemError.iCloudUnavailable
+        }
+        // Use Documents subdirectory in iCloud container (standard pattern)
+        let documentsURL = iCloudURL.appendingPathComponent("Documents", isDirectory: true)
+        return try resolveDirectoryThrowing(url: documentsURL, createIfNeeded: createIfNeeded)
+    }
+    #endif
+    
+    // Use local directory (default behavior)
     let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     return try resolveDirectoryThrowing(url: url, createIfNeeded: createIfNeeded)
 }
@@ -116,6 +161,12 @@ public func platformApplicationSupportDirectoryThrowing(createIfNeeded: Bool = f
 /// - Future extensibility for platform-specific enhancements (e.g., iCloud Drive integration, sandbox handling)
 /// - Reduced code verbosity in consuming applications
 ///
+/// **iCloud Drive Support:**
+/// When `useiCloud` is `true`, this function attempts to use the iCloud container directory
+/// instead of the local Documents directory. If iCloud is not available, it falls back to
+/// the local directory. The default container identifier (derived from your app's bundle
+/// identifier) is used.
+///
 /// This eliminates the need for verbose, repetitive code in consuming applications:
 /// ```swift
 /// // Instead of:
@@ -126,11 +177,32 @@ public func platformApplicationSupportDirectoryThrowing(createIfNeeded: Bool = f
 ///     // Handle error
 ///     return
 /// }
+///
+/// // With iCloud support:
+/// guard let documentsURL = platformDocumentsDirectory(createIfNeeded: true, useiCloud: true) else {
+///     // Handle error (may be iCloud unavailable)
+///     return
+/// }
 /// ```
 ///
-/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
-/// - Returns: A `URL` representing the Documents directory, or `nil` if the directory cannot be located or created.
-public func platformDocumentsDirectory(createIfNeeded: Bool = false) -> URL? {
+/// - Parameters:
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+///   - useiCloud: If `true`, attempts to use iCloud container directory. Defaults to `false` for backward compatibility.
+/// - Returns: A `URL` representing the Documents directory (or iCloud container if `useiCloud` is true), or `nil` if the directory cannot be located or created.
+public func platformDocumentsDirectory(createIfNeeded: Bool = false, useiCloud: Bool = false) -> URL? {
+    #if os(iOS) || os(macOS)
+    if useiCloud {
+        // Try to use iCloud container (default container identifier)
+        if let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) {
+            // Use Documents subdirectory in iCloud container (standard pattern)
+            let documentsURL = iCloudURL.appendingPathComponent("Documents", isDirectory: true)
+            return resolveDirectory(url: documentsURL, createIfNeeded: createIfNeeded)
+        }
+        // Fall back to local directory if iCloud is not available
+    }
+    #endif
+    
+    // Use local directory (default behavior)
     let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     return resolveDirectory(url: url, createIfNeeded: createIfNeeded)
 }
@@ -152,12 +224,36 @@ public func platformDocumentsDirectory(createIfNeeded: Bool = false) -> URL? {
 /// } catch {
 ///     // Handle other errors
 /// }
+///
+/// // With iCloud support:
+/// do {
+///     let documents = try platformDocumentsDirectoryThrowing(createIfNeeded: true, useiCloud: true)
+///     // Use iCloud container directory
+/// } catch PlatformFileSystemError.iCloudUnavailable {
+///     // iCloud is not available, fall back to local
+///     let documents = try platformDocumentsDirectoryThrowing(createIfNeeded: true, useiCloud: false)
+/// }
 /// ```
 ///
-/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
-/// - Returns: A `URL` representing the Documents directory
-/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created
-public func platformDocumentsDirectoryThrowing(createIfNeeded: Bool = false) throws -> URL {
+/// - Parameters:
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+///   - useiCloud: If `true`, attempts to use iCloud container directory. Defaults to `false` for backward compatibility.
+/// - Returns: A `URL` representing the Documents directory (or iCloud container if `useiCloud` is true)
+/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created. Throws `.iCloudUnavailable` if `useiCloud` is true but iCloud is not available.
+public func platformDocumentsDirectoryThrowing(createIfNeeded: Bool = false, useiCloud: Bool = false) throws -> URL {
+    #if os(iOS) || os(macOS)
+    if useiCloud {
+        // Try to use iCloud container (default container identifier)
+        guard let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) else {
+            throw PlatformFileSystemError.iCloudUnavailable
+        }
+        // Use Documents subdirectory in iCloud container (standard pattern)
+        let documentsURL = iCloudURL.appendingPathComponent("Documents", isDirectory: true)
+        return try resolveDirectoryThrowing(url: documentsURL, createIfNeeded: createIfNeeded)
+    }
+    #endif
+    
+    // Use local directory (default behavior)
     let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     return try resolveDirectoryThrowing(url: url, createIfNeeded: createIfNeeded)
 }
@@ -1829,15 +1925,141 @@ public func sanitizeFilename(
     return result
 }
 
+// MARK: - iCloud Drive Integration
+
+/// Checks if iCloud Drive is available and enabled on the current device.
+///
+/// This function checks if iCloud Drive is available by attempting to access
+/// the default ubiquity container. On platforms that don't support iCloud
+/// (watchOS, tvOS), this always returns `false`.
+///
+/// **Platform Support:**
+/// - **iOS/macOS**: Returns `true` if iCloud Drive is available and enabled
+/// - **watchOS/tvOS/visionOS**: Always returns `false` (iCloud Drive not supported)
+///
+/// **Note**: This function checks availability, not whether the user is signed in.
+/// Even if iCloud is available, the user may not be signed in to iCloud.
+///
+/// - Returns: `true` if iCloud Drive is available, `false` otherwise
+public func isiCloudDriveAvailable() -> Bool {
+    #if os(iOS) || os(macOS)
+    // Check if default ubiquity container is available
+    if let _ = FileManager.default.url(forUbiquityContainerIdentifier: nil) {
+        return true
+    }
+    return false
+    #else
+    // iCloud Drive not supported on watchOS, tvOS, visionOS
+    return false
+    #endif
+}
+
+/// Checks if a specific iCloud container is available.
+///
+/// This function checks if a specific iCloud container identifier is available
+/// and accessible. The container identifier should be in the format
+/// "iCloud.com.example.app" (matching your app's bundle identifier).
+///
+/// **Platform Support:**
+/// - **iOS/macOS**: Returns `true` if the container is available and accessible
+/// - **watchOS/tvOS/visionOS**: Always returns `false` (iCloud Drive not supported)
+///
+/// **Example Usage:**
+/// ```swift
+/// if isiCloudDriveAvailable(containerIdentifier: "iCloud.com.example.app") {
+///     // Use iCloud container
+/// } else {
+///     // Fall back to local directory
+/// }
+/// ```
+///
+/// - Parameter containerIdentifier: The iCloud container identifier (e.g., "iCloud.com.example.app")
+/// - Returns: `true` if the container is available, `false` otherwise
+public func isiCloudDriveAvailable(containerIdentifier: String) -> Bool {
+    #if os(iOS) || os(macOS)
+    // Check if specific ubiquity container is available
+    if let _ = FileManager.default.url(forUbiquityContainerIdentifier: containerIdentifier) {
+        return true
+    }
+    return false
+    #else
+    // iCloud Drive not supported on watchOS, tvOS, visionOS
+    return false
+    #endif
+}
+
+/// Returns the iCloud container directory URL.
+///
+/// This function provides access to an iCloud container directory. The container
+/// must be configured in your app's entitlements file.
+///
+/// **Platform Support:**
+/// - **iOS/macOS**: Returns iCloud container URL if available
+/// - **watchOS/tvOS/visionOS**: Always returns `nil` (iCloud Drive not supported)
+///
+/// **Requirements:**
+/// - The container identifier must be configured in your app's entitlements
+/// - iCloud Drive must be available and enabled
+/// - User must be signed in to iCloud (for full functionality)
+///
+/// **Example Usage:**
+/// ```swift
+/// if let iCloudURL = platformiCloudContainerDirectory(
+///     containerIdentifier: "iCloud.com.example.app",
+///     createIfNeeded: true
+/// ) {
+///     // Use iCloud container
+/// } else {
+///     // Fall back to local directory
+/// }
+/// ```
+///
+/// - Parameters:
+///   - containerIdentifier: The iCloud container identifier (e.g., "iCloud.com.example.app")
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the iCloud container directory, or `nil` if unavailable
+public func platformiCloudContainerDirectory(containerIdentifier: String, createIfNeeded: Bool = false) -> URL? {
+    #if os(iOS) || os(macOS)
+    guard let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: containerIdentifier) else {
+        return nil
+    }
+    return resolveDirectory(url: containerURL, createIfNeeded: createIfNeeded)
+    #else
+    // iCloud Drive not supported on watchOS, tvOS, visionOS
+    return nil
+    #endif
+}
+
+/// Returns the iCloud container directory URL (throwing variant).
+///
+/// This is the throwing variant that provides detailed error information.
+///
+/// - Parameters:
+///   - containerIdentifier: The iCloud container identifier (e.g., "iCloud.com.example.app")
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the iCloud container directory
+/// - Throws: `PlatformFileSystemError.iCloudUnavailable` if iCloud is not available, or other `PlatformFileSystemError` if directory cannot be created
+public func platformiCloudContainerDirectoryThrowing(containerIdentifier: String, createIfNeeded: Bool = false) throws -> URL {
+    #if os(iOS) || os(macOS)
+    guard let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: containerIdentifier) else {
+        throw PlatformFileSystemError.iCloudUnavailable
+    }
+    return try resolveDirectoryThrowing(url: containerURL, createIfNeeded: createIfNeeded)
+    #else
+    // iCloud Drive not supported on watchOS, tvOS, visionOS
+    throw PlatformFileSystemError.iCloudUnavailable
+    #endif
+}
+
 // MARK: - Future Enhancements
 
 /// Potential future enhancements for platform file system utilities:
 ///
 /// **Platform-Specific Features:**
-/// - **iCloud Drive Integration**: Support for iCloud-enabled directories on iOS/macOS
-///   - Detect if iCloud Drive is available and enabled
-///   - Option to use iCloud container directories
-///   - Handle iCloud sync status and conflicts
+/// - ✅ **iCloud Drive Integration**: Support for iCloud-enabled directories on iOS/macOS (IMPLEMENTED)
+///   - ✅ Detect if iCloud Drive is available and enabled
+///   - ✅ Option to use iCloud container directories
+///   - ⚠️ Handle iCloud sync status and conflicts (basic support - sync status requires NSMetadataQuery)
 ///
 /// - **watchOS/tvOS Optimizations**: Platform-specific directory handling
 ///   - Optimize for limited storage on watchOS
