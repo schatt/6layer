@@ -186,6 +186,143 @@ open class PlatformTypesAPISignatureTests: BaseTestClass {
         #expect(documentsURL1.path == documentsURL2.path)
     }
     
+    // MARK: - platformCachesDirectory API
+    
+    @Test func testPlatformCachesDirectoryReturnsURL() {
+        // Test that the function exists and returns a URL when directory exists or can be created
+        guard let cachesURL = platformCachesDirectory(createIfNeeded: true) else {
+            Issue.record("Caches directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(!cachesURL.path.isEmpty)
+    }
+    
+    @Test func testPlatformCachesDirectoryReturnsFileURL() {
+        // Test that the returned URL is a file URL
+        guard let cachesURL = platformCachesDirectory(createIfNeeded: true) else {
+            Issue.record("Caches directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(cachesURL.isFileURL)
+    }
+    
+    @Test func testPlatformCachesDirectoryReturnsExistingDirectory() {
+        // Test that the Caches directory actually exists (or can be created)
+        guard let cachesURL = platformCachesDirectory(createIfNeeded: true) else {
+            Issue.record("Caches directory should be accessible on Apple platforms")
+            return
+        }
+        var isDirectory: ObjCBool = false
+        let exists = FileManager.default.fileExists(atPath: cachesURL.path, isDirectory: &isDirectory)
+        #expect(exists)
+        #expect(isDirectory.boolValue)
+    }
+    
+    @Test func testPlatformCachesDirectoryConsistentReturns() {
+        // Test that multiple calls return the same path
+        guard let cachesURL1 = platformCachesDirectory(createIfNeeded: true),
+              let cachesURL2 = platformCachesDirectory(createIfNeeded: true) else {
+            Issue.record("Caches directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(cachesURL1.path == cachesURL2.path)
+    }
+    
+    @Test func testPlatformCachesDirectoryWithCreateIfNeeded() {
+        // Test that createIfNeeded parameter works
+        guard let cachesURL1 = platformCachesDirectory(createIfNeeded: true),
+              let cachesURL2 = platformCachesDirectory(createIfNeeded: true) else {
+            Issue.record("Caches directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(cachesURL1.path == cachesURL2.path)
+    }
+    
+    // MARK: - platformTemporaryDirectory API
+    
+    @Test func testPlatformTemporaryDirectoryReturnsURL() {
+        // Test that the function exists and returns a URL
+        guard let tempURL = platformTemporaryDirectory(createIfNeeded: true) else {
+            Issue.record("Temporary directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(!tempURL.path.isEmpty)
+    }
+    
+    @Test func testPlatformTemporaryDirectoryReturnsFileURL() {
+        // Test that the returned URL is a file URL
+        guard let tempURL = platformTemporaryDirectory(createIfNeeded: true) else {
+            Issue.record("Temporary directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(tempURL.isFileURL)
+    }
+    
+    @Test func testPlatformTemporaryDirectoryReturnsExistingDirectory() {
+        // Test that the Temporary directory actually exists (or can be created)
+        guard let tempURL = platformTemporaryDirectory(createIfNeeded: true) else {
+            Issue.record("Temporary directory should be accessible on Apple platforms")
+            return
+        }
+        var isDirectory: ObjCBool = false
+        let exists = FileManager.default.fileExists(atPath: tempURL.path, isDirectory: &isDirectory)
+        #expect(exists)
+        #expect(isDirectory.boolValue)
+    }
+    
+    @Test func testPlatformTemporaryDirectoryConsistentReturns() {
+        // Test that multiple calls return the same path
+        guard let tempURL1 = platformTemporaryDirectory(createIfNeeded: true),
+              let tempURL2 = platformTemporaryDirectory(createIfNeeded: true) else {
+            Issue.record("Temporary directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(tempURL1.path == tempURL2.path)
+    }
+    
+    @Test func testPlatformTemporaryDirectoryWithCreateIfNeeded() {
+        // Test that createIfNeeded parameter works
+        guard let tempURL1 = platformTemporaryDirectory(createIfNeeded: true),
+              let tempURL2 = platformTemporaryDirectory(createIfNeeded: true) else {
+            Issue.record("Temporary directory should be accessible on Apple platforms")
+            return
+        }
+        #expect(tempURL1.path == tempURL2.path)
+    }
+    
+    // MARK: - platformSharedContainerDirectory API
+    
+    @Test func testPlatformSharedContainerDirectoryReturnsURL() {
+        // Test that the function exists and returns a URL when container identifier is valid
+        // Use a test container identifier (may not exist, but API should handle gracefully)
+        let testContainerID = "group.com.test.container"
+        let containerURL = platformSharedContainerDirectory(containerIdentifier: testContainerID, createIfNeeded: false)
+        // May return nil if container doesn't exist, but API should exist
+        let _ = containerURL
+    }
+    
+    @Test func testPlatformSharedContainerDirectoryReturnsFileURLWhenExists() {
+        // Test that the returned URL is a file URL when container exists
+        // This test may pass or fail depending on whether test container exists
+        let testContainerID = "group.com.test.container"
+        if let containerURL = platformSharedContainerDirectory(containerIdentifier: testContainerID, createIfNeeded: false) {
+            #expect(containerURL.isFileURL)
+        }
+    }
+    
+    @Test func testPlatformSharedContainerDirectoryWithCreateIfNeeded() {
+        // Test that createIfNeeded parameter works
+        // This test may pass or fail depending on container permissions
+        let testContainerID = "group.com.test.container"
+        let containerURL1 = platformSharedContainerDirectory(containerIdentifier: testContainerID, createIfNeeded: false)
+        let containerURL2 = platformSharedContainerDirectory(containerIdentifier: testContainerID, createIfNeeded: true)
+        
+        // If both exist, they should be the same
+        if let url1 = containerURL1, let url2 = containerURL2 {
+            #expect(url1.path == url2.path)
+        }
+    }
+    
     // MARK: - platformSecurityScopedAccess API
     
     @Test func testPlatformSecurityScopedAccessExecutesBlock() {

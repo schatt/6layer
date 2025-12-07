@@ -710,17 +710,24 @@ public struct RuntimeCapabilityDetection {
     
     /// Runtime detection of security-scoped resource support
     /// Checks if URL.startAccessingSecurityScopedResource() is available
+    /// Security-scoped resources are available on macOS 10.7+ and iOS 8.0+
     private static func detectSecurityScopedResourceSupport() -> Bool {
-        // Create a test URL to check if the method exists
-        let testURL = URL(fileURLWithPath: "/tmp")
-        
-        // Check if URL responds to startAccessingSecurityScopedResource selector
-        // URL conforms to NSObjectProtocol, so we can use responds(to:)
-        if testURL.responds(to: #selector(URL.startAccessingSecurityScopedResource)) {
+        #if os(macOS)
+        // macOS 10.7+ supports security-scoped resources
+        if #available(macOS 10.7, *) {
             return true
         }
-        
         return false
+        #elseif os(iOS)
+        // iOS 8.0+ supports security-scoped resources
+        if #available(iOS 8.0, *) {
+            return true
+        }
+        return false
+        #else
+        // watchOS, tvOS, and visionOS do not support security-scoped resources
+        return false
+        #endif
     }
     
     /// Runtime detection of security-scoped bookmark support
