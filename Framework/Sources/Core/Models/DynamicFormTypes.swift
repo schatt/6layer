@@ -461,6 +461,9 @@ public struct DynamicFormConfiguration: Identifiable {
     public let submitButtonText: String
     public let cancelButtonText: String?
     public let metadata: [String: String]?
+    /// Optional model name for auto-loading hints from .hints files
+    /// If provided, hints are automatically loaded and applied to fields
+    public let modelName: String?
     
     public init(
         id: String,
@@ -469,7 +472,8 @@ public struct DynamicFormConfiguration: Identifiable {
         sections: [DynamicFormSection] = [],
         submitButtonText: String = "Submit",
         cancelButtonText: String? = "Cancel",
-        metadata: [String: String]? = nil
+        metadata: [String: String]? = nil,
+        modelName: String? = nil
     ) {
         self.id = id
         self.title = title
@@ -478,6 +482,7 @@ public struct DynamicFormConfiguration: Identifiable {
         self.submitButtonText = submitButtonText
         self.cancelButtonText = cancelButtonText
         self.metadata = metadata
+        self.modelName = modelName
     }
     
     /// Get all fields from all sections

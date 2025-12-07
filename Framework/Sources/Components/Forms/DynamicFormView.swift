@@ -14,9 +14,52 @@ public struct DynamicFormView: View {
         configuration: DynamicFormConfiguration,
         onSubmit: @escaping ([String: Any]) -> Void
     ) {
-        self.configuration = configuration
         self.onSubmit = onSubmit
-        _formState = StateObject(wrappedValue: DynamicFormState(configuration: configuration))
+        
+        // Auto-load hints if modelName provided (Issue #71)
+        let effectiveConfiguration: DynamicFormConfiguration
+        if let modelName = configuration.modelName {
+            let hintsLoader = FileBasedDataHintsLoader()
+            let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+            let fieldHints = hintsResult.fieldHints
+            
+            // Apply hints to fields in sections
+            let sectionsWithHints = configuration.sections.map { section in
+                DynamicFormSection(
+                    id: section.id,
+                    title: section.title,
+                    description: section.description,
+                    fields: section.fields.map { field in
+                        if let hints = fieldHints[field.id] {
+                            return field.applying(hints: hints)
+                        }
+                        return field
+                    },
+                    isCollapsible: section.isCollapsible,
+                    isCollapsed: section.isCollapsed,
+                    metadata: section.metadata,
+                    layoutStyle: section.layoutStyle
+                )
+            }
+            
+            // Create configuration with hints-applied sections
+            effectiveConfiguration = DynamicFormConfiguration(
+                id: configuration.id,
+                title: configuration.title,
+                description: configuration.description,
+                sections: sectionsWithHints,
+                submitButtonText: configuration.submitButtonText,
+                cancelButtonText: configuration.cancelButtonText,
+                metadata: configuration.metadata,
+                modelName: configuration.modelName
+            )
+        } else {
+            effectiveConfiguration = configuration
+        }
+        
+        // Store effective configuration (with hints applied if applicable)
+        self.configuration = effectiveConfiguration
+        _formState = StateObject(wrappedValue: DynamicFormState(configuration: effectiveConfiguration))
     }
 
     public var body: some View {

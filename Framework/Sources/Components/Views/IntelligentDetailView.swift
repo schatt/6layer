@@ -682,31 +682,10 @@ public extension IntelligentDetailView {
     }
     
     /// Get field value using reflection or Core Data introspection
+    /// Extract field value from data model
+    /// Delegates to shared DataValueExtraction utility
     static func getFieldValue<T>(from data: T, fieldName: String) -> Any {
-        // Check if this is a Core Data managed object
-        if let managedObject = data as? NSManagedObject {
-            // Use Core Data value extraction
-            if let value = managedObject.value(forKey: fieldName), !(value is NSNull) {
-                return value
-            }
-            return "N/A"
-        }
-        
-        // Use Mirror for non-Core Data objects
-        let mirror = Mirror(reflecting: data)
-        
-        for child in mirror.children {
-            if child.label == fieldName {
-                let value = child.value
-                // Return "N/A" for nil values wrapped as Optional.none
-                if String(describing: value) == "nil" {
-                    return "N/A"
-                }
-                return value
-            }
-        }
-        
-        return "N/A"
+        return DataValueExtraction.extractFieldValue(from: data, fieldName: fieldName)
     }
 }
 

@@ -1,5 +1,182 @@
 import SwiftUI
 
+// MARK: - Platform Navigation Split View Helpers
+
+/// Platform-aware 2-column navigation split view helper
+/// Automatically chooses the appropriate navigation pattern based on device type, orientation, and screen size
+///
+/// **iOS Behavior:**
+/// - **iPad**: Always uses `NavigationSplitView` (regardless of orientation)
+/// - **iPhone Portrait**: Uses `NavigationStack` (detail-only with content accessible via navigation)
+/// - **iPhone Landscape**: Uses `NavigationSplitView` for large devices (Plus/ProMax), `NavigationStack` for smaller devices
+///
+/// **macOS Behavior:**
+/// - Always uses `NavigationSplitView` (macOS 13+) or `HStack` (macOS 12)
+///
+/// - Parameters:
+///   - content: View builder for the content column
+///   - detail: View builder for the detail column
+/// - Returns: A view with platform-appropriate navigation pattern
+@MainActor
+@ViewBuilder
+public func platformNavigationSplitView<Content: View, Detail: View>(
+    @ViewBuilder content: () -> Content,
+    @ViewBuilder detail: () -> Detail
+) -> some View {
+    #if os(iOS)
+    let deviceType = DeviceType.current
+    let deviceCapabilities = DeviceCapabilities()
+    let orientation = deviceCapabilities.orientation
+    let screenSize = deviceCapabilities.screenSize
+    
+    let iPhoneSizeCategory: iPhoneSizeCategory? = deviceType == .phone 
+        ? iPhoneSizeCategory.from(screenSize: screenSize) 
+        : nil
+    
+    let decision = determineAppNavigationStrategy_L2(
+        deviceType: deviceType,
+        orientation: orientation,
+        screenSize: screenSize,
+        iPhoneSizeCategory: iPhoneSizeCategory
+    )
+    
+    if decision.useSplitView {
+        if #available(iOS 16.0, *) {
+            NavigationSplitView {
+                content()
+            } detail: {
+                detail()
+            }
+        } else {
+            NavigationView {
+                content()
+            }
+            .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        }
+    } else {
+        // Detail-only with content accessible via navigation
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                detail()
+            }
+        } else {
+            NavigationView {
+                detail()
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        }
+    }
+    #elseif os(macOS)
+    if #available(macOS 13.0, *) {
+        NavigationSplitView {
+            content()
+        } detail: {
+            detail()
+        }
+    } else {
+        HStack(spacing: 0) {
+            content()
+            detail()
+        }
+    }
+    #else
+    NavigationView {
+        content()
+    }
+    #endif
+}
+
+/// Platform-aware 3-column navigation split view helper
+/// Automatically chooses the appropriate navigation pattern based on device type, orientation, and screen size
+///
+/// **iOS Behavior:**
+/// - **iPad**: Always uses `NavigationSplitView` with sidebar, content, and detail columns
+/// - **iPhone Portrait**: Uses `NavigationStack` (detail-only, sidebar and content accessible via navigation)
+/// - **iPhone Landscape**: Uses `NavigationSplitView` for large devices (Plus/ProMax), `NavigationStack` for smaller devices
+///
+/// **macOS Behavior:**
+/// - Always uses `NavigationSplitView` with all three columns (macOS 13+) or `HStack` (macOS 12)
+///
+/// - Parameters:
+///   - sidebar: View builder for the sidebar column
+///   - content: View builder for the content column
+///   - detail: View builder for the detail column
+/// - Returns: A view with platform-appropriate navigation pattern
+@MainActor
+@ViewBuilder
+public func platformNavigationSplitView<Sidebar: View, Content: View, Detail: View>(
+    @ViewBuilder sidebar: () -> Sidebar,
+    @ViewBuilder content: () -> Content,
+    @ViewBuilder detail: () -> Detail
+) -> some View {
+    #if os(iOS)
+    let deviceType = DeviceType.current
+    let deviceCapabilities = DeviceCapabilities()
+    let orientation = deviceCapabilities.orientation
+    let screenSize = deviceCapabilities.screenSize
+    
+    let iPhoneSizeCategory: iPhoneSizeCategory? = deviceType == .phone 
+        ? iPhoneSizeCategory.from(screenSize: screenSize) 
+        : nil
+    
+    let decision = determineAppNavigationStrategy_L2(
+        deviceType: deviceType,
+        orientation: orientation,
+        screenSize: screenSize,
+        iPhoneSizeCategory: iPhoneSizeCategory
+    )
+    
+    if decision.useSplitView {
+        if #available(iOS 16.0, *) {
+            NavigationSplitView {
+                sidebar()
+            } content: {
+                content()
+            } detail: {
+                detail()
+            }
+        } else {
+            NavigationView {
+                sidebar()
+            }
+            .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        }
+    } else {
+        // Detail-only with sidebar and content accessible via navigation
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                detail()
+            }
+        } else {
+            NavigationView {
+                detail()
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+        }
+    }
+    #elseif os(macOS)
+    if #available(macOS 13.0, *) {
+        NavigationSplitView {
+            sidebar()
+        } content: {
+            content()
+        } detail: {
+            detail()
+        }
+    } else {
+        HStack(spacing: 0) {
+            sidebar()
+            content()
+            detail()
+        }
+    }
+    #else
+    NavigationView {
+        sidebar()
+    }
+    #endif
+}
+
 // MARK: - Cross-Platform Navigation Helpers
 
 /// Cross-platform navigation helpers that provide consistent behavior

@@ -64,36 +64,8 @@ public func platformHomeDirectory() -> URL {
 /// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
 /// - Returns: A `URL` representing the Application Support directory, or `nil` if the directory cannot be located or created.
 public func platformApplicationSupportDirectory(createIfNeeded: Bool = false) -> URL? {
-    guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-        return nil
-    }
-    
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
-    
-    if exists && isDirectory.boolValue {
-        // Directory exists, return it
-        return url
-    }
-    
-    // Directory doesn't exist
-    if createIfNeeded {
-        // Try to create the directory
-        do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-            // Verify it was created successfully
-            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
-                return url
-            }
-        } catch {
-            // Creation failed, return nil
-            return nil
-        }
-    }
-    
-    // Directory doesn't exist and createIfNeeded is false, or creation failed
-    return nil
+    let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+    return resolveDirectory(url: url, createIfNeeded: createIfNeeded)
 }
 
 /// Returns the Application Support directory URL in a cross-platform manner (throwing variant).
@@ -159,36 +131,8 @@ public func platformApplicationSupportDirectoryThrowing(createIfNeeded: Bool = f
 /// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
 /// - Returns: A `URL` representing the Documents directory, or `nil` if the directory cannot be located or created.
 public func platformDocumentsDirectory(createIfNeeded: Bool = false) -> URL? {
-    guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-        return nil
-    }
-    
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
-    
-    if exists && isDirectory.boolValue {
-        // Directory exists, return it
-        return url
-    }
-    
-    // Directory doesn't exist
-    if createIfNeeded {
-        // Try to create the directory
-        do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-            // Verify it was created successfully
-            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
-                return url
-            }
-        } catch {
-            // Creation failed, return nil
-            return nil
-        }
-    }
-    
-    // Directory doesn't exist and createIfNeeded is false, or creation failed
-    return nil
+    let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    return resolveDirectory(url: url, createIfNeeded: createIfNeeded)
 }
 
 /// Returns the Documents directory URL in a cross-platform manner (throwing variant).
@@ -245,36 +189,8 @@ public func platformDocumentsDirectoryThrowing(createIfNeeded: Bool = false) thr
 /// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
 /// - Returns: A `URL` representing the Caches directory, or `nil` if the directory cannot be located or created.
 public func platformCachesDirectory(createIfNeeded: Bool = false) -> URL? {
-    guard let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
-        return nil
-    }
-    
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
-    
-    if exists && isDirectory.boolValue {
-        // Directory exists, return it
-        return url
-    }
-    
-    // Directory doesn't exist
-    if createIfNeeded {
-        // Try to create the directory
-        do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-            // Verify it was created successfully
-            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
-                return url
-            }
-        } catch {
-            // Creation failed, return nil
-            return nil
-        }
-    }
-    
-    // Directory doesn't exist and createIfNeeded is false, or creation failed
-    return nil
+    let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+    return resolveDirectory(url: url, createIfNeeded: createIfNeeded)
 }
 
 /// Returns the Caches directory URL in a cross-platform manner (throwing variant).
@@ -327,34 +243,7 @@ public func platformCachesDirectoryThrowing(createIfNeeded: Bool = false) throws
 /// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
 /// - Returns: A `URL` representing the Temporary directory, or `nil` if the directory cannot be located or created.
 public func platformTemporaryDirectory(createIfNeeded: Bool = false) -> URL? {
-    let url = FileManager.default.temporaryDirectory
-    
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
-    
-    if exists && isDirectory.boolValue {
-        // Directory exists, return it
-        return url
-    }
-    
-    // Directory doesn't exist
-    if createIfNeeded {
-        // Try to create the directory
-        do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-            // Verify it was created successfully
-            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
-                return url
-            }
-        } catch {
-            // Creation failed, return nil
-            return nil
-        }
-    }
-    
-    // Directory doesn't exist and createIfNeeded is false, or creation failed
-    return nil
+    return resolveDirectory(url: FileManager.default.temporaryDirectory, createIfNeeded: createIfNeeded)
 }
 
 /// Returns the Temporary directory URL in a cross-platform manner (throwing variant).
@@ -417,36 +306,8 @@ public func platformTemporaryDirectoryThrowing(createIfNeeded: Bool = false) thr
 /// - Returns: A `URL` representing the Shared Container directory, or `nil` if the container cannot be located or created.
 /// - Note: Returns `nil` if the container identifier is not configured in the app's entitlements or if the container cannot be accessed.
 public func platformSharedContainerDirectory(containerIdentifier: String, createIfNeeded: Bool = false) -> URL? {
-    guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: containerIdentifier) else {
-        return nil
-    }
-    
-    // Check if directory exists
-    var isDirectory: ObjCBool = false
-    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
-    
-    if exists && isDirectory.boolValue {
-        // Directory exists, return it
-        return url
-    }
-    
-    // Directory doesn't exist
-    if createIfNeeded {
-        // Try to create the directory
-        do {
-            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-            // Verify it was created successfully
-            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
-                return url
-            }
-        } catch {
-            // Creation failed, return nil
-            return nil
-        }
-    }
-    
-    // Directory doesn't exist and createIfNeeded is false, or creation failed
-    return nil
+    let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: containerIdentifier)
+    return resolveDirectory(url: url, createIfNeeded: createIfNeeded)
 }
 
 /// Returns the Shared Container (App Group) directory URL in a cross-platform manner (throwing variant).
@@ -1108,6 +969,48 @@ private func mapFoundationError(_ error: Error) -> PlatformFileSystemError {
 }
 
 // MARK: - Directory Resolution Helpers
+
+/// Resolves a directory URL, creating it if needed (optional variant).
+///
+/// This helper function extracts the common logic for resolving directory URLs
+/// with creation support. Returns `nil` if the directory cannot be located or created.
+///
+/// - Parameters:
+///   - url: The directory URL to resolve (may be `nil` if directory cannot be located)
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist
+/// - Returns: The resolved directory URL, or `nil` if the directory cannot be located or created
+private func resolveDirectory(url: URL?, createIfNeeded: Bool) -> URL? {
+    guard let url = url else {
+        return nil
+    }
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+    
+    if exists && isDirectory.boolValue {
+        // Directory exists, return it
+        return url
+    }
+    
+    // Directory doesn't exist
+    if createIfNeeded {
+        // Try to create the directory
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            // Verify it was created successfully
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                return url
+            }
+        } catch {
+            // Creation failed, return nil
+            return nil
+        }
+    }
+    
+    // Directory doesn't exist and createIfNeeded is false, or creation failed
+    return nil
+}
 
 /// Resolves a directory URL, creating it if needed (throwing variant).
 ///

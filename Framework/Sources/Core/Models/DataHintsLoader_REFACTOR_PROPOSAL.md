@@ -254,3 +254,4 @@ But this loses the ability to have a global instance easily accessible.
 - Swift compiler allows `nonisolated` (not unsafe) because we're not using unsafe features
 
 
+
