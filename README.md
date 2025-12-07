@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "5.8.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.0.0")
 ]
 ```
 
@@ -41,15 +41,16 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v5.8.0
+## 🆕 Latest Release: v6.0.0
 
-### **Cross-Platform Printing Solution & Automatic Data Binding**
-🖨️ **Unified printing API**: Single API works on both iOS and macOS.  
-📸 **Photo-quality printing**: Automatic photo-quality printing for images (iOS).  
-🔧 **Multiple content types**: Supports text, images, PDFs, and SwiftUI views.  
-🔗 **Automatic data binding**: `DataBinder` automatically created for `IntelligentFormView` with real-time model updates.  
+### **Intelligent Device-Aware Navigation & Cross-Platform Utilities**
+🧭 **Intelligent navigation**: Device-aware app navigation with automatic pattern selection (NavigationSplitView vs detail-only).  
+🖨️ **Cross-platform printing**: Unified printing API supporting text, images, PDFs, and SwiftUI views.  
+📁 **File system utilities**: Comprehensive file system utilities with iCloud Drive support.  
+🔧 **Toolbar placement**: Platform-specific toolbar placement helpers for cross-platform apps.  
+📏 **HIG-compliant spacing**: Refactored spacing system aligned with macOS HIG 8pt grid guidelines.  
 ♿ **Accessibility**: Automatic accessibility identifiers and full VoiceOver support.  
-🧪 **Comprehensive testing**: 12 printing tests + 10 auto-binding tests covering all functionality.  
+🧪 **Comprehensive testing**: Full test coverage for all new features.  
 📚 **Complete documentation**: Full guides with usage examples and best practices.
 
 ### **Previous Release: v5.7.2 – Intelligent Decimal Correction & Enhanced Range Validation**
@@ -115,8 +116,8 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v5.8.0 (Cross-Platform Printing Solution)  
-**Phase**: Minor Release  
+**Version**: v6.0.0 (Intelligent Device-Aware Navigation & Cross-Platform Utilities)  
+**Phase**: Major Release  
 **Next**: Continue framework development and stability improvements
 
 ## 🤝 Contributing

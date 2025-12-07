@@ -2,9 +2,9 @@
 
 ## 🎯 **Major Features & Breaking Changes**
 
-**Release Date**: [Date TBD]  
-**Status**: ✅ **IN PROGRESS**  
-**Previous Release**: v5.9.0 – PlatformImage Standardization & HIG Compliance  
+**Release Date**: December 7, 2025  
+**Status**: ✅ **COMPLETE**  
+**Previous Release**: v5.8.0 – Cross-Platform Printing Solution & Automatic Data Binding  
 **Next Release**: TBD
 
 ---
@@ -362,6 +362,112 @@ VStack(spacing: PlatformSpacing.medium) {
 - **Type Safety**: Compile-time constants prevent runtime errors
 - **Cross-Platform**: Handles all Apple platforms explicitly (iOS, macOS, watchOS, tvOS, visionOS)
 
+### **Platform File System Utilities Enhancements (Issues #54, #55, #56, #57)**
+
+**COMPLETED**: Enhanced file system utilities with App Sandbox support, additional directory functions, validation utilities, and comprehensive error handling.
+
+#### Key Features
+
+- **App Sandbox Support (Issue #54)**: Enhanced macOS App Sandbox support for file system operations
+- **Additional Directories (Issue #55)**: Added Caches, Temporary, and Shared Container directory utilities
+- **Directory Validation (Issue #56)**: Path validation and utility functions for safe file system operations
+- **Error Handling (Issue #57)**: Detailed error handling with descriptive error messages and recovery suggestions
+
+#### Benefits
+
+- **Enhanced Security**: Proper App Sandbox support ensures secure file access on macOS
+- **Comprehensive Coverage**: Support for all standard directory types (Home, Documents, Application Support, Caches, Temporary, Shared Container)
+- **Safe Operations**: Validation utilities prevent common file system errors
+- **Better Debugging**: Detailed error messages help identify and resolve file system issues
+
+### **Platform Haptic Feedback System (Issue #61)**
+
+**COMPLETED**: Added cross-platform haptic feedback system for iOS, watchOS, and visionOS.
+
+#### Key Features
+
+- **Cross-Platform Abstraction**: Single API works across iOS, watchOS, and visionOS
+- **Platform-Specific Optimization**: Leverages native haptic feedback capabilities per platform
+- **Type Safety**: Compile-time constants for different feedback types
+- **Graceful Fallbacks**: No-op on platforms without haptic support (macOS, tvOS)
+
+#### Usage Example
+
+```swift
+platformHapticFeedback(.success)
+platformHapticFeedback(.warning)
+platformHapticFeedback(.error)
+```
+
+#### Benefits
+
+- **Consistent UX**: Standardized haptic feedback across all supported platforms
+- **Reduced Boilerplate**: No need for platform-specific conditional compilation
+- **Type Safety**: Compile-time constants prevent runtime errors
+
+### **Platform NavigationSplitView Helpers (Issue #63)**
+
+**COMPLETED**: Added helper functions for NavigationSplitView column visibility management.
+
+#### Key Features
+
+- **Cross-Platform Support**: Works on iOS, macOS, and iPadOS
+- **State Management**: Helper functions for managing column visibility
+- **Consistent API**: Matches framework's abstraction pattern
+
+#### Benefits
+
+- **Simplified State Management**: Easier to manage NavigationSplitView state
+- **Consistent Patterns**: Follows framework's cross-platform abstraction approach
+
+### **Auto-Loading Hints Support (Issue #71)**
+
+**COMPLETED**: Added automatic hints loading support to DynamicFormView.
+
+#### Key Features
+
+- **Automatic Loading**: Hints are automatically loaded based on model name
+- **Seamless Integration**: Works with existing DynamicFormView API
+- **Backward Compatible**: Existing code continues to work without changes
+
+#### Benefits
+
+- **Reduced Boilerplate**: No need to manually load hints
+- **Consistency**: Ensures hints are always loaded when needed
+- **Better Developer Experience**: Simpler API for common use cases
+
+### **IntelligentFormView CoreData DataBinder Fix (Issue #72)**
+
+**COMPLETED**: Fixed DataBinder compatibility with CoreData @NSManaged properties.
+
+#### Key Features
+
+- **CoreData Support**: DataBinder now works correctly with @NSManaged properties
+- **Property Observation**: Proper observation of CoreData property changes
+- **Real-Time Updates**: Form fields update automatically when CoreData properties change
+
+#### Benefits
+
+- **CoreData Integration**: Seamless integration with CoreData models
+- **Automatic Updates**: Form fields stay in sync with CoreData properties
+- **Better Data Binding**: Reliable two-way data binding with CoreData
+
+### **IntelligentFormView Initial Data Fix (Issue #73)**
+
+**COMPLETED**: Fixed issue where IntelligentFormView showed labels but not actual values from initialData.
+
+#### Key Features
+
+- **Initial Data Display**: Form fields now correctly display values from initialData
+- **Proper Binding**: Fixed data binding to ensure initial values are shown
+- **Backward Compatible**: Existing code continues to work correctly
+
+#### Benefits
+
+- **Correct Initialization**: Forms now properly display initial data
+- **Better UX**: Users see actual values instead of just labels
+- **Reliable Behavior**: Consistent form initialization across all use cases
+
 ---
 
 ## 🔧 **Breaking Changes**
@@ -447,14 +553,23 @@ content.platformNavigation_L4 {
 - **Issue #49**: Add platformNavigationTitleDisplayMode() view extension - ✅ COMPLETED
 - **Issue #51**: Intelligent Device-Aware App Navigation - ✅ COMPLETED
 - **Issue #53**: Add iCloud Drive integration for platform file system utilities - ✅ COMPLETED
+- **Issue #54**: Add enhanced App Sandbox support for macOS file system utilities - ✅ COMPLETED
+- **Issue #55**: Add additional directory utility functions (Caches, Temporary, Shared Container) - ✅ COMPLETED
+- **Issue #56**: Add directory validation and path utilities for file system operations - ✅ COMPLETED
+- **Issue #57**: Add detailed error handling for platform file system utilities - ✅ COMPLETED
 - **Issue #58**: Feature: Add platformSettingsContainer_L4 for Settings Views - ✅ COMPLETED
 - **Issue #59**: Add Platform Toolbar Placement Helpers - ✅ COMPLETED
 - **Issue #60**: Add PlatformSpacing Struct for Consistent UI Spacing - ✅ COMPLETED (Refactored)
+- **Issue #61**: Add Platform Haptic Feedback System - ✅ COMPLETED
+- **Issue #63**: Add Platform NavigationSplitView Helpers - ✅ COMPLETED
 - **Issue #69**: Research tvOS Toolbar Placement Support - ⏳ Low priority research
+- **Issue #71**: Add Auto-Loading Hints Support to DynamicFormView - ✅ COMPLETED
+- **Issue #72**: Critical: IntelligentFormView DataBinder doesn't work with CoreData @NSManaged properties - ✅ COMPLETED
+- **Issue #73**: IntelligentFormView shows labels but not actual values from initialData - ✅ COMPLETED
 
 ---
 
 **Version**: 6.0.0  
-**Release Date**: [Date TBD]  
-**Previous Version**: 5.9.0  
-**Issues**: #43 (Cross-Platform Printing), #46 (Home Directory), #48 (File System Utilities), #49 (Navigation Extensions), #51 (Intelligent App Navigation), #53 (iCloud Drive), #58 (Settings Container), #59 (Platform Toolbar Placement), #60 (PlatformSpacing HIG Alignment)
+**Release Date**: December 7, 2025  
+**Previous Version**: 5.8.0  
+**Issues**: #43 (Cross-Platform Printing), #46 (Home Directory), #48 (File System Utilities), #49 (Navigation Extensions), #51 (Intelligent App Navigation), #53 (iCloud Drive), #54 (App Sandbox Support), #55 (Additional Directory Utilities), #56 (Directory Validation), #57 (Error Handling), #58 (Settings Container), #59 (Platform Toolbar Placement), #60 (PlatformSpacing HIG Alignment), #61 (Haptic Feedback), #63 (NavigationSplitView Helpers), #71 (Auto-Loading Hints), #72 (CoreData DataBinder Fix), #73 (IntelligentFormView Initial Data Fix)

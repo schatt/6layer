@@ -1,11 +1,11 @@
 # 🚀 Six-Layer Framework Development Roadmap
 
-## 📍 **Current Status: v5.8.0 - Cross-Platform Printing Solution** 🎯
+## 📍 **Current Status: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities** 🎯
 
-**Last Release**: v5.8.0 - Cross-Platform Printing Solution  
-**Current Phase**: Minor Release (Cross-platform printing solution)  
+**Last Release**: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities  
+**Current Phase**: Major Release (Intelligent navigation, cross-platform utilities, HIG compliance)  
 **Next Phase**: Continue framework evolution and stability improvements  
-**Note**: v5.8.0 adds unified cross-platform printing API supporting text, images, PDFs, and SwiftUI views, photo-quality printing for iOS, and resolves Priority 1 violations for platform-specific printing code. Previous release v5.7.2 added intelligent decimal correction using expected ranges and calculation groups, range inference for fields without explicit ranges, field adjustment tracking in `OCRResult.adjustedFields`, and enhanced range validation (ranges are now guidelines, not hard requirements). Also adds field averages for typical value detection. Previous release v5.7.1 added value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction.
+**Note**: v6.0.0 adds intelligent device-aware app navigation with automatic pattern selection, cross-platform printing API, comprehensive file system utilities with iCloud Drive support, platform-specific toolbar placement abstractions, and refactored spacing system aligned with macOS HIG guidelines. Previous release v5.8.0 added unified cross-platform printing API supporting text, images, PDFs, and SwiftUI views, photo-quality printing for iOS, and resolves Priority 1 violations for platform-specific printing code. Previous release v5.7.2 added intelligent decimal correction using expected ranges and calculation groups, range inference for fields without explicit ranges, field adjustment tracking in `OCRResult.adjustedFields`, and enhanced range validation (ranges are now guidelines, not hard requirements). Also adds field averages for typical value detection. Previous release v5.7.1 added value range validation for OCR-extracted numeric fields. Hints files can define acceptable ranges via `expectedRange`, and apps can override ranges at runtime using `OCRContext.fieldRanges`. Out-of-range values are automatically filtered during extraction.
 
 > 📋 **Release History**: See [RELEASES.md](RELEASES.md) for complete release history and details
 

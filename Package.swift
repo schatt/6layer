@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v5.8.0 - Cross-Platform Printing Solution
+// SixLayerFramework v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

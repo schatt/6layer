@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v6.0.0.md](AI_AGENT_v6.0.0.md)** - Intelligent device-aware navigation & cross-platform utilities
 - **[AI_AGENT_v5.8.0.md](AI_AGENT_v5.8.0.md)** - Cross-platform printing & automatic data binding
 - **[AI_AGENT_v5.7.0.md](AI_AGENT_v5.7.0.md)** - Automatic OCR hints loading & calculation groups
 - **[AI_AGENT_v5.6.0.md](AI_AGENT_v5.6.0.md)** - Enhanced Layer 1 functions & keyboard extensions

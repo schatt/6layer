@@ -1,62 +1,73 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v5.8.0 - Cross-Platform Printing Solution & Automatic Data Binding** 🎯
+## 📍 **Current Release: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities** 🎯
 
-**Release Date**: December 3, 2025
+**Release Date**: December 7, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v5.7.2 - Intelligent Decimal Correction & Enhanced Range Validation
-**Note**: Adds unified cross-platform printing API supporting text, images, PDFs, and SwiftUI views. Resolves Priority 1 violations for platform-specific printing code. Includes photo-quality printing support for iOS. Also adds automatic DataBinder creation for IntelligentFormView with real-time model updates, opt-out support, and comprehensive TDD test suites (12 printing tests + 10 auto-binding tests).
+**Previous Release**: v5.8.0 - Cross-Platform Printing Solution & Automatic Data Binding
+**Note**: Major release with intelligent device-aware app navigation, cross-platform printing, platform file system utilities, platform toolbar placement helpers, and refactored spacing system aligned with macOS HIG guidelines. Includes complete 6-layer architecture implementation for navigation pattern selection, unified printing API, comprehensive file system utilities with iCloud Drive support, platform-specific toolbar placement abstractions, and HIG-compliant spacing values.
 **Next Release**: TBD
 
 ---
 
-## 🎯 **v5.8.0 - Cross-Platform Printing Solution & Automatic Data Binding** (December 3, 2025)
+## 🎯 **v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities** (December 7, 2025)
 
 ### **What's New:**
 
-#### **🖨️ Cross-Platform Printing API**
+#### **🧭 Intelligent Device-Aware App Navigation (Issue #51)**
+- Complete 6-layer architecture implementation for device-aware navigation
+- Automatic pattern selection: NavigationSplitView vs detail-only based on device type
+- iPad/macOS: Always uses NavigationSplitView
+- iPhone Portrait: Detail-only with sidebar as sheet
+- iPhone Landscape (Large): NavigationSplitView for Plus/Pro Max models
+- Orientation-aware: Automatically adapts to device rotation
+
+#### **🖨️ Cross-Platform Printing Solution (Issue #43)**
 - Unified printing API that works identically on iOS and macOS
-- View modifier: `platformPrint_L4(isPresented:content:options:onComplete:)`
-- Direct function: `platformPrint_L4(content:options:)`
 - Supports text, images, PDFs, and SwiftUI views
+- Photo-quality printing for iOS images
+- Platform-specific optimizations with graceful fallbacks
 
-#### **📸 Photo-Quality Printing (iOS)**
-- Automatic photo-quality printing for images
-- Configurable output type: `.general`, `.photo`, or `.grayscale`
-- Perfect for insurance cards, photos, and high-quality image printing
+#### **📁 Platform File System Utilities (Issues #46, #48, #53, #54, #55, #56, #57)**
+- Home directory, Application Support, Documents, Caches, Temporary, Shared Container
+- iCloud Drive integration support
+- Enhanced App Sandbox support for macOS
+- Directory validation and path utilities
+- Comprehensive error handling with detailed messages
 
-#### **🔧 Platform Implementations**
-- **iOS**: Uses `UIPrintInteractionController` with modal sheet presentation
-- **macOS**: Uses `NSPrintOperation` with standard print dialog
-- Error handling for no printer available scenarios
-- Graceful fallbacks for older OS versions
+#### **🔧 Platform Toolbar Placement Helpers (Issue #59)**
+- Cross-platform toolbar placement abstraction
+- Semantic placements for iOS/watchOS/visionOS
+- Automatic fallbacks for older iOS versions
+- Consistent API across all Apple platforms
 
-#### **♿ Accessibility & Testing**
-- Automatic accessibility identifiers via `.automaticCompliance()`
-- Comprehensive TDD test suite (12 tests, all passing)
-- Tests cover API consistency, all content types, platform implementations, options, callbacks, and error handling
+#### **📏 PlatformSpacing HIG Alignment (Issue #60)**
+- Refactored to match macOS HIG 8pt grid system
+- Explicit platform handling for all Apple platforms
+- Consistent spacing values following design guidelines
 
-#### **📚 Documentation**
-- Complete guide: `Framework/docs/PlatformPrintLayer4Guide.md`
-- Usage examples for all content types
-- Insurance card printing example (photo-quality)
-- Platform-specific notes and best practices
+#### **⚡ Platform Haptic Feedback System (Issue #61)**
+- Cross-platform haptic feedback API
+- Works on iOS, watchOS, and visionOS
+- Graceful no-op on platforms without haptic support
 
-#### **🔗 Automatic Data Binding for IntelligentFormView**
-- **Automatic DataBinder creation**: `DataBinder` is automatically created when generating forms (opt-out available)
-- **Real-time model updates**: Form field changes automatically update bound models via `dataBinder.updateField()`
-- **Picker field integration**: Picker fields now integrate with `DataBinder` for enum field updates
-- **Opt-out support**: Set `autoBind: false` to disable automatic binding for read-only forms, immutable models, or external state management
-- **Backward compatible**: Existing code continues to work without changes
-- **Comprehensive testing**: 10 tests covering all auto-binding functionality
+#### **🧭 Platform NavigationSplitView Helpers (Issue #63)**
+- Helper functions for column visibility management
+- Simplified state management for split views
+
+#### **📝 Form Enhancements (Issues #71, #72, #73)**
+- Auto-loading hints support for DynamicFormView
+- CoreData DataBinder compatibility fix
+- IntelligentFormView initial data display fix
 
 ### **Why It Matters**
-- Eliminates need for platform-specific printing code
-- Resolves Priority 1 violations (`UIPrintInteractionController`, `NSPrintOperation`)
-- Accepts `PlatformImage` directly (no manual `.uiImage`/`.nsImage` conversion)
-- Provides consistent API across iOS and macOS
-- Reduces boilerplate for form data binding
-- Enables real-time model updates with minimal code
+- Intelligent navigation eliminates manual device detection code
+- Consistent cross-platform APIs reduce boilerplate
+- HIG compliance ensures proper platform design guidelines
+- Enhanced file system utilities provide comprehensive directory support
+- Form fixes improve reliability and CoreData integration
+
+**See [RELEASE_v6.0.0.md](RELEASE_v6.0.0.md) for complete release notes.**
 
 ---
 
