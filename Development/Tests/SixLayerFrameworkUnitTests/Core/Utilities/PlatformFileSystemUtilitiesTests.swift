@@ -444,4 +444,165 @@ struct PlatformFileSystemUtilitiesTests {
         let result = sanitizeFilename("folder/file.txt", replacementCharacter: "_")
         #expect(result == "folder_file.txt")
     }
+    
+    // MARK: - PlatformFileSystemError Tests
+    
+    @Test func testPlatformFileSystemErrorDescriptions() {
+        #expect(PlatformFileSystemError.directoryNotFound.errorDescription != nil)
+        #expect(PlatformFileSystemError.permissionDenied.errorDescription != nil)
+        #expect(PlatformFileSystemError.diskFull.errorDescription != nil)
+        #expect(PlatformFileSystemError.invalidPath.errorDescription != nil)
+        #expect(PlatformFileSystemError.iCloudUnavailable.errorDescription != nil)
+        
+        let testError = NSError(domain: "test", code: 1)
+        #expect(PlatformFileSystemError.creationFailed(underlying: testError).errorDescription != nil)
+        #expect(PlatformFileSystemError.unknown(testError).errorDescription != nil)
+    }
+    
+    @Test func testPlatformFileSystemErrorUnderlyingError() {
+        let testError = NSError(domain: "test", code: 1)
+        
+        let creationFailed = PlatformFileSystemError.creationFailed(underlying: testError)
+        #expect(creationFailed.underlyingError != nil)
+        
+        let unknown = PlatformFileSystemError.unknown(testError)
+        #expect(unknown.underlyingError != nil)
+        
+        let directoryNotFound = PlatformFileSystemError.directoryNotFound
+        #expect(directoryNotFound.underlyingError == nil)
+    }
+    
+    // MARK: - platformApplicationSupportDirectoryThrowing Tests
+    
+    @Test func testPlatformApplicationSupportDirectoryThrowingSuccess() throws {
+        let url = try platformApplicationSupportDirectoryThrowing(createIfNeeded: true)
+        #expect(url.path.isEmpty == false)
+        #expect(FileManager.default.fileExists(atPath: url.path))
+    }
+    
+    @Test func testPlatformApplicationSupportDirectoryThrowingWithoutCreation() throws {
+        // This should succeed if directory already exists
+        do {
+            let url = try platformApplicationSupportDirectoryThrowing(createIfNeeded: false)
+            #expect(url.path.isEmpty == false)
+        } catch PlatformFileSystemError.directoryNotFound {
+            // Directory might not exist - that's acceptable
+        }
+    }
+    
+    // MARK: - platformDocumentsDirectoryThrowing Tests
+    
+    @Test func testPlatformDocumentsDirectoryThrowingSuccess() throws {
+        let url = try platformDocumentsDirectoryThrowing(createIfNeeded: true)
+        #expect(url.path.isEmpty == false)
+        #expect(FileManager.default.fileExists(atPath: url.path))
+    }
+    
+    @Test func testPlatformDocumentsDirectoryThrowingWithoutCreation() throws {
+        // This should succeed if directory already exists
+        do {
+            let url = try platformDocumentsDirectoryThrowing(createIfNeeded: false)
+            #expect(url.path.isEmpty == false)
+        } catch PlatformFileSystemError.directoryNotFound {
+            // Directory might not exist - that's acceptable
+        }
+    }
+    
+    // MARK: - platformCachesDirectoryThrowing Tests
+    
+    @Test func testPlatformCachesDirectoryThrowingSuccess() throws {
+        let url = try platformCachesDirectoryThrowing(createIfNeeded: true)
+        #expect(url.path.isEmpty == false)
+        #expect(FileManager.default.fileExists(atPath: url.path))
+    }
+    
+    @Test func testPlatformCachesDirectoryThrowingWithoutCreation() throws {
+        // This should succeed if directory already exists
+        do {
+            let url = try platformCachesDirectoryThrowing(createIfNeeded: false)
+            #expect(url.path.isEmpty == false)
+        } catch PlatformFileSystemError.directoryNotFound {
+            // Directory might not exist - that's acceptable
+        }
+    }
+    
+    // MARK: - platformTemporaryDirectoryThrowing Tests
+    
+    @Test func testPlatformTemporaryDirectoryThrowingSuccess() throws {
+        // Temporary directory should always exist
+        let url = try platformTemporaryDirectoryThrowing(createIfNeeded: false)
+        #expect(url.path.isEmpty == false)
+        #expect(FileManager.default.fileExists(atPath: url.path))
+    }
+    
+    @Test func testPlatformTemporaryDirectoryThrowingWithCreation() throws {
+        let url = try platformTemporaryDirectoryThrowing(createIfNeeded: true)
+        #expect(url.path.isEmpty == false)
+        #expect(FileManager.default.fileExists(atPath: url.path))
+    }
+    
+    // MARK: - platformSharedContainerDirectoryThrowing Tests
+    
+    @Test func testPlatformSharedContainerDirectoryThrowingWithInvalidIdentifier() throws {
+        // Use an invalid container identifier that won't be configured
+        let invalidIdentifier = "group.com.nonexistent.\(UUID().uuidString)"
+        
+        do {
+            _ = try platformSharedContainerDirectoryThrowing(containerIdentifier: invalidIdentifier, createIfNeeded: false)
+            // If this doesn't throw, the container might exist (unlikely but possible)
+        } catch PlatformFileSystemError.directoryNotFound {
+            // Expected - container not configured
+        } catch {
+            #expect(Bool(false), "Unexpected error: \(error)")
+        }
+    }
+    
+    // MARK: - Backward Compatibility Tests
+    
+    @Test func testBackwardCompatibilityOptionalReturnFunctions() {
+        // Verify existing optional return functions still work
+        let appSupport = platformApplicationSupportDirectory(createIfNeeded: true)
+        // Should return URL or nil, but not crash
+        if let url = appSupport {
+            #expect(url.path.isEmpty == false)
+        }
+        
+        let documents = platformDocumentsDirectory(createIfNeeded: true)
+        if let url = documents {
+            #expect(url.path.isEmpty == false)
+        }
+        
+        let caches = platformCachesDirectory(createIfNeeded: true)
+        if let url = caches {
+            #expect(url.path.isEmpty == false)
+        }
+        
+        let temp = platformTemporaryDirectory(createIfNeeded: true)
+        if let url = temp {
+            #expect(url.path.isEmpty == false)
+        }
+    }
+    
+    @Test func testBothVariantsReturnSameResult() throws {
+        // Test that throwing and optional variants return the same URL when successful
+        if let optionalURL = platformApplicationSupportDirectory(createIfNeeded: true) {
+            let throwingURL = try platformApplicationSupportDirectoryThrowing(createIfNeeded: true)
+            #expect(optionalURL == throwingURL)
+        }
+        
+        if let optionalURL = platformDocumentsDirectory(createIfNeeded: true) {
+            let throwingURL = try platformDocumentsDirectoryThrowing(createIfNeeded: true)
+            #expect(optionalURL == throwingURL)
+        }
+        
+        if let optionalURL = platformCachesDirectory(createIfNeeded: true) {
+            let throwingURL = try platformCachesDirectoryThrowing(createIfNeeded: true)
+            #expect(optionalURL == throwingURL)
+        }
+        
+        if let optionalURL = platformTemporaryDirectory(createIfNeeded: true) {
+            let throwingURL = try platformTemporaryDirectoryThrowing(createIfNeeded: true)
+            #expect(optionalURL == throwingURL)
+        }
+    }
 }

@@ -96,6 +96,72 @@ public func platformApplicationSupportDirectory(createIfNeeded: Bool = false) ->
     return nil
 }
 
+/// Returns the Application Support directory URL in a cross-platform manner (throwing variant).
+///
+/// This is the throwing variant that provides detailed error information.
+/// For backward compatibility, use the optional return variant `platformApplicationSupportDirectory(createIfNeeded:)`.
+///
+/// **Example Usage:**
+/// ```swift
+/// // With detailed error handling
+/// do {
+///     let appSupport = try platformApplicationSupportDirectoryThrowing(createIfNeeded: true)
+///     // Use appSupport directory
+/// } catch PlatformFileSystemError.permissionDenied {
+///     // Handle permission issue
+/// } catch PlatformFileSystemError.diskFull {
+///     // Handle disk full error
+/// } catch PlatformFileSystemError.creationFailed(let underlying) {
+///     // Handle creation failure with underlying error
+///     print("Creation failed: \(underlying)")
+/// } catch {
+///     // Handle other errors
+/// }
+///
+/// // Compare with optional variant (less detailed)
+/// guard let appSupport = platformApplicationSupportDirectory(createIfNeeded: true) else {
+///     // No information about why it failed
+///     return
+/// }
+/// ```
+///
+/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the Application Support directory
+/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created
+public func platformApplicationSupportDirectoryThrowing(createIfNeeded: Bool = false) throws -> URL {
+    guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+        throw PlatformFileSystemError.directoryNotFound
+    }
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+    
+    if exists && isDirectory.boolValue {
+        // Directory exists, return it
+        return url
+    }
+    
+    // Directory doesn't exist
+    if createIfNeeded {
+        // Try to create the directory
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            // Verify it was created successfully
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                return url
+            } else {
+                throw PlatformFileSystemError.creationFailed(underlying: NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError))
+            }
+        } catch {
+            throw mapFoundationError(error)
+        }
+    }
+    
+    // Directory doesn't exist and createIfNeeded is false
+    throw PlatformFileSystemError.directoryNotFound
+}
+
 /// Returns the Documents directory URL in a cross-platform manner.
 ///
 /// This function abstracts platform-specific Documents directory access:
@@ -152,6 +218,62 @@ public func platformDocumentsDirectory(createIfNeeded: Bool = false) -> URL? {
     
     // Directory doesn't exist and createIfNeeded is false, or creation failed
     return nil
+}
+
+/// Returns the Documents directory URL in a cross-platform manner (throwing variant).
+///
+/// This is the throwing variant that provides detailed error information.
+/// For backward compatibility, use the optional return variant `platformDocumentsDirectory(createIfNeeded:)`.
+///
+/// **Example Usage:**
+/// ```swift
+/// do {
+///     let documents = try platformDocumentsDirectoryThrowing(createIfNeeded: true)
+///     // Use documents directory
+/// } catch PlatformFileSystemError.permissionDenied {
+///     // Handle permission issue
+/// } catch PlatformFileSystemError.diskFull {
+///     // Handle disk full error
+/// } catch {
+///     // Handle other errors
+/// }
+/// ```
+///
+/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the Documents directory
+/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created
+public func platformDocumentsDirectoryThrowing(createIfNeeded: Bool = false) throws -> URL {
+    guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        throw PlatformFileSystemError.directoryNotFound
+    }
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+    
+    if exists && isDirectory.boolValue {
+        // Directory exists, return it
+        return url
+    }
+    
+    // Directory doesn't exist
+    if createIfNeeded {
+        // Try to create the directory
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            // Verify it was created successfully
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                return url
+            } else {
+                throw PlatformFileSystemError.creationFailed(underlying: NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError))
+            }
+        } catch {
+            throw mapFoundationError(error)
+        }
+    }
+    
+    // Directory doesn't exist and createIfNeeded is false
+    throw PlatformFileSystemError.directoryNotFound
 }
 
 /// Returns the Caches directory URL in a cross-platform manner.
@@ -213,6 +335,60 @@ public func platformCachesDirectory(createIfNeeded: Bool = false) -> URL? {
     return nil
 }
 
+/// Returns the Caches directory URL in a cross-platform manner (throwing variant).
+///
+/// This is the throwing variant that provides detailed error information.
+/// For backward compatibility, use the optional return variant `platformCachesDirectory(createIfNeeded:)`.
+///
+/// **Example Usage:**
+/// ```swift
+/// do {
+///     let caches = try platformCachesDirectoryThrowing(createIfNeeded: true)
+///     // Use caches directory
+/// } catch PlatformFileSystemError.permissionDenied {
+///     // Handle permission issue
+/// } catch {
+///     // Handle other errors
+/// }
+/// ```
+///
+/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the Caches directory
+/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created
+public func platformCachesDirectoryThrowing(createIfNeeded: Bool = false) throws -> URL {
+    guard let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
+        throw PlatformFileSystemError.directoryNotFound
+    }
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+    
+    if exists && isDirectory.boolValue {
+        // Directory exists, return it
+        return url
+    }
+    
+    // Directory doesn't exist
+    if createIfNeeded {
+        // Try to create the directory
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            // Verify it was created successfully
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                return url
+            } else {
+                throw PlatformFileSystemError.creationFailed(underlying: NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError))
+            }
+        } catch {
+            throw mapFoundationError(error)
+        }
+    }
+    
+    // Directory doesn't exist and createIfNeeded is false
+    throw PlatformFileSystemError.directoryNotFound
+}
+
 /// Returns the Temporary directory URL in a cross-platform manner.
 ///
 /// This function abstracts platform-specific Temporary directory access:
@@ -266,6 +442,58 @@ public func platformTemporaryDirectory(createIfNeeded: Bool = false) -> URL? {
     
     // Directory doesn't exist and createIfNeeded is false, or creation failed
     return nil
+}
+
+/// Returns the Temporary directory URL in a cross-platform manner (throwing variant).
+///
+/// This is the throwing variant that provides detailed error information.
+/// For backward compatibility, use the optional return variant `platformTemporaryDirectory(createIfNeeded:)`.
+///
+/// **Example Usage:**
+/// ```swift
+/// do {
+///     let tempDir = try platformTemporaryDirectoryThrowing(createIfNeeded: true)
+///     // Use temporary directory
+/// } catch PlatformFileSystemError.diskFull {
+///     // Handle disk full error
+/// } catch {
+///     // Handle other errors
+/// }
+/// ```
+///
+/// - Parameter createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the Temporary directory
+/// - Throws: `PlatformFileSystemError` if the directory cannot be located or created
+public func platformTemporaryDirectoryThrowing(createIfNeeded: Bool = false) throws -> URL {
+    let url = FileManager.default.temporaryDirectory
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+    
+    if exists && isDirectory.boolValue {
+        // Directory exists, return it
+        return url
+    }
+    
+    // Directory doesn't exist
+    if createIfNeeded {
+        // Try to create the directory
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            // Verify it was created successfully
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                return url
+            } else {
+                throw PlatformFileSystemError.creationFailed(underlying: NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError))
+            }
+        } catch {
+            throw mapFoundationError(error)
+        }
+    }
+    
+    // Directory doesn't exist and createIfNeeded is false
+    throw PlatformFileSystemError.directoryNotFound
 }
 
 /// Returns the Shared Container (App Group) directory URL in a cross-platform manner.
@@ -333,6 +561,68 @@ public func platformSharedContainerDirectory(containerIdentifier: String, create
     
     // Directory doesn't exist and createIfNeeded is false, or creation failed
     return nil
+}
+
+/// Returns the Shared Container (App Group) directory URL in a cross-platform manner (throwing variant).
+///
+/// This is the throwing variant that provides detailed error information.
+/// For backward compatibility, use the optional return variant `platformSharedContainerDirectory(containerIdentifier:createIfNeeded:)`.
+///
+/// **Example Usage:**
+/// ```swift
+/// do {
+///     let container = try platformSharedContainerDirectoryThrowing(
+///         containerIdentifier: "group.com.example.app",
+///         createIfNeeded: true
+///     )
+///     // Use shared container directory
+/// } catch PlatformFileSystemError.directoryNotFound {
+///     // Container identifier not configured in entitlements
+/// } catch PlatformFileSystemError.permissionDenied {
+///     // Handle permission issue
+/// } catch {
+///     // Handle other errors
+/// }
+/// ```
+///
+/// - Parameters:
+///   - containerIdentifier: The app group identifier (e.g., "group.com.example.app")
+///   - createIfNeeded: If `true`, creates the directory if it doesn't exist. Defaults to `false`.
+/// - Returns: A `URL` representing the Shared Container directory
+/// - Throws: `PlatformFileSystemError` if the container cannot be located or created
+/// - Note: Throws `PlatformFileSystemError.directoryNotFound` if the container identifier is not configured in the app's entitlements
+public func platformSharedContainerDirectoryThrowing(containerIdentifier: String, createIfNeeded: Bool = false) throws -> URL {
+    guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: containerIdentifier) else {
+        throw PlatformFileSystemError.directoryNotFound
+    }
+    
+    // Check if directory exists
+    var isDirectory: ObjCBool = false
+    let exists = FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory)
+    
+    if exists && isDirectory.boolValue {
+        // Directory exists, return it
+        return url
+    }
+    
+    // Directory doesn't exist
+    if createIfNeeded {
+        // Try to create the directory
+        do {
+            try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            // Verify it was created successfully
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue {
+                return url
+            } else {
+                throw PlatformFileSystemError.creationFailed(underlying: NSError(domain: NSCocoaErrorDomain, code: NSFileWriteFileExistsError))
+            }
+        } catch {
+            throw mapFoundationError(error)
+        }
+    }
+    
+    // Directory doesn't exist and createIfNeeded is false
+    throw PlatformFileSystemError.directoryNotFound
 }
 
 // MARK: - Security-Scoped Resource Management
@@ -833,6 +1123,131 @@ public enum DirectoryValidationError: Error, LocalizedError, Sendable {
             return "Security-scoped resource access is required but not available"
         }
     }
+}
+
+// MARK: - Platform File System Error
+
+/// Errors that can occur during platform file system directory operations.
+///
+/// This error type provides detailed information about why directory operations failed,
+/// enabling better error handling, debugging, and user-facing error messages.
+///
+/// **Example Usage:**
+/// ```swift
+/// do {
+///     let dir = try platformApplicationSupportDirectoryThrowing(createIfNeeded: true)
+///     // Use directory
+/// } catch PlatformFileSystemError.permissionDenied {
+///     // Show user-friendly message about permissions
+///     showError("Permission denied. Please check app permissions.")
+/// } catch PlatformFileSystemError.diskFull {
+///     // Show disk space warning
+///     showError("Disk is full. Please free up space.")
+/// } catch PlatformFileSystemError.creationFailed(let underlying) {
+///     // Log underlying error for debugging
+///     print("Creation failed: \(underlying)")
+///     showError("Failed to create directory.")
+/// } catch {
+///     // Handle other errors
+///     showError("An error occurred: \(error.localizedDescription)")
+/// }
+/// ```
+public enum PlatformFileSystemError: Error, LocalizedError, Sendable {
+    /// The directory could not be located (e.g., Application Support directory not found)
+    case directoryNotFound
+    
+    /// Permission denied - the current process cannot access the directory
+    case permissionDenied
+    
+    /// Disk is full - insufficient space to create directory or write files
+    case diskFull
+    
+    /// Invalid path - the path contains invalid characters or is malformed
+    case invalidPath
+    
+    /// Directory creation failed with an underlying error
+    case creationFailed(underlying: Error)
+    
+    /// iCloud Drive is unavailable (future enhancement)
+    case iCloudUnavailable
+    
+    /// Unknown error occurred
+    case unknown(Error)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .directoryNotFound:
+            return "The directory could not be located"
+        case .permissionDenied:
+            return "Permission denied - the current process cannot access the directory"
+        case .diskFull:
+            return "Disk is full - insufficient space available"
+        case .invalidPath:
+            return "Invalid path - the path contains invalid characters or is malformed"
+        case .creationFailed(let error):
+            return "Directory creation failed: \(error.localizedDescription)"
+        case .iCloudUnavailable:
+            return "iCloud Drive is unavailable"
+        case .unknown(let error):
+            return "Unknown error: \(error.localizedDescription)"
+        }
+    }
+    
+    /// The underlying error, if available
+    public var underlyingError: Error? {
+        switch self {
+        case .creationFailed(let error), .unknown(let error):
+            return error
+        default:
+            return nil
+        }
+    }
+}
+
+// MARK: - Error Mapping Helpers
+
+/// Maps Foundation errors to `PlatformFileSystemError`.
+///
+/// This function provides intelligent mapping of common Foundation errors
+/// (particularly `CocoaError`) to more specific `PlatformFileSystemError` cases.
+///
+/// - Parameter error: The Foundation error to map
+/// - Returns: A `PlatformFileSystemError` representing the error
+private func mapFoundationError(_ error: Error) -> PlatformFileSystemError {
+    // Handle CocoaError specifically
+    if let cocoaError = error as? CocoaError {
+        switch cocoaError.code {
+        case .fileReadNoPermission, .fileWriteNoPermission:
+            return .permissionDenied
+        case .fileWriteVolumeReadOnly, .fileWriteOutOfSpace:
+            return .diskFull
+        case .fileNoSuchFile, .fileReadNoSuchFile:
+            return .directoryNotFound
+        case .fileReadInvalidFileName, .fileWriteInvalidFileName:
+            return .invalidPath
+        default:
+            return .creationFailed(underlying: error)
+        }
+    }
+    
+    // Handle POSIX errors if available
+    if let posixError = error as? POSIXError {
+        switch posixError.code {
+        case .EACCES, .EPERM:
+            return .permissionDenied
+        case .ENOSPC:
+            return .diskFull
+        case .ENOENT:
+            return .directoryNotFound
+        case .EINVAL:
+            return .invalidPath
+        default:
+            return .unknown(error)
+        }
+    }
+    
+    // For other errors, wrap them
+    return .unknown(error)
 }
 
 // MARK: - Directory Validation
