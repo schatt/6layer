@@ -72,59 +72,75 @@ public struct DynamicFormView: View {
     }
 
     public var body: some View {
-        VStack(spacing: 20) {
-            // Form title
-            Text(configuration.title)
-                .font(.headline)
-                .automaticCompliance(named: "FormTitle")
+        ScrollViewReader { proxy in
+            VStack(spacing: 20) {
+                // Form title
+                Text(configuration.title)
+                    .font(.headline)
+                    .automaticCompliance(named: "FormTitle")
 
-            // Form description if present
-            if let description = configuration.description {
-                Text(description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .automaticCompliance(named: "FormDescription")
-            }
-
-            // Show batch OCR button if any fields support OCR
-            if !configuration.getOCREnabledFields().isEmpty {
-                Button(action: {
-                    // TODO: Implement batch OCR workflow
-                    // This should trigger OCROverlayView and process all OCR-enabled fields
-                    print("Batch OCR scan requested for \(configuration.getOCREnabledFields().count) fields")
-                }) {
-                    HStack {
-                        Image(systemName: "doc.viewfinder")
-                        Text("Scan Document")
-                    }
-                    .foregroundColor(.blue)
+                // Form description if present
+                if let description = configuration.description {
+                    Text(description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .automaticCompliance(named: "FormDescription")
                 }
-                .buttonStyle(.bordered)
-                .accessibilityLabel("Scan document to fill multiple fields")
-                .accessibilityHint("Takes a photo and automatically fills all OCR-enabled fields")
-                .automaticCompliance(named: "BatchOCRButton")
-            }
 
-            // Render form sections
-            ForEach(configuration.sections) { section in
-                DynamicFormSectionView(section: section, formState: formState)
-            }
+                // Validation summary - shows all errors at once
+                if formState.hasValidationErrors {
+                    FormValidationSummary(
+                        formState: formState,
+                        configuration: configuration,
+                        onErrorTap: { fieldId in
+                            // Scroll to the field with animation
+                            withAnimation {
+                                proxy.scrollTo(fieldId, anchor: .center)
+                            }
+                        }
+                    )
+                }
 
-            Spacer()
+                // Show batch OCR button if any fields support OCR
+                if !configuration.getOCREnabledFields().isEmpty {
+                    Button(action: {
+                        // TODO: Implement batch OCR workflow
+                        // This should trigger OCROverlayView and process all OCR-enabled fields
+                        print("Batch OCR scan requested for \(configuration.getOCREnabledFields().count) fields")
+                    }) {
+                        HStack {
+                            Image(systemName: "doc.viewfinder")
+                            Text("Scan Document")
+                        }
+                        .foregroundColor(.blue)
+                    }
+                    .buttonStyle(.bordered)
+                    .accessibilityLabel("Scan document to fill multiple fields")
+                    .accessibilityHint("Takes a photo and automatically fills all OCR-enabled fields")
+                    .automaticCompliance(named: "BatchOCRButton")
+                }
 
-            // Submit button
-            Button(action: {
-                handleSubmit()
-            }) {
-                Text(configuration.submitButtonText)
-                    .frame(maxWidth: .infinity)
+                // Render form sections
+                ForEach(configuration.sections) { section in
+                    DynamicFormSectionView(section: section, formState: formState)
+                }
+
+                Spacer()
+
+                // Submit button
+                Button(action: {
+                    handleSubmit()
+                }) {
+                    Text(configuration.submitButtonText)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .automaticCompliance(named: "SubmitButton")
             }
-            .buttonStyle(.borderedProminent)
-            .automaticCompliance(named: "SubmitButton")
+            .padding()
+            .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
+            .automaticCompliance(named: "DynamicFormView")
         }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
-        .automaticCompliance(named: "DynamicFormView")
     }
     
     /// Handle form submission: validate, create entity if modelName provided, then call callbacks
@@ -228,6 +244,7 @@ public struct DynamicFormView: View {
 
 /// Section view for dynamic forms
 /// REFACTOR: Now uses layoutStyle from section to apply proper field layout
+/// GREEN PHASE: Implements collapsible sections using DisclosureGroup
 @MainActor
 public struct DynamicFormSectionView: View {
     let section: DynamicFormSection
@@ -237,25 +254,62 @@ public struct DynamicFormSectionView: View {
         self.section = section
         self.formState = formState
     }
+    
+    /// Binding to section collapsed state from formState
+    private var isExpanded: Binding<Bool> {
+        Binding(
+            get: { !formState.isSectionCollapsed(section.id) },
+            set: { newValue in
+                if newValue != !formState.isSectionCollapsed(section.id) {
+                    formState.toggleSection(section.id)
+                }
+            }
+        )
+    }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Section title
-            Text(section.title)
-                .font(.title3)
-                .bold()
-                .automaticCompliance(named: "SectionTitle")
+            if section.isCollapsible {
+                // Use DisclosureGroup for collapsible sections
+                DisclosureGroup(isExpanded: isExpanded) {
+                    // Section description if present (shown when expanded)
+                    if let description = section.description {
+                        Text(description)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .automaticCompliance(named: "SectionDescription")
+                    }
+                    
+                    // Render fields using section's layoutStyle
+                    fieldLayoutView
+                } label: {
+                    // Section title as disclosure label
+                    Text(section.title)
+                        .font(.title3)
+                        .bold()
+                        .automaticCompliance(named: "SectionTitle")
+                }
+                .accessibilityLabel("\(section.title), \(isExpanded.wrappedValue ? "expanded" : "collapsed") section")
+                .accessibilityHint("Double tap to \(isExpanded.wrappedValue ? "collapse" : "expand") this section")
+            } else {
+                // Non-collapsible sections render normally
+                // Section title
+                Text(section.title)
+                    .font(.title3)
+                    .bold()
+                    .automaticCompliance(named: "SectionTitle")
 
-            // Section description if present
-            if let description = section.description {
-                Text(description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .automaticCompliance(named: "SectionDescription")
+                // Section description if present
+                if let description = section.description {
+                    Text(description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .automaticCompliance(named: "SectionDescription")
+                }
+
+                // Render fields using section's layoutStyle (hint, not commandment - framework adapts)
+                fieldLayoutView
             }
-
-            // Render fields using section's layoutStyle (hint, not commandment - framework adapts)
-            fieldLayoutView
         }
         .padding()
         .background(Color.gray.opacity(0.1))
@@ -380,6 +434,7 @@ public struct DynamicFormFieldView: View {
                 }
             }
         }
+        .id(field.id) // Add ID for ScrollViewReader scrolling
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticCompliance(named: "DynamicFormFieldView")
     }
@@ -390,6 +445,84 @@ public struct DynamicFormFieldView: View {
         // This ensures all field types (multiselect, richtext, file, image, array, data, autocomplete, enum, color, etc.)
         // are properly supported through the individual field components we implemented
         CustomFieldView(field: field, formState: formState)
+    }
+}
+
+// MARK: - Form Validation Summary
+
+/// Validation summary view showing all form errors at once
+/// Issue #78: Add form validation summary view showing all errors at once
+@MainActor
+public struct FormValidationSummary: View {
+    @ObservedObject var formState: DynamicFormState
+    let configuration: DynamicFormConfiguration
+    @State private var isExpanded = true
+    let onErrorTap: ((String) -> Void)?
+    
+    public init(
+        formState: DynamicFormState,
+        configuration: DynamicFormConfiguration,
+        onErrorTap: ((String) -> Void)? = nil
+    ) {
+        self.formState = formState
+        self.configuration = configuration
+        self.onErrorTap = onErrorTap
+    }
+    
+    public var body: some View {
+        let allErrors = formState.allErrors(with: configuration)
+        let errorCount = formState.errorCount
+        
+        if !allErrors.isEmpty {
+            DisclosureGroup(isExpanded: $isExpanded) {
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(Array(allErrors.enumerated()), id: \.offset) { index, error in
+                        Button(action: {
+                            onErrorTap?(error.fieldId)
+                        }) {
+                            HStack(alignment: .top, spacing: 8) {
+                                Image(systemName: "exclamationmark.circle.fill")
+                                    .foregroundColor(.red)
+                                    .font(.caption)
+                                
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(error.fieldLabel)
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.primary)
+                                    
+                                    Text(error.message)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(.vertical, 4)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("\(error.fieldLabel): \(error.message)")
+                        .accessibilityHint("Tap to navigate to this field")
+                    }
+                }
+                .padding(.top, 8)
+            } label: {
+                HStack {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.red)
+                    
+                    Text("\(errorCount) validation error\(errorCount == 1 ? "" : "s")")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                }
+            }
+            .padding()
+            .background(Color.red.opacity(0.1))
+            .cornerRadius(8)
+            .automaticCompliance(named: "FormValidationSummary")
+            .accessibilityLabel("Validation summary: \(errorCount) error\(errorCount == 1 ? "" : "s")")
+            .accessibilityHint("Expand to see all validation errors")
+        }
     }
 }
 
