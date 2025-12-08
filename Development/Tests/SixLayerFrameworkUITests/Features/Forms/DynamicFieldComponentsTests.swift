@@ -1286,8 +1286,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             #expect(!allTexts.isEmpty, "Invalid URL should use Text component")
             
             // Verify Text displays the invalid URL
-            let allTexts = texts.compactMap { try? $0.sixLayerString() }
-            let hasInvalidURL = allTexts.contains { $0.contains("not a valid url") }
+            let allTextStrings = allTexts.compactMap { try? $0.sixLayerString() }
+            let hasInvalidURL = allTextStrings.contains { $0.contains("not a valid url") }
             #expect(hasInvalidURL, "Text should display the invalid URL value")
         }
         #else
