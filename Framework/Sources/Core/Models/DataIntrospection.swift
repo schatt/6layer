@@ -17,6 +17,75 @@ import SwiftData
 /// Analyzes data structures to provide intelligent UI recommendations
 public struct DataIntrospectionEngine {
     
+    /// Analyze a data model from type and hints alone (type-only analysis)
+    /// Requires fully declarative hints to work without instance data
+    /// - Parameters:
+    ///   - modelType: The type to analyze
+    ///   - modelName: Optional model name for hints lookup (defaults to type name)
+    /// - Returns: DataAnalysisResult if hints are fully declarative, nil otherwise
+    public static func analyzeFromType<T>(_ modelType: T.Type, modelName: String? = nil) -> DataAnalysisResult? {
+        let typeName = modelName ?? String(describing: modelType)
+            .components(separatedBy: ".").last ?? String(describing: modelType)
+        
+        // Load hints
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: typeName)
+        
+        // Check if we have any hints
+        guard !hintsResult.fieldHints.isEmpty else {
+            return nil // No hints available, cannot analyze from type alone
+        }
+        
+        // Check if all hints are fully declarative
+        let allFullyDeclarative = hintsResult.fieldHints.values.allSatisfy { $0.isFullyDeclarative }
+        
+        guard allFullyDeclarative else {
+            return nil // Hints are not fully declarative, need instance data
+        }
+        
+        // Analyze from hints only (no instance data needed)
+        return analyzeFromHintsOnly(hints: hintsResult.fieldHints)
+    }
+    
+    /// Analyze fields from fully declarative hints only (no instance data)
+    private static func analyzeFromHintsOnly(hints: [String: FieldDisplayHints]) -> DataAnalysisResult {
+        var fields: [DataField] = []
+        
+        for (fieldName, hint) in hints {
+            // Skip hidden fields
+            guard !hint.isHidden else { continue }
+            // Only use fully declarative hints
+            guard hint.isFullyDeclarative else { continue }
+            
+            let fieldType = convertFieldTypeStringToEnum(hint.fieldType ?? "custom")
+            let field = DataField(
+                name: fieldName,
+                type: fieldType,
+                isOptional: hint.isOptional ?? false,
+                isArray: hint.isArray ?? false,
+                isIdentifiable: fieldName == "id" || fieldName.hasSuffix("ID"),
+                hasDefaultValue: hint.defaultValue != nil
+            )
+            fields.append(field)
+        }
+        
+        // Calculate complexity without instance data
+        let complexity = calculateComplexity(fields: fields, data: nil)
+        let patterns = detectPatterns(fields: fields)
+        let recommendations = generateRecommendations(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns
+        )
+        
+        return DataAnalysisResult(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns,
+            recommendations: recommendations
+        )
+    }
+    
     /// Analyze a data model and provide UI recommendations
     /// Supports Core Data (NSManagedObject), SwiftData (PersistentModel), and regular Swift types
     /// Uses hints-first discovery: checks for fully declarative hints, falls back to Mirror introspection

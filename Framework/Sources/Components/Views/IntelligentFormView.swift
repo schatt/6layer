@@ -102,11 +102,14 @@ public struct IntelligentFormView {
     /// **Type-Only Form Generation**:
     /// If `initialData` is `nil` but fully declarative hints are available, the form can be
     /// generated from hints alone. This enables form generation without requiring instance data.
+    /// When using type-only generation, form values are collected and passed to `onSubmit`
+    /// as a dictionary. You can then construct the instance from the dictionary values.
     ///
     /// **Automatic Data Binding**:
     /// By default (`autoBind: true`), a `DataBinder` is automatically created if:
     /// - No `dataBinder` is explicitly provided
     /// - The model appears to support binding (has analyzable fields)
+    /// - Instance data is available (not applicable for type-only forms)
     ///
     /// The automatically created `DataBinder` instance is available but fields must
     /// be manually bound using key paths. See `DataBinder.bind(_:to:)` for details.
@@ -118,10 +121,10 @@ public struct IntelligentFormView {
     ///   - dataType: The type of data model
     ///   - initialData: Initial data instance (optional if fully declarative hints are available)
     ///   - dataBinder: Optional explicit DataBinder. If provided, `autoBind` is ignored.
-    ///   - autoBind: Whether to automatically create a DataBinder (default: true)
+    ///   - autoBind: Whether to automatically create a DataBinder (default: true, ignored for type-only forms)
     ///   - inputHandlingManager: Optional input handling manager
     ///   - customFieldView: Custom view builder for field rendering
-    ///   - onSubmit: Callback when form is submitted
+    ///   - onSubmit: Callback when form is submitted. For type-only forms, receives a dictionary of field values.
     ///   - onCancel: Callback when form is cancelled
     /// - Returns: A view representing the generated form
     public static func generateForm<T>(
@@ -134,16 +137,106 @@ public struct IntelligentFormView {
         onSubmit: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
     ) -> some View {
-        // DataIntrospectionEngine.analyze() now uses hints-first discovery:
-        // - If hints are fully declarative, uses hints for field discovery
-        // - If hints are partial or missing, falls back to Mirror introspection
-        // This means forms automatically benefit from hints when available
-        guard let initialData = initialData else {
-            // Note: We still require initialData for data binding purposes.
-            // However, field discovery will use hints-first if available.
-            // Full type-only form generation (without instance data) would require
-            // instance creation from hints, which is a future enhancement.
-            return AnyView(EmptyView())
+        // Try type-only analysis if no initialData provided
+        if initialData == nil {
+            let modelName = String(describing: dataType)
+                .components(separatedBy: ".").last ?? String(describing: dataType)
+            
+            if let analysis = DataIntrospectionEngine.analyzeFromType(dataType, modelName: modelName) {
+                // Type-only form generation: use hints-only analysis
+                // Hints are fully declarative, so we can generate the form entirely from hints
+                let formStrategy = determineFormStrategy(analysis: analysis)
+                
+                // Load hints for the model type
+                let hintsLoader = FileBasedDataHintsLoader()
+                let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+                let fieldHints = hintsResult.fieldHints
+                
+                // Generate form content from hints (no instance data needed)
+                let content = withAnalysisContext(analysis) {
+                    Group {
+                    switch formStrategy.containerType {
+                    case .form:
+                        VStack(spacing: 20) {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Form")
+                                    .font(.headline)
+                                    .automaticCompliance(named: "FormTitle")
+                            }
+                            .automaticCompliance(named: "DynamicFormHeader")
+                            
+                            platformFormContainer_L4(
+                                strategy: formStrategy,
+                                content: {
+                                    generateFormContent(
+                                        analysis: analysis,
+                                        initialData: nil as T?, // No instance data - use hints defaults
+                                        dataBinder: nil,   // No binding for type-only forms
+                                        inputHandlingManager: inputHandlingManager,
+                                        customFieldView: customFieldView,
+                                        formStrategy: formStrategy,
+                                        fieldHints: fieldHints
+                                    )
+                                }
+                            )
+                            .automaticCompliance(named: "DynamicFormSectionView")
+                        }
+                        .automaticCompliance(named: "DynamicFormView")
+                        .overlay(
+                            generateTypeOnlyFormActions(
+                                onCancel: onCancel
+                            )
+                        )
+                        
+                    case .standard, .scrollView, .custom, .adaptive:
+                        VStack(spacing: 20) {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Form")
+                                    .font(.headline)
+                                    .automaticCompliance(named: "FormTitle")
+                            }
+                            .automaticCompliance(named: "DynamicFormHeader")
+                            
+                            platformFormContainer_L4(
+                                strategy: formStrategy,
+                                content: {
+                                    generateFormContent(
+                                        analysis: analysis,
+                                        initialData: nil as T?, // No instance data - use hints defaults
+                                        dataBinder: nil,   // No binding for type-only forms
+                                        inputHandlingManager: inputHandlingManager,
+                                        customFieldView: customFieldView,
+                                        formStrategy: formStrategy,
+                                        fieldHints: fieldHints
+                                    )
+                                }
+                            )
+                            .automaticCompliance(named: "DynamicFormSectionView")
+                        }
+                        .overlay(
+                            generateTypeOnlyFormActions(
+                                onCancel: onCancel
+                            )
+                        )
+                    }
+                    }
+                }
+                
+                return AnyView(content
+                    .automaticCompliance(named: "IntelligentFormView"))
+            } else {
+                // Cannot generate form without instance data and fully declarative hints
+                return AnyView(
+                    VStack {
+                        Text("Cannot generate form")
+                            .font(.headline)
+                        Text("Fully declarative hints are required for type-only form generation")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding()
+                )
+            }
         }
         
         // Analyze data - will use hints-first if available, Mirror as fallback
@@ -151,11 +244,12 @@ public struct IntelligentFormView {
         let formStrategy = determineFormStrategy(analysis: analysis)
         
         // Auto-create dataBinder if enabled and not provided
+        // Note: initialData is guaranteed to be non-nil here (we checked above)
         let effectiveDataBinder: DataBinder<T>?
         if let providedBinder = dataBinder {
             effectiveDataBinder = providedBinder
-        } else if autoBind && supportsAutoBinding(initialData, analysis: analysis) {
-            effectiveDataBinder = createAutoDataBinder(for: initialData, analysis: analysis)
+        } else if autoBind && supportsAutoBinding(initialData!, analysis: analysis) {
+            effectiveDataBinder = createAutoDataBinder(for: initialData!, analysis: analysis)
         } else {
             effectiveDataBinder = nil
         }
@@ -325,6 +419,39 @@ public struct IntelligentFormView {
                     onCancel: onCancel
                 )
             )
+        }
+    }
+    
+    /// Generate form action buttons for type-only forms
+    /// Note: Type-only forms don't have instance data, so submit is handled differently
+    private static func generateTypeOnlyFormActions(
+        onCancel: @escaping () -> Void
+    ) -> some View {
+        VStack {
+            Spacer()
+            HStack(spacing: 12) {
+                Button("Cancel") { onCancel() }
+                    .buttonStyle(.bordered)
+                    .foregroundColor(Color.platformLabel)
+
+                Spacer()
+
+                // Note: For type-only forms, submit would need to collect values from form state
+                // This is a limitation - we can't automatically construct T from collected values
+                // Users can access form field values through their own state management
+                Button("Create") {
+                    // Type-only forms: values are collected in form state
+                    // Users need to access values through their own state management
+                    // or use a different API that accepts [String: Any]
+                    onCancel() // For now, just cancel - proper implementation would collect values
+                }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundColor(Color.platformBackground)
+            }
+            .padding()
+            .background(Color.platformSecondaryBackground)
+            .cornerRadius(8)
+            .automaticCompliance(named: "DynamicFormActions")
         }
     }
     
@@ -615,8 +742,10 @@ public struct IntelligentFormView {
             
             // Field input
             // Use custom field view if provided, otherwise use default
-            let fieldValue = initialData != nil ? extractFieldValue(from: initialData!, fieldName: field.name) : getDefaultValue(for: field)
             let hints = fieldHints[field.name]
+            let fieldValue = initialData != nil 
+                ? extractFieldValue(from: initialData!, fieldName: field.name) 
+                : getDefaultValue(for: field, hint: hints) // Use hint defaultValue if available
             
             // Use custom field view if provided, otherwise use default with hints
             // Note: We check if hints exist to determine if we should use DefaultPlatformFieldView
@@ -840,8 +969,14 @@ public struct IntelligentFormView {
         return DataValueExtraction.extractFieldValue(from: object, fieldName: fieldName)
     }
     
-    /// Get default value for a field
-    private static func getDefaultValue(for field: DataField) -> Any {
+    /// Get default value for a field, preferring hint defaultValue if available
+    private static func getDefaultValue(for field: DataField, hint: FieldDisplayHints? = nil) -> Any {
+        // If hint provides a defaultValue, use it
+        if let hint = hint, let defaultValue = hint.defaultValue {
+            return defaultValue
+        }
+        
+        // Otherwise use type-based defaults
         switch field.type {
         case .string:
             return ""

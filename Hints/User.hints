@@ -1,0 +1,42 @@
+{
+  "id": {
+    "fieldType": "string",
+    "isArray": false,
+    "isEditable": true,
+    "isHidden": false,
+    "isOptional": false
+  },
+  "name": {
+    "fieldType": "string",
+    "isArray": false,
+    "isEditable": true,
+    "isHidden": false,
+    "isOptional": false
+  },
+  "displayName": {
+    "fieldType": "string",
+    "isArray": false,
+    "isEditable": false,
+    "isHidden": false,
+    "isOptional": false
+  },
+  "__example": {
+    "calculationGroups": null,
+    "defaultValue": null,
+    "displayWidth": null,
+    "expectedLength": null,
+    "expectedRange": null,
+    "fieldType": "string",
+    "inputType": null,
+    "isArray": false,
+    "isEditable": true,
+    "isHidden": false,
+    "isOptional": false,
+    "maxLength": null,
+    "metadata": {},
+    "minLength": null,
+    "ocrHints": null,
+    "pickerOptions": null,
+    "showCharacterCounter": false
+  }
+}

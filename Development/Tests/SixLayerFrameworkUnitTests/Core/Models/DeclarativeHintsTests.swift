@@ -490,6 +490,98 @@ struct DeclarativeHintsTests {
         #expect(tagsHints?.displayWidth == "wide")
     }
     
+    @Test func testFieldDisplayHints_WithIsEditable() {
+        // Test isEditable property
+        let editableHints = FieldDisplayHints(
+            fieldType: "string",
+            isEditable: true
+        )
+        #expect(editableHints.isEditable == true)
+        
+        let readOnlyHints = FieldDisplayHints(
+            fieldType: "string",
+            isEditable: false
+        )
+        #expect(readOnlyHints.isEditable == false)
+        
+        // Default should be true
+        let defaultHints = FieldDisplayHints(
+            fieldType: "string"
+        )
+        #expect(defaultHints.isEditable == true)
+    }
+    
+    @Test func testParseHints_WithIsEditable() throws {
+        // Test parsing hints file with isEditable flag
+        let modelName = "Model_testParseHints_WithIsEditable"
+        let json: [String: Any] = [
+            "editableField": [
+                "fieldType": "string",
+                "isOptional": false,
+                "isEditable": true
+            ],
+            "readOnlyField": [
+                "fieldType": "string",
+                "isOptional": false,
+                "isEditable": false
+            ],
+            "defaultField": [
+                "fieldType": "string",
+                "isOptional": false
+                // isEditable not specified - should default to true
+            ]
+        ]
+        
+        let (testFile, uniqueModelName) = try writeHintsFile(modelName: modelName, json: json)
+        defer {
+            try? FileManager.default.removeItem(at: testFile)
+        }
+        
+        let loader = createTestLoader()
+        let result = loader.loadHintsResult(for: uniqueModelName)
+        
+        let editableHints = result.fieldHints["editableField"]
+        #expect(editableHints != nil)
+        #expect(editableHints?.isEditable == true)
+        
+        let readOnlyHints = result.fieldHints["readOnlyField"]
+        #expect(readOnlyHints != nil)
+        #expect(readOnlyHints?.isEditable == false)
+        
+        let defaultHints = result.fieldHints["defaultField"]
+        #expect(defaultHints != nil)
+        #expect(defaultHints?.isEditable == true) // Should default to true
+    }
+    
+    @Test func testFieldHintsRegistry_SerializeIsEditable() throws {
+        // Test that FieldHintsRegistry serializes isEditable correctly
+        let fileManager = FileManager.default
+        let tempDir = fileManager.temporaryDirectory
+        let testFile = tempDir.appendingPathComponent("test_isEditable_\(UUID().uuidString).hints")
+        
+        defer {
+            try? fileManager.removeItem(at: testFile)
+        }
+        
+        let registry = FieldHintsRegistry(store: FileSystemFieldHintsStore(baseURL: tempDir))
+        
+        var hints: [String: FieldDisplayHints] = [:]
+        hints["editable"] = FieldDisplayHints(
+            fieldType: "string",
+            isEditable: true
+        )
+        hints["readOnly"] = FieldDisplayHints(
+            fieldType: "string",
+            isEditable: false
+        )
+        
+        try await registry.saveHints(hints, for: "testModel")
+        
+        let loaded = await registry.loadHints(for: "testModel")
+        #expect(loaded["editable"]?.isEditable == true)
+        #expect(loaded["readOnly"]?.isEditable == false)
+    }
+    
     @Test func testFieldHintsRegistry_BackwardCompatibility() throws {
         // Test that registry handles hints without type info
         let fileManager = FileManager.default
