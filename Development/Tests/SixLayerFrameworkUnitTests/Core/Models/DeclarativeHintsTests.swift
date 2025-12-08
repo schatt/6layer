@@ -553,7 +553,7 @@ struct DeclarativeHintsTests {
         #expect(defaultHints?.isEditable == true) // Should default to true
     }
     
-    @Test func testFieldHintsRegistry_SerializeIsEditable() throws {
+    @Test func testFieldHintsRegistry_SerializeIsEditable() async throws {
         // Test that FieldHintsRegistry serializes isEditable correctly
         let fileManager = FileManager.default
         let tempDir = fileManager.temporaryDirectory
@@ -563,7 +563,7 @@ struct DeclarativeHintsTests {
             try? fileManager.removeItem(at: testFile)
         }
         
-        let registry = FieldHintsRegistry(store: FileSystemFieldHintsStore(baseURL: tempDir))
+        let registry = FieldHintsRegistry(store: JSONFieldHintsStore(baseURL: tempDir))
         
         var hints: [String: FieldDisplayHints] = [:]
         hints["editable"] = FieldDisplayHints(
