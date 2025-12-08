@@ -1407,34 +1407,17 @@ private struct TypeOnlyFormWrapper<T>: View {
     
     #if canImport(CoreData)
     /// Create a blank Core Data entity and populate with defaults from hints
+    /// DRY: Uses shared EntityCreationUtilities
     private func createCoreDataEntity(entityName: String) -> NSManagedObject? {
         let context = managedObjectContext
         
-        // Create blank entity
-        let entity = NSEntityDescription.insertNewObject(
-            forEntityName: entityName,
-            into: context
+        // Use shared utility
+        return EntityCreationUtilities.createBlankCoreDataEntity(
+            entityName: entityName,
+            context: context,
+            fields: analysis.fields,
+            fieldHints: fieldHints
         )
-        
-        // Populate with defaults from hints
-        for field in analysis.fields {
-            guard let hint = fieldHints[field.name] else { continue }
-            guard !hint.isHidden else { continue }
-            
-            if let defaultValue = hint.defaultValue {
-                // Set default value using KVC
-                entity.setValue(defaultValue, forKey: field.name)
-            } else if field.isOptional {
-                // Optional fields can be nil
-                entity.setValue(nil, forKey: field.name)
-            } else {
-                // Required fields without defaults - use type-based defaults
-                let typeDefault = getDefaultValueForType(field.type)
-                entity.setValue(typeDefault, forKey: field.name)
-            }
-        }
-        
-        return entity
     }
     #endif
     
@@ -1460,44 +1443,21 @@ private struct TypeOnlyFormWrapper<T>: View {
     /// If T does not conform to Codable, memberwise initialization will be attempted.
     /// 
     /// See: `createSwiftDataEntityUsingMemberwise()` for fallback.
+    /// DRY: Uses shared EntityCreationUtilities
     @available(macOS 14.0, iOS 17.0, *)
     private func createSwiftDataEntityUsingCodable() -> T? {
-        // Check if T conforms to Decodable (part of Codable)
-        // We need to use a type-erased approach since we can't directly decode T
-        guard T.self is any Decodable.Type else { return nil }
+        let context = modelContext
         
-        // Build dictionary from hints defaults
-        var values: [String: Any] = [:]
-        for field in analysis.fields {
-            guard let hint = fieldHints[field.name] else { continue }
-            guard !hint.isHidden else { continue }
-            
-            if let defaultValue = hint.defaultValue {
-                values[field.name] = defaultValue
-            } else if field.isOptional {
-                // Optional fields can be nil (represented as NSNull in JSON)
-                values[field.name] = NSNull()
-            } else {
-                // Required fields without defaults - use type-based defaults
-                values[field.name] = getDefaultValueForType(field.type)
-            }
+        // Use shared utility
+        if let entity = EntityCreationUtilities.createBlankSwiftDataEntity(
+            entityType: T.self,
+            context: context,
+            fields: analysis.fields,
+            fieldHints: fieldHints
+        ) {
+            return entity as? T
         }
-        
-        // Encode to JSON, then decode to T using type-erased Decodable
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: values)
-            let decoder = JSONDecoder()
-            
-            // Use type-erased decoding: cast T.self to Decodable.Type, decode, then cast back
-            if let decodableType = T.self as? any Decodable.Type {
-                let decoded = try decoder.decode(decodableType, from: jsonData)
-                return decoded as? T
-            }
-            return nil
-        } catch {
-            // Codable failed, try memberwise
-            return nil
-        }
+        return nil
     }
     
     /// Create SwiftData entity using memberwise initializer (fallback)
@@ -1524,17 +1484,9 @@ private struct TypeOnlyFormWrapper<T>: View {
     #endif
     
     /// Get default value for a field type
+    /// DRY: Uses shared EntityCreationUtilities
     private func getDefaultValueForType(_ fieldType: FieldType) -> Any {
-        switch fieldType {
-        case .string: return ""
-        case .number: return 0
-        case .boolean: return false
-        case .date: return Date()
-        case .url: return URL(string: "https://example.com") ?? URL(string: "https://example.com")!
-        case .uuid: return UUID()
-        case .image, .document: return ""
-        case .relationship, .hierarchical, .custom: return ""
-        }
+        return EntityCreationUtilities.getDefaultValueForType(fieldType)
     }
     
     /// Handle cancel - delete the created entity if it's new

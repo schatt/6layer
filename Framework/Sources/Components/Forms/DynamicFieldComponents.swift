@@ -250,7 +250,7 @@ public struct DynamicPasswordField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -260,6 +260,9 @@ public struct DynamicPasswordField: View {
             ))
             .textFieldStyle(.roundedBorder)
             .automaticCompliance()
+            
+            // Character counter for fields with maxLength validation
+            field.characterCounterView(formState: formState)
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
@@ -695,6 +698,9 @@ public struct DynamicRichTextField: View {
             .frame(minHeight: 100)
             .automaticCompliance(named: "RichTextEditor")
             #endif
+            
+            // Character counter for fields with maxLength validation
+            field.characterCounterView(formState: formState)
         }
         .padding()
         .automaticCompliance(named: "DynamicRichTextField")

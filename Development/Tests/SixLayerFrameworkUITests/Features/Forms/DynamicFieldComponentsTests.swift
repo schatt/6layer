@@ -1051,4 +1051,41 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
+
+    @Test @MainActor func testDynamicRichTextFieldShowsCharacterCounterWhenMaxLengthSet() async {
+        // DynamicRichTextField should also show character counter when maxLength is set
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "richtext-with-limit",
+            contentType: .richtext,
+            label: "Limited Rich Text",
+            validationRules: ["maxLength": "500"]
+        )
+
+        let view = DynamicRichTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should show character counter
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("500")
+                }
+                #expect(hasCounter, "Should display character counter in rich text field")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
 }

@@ -153,79 +153,44 @@ public struct DynamicFormView: View {
     
     #if canImport(CoreData)
     /// Create Core Data entity from form values
+    /// DRY: Uses shared EntityCreationUtilities
     private func createCoreDataEntity(entityName: String, values: [String: Any]) -> NSManagedObject? {
         let context = managedObjectContext
         
-        // Create blank entity
-        let entity = NSEntityDescription.insertNewObject(
-            forEntityName: entityName,
-            into: context
-        )
-        
-        // Load hints to get type information
+        // Load hints to get type information (for filtering hidden fields)
         let hintsLoader = FileBasedDataHintsLoader()
         let hintsResult = hintsLoader.loadHintsResult(for: entityName)
         let fieldHints = hintsResult.fieldHints
         
-        // Set values from form
-        for (fieldId, value) in values {
-            // Check if field should be hidden (skip it)
-            if let hint = fieldHints[fieldId], hint.isHidden {
-                continue
-            }
-            
-            // Set value using KVC
-            entity.setValue(value, forKey: fieldId)
-        }
-        
-        // Save context
-        do {
-            if context.hasChanges {
-                try context.save()
-            }
-        } catch {
-            print("Error saving Core Data entity: \(error.localizedDescription)")
-            // Continue - entity is still created, just not saved
-        }
-        
-        return entity
+        // Use shared utility
+        return EntityCreationUtilities.createCoreDataEntity(
+            entityName: entityName,
+            values: values,
+            context: context,
+            fieldHints: fieldHints
+        )
     }
     #endif
     
     #if canImport(SwiftData)
     /// Create SwiftData entity from form values using Codable
+    /// DRY: Uses shared EntityCreationUtilities
     @available(macOS 14.0, iOS 17.0, *)
     private func createSwiftDataEntity(entityType: Any.Type, values: [String: Any]) -> Any? {
-        // Check if entityType conforms to Decodable
-        guard let decodableType = entityType as? any Decodable.Type else { return nil }
+        let context = modelContext
         
-        // Encode values to JSON, then decode to entity type
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: values)
-            let decoder = JSONDecoder()
-            let decoded = try decoder.decode(decodableType, from: jsonData)
-            
-            // Insert into context
-            let context = modelContext
-            if let persistentModel = decoded as? any PersistentModel {
-                context.insert(persistentModel)
-                
-                // Save context
-                do {
-                    if context.hasChanges {
-                        try context.save()
-                    }
-                } catch {
-                    print("Error saving SwiftData entity: \(error.localizedDescription)")
-                    // Continue - entity is still created, just not saved
-                }
-            }
-            
-            return decoded
-        } catch {
-            print("Error creating SwiftData entity: \(error.localizedDescription)")
-            return nil
-        }
+        // Load hints to get type information (for filtering hidden fields)
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: configuration.modelName ?? "")
+        let fieldHints = hintsResult.fieldHints
+        
+        // Use shared utility
+        return EntityCreationUtilities.createSwiftDataEntity(
+            entityType: entityType,
+            values: values,
+            context: context,
+            fieldHints: fieldHints
+        )
     }
     #endif
 }

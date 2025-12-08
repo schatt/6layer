@@ -563,7 +563,7 @@ public struct PlatformDesignSystem {
     // Design systems are immutable and platform-specific, so caching is safe
     // Using nonisolated(unsafe) because we protect access with NSLock
     nonisolated(unsafe) private static var cachedSystems: [SixLayerPlatform: PlatformDesignSystem] = [:]
-    nonisolated(unsafe) private static let cacheLock = NSLock()
+    private static let cacheLock = NSLock()
     
     /// Get or create a cached design system for the platform
     /// This prevents infinite recursion when creating design systems in view body
