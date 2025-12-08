@@ -825,11 +825,19 @@ public struct IntelligentFormView {
         fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Field label using platform colors
-            Text(field.name.capitalized)
-                .font(.body)
-                .fontWeight(.medium)
-                .foregroundColor(Color.platformLabel)
+            // Field label with required indicator
+            HStack {
+                Text(field.name.capitalized)
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .foregroundColor(Color.platformLabel)
+                if !field.isOptional {
+                    Text("*")
+                        .foregroundColor(.red)
+                        .fontWeight(.bold)
+                }
+            }
+            .accessibilityLabel(!field.isOptional ? "\(field.name.capitalized), required" : field.name.capitalized)
             
             // Field input
             // Use custom field view if provided, otherwise use default
