@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v6.0.3.md](AI_AGENT_v6.0.3.md)** - Critical bug fix: Additional infinite recursion fixes in accessibility identifiers
 - **[AI_AGENT_v6.0.2.md](AI_AGENT_v6.0.2.md)** - Critical bug fix: Infinite recursion crash in accessibility identifiers
 - **[AI_AGENT_v6.0.1.md](AI_AGENT_v6.0.1.md)** - Critical bug fix: Infinite recursion crash (Issue #91)
 - **[AI_AGENT_v6.0.0.md](AI_AGENT_v6.0.0.md)** - Intelligent device-aware navigation & cross-platform utilities

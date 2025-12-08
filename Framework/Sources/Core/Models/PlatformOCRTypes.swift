@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+#if canImport(Vision)
+import Vision
+#endif
+
 // MARK: - Text Types
 
 /// Types of text that can be recognized by OCR
@@ -577,6 +581,222 @@ public struct BuiltInPatterns {
             "expiry": #"Exp:\s*(\d{2}/\d{2}/\d{4})"#
         ]
     ]
+}
+
+// MARK: - Barcode Types
+
+/// Types of barcodes that can be detected
+public enum BarcodeType: String, CaseIterable, Sendable {
+    // 1D Barcodes
+    case ean8 = "ean8"
+    case ean13 = "ean13"
+    case upcA = "upcA"
+    case upcE = "upcE"
+    case code128 = "code128"
+    case code39 = "code39"
+    case code93 = "code93"
+    case codabar = "codabar"
+    case interleaved2of5 = "interleaved2of5"
+    case itf14 = "itf14"
+    case msiPlessey = "msiPlessey"
+    
+    // 2D Barcodes
+    case qrCode = "qrCode"
+    case dataMatrix = "dataMatrix"
+    case pdf417 = "pdf417"
+    case aztec = "aztec"
+    
+    public var displayName: String {
+        switch self {
+        case .ean8: return "EAN-8"
+        case .ean13: return "EAN-13"
+        case .upcA: return "UPC-A"
+        case .upcE: return "UPC-E"
+        case .code128: return "Code 128"
+        case .code39: return "Code 39"
+        case .code93: return "Code 93"
+        case .codabar: return "Codabar"
+        case .interleaved2of5: return "Interleaved 2 of 5"
+        case .itf14: return "ITF-14"
+        case .msiPlessey: return "MSI Plessey"
+        case .qrCode: return "QR Code"
+        case .dataMatrix: return "Data Matrix"
+        case .pdf417: return "PDF417"
+        case .aztec: return "Aztec"
+        }
+    }
+    
+    /// Whether this is a 1D barcode type
+    public var is1D: Bool {
+        switch self {
+        case .ean8, .ean13, .upcA, .upcE, .code128, .code39, .code93, .codabar, .interleaved2of5, .itf14, .msiPlessey:
+            return true
+        case .qrCode, .dataMatrix, .pdf417, .aztec:
+            return false
+        }
+    }
+    
+    /// Whether this is a 2D barcode type
+    public var is2D: Bool {
+        return !is1D
+    }
+    
+    /// Convert to VNBarcodeSymbology (for Vision framework)
+    #if canImport(Vision)
+    @available(iOS 11.0, macOS 10.15, *)
+    public var vnSymbology: VNBarcodeSymbology? {
+        switch self {
+        case .ean8: return .ean8
+        case .ean13: return .ean13
+        case .upcE: return .upce
+        case .code128: return .code128
+        case .code39: return .code39
+        case .code93: return .code93
+        case .interleaved2of5: return .i2of5
+        case .itf14: return .itf14
+        case .qrCode: return .qr
+        case .dataMatrix: return .dataMatrix
+        case .pdf417: return .pdf417
+        case .aztec: return .aztec
+        // Note: UPC-A, Codabar, and MSI Plessey are not directly supported by Vision framework
+        // UPC-A can be detected via EAN-13, but we'll return nil for unsupported types
+        case .upcA, .codabar, .msiPlessey:
+            return nil
+        }
+    }
+    #endif
+}
+
+// MARK: - Barcode Context
+
+/// Context information for barcode scanning operations
+public struct BarcodeContext: Sendable {
+    public let supportedBarcodeTypes: [BarcodeType]
+    public let confidenceThreshold: Float
+    public let allowsMultipleBarcodes: Bool
+    public let maxImageSize: CGSize?
+    
+    public init(
+        supportedBarcodeTypes: [BarcodeType] = BarcodeType.allCases,
+        confidenceThreshold: Float = 0.8,
+        allowsMultipleBarcodes: Bool = true,
+        maxImageSize: CGSize? = nil
+    ) {
+        self.supportedBarcodeTypes = supportedBarcodeTypes
+        self.confidenceThreshold = confidenceThreshold
+        self.allowsMultipleBarcodes = allowsMultipleBarcodes
+        self.maxImageSize = maxImageSize
+    }
+}
+
+// MARK: - Barcode
+
+/// Represents a detected barcode
+public struct Barcode: Sendable {
+    public let payload: String
+    public let barcodeType: BarcodeType
+    public let boundingBox: CGRect
+    public let confidence: Float
+    
+    public init(
+        payload: String,
+        barcodeType: BarcodeType,
+        boundingBox: CGRect,
+        confidence: Float
+    ) {
+        self.payload = payload
+        self.barcodeType = barcodeType
+        self.boundingBox = boundingBox
+        self.confidence = confidence
+    }
+}
+
+// MARK: - Barcode Result
+
+/// Result of barcode scanning operation
+public struct BarcodeResult: Sendable {
+    public let barcodes: [Barcode]
+    public let confidence: Float
+    public let processingTime: TimeInterval
+    
+    public init(
+        barcodes: [Barcode],
+        confidence: Float,
+        processingTime: TimeInterval
+    ) {
+        self.barcodes = barcodes
+        self.confidence = confidence
+        self.processingTime = processingTime
+    }
+    
+    /// Whether any barcodes were detected
+    public var hasBarcodes: Bool {
+        return !barcodes.isEmpty
+    }
+    
+    /// Filter barcodes by type
+    public func filtered(by type: BarcodeType) -> [Barcode] {
+        return barcodes.filter { $0.barcodeType == type }
+    }
+    
+    /// Filter barcodes by confidence threshold
+    public func filtered(by threshold: Float) -> BarcodeResult {
+        let filtered = barcodes.filter { $0.confidence >= threshold }
+        let avgConfidence = filtered.isEmpty ? 0.0 : filtered.map { $0.confidence }.reduce(0, +) / Float(filtered.count)
+        return BarcodeResult(
+            barcodes: filtered,
+            confidence: avgConfidence,
+            processingTime: processingTime
+        )
+    }
+}
+
+// MARK: - Barcode Error Types
+
+/// Barcode-specific error types
+public enum BarcodeError: Error, LocalizedError {
+    case visionUnavailable
+    case invalidImage
+    case noBarcodeFound
+    case processingFailed
+    case unsupportedPlatform
+    
+    public var errorDescription: String? {
+        switch self {
+        case .visionUnavailable:
+            return "Vision framework is not available on this platform"
+        case .invalidImage:
+            return "The provided image is invalid or cannot be processed"
+        case .noBarcodeFound:
+            return "No barcode was found in the image"
+        case .processingFailed:
+            return "Barcode processing failed"
+        case .unsupportedPlatform:
+            return "Barcode scanning is not supported on this platform"
+        }
+    }
+}
+
+// MARK: - Barcode Capabilities
+
+/// Platform-specific barcode scanning capabilities
+public struct BarcodeCapabilities {
+    public let supportsVision: Bool
+    public let supportedBarcodeTypes: [BarcodeType]
+    public let maxImageSize: CGSize
+    public let processingTimeEstimate: TimeInterval
+    
+    public init(
+        supportsVision: Bool,
+        supportedBarcodeTypes: [BarcodeType],
+        maxImageSize: CGSize,
+        processingTimeEstimate: TimeInterval
+    ) {
+        self.supportsVision = supportsVision
+        self.supportedBarcodeTypes = supportedBarcodeTypes
+        self.maxImageSize = maxImageSize
+        self.processingTimeEstimate = processingTimeEstimate
+    }
 }
 
 

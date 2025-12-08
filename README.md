@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.0.2")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.0.3")
 ]
 ```
 
@@ -41,12 +41,12 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.0.2
+## 🆕 Latest Release: v6.0.3
 
-### **Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers**
-🚨 **Critical fix**: Fixed infinite recursion crash in `AutomaticComplianceModifier.EnvironmentAccessor.generateIdentifier()`.  
+### **Critical Bug Fix: Additional Infinite Recursion Fixes in Accessibility Identifiers**
+🚨 **Critical fix**: Fixed additional infinite recursion crashes in accessibility identifier generation.  
 ✅ **Stable**: All users of automatic accessibility identifier generation should upgrade immediately.  
-🔧 **Technical**: Captured `@Published` config values as local variables to prevent SwiftUI reactive dependency cycles.
+🔧 **Technical**: Fixed 7 additional instances where `@Published` properties were accessed directly during view body evaluation, including `namespace`, `globalPrefix`, and `enableAutoIDs`.
 
 ### **Previous Release: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities**
 🧭 **Intelligent navigation**: Device-aware app navigation with automatic pattern selection (NavigationSplitView vs detail-only).  

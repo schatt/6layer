@@ -1,12 +1,39 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.0.2 - Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers** 🎯
+## 📍 **Current Release: v6.0.3 - Critical Bug Fix: Additional Infinite Recursion Fixes in Accessibility Identifiers** 🎯
 
 **Release Date**: December 8, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.0.1 - Critical Bug Fix: Infinite Recursion Crash
-**Note**: Critical patch release fixing infinite recursion crash in AutomaticComplianceModifier.EnvironmentAccessor.generateIdentifier(). Fixed by capturing @Published config values as local variables to prevent SwiftUI reactive dependency cycles.
+**Previous Release**: v6.0.2 - Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers
+**Note**: Critical patch release fixing 7 additional instances of infinite recursion crashes in accessibility identifier generation. Fixed by capturing all @Published config values (namespace, globalPrefix, enableAutoIDs, etc.) as local variables before use.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.0.3 - Critical Bug Fix: Additional Infinite Recursion Fixes in Accessibility Identifiers** (December 8, 2025)
+
+### **Critical Bug Fix:**
+
+#### **🚨 Additional Infinite Recursion Fixes**
+- **Fixed**: 7 additional instances of infinite recursion crashes in accessibility identifier generation
+- **Fixed**: Direct access to `config.namespace` and `config.globalPrefix` in `generateIdentifier` methods
+- **Fixed**: Direct access to `config.enableAutoIDs` in debug logging statements
+- **Fixed**: Direct access to `config.enableDebugLogging` instead of using captured values
+- **Fixed**: `generateNamedAccessibilityIdentifier` accessing all config properties directly
+- **Fixed**: `generateExactNamedAccessibilityIdentifier` accessing `config.enableDebugLogging` directly
+- **Fixed**: `AccessibilityIdentifierGenerator.generateID` (public API) accessing all config properties directly
+- **Solution**: Capture all `@Published` config values as local variables before use, following the same pattern as v6.0.2
+- **Impact**: All users of automatic accessibility identifier generation with non-empty namespace/prefix should upgrade immediately
+
+**Technical Details**:
+- Modified 6 methods across 2 files to capture config values as local variables
+- Updated all `generateIdentifier` methods to accept captured values as parameters
+- Fixed debug logging to use captured values instead of direct access
+- Applied to: `AutomaticComplianceModifier`, `NamedEnvironmentAccessor`, `ForcedEnvironmentAccessor`, `NamedModifierEnvironmentAccessor`, `ExactNamedModifierEnvironmentAccessor`, and `AccessibilityIdentifierGenerator`
+
+**Why Tests Didn't Catch**: Tests use ViewInspector which doesn't trigger SwiftUI's AttributeGraph update cycle. The recursion only occurs during actual view rendering in real apps.
+
+**Migration**: No code changes required - upgrade to v6.0.3 to fix the crashes.
 
 ---
 

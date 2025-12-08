@@ -42,12 +42,24 @@ public class AccessibilityIdentifierGenerator {
         // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
         let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? AccessibilityIdentifierConfig.shared
         
+        // CRITICAL: Capture @Published property values as local variables BEFORE using them
+        // to avoid creating SwiftUI dependencies that cause infinite recursion if called from View.body
+        let capturedNamespace = config.namespace
+        let capturedGlobalPrefix = config.globalPrefix
+        let capturedEnableUITestIntegration = config.enableUITestIntegration
+        let capturedScreenContext = config.currentScreenContext
+        let capturedViewHierarchy = config.currentViewHierarchy
+        let capturedIncludeComponentNames = config.includeComponentNames
+        let capturedIncludeElementTypes = config.includeElementTypes
+        let capturedEnableDebugLogging = config.enableDebugLogging
+        
         // Generate the identifier using the same logic as AutomaticAccessibilityIdentifiersModifier
         // Get configured values (empty means skip entirely - no framework forcing)
-        let namespace = config.namespace.isEmpty ? nil : config.namespace
-        let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
-        let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
-        let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
+        // CRITICAL: Use captured values instead of accessing @Published properties directly
+        let namespace = capturedNamespace.isEmpty ? nil : capturedNamespace
+        let prefix = capturedGlobalPrefix.isEmpty ? nil : capturedGlobalPrefix
+        let screenContext: String = capturedEnableUITestIntegration ? "main" : (capturedScreenContext ?? "main")
+        let viewHierarchyPath: String = capturedEnableUITestIntegration ? "ui" : (capturedViewHierarchy.isEmpty ? "ui" : capturedViewHierarchy.joined(separator: "."))
         
         // Build identifier components in order: namespace.prefix.main.ui...
         var identifierComponents: [String] = []
@@ -67,11 +79,13 @@ public class AccessibilityIdentifierGenerator {
         identifierComponents.append(screenContext)
         identifierComponents.append(viewHierarchyPath)
         
-        if config.includeComponentNames {
+        // CRITICAL: Use captured value instead of accessing @Published property directly
+        if capturedIncludeComponentNames {
             identifierComponents.append(componentName)
         }
         
-        if config.includeElementTypes {
+        // CRITICAL: Use captured value instead of accessing @Published property directly
+        if capturedIncludeElementTypes {
             identifierComponents.append(role)
         }
         
@@ -81,7 +95,8 @@ public class AccessibilityIdentifierGenerator {
         generatedIDs.insert(generatedID)
         
         // Log the generation if debug logging is enabled
-        if config.enableDebugLogging {
+        // CRITICAL: Use captured value instead of accessing @Published property directly
+        if capturedEnableDebugLogging {
             let logEntry = "Generated ID: \(generatedID) for: \(componentName) role: \(role) context: \(context)"
             config.addDebugLogEntry(logEntry)
         }

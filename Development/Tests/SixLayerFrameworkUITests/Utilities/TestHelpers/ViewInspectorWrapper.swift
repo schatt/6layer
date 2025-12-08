@@ -60,6 +60,8 @@ public protocol Inspectable {
     func sixLayerZStack() throws -> Inspectable
     func sixLayerTextField() throws -> Inspectable
     func sixLayerTextField(_ index: Int) throws -> Inspectable
+    func sixLayerLink() throws -> Inspectable
+    func sixLayerFindAllLinks() -> [Inspectable]
     func sixLayerAccessibilityIdentifier() throws -> String
     func sixLayerFindAll<T>(_ type: T.Type) -> [Inspectable]
     func sixLayerFind<T>(_ type: T.Type) throws -> Inspectable
@@ -198,6 +200,26 @@ extension InspectableView: Inspectable {
             return firstTextField as Inspectable
         }
         throw InspectionError.notSupported("sixLayerTextField() requires a TextField view")
+    }
+    
+    public func sixLayerLink() throws -> Inspectable {
+        // Use ViewInspector's findAll with ViewType.Link to recursively search for Link views
+        // Note: findAll can throw, but compiler may warn - this is a false positive
+        let links = try self.findAll(ViewType.Link.self)
+        if let firstLink = links.first {
+            return firstLink as Inspectable
+        }
+        throw InspectionError.notSupported("sixLayerLink() requires a Link view")
+    }
+    
+    public func sixLayerFindAllLinks() -> [Inspectable] {
+        // Use ViewInspector's findAll with ViewType.Link to recursively search for Link views
+        // Non-throwing version - returns empty array on failure
+        // Note: findAll can throw, but compiler may warn - this is a false positive
+        guard let links = try? self.findAll(ViewType.Link.self) else {
+            return []
+        }
+        return links.map { $0 as Inspectable }
     }
     
     public func sixLayerAccessibilityIdentifier() throws -> String {

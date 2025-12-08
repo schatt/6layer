@@ -1226,21 +1226,20 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
             // Should contain Link component, not TextField
-            // Note: Link doesn't have a generic type parameter in SwiftUI
-            // We'll search for it by checking text content that matches URL patterns
-            let allTexts = inspected.sixLayerFindAll(Text.self)
+            // Use specialized method to directly verify Link component is used
+            let links = inspected.sixLayerFindAllLinks()
             let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
             
-            // Check if we have text that looks like a URL (Link displays as clickable text)
-            let hasURLLikeText = allTexts.contains { text in
-                if let textContent = try? text.sixLayerString() {
-                    return textContent.contains("https://") || textContent.contains("http://") || textContent.contains("example.com")
-                }
-                return false
-            }
-            
-            #expect(hasURLLikeText, "Read-only URL field with valid URL should use Link component (or display URL text)")
+            // Verify Link component is present for read-only valid URL
+            #expect(!links.isEmpty, "Read-only URL field with valid URL should use Link component")
             #expect(textFields.isEmpty, "Read-only URL field should not use TextField")
+            
+            // Verify Link contains the URL text
+            if let firstLink = links.first {
+                let linkText = try? firstLink.sixLayerString()
+                #expect(linkText?.contains("https://example.com") == true || linkText?.contains("example.com") == true,
+                       "Link should display the URL text")
+            }
         }
         #else
         // ViewInspector not available on this platform - verify behavior conceptually
@@ -1273,16 +1272,12 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
             // Should contain Text component for invalid URL, not Link
+            // Use specialized method to directly verify Link component is NOT used
+            let links = inspected.sixLayerFindAllLinks()
             let allTexts = inspected.sixLayerFindAll(Text.self)
             
-            // Invalid URL should not have clickable link text
-            let hasURLLikeText = allTexts.contains { text in
-                if let textContent = try? text.sixLayerString() {
-                    return textContent.contains("https://") || textContent.contains("http://")
-                }
-                return false
-            }
-            #expect(!hasURLLikeText, "Invalid URL should not use Link component")
+            // Invalid URL should not use Link component
+            #expect(links.isEmpty, "Invalid URL should not use Link component")
             #expect(!allTexts.isEmpty, "Invalid URL should use Text component")
             
             // Verify Text displays the invalid URL
@@ -1365,18 +1360,20 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
         withInspectedView(view) { inspected in
             // Should use Link for display-only field with valid URL
-            let allTexts = inspected.sixLayerFindAll(Text.self)
+            // Use specialized method to directly verify Link component is used
+            let links = inspected.sixLayerFindAllLinks()
             let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
             
-            // Check if we have text that looks like a URL (Link displays as clickable text)
-            let hasURLLikeText = allTexts.contains { text in
-                if let textContent = try? text.sixLayerString() {
-                    return textContent.contains("https://") || textContent.contains("http://") || textContent.contains("apple.com")
-                }
-                return false
-            }
-            #expect(hasURLLikeText, "Display-only URL field should use Link component (or display URL text)")
+            // Verify Link component is present for display-only valid URL
+            #expect(!links.isEmpty, "Display-only URL field should use Link component")
             #expect(textFields.isEmpty, "Display-only URL field should not use TextField")
+            
+            // Verify Link contains the URL text
+            if let firstLink = links.first {
+                let linkText = try? firstLink.sixLayerString()
+                #expect(linkText?.contains("https://apple.com") == true || linkText?.contains("apple.com") == true,
+                       "Link should display the URL text")
+            }
         }
         #else
         // ViewInspector not available - verify metadata

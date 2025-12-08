@@ -146,6 +146,12 @@ public struct DynamicFormField: Identifiable {
     public let ocrValidationRules: [String: Any]? // Custom validation rules (e.g., ["min": 0, "max": 100])
     public let ocrHints: [String]? // Keywords to help identify this field in OCR text (e.g., ["gallons", "gal", "fuel"])
 
+    // Barcode Scanning Configuration
+    public let supportsBarcodeScanning: Bool // Whether this field can use barcode scanning for input
+    public let barcodeHint: String? // Hint for barcode scanning (e.g., "scan product barcode", "scan QR code")
+    public let supportedBarcodeTypes: [BarcodeType]? // Expected barcode types for this field
+    public let barcodeFieldIdentifier: String? // Unique identifier for mapping barcode results to specific fields
+
     // Calculation Configuration
     public let isCalculated: Bool // Whether this field is calculated from other fields
     public let calculationFormula: String? // Formula for calculated fields (e.g., "total_price / gallons")
@@ -171,6 +177,10 @@ public struct DynamicFormField: Identifiable {
         ocrFieldIdentifier: String? = nil,
         ocrValidationRules: [String: Any]? = nil,
         ocrHints: [String]? = nil,
+        supportsBarcodeScanning: Bool = false,
+        barcodeHint: String? = nil,
+        supportedBarcodeTypes: [BarcodeType]? = nil,
+        barcodeFieldIdentifier: String? = nil,
         isCalculated: Bool = false,
         calculationFormula: String? = nil,
         calculationDependencies: [String]? = nil,
@@ -193,6 +203,10 @@ public struct DynamicFormField: Identifiable {
         self.ocrFieldIdentifier = ocrFieldIdentifier
         self.ocrValidationRules = ocrValidationRules
         self.ocrHints = ocrHints
+        self.supportsBarcodeScanning = supportsBarcodeScanning
+        self.barcodeHint = barcodeHint
+        self.supportedBarcodeTypes = supportedBarcodeTypes
+        self.barcodeFieldIdentifier = barcodeFieldIdentifier
         self.isCalculated = isCalculated
         self.calculationFormula = calculationFormula
         self.calculationDependencies = calculationDependencies
@@ -226,7 +240,11 @@ public struct DynamicFormField: Identifiable {
             supportsOCR: false,
             ocrHint: nil,
             ocrValidationTypes: nil,
-            ocrFieldIdentifier: nil
+            ocrFieldIdentifier: nil,
+            supportsBarcodeScanning: false,
+            barcodeHint: nil,
+            supportedBarcodeTypes: nil,
+            barcodeFieldIdentifier: nil
         )
     }
     
@@ -258,7 +276,11 @@ public struct DynamicFormField: Identifiable {
             supportsOCR: false,
             ocrHint: nil,
             ocrValidationTypes: nil,
-            ocrFieldIdentifier: nil
+            ocrFieldIdentifier: nil,
+            supportsBarcodeScanning: false,
+            barcodeHint: nil,
+            supportedBarcodeTypes: nil,
+            barcodeFieldIdentifier: nil
         )
     }
     
@@ -281,6 +303,10 @@ public struct DynamicFormField: Identifiable {
         self.ocrFieldIdentifier = nil
         self.ocrValidationRules = nil
         self.ocrHints = nil
+        self.supportsBarcodeScanning = false
+        self.barcodeHint = nil
+        self.supportedBarcodeTypes = nil
+        self.barcodeFieldIdentifier = nil
         self.isCalculated = false
         self.calculationFormula = nil
         self.calculationDependencies = nil
@@ -436,6 +462,10 @@ public struct DynamicFormField: Identifiable {
             ocrFieldIdentifier: self.ocrFieldIdentifier,
             ocrValidationRules: self.ocrValidationRules,
             ocrHints: hints.ocrHints ?? self.ocrHints,
+            supportsBarcodeScanning: self.supportsBarcodeScanning,
+            barcodeHint: self.barcodeHint,
+            supportedBarcodeTypes: self.supportedBarcodeTypes,
+            barcodeFieldIdentifier: self.barcodeFieldIdentifier,
             isCalculated: hints.calculationGroups != nil ? true : self.isCalculated,
             calculationFormula: self.calculationFormula,
             calculationDependencies: self.calculationDependencies,
