@@ -99,11 +99,21 @@ public struct IntelligentFormView {
     
     /// Generate a form for creating new data with data binding integration
     ///
-    /// **Type-Only Form Generation**:
+    /// **Type-Only Form Generation (New Object Creation)**:
     /// If `initialData` is `nil` but fully declarative hints are available, the form can be
     /// generated from hints alone. This enables form generation without requiring instance data.
-    /// When using type-only generation, form values are collected and passed to `onSubmit`
-    /// as a dictionary. You can then construct the instance from the dictionary values.
+    /// 
+    /// **How it works:**
+    /// 1. Creates a blank entity (Core Data or SwiftData) with defaults from hints
+    /// 2. Uses existing update flow (reuses all existing form logic)
+    /// 3. On cancel: Deletes the blank entity
+    /// 4. On save: Uses existing save logic
+    ///
+    /// **Requirements:**
+    /// - **Core Data**: Works automatically. Entity is created using `NSEntityDescription.insertNewObject`.
+    /// - **SwiftData**: Requires `T: Codable` for type-only forms to work. If your SwiftData model
+    ///   does not conform to Codable, use `generateForm(for: existingInstance)` with a pre-created instance instead.
+    /// - **Plain Swift types**: Not supported for type-only forms. Use `generateForm(for: existingInstance)`.
     ///
     /// **Automatic Data Binding**:
     /// By default (`autoBind: true`), a `DataBinder` is automatically created if:
@@ -153,7 +163,8 @@ public struct IntelligentFormView {
                 let fieldHints = hintsResult.fieldHints
                 
                 // Generate form content from hints (no instance data needed)
-                let content = withAnalysisContext(analysis) {
+                // Note: This content is not used directly - TypeOnlyFormWrapper creates entity and uses update flow
+                let _ = withAnalysisContext(analysis) {
                     Group {
                     switch formStrategy.containerType {
                     case .form:
@@ -222,8 +233,26 @@ public struct IntelligentFormView {
                     }
                 }
                 
-                return AnyView(content
-                    .automaticCompliance(named: "IntelligentFormView"))
+                // Wrap in a view that creates blank entity and uses existing update flow
+                // This approach:
+                // 1. Creates blank entity (Core Data or SwiftData) with defaults from hints
+                // 2. Uses existing update flow (reuses all existing code)
+                // 3. On cancel: deletes the entity
+                // 4. On save: uses existing save logic
+                return AnyView(
+                    TypeOnlyFormWrapper(
+                        dataType: dataType,
+                        analysis: analysis,
+                        formStrategy: formStrategy,
+                        fieldHints: fieldHints,
+                        inputHandlingManager: inputHandlingManager,
+                        customFieldView: { name, value, type in
+                            AnyView(customFieldView(name, value, type))
+                        },
+                        onSubmit: onSubmit,
+                        onCancel: onCancel
+                    )
+                )
             } else {
                 // Cannot generate form without instance data and fully declarative hints
                 return AnyView(
@@ -762,6 +791,8 @@ public struct IntelligentFormView {
                             if let dataBinder = dataBinder {
                                 dataBinder.updateField(field.name, value: newValue)
                             }
+                            // For type-only forms, values are collected in wrapper's @State
+                            // (handled by TypeOnlyFormWrapper)
                         }
                     )
                 } else {
@@ -1289,5 +1320,242 @@ public extension View {
             onUpdate: onUpdate,
             onCancel: onCancel
         )
+    }
+}
+
+// MARK: - Type-Only Form Wrapper
+
+/// Wrapper view for type-only form generation (new object creation)
+/// Creates a blank entity upfront, populates with defaults from hints, then uses existing update flow
+@MainActor
+private struct TypeOnlyFormWrapper<T>: View {
+    let dataType: T.Type
+    let analysis: DataAnalysisResult
+    let formStrategy: FormStrategy
+    let fieldHints: [String: FieldDisplayHints]
+    let inputHandlingManager: InputHandlingManager?
+    let customFieldView: (String, Any, FieldType) -> AnyView
+    let onSubmit: (T) -> Void
+    let onCancel: () -> Void
+    
+    // Environment contexts
+    #if canImport(CoreData)
+    @Environment(\.managedObjectContext) private var managedObjectContext
+    #endif
+    
+    #if canImport(SwiftData)
+    @Environment(\.modelContext) private var modelContext
+    #endif
+    
+    // State to hold the created entity
+    @State private var createdEntity: T?
+    @State private var isNewEntity: Bool = true // Track if entity should be deleted on cancel
+    
+    var body: some View {
+        Group {
+            if let entity = createdEntity {
+                // Use existing update flow once entity is created
+                IntelligentFormView.generateForm(
+                    for: entity,
+                    onUpdate: { updatedEntity in
+                        onSubmit(updatedEntity)
+                    },
+                    onCancel: {
+                        handleCancel()
+                    }
+                )
+            } else {
+                // Creating entity...
+                ProgressView("Creating form...")
+                    .onAppear {
+                        createBlankEntity()
+                    }
+            }
+        }
+    }
+    
+    /// Create a blank entity and populate with defaults from hints
+    private func createBlankEntity() {
+        let modelName = String(describing: dataType)
+            .components(separatedBy: ".").last ?? String(describing: dataType)
+        
+        // Try Core Data first
+        #if canImport(CoreData)
+        if let entity = createCoreDataEntity(entityName: modelName) {
+            createdEntity = entity as? T
+            isNewEntity = true
+            return
+        }
+        #endif
+        
+        // Try SwiftData
+        #if canImport(SwiftData)
+        if #available(macOS 14.0, iOS 17.0, *) {
+            if let entity = createSwiftDataEntity() {
+                createdEntity = entity
+                isNewEntity = true
+                return
+            }
+        }
+        #endif
+        
+        // If we can't create an entity, show error
+        // (This shouldn't happen if hints are fully declarative)
+    }
+    
+    #if canImport(CoreData)
+    /// Create a blank Core Data entity and populate with defaults from hints
+    private func createCoreDataEntity(entityName: String) -> NSManagedObject? {
+        let context = managedObjectContext
+        
+        // Create blank entity
+        let entity = NSEntityDescription.insertNewObject(
+            forEntityName: entityName,
+            into: context
+        )
+        
+        // Populate with defaults from hints
+        for field in analysis.fields {
+            guard let hint = fieldHints[field.name] else { continue }
+            guard !hint.isHidden else { continue }
+            
+            if let defaultValue = hint.defaultValue {
+                // Set default value using KVC
+                entity.setValue(defaultValue, forKey: field.name)
+            } else if field.isOptional {
+                // Optional fields can be nil
+                entity.setValue(nil, forKey: field.name)
+            } else {
+                // Required fields without defaults - use type-based defaults
+                let typeDefault = getDefaultValueForType(field.type)
+                entity.setValue(typeDefault, forKey: field.name)
+            }
+        }
+        
+        return entity
+    }
+    #endif
+    
+    #if canImport(SwiftData)
+    /// Create a blank SwiftData entity using Codable or memberwise initializer
+    @available(macOS 14.0, iOS 17.0, *)
+    private func createSwiftDataEntity() -> T? {
+        // Try Codable first (preferred)
+        if let codableEntity = createSwiftDataEntityUsingCodable() {
+            return codableEntity
+        }
+        
+        // Fall back to memberwise initializer
+        return createSwiftDataEntityUsingMemberwise()
+    }
+    
+    /// Create SwiftData entity using Codable (preferred method)
+    /// 
+    /// **Requirements**: T must conform to Codable for this to work.
+    /// If T does not conform to Codable, memberwise initialization will be attempted.
+    /// 
+    /// See: `createSwiftDataEntityUsingMemberwise()` for fallback.
+    @available(macOS 14.0, iOS 17.0, *)
+    private func createSwiftDataEntityUsingCodable() -> T? {
+        // Check if T conforms to Decodable (part of Codable)
+        // We need to use a type-erased approach since we can't directly decode T
+        guard T.self is any Decodable.Type else { return nil }
+        
+        // Build dictionary from hints defaults
+        var values: [String: Any] = [:]
+        for field in analysis.fields {
+            guard let hint = fieldHints[field.name] else { continue }
+            guard !hint.isHidden else { continue }
+            
+            if let defaultValue = hint.defaultValue {
+                values[field.name] = defaultValue
+            } else if field.isOptional {
+                // Optional fields can be nil (represented as NSNull in JSON)
+                values[field.name] = NSNull()
+            } else {
+                // Required fields without defaults - use type-based defaults
+                values[field.name] = getDefaultValueForType(field.type)
+            }
+        }
+        
+        // Encode to JSON, then decode to T using type-erased Decodable
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: values)
+            let decoder = JSONDecoder()
+            
+            // Use type-erased decoding: cast T.self to Decodable.Type, decode, then cast back
+            if let decodableType = T.self as? any Decodable.Type {
+                let decoded = try decoder.decode(decodableType, from: jsonData)
+                return decoded as? T
+            }
+            return nil
+        } catch {
+            // Codable failed, try memberwise
+            return nil
+        }
+    }
+    
+    /// Create SwiftData entity using memberwise initializer (fallback)
+    /// 
+    /// **Limitation**: Swift does not support dynamic memberwise initialization at runtime.
+    /// This method is a placeholder for future enhancement.
+    /// 
+    /// **Recommendation**: Make your SwiftData models conform to Codable for type-only form support.
+    /// 
+    /// For now, if Codable is not available, type-only forms will not work for SwiftData models.
+    /// Use `generateForm(for: existingInstance)` instead with a pre-created instance.
+    @available(macOS 14.0, iOS 17.0, *)
+    private func createSwiftDataEntityUsingMemberwise() -> T? {
+        // Swift does not support dynamic memberwise initialization at runtime.
+        // We would need:
+        // 1. Reflection to find the initializer
+        // 2. Type information for each parameter
+        // 3. Dynamic invocation (not possible in Swift)
+        // 
+        // Future enhancement: Could use SwiftSyntax or code generation to create
+        // a helper initializer that accepts [String: Any] dictionary.
+        return nil
+    }
+    #endif
+    
+    /// Get default value for a field type
+    private func getDefaultValueForType(_ fieldType: FieldType) -> Any {
+        switch fieldType {
+        case .string: return ""
+        case .number: return 0
+        case .boolean: return false
+        case .date: return Date()
+        case .url: return URL(string: "https://example.com") ?? URL(string: "https://example.com")!
+        case .uuid: return UUID()
+        case .image, .document: return ""
+        case .relationship, .hierarchical, .custom: return ""
+        }
+    }
+    
+    /// Handle cancel - delete the created entity if it's new
+    private func handleCancel() {
+        guard isNewEntity else {
+            onCancel()
+            return
+        }
+        
+        // Delete the entity we created
+        #if canImport(CoreData)
+        if let managedObject = createdEntity as? NSManagedObject,
+           let context = managedObject.managedObjectContext {
+            context.delete(managedObject)
+        }
+        #endif
+        
+        #if canImport(SwiftData)
+        if #available(macOS 14.0, iOS 17.0, *) {
+            if let persistentModel = createdEntity as? any PersistentModel {
+                let context = modelContext
+                context.delete(persistentModel)
+            }
+        }
+        #endif
+        
+        onCancel()
     }
 }
