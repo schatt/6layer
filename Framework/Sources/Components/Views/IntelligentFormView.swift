@@ -110,9 +110,11 @@ public struct IntelligentFormView {
     /// 4. On save: Uses existing save logic
     ///
     /// **Requirements:**
-    /// - **Core Data**: Works automatically. Entity is created using `NSEntityDescription.insertNewObject`.
-    /// - **SwiftData**: Requires `T: Codable` for type-only forms to work. If your SwiftData model
-    ///   does not conform to Codable, use `generateForm(for: existingInstance)` with a pre-created instance instead.
+    /// - **Core Data**: Works automatically. Entity is created using `NSEntityDescription.insertNewObject`
+    ///   and values are set via KVC. No Codable or memberwise initialization required.
+    /// - **SwiftData**: Requires `T: Codable` for type-only forms to work (preferred). If your SwiftData model
+    ///   does not conform to Codable, memberwise initialization would be required (not yet implemented).
+    ///   For non-Codable SwiftData models, use `generateForm(for: existingInstance)` with a pre-created instance instead.
     /// - **Plain Swift types**: Not supported for type-only forms. Use `generateForm(for: existingInstance)`.
     ///
     /// **Automatic Data Binding**:
@@ -1450,6 +1452,9 @@ private struct TypeOnlyFormWrapper<T>: View {
     }
     
     /// Create SwiftData entity using Codable (preferred method)
+    /// 
+    /// **Note**: This requirement applies only to SwiftData (and plain Swift types).
+    /// Core Data does not require Codable because it uses KVC (Key-Value Coding).
     /// 
     /// **Requirements**: T must conform to Codable for this to work.
     /// If T does not conform to Codable, memberwise initialization will be attempted.
