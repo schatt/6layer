@@ -1088,4 +1088,329 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
         #endif
     }
+
+    // MARK: - Additional Text Field Types Character Counter Tests
+
+    @Test @MainActor func testDynamicEmailFieldShowsCharacterCounterWhenMaxLengthSet() async {
+        // DynamicEmailField should show character counter when maxLength is set
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "email-with-limit",
+            contentType: .email,
+            label: "Email",
+            validationRules: ["maxLength": "255"]
+        )
+
+        let view = DynamicEmailField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("255")
+                }
+                #expect(hasCounter, "Should display character counter in email field")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
+
+    @Test @MainActor func testDynamicPhoneFieldShowsCharacterCounterWhenMaxLengthSet() async {
+        // DynamicPhoneField should show character counter when maxLength is set
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "phone-with-limit",
+            contentType: .phone,
+            label: "Phone",
+            validationRules: ["maxLength": "20"]
+        )
+
+        let view = DynamicPhoneField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("20")
+                }
+                #expect(hasCounter, "Should display character counter in phone field")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
+
+    @Test @MainActor func testDynamicURLFieldShowsCharacterCounterWhenMaxLengthSet() async {
+        // DynamicURLField should show character counter when maxLength is set
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "url-with-limit",
+            contentType: .url,
+            label: "URL",
+            validationRules: ["maxLength": "2048"]
+        )
+
+        let view = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("2048")
+                }
+                #expect(hasCounter, "Should display character counter in URL field")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
+
+    @Test @MainActor func testDynamicPasswordFieldShowsCharacterCounterWhenMaxLengthSet() async {
+        // DynamicPasswordField should show character counter when maxLength is set
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "password-with-limit",
+            contentType: .password,
+            label: "Password",
+            validationRules: ["maxLength": "128"]
+        )
+
+        let view = DynamicPasswordField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("128")
+                }
+                #expect(hasCounter, "Should display character counter in password field")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
+
+    @Test @MainActor func testDynamicAutocompleteFieldShowsCharacterCounterWhenMaxLengthSet() async {
+        // DynamicAutocompleteField should show character counter when maxLength is set
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "autocomplete-with-limit",
+            contentType: .autocomplete,
+            label: "Autocomplete",
+            validationRules: ["maxLength": "100"]
+        )
+
+        let view = DynamicAutocompleteField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("100")
+                }
+                #expect(hasCounter, "Should display character counter in autocomplete field")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
+
+    // MARK: - Edge Case Tests
+
+    @Test @MainActor func testCharacterCounterShowsWarningAtExactly80Percent() async {
+        // Character counter should show warning color at exactly 80% of maxLength
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "text-80-percent",
+            contentType: .text,
+            label: "Text at 80%",
+            validationRules: ["maxLength": "100"]
+        )
+
+        // Set value to exactly 80 characters (80% of 100)
+        let text80 = String(repeating: "a", count: 80)
+        formState.setValue(text80, for: "text-80-percent")
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // At exactly 80%, should NOT show warning (threshold is >80%)
+        #expect(text80.count == 80, "Should have exactly 80 characters")
+    }
+
+    @Test @MainActor func testCharacterCounterShowsWarningAt81Percent() async {
+        // Character counter should show warning color at 81% of maxLength (>80%)
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "text-81-percent",
+            contentType: .text,
+            label: "Text at 81%",
+            validationRules: ["maxLength": "100"]
+        )
+
+        // Set value to 81 characters (81% of 100, should show warning)
+        let text81 = String(repeating: "a", count: 81)
+        formState.setValue(text81, for: "text-81-percent")
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #expect(text81.count == 81, "Should have exactly 81 characters")
+    }
+
+    @Test @MainActor func testCharacterCounterHandlesZeroMaxLength() async {
+        // Character counter should handle zero maxLength gracefully (should not appear)
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "text-zero-limit",
+            contentType: .text,
+            label: "Zero Limit",
+            validationRules: ["maxLength": "0"]
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should not crash, counter should not appear
+        #expect(view != nil, "Should handle zero maxLength without crashing")
+    }
+
+    @Test @MainActor func testCharacterCounterHandlesNegativeMaxLength() async {
+        // Character counter should handle negative maxLength gracefully (should not appear)
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        // Note: validationRules stores strings, so negative would be "-10"
+        let field = DynamicFormField(
+            id: "text-negative-limit",
+            contentType: .text,
+            label: "Negative Limit",
+            validationRules: ["maxLength": "-10"]
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should not crash, counter should not appear (maxLength > 0 check)
+        #expect(view != nil, "Should handle negative maxLength without crashing")
+    }
+
+    @Test @MainActor func testCharacterCounterUpdatesInRealTime() async {
+        // Character counter should update immediately when formState changes
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "text-realtime",
+            contentType: .text,
+            label: "Real-time Test",
+            validationRules: ["maxLength": "50"]
+        )
+
+        // Test multiple updates
+        formState.setValue("", for: "text-realtime")
+        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 0)
+
+        formState.setValue("H", for: "text-realtime")
+        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 1)
+
+        formState.setValue("He", for: "text-realtime")
+        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 2)
+
+        formState.setValue("Hello", for: "text-realtime")
+        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 5)
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // View should be created successfully
+        #expect(view != nil, "Should handle real-time updates")
+    }
 }

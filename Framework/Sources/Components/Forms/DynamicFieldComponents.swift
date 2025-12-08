@@ -142,6 +142,46 @@ extension DynamicFormField {
     }
 }
 
+// MARK: - Text Field Helpers (DRY Refactoring)
+
+@MainActor
+extension DynamicFormField {
+    /// Creates a binding for text field values that syncs with formState
+    /// - Parameter formState: The form state to bind to
+    /// - Returns: A binding that reads from and writes to formState
+    func textBinding(formState: DynamicFormState) -> Binding<String> {
+        Binding(
+            get: { formState.getValue(for: id) as String? ?? defaultValue ?? "" },
+            set: { formState.setValue($0, for: id) }
+        )
+    }
+    
+    /// Creates a standard field label view
+    /// - Returns: A Text view with the field label
+    @ViewBuilder
+    func fieldLabel() -> some View {
+        Text(label)
+            .font(.subheadline)
+    }
+    
+    /// Applies standard field container styling and modifiers
+    /// - Parameters:
+    ///   - content: The field content view
+    ///   - componentName: The name for automatic compliance
+    /// - Returns: A view with standard field styling applied
+    func fieldContainer<Content: View>(
+        @ViewBuilder content: () -> Content,
+        componentName: String
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            content()
+        }
+        .padding()
+        .environment(\.accessibilityIdentifierLabel, label)
+        .automaticCompliance(named: componentName)
+    }
+}
+
 // MARK: - Individual Field Components (TDD Red Phase Stubs)
 
 /// Text field component
@@ -157,18 +197,14 @@ public struct DynamicTextField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(field.label)
-                .font(.subheadline)
+        field.fieldContainer(content: {
+            field.fieldLabel()
 
             if field.supportsOCR {
                 HStack {
-                    TextField(field.placeholder ?? "Enter text", text: Binding(
-                        get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                        set: { formState.setValue($0, for: field.id) }
-                    ))
-                    .textFieldStyle(.roundedBorder)
-                    .automaticCompliance()
+                    TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+                        .textFieldStyle(.roundedBorder)
+                        .automaticCompliance()
 
                     Button(action: {
                         // TODO: Implement OCR scanning workflow
@@ -184,20 +220,14 @@ public struct DynamicTextField: View {
                     .automaticCompliance()
                 }
             } else {
-                TextField(field.placeholder ?? "Enter text", text: Binding(
-                    get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                    set: { formState.setValue($0, for: field.id) }
-                ))
-                .textFieldStyle(.roundedBorder)
-                .automaticCompliance()
+                TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+                    .textFieldStyle(.roundedBorder)
+                    .automaticCompliance()
             }
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticCompliance(named: "DynamicTextField")
+        }, componentName: "DynamicTextField")
     }
 }
 
@@ -214,26 +244,19 @@ public struct DynamicEmailField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(field.label)
-                .font(.subheadline)
+        field.fieldContainer(content: {
+            field.fieldLabel()
 
-            TextField(field.placeholder ?? "Enter email", text: Binding(
-                get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            #if os(iOS)
-            .keyboardType(UIKeyboardType.emailAddress)
-            #endif
-            .automaticCompliance()
+            TextField(field.placeholder ?? "Enter email", text: field.textBinding(formState: formState))
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(UIKeyboardType.emailAddress)
+                #endif
+                .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticCompliance(named: "DynamicEmailField")
+        }, componentName: "DynamicEmailField")
     }
 }
 
@@ -250,23 +273,16 @@ public struct DynamicPasswordField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(field.label)
-                .font(.subheadline)
+        field.fieldContainer(content: {
+            field.fieldLabel()
 
-            SecureField(field.placeholder ?? "Enter password", text: Binding(
-                get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            .automaticCompliance()
+            SecureField(field.placeholder ?? "Enter password", text: field.textBinding(formState: formState))
+                .textFieldStyle(.roundedBorder)
+                .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticCompliance(named: "DynamicPasswordField")
+        }, componentName: "DynamicPasswordField")
     }
 }
 
@@ -283,26 +299,19 @@ public struct DynamicPhoneField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(field.label)
-                .font(.subheadline)
+        field.fieldContainer(content: {
+            field.fieldLabel()
 
-            TextField(field.placeholder ?? "Enter phone", text: Binding(
-                get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            #if os(iOS)
-            .keyboardType(UIKeyboardType.phonePad)
-            #endif
-            .automaticCompliance()
+            TextField(field.placeholder ?? "Enter phone", text: field.textBinding(formState: formState))
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(UIKeyboardType.phonePad)
+                #endif
+                .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticCompliance(named: "DynamicPhoneField")
+        }, componentName: "DynamicPhoneField")
     }
 }
 
@@ -319,26 +328,19 @@ public struct DynamicURLField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(field.label)
-                .font(.subheadline)
+        field.fieldContainer(content: {
+            field.fieldLabel()
 
-            TextField(field.placeholder ?? "Enter URL", text: Binding(
-                get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            #if os(iOS)
-            .keyboardType(UIKeyboardType.URL)
-            #endif
-            .automaticCompliance()
+            TextField(field.placeholder ?? "Enter URL", text: field.textBinding(formState: formState))
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(UIKeyboardType.URL)
+                #endif
+                .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, field.label)
-        .automaticCompliance(named: "DynamicURLField")
+        }, componentName: "DynamicURLField")
     }
 }
 
@@ -675,35 +677,27 @@ public struct DynamicRichTextField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        field.fieldContainer(content: {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
                 .automaticCompliance(named: "FieldLabel")
 
             #if os(iOS)
-            TextEditor(text: Binding(
-                get: { formState.fieldValues[field.id] as? String ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .frame(minHeight: 100)
-            .border(Color.gray.opacity(0.2))
-            .automaticCompliance(named: "RichTextEditor")
+            TextEditor(text: field.textBinding(formState: formState))
+                .frame(minHeight: 100)
+                .border(Color.gray.opacity(0.2))
+                .automaticCompliance(named: "RichTextEditor")
             #else
-            TextField(field.placeholder ?? "Enter text", text: Binding(
-                get: { formState.fieldValues[field.id] as? String ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .textFieldStyle(.roundedBorder)
-            .frame(minHeight: 100)
-            .automaticCompliance(named: "RichTextEditor")
+            TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+                .textFieldStyle(.roundedBorder)
+                .frame(minHeight: 100)
+                .automaticCompliance(named: "RichTextEditor")
             #endif
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .automaticCompliance(named: "DynamicRichTextField")
+        }, componentName: "DynamicRichTextField")
     }
 }
 
@@ -1172,35 +1166,26 @@ public struct DynamicTextAreaField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        field.fieldContainer(content: {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
                 .automaticCompliance(named: "FieldLabel")
             
             #if os(iOS)
-            TextEditor(text: Binding(
-                get: { formState.getValue(for: field.id) as String? ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ))
-            .frame(minHeight: 100)
-            .border(Color.gray.opacity(0.2))
-            .automaticCompliance(named: "TextArea")
+            TextEditor(text: field.textBinding(formState: formState))
+                .frame(minHeight: 100)
+                .border(Color.gray.opacity(0.2))
+                .automaticCompliance(named: "TextArea")
             #else
-            TextField(field.placeholder ?? "Enter text", text: Binding(
-                get: { formState.getValue(for: field.id) as String? ?? field.defaultValue ?? "" },
-                set: { formState.setValue($0, for: field.id) }
-            ), axis: .vertical)
-            .textFieldStyle(.roundedBorder)
-            .lineLimit(5...10)
-            .automaticCompliance(named: "TextArea")
+            TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState), axis: .vertical)
+                .textFieldStyle(.roundedBorder)
+                .lineLimit(5...10)
+                .automaticCompliance(named: "TextArea")
             #endif
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
-        }
-        .padding()
-        .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
-        .automaticCompliance(named: "DynamicTextAreaField")
+        }, componentName: "DynamicTextAreaField")
     }
 }
