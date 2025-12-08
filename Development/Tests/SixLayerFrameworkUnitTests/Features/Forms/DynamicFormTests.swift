@@ -458,6 +458,83 @@ open class DynamicFormTests: BaseTestClass {
         #expect(!state.isSectionCollapsed("section1"))
     }
     
+    /// BUSINESS PURPOSE: Validate DynamicFormState initializes section collapsed state from section.isCollapsed
+    /// TESTING SCOPE: Tests that initial section state respects isCollapsed property
+    /// METHODOLOGY: Create sections with different isCollapsed values and verify initial state
+    @Test func testDynamicFormStateInitialSectionCollapsedState() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "expandedSection",
+                    title: "Expanded Section",
+                    isCollapsible: true,
+                    isCollapsed: false
+                ),
+                DynamicFormSection(
+                    id: "collapsedSection",
+                    title: "Collapsed Section",
+                    isCollapsible: true,
+                    isCollapsed: true
+                ),
+                DynamicFormSection(
+                    id: "nonCollapsibleSection",
+                    title: "Non-Collapsible Section",
+                    isCollapsible: false,
+                    isCollapsed: false
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Test that initial state respects isCollapsed property
+        #expect(!state.isSectionCollapsed("expandedSection"), "Expanded section should not be collapsed initially")
+        #expect(state.isSectionCollapsed("collapsedSection"), "Collapsed section should be collapsed initially")
+        // Non-collapsible sections should not have state (or should default to false)
+        #expect(!state.isSectionCollapsed("nonCollapsibleSection"), "Non-collapsible section should not be collapsed")
+    }
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormState handles collapsible vs non-collapsible sections correctly
+    /// TESTING SCOPE: Tests that only collapsible sections can be toggled
+    /// METHODOLOGY: Create collapsible and non-collapsible sections and verify toggle behavior
+    @Test func testDynamicFormStateCollapsibleVsNonCollapsible() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "collapsible",
+                    title: "Collapsible",
+                    isCollapsible: true,
+                    isCollapsed: false
+                ),
+                DynamicFormSection(
+                    id: "nonCollapsible",
+                    title: "Non-Collapsible",
+                    isCollapsible: false,
+                    isCollapsed: false
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Both should start expanded (not collapsed)
+        #expect(!state.isSectionCollapsed("collapsible"))
+        #expect(!state.isSectionCollapsed("nonCollapsible"))
+        
+        // Toggle collapsible section - should work
+        state.toggleSection("collapsible")
+        #expect(state.isSectionCollapsed("collapsible"))
+        
+        // Toggle non-collapsible section - should still work (state management doesn't prevent it)
+        // but UI should not show toggle controls for non-collapsible sections
+        state.toggleSection("nonCollapsible")
+        #expect(state.isSectionCollapsed("nonCollapsible"))
+    }
+    
     /// BUSINESS PURPOSE: Validate DynamicFormState reset functionality
     /// TESTING SCOPE: Tests DynamicFormState reset and state clearing
     /// METHODOLOGY: Set state, reset DynamicFormState, and verify complete state reset functionality
@@ -799,6 +876,327 @@ open class DynamicFormTests: BaseTestClass {
         
         // Note: Actual keyboard type verification would require UI testing
         // This test verifies the field is properly configured for text input
+    }
+    
+    // MARK: - Form Validation Summary Tests
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormState hasValidationErrors property
+    /// TESTING SCOPE: Tests that hasValidationErrors correctly identifies when form has errors
+    /// METHODOLOGY: Add errors to form state and verify hasValidationErrors returns true
+    @Test func testDynamicFormStateHasValidationErrors() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Initially no errors
+        #expect(!state.hasValidationErrors)
+        
+        // Add error
+        state.addError("Field is required", for: "testField")
+        #expect(state.hasValidationErrors)
+        
+        // Clear errors
+        state.clearAllErrors()
+        #expect(!state.hasValidationErrors)
+    }
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormState errorCount property
+    /// TESTING SCOPE: Tests that errorCount correctly counts all validation errors
+    /// METHODOLOGY: Add multiple errors to form state and verify errorCount is correct
+    @Test func testDynamicFormStateErrorCount() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Initially no errors
+        #expect(state.errorCount == 0)
+        
+        // Add single error
+        state.addError("Field is required", for: "field1")
+        #expect(state.errorCount == 1)
+        
+        // Add multiple errors to same field
+        state.addError("Field is too short", for: "field1")
+        #expect(state.errorCount == 2)
+        
+        // Add error to different field
+        state.addError("Invalid format", for: "field2")
+        #expect(state.errorCount == 3)
+        
+        // Clear errors
+        state.clearAllErrors()
+        #expect(state.errorCount == 0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormState allErrors method
+    /// TESTING SCOPE: Tests that allErrors returns all errors with field information
+    /// METHODOLOGY: Add errors to multiple fields and verify allErrors returns correct structure
+    @Test func testDynamicFormStateAllErrors() {
+        let fields = [
+            DynamicFormField(id: "firstName", contentType: .text, label: "First Name"),
+            DynamicFormField(id: "email", contentType: .email, label: "Email Address")
+        ]
+        
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(id: "section1", title: "Section 1", fields: fields)
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Initially no errors
+        #expect(state.allErrors(with: config).isEmpty)
+        
+        // Add errors
+        state.addError("First name is required", for: "firstName")
+        state.addError("Email is invalid", for: "email")
+        state.addError("Email format is wrong", for: "email")
+        
+        let allErrors = state.allErrors(with: config)
+        #expect(allErrors.count == 3)
+        
+        // Verify first error
+        let firstNameError = allErrors.first { $0.fieldId == "firstName" }
+        #expect(firstNameError != nil)
+        #expect(firstNameError?.fieldLabel == "First Name")
+        #expect(firstNameError?.message == "First name is required")
+        
+        // Verify email errors
+        let emailErrors = allErrors.filter { $0.fieldId == "email" }
+        #expect(emailErrors.count == 2)
+        #expect(emailErrors.contains { $0.message == "Email is invalid" })
+        #expect(emailErrors.contains { $0.message == "Email format is wrong" })
+        #expect(emailErrors.allSatisfy { $0.fieldLabel == "Email Address" })
+    }
+    
+    /// BUSINESS PURPOSE: Validate allErrors handles missing field gracefully
+    /// TESTING SCOPE: Tests that allErrors uses fieldId as label when field not found in configuration
+    /// METHODOLOGY: Add error for field not in configuration and verify fallback behavior
+    @Test func testDynamicFormStateAllErrorsMissingField() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Add error for field not in configuration
+        state.addError("Field error", for: "unknownField")
+        
+        let allErrors = state.allErrors(with: config)
+        #expect(allErrors.count == 1)
+        #expect(allErrors[0].fieldId == "unknownField")
+        #expect(allErrors[0].fieldLabel == "unknownField") // Should use fieldId as fallback
+        #expect(allErrors[0].message == "Field error")
+    }
+    
+    // MARK: - FormValidationSummary Component Tests
+    
+    /// BUSINESS PURPOSE: Validate FormValidationSummary data requirements
+    /// TESTING SCOPE: Tests that FormValidationSummary has access to all required data
+    /// METHODOLOGY: Create form state with errors and verify allErrors and errorCount are available
+    @Test func testFormValidationSummaryDataRequirements() {
+        let fields = [
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+            DynamicFormField(id: "field2", contentType: .email, label: "Field 2")
+        ]
+        
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(id: "section1", title: "Section 1", fields: fields)
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Add errors
+        state.addError("Field 1 is required", for: "field1")
+        state.addError("Field 2 is invalid", for: "field2")
+        state.addError("Field 2 format is wrong", for: "field2")
+        
+        // Verify data is available for FormValidationSummary
+        #expect(state.hasValidationErrors)
+        #expect(state.errorCount == 3)
+        
+        let allErrors = state.allErrors(with: config)
+        #expect(allErrors.count == 3)
+        #expect(allErrors.contains { $0.fieldId == "field1" && $0.fieldLabel == "Field 1" })
+        #expect(allErrors.contains { $0.fieldId == "field2" && $0.fieldLabel == "Field 2" })
+    }
+    
+    /// BUSINESS PURPOSE: Validate FormValidationSummary shows correct error count
+    /// TESTING SCOPE: Tests that error count displayed in summary matches actual errors
+    /// METHODOLOGY: Create form with various error counts and verify errorCount property
+    @Test func testFormValidationSummaryErrorCount() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Test single error
+        state.addError("Error 1", for: "field1")
+        #expect(state.errorCount == 1)
+        
+        // Test multiple errors on same field
+        state.addError("Error 2", for: "field1")
+        #expect(state.errorCount == 2)
+        
+        // Test errors on multiple fields
+        state.addError("Error 3", for: "field2")
+        state.addError("Error 4", for: "field3")
+        #expect(state.errorCount == 4)
+        
+        // Clear and verify
+        state.clearAllErrors()
+        #expect(state.errorCount == 0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate FormValidationSummary error list structure
+    /// TESTING SCOPE: Tests that allErrors returns correct structure for display
+    /// METHODOLOGY: Create form with errors and verify allErrors structure matches requirements
+    @Test func testFormValidationSummaryErrorListStructure() {
+        let fields = [
+            DynamicFormField(id: "name", contentType: .text, label: "Full Name"),
+            DynamicFormField(id: "email", contentType: .email, label: "Email Address"),
+            DynamicFormField(id: "phone", contentType: .phone, label: "Phone Number")
+        ]
+        
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(id: "section1", title: "Section 1", fields: fields)
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Add multiple errors
+        state.addError("Name is required", for: "name")
+        state.addError("Email is invalid", for: "email")
+        state.addError("Email format is wrong", for: "email")
+        state.addError("Phone is required", for: "phone")
+        
+        let allErrors = state.allErrors(with: config)
+        
+        // Verify structure: each error should have fieldId, fieldLabel, and message
+        #expect(allErrors.count == 4)
+        
+        for error in allErrors {
+            #expect(!error.fieldId.isEmpty)
+            #expect(!error.fieldLabel.isEmpty)
+            #expect(!error.message.isEmpty)
+        }
+        
+        // Verify name error
+        let nameErrors = allErrors.filter { $0.fieldId == "name" }
+        #expect(nameErrors.count == 1)
+        #expect(nameErrors[0].fieldLabel == "Full Name")
+        #expect(nameErrors[0].message == "Name is required")
+        
+        // Verify email errors (multiple)
+        let emailErrors = allErrors.filter { $0.fieldId == "email" }
+        #expect(emailErrors.count == 2)
+        #expect(emailErrors.allSatisfy { $0.fieldLabel == "Email Address" })
+        #expect(emailErrors.contains { $0.message == "Email is invalid" })
+        #expect(emailErrors.contains { $0.message == "Email format is wrong" })
+        
+        // Verify phone error
+        let phoneErrors = allErrors.filter { $0.fieldId == "phone" }
+        #expect(phoneErrors.count == 1)
+        #expect(phoneErrors[0].fieldLabel == "Phone Number")
+        #expect(phoneErrors[0].message == "Phone is required")
+    }
+    
+    /// BUSINESS PURPOSE: Validate FormValidationSummary handles empty error list
+    /// TESTING SCOPE: Tests that FormValidationSummary doesn't show when no errors exist
+    /// METHODOLOGY: Create form without errors and verify hasValidationErrors is false
+    @Test func testFormValidationSummaryNoErrors() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // No errors
+        #expect(!state.hasValidationErrors)
+        #expect(state.errorCount == 0)
+        #expect(state.allErrors(with: config).isEmpty)
+        
+        // FormValidationSummary should not be displayed when hasValidationErrors is false
+        // This is verified by the component's conditional rendering: if !allErrors.isEmpty
+    }
+    
+    /// BUSINESS PURPOSE: Validate FormValidationSummary error navigation callback
+    /// TESTING SCOPE: Tests that onErrorTap callback receives correct fieldId
+    /// METHODOLOGY: Create form with errors and verify callback would receive correct fieldId
+    @Test func testFormValidationSummaryErrorNavigation() {
+        let fields = [
+            DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+            DynamicFormField(id: "field2", contentType: .text, label: "Field 2")
+        ]
+        
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(id: "section1", title: "Section 1", fields: fields)
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Add errors
+        state.addError("Error 1", for: "field1")
+        state.addError("Error 2", for: "field2")
+        
+        let allErrors = state.allErrors(with: config)
+        
+        // Verify each error has correct fieldId for navigation
+        #expect(allErrors.count == 2)
+        #expect(allErrors.contains { $0.fieldId == "field1" })
+        #expect(allErrors.contains { $0.fieldId == "field2" })
+        
+        // When onErrorTap is called, it should receive the fieldId
+        // This allows scrolling to the field using ScrollViewReader
+        // Test verifies the data structure supports this functionality
     }
 }
     
