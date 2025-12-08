@@ -41,6 +41,18 @@ struct SwiftModelParser {
             guard nameRange.location != NSNotFound,
                   typeRange.location != NSNotFound else { continue }
             
+            // Check if this is a computed property (has { after type) vs stored property (has = or nothing)
+            let matchEnd = match.range.location + match.range.length
+            if matchEnd < nsContent.length {
+                // Look ahead to see what comes after the match
+                let remainingContent = nsContent.substring(from: matchEnd)
+                let trimmed = remainingContent.trimmingCharacters(in: .whitespacesAndNewlines)
+                // If it starts with {, it's a computed property - skip it
+                if trimmed.hasPrefix("{") {
+                    continue // Skip computed properties
+                }
+            }
+            
             let name = nsContent.substring(with: nameRange)
             var typeString = nsContent.substring(with: typeRange)
             
