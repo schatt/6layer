@@ -43,13 +43,14 @@ struct SwiftModelParser {
             
             // Check if this is a computed property (has { after type) vs stored property (has = or nothing)
             let matchEnd = match.range.location + match.range.length
+            var isComputed = false
             if matchEnd < nsContent.length {
                 // Look ahead to see what comes after the match
                 let remainingContent = nsContent.substring(from: matchEnd)
                 let trimmed = remainingContent.trimmingCharacters(in: .whitespacesAndNewlines)
-                // If it starts with {, it's a computed property - skip it
+                // If it starts with {, it's a computed property
                 if trimmed.hasPrefix("{") {
-                    continue // Skip computed properties
+                    isComputed = true
                 }
             }
             
@@ -82,13 +83,17 @@ struct SwiftModelParser {
             // Common patterns: cloudSyncId, syncId, internalId, _id, etc.
             let isHidden = shouldHideField(name: name, type: fieldType)
             
+            // Computed properties are not editable
+            let isEditable = !isComputed
+            
             fields.append(FieldInfo(
                 name: name,
                 fieldType: fieldType,
                 isOptional: isOptional,
                 isArray: isArray,
                 defaultValue: defaultValue,
-                isHidden: isHidden
+                isHidden: isHidden,
+                isEditable: isEditable
             ))
         }
         
@@ -258,13 +263,15 @@ struct CoreDataModelParser {
                 // Determine if field should be hidden
                 let isHidden = shouldHideField(name: name, type: fieldType)
                 
+                // Core Data attributes are always stored (editable)
                 fields.append(FieldInfo(
                     name: name,
                     fieldType: fieldType,
                     isOptional: isOptional,
                     isArray: false, // Core Data attributes are not arrays (use relationships)
                     defaultValue: nil,
-                    isHidden: isHidden
+                    isHidden: isHidden,
+                    isEditable: true
                 ))
             }
             
@@ -333,6 +340,7 @@ struct FieldInfo {
     let isArray: Bool
     let defaultValue: (any Sendable)?
     let isHidden: Bool  // Whether field should be hidden from forms
+    let isEditable: Bool  // Whether field is editable (false for computed properties)
 }
 
 struct EntityInfo {
@@ -388,6 +396,11 @@ struct HintsGenerator {
             // Add isHidden (only if not already present, to allow manual override)
             if fieldHints["isHidden"] == nil {
                 fieldHints["isHidden"] = field.isHidden
+            }
+            // Add isEditable (only if not already present, to allow manual override)
+            // Computed properties are automatically marked as non-editable
+            if fieldHints["isEditable"] == nil {
+                fieldHints["isEditable"] = field.isEditable
             }
             
             // For existing fields: don't add any properties that weren't already there
