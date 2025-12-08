@@ -155,8 +155,17 @@ public struct AutomaticComplianceModifier: ViewModifier {
         // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
         let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
+        // CRITICAL: Capture @Published property values as local variables BEFORE calling generateIdentifier
+        // to avoid creating SwiftUI dependencies that cause infinite recursion
+        let capturedScreenContext = config.currentScreenContext
+        let capturedViewHierarchy = config.currentViewHierarchy
+        let capturedEnableUITestIntegration = config.enableUITestIntegration
+        let capturedIncludeComponentNames = config.includeComponentNames
+        let capturedIncludeElementTypes = config.includeElementTypes
+        let capturedEnableDebugLogging = config.enableDebugLogging
+        
         // Always check debug logging and print immediately (helps verify modifier is being called)
-        if config.enableDebugLogging {
+        if capturedEnableDebugLogging {
             let debugMsg = "🔍 MODIFIER DEBUG: body() called - enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)"
             print(debugMsg)
             fflush(stdout) // Ensure output appears immediately
@@ -168,7 +177,13 @@ public struct AutomaticComplianceModifier: ViewModifier {
                     config: config,
                     accessibilityIdentifierName: accessibilityIdentifierName,
                     accessibilityIdentifierElementType: accessibilityIdentifierElementType,
-                    accessibilityIdentifierLabel: accessibilityIdentifierLabel
+                    accessibilityIdentifierLabel: accessibilityIdentifierLabel,
+                    capturedScreenContext: capturedScreenContext,
+                    capturedViewHierarchy: capturedViewHierarchy,
+                    capturedEnableUITestIntegration: capturedEnableUITestIntegration,
+                    capturedIncludeComponentNames: capturedIncludeComponentNames,
+                    capturedIncludeElementTypes: capturedIncludeElementTypes,
+                    capturedEnableDebugLogging: capturedEnableDebugLogging
                 )
             if config.enableDebugLogging {
                 let debugMsg = "🔍 MODIFIER DEBUG: Applying identifier '\(identifier)' to view"
@@ -205,21 +220,29 @@ public struct AutomaticComplianceModifier: ViewModifier {
         config: AccessibilityIdentifierConfig,
         accessibilityIdentifierName: String?,
         accessibilityIdentifierElementType: String?,
-        accessibilityIdentifierLabel: String?
+        accessibilityIdentifierLabel: String?,
+        capturedScreenContext: String?,
+        capturedViewHierarchy: [String],
+        capturedEnableUITestIntegration: Bool,
+        capturedIncludeComponentNames: Bool,
+        capturedIncludeElementTypes: Bool,
+        capturedEnableDebugLogging: Bool
     ) -> String {
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
         
         // Use simplified context in UI test integration to stabilize patterns
+        // CRITICAL: Use captured values instead of accessing @Published properties directly
+        // to avoid creating SwiftUI dependencies that cause infinite recursion
         let screenContext: String
         let viewHierarchyPath: String
-        if config.enableUITestIntegration {
+        if capturedEnableUITestIntegration {
             screenContext = "main"
             viewHierarchyPath = "ui"
         } else {
-            screenContext = config.currentScreenContext ?? "main"
-            viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+            screenContext = capturedScreenContext ?? "main"
+            viewHierarchyPath = capturedViewHierarchy.isEmpty ? "ui" : capturedViewHierarchy.joined(separator: ".")
         }
         
         // Determine component name
@@ -249,7 +272,7 @@ public struct AutomaticComplianceModifier: ViewModifier {
         // Add view hierarchy path
         identifierComponents.append(viewHierarchyPath)
         
-        if config.includeComponentNames {
+        if capturedIncludeComponentNames {
             identifierComponents.append(componentName)
         }
         
@@ -258,14 +281,15 @@ public struct AutomaticComplianceModifier: ViewModifier {
             identifierComponents.append(sanitizeLabelText(label))
         }
         
-        if config.includeElementTypes {
+        if capturedIncludeElementTypes {
             identifierComponents.append(elementType)
         }
         
         let identifier = identifierComponents.joined(separator: ".")
         
         // Debug logging - both print to console AND add to debug log
-        if config.enableDebugLogging {
+        // CRITICAL: Use captured value instead of accessing @Published property directly
+        if capturedEnableDebugLogging {
             let debugLines = [
                 "🔍 ACCESSIBILITY DEBUG: Generated identifier '\(identifier)'",
                 "   - prefix: '\(String(describing: prefix))'",
@@ -275,8 +299,8 @@ public struct AutomaticComplianceModifier: ViewModifier {
                 "   - componentName: '\(componentName)'",
                 "   - label: '\(accessibilityIdentifierLabel ?? "none")'",
                 "   - elementType: '\(elementType)'",
-                "   - includeComponentNames: \(config.includeComponentNames)",
-                "   - includeElementTypes: \(config.includeElementTypes)"
+                "   - includeComponentNames: \(capturedIncludeComponentNames)",
+                "   - includeElementTypes: \(capturedIncludeElementTypes)"
             ]
             for line in debugLines {
                 print(line)
@@ -402,8 +426,17 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         // Same logic as AutomaticComplianceModifier: respect both global and local settings
         let shouldApply = config.enableAutoIDs || globalAutomaticAccessibilityIdentifiers
         
+        // CRITICAL: Capture @Published property values as local variables BEFORE calling generateIdentifier
+        // to avoid creating SwiftUI dependencies that cause infinite recursion
+        let capturedScreenContext = config.currentScreenContext
+        let capturedViewHierarchy = config.currentViewHierarchy
+        let capturedEnableUITestIntegration = config.enableUITestIntegration
+        let capturedIncludeComponentNames = config.includeComponentNames
+        let capturedIncludeElementTypes = config.includeElementTypes
+        let capturedEnableDebugLogging = config.enableDebugLogging
+        
         // Debug logging to help diagnose identifier generation
-        if config.enableDebugLogging {
+        if capturedEnableDebugLogging {
             let debugMsg = "🔍 NAMED MODIFIER DEBUG: body() called for '\(componentName)' - enableAutoIDs=\(config.enableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)"
             print(debugMsg)
             fflush(stdout)
@@ -411,8 +444,16 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         }
         
         if shouldApply {
-                let identifier = Self.generateIdentifier(config: config, componentName: componentName)
-            if config.enableDebugLogging {
+                let identifier = Self.generateIdentifier(
+                    config: config,
+                    componentName: componentName,
+                    capturedScreenContext: capturedScreenContext,
+                    capturedViewHierarchy: capturedViewHierarchy,
+                    capturedEnableUITestIntegration: capturedEnableUITestIntegration,
+                    capturedIncludeComponentNames: capturedIncludeComponentNames,
+                    capturedIncludeElementTypes: capturedIncludeElementTypes
+                )
+            if capturedEnableDebugLogging {
                 let debugMsg = "🔍 NAMED MODIFIER DEBUG: Applying identifier '\(identifier)' to view '\(componentName)'"
                 print(debugMsg)
                 fflush(stdout)
@@ -421,7 +462,7 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
             // Wrap in AnyView to satisfy type erasure requirement (different branches return different types)
             return AnyView(content.accessibilityIdentifier(identifier))
         } else {
-            if config.enableDebugLogging {
+            if capturedEnableDebugLogging {
                 let debugMsg = "🔍 NAMED MODIFIER DEBUG: NOT applying identifier for '\(componentName)' - conditions not met"
                 print(debugMsg)
                 fflush(stdout)
@@ -433,19 +474,29 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
     
     // Note: Not @MainActor - this function only does string manipulation and config access
     // which are thread-safe. Calling from non-MainActor contexts (like view body) is safe.
-    private static func generateIdentifier(config: AccessibilityIdentifierConfig, componentName: String) -> String {
+    private static func generateIdentifier(
+        config: AccessibilityIdentifierConfig,
+        componentName: String,
+        capturedScreenContext: String?,
+        capturedViewHierarchy: [String],
+        capturedEnableUITestIntegration: Bool,
+        capturedIncludeComponentNames: Bool,
+        capturedIncludeElementTypes: Bool
+    ) -> String {
         
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
         
+        // CRITICAL: Use captured values instead of accessing @Published properties directly
+        // to avoid creating SwiftUI dependencies that cause infinite recursion
         let screenContext: String
         let viewHierarchyPath: String
-        if config.enableUITestIntegration {
+        if capturedEnableUITestIntegration {
             screenContext = "main"
             viewHierarchyPath = "ui"
         } else {
-            screenContext = config.currentScreenContext ?? "main"
-            viewHierarchyPath = config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: ".")
+            screenContext = capturedScreenContext ?? "main"
+            viewHierarchyPath = capturedViewHierarchy.isEmpty ? "ui" : capturedViewHierarchy.joined(separator: ".")
         }
         
         var identifierComponents: [String] = []
@@ -461,11 +512,11 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         identifierComponents.append(screenContext)
         identifierComponents.append(viewHierarchyPath)
         
-        if config.includeComponentNames {
+        if capturedIncludeComponentNames {
             identifierComponents.append(componentName)
         }
         
-        if config.includeElementTypes {
+        if capturedIncludeElementTypes {
             identifierComponents.append("View")
         }
         
@@ -637,7 +688,14 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         // Production: taskLocalConfig is nil, falls through to shared (trivial nil check)
         let config = AccessibilityIdentifierConfig.currentTaskLocalConfig ?? injectedConfig ?? AccessibilityIdentifierConfig.shared
         
-        if config.enableDebugLogging {
+        // CRITICAL: Capture @Published property values as local variables BEFORE calling generateIdentifier
+        // to avoid creating SwiftUI dependencies that cause infinite recursion
+        let capturedScreenContext = config.currentScreenContext
+        let capturedViewHierarchy = config.currentViewHierarchy
+        let capturedEnableUITestIntegration = config.enableUITestIntegration
+        let capturedEnableDebugLogging = config.enableDebugLogging
+        
+        if capturedEnableDebugLogging {
             print("🔍 FORCED MODIFIER DEBUG: Always applying identifier (local override)")
             print("🔍 FORCED MODIFIER DEBUG: accessibilityIdentifierName = '\(accessibilityIdentifierName ?? "nil")'")
             print("🔍 FORCED MODIFIER DEBUG: accessibilityIdentifierElementType = '\(accessibilityIdentifierElementType ?? "nil")'")
@@ -646,9 +704,12 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
             let identifier = Self.generateIdentifier(
                 config: config,
                 accessibilityIdentifierName: accessibilityIdentifierName,
-                accessibilityIdentifierElementType: accessibilityIdentifierElementType
+                accessibilityIdentifierElementType: accessibilityIdentifierElementType,
+                capturedScreenContext: capturedScreenContext,
+                capturedViewHierarchy: capturedViewHierarchy,
+                capturedEnableUITestIntegration: capturedEnableUITestIntegration
             )
-        if config.enableDebugLogging {
+        if capturedEnableDebugLogging {
             print("🔍 FORCED MODIFIER DEBUG: Applying identifier '\(identifier)' to view")
         }
         
@@ -658,15 +719,20 @@ public struct ForcedAutomaticAccessibilityIdentifiersModifier: ViewModifier {
         private static func generateIdentifier(
             config: AccessibilityIdentifierConfig,
             accessibilityIdentifierName: String?,
-            accessibilityIdentifierElementType: String?
+            accessibilityIdentifierElementType: String?,
+            capturedScreenContext: String?,
+            capturedViewHierarchy: [String],
+            capturedEnableUITestIntegration: Bool
         ) -> String {
         // Use injected config from environment (for testing), fall back to shared (for production)
         
         // Get configured values (empty means skip entirely - no framework forcing)
         let namespace = config.namespace.isEmpty ? nil : config.namespace
         let prefix = config.globalPrefix.isEmpty ? nil : config.globalPrefix
-        let screenContext: String = config.enableUITestIntegration ? "main" : (config.currentScreenContext ?? "main")
-        let viewHierarchyPath: String = config.enableUITestIntegration ? "ui" : (config.currentViewHierarchy.isEmpty ? "ui" : config.currentViewHierarchy.joined(separator: "."))
+        // CRITICAL: Use captured values instead of accessing @Published properties directly
+        // to avoid creating SwiftUI dependencies that cause infinite recursion
+        let screenContext: String = capturedEnableUITestIntegration ? "main" : (capturedScreenContext ?? "main")
+        let viewHierarchyPath: String = capturedEnableUITestIntegration ? "ui" : (capturedViewHierarchy.isEmpty ? "ui" : capturedViewHierarchy.joined(separator: "."))
         
         // Build identifier components in order: namespace.prefix.main.ui.element...
         var identifierComponents: [String] = []

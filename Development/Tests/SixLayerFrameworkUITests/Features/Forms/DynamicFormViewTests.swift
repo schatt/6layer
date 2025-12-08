@@ -1163,8 +1163,8 @@ open class DynamicFormViewTests: BaseTestClass {
         }
 
         // Verify fields were populated
-        let priceValue = formState.getValue(for: "price") as? String
-        let quantityValue = formState.getValue(for: "quantity") as? String
+        let priceValue: String? = formState.getValue(for: "price")
+        let quantityValue: String? = formState.getValue(for: "quantity")
         #expect(priceValue == "10.00", "Price field should be populated from structuredData")
         #expect(quantityValue == "5", "Quantity field should be populated from structuredData")
     }
@@ -1231,9 +1231,9 @@ open class DynamicFormViewTests: BaseTestClass {
         }
 
         // Verify all fields were populated (extracted + calculated)
-        let priceValue = formState.getValue(for: "price") as? String
-        let quantityValue = formState.getValue(for: "quantity") as? String
-        let totalValue = formState.getValue(for: "total") as? String
+        let priceValue: String? = formState.getValue(for: "price")
+        let quantityValue: String? = formState.getValue(for: "quantity")
+        let totalValue: String? = formState.getValue(for: "total")
         #expect(priceValue == "10.00", "Price field should be populated")
         #expect(quantityValue == "5", "Quantity field should be populated")
         #expect(totalValue == "50.00", "Total field should be populated from calculation groups")
@@ -1290,11 +1290,11 @@ open class DynamicFormViewTests: BaseTestClass {
         }
 
         // Verify populated field
-        let priceValue = formState.getValue(for: "price") as? String
+        let priceValue: String? = formState.getValue(for: "price")
         #expect(priceValue == "10.00", "Price field should be populated")
 
         // Verify existing field value is preserved
-        let quantityValue = formState.getValue(for: "quantity") as? String
+        let quantityValue: String? = formState.getValue(for: "quantity")
         #expect(quantityValue == "3", "Quantity field should retain existing value")
     }
 

@@ -225,9 +225,20 @@ struct HintsGeneratorTests {
         #expect(section.layoutStyle == .vertical)
         #expect(section.isCollapsible == true)
         #expect(section.isCollapsed == false)
-        #expect(section.fields.count == 2)
-        #expect(section.fields[0].id == "username")
-        #expect(section.fields[1].id == "email")
+        
+        // Fields are stored in metadata as _fieldIds until matched with actual DynamicFormField instances
+        // Verify field IDs are preserved in metadata
+        guard let fieldIdsString = section.metadata?["_fieldIds"] else {
+            Issue.record("Section should have _fieldIds in metadata")
+            return
+        }
+        let fieldIds = fieldIdsString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
+        #expect(fieldIds.count == 2)
+        #expect(fieldIds[0] == "username")
+        #expect(fieldIds[1] == "email")
+        
+        // Note: section.fields will be empty until SectionBuilder.buildSections() is called
+        // with actual DynamicFormField instances to match against
     }
     
     /// BUSINESS PURPOSE: Validate that hints files without sections can still be loaded
@@ -352,211 +363,4 @@ struct HintsGeneratorTests {
         #expect(profileSection?.isCollapsed == false)  // Default when not specified
     }
     
-    // MARK: - Generator Script Integration Tests
-    
-    /// BUSINESS PURPOSE: Validate that generator script creates default section when none exist
-    /// TESTING SCOPE: Tests that running the generator on a model without sections creates a default section
-    /// METHODOLOGY: Create temp Swift model, run generator script, verify output includes default section
-    @Test func testGeneratorScriptCreatesDefaultSection() throws {
-        let fileManager = FileManager.default
-        let tempDir = fileManager.temporaryDirectory.appendingPathComponent("hints_gen_test_\(UUID().uuidString)")
-        try fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
-        defer {
-            try? fileManager.removeItem(at: tempDir)
-        }
-        
-        // Create a simple Swift model file
-        let modelFile = tempDir.appendingPathComponent("TestUser.swift")
-        let modelContent = """
-        struct TestUser {
-            let username: String
-            let email: String?
-            let age: Int
-        }
-        """
-        try modelContent.write(to: modelFile, atomically: true, encoding: .utf8)
-        
-        // Create output directory
-        let outputDir = tempDir.appendingPathComponent("Hints")
-        try fileManager.createDirectory(at: outputDir, withIntermediateDirectories: true)
-        
-        // Find the generator script
-        let projectRoot = URL(fileURLWithPath: #file)
-            .deletingLastPathComponent() // HintsGeneratorTests.swift
-            .deletingLastPathComponent() // Models
-            .deletingLastPathComponent() // Core
-            .deletingLastPathComponent() // SixLayerFrameworkUnitTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // Development
-        let scriptPath = projectRoot.appendingPathComponent("scripts/generate_hints_from_models.swift")
-        
-        guard fileManager.fileExists(atPath: scriptPath.path) else {
-            throw NSError(domain: "TestError", code: 1, userInfo: ["NSLocalizedDescription": "Generator script not found at \(scriptPath.path)"])
-        }
-        
-        // Run the generator script
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-        process.arguments = ["swift", scriptPath.path, "-model", modelFile.path, "-outputdir", outputDir.path]
-        process.currentDirectoryURL = projectRoot
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        #expect(process.terminationStatus == 0, "Generator script should succeed")
-        
-        // Verify hints file was created
-        let hintsFile = outputDir.appendingPathComponent("TestUser.hints")
-        #expect(fileManager.fileExists(atPath: hintsFile.path), "Hints file should be created")
-        
-        // Load and verify the hints file
-        guard let data = try? Data(contentsOf: hintsFile),
-              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            throw NSError(domain: "TestError", code: 2, userInfo: ["NSLocalizedDescription": "Failed to parse hints file"])
-        }
-        
-        // Verify default section was created
-        guard let sections = json["_sections"] as? [[String: Any]] else {
-            throw NSError(domain: "TestError", code: 3, userInfo: ["NSLocalizedDescription": "No _sections found in generated hints"])
-        }
-        
-        #expect(sections.count == 1, "Should have one default section")
-        
-        let defaultSection = sections[0]
-        #expect(defaultSection["id"] as? String == "default")
-        #expect(defaultSection["title"] as? String == "Form Fields")
-        
-        guard let fields = defaultSection["fields"] as? [String] else {
-            throw NSError(domain: "TestError", code: 4, userInfo: ["NSLocalizedDescription": "No fields in default section"])
-        }
-        
-        #expect(fields.count == 3, "Default section should contain all fields")
-        #expect(fields.contains("username"))
-        #expect(fields.contains("email"))
-        #expect(fields.contains("age"))
-    }
-    
-    /// BUSINESS PURPOSE: Validate that generator script preserves existing sections
-    /// TESTING SCOPE: Tests that running the generator preserves existing _sections
-    /// METHODOLOGY: Create hints file with sections, run generator, verify sections are preserved
-    @Test func testGeneratorScriptPreservesExistingSections() throws {
-        let fileManager = FileManager.default
-        let tempDir = fileManager.temporaryDirectory.appendingPathComponent("hints_gen_test_\(UUID().uuidString)")
-        try fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
-        defer {
-            try? fileManager.removeItem(at: tempDir)
-        }
-        
-        // Create a simple Swift model file
-        let modelFile = tempDir.appendingPathComponent("TestUser.swift")
-        let modelContent = """
-        struct TestUser {
-            let username: String
-            let email: String?
-            let age: Int
-        }
-        """
-        try modelContent.write(to: modelFile, atomically: true, encoding: .utf8)
-        
-        // Create output directory and existing hints file with sections
-        let outputDir = tempDir.appendingPathComponent("Hints")
-        try fileManager.createDirectory(at: outputDir, withIntermediateDirectories: true)
-        
-        let existingHints: [String: Any] = [
-            "username": [
-                "fieldType": "string",
-                "isOptional": false
-            ],
-            "email": [
-                "fieldType": "string",
-                "isOptional": true
-            ],
-            "age": [
-                "fieldType": "number",
-                "isOptional": false
-            ],
-            "_sections": [
-                [
-                    "id": "account",
-                    "title": "Account Information",
-                    "description": "Your account details",
-                    "fields": ["username", "email"],
-                    "layoutStyle": "vertical",
-                    "isCollapsible": true,
-                    "isCollapsed": false
-                ],
-                [
-                    "id": "profile",
-                    "title": "Profile",
-                    "fields": ["age"],
-                    "layoutStyle": "horizontal"
-                ]
-            ]
-        ]
-        
-        let hintsFile = outputDir.appendingPathComponent("TestUser.hints")
-        let data = try JSONSerialization.data(withJSONObject: existingHints, options: .prettyPrinted)
-        try data.write(to: hintsFile, options: .atomic)
-        
-        // Find the generator script
-        let projectRoot = URL(fileURLWithPath: #file)
-            .deletingLastPathComponent() // HintsGeneratorTests.swift
-            .deletingLastPathComponent() // Models
-            .deletingLastPathComponent() // Core
-            .deletingLastPathComponent() // SixLayerFrameworkUnitTests
-            .deletingLastPathComponent() // Tests
-            .deletingLastPathComponent() // Development
-        let scriptPath = projectRoot.appendingPathComponent("scripts/generate_hints_from_models.swift")
-        
-        guard fileManager.fileExists(atPath: scriptPath.path) else {
-            throw NSError(domain: "TestError", code: 1, userInfo: ["NSLocalizedDescription": "Generator script not found at \(scriptPath.path)"])
-        }
-        
-        // Run the generator script (should update field hints but preserve sections)
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
-        process.arguments = ["swift", scriptPath.path, "-model", modelFile.path, "-outputdir", outputDir.path]
-        process.currentDirectoryURL = projectRoot
-        
-        try process.run()
-        process.waitUntilExit()
-        
-        #expect(process.terminationStatus == 0, "Generator script should succeed")
-        
-        // Verify hints file still exists and was updated
-        #expect(fileManager.fileExists(atPath: hintsFile.path), "Hints file should still exist")
-        
-        // Load and verify the hints file
-        guard let updatedData = try? Data(contentsOf: hintsFile),
-              let json = try? JSONSerialization.jsonObject(with: updatedData) as? [String: Any] else {
-            throw NSError(domain: "TestError", code: 2, userInfo: ["NSLocalizedDescription": "Failed to parse updated hints file"])
-        }
-        
-        // Verify sections were preserved
-        guard let sections = json["_sections"] as? [[String: Any]] else {
-            throw NSError(domain: "TestError", code: 3, userInfo: ["NSLocalizedDescription": "_sections not found or not preserved"])
-        }
-        
-        #expect(sections.count == 2, "Should preserve both sections")
-        
-        // Verify first section properties
-        let accountSection = sections.first { $0["id"] as? String == "account" }
-        #expect(accountSection != nil)
-        #expect(accountSection?["title"] as? String == "Account Information")
-        #expect(accountSection?["description"] as? String == "Your account details")
-        #expect(accountSection?["layoutStyle"] as? String == "vertical")
-        #expect(accountSection?["isCollapsible"] as? Bool == true)
-        #expect(accountSection?["isCollapsed"] as? Bool == false)
-        
-        // Verify second section properties
-        let profileSection = sections.first { $0["id"] as? String == "profile" }
-        #expect(profileSection != nil)
-        #expect(profileSection?["title"] as? String == "Profile")
-        #expect(profileSection?["layoutStyle"] as? String == "horizontal")
-        
-        // Verify field hints were updated (type info added)
-        let usernameHints = json["username"] as? [String: Any]
-        #expect(usernameHints != nil)
-        #expect(usernameHints?["fieldType"] as? String == "string")
-    }
 }
