@@ -1,12 +1,32 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities** 🎯
+## 📍 **Current Release: v6.0.1 - Critical Bug Fix: Infinite Recursion Crash** 🎯
 
 **Release Date**: December 7, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v5.8.0 - Cross-Platform Printing Solution & Automatic Data Binding
-**Note**: Major release with intelligent device-aware app navigation, cross-platform printing, platform file system utilities, platform toolbar placement helpers, and refactored spacing system aligned with macOS HIG guidelines. Includes complete 6-layer architecture implementation for navigation pattern selection, unified printing API, comprehensive file system utilities with iCloud Drive support, platform-specific toolbar placement abstractions, and HIG-compliant spacing values.
+**Previous Release**: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities
+**Note**: Critical patch release fixing infinite recursion crash in AutomaticComplianceModifier. Fixes Issue #91 by adding static cache for PlatformDesignSystem instances to prevent circular dependency when creating design systems in view body.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.0.1 - Critical Bug Fix: Infinite Recursion Crash** (December 7, 2025)
+
+### **Critical Bug Fix:**
+
+#### **🚨 Infinite Recursion Crash in AutomaticComplianceModifier (Issue #91)**
+- **Fixed**: Infinite recursion causing stack overflow when `.automaticCompliance()` modifier is applied
+- **Fixed**: Circular dependency between view body evaluation and design system initialization
+- **Solution**: Added static cache for `PlatformDesignSystem` instances to prevent recreation on every body evaluation
+- **Impact**: All users of `.automaticCompliance()` modifier should upgrade immediately
+
+**Technical Details**:
+- Added `PlatformDesignSystem.cached(for:)` with thread-safe static caching using `NSLock`
+- Updated `applyHIGComplianceFeatures` to use cached design system
+- Updated `platformPatterns()` and `visualConsistency()` to use cached version
+- Marked static cache as `nonisolated(unsafe)` for concurrency safety
+
+**Migration**: No code changes required - upgrade to v6.0.1 to fix the crash.
 
 ---
 
