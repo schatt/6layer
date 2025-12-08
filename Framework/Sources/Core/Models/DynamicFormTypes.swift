@@ -293,14 +293,124 @@ public struct DynamicFormField: Identifiable {
     public var displayHints: FieldDisplayHints? {
         guard let metadata = metadata else { return nil }
         
+        // Parse type information (new - for fully declarative hints)
+        let fieldType = metadata["fieldType"]
+        let isOptional: Bool? = {
+            if let value = metadata["isOptional"] {
+                return value == "true" ? true : (value == "false" ? false : nil)
+            }
+            return nil
+        }()
+        let isArray: Bool? = {
+            if let value = metadata["isArray"] {
+                return value == "true" ? true : (value == "false" ? false : nil)
+            }
+            return nil
+        }()
+        
+        // Parse defaultValue (supports string, number, boolean as strings)
+        let defaultValue: (any Sendable)? = {
+            guard let valueStr = metadata["defaultValue"] else { return nil }
+            // Try parsing as different types
+            if let intValue = Int(valueStr) {
+                return intValue
+            } else if let doubleValue = Double(valueStr) {
+                return doubleValue
+            } else if valueStr.lowercased() == "true" {
+                return true
+            } else if valueStr.lowercased() == "false" {
+                return false
+            } else {
+                return valueStr // Default to string
+            }
+        }()
+        
+        // Parse expectedRange from metadata (format: "min:max" or stored as separate keys)
+        let expectedRange: ValueRange? = {
+            // Try parsing from "expectedRange" as "min:max" format
+            if let rangeStr = metadata["expectedRange"],
+               let colonIndex = rangeStr.firstIndex(of: ":"),
+               let min = Double(String(rangeStr[..<colonIndex])),
+               let max = Double(String(rangeStr[rangeStr.index(after: colonIndex)...])) {
+                return ValueRange(min: min, max: max)
+            }
+            // Try parsing from separate "expectedRangeMin" and "expectedRangeMax" keys
+            if let minStr = metadata["expectedRangeMin"],
+               let maxStr = metadata["expectedRangeMax"],
+               let min = Double(minStr),
+               let max = Double(maxStr) {
+                return ValueRange(min: min, max: max)
+            }
+            return nil
+        }()
+        
+        // Parse OCR hints (comma-separated string)
+        let ocrHints: [String]? = {
+            guard let hintsStr = metadata["ocrHints"], !hintsStr.isEmpty else { return nil }
+            return hintsStr.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+        }()
+        
+        // Parse picker options from JSON string in metadata
+        let pickerOptions: [PickerOption]? = {
+            // Try parsing from "pickerOptions" key as JSON string
+            if let optionsJsonStr = metadata["pickerOptions"],
+               let jsonData = optionsJsonStr.data(using: .utf8),
+               let jsonArray = try? JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] {
+                var options: [PickerOption] = []
+                for optionDict in jsonArray {
+                    guard let value = optionDict["value"] as? String,
+                          let label = optionDict["label"] as? String else {
+                        continue // Skip invalid options
+                    }
+                    options.append(PickerOption(value: value, label: label))
+                }
+                return options.isEmpty ? nil : options
+            }
+            // Also try "options" key (alternative name)
+            if let optionsJsonStr = metadata["options"],
+               let jsonData = optionsJsonStr.data(using: .utf8),
+               let jsonArray = try? JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] {
+                var options: [PickerOption] = []
+                for optionDict in jsonArray {
+                    guard let value = optionDict["value"] as? String,
+                          let label = optionDict["label"] as? String else {
+                        continue // Skip invalid options
+                    }
+                    options.append(PickerOption(value: value, label: label))
+                }
+                return options.isEmpty ? nil : options
+            }
+            return nil
+        }()
+        
+        // Parse calculation groups (stored as JSON string - would need JSON parsing for full support)
+        // For now, we'll leave this as nil since it requires array of objects
+        let calculationGroups: [CalculationGroup]? = nil
+        
+        // Parse boolean flags
+        let isHidden = metadata["isHidden"] == "true"
+        let isEditable = metadata["isEditable"] != "false"  // Defaults to true
+        
         return FieldDisplayHints(
+            // Type information (new)
+            fieldType: fieldType,
+            isOptional: isOptional,
+            isArray: isArray,
+            defaultValue: defaultValue,
+            // Display properties (existing)
             expectedLength: metadata["expectedLength"].flatMap(Int.init),
             displayWidth: metadata["displayWidth"],
             showCharacterCounter: metadata["showCharacterCounter"] == "true",
             maxLength: metadata["maxLength"].flatMap(Int.init),
             minLength: metadata["minLength"].flatMap(Int.init),
+            expectedRange: expectedRange,
             metadata: metadata,
-            isEditable: metadata["isEditable"] != "false"  // Defaults to true
+            ocrHints: ocrHints,
+            calculationGroups: calculationGroups,
+            inputType: metadata["inputType"],
+            pickerOptions: pickerOptions,
+            isHidden: isHidden,
+            isEditable: isEditable
         )
     }
     
@@ -386,6 +496,7 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     case image = "image"             // Image picker
     case color = "color"             // Color picker
     case range = "range"             // Slider
+    case stepper = "stepper"         // Increment/decrement control
     case toggle = "toggle"           // Toggle switch
     case array = "array"             // Array input
     case data = "data"               // Data input
@@ -963,6 +1074,36 @@ public class DynamicFormState: ObservableObject {
     /// Check if form is valid
     public var isValid: Bool {
         return fieldErrors.values.allSatisfy { $0.isEmpty }
+    }
+    
+    /// Check if form has any validation errors
+    public var hasValidationErrors: Bool {
+        return !fieldErrors.values.allSatisfy { $0.isEmpty }
+    }
+    
+    /// Get total count of all validation errors across all fields
+    public var errorCount: Int {
+        return fieldErrors.values.reduce(0) { $0 + $1.count }
+    }
+    
+    /// Get all validation errors as a flat list with field information
+    /// Returns array of tuples: (fieldId: String, fieldLabel: String, message: String)
+    public func allErrors(with configuration: DynamicFormConfiguration) -> [(fieldId: String, fieldLabel: String, message: String)] {
+        var errors: [(fieldId: String, fieldLabel: String, message: String)] = []
+        
+        for (fieldId, errorMessages) in fieldErrors {
+            guard !errorMessages.isEmpty else { continue }
+            
+            // Get field label from configuration
+            let fieldLabel = configuration.getField(by: fieldId)?.label ?? fieldId
+            
+            // Add each error message
+            for message in errorMessages {
+                errors.append((fieldId: fieldId, fieldLabel: fieldLabel, message: message))
+            }
+        }
+        
+        return errors
     }
     
     /// Reset form to initial state

@@ -445,17 +445,32 @@ struct HintsGenerator {
     /// Returns both the hints dictionary and the field order (to preserve custom ordering)
     /// For existing fields, preserves all properties exactly as they are
     /// Only adds type information if missing (for fully declarative hints)
+    /// Preserves _sections if they exist, or creates a default section if none exist
     static func generateHintsJSON(
         fields: [FieldInfo], 
-        existingHints: [String: [String: Any]]? = nil
+        existingHints: [String: Any]? = nil
     ) -> (hints: [String: Any], fieldOrder: [String]) {
         var hints: [String: Any] = existingHints ?? [:]
         var fieldOrder: [String] = []
         
-        // Preserve order from existing hints first
-        if let existing = existingHints {
-            fieldOrder = Array(existing.keys) // Preserve existing order
+        // Extract field hints (everything except _sections and __example)
+        var fieldHints: [String: [String: Any]] = [:]
+        var existingSections: [[String: Any]]? = nil
+        
+        for (key, value) in hints {
+            if key == "_sections" {
+                if let sections = value as? [[String: Any]] {
+                    existingSections = sections
+                }
+            } else if key != "__example" {
+                if let fieldDict = value as? [String: Any] {
+                    fieldHints[key] = fieldDict
+                }
+            }
         }
+        
+        // Preserve order from existing field hints first
+        fieldOrder = Array(fieldHints.keys)
         
         // Process fields from model (in source order)
         // Skip __example field if it exists (it's documentation only)
@@ -465,38 +480,38 @@ struct HintsGenerator {
                 continue
             }
             
-            let existingFieldHints = hints[field.name] as? [String: Any]
-            var fieldHints: [String: Any] = existingFieldHints ?? [:]
+            let existingFieldHints = fieldHints[field.name]
+            var fieldHintsDict: [String: Any] = existingFieldHints ?? [:]
             
             // Always include type information (core fields for fully declarative hints)
             // Only override if not already present in existing hints
-            if fieldHints["fieldType"] == nil {
-                fieldHints["fieldType"] = field.fieldType
+            if fieldHintsDict["fieldType"] == nil {
+                fieldHintsDict["fieldType"] = field.fieldType
             }
-            if fieldHints["isOptional"] == nil {
-                fieldHints["isOptional"] = field.isOptional
+            if fieldHintsDict["isOptional"] == nil {
+                fieldHintsDict["isOptional"] = field.isOptional
             }
-            if fieldHints["isArray"] == nil {
-                fieldHints["isArray"] = field.isArray
+            if fieldHintsDict["isArray"] == nil {
+                fieldHintsDict["isArray"] = field.isArray
             }
-            if field.defaultValue != nil && fieldHints["defaultValue"] == nil {
-                fieldHints["defaultValue"] = field.defaultValue
+            if field.defaultValue != nil && fieldHintsDict["defaultValue"] == nil {
+                fieldHintsDict["defaultValue"] = field.defaultValue
             }
             // Add isHidden (only if not already present, to allow manual override)
-            if fieldHints["isHidden"] == nil {
-                fieldHints["isHidden"] = field.isHidden
+            if fieldHintsDict["isHidden"] == nil {
+                fieldHintsDict["isHidden"] = field.isHidden
             }
             // Add isEditable (only if not already present, to allow manual override)
             // Computed properties are automatically marked as non-editable
-            if fieldHints["isEditable"] == nil {
-                fieldHints["isEditable"] = field.isEditable
+            if fieldHintsDict["isEditable"] == nil {
+                fieldHintsDict["isEditable"] = field.isEditable
             }
             
             // For existing fields: don't add any properties that weren't already there
             // This preserves developer's choice to remove properties
             // New fields get minimal type info only - see __example for all options
             
-            hints[field.name] = fieldHints
+            fieldHints[field.name] = fieldHintsDict
             
             // Add to order if not already present (new fields go at end)
             if !fieldOrder.contains(field.name) {
@@ -504,20 +519,56 @@ struct HintsGenerator {
             }
         }
         
-        return (hints, fieldOrder)
+        // Build final hints dictionary with field hints
+        var finalHints: [String: Any] = fieldHints
+        
+        // Handle sections: preserve existing or create default
+        let allFieldNames = fieldOrder.filter { $0 != "__example" }
+        if let existingSections = existingSections, !existingSections.isEmpty {
+            // Preserve existing sections
+            finalHints["_sections"] = existingSections
+        } else {
+            // Create default section with all fields if no sections exist
+            if !allFieldNames.isEmpty {
+                finalHints["_sections"] = [[
+                    "id": "default",
+                    "title": "Form Fields",
+                    "fields": allFieldNames
+                ]]
+            }
+        }
+        
+        return (finalHints, fieldOrder)
     }
     
     /// Write hints to a .hints file
     /// Preserves field order from existing hints, then appends new fields
+    /// Writes _sections after all fields but before __example
     /// Note: JSONSerialization doesn't guarantee order, so we manually construct JSON
     static func writeHints(_ hints: [String: Any], to url: URL, preserveOrder: [String]? = nil) throws {
         // Build JSON string manually to preserve order
         var jsonLines: [String] = ["{"]
         
+        // Separate fields, _sections, and __example
         let fieldOrder = preserveOrder ?? Array(hints.keys).sorted()
+        var fieldsToWrite: [String] = []
+        var hasSections = false
+        var hasExample = false
+        
+        for key in fieldOrder {
+            if key == "_sections" {
+                hasSections = true
+            } else if key == "__example" {
+                hasExample = true
+            } else {
+                fieldsToWrite.append(key)
+            }
+        }
+        
         var isFirst = true
         
-        for fieldName in fieldOrder {
+        // Write all field definitions first
+        for fieldName in fieldsToWrite {
             guard let fieldHints = hints[fieldName] as? [String: Any] else { continue }
             
             if !isFirst {
@@ -580,12 +631,123 @@ struct HintsGenerator {
             jsonLines.append("  }")
         }
         
+        // Write _sections after fields but before __example
+        if hasSections, let sections = hints["_sections"] {
+            if !isFirst {
+                jsonLines[jsonLines.count - 1] += ","
+            }
+            isFirst = false
+            
+            jsonLines.append("  \"_sections\": [")
+            
+            if let sectionsArray = sections as? [[String: Any]] {
+                var isFirstSection = true
+                for section in sectionsArray {
+                    if !isFirstSection {
+                        jsonLines[jsonLines.count - 1] += ","
+                    }
+                    isFirstSection = false
+                    
+                    jsonLines.append("    {")
+                    
+                    // Write section properties in a consistent order
+                    var sectionProps: [String] = []
+                    if let id = section["id"] { sectionProps.append("\"id\": \(formatJSONValue(id))") }
+                    if let title = section["title"] { sectionProps.append("\"title\": \(formatJSONValue(title))") }
+                    if let description = section["description"] { sectionProps.append("\"description\": \(formatJSONValue(description))") }
+                    if let fields = section["fields"] { sectionProps.append("\"fields\": \(formatJSONValue(fields))") }
+                    if let layoutStyle = section["layoutStyle"] { sectionProps.append("\"layoutStyle\": \(formatJSONValue(layoutStyle))") }
+                    if let isCollapsible = section["isCollapsible"] { sectionProps.append("\"isCollapsible\": \(formatJSONValue(isCollapsible))") }
+                    if let isCollapsed = section["isCollapsed"] { sectionProps.append("\"isCollapsed\": \(formatJSONValue(isCollapsed))") }
+                    
+                    // Add any other properties
+                    for (key, value) in section {
+                        if !["id", "title", "description", "fields", "layoutStyle", "isCollapsible", "isCollapsed"].contains(key) {
+                            sectionProps.append("\"\(key)\": \(formatJSONValue(value))")
+                        }
+                    }
+                    
+                    for (index, prop) in sectionProps.enumerated() {
+                        if index > 0 {
+                            jsonLines[jsonLines.count - 1] += ","
+                        }
+                        jsonLines.append("      \(prop)")
+                    }
+                    
+                    jsonLines.append("    }")
+                }
+            }
+            
+            jsonLines.append("  ]")
+        }
+        
+        // Write __example last
+        if hasExample, let example = hints["__example"] as? [String: Any] {
+            if !isFirst {
+                jsonLines[jsonLines.count - 1] += ","
+            }
+            
+            jsonLines.append("  \"__example\": {")
+            
+            let sortedKeys = example.keys.sorted()
+            var isFirstProp = true
+            for key in sortedKeys {
+                guard let value = example[key] else { continue }
+                
+                if !isFirstProp {
+                    jsonLines[jsonLines.count - 1] += ","
+                }
+                isFirstProp = false
+                
+                jsonLines.append("    \"\(key)\": \(formatJSONValue(value))")
+            }
+            
+            jsonLines.append("  }")
+        }
+        
         jsonLines.append("}")
         
         // Join with proper spacing
         let jsonString = jsonLines.joined(separator: "\n")
         let data = jsonString.data(using: .utf8)!
         try data.write(to: url)
+    }
+    
+    /// Helper to format JSON values consistently
+    private static func formatJSONValue(_ value: Any) -> String {
+        if value is NSNull {
+            return "null"
+        } else if let stringValue = value as? String {
+            let escaped = stringValue.replacingOccurrences(of: "\"", with: "\\\"")
+            return "\"\(escaped)\""
+        } else if let boolValue = value as? Bool {
+            return boolValue ? "true" : "false"
+        } else if let numberValue = value as? NSNumber {
+            return "\(numberValue)"
+        } else if let arrayValue = value as? [Any] {
+            let items = arrayValue.map { formatJSONValue($0) }.joined(separator: ", ")
+            return "[\(items)]"
+        } else if let dictValue = value as? [String: Any] {
+            if dictValue.isEmpty {
+                return "{}"
+            } else {
+                // Use JSONSerialization for dictionaries
+                if let jsonData = try? JSONSerialization.data(withJSONObject: dictValue, options: []),
+                   let jsonString = String(data: jsonData, encoding: .utf8) {
+                    return jsonString
+                } else {
+                    return "{}"
+                }
+            }
+        } else {
+            // Fallback: use JSONSerialization
+            if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                return jsonString
+            } else {
+                return "null"
+            }
+        }
     }
 }
 
@@ -833,14 +995,14 @@ func generateHintsFile(for fields: [FieldInfo], outputURL: URL) {
     // Ensure output directory exists
     let outputDir = outputURL.deletingLastPathComponent()
     try? FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
-    // Load existing hints if they exist, preserving field order
-    var existingHints: [String: [String: Any]]? = nil
+    // Load existing hints if they exist, preserving field order and sections
+    var existingHints: [String: Any]? = nil
     var existingFieldOrder: [String] = []
     
     if FileManager.default.fileExists(atPath: outputURL.path),
        let data = try? Data(contentsOf: outputURL),
        let jsonString = String(data: data, encoding: .utf8),
-       let json = try? JSONSerialization.jsonObject(with: data) as? [String: [String: Any]] {
+       let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
         existingHints = json
         
         // Extract field order from JSON string (fields appear in order in JSON)
@@ -854,8 +1016,8 @@ func generateHintsFile(for fields: [FieldInfo], outputURL: URL) {
                 let fieldNameRange = match.range(at: 1)
                 if fieldNameRange.location != NSNotFound {
                     let fieldName = nsString.substring(with: fieldNameRange)
-                    // Skip __example when tracking order (it's added at end)
-                    if fieldName != "__example" && !existingFieldOrder.contains(fieldName) {
+                    // Skip __example and _sections when tracking order
+                    if fieldName != "__example" && fieldName != "_sections" && !existingFieldOrder.contains(fieldName) {
                         existingFieldOrder.append(fieldName)
                     }
                 }

@@ -58,6 +58,8 @@ public struct CustomFieldView: View {
                 DynamicColorField(field: field, formState: formState)
             case .range:
                 DynamicRangeField(field: field, formState: formState)
+            case .stepper:
+                DynamicStepperField(field: field, formState: formState)
             case .toggle:
                 DynamicToggleField(field: field, formState: formState)
             case .array:
@@ -124,6 +126,20 @@ extension DynamicFormField {
     func currentTextValue(from formState: DynamicFormState) -> String {
         return formState.getValue(for: id) as String? ?? defaultValue ?? ""
     }
+    
+    /// Check if field is read-only based on displayHints or metadata
+    /// Returns true if the field should be displayed as read-only (non-editable)
+    var isReadOnly: Bool {
+        // Check displayHints first (from metadata["isEditable"])
+        if let displayHints = displayHints, !displayHints.isEditable {
+            return true
+        }
+        // Check metadata["displayOnly"]
+        if metadata?["displayOnly"] == "true" {
+            return true
+        }
+        return false
+    }
 }
 
 // MARK: - Character Counter Helper
@@ -180,6 +196,27 @@ extension DynamicFormField {
         .environment(\.accessibilityIdentifierLabel, label)
         .automaticCompliance(named: componentName)
     }
+    
+    /// Check if field should render as picker based on hints
+    var shouldRenderAsPicker: Bool {
+        guard let hints = displayHints else { return false }
+        return hints.inputType == "picker" && hints.pickerOptions != nil && !(hints.pickerOptions?.isEmpty ?? true)
+    }
+    
+    /// Get picker options from hints (preferred) or field.options (fallback)
+    var pickerOptionsFromHints: [(value: String, label: String)] {
+        // Prefer pickerOptions from displayHints (has labels)
+        if let hints = displayHints,
+           let pickerOptions = hints.pickerOptions,
+           !pickerOptions.isEmpty {
+            return pickerOptions.map { ($0.value, $0.label) }
+        }
+        // Fallback to field.options (simple string array)
+        if let options = options {
+            return options.map { ($0, $0) } // Use same value for both value and label
+        }
+        return []
+    }
 }
 
 // MARK: - Individual Field Components (TDD Red Phase Stubs)
@@ -200,7 +237,26 @@ public struct DynamicTextField: View {
         field.fieldContainer(content: {
             field.fieldLabel()
 
-            if field.supportsOCR {
+            // Check if field should render as picker based on hints
+            if field.shouldRenderAsPicker {
+                // Render picker when inputType == "picker" and pickerOptions exist
+                let pickerOptions = field.pickerOptionsFromHints
+                if !pickerOptions.isEmpty {
+                    Picker(field.placeholder ?? "Select", selection: field.textBinding(formState: formState)) {
+                        ForEach(pickerOptions, id: \.value) { option in
+                            Text(option.label).tag(option.value)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .automaticCompliance()
+                } else {
+                    // Fallback to text field if no options
+                    TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+                        .textFieldStyle(.roundedBorder)
+                        .automaticCompliance()
+                }
+            } else if field.supportsOCR {
+                // Render text field with OCR support
                 HStack {
                     TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
                         .textFieldStyle(.roundedBorder)
@@ -220,6 +276,7 @@ public struct DynamicTextField: View {
                     .automaticCompliance()
                 }
             } else {
+                // Default text field
                 TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
                     .textFieldStyle(.roundedBorder)
                     .automaticCompliance()
@@ -316,7 +373,7 @@ public struct DynamicPhoneField: View {
 }
 
 /// URL field component
-/// TDD RED PHASE: This is a stub implementation for testing
+/// Uses Link component for read-only/display URL fields, TextField for editable fields
 @MainActor
 public struct DynamicURLField: View {
     let field: DynamicFormField
@@ -327,20 +384,62 @@ public struct DynamicURLField: View {
         self.formState = formState
     }
 
+    /// Get the current URL value from form state
+    private var urlValue: String {
+        (formState.getValue(for: field.id) as String?) ?? field.defaultValue ?? ""
+    }
+
+    /// Parse and validate URL, returning both the URL object and validity
+    private var parsedURL: (url: URL?, isValid: Bool) {
+        let value = urlValue
+        guard !value.isEmpty else {
+            return (nil, false)
+        }
+        if let url = URL(string: value) {
+            return (url, true)
+        }
+        return (nil, false)
+    }
+
     public var body: some View {
         field.fieldContainer(content: {
             field.fieldLabel()
 
-            TextField(field.placeholder ?? "Enter URL", text: field.textBinding(formState: formState))
-                .textFieldStyle(.roundedBorder)
-                #if os(iOS)
-                .keyboardType(UIKeyboardType.URL)
-                #endif
-                .automaticCompliance()
-            
-            // Character counter for fields with maxLength validation
-            field.characterCounterView(formState: formState)
+            if field.isReadOnly {
+                readOnlyURLView
+            } else {
+                editableURLView
+            }
         }, componentName: "DynamicURLField")
+    }
+    
+    /// Read-only display view: Link for valid URLs, Text for invalid/empty
+    @ViewBuilder
+    private var readOnlyURLView: some View {
+        let (url, isValid) = parsedURL
+        if isValid, let url = url {
+            Link(urlValue, destination: url)
+                .foregroundColor(.blue)
+                .automaticCompliance()
+        } else {
+            Text(urlValue.isEmpty ? "—" : urlValue)
+                .foregroundColor(.secondary)
+                .automaticCompliance()
+        }
+    }
+    
+    /// Editable input view: TextField with URL keyboard type
+    @ViewBuilder
+    private var editableURLView: some View {
+        TextField(field.placeholder ?? "Enter URL", text: field.textBinding(formState: formState))
+            .textFieldStyle(.roundedBorder)
+            #if os(iOS)
+            .keyboardType(UIKeyboardType.URL)
+            #endif
+            .automaticCompliance()
+        
+        // Character counter for fields with maxLength validation
+        field.characterCounterView(formState: formState)
     }
 }
 
@@ -362,7 +461,7 @@ public struct DynamicNumberField: View {
                 .font(.subheadline)
 
             TextField(field.placeholder ?? "Enter number", text: Binding(
-                get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
+                get: { (formState.getValue(for: field.id) as String?) ?? field.defaultValue ?? "" },
                 set: { formState.setValue($0, for: field.id) }
             ))
             .textFieldStyle(.roundedBorder)
@@ -395,7 +494,7 @@ public struct DynamicIntegerField: View {
                 .font(.subheadline)
 
             TextField(field.placeholder ?? "Enter integer", text: Binding(
-                get: { formState.getValue(for: field.id) ?? field.defaultValue ?? "" },
+                get: { (formState.getValue(for: field.id) as String?) ?? field.defaultValue ?? "" },
                 set: { formState.setValue($0, for: field.id) }
             ))
             .textFieldStyle(.roundedBorder)
@@ -407,6 +506,73 @@ public struct DynamicIntegerField: View {
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticCompliance(named: "DynamicIntegerField")
+    }
+}
+
+/// Stepper field component
+/// Provides increment/decrement controls for numeric values
+@MainActor
+public struct DynamicStepperField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+
+    public init(field: DynamicFormField, formState: DynamicFormState) {
+        self.field = field
+        self.formState = formState
+    }
+
+    private var value: Binding<Double> {
+        Binding(
+            get: {
+                if let value: Any = formState.getValue(for: field.id) {
+                    if let doubleValue = value as? Double {
+                        return doubleValue
+                    } else if let stringValue = value as? String,
+                              let parsed = Double(stringValue) {
+                        return parsed
+                    }
+                }
+                return Double(field.defaultValue ?? "0") ?? 0.0
+            },
+            set: { newValue in
+                formState.setValue(String(newValue), for: field.id)
+            }
+        )
+    }
+
+    private var range: ClosedRange<Double> {
+        let min = Double(field.metadata?["min"] ?? "0") ?? 0.0
+        let max = Double(field.metadata?["max"] ?? "100") ?? 100.0
+        return min...max
+    }
+
+    private var step: Double {
+        Double(field.metadata?["step"] ?? "1") ?? 1.0
+    }
+
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(field.label)
+                .font(.subheadline)
+                .bold()
+
+            Stepper(
+                field.label,
+                value: value,
+                in: range,
+                step: step
+            )
+
+            // Show current value - use appropriate format based on step size
+            Text(step.truncatingRemainder(dividingBy: 1.0) == 0.0 
+                 ? "\(Int(value.wrappedValue))" 
+                 : String(format: "%.2f", value.wrappedValue))
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+        .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
+        .automaticCompliance(named: "DynamicStepperField")
     }
 }
 
@@ -817,7 +983,7 @@ public struct DynamicRangeField: View {
                 .font(.subheadline)
 
             Slider(value: Binding(
-                get: { Double(formState.getValue(for: field.id) ?? field.defaultValue ?? "0") ?? 0 },
+                get: { Double((formState.getValue(for: field.id) as String?) ?? field.defaultValue ?? "0") ?? 0 },
                 set: { formState.setValue(String($0), for: field.id) }
             ), in: 0...100)
             .automaticCompliance()
@@ -1024,6 +1190,21 @@ public struct DynamicEnumField: View {
         self.formState = formState
     }
 
+    /// Get picker options from hints (preferred) or field.options (fallback)
+    private var pickerOptions: [(value: String, label: String)] {
+        // Prefer pickerOptions from displayHints (has labels)
+        if let hints = field.displayHints,
+           let pickerOptions = hints.pickerOptions,
+           !pickerOptions.isEmpty {
+            return pickerOptions.map { ($0.value, $0.label) }
+        }
+        // Fallback to field.options (simple string array)
+        if let options = field.options {
+            return options.map { ($0, $0) } // Use same value for both value and label
+        }
+        return []
+    }
+    
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(field.label)
@@ -1031,13 +1212,13 @@ public struct DynamicEnumField: View {
                 .bold()
                 .automaticCompliance(named: "FieldLabel")
 
-            if let options = field.options {
+            if !pickerOptions.isEmpty {
                 Picker(field.label, selection: Binding(
                     get: { formState.fieldValues[field.id] as? String ?? "" },
                     set: { formState.setValue($0, for: field.id) }
                 )) {
-                    ForEach(options, id: \.self) { option in
-                        Text(option).tag(option)
+                    ForEach(pickerOptions, id: \.value) { option in
+                        Text(option.label).tag(option.value)
                     }
                 }
                 .pickerStyle(.menu)

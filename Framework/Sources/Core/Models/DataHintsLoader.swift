@@ -395,6 +395,10 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
             let layoutStyleString = sectionDict["layoutStyle"] as? String
             let layoutStyle = layoutStyleString.flatMap { FieldLayout(rawValue: $0) }
             
+            // Parse collapsible properties (Issue #74: Support collapsible sections in hints)
+            let isCollapsible = sectionDict["isCollapsible"] as? Bool ?? false
+            let isCollapsed = sectionDict["isCollapsed"] as? Bool ?? false
+            
             // Store field IDs in metadata so we can match them later when creating form
             var metadata: [String: String] = [:]
             if !fieldIds.isEmpty {
@@ -407,6 +411,8 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 title: title,
                 description: description,
                 fields: [], // Fields will be populated when creating form
+                isCollapsible: isCollapsible,
+                isCollapsed: isCollapsed,
                 metadata: metadata.isEmpty ? nil : metadata,
                 layoutStyle: layoutStyle
             )

@@ -294,6 +294,37 @@ Each section in `_sections` supports:
 | `description` | No | String | Optional section description text |
 | `fields` | No | Array[String] | Field IDs that belong to this section, in display order |
 | `layoutStyle` | No | String | Layout strategy (see below) |
+| `isCollapsible` | No | Boolean | Whether section can be collapsed/expanded (default: `false`) |
+| `isCollapsed` | No | Boolean | Initial collapsed state (default: `false`, i.e., expanded) |
+
+### Collapsible Sections
+
+Sections can be made collapsible by setting `isCollapsible: true`. Use `isCollapsed` to control the initial state:
+
+```json
+{
+  "_sections": [
+    {
+      "id": "basic-info",
+      "title": "Basic Information",
+      "fields": ["username", "email"],
+      "isCollapsible": true,
+      "isCollapsed": false
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Options",
+      "fields": ["bio", "preferences"],
+      "isCollapsible": true,
+      "isCollapsed": true
+    }
+  ]
+}
+```
+
+- `isCollapsible: true` - Enables collapse/expand UI (DisclosureGroup)
+- `isCollapsed: false` - Section starts expanded (default)
+- `isCollapsed: true` - Section starts collapsed
 
 ### Layout Styles
 

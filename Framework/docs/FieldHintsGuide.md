@@ -418,6 +418,21 @@ Add `inputType: "picker"` and an `options` array to your field definition:
 - **Platform Support**: Works on both macOS (menu style) and iOS (menu style)
 - **Backward Compatible**: Fields without `inputType` continue to render as TextFields
 
+### DynamicFormField Component Support
+
+**NEW**: All `DynamicFormField` components now automatically understand and respect hints:
+
+- **`DynamicTextField`**: Checks `inputType == "picker"` and renders a picker when `pickerOptions` are available
+- **`DynamicSelectField`**: Prefers `pickerOptions` from hints (with labels) over `field.options` (simple strings)
+- **`DynamicEnumField`**: Prefers `pickerOptions` from hints (with labels) over `field.options` (simple strings)
+
+Components automatically:
+1. Check `displayHints.inputType` and `displayHints.pickerOptions` first
+2. Fall back to `field.options` if hints aren't available
+3. Use labeled options (`PickerOption.label` for display, `PickerOption.value` for storage) when available
+
+This means you can configure pickers entirely through hints files, and components will automatically use them!
+
 ### Example
 
 ```swift
@@ -538,6 +553,61 @@ That's it! 6Layer automatically reads `User.hints` and applies the display prope
 ## Integration with DynamicFormField
 
 The framework automatically applies field hints when rendering forms. Simply include hints in your `PresentationHints` and the views will respect the display width and other properties.
+
+### Automatic Hint Recognition
+
+**NEW**: `DynamicFormField` components automatically understand and use hints:
+
+```swift
+// Create a field - no need to specify options manually
+let field = DynamicFormField(
+    id: "sizeUnit",
+    contentType: .text,  // Can be .text, .select, or .enum
+    label: "Size Unit"
+)
+
+// If User.hints contains:
+// {
+//   "sizeUnit": {
+//     "inputType": "picker",
+//     "options": [{"value": "story_points", "label": "Story Points"}, ...]
+//   }
+// }
+// Then DynamicTextField will automatically render a picker!
+```
+
+**Component Behavior**:
+- **`DynamicTextField`**: Automatically renders picker when `inputType == "picker"` in hints
+- **`DynamicSelectField`**: Uses `pickerOptions` from hints (preferred) or `field.options` (fallback)
+- **`DynamicEnumField`**: Uses `pickerOptions` from hints (preferred) or `field.options` (fallback)
+
+**Hints Priority**: Components prefer hints over direct field configuration:
+1. `displayHints.pickerOptions` (from hints file) - **Preferred** (has labels)
+2. `field.options` (from code) - **Fallback** (simple strings)
+
+### Using Picker Options in Metadata
+
+You can also provide picker options via metadata (useful for runtime configuration):
+
+```swift
+let field = DynamicFormField(
+    id: "status",
+    contentType: .select,
+    label: "Status",
+    metadata: [
+        "inputType": "picker",
+        "pickerOptions": """
+        [
+            {"value": "draft", "label": "Draft"},
+            {"value": "published", "label": "Published"},
+            {"value": "archived", "label": "Archived"}
+        ]
+        """
+    ]
+)
+```
+
+The `displayHints` property automatically parses JSON strings from metadata to create `PickerOption` arrays.
 
 ## Benefits
 

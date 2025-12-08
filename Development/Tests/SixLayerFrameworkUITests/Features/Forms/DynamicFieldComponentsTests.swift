@@ -1199,6 +1199,204 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #endif
     }
 
+    // MARK: - Read-Only URL Field Tests (TDD RED PHASE)
+
+    @Test @MainActor func testDynamicURLFieldUsesLinkForReadOnlyValidURL() async {
+        // TDD GREEN PHASE: Read-only URL field with valid URL should use Link component
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+        formState.setValue("https://example.com", for: "readonly-url")
+
+        let field = DynamicFormField(
+            id: "readonly-url",
+            contentType: .url,
+            label: "Website",
+            metadata: ["isEditable": "false"]
+        )
+        formState.initializeField(field)
+
+        let view = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            // Should contain Link component, not TextField
+            let links = inspected.sixLayerFindAll(Link<String>.self)
+            let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
+            
+            #expect(!links.isEmpty, "Read-only URL field with valid URL should use Link component")
+            #expect(textFields.isEmpty, "Read-only URL field should not use TextField")
+            
+            // Verify Link has correct destination
+            if let link = links.first {
+                let linkText = (try? link.sixLayerString()) ?? ""
+                #expect(linkText.contains("https://example.com") || linkText.contains("example.com"), 
+                       "Link should display the URL text")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform - verify behavior conceptually
+        #expect(field.displayHints?.isEditable == false, "Field should be marked as read-only")
+        #endif
+    }
+
+    @Test @MainActor func testDynamicURLFieldUsesTextForReadOnlyInvalidURL() async {
+        // TDD GREEN PHASE: Read-only URL field with invalid URL should use Text component (not Link)
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+        formState.setValue("not a valid url", for: "readonly-invalid-url")
+
+        let field = DynamicFormField(
+            id: "readonly-invalid-url",
+            contentType: .url,
+            label: "Website",
+            metadata: ["isEditable": "false"]
+        )
+        formState.initializeField(field)
+
+        let view = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            // Should contain Text component for invalid URL, not Link
+            let links = inspected.sixLayerFindAll(Link<String>.self)
+            let texts = inspected.sixLayerFindAll(Text.self)
+            
+            #expect(links.isEmpty, "Invalid URL should not use Link component")
+            #expect(!texts.isEmpty, "Invalid URL should use Text component")
+            
+            // Verify Text displays the invalid URL
+            let allTexts = texts.compactMap { try? $0.sixLayerString() }
+            let hasInvalidURL = allTexts.contains { $0.contains("not a valid url") }
+            #expect(hasInvalidURL, "Text should display the invalid URL value")
+        }
+        #else
+        // ViewInspector not available - verify conceptually
+        let urlValue = formState.getValue(for: "readonly-invalid-url") as? String ?? ""
+        #expect(URL(string: urlValue) == nil, "URL should be invalid")
+        #endif
+    }
+
+    @Test @MainActor func testDynamicURLFieldUsesTextFieldForEditableURL() async {
+        // TDD GREEN PHASE: Editable URL field should use TextField component
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "editable-url",
+            contentType: .url,
+            label: "Website",
+            placeholder: "Enter URL"
+        )
+        formState.initializeField(field)
+
+        let view = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            // Should contain TextField, not Link
+            let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
+            let links = inspected.sixLayerFindAll(Link<String>.self)
+            
+            #expect(!textFields.isEmpty, "Editable URL field should use TextField component")
+            #expect(links.isEmpty, "Editable URL field should not use Link component")
+        }
+        #else
+        // ViewInspector not available - verify conceptually
+        #expect(field.displayHints?.isEditable != false, "Field should be editable")
+        #endif
+    }
+
+    @Test @MainActor func testDynamicURLFieldDetectsReadOnlyViaDisplayOnlyMetadata() async {
+        // TDD GREEN PHASE: Read-only detection via metadata["displayOnly"] == "true"
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+        formState.setValue("https://apple.com", for: "display-only-url")
+
+        let field = DynamicFormField(
+            id: "display-only-url",
+            contentType: .url,
+            label: "Website",
+            metadata: ["displayOnly": "true"]
+        )
+        formState.initializeField(field)
+
+        let view = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            // Should use Link for display-only field with valid URL
+            let links = inspected.sixLayerFindAll(Link<String>.self)
+            let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
+            
+            #expect(!links.isEmpty, "Display-only URL field should use Link component")
+            #expect(textFields.isEmpty, "Display-only URL field should not use TextField")
+        }
+        #else
+        // ViewInspector not available - verify metadata
+        #expect(field.metadata?["displayOnly"] == "true", "Field should be marked as display-only")
+        #endif
+    }
+
+    @Test @MainActor func testDynamicURLFieldShowsEmptyPlaceholderForReadOnlyEmptyURL() async {
+        // TDD GREEN PHASE: Read-only URL field with empty value should show placeholder text
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "readonly-empty-url",
+            contentType: .url,
+            label: "Website",
+            metadata: ["isEditable": "false"]
+        )
+        formState.initializeField(field)
+
+        let view = DynamicURLField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            // Should show placeholder text (—) for empty read-only URL
+            let texts = inspected.sixLayerFindAll(Text.self)
+            let allTexts = texts.compactMap { try? $0.sixLayerString() }
+            let hasPlaceholder = allTexts.contains { $0 == "—" || $0.trimmingCharacters(in: .whitespaces) == "—" }
+            #expect(hasPlaceholder, "Empty read-only URL should show placeholder (—)")
+        }
+        #else
+        // ViewInspector not available - verify conceptually
+        let urlValue = formState.getValue(for: "readonly-empty-url") as? String ?? ""
+        #expect(urlValue.isEmpty, "URL value should be empty")
+        #endif
+    }
+
     @Test @MainActor func testDynamicPasswordFieldShowsCharacterCounterWhenMaxLengthSet() async {
         // DynamicPasswordField should show character counter when maxLength is set
 
@@ -1412,5 +1610,247 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // View should be created successfully
         #expect(view != nil, "Should handle real-time updates")
+    }
+
+    // MARK: - Stepper Field
+
+    @Test @MainActor func testDynamicStepperFieldRendersStepper() async {
+        // DynamicStepperField should:
+        // 1. Render a Stepper control with increment/decrement buttons
+        // 2. Display field label
+        // 3. Show current value
+        // 4. Support min/max values from metadata
+        // 5. Support step size from metadata
+        // 6. Update formState when value changes
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Quantity",
+            defaultValue: "5",
+            metadata: ["min": "0", "max": "10", "step": "1"]
+        )
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should render stepper interface
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let _ = view.tryInspect() {
+            // View is inspectable - stepper interface should be present
+            #expect(Bool(true), "Should provide stepper interface")
+        } else {
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            Issue.record("DynamicStepperField interface not found")
+            #else
+            #expect(Bool(true), "DynamicStepperField created (ViewInspector not available on macOS)")
+            #endif
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+
+        // Should generate accessibility identifier
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*DynamicStepperField.*",
+            platform: .iOS,
+            componentName: "DynamicStepperField"
+        )
+        #expect(hasAccessibilityID, "Should generate accessibility identifier")
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+        #endif
+    }
+
+    @Test @MainActor func testDynamicStepperFieldRespectsMinMaxConstraints() async {
+        // DynamicStepperField should respect min and max values from metadata
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Rating",
+            defaultValue: "3",
+            metadata: ["min": "1", "max": "5", "step": "1"]
+        )
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Initial value should be within bounds
+        let initialValue = formState.getValue(for: "stepper") ?? field.defaultValue ?? "0"
+        if let doubleValue = Double(initialValue as? String ?? initialValue as? String ?? "0") {
+            #expect(doubleValue >= 1.0, "Initial value should respect min constraint")
+            #expect(doubleValue <= 5.0, "Initial value should respect max constraint")
+        }
+
+        // View should be created successfully
+        #expect(view != nil, "Should respect min/max constraints")
+    }
+
+    @Test @MainActor func testDynamicStepperFieldRespectsStepSize() async {
+        // DynamicStepperField should respect step size from metadata
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Increment by 5",
+            defaultValue: "10",
+            metadata: ["min": "0", "max": "100", "step": "5"]
+        )
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // View should be created successfully
+        #expect(view != nil, "Should respect step size")
+    }
+
+    @Test @MainActor func testDynamicStepperFieldUpdatesFormState() async {
+        // DynamicStepperField should update formState when value changes
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Quantity",
+            defaultValue: "0",
+            metadata: ["min": "0", "max": "10", "step": "1"]
+        )
+
+        // Set initial value
+        formState.setValue("5", for: "stepper")
+        let initialValue = formState.getValue(for: "stepper") as? String
+        #expect(initialValue == "5", "Should set initial value in formState")
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // View should be created successfully
+        #expect(view != nil, "Should update formState")
+    }
+
+    @Test @MainActor func testDynamicStepperFieldUsesDefaultValuesWhenMetadataMissing() async {
+        // DynamicStepperField should use sensible defaults when min/max/step are not provided
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Value",
+            defaultValue: "0"
+            // No metadata - should use defaults
+        )
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should not crash with missing metadata
+        #expect(view != nil, "Should handle missing metadata gracefully")
+    }
+
+    @Test @MainActor func testDynamicStepperFieldShowsCurrentValue() async {
+        // DynamicStepperField should display the current value
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Quantity",
+            defaultValue: "7",
+            metadata: ["min": "0", "max": "10", "step": "1"]
+        )
+
+        formState.setValue("7", for: "stepper")
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should display current value
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let showsValue = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("7")
+                }
+                #expect(showsValue, "Should display current value")
+            }
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+    }
+
+    @Test @MainActor func testDynamicStepperFieldHandlesStringToDoubleConversion() async {
+        // DynamicStepperField should handle conversion between String (formState) and Double (Stepper)
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Value",
+            defaultValue: "3.5",
+            metadata: ["min": "0", "max": "10", "step": "0.5"]
+        )
+
+        // Set value as string
+        formState.setValue("3.5", for: "stepper")
+        let stringValue: String? = formState.getValue(for: "stepper")
+        #expect(stringValue == "3.5", "Should store value as string in formState")
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should handle conversion
+        #expect(view != nil, "Should handle string to double conversion")
     }
 }

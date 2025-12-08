@@ -131,6 +131,8 @@ public struct FieldViewTypeDeterminer {
             return .arrayInput
         case .range:
             return .toggle  // Range/slider uses toggle-like component
+        case .stepper:
+            return .textField(keyboardType: FormKeyboardType.decimalPad, autocapitalization: FormAutocapitalizationType.none)  // Stepper uses numeric input
         case .custom:
             return .custom
         }

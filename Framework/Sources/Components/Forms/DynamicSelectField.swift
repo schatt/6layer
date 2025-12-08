@@ -20,6 +20,21 @@ public struct DynamicSelectField: View {
         )
     }
     
+    /// Get picker options from hints (preferred) or field.options (fallback)
+    private var pickerOptions: [(value: String, label: String)] {
+        // Prefer pickerOptions from displayHints (has labels)
+        if let hints = field.displayHints,
+           let pickerOptions = hints.pickerOptions,
+           !pickerOptions.isEmpty {
+            return pickerOptions.map { ($0.value, $0.label) }
+        }
+        // Fallback to field.options (simple string array)
+        if let options = field.options {
+            return options.map { ($0, $0) } // Use same value for both value and label
+        }
+        return []
+    }
+    
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             // Field label
@@ -27,14 +42,21 @@ public struct DynamicSelectField: View {
                 .font(.headline)
                 .foregroundColor(.primary)
             
-            // Select picker
-            Picker(field.placeholder ?? "Select", selection: selectedValue) {
-                ForEach(field.options ?? [], id: \.self) { option in
-                    Text(option).tag(option)
+            // Select picker - use hints if available, otherwise fallback to field.options
+            if !pickerOptions.isEmpty {
+                Picker(field.placeholder ?? "Select", selection: selectedValue) {
+                    ForEach(pickerOptions, id: \.value) { option in
+                        Text(option.label).tag(option.value)
+                    }
                 }
+                .pickerStyle(.menu)
+                .accessibilityIdentifier("SixLayer.main.element.select.\(field.id)")
+            } else {
+                // No options available
+                Text("No options available")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
-            .pickerStyle(.menu)
-            .accessibilityIdentifier("SixLayer.main.element.select.\(field.id)")
             
             // Error message if any
             if let errors = formState.fieldErrors[field.id], !errors.isEmpty {

@@ -1237,6 +1237,8 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
             case .number, .integer:
                 TextField(field.placeholder ?? "Enter \(field.label)", value: .constant(0), format: .number)
                     .textFieldStyle(.roundedBorder)
+            case .stepper:
+                Stepper(field.label, value: .constant(0.0), in: 0...100, step: 1.0)
             case .textarea, .richtext:
                 TextEditor(text: .constant(field.defaultValue ?? ""))
                     .frame(minHeight: 80)
@@ -2293,6 +2295,8 @@ public struct ModalFormView: View {
                 case .custom:
                     Text("Custom field: \(field.label)")
                         .foregroundColor(.secondary)
+                case .stepper:
+                    Stepper(field.label, value: .constant(0.0), in: 0...100, step: 1.0)
                 case .enum:
                     Picker(field.placeholder ?? "Select option", selection: .constant("")) {
                         Text("Select an option").tag("")

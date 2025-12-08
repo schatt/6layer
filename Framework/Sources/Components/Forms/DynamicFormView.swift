@@ -35,6 +35,11 @@ public struct DynamicFormView: View {
     let entityType: Any.Type?
     @StateObject private var formState: DynamicFormState
     
+    // Batch OCR state (Issue #83)
+    @State private var showImagePicker = false
+    @State private var isProcessingOCR = false
+    @State private var ocrError: String?
+    
     // Environment contexts
     #if canImport(CoreData)
     @Environment(\.managedObjectContext) private var managedObjectContext
@@ -104,20 +109,37 @@ public struct DynamicFormView: View {
                 // Show batch OCR button if any fields support OCR
                 if !configuration.getOCREnabledFields().isEmpty {
                     Button(action: {
-                        // TODO: Implement batch OCR workflow
-                        // This should trigger OCROverlayView and process all OCR-enabled fields
-                        print("Batch OCR scan requested for \(configuration.getOCREnabledFields().count) fields")
+                        showImagePicker = true
                     }) {
                         HStack {
-                            Image(systemName: "doc.viewfinder")
-                            Text("Scan Document")
+                            if isProcessingOCR {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                            } else {
+                                Image(systemName: "doc.viewfinder")
+                            }
+                            Text(isProcessingOCR ? "Processing..." : "Scan Document")
                         }
                         .foregroundColor(.blue)
                     }
                     .buttonStyle(.bordered)
+                    .disabled(isProcessingOCR)
                     .accessibilityLabel("Scan document to fill multiple fields")
                     .accessibilityHint("Takes a photo and automatically fills all OCR-enabled fields")
                     .automaticCompliance(named: "BatchOCRButton")
+                    .sheet(isPresented: $showImagePicker) {
+                        UnifiedImagePicker { image in
+                            processBatchOCR(image: image)
+                        }
+                    }
+                    
+                    // Show OCR error if any
+                    if let error = ocrError {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                            .padding(.horizontal)
+                    }
                 }
 
                 // Render form sections
@@ -140,6 +162,68 @@ public struct DynamicFormView: View {
             .padding()
             .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
             .automaticCompliance(named: "DynamicFormView")
+        }
+    }
+    
+    /// Process batch OCR: extract structured data and populate form fields (Issue #83)
+    private func processBatchOCR(image: PlatformImage) {
+        isProcessingOCR = true
+        ocrError = nil
+        showImagePicker = false
+        
+        Task {
+            do {
+                // Build OCR context from form configuration
+                let ocrEnabledFields = configuration.getOCREnabledFields()
+                
+                // Collect all text types from OCR-enabled fields
+                var textTypes: Set<TextType> = []
+                for field in ocrEnabledFields {
+                    if let validationTypes = field.ocrValidationTypes {
+                        textTypes.formUnion(validationTypes)
+                    } else {
+                        // Default to general if no specific types
+                        textTypes.insert(.general)
+                    }
+                }
+                
+                // Build extraction hints from field identifiers
+                var extractionHints: [String: String] = [:]
+                for field in ocrEnabledFields {
+                    let fieldId = field.ocrFieldIdentifier ?? field.id
+                    if let ocrHint = field.ocrHint {
+                        // Use ocrHint as a simple pattern if provided
+                        extractionHints[fieldId] = ocrHint
+                    }
+                }
+                
+                // Create OCR context
+                let context = OCRContext(
+                    textTypes: Array(textTypes),
+                    language: .english, // TODO: Make configurable
+                    extractionHints: extractionHints.isEmpty ? [:] : extractionHints,
+                    extractionMode: .automatic,
+                    entityName: configuration.modelName // Use modelName for hints file loading
+                )
+                
+                // Process structured extraction (includes calculation groups)
+                let service = OCRService()
+                let result = try await service.processStructuredExtraction(image, context: context)
+                
+                // Populate form fields from structuredData
+                await MainActor.run {
+                    for (fieldId, value) in result.structuredData {
+                        formState.setValue(value, for: fieldId)
+                    }
+                    
+                    isProcessingOCR = false
+                }
+            } catch {
+                await MainActor.run {
+                    isProcessingOCR = false
+                    ocrError = "OCR processing failed: \(error.localizedDescription)"
+                }
+            }
         }
     }
     
