@@ -561,8 +561,9 @@ public struct PlatformDesignSystem {
     
     // Static cache to prevent infinite recursion when creating design systems in view body
     // Design systems are immutable and platform-specific, so caching is safe
-    private static var cachedSystems: [SixLayerPlatform: PlatformDesignSystem] = [:]
-    private static let cacheLock = NSLock()
+    // Using nonisolated(unsafe) because we protect access with NSLock
+    nonisolated(unsafe) private static var cachedSystems: [SixLayerPlatform: PlatformDesignSystem] = [:]
+    nonisolated(unsafe) private static let cacheLock = NSLock()
     
     /// Get or create a cached design system for the platform
     /// This prevents infinite recursion when creating design systems in view body
