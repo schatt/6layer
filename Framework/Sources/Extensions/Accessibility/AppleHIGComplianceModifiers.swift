@@ -969,19 +969,21 @@ public extension View {
     
     /// Apply platform-specific patterns
     func platformPatterns() -> some View {
+        let platform = RuntimeCapabilityDetection.currentPlatform
         self.modifier(PlatformPatternModifier(
-            designSystem: PlatformDesignSystem(for: .iOS),
-            platform: .iOS
+            designSystem: PlatformDesignSystem.cached(for: platform),
+            platform: platform
         ))
     }
     
     /// Apply visual design consistency
     func visualConsistency() -> some View {
+        let platform = RuntimeCapabilityDetection.currentPlatform
         self.modifier(VisualConsistencyModifier(
-            designSystem: PlatformDesignSystem(for: .iOS),
-            platform: .iOS,
-            visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: .iOS),
-            iOSConfig: HIGiOSCategoryConfig()
+            designSystem: PlatformDesignSystem.cached(for: platform),
+            platform: platform,
+            visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: platform),
+            iOSConfig: platform == .iOS ? HIGiOSCategoryConfig() : nil
         ))
     }
     

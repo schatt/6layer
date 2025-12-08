@@ -559,6 +559,26 @@ public struct PlatformDesignSystem {
     public let iconSystem: HIGIconSystem
     public let visualDesignSystem: HIGVisualDesignSystem
     
+    // Static cache to prevent infinite recursion when creating design systems in view body
+    // Design systems are immutable and platform-specific, so caching is safe
+    private static var cachedSystems: [SixLayerPlatform: PlatformDesignSystem] = [:]
+    private static let cacheLock = NSLock()
+    
+    /// Get or create a cached design system for the platform
+    /// This prevents infinite recursion when creating design systems in view body
+    public static func cached(for platform: SixLayerPlatform) -> PlatformDesignSystem {
+        cacheLock.lock()
+        defer { cacheLock.unlock() }
+        
+        if let cached = cachedSystems[platform] {
+            return cached
+        }
+        
+        let system = PlatformDesignSystem(for: platform)
+        cachedSystems[platform] = system
+        return system
+    }
+    
     public init(for platform: SixLayerPlatform) {
         self.platform = platform
         self.colorSystem = HIGColorSystem(for: platform)
