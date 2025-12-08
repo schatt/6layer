@@ -305,8 +305,10 @@ public struct AutomaticComplianceModifier: ViewModifier {
         // These are safe to access from any context - they use thread-local storage
         let platform = RuntimeCapabilityDetection.currentPlatform
         
-        // Create platform design system for automatic styling
-        let designSystem = PlatformDesignSystem(for: platform)
+        // Use cached design system to prevent infinite recursion
+        // Creating new design systems in view body triggers SwiftUI AttributeGraph updates
+        // which cause body to be re-evaluated, creating a circular dependency
+        let designSystem = PlatformDesignSystem.cached(for: platform)
         
         // minTouchTarget is @MainActor, but we can compute it safely from platform
         let minTouchTarget: CGFloat = {
