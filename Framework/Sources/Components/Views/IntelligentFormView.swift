@@ -887,11 +887,16 @@ public struct IntelligentFormView {
 /// Default platform field view using our cross-platform system
 @MainActor
 private struct DefaultPlatformFieldView: View {
-    
+
     let field: DataField
     let value: Any
     let hints: FieldDisplayHints?
     let onValueChange: (Any) -> Void
+    
+    /// Whether the field is editable (defaults to true if hints not provided)
+    private var isEditable: Bool {
+        return hints?.isEditable ?? true
+    }
     
     init(field: DataField, value: Any, hints: FieldDisplayHints? = nil, onValueChange: @escaping (Any) -> Void) {
         self.field = field
@@ -939,13 +944,16 @@ private struct DefaultPlatformFieldView: View {
                         return options.contains(where: { $0.value == currentValue }) ? currentValue : (options.first?.value ?? "")
                     },
                     set: { newValue in
-                        onValueChange(newValue)
+                        if isEditable {
+                            onValueChange(newValue)
+                        }
                     }
                 )) {
                     ForEach(options, id: \.value) { option in
                         Text(option.label).tag(option.value)
                     }
                 }
+                .disabled(!isEditable)
                 #if os(macOS)
                 .pickerStyle(.menu)
                 #else
@@ -955,9 +963,10 @@ private struct DefaultPlatformFieldView: View {
                 // Default TextField for string fields
                 TextField("Enter \(field.name)", text: Binding(
                     get: { value as? String ?? "" },
-                    set: { onValueChange($0) }
+                    set: { if isEditable { onValueChange($0) } }
                 ))
                 .textFieldStyle(.roundedBorder)
+                .disabled(!isEditable)
                 .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -969,9 +978,10 @@ private struct DefaultPlatformFieldView: View {
             HStack {
                 TextField("Enter \(field.name)", value: Binding(
                     get: { value as? Double ?? 0.0 },
-                    set: { onValueChange($0) }
+                    set: { if isEditable { onValueChange($0) } }
                 ), format: .number)
                 .textFieldStyle(.roundedBorder)
+                .disabled(!isEditable)
                 #if os(iOS)
                 .keyboardType(UIKeyboardType.decimalPad)
                 #endif
@@ -983,32 +993,36 @@ private struct DefaultPlatformFieldView: View {
 
                 Stepper("", value: Binding(
                     get: { value as? Double ?? 0.0 },
-                    set: { onValueChange($0) }
+                    set: { if isEditable { onValueChange($0) } }
                 ), in: 0...1000)
+                .disabled(!isEditable)
             }
 
         case .boolean:
             Toggle(field.name.capitalized, isOn: Binding(
                 get: { value as? Bool ?? false },
-                set: { onValueChange($0) }
+                set: { if isEditable { onValueChange($0) } }
             ))
+            .disabled(!isEditable)
 
         case .date:
             DatePicker(
                 field.name.capitalized,
                 selection: Binding(
                     get: { value as? Date ?? Date() },
-                    set: { onValueChange($0) }
+                    set: { if isEditable { onValueChange($0) } }
                 ),
                 displayedComponents: [.date]
             )
+            .disabled(!isEditable)
 
         case .url:
             TextField("Enter URL", text: Binding(
                 get: { value as? String ?? "" },
-                set: { onValueChange($0) }
+                set: { if isEditable { onValueChange($0) } }
             ))
             .textFieldStyle(.roundedBorder)
+            .disabled(!isEditable)
             #if os(iOS)
             .keyboardType(UIKeyboardType.URL)
             .autocapitalization(.none)
@@ -1022,9 +1036,10 @@ private struct DefaultPlatformFieldView: View {
         case .uuid:
             TextField("Enter UUID", text: Binding(
                 get: { value as? String ?? "" },
-                set: { onValueChange($0) }
+                set: { if isEditable { onValueChange($0) } }
             ))
             .textFieldStyle(.roundedBorder)
+            .disabled(!isEditable)
             #if os(iOS)
             .autocapitalization(.none)
             #endif
@@ -1037,16 +1052,20 @@ private struct DefaultPlatformFieldView: View {
         case .image, .document:
             Button("Select \(field.type.rawValue)") {
                 // File picker implementation would go here
-                onValueChange("")
+                if isEditable {
+                    onValueChange("")
+                }
             }
             .buttonStyle(.bordered)
+            .disabled(!isEditable)
 
         case .relationship, .hierarchical, .custom:
             TextField("Enter \(field.name)", text: Binding(
                 get: { value as? String ?? "" },
-                set: { onValueChange($0) }
+                set: { if isEditable { onValueChange($0) } }
             ))
             .textFieldStyle(.roundedBorder)
+            .disabled(!isEditable)
             .background(isValid ? Color.platformSecondaryBackground : Color.red.opacity(0.1))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)

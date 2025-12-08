@@ -588,6 +588,7 @@ func main() {
             "isArray": false,
             "defaultValue": NSNull(),  // Can be String, Int, Bool, Double, etc.
             "isHidden": false,
+            "isEditable": true,  // false for computed/read-only fields
             "expectedLength": NSNull(),  // Int or null
             "displayWidth": NSNull(),  // "narrow", "medium", "wide", or numeric value
             "showCharacterCounter": false,

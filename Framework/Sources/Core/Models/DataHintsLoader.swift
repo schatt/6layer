@@ -174,7 +174,7 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 for (propKey, propValue) in properties {
                     if !["expectedLength", "displayWidth", "showCharacterCounter", "maxLength", "minLength", 
                          "expectedRange", "ocrHints", "calculationGroups", "inputType", "options",
-                         "fieldType", "isOptional", "isArray", "defaultValue", "isHidden"].contains(propKey) &&
+                         "fieldType", "isOptional", "isArray", "defaultValue", "isHidden", "isEditable"].contains(propKey) &&
                        !propKey.hasPrefix("ocrHints.") {
                         if let stringValue = propValue as? String {
                             metadata[propKey] = stringValue
@@ -196,6 +196,10 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 let isHidden = (properties["isHidden"] as? String) == "true" ||
                               (properties["isHidden"] as? Bool) == true
                 
+                // Parse isEditable flag (defaults to true for backward compatibility)
+                let isEditable = (properties["isEditable"] as? String) == "false" ||
+                               (properties["isEditable"] as? Bool) == false ? false : true
+                
                 fieldHints[key] = FieldDisplayHints(
                     // Type information (new)
                     fieldType: fieldType,
@@ -214,7 +218,8 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                     calculationGroups: calculationGroups,
                     inputType: inputType,
                     pickerOptions: pickerOptions,
-                    isHidden: isHidden
+                    isHidden: isHidden,
+                    isEditable: isEditable
                 )
             }
         }

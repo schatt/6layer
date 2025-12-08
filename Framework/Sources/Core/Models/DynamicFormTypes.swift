@@ -299,7 +299,8 @@ public struct DynamicFormField: Identifiable {
             showCharacterCounter: metadata["showCharacterCounter"] == "true",
             maxLength: metadata["maxLength"].flatMap(Int.init),
             minLength: metadata["minLength"].flatMap(Int.init),
-            metadata: metadata
+            metadata: metadata,
+            isEditable: metadata["isEditable"] != "false"  // Defaults to true
         )
     }
     

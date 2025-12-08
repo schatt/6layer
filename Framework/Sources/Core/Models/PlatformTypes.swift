@@ -1058,6 +1058,12 @@ public struct FieldDisplayHints: Sendable {
     /// Useful for internal fields like cloud sync IDs, internal metadata, etc.
     public let isHidden: Bool
     
+    /// Whether this field is editable in forms
+    /// When false, the field is displayed but read-only (non-editable)
+    /// Useful for computed/calculated fields that should be visible but not editable
+    /// Defaults to true for backward compatibility
+    public let isEditable: Bool
+    
     public init(
         // Type information (new - optional for backward compatibility)
         fieldType: String? = nil,
@@ -1076,7 +1082,8 @@ public struct FieldDisplayHints: Sendable {
         calculationGroups: [CalculationGroup]? = nil,
         inputType: String? = nil,
         pickerOptions: [PickerOption]? = nil,
-        isHidden: Bool = false
+        isHidden: Bool = false,
+        isEditable: Bool = true
     ) {
         self.fieldType = fieldType
         self.isOptional = isOptional
@@ -1094,6 +1101,7 @@ public struct FieldDisplayHints: Sendable {
         self.inputType = inputType
         self.pickerOptions = pickerOptions
         self.isHidden = isHidden
+        self.isEditable = isEditable
     }
     
     /// Get display width as CGFloat if a specific numeric value is provided
