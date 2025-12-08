@@ -1945,7 +1945,7 @@ open class DynamicFormViewTests: BaseTestClass {
     /// METHODOLOGY: Create form with modelName, submit form, verify entity is created
     @Test @MainActor func testDynamicFormViewCreatesCoreDataEntityOnSubmit() async throws {
         initializeTestConfig()
-        await runWithTaskLocalConfig {
+        try await runWithTaskLocalConfig {
             setupTestEnvironment()
             
             #if canImport(CoreData)

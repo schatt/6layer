@@ -1396,16 +1396,16 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         // Test multiple updates
         formState.setValue("", for: "text-realtime")
-        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 0)
+        #expect((formState.getValue(for: "text-realtime") as String? ?? "").count == 0)
 
         formState.setValue("H", for: "text-realtime")
-        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 1)
+        #expect((formState.getValue(for: "text-realtime") as String? ?? "").count == 1)
 
         formState.setValue("He", for: "text-realtime")
-        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 2)
+        #expect((formState.getValue(for: "text-realtime") as String? ?? "").count == 2)
 
         formState.setValue("Hello", for: "text-realtime")
-        #expect((formState.getValue(for: "text-realtime") as? String ?? "").count == 5)
+        #expect((formState.getValue(for: "text-realtime") as String? ?? "").count == 5)
 
         let view = DynamicTextField(field: field, formState: formState)
             .enableGlobalAutomaticCompliance()
