@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.0.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.0.2")
 ]
 ```
 
@@ -41,12 +41,12 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.0.1
+## 🆕 Latest Release: v6.0.2
 
-### **Critical Bug Fix: Infinite Recursion Crash**
-🚨 **Critical fix**: Fixed infinite recursion crash in `AutomaticComplianceModifier` (Issue #91).  
-✅ **Stable**: All users of `.automaticCompliance()` modifier should upgrade immediately.  
-🔧 **Technical**: Added static cache for `PlatformDesignSystem` instances to prevent circular dependency.
+### **Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers**
+🚨 **Critical fix**: Fixed infinite recursion crash in `AutomaticComplianceModifier.EnvironmentAccessor.generateIdentifier()`.  
+✅ **Stable**: All users of automatic accessibility identifier generation should upgrade immediately.  
+🔧 **Technical**: Captured `@Published` config values as local variables to prevent SwiftUI reactive dependency cycles.
 
 ### **Previous Release: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities**
 🧭 **Intelligent navigation**: Device-aware app navigation with automatic pattern selection (NavigationSplitView vs detail-only).  
@@ -121,7 +121,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.0.1 (Critical Bug Fix: Infinite Recursion Crash)
+**Version**: v6.0.2 (Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers)
 **Phase**: Patch Release
 **Next**: Continue framework development and stability improvements
 

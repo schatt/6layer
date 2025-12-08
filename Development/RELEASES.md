@@ -1,12 +1,32 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.0.1 - Critical Bug Fix: Infinite Recursion Crash** 🎯
+## 📍 **Current Release: v6.0.2 - Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers** 🎯
 
-**Release Date**: December 7, 2025
+**Release Date**: December 8, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities
-**Note**: Critical patch release fixing infinite recursion crash in AutomaticComplianceModifier. Fixes Issue #91 by adding static cache for PlatformDesignSystem instances to prevent circular dependency when creating design systems in view body.
+**Previous Release**: v6.0.1 - Critical Bug Fix: Infinite Recursion Crash
+**Note**: Critical patch release fixing infinite recursion crash in AutomaticComplianceModifier.EnvironmentAccessor.generateIdentifier(). Fixed by capturing @Published config values as local variables to prevent SwiftUI reactive dependency cycles.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.0.2 - Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers** (December 8, 2025)
+
+### **Critical Bug Fix:**
+
+#### **🚨 Infinite Recursion Crash in Accessibility Identifier Generation**
+- **Fixed**: Infinite recursion causing stack overflow in `AutomaticComplianceModifier.EnvironmentAccessor.generateIdentifier()`
+- **Fixed**: SwiftUI reactive dependency cycle when accessing `@Published` properties during view body evaluation
+- **Solution**: Capture `@Published` config values (`currentViewHierarchy`, `currentScreenContext`, etc.) as local variables before calling identifier generation logic
+- **Impact**: All users of automatic accessibility identifier generation should upgrade immediately
+
+**Technical Details**:
+- Modified three `generateIdentifier` methods to capture config values as local variables
+- Prevents SwiftUI from tracking `@Published` properties as reactive dependencies
+- Breaks the dependency chain that caused infinite view update cycles
+- Applied to: `AutomaticComplianceModifier`, `NamedEnvironmentAccessor`, and `ForcedEnvironmentAccessor`
+
+**Migration**: No code changes required - upgrade to v6.0.2 to fix the crash.
 
 ---
 

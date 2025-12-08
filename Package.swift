@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.0.1 - Critical Bug Fix: Infinite Recursion Crash
+// SixLayerFramework v6.0.2 - Critical Bug Fix: Infinite Recursion Crash
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
