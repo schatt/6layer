@@ -1,20 +1,63 @@
 import SwiftUI
+#if canImport(CoreData)
+import CoreData
+#endif
+#if canImport(SwiftData)
+import SwiftData
+#endif
 
 // MARK: - Dynamic Form View
 
 /// Main dynamic form view component
 /// GREEN PHASE: Full implementation of dynamic form rendering
+/// 
+/// **Entity Creation (New Object Creation)**:
+/// If `modelName` is provided and hints are fully declarative, the form can automatically
+/// create entities (Core Data or SwiftData) from collected form values on submit.
+/// 
+/// **How it works:**
+/// 1. Form collects values as user types (existing behavior)
+/// 2. On submit: If `modelName` is provided, creates entity from form values
+/// 3. Calls `onEntityCreated` with the created entity (if provided)
+/// 4. Always calls `onSubmit` with dictionary of values (backward compatible)
+///
+/// **Requirements:**
+/// - **Core Data**: Works automatically when `modelName` is provided. Entity is created using
+///   `NSEntityDescription.insertNewObject` and values are set via KVC.
+/// - **SwiftData**: Requires `entityType` parameter to be provided for entity creation.
+///   If not provided, only dictionary is returned (backward compatible).
 @MainActor
 public struct DynamicFormView: View {
     let configuration: DynamicFormConfiguration
     let onSubmit: ([String: Any]) -> Void
+    let onEntityCreated: ((Any) -> Void)?
+    let entityType: Any.Type?
     @StateObject private var formState: DynamicFormState
+    
+    // Environment contexts
+    #if canImport(CoreData)
+    @Environment(\.managedObjectContext) private var managedObjectContext
+    #endif
+    
+    #if canImport(SwiftData)
+    @Environment(\.modelContext) private var modelContext
+    #endif
 
+    /// Initialize DynamicFormView
+    /// - Parameters:
+    ///   - configuration: Form configuration with fields and optional modelName
+    ///   - onSubmit: Callback with dictionary of form values (always called)
+    ///   - onEntityCreated: Optional callback with created entity (called if modelName provided and entity created)
+    ///   - entityType: Optional SwiftData entity type (required for SwiftData entity creation)
     public init(
         configuration: DynamicFormConfiguration,
-        onSubmit: @escaping ([String: Any]) -> Void
+        onSubmit: @escaping ([String: Any]) -> Void,
+        onEntityCreated: ((Any) -> Void)? = nil,
+        entityType: Any.Type? = nil
     ) {
         self.onSubmit = onSubmit
+        self.onEntityCreated = onEntityCreated
+        self.entityType = entityType
         
         // Auto-load hints if modelName provided (Issue #71)
         let effectiveConfiguration = configuration.applyingHints()
@@ -67,10 +110,9 @@ public struct DynamicFormView: View {
 
             // Submit button
             Button(action: {
-                // Submit the form (validation can be handled by individual fields or externally)
-                onSubmit(formState.fieldValues)
+                handleSubmit()
             }) {
-                Text("Submit")
+                Text(configuration.submitButtonText)
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -80,6 +122,112 @@ public struct DynamicFormView: View {
         .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
         .automaticCompliance(named: "DynamicFormView")
     }
+    
+    /// Handle form submission: create entity if modelName provided, then call callbacks
+    private func handleSubmit() {
+        // Always call onSubmit with dictionary (backward compatible)
+        onSubmit(formState.fieldValues)
+        
+        // If modelName is provided, try to create entity
+        guard let modelName = configuration.modelName else { return }
+        
+        // Try to create Core Data entity
+        #if canImport(CoreData)
+        if let entity = createCoreDataEntity(entityName: modelName, values: formState.fieldValues) {
+            onEntityCreated?(entity)
+            return
+        }
+        #endif
+        
+        // Try to create SwiftData entity (requires entityType)
+        #if canImport(SwiftData)
+        if #available(macOS 14.0, iOS 17.0, *) {
+            if let entityType = entityType,
+               let entity = createSwiftDataEntity(entityType: entityType, values: formState.fieldValues) {
+                onEntityCreated?(entity)
+                return
+            }
+        }
+        #endif
+    }
+    
+    #if canImport(CoreData)
+    /// Create Core Data entity from form values
+    private func createCoreDataEntity(entityName: String, values: [String: Any]) -> NSManagedObject? {
+        let context = managedObjectContext
+        
+        // Create blank entity
+        let entity = NSEntityDescription.insertNewObject(
+            forEntityName: entityName,
+            into: context
+        )
+        
+        // Load hints to get type information
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: entityName)
+        let fieldHints = hintsResult.fieldHints
+        
+        // Set values from form
+        for (fieldId, value) in values {
+            // Check if field should be hidden (skip it)
+            if let hint = fieldHints[fieldId], hint.isHidden {
+                continue
+            }
+            
+            // Set value using KVC
+            entity.setValue(value, forKey: fieldId)
+        }
+        
+        // Save context
+        do {
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            print("Error saving Core Data entity: \(error.localizedDescription)")
+            // Continue - entity is still created, just not saved
+        }
+        
+        return entity
+    }
+    #endif
+    
+    #if canImport(SwiftData)
+    /// Create SwiftData entity from form values using Codable
+    @available(macOS 14.0, iOS 17.0, *)
+    private func createSwiftDataEntity(entityType: Any.Type, values: [String: Any]) -> Any? {
+        // Check if entityType conforms to Decodable
+        guard let decodableType = entityType as? any Decodable.Type else { return nil }
+        
+        // Encode values to JSON, then decode to entity type
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: values)
+            let decoder = JSONDecoder()
+            let decoded = try decoder.decode(decodableType, from: jsonData)
+            
+            // Insert into context
+            let context = modelContext
+            if let persistentModel = decoded as? any PersistentModel {
+                context.insert(persistentModel)
+                
+                // Save context
+                do {
+                    if context.hasChanges {
+                        try context.save()
+                    }
+                } catch {
+                    print("Error saving SwiftData entity: \(error.localizedDescription)")
+                    // Continue - entity is still created, just not saved
+                }
+            }
+            
+            return decoded
+        } catch {
+            print("Error creating SwiftData entity: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    #endif
 }
 
 // MARK: - Dynamic Form Section View
