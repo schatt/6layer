@@ -55,60 +55,22 @@ public struct ThemedIntelligentFormView<DataType: Codable>: View {
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            HStack {
-                Text("Form")
-                    .font(typography.title2)
-                    .foregroundColor(colors.text)
-                Spacer()
-                AdaptiveUIPatterns.AdaptiveButton(
-                    "Cancel",
-                    style: .ghost,
-                    size: .small,
-                    action: onCancel
-                )
-            }
-            .padding(.horizontal)
-            .padding(.top)
-            .background(colors.surface)
-            
-            // Form content
-            ScrollView {
-                VStack(spacing: 16) {
-                    // Form fields would go here
-                    // This is a simplified version for demonstration
-                    Text("Form content will be generated here")
-                        .font(typography.body)
-                        .foregroundColor(colors.textSecondary)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding()
-                }
-                .padding()
-            }
-            .background(colors.background)
-            
-            // Footer
-            HStack {
-                AdaptiveUIPatterns.AdaptiveButton(
-                    "Cancel",
-                    style: .outline,
-                    size: .medium,
-                    action: onCancel
-                )
-                
-                Spacer()
-                
-                AdaptiveUIPatterns.AdaptiveButton(
-                    "Submit",
-                    style: .primary,
-                    size: .medium,
-                    action: { /* Submit logic */ }
-                )
-            }
-            .padding()
-            .background(colors.surface)
-        }
+        // Delegate to IntelligentFormView for actual form generation
+        // This ensures ThemedIntelligentFormView benefits from all IntelligentFormView features,
+        // including type-only form generation, hints-first discovery, and entity creation
+        IntelligentFormView.generateForm(
+            for: dataType,
+            initialData: initialData,
+            customFieldView: { name, value, fieldType in
+                // Convert IntelligentFormView's customFieldView signature to ThemedIntelligentFormView's
+                // ThemedIntelligentFormView expects (String, Any, Binding<Any>)
+                // IntelligentFormView provides (String, Any, FieldType)
+                // We create a binding from the value for the themed view
+                customFieldView(name, value, Binding.constant(value))
+            },
+            onSubmit: onSubmit,
+            onCancel: onCancel
+        )
         .themedCard()
     }
 }
