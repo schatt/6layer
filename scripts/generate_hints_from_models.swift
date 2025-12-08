@@ -147,6 +147,48 @@ struct SwiftModelParser {
         return result.fields.isEmpty ? nil : result.fields
     }
     
+    /// Recursively find all Swift files in a directory
+    static func findSwiftFiles(in directory: URL) -> [URL] {
+        var swiftFiles: [URL] = []
+        guard let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) else {
+            return swiftFiles
+        }
+        
+        for case let fileURL as URL in enumerator {
+            if fileURL.pathExtension == "swift" {
+                swiftFiles.append(fileURL)
+            }
+        }
+        
+        return swiftFiles
+    }
+    
+    /// Find all Swift files that extend a given type name
+    static func findExtensionFiles(for typeName: String, in searchDirs: [URL]) -> [URL] {
+        var extensionFiles: [URL] = []
+        
+        for searchDir in searchDirs {
+            guard FileManager.default.fileExists(atPath: searchDir.path) else { continue }
+            
+            // Recursively find all Swift files
+            let swiftFiles = findSwiftFiles(in: searchDir)
+            
+            // Parse each file to see if it extends the target type
+            for file in swiftFiles {
+                if let result = parseSwiftFile(at: file) {
+                    // Check if this file extends the target type
+                    if result.extendedTypes.contains(typeName) {
+                        if !extensionFiles.contains(where: { $0.path == file.path }) {
+                            extensionFiles.append(file)
+                        }
+                    }
+                }
+            }
+        }
+        
+        return extensionFiles
+    }
+    
     /// Determine if a field should be hidden based on naming patterns
     private static func shouldHideField(name: String, type: String) -> Bool {
         let lowercased = name.lowercased()
@@ -685,25 +727,24 @@ func main() {
         // Find all Swift files that might contain this model or its extensions
         var swiftFiles: [URL] = [modelURL] // Start with the main file
         
-        // Search directories for extension files
+        // First, parse the main file to get the actual type name(s) it defines
+        var actualTypeNames: [String] = [modelName] // Fallback to filename
+        if let mainFileResult = SwiftModelParser.parseSwiftFile(at: modelURL) {
+            if !mainFileResult.definedTypes.isEmpty {
+                actualTypeNames = mainFileResult.definedTypes
+            }
+        }
+        
+        // Search directories for extension files that extend any of the type names
         var searchDirs = [modelDir] // Start with same directory as main file
         searchDirs.append(contentsOf: extensionSearchPaths) // Add any provided search paths
         
-        for searchDir in searchDirs {
-            guard FileManager.default.fileExists(atPath: searchDir.path) else { continue }
-            
-            // Look for extension files matching ModelName+*.swift
-            if let dirContents = try? FileManager.default.contentsOfDirectory(at: searchDir, includingPropertiesForKeys: nil) {
-                for file in dirContents {
-                    let fileName = file.deletingPathExtension().lastPathComponent
-                    // Check if it's an extension file for this model
-                    // Matches: ModelName+Something.swift or ModelName+Something+More.swift
-                    if file.pathExtension == "swift" && fileName.hasPrefix("\(modelName)+") {
-                        // Avoid duplicates
-                        if !swiftFiles.contains(where: { $0.path == file.path }) {
-                            swiftFiles.append(file)
-                        }
-                    }
+        // Find extension files by parsing Swift files and matching extension declarations
+        for typeName in actualTypeNames {
+            let extensionFiles = SwiftModelParser.findExtensionFiles(for: typeName, in: searchDirs)
+            for extFile in extensionFiles {
+                if !swiftFiles.contains(where: { $0.path == extFile.path }) {
+                    swiftFiles.append(extFile)
                 }
             }
         }
@@ -760,23 +801,9 @@ func main() {
                 ]
             }
             
-            var extensionFiles: [URL] = []
-            for searchDir in searchDirs {
-                guard FileManager.default.fileExists(atPath: searchDir.path) else { continue }
-                
-                // Look for extension files matching EntityName+*.swift
-                if let dirContents = try? FileManager.default.contentsOfDirectory(at: searchDir, includingPropertiesForKeys: nil) {
-                    for file in dirContents {
-                        let fileName = file.deletingPathExtension().lastPathComponent
-                        // Check if it's an extension file for this entity
-                        if file.pathExtension == "swift" && fileName.hasPrefix("\(entity.name)+") {
-                            if !extensionFiles.contains(where: { $0.path == file.path }) {
-                                extensionFiles.append(file)
-                            }
-                        }
-                    }
-                }
-            }
+            // Find extension files by parsing Swift files and matching extension declarations
+            // This is more robust than filename pattern matching
+            let extensionFiles = SwiftModelParser.findExtensionFiles(for: entity.name, in: searchDirs)
             
             // Parse extension files and add their fields
             for extFile in extensionFiles {
