@@ -178,7 +178,7 @@ struct CoreDataModelParser {
             // Find attributes for this entity
             // Look for the closing </entity> tag
             let entityStart = entityMatch.range.location + entityMatch.range.length
-            let entityEndPattern = #"</entity>"
+            let entityEndPattern = "</entity>"
             let entityEndRegex = try? NSRegularExpression(pattern: entityEndPattern, options: [])
             let endMatches = entityEndRegex?.matches(in: xmlString, options: [], range: NSRange(location: entityStart, length: nsString.length - entityStart))
             
