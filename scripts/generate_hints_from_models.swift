@@ -505,9 +505,12 @@ struct HintsGenerator {
 func main() {
     let arguments = CommandLine.arguments
     guard arguments.count >= 2 else {
-        print("Usage: generate_hints_from_models.swift <model_file> [output_hints_file]")
+        print("Usage: generate_hints_from_models.swift <model_file> [output_directory]")
         print("  model_file: Swift .swift file or Core Data .xcdatamodel directory")
-        print("  output_hints_file: Optional path to output .hints file (defaults to Hints/<model_name>.hints)")
+        print("  output_directory: Optional directory for output .hints files (defaults to Hints/)")
+        print("")
+        print("For Swift files: generates <model_name>.hints in output directory")
+        print("For Core Data models: generates <entity_name>.hints for each entity in output directory")
         exit(1)
     }
     
@@ -519,20 +522,61 @@ func main() {
         exit(1)
     }
     
-    // Determine output path
-    let outputPath: String
+    // Determine output directory
+    let outputDir: URL
     if arguments.count >= 3 {
-        outputPath = arguments[2]
+        outputDir = URL(fileURLWithPath: arguments[2])
     } else {
-        let modelName = modelURL.deletingPathExtension().lastPathComponent
-        outputPath = "Hints/\(modelName).hints"
+        outputDir = URL(fileURLWithPath: "Hints")
     }
-    let outputURL = URL(fileURLWithPath: outputPath)
     
+    // Parse model file and generate hints
+    if modelURL.pathExtension == "swift" {
+        // Swift file: single model, generate one hints file
+        guard let fields = SwiftModelParser.parseSwiftFile(at: modelURL) else {
+            print("Error: Could not parse Swift file or no fields found")
+            exit(1)
+        }
+        
+        let modelName = modelURL.deletingPathExtension().lastPathComponent
+        let outputURL = outputDir.appendingPathComponent("\(modelName).hints")
+        
+        generateHintsFile(for: fields, outputURL: outputURL)
+        print("✅ Generated hints file: \(outputURL.path)")
+        print("   Found \(fields.count) fields")
+        
+    } else if modelURL.pathExtension == "xcdatamodel" || modelURL.lastPathComponent.hasSuffix(".xcdatamodel") {
+        // Core Data model: multiple entities, generate/update one hints file per entity
+        guard let entities = CoreDataModelParser.parseCoreDataModel(at: modelURL) else {
+            print("Error: Could not parse Core Data model or no entities found")
+            exit(1)
+        }
+        
+        if entities.isEmpty {
+            print("Error: No entities found in Core Data model")
+            exit(1)
+        }
+        
+        print("Found \(entities.count) entity/entities in Core Data model:")
+        for entity in entities {
+            let outputURL = outputDir.appendingPathComponent("\(entity.name).hints")
+            generateHintsFile(for: entity.fields, outputURL: outputURL)
+            print("✅ Generated/updated hints file: \(outputURL.path)")
+            print("   Entity: \(entity.name), Found \(entity.fields.count) fields")
+        }
+        
+    } else {
+        print("Error: Unsupported model file type. Supported: .swift, .xcdatamodel")
+        exit(1)
+    }
+}
+
+/// Generate or update a hints file for a set of fields
+/// Preserves existing hints properties and field order
+func generateHintsFile(for fields: [FieldInfo], outputURL: URL) {
     // Ensure output directory exists
     let outputDir = outputURL.deletingLastPathComponent()
     try? FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
-    
     // Load existing hints if they exist, preserving field order
     var existingHints: [String: [String: Any]]? = nil
     var existingFieldOrder: [String] = []
@@ -563,87 +607,63 @@ func main() {
         }
     }
     
-    // Parse model file
-    var fields: [FieldInfo]? = nil
+    // Generate hints (returns both hints and field order)
+    let (hints, newFieldOrder) = HintsGenerator.generateHintsJSON(
+        fields: fields, 
+        existingHints: existingHints
+    )
     
-    if modelURL.pathExtension == "swift" {
-        fields = SwiftModelParser.parseSwiftFile(at: modelURL)
-    } else if modelURL.pathExtension == "xcdatamodel" || modelURL.lastPathComponent.hasSuffix(".xcdatamodel") {
-        if let entities = CoreDataModelParser.parseCoreDataModel(at: modelURL) {
-            // For now, use first entity (could be enhanced to handle multiple entities)
-            if let firstEntity = entities.first {
-                fields = firstEntity.fields
-            }
-        }
-    } else {
-        print("Error: Unsupported model file type. Supported: .swift, .xcdatamodel")
-        exit(1)
-    }
+    // Add/update __example field with all possible properties and defaults
+    // This serves as documentation showing all available options
+    // Always ensure it has all properties, even if it existed before
+    var finalHints = hints
+    finalHints["__example"] = [
+        "fieldType": "string",  // string, number, boolean, date, url, uuid, document, image, custom
+        "isOptional": false,
+        "isArray": false,
+        "defaultValue": NSNull(),  // Can be String, Int, Bool, Double, etc.
+        "isHidden": false,
+        "isEditable": true,  // false for computed/read-only fields
+        "expectedLength": NSNull(),  // Int or null
+        "displayWidth": NSNull(),  // "narrow", "medium", "wide", or numeric value
+        "showCharacterCounter": false,
+        "maxLength": NSNull(),  // Int or null
+        "minLength": NSNull(),  // Int or null
+        "expectedRange": NSNull(),  // {"min": 0.0, "max": 100.0} or null
+        "metadata": [:],  // Dictionary of string key-value pairs
+        "ocrHints": NSNull(),  // ["keyword1", "keyword2"] or null
+        "calculationGroups": NSNull(),  // [{"id": "...", "formula": "...", ...}] or null
+        "inputType": NSNull(),  // "picker", "text", etc. or null
+        "pickerOptions": NSNull()  // [{"value": "...", "label": "..."}] or null
+    ] as [String: Any]
     
-    guard let fields = fields, !fields.isEmpty else {
-        print("Error: Could not parse model file or no fields found")
-        exit(1)
-    }
-    
-        // Generate hints (returns both hints and field order)
-        let (hints, newFieldOrder) = HintsGenerator.generateHintsJSON(
-            fields: fields, 
-            existingHints: existingHints
-        )
-        
-        // Add/update __example field with all possible properties and defaults
-        // This serves as documentation showing all available options
-        // Always ensure it has all properties, even if it existed before
-        var finalHints = hints
-        finalHints["__example"] = [
-            "fieldType": "string",  // string, number, boolean, date, url, uuid, document, image, custom
-            "isOptional": false,
-            "isArray": false,
-            "defaultValue": NSNull(),  // Can be String, Int, Bool, Double, etc.
-            "isHidden": false,
-            "isEditable": true,  // false for computed/read-only fields
-            "expectedLength": NSNull(),  // Int or null
-            "displayWidth": NSNull(),  // "narrow", "medium", "wide", or numeric value
-            "showCharacterCounter": false,
-            "maxLength": NSNull(),  // Int or null
-            "minLength": NSNull(),  // Int or null
-            "expectedRange": NSNull(),  // {"min": 0.0, "max": 100.0} or null
-            "metadata": [:],  // Dictionary of string key-value pairs
-            "ocrHints": NSNull(),  // ["keyword1", "keyword2"] or null
-            "calculationGroups": NSNull(),  // [{"id": "...", "formula": "...", ...}] or null
-            "inputType": NSNull(),  // "picker", "text", etc. or null
-            "pickerOptions": NSNull()  // [{"value": "...", "label": "..."}] or null
-        ] as [String: Any]
-        
-        // Use existing field order if available, otherwise use new order
-        // Always ensure __example is at the end
-        let finalFieldOrder: [String] = {
-            var merged: [String]
-            if existingFieldOrder.isEmpty {
-                // New file: use new order
-                merged = newFieldOrder
-            } else {
-                // Existing file: merge existing order with new fields
-                merged = existingFieldOrder
-                for fieldName in newFieldOrder {
-                    if !merged.contains(fieldName) {
-                        merged.append(fieldName)
-                    }
+    // Use existing field order if available, otherwise use new order
+    // Always ensure __example is at the end
+    let finalFieldOrder: [String] = {
+        var merged: [String]
+        if existingFieldOrder.isEmpty {
+            // New file: use new order
+            merged = newFieldOrder
+        } else {
+            // Existing file: merge existing order with new fields
+            merged = existingFieldOrder
+            for fieldName in newFieldOrder {
+                if !merged.contains(fieldName) {
+                    merged.append(fieldName)
                 }
             }
-            // Always move __example to the end (remove if present, then append)
-            merged.removeAll { $0 == "__example" }
-            merged.append("__example")
-            return merged
-        }()
-        
-        // Write hints file (preserving field order)
-        do {
-            try HintsGenerator.writeHints(finalHints, to: outputURL, preserveOrder: finalFieldOrder)
-        print("✅ Generated hints file: \(outputPath)")
-        print("   Found \(fields.count) fields")
+        }
+        // Always move __example to the end (remove if present, then append)
+        merged.removeAll { $0 == "__example" }
+        merged.append("__example")
+        return merged
+    }()
+    
+    // Write hints file (preserving field order)
+    do {
+        try HintsGenerator.writeHints(finalHints, to: outputURL, preserveOrder: finalFieldOrder)
     } catch {
-        print("Error: Failed to write hints file: \(error)")
+        print("Error: Failed to write hints file \(outputURL.path): \(error)")
         exit(1)
     }
 }
