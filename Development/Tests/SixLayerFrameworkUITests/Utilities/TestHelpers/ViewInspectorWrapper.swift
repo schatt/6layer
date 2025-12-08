@@ -337,6 +337,8 @@ struct DummyInspectable: Inspectable {
     func sixLayerZStack() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
     func sixLayerTextField() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
     func sixLayerTextField(_ index: Int) throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func sixLayerLink() throws -> Inspectable { throw ViewInspectorNotAvailableError() }
+    func sixLayerFindAllLinks() -> [Inspectable] { return [] }
     func sixLayerAccessibilityIdentifier() throws -> String { throw ViewInspectorNotAvailableError() }
     func sixLayerFindAll<T>(_ type: T.Type) -> [Inspectable] { return [] }
     func sixLayerFind<T>(_ type: T.Type) throws -> Inspectable { throw ViewInspectorNotAvailableError() }

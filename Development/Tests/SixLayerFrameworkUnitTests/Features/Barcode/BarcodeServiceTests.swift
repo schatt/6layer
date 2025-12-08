@@ -30,6 +30,14 @@ import Foundation
 import Vision
 #endif
 
+#if os(macOS)
+import AppKit
+#endif
+
+#if os(macOS)
+import AppKit
+#endif
+
 /// Tests for Barcode Service functionality
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 @Suite("Barcode Service")
