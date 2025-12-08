@@ -970,7 +970,7 @@ public extension View {
     /// Apply platform-specific patterns
     func platformPatterns() -> some View {
         let platform = RuntimeCapabilityDetection.currentPlatform
-        self.modifier(PlatformPatternModifier(
+        return self.modifier(PlatformPatternModifier(
             designSystem: PlatformDesignSystem.cached(for: platform),
             platform: platform
         ))
@@ -979,7 +979,7 @@ public extension View {
     /// Apply visual design consistency
     func visualConsistency() -> some View {
         let platform = RuntimeCapabilityDetection.currentPlatform
-        self.modifier(VisualConsistencyModifier(
+        return self.modifier(VisualConsistencyModifier(
             designSystem: PlatformDesignSystem.cached(for: platform),
             platform: platform,
             visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: platform),
