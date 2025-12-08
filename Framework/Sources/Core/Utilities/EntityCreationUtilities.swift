@@ -28,13 +28,14 @@ public enum EntityCreationUtilities {
     ///   - values: Dictionary of field names to values
     ///   - context: Managed object context to insert into
     ///   - fieldHints: Optional hints to filter hidden fields
-    /// - Returns: Created NSManagedObject, or nil if creation failed
+    /// - Returns: Created NSManagedObject
+    /// - Throws: Error if entity creation or save fails (entity is rolled back on error)
     public static func createCoreDataEntity(
         entityName: String,
         values: [String: Any],
         context: NSManagedObjectContext,
         fieldHints: [String: FieldDisplayHints]? = nil
-    ) -> NSManagedObject? {
+    ) throws -> NSManagedObject {
         // Create blank entity
         let entity = NSEntityDescription.insertNewObject(
             forEntityName: entityName,
@@ -52,14 +53,17 @@ public enum EntityCreationUtilities {
             entity.setValue(value, forKey: fieldId)
         }
         
-        // Save context
+        // Save context - throw error if save fails (entity will be rolled back)
         do {
             if context.hasChanges {
                 try context.save()
             }
         } catch {
-            print("Error saving Core Data entity: \(error.localizedDescription)")
-            // Continue - entity is still created, just not saved
+            // Rollback: Delete entity if save fails
+            context.delete(entity)
+            // Reset context to discard changes
+            context.rollback()
+            throw error
         }
         
         return entity
@@ -115,16 +119,23 @@ public enum EntityCreationUtilities {
     ///   - values: Dictionary of field names to values
     ///   - context: Model context to insert into
     ///   - fieldHints: Optional hints to filter hidden fields
-    /// - Returns: Created entity, or nil if creation failed
+    /// - Returns: Created entity
+    /// - Throws: Error if entity creation or save fails (entity is rolled back on error)
     @available(macOS 14.0, iOS 17.0, *)
     public static func createSwiftDataEntity(
         entityType: Any.Type,
         values: [String: Any],
         context: ModelContext,
         fieldHints: [String: FieldDisplayHints]? = nil
-    ) -> Any? {
+    ) throws -> Any {
         // Check if entityType conforms to Decodable
-        guard let decodableType = entityType as? any Decodable.Type else { return nil }
+        guard let decodableType = entityType as? any Decodable.Type else {
+            throw NSError(
+                domain: "EntityCreationUtilities",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "Entity type does not conform to Decodable"]
+            )
+        }
         
         // Filter out hidden fields
         var filteredValues = values
@@ -136,31 +147,47 @@ public enum EntityCreationUtilities {
         }
         
         // Encode values to JSON, then decode to entity type
+        let jsonData: Data
+        let decoded: Any
+        
         do {
-            let jsonData = try JSONSerialization.data(withJSONObject: filteredValues)
+            jsonData = try JSONSerialization.data(withJSONObject: filteredValues)
             let decoder = JSONDecoder()
-            let decoded = try decoder.decode(decodableType, from: jsonData)
-            
-            // Insert into context
-            if let persistentModel = decoded as? any PersistentModel {
-                context.insert(persistentModel)
-                
-                // Save context
-                do {
-                    if context.hasChanges {
-                        try context.save()
-                    }
-                } catch {
-                    print("Error saving SwiftData entity: \(error.localizedDescription)")
-                    // Continue - entity is still created, just not saved
-                }
-            }
-            
-            return decoded
+            decoded = try decoder.decode(decodableType, from: jsonData)
         } catch {
-            print("Error creating SwiftData entity: \(error.localizedDescription)")
-            return nil
+            throw NSError(
+                domain: "EntityCreationUtilities",
+                code: 2,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Failed to decode entity from form values: \(error.localizedDescription)",
+                    NSUnderlyingErrorKey: error
+                ]
+            )
         }
+        
+        // Insert into context
+        guard let persistentModel = decoded as? any PersistentModel else {
+            throw NSError(
+                domain: "EntityCreationUtilities",
+                code: 3,
+                userInfo: [NSLocalizedDescriptionKey: "Decoded entity does not conform to PersistentModel"]
+            )
+        }
+        
+        context.insert(persistentModel)
+        
+        // Save context - throw error if save fails (entity will be rolled back)
+        do {
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            // Rollback: Delete entity if save fails
+            context.delete(persistentModel)
+            throw error
+        }
+        
+        return decoded
     }
     
     /// Create a blank SwiftData entity with defaults from hints using Codable

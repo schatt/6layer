@@ -31,6 +31,7 @@ public struct DynamicFormView: View {
     let configuration: DynamicFormConfiguration
     let onSubmit: ([String: Any]) -> Void
     let onEntityCreated: ((Any) -> Void)?
+    let onError: ((Error) -> Void)?
     let entityType: Any.Type?
     @StateObject private var formState: DynamicFormState
     
@@ -48,15 +49,18 @@ public struct DynamicFormView: View {
     ///   - configuration: Form configuration with fields and optional modelName
     ///   - onSubmit: Callback with dictionary of form values (always called)
     ///   - onEntityCreated: Optional callback with created entity (called if modelName provided and entity created)
+    ///   - onError: Optional callback for errors (called if entity creation or save fails)
     ///   - entityType: Optional SwiftData entity type (required for SwiftData entity creation)
     public init(
         configuration: DynamicFormConfiguration,
         onSubmit: @escaping ([String: Any]) -> Void,
         onEntityCreated: ((Any) -> Void)? = nil,
+        onError: ((Error) -> Void)? = nil,
         entityType: Any.Type? = nil
     ) {
         self.onSubmit = onSubmit
         self.onEntityCreated = onEntityCreated
+        self.onError = onError
         self.entityType = entityType
         
         // Auto-load hints if modelName provided (Issue #71)
@@ -123,7 +127,7 @@ public struct DynamicFormView: View {
         .automaticCompliance(named: "DynamicFormView")
     }
     
-    /// Handle form submission: create entity if modelName provided, then call callbacks
+    /// Handle form submission: validate, create entity if modelName provided, then call callbacks
     private func handleSubmit() {
         // Always call onSubmit with dictionary (backward compatible)
         onSubmit(formState.fieldValues)
@@ -131,10 +135,28 @@ public struct DynamicFormView: View {
         // If modelName is provided, try to create entity
         guard let modelName = configuration.modelName else { return }
         
+        // Validate form before entity creation
+        if !formState.isValid {
+            let validationError = NSError(
+                domain: "DynamicFormView",
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Form validation failed. Please fix errors before submitting.",
+                    "fieldErrors": formState.fieldErrors
+                ]
+            )
+            onError?(validationError)
+            return
+        }
+        
         // Try to create Core Data entity
         #if canImport(CoreData)
-        if let entity = createCoreDataEntity(entityName: modelName, values: formState.fieldValues) {
+        do {
+            let entity = try createCoreDataEntity(entityName: modelName, values: formState.fieldValues)
             onEntityCreated?(entity)
+            return
+        } catch {
+            onError?(error)
             return
         }
         #endif
@@ -142,10 +164,15 @@ public struct DynamicFormView: View {
         // Try to create SwiftData entity (requires entityType)
         #if canImport(SwiftData)
         if #available(macOS 14.0, iOS 17.0, *) {
-            if let entityType = entityType,
-               let entity = createSwiftDataEntity(entityType: entityType, values: formState.fieldValues) {
-                onEntityCreated?(entity)
-                return
+            if let entityType = entityType {
+                do {
+                    let entity = try createSwiftDataEntity(entityType: entityType, values: formState.fieldValues)
+                    onEntityCreated?(entity)
+                    return
+                } catch {
+                    onError?(error)
+                    return
+                }
             }
         }
         #endif
@@ -154,7 +181,8 @@ public struct DynamicFormView: View {
     #if canImport(CoreData)
     /// Create Core Data entity from form values
     /// DRY: Uses shared EntityCreationUtilities
-    private func createCoreDataEntity(entityName: String, values: [String: Any]) -> NSManagedObject? {
+    /// - Throws: Error if entity creation or save fails
+    private func createCoreDataEntity(entityName: String, values: [String: Any]) throws -> NSManagedObject {
         let context = managedObjectContext
         
         // Load hints to get type information (for filtering hidden fields)
@@ -162,8 +190,8 @@ public struct DynamicFormView: View {
         let hintsResult = hintsLoader.loadHintsResult(for: entityName)
         let fieldHints = hintsResult.fieldHints
         
-        // Use shared utility
-        return EntityCreationUtilities.createCoreDataEntity(
+        // Use shared utility (now throws on error)
+        return try EntityCreationUtilities.createCoreDataEntity(
             entityName: entityName,
             values: values,
             context: context,
@@ -175,8 +203,9 @@ public struct DynamicFormView: View {
     #if canImport(SwiftData)
     /// Create SwiftData entity from form values using Codable
     /// DRY: Uses shared EntityCreationUtilities
+    /// - Throws: Error if entity creation or save fails
     @available(macOS 14.0, iOS 17.0, *)
-    private func createSwiftDataEntity(entityType: Any.Type, values: [String: Any]) -> Any? {
+    private func createSwiftDataEntity(entityType: Any.Type, values: [String: Any]) throws -> Any {
         let context = modelContext
         
         // Load hints to get type information (for filtering hidden fields)
@@ -184,8 +213,8 @@ public struct DynamicFormView: View {
         let hintsResult = hintsLoader.loadHintsResult(for: configuration.modelName ?? "")
         let fieldHints = hintsResult.fieldHints
         
-        // Use shared utility
-        return EntityCreationUtilities.createSwiftDataEntity(
+        // Use shared utility (now throws on error)
+        return try EntityCreationUtilities.createSwiftDataEntity(
             entityType: entityType,
             values: values,
             context: context,
@@ -315,11 +344,19 @@ public struct DynamicFormFieldView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Field label
-            Text(field.label)
-                .font(.subheadline)
-                .bold()
-                .automaticCompliance(named: "FieldLabel")
+            // Field label with required indicator
+            HStack {
+                Text(field.label)
+                    .font(.subheadline)
+                    .bold()
+                if field.isRequired {
+                    Text("*")
+                        .foregroundColor(.red)
+                        .fontWeight(.bold)
+                }
+            }
+            .automaticCompliance(named: "FieldLabel")
+            .accessibilityLabel(field.isRequired ? "\(field.label), required" : field.label)
 
             // Field description if present
             if let description = field.description {

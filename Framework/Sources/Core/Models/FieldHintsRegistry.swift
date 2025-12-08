@@ -93,9 +93,18 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
     
     private func parseFieldHints(from data: [String: Any]) -> FieldDisplayHints {
         // Parse type information (new - for fully declarative hints)
+        // Phase 2: Update parser to handle type information from hints files
         let fieldType = data["fieldType"] as? String
-        let isOptional = data["isOptional"] as? Bool
-        let isArray = data["isArray"] as? Bool
+        // Handle both String and Bool for isOptional (JSON can have "true"/"false" strings)
+        let isOptional = (data["isOptional"] as? String) == "true" ||
+                        (data["isOptional"] as? Bool) == true ? true :
+                        (data["isOptional"] as? String) == "false" ||
+                        (data["isOptional"] as? Bool) == false ? false : nil
+        // Handle both String and Bool for isArray (JSON can have "true"/"false" strings)
+        let isArray = (data["isArray"] as? String) == "true" ||
+                     (data["isArray"] as? Bool) == true ? true :
+                     (data["isArray"] as? String) == "false" ||
+                     (data["isArray"] as? Bool) == false ? false : nil
         // Parse defaultValue and convert to Sendable (JSON supports String, Int, Bool, Double, Float - all Sendable)
         // Note: JSONSerialization converts Bool to NSNumber/CFBoolean
         let defaultValue: (any Sendable)? = {

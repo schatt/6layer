@@ -179,6 +179,209 @@ public struct FieldDisplayHints: Sendable {
 **📚 For complete OCR hints, calculation groups, and value ranges documentation, see:**
 - **[Hints File OCR and Calculations Guide](HintsFileOCRAndCalculationsGuide.md)** - Complete guide to OCR hints, calculations, and value ranges in hints files
 
+## Fully Declarative Hints (Type-Only Form Generation)
+
+**NEW in v6.1.0**: You can now make hints fully declarative by adding type information. This enables **type-only form generation** - creating forms without requiring instance data.
+
+### What Are Fully Declarative Hints?
+
+Fully declarative hints include type information (`fieldType`, `isOptional`, `isArray`, `defaultValue`) that allows the framework to generate forms from hints alone, without needing to examine actual data instances using Mirror reflection.
+
+### Benefits
+
+- **Type-Only Forms**: Generate forms without creating instance data
+- **Self-Documenting**: Hints become complete data schemas
+- **Better Control**: Explicitly define what fields exist and their types
+- **Code Generation**: Use hints as source of truth for documentation/tools
+- **Performance**: Skip Mirror reflection when hints are complete
+
+### Making Hints Fully Declarative
+
+Add type information to your hints:
+
+```json
+{
+  "username": {
+    "fieldType": "string",        // NEW: Field type
+    "isOptional": false,           // NEW: Whether field can be nil
+    "isArray": false,              // NEW: Whether field is an array
+    "defaultValue": null,          // NEW: Default value (optional)
+    "expectedLength": 20,
+    "displayWidth": "medium",
+    "maxLength": 50
+  },
+  "email": {
+    "fieldType": "string",
+    "isOptional": true,
+    "displayWidth": "wide"
+  },
+  "age": {
+    "fieldType": "number",
+    "isOptional": false,
+    "expectedRange": {"min": 0, "max": 120},
+    "displayWidth": "narrow"
+  },
+  "isActive": {
+    "fieldType": "boolean",
+    "isOptional": false,
+    "defaultValue": true
+  },
+  "tags": {
+    "fieldType": "string",
+    "isArray": true,
+    "displayWidth": "wide"
+  }
+}
+```
+
+### Field Type Values
+
+The `fieldType` property supports:
+- `"string"` - Text fields
+- `"number"` - Numeric fields (Int, Double, Float)
+- `"boolean"` - Boolean/toggle fields
+- `"date"` - Date fields
+- `"url"` - URL fields
+- `"uuid"` - UUID fields
+- `"document"` - Document/file fields
+- `"image"` - Image fields
+- `"custom"` - Custom types
+
+### When Hints Are Fully Declarative
+
+A hint is **fully declarative** when it has both `fieldType` and `isOptional` specified:
+
+```json
+{
+  "username": {
+    "fieldType": "string",    // ✅ Has fieldType
+    "isOptional": false        // ✅ Has isOptional
+    // This hint is fully declarative!
+  }
+}
+```
+
+### Hybrid Approach (Mirror Fallback)
+
+The framework uses a **hybrid approach**:
+1. **Hints-First**: If hints are fully declarative, use them
+2. **Mirror Fallback**: If hints are incomplete or missing, use Mirror reflection
+3. **Best of Both**: Automatic by default (Mirror), explicit when needed (hints)
+
+**Example - Partial Hints (Mirror Fallback)**:
+```json
+{
+  "email": {
+    "displayWidth": "wide",
+    "maxLength": 255
+    // No fieldType/isOptional - Mirror will discover it
+  }
+}
+```
+
+### Type-Only Form Generation
+
+With fully declarative hints, you can generate forms without instance data:
+
+```swift
+// Generate form from type + hints only (no instance needed)
+IntelligentFormView.generateForm(
+    for: User.self,        // Type only
+    initialData: nil,      // No instance data
+    onSubmit: { user in
+        // Handle created user
+    },
+    onCancel: {
+        // Handle cancel
+    }
+)
+```
+
+The framework will:
+1. Load hints for `User`
+2. Verify hints are fully declarative
+3. Create a blank entity (Core Data or SwiftData) with defaults from hints
+4. Generate form for the new entity
+
+### The `__example` Field
+
+The hints generator tool automatically adds a `__example` field to your hints files:
+
+```json
+{
+  "__example": {
+    "fieldType": "string",
+    "isOptional": false,
+    "isArray": false,
+    "defaultValue": null,
+    "isHidden": false,
+    "isEditable": true,
+    "displayWidth": "medium",
+    "expectedLength": 20,
+    "maxLength": 50,
+    "minLength": 3,
+    "showCharacterCounter": false
+  }
+}
+```
+
+This field serves as **self-documentation** - it shows all available properties and their default values. You can reference it when adding new fields or configuring existing ones.
+
+**Note**: The `__example` field is ignored during form generation - it's documentation only.
+
+### Migration Guide
+
+To migrate existing hints to fully declarative:
+
+1. **Add `fieldType`**: Determine the type for each field
+2. **Add `isOptional`**: Mark optional fields as `true`, required as `false`
+3. **Add `isArray`** (if needed): Mark array/collection fields as `true`
+4. **Add `defaultValue`** (optional): Specify default values where appropriate
+
+**Example Migration**:
+
+**Before** (display hints only):
+```json
+{
+  "username": {
+    "displayWidth": "medium",
+    "maxLength": 50
+  }
+}
+```
+
+**After** (fully declarative):
+```json
+{
+  "username": {
+    "fieldType": "string",
+    "isOptional": false,
+    "displayWidth": "medium",
+    "maxLength": 50
+  }
+}
+```
+
+**Backward Compatibility**: Existing hints without type information continue to work - Mirror reflection is used as fallback.
+
+### Using the Hints Generator Tool
+
+The `generate_hints_from_models.swift` tool can automatically generate fully declarative hints from your Swift models:
+
+```bash
+swift scripts/generate_hints_from_models.swift \
+  -model User.swift \
+  -extensionsdir Models \
+  -outputdir Hints
+```
+
+The tool:
+- Parses Swift files to extract field types
+- Detects optionality and arrays
+- Generates hints with `fieldType`, `isOptional`, `isArray`
+- Preserves existing hints and customizations
+- Adds `__example` field for reference
+
 ## Picker Options for Enum Fields
 
 **NEW in v5.8.0**: You can now specify enum fields as pickers with human-readable labels!
