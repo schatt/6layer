@@ -139,6 +139,19 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
             }
             
             if let properties = value as? [String: Any] {
+                // Parse type information (new - for fully declarative hints)
+                let fieldType = properties["fieldType"] as? String
+                let isOptional = (properties["isOptional"] as? String) == "true" ||
+                                (properties["isOptional"] as? Bool) == true ? true :
+                                (properties["isOptional"] as? String) == "false" ||
+                                (properties["isOptional"] as? Bool) == false ? false : nil
+                let isArray = (properties["isArray"] as? String) == "true" ||
+                             (properties["isArray"] as? Bool) == true ? true :
+                             (properties["isArray"] as? String) == "false" ||
+                             (properties["isArray"] as? Bool) == false ? false : nil
+                // Parse defaultValue and convert to Sendable
+                let defaultValue: (any Sendable)? = parseDefaultValue(from: properties["defaultValue"])
+                
                 // Parse standard display hints
                 let expectedLength = (properties["expectedLength"] as? String).flatMap(Int.init) ?? 
                                    (properties["expectedLength"] as? Int)
@@ -157,7 +170,8 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 var metadata: [String: String] = [:]
                 for (propKey, propValue) in properties {
                     if !["expectedLength", "displayWidth", "showCharacterCounter", "maxLength", "minLength", 
-                         "expectedRange", "ocrHints", "calculationGroups", "inputType", "options"].contains(propKey) &&
+                         "expectedRange", "ocrHints", "calculationGroups", "inputType", "options",
+                         "fieldType", "isOptional", "isArray", "defaultValue"].contains(propKey) &&
                        !propKey.hasPrefix("ocrHints.") {
                         if let stringValue = propValue as? String {
                             metadata[propKey] = stringValue
@@ -176,6 +190,12 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 let pickerOptions = parsePickerOptions(from: properties)
                 
                 fieldHints[key] = FieldDisplayHints(
+                    // Type information (new)
+                    fieldType: fieldType,
+                    isOptional: isOptional,
+                    isArray: isArray,
+                    defaultValue: defaultValue,
+                    // Display properties (existing)
                     expectedLength: expectedLength,
                     displayWidth: displayWidth,
                     showCharacterCounter: showCharacterCounter,
@@ -233,6 +253,43 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         }
         
         return ValueRange(min: min, max: max)
+    }
+    
+    /// Parse defaultValue from JSON and convert to Sendable type
+    /// Supports String, Int, Bool, Double, Float (all are Sendable)
+    /// Note: JSONSerialization converts Bool to NSNumber/CFBoolean, so we check for that
+    private func parseDefaultValue(from value: Any?) -> (any Sendable)? {
+        guard let value = value else { return nil }
+        
+        // Convert common Sendable types (all JSON-serializable types are Sendable)
+        if let stringValue = value as? String {
+            return stringValue
+        } else if let boolValue = value as? Bool {
+            return boolValue
+        } else if let nsNumber = value as? NSNumber {
+            // JSONSerialization converts Bool to NSNumber/CFBoolean
+            // Check if it's a CFBoolean (true/false) vs a numeric value
+            if CFGetTypeID(nsNumber) == CFBooleanGetTypeID() {
+                return nsNumber.boolValue
+            } else {
+                // It's a numeric value - check if it's a whole number (Int) or has decimal (Double)
+                if nsNumber.doubleValue.truncatingRemainder(dividingBy: 1) == 0 {
+                    return nsNumber.intValue
+                } else {
+                    return nsNumber.doubleValue
+                }
+            }
+        } else if let intValue = value as? Int {
+            return intValue
+        } else if let doubleValue = value as? Double {
+            return doubleValue
+        } else if let floatValue = value as? Float {
+            return floatValue
+        }
+        
+        // For other types, we can't safely convert without knowing the type
+        // JSON only supports String, Int, Bool, Double, so this should cover all cases
+        return nil
     }
     
     /// Parse picker options from properties (supports [{"value": "...", "label": "..."}] format)

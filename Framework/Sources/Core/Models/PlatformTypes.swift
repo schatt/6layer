@@ -996,6 +996,27 @@ public struct PickerOption: Sendable, Equatable {
 
 /// Field-level display hints for individual form fields
 public struct FieldDisplayHints: Sendable {
+    // MARK: - Type Information (New - for fully declarative hints)
+    
+    /// Field type: "string", "number", "boolean", "date", "url", "uuid", "document", "image", "custom"
+    /// When provided, makes hints fully declarative (can generate forms without Mirror introspection)
+    public let fieldType: String?
+    
+    /// Whether the field is optional (can be nil)
+    /// When provided with fieldType, makes hints fully declarative
+    public let isOptional: Bool?
+    
+    /// Whether the field is an array/collection type
+    /// When provided with fieldType, makes hints fully declarative
+    public let isArray: Bool?
+    
+    /// Default value for the field (type-dependent: String, Int, Bool, etc.)
+    /// When provided, indicates the field has a default value
+    /// Uses `any Sendable` to ensure Sendable conformance while supporting multiple types
+    public let defaultValue: (any Sendable)?
+    
+    // MARK: - Display Properties (Existing)
+    
     /// Expected maximum length of the field (for display sizing)
     public let expectedLength: Int?
     
@@ -1033,6 +1054,12 @@ public struct FieldDisplayHints: Sendable {
     public let pickerOptions: [PickerOption]?
     
     public init(
+        // Type information (new - optional for backward compatibility)
+        fieldType: String? = nil,
+        isOptional: Bool? = nil,
+        isArray: Bool? = nil,
+        defaultValue: (any Sendable)? = nil,
+        // Display properties (existing)
         expectedLength: Int? = nil,
         displayWidth: String? = nil,
         showCharacterCounter: Bool = false,
@@ -1045,6 +1072,10 @@ public struct FieldDisplayHints: Sendable {
         inputType: String? = nil,
         pickerOptions: [PickerOption]? = nil
     ) {
+        self.fieldType = fieldType
+        self.isOptional = isOptional
+        self.isArray = isArray
+        self.defaultValue = defaultValue
         self.expectedLength = expectedLength
         self.displayWidth = displayWidth
         self.showCharacterCounter = showCharacterCounter
@@ -1084,6 +1115,19 @@ public struct FieldDisplayHints: Sendable {
     /// Determine if display width is wide
     public var isWide: Bool {
         return displayWidth?.lowercased() == "wide"
+    }
+    
+    // MARK: - Declarative Hints Support
+    
+    /// Whether this hint is fully declarative (has enough type information to generate forms without Mirror)
+    /// A hint is fully declarative if it has both fieldType and isOptional specified
+    public var isFullyDeclarative: Bool {
+        return fieldType != nil && isOptional != nil
+    }
+    
+    /// Whether this hint provides partial type information (has fieldType but missing isOptional)
+    public var hasPartialTypeInfo: Bool {
+        return fieldType != nil && isOptional == nil
     }
 }
 

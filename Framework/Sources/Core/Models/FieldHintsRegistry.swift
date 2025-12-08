@@ -92,6 +92,36 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
     }
     
     private func parseFieldHints(from data: [String: Any]) -> FieldDisplayHints {
+        // Parse type information (new - for fully declarative hints)
+        let fieldType = data["fieldType"] as? String
+        let isOptional = data["isOptional"] as? Bool
+        let isArray = data["isArray"] as? Bool
+        // Parse defaultValue and convert to Sendable (JSON supports String, Int, Bool, Double, Float - all Sendable)
+        // Note: JSONSerialization converts Bool to NSNumber/CFBoolean
+        let defaultValue: (any Sendable)? = {
+            guard let value = data["defaultValue"] else { return nil }
+            if let stringValue = value as? String { return stringValue }
+            if let boolValue = value as? Bool { return boolValue }
+            if let nsNumber = value as? NSNumber {
+                // Check if it's a CFBoolean (true/false) vs a numeric value
+                if CFGetTypeID(nsNumber) == CFBooleanGetTypeID() {
+                    return nsNumber.boolValue
+                } else {
+                    // It's a numeric value
+                    if nsNumber.doubleValue.truncatingRemainder(dividingBy: 1) == 0 {
+                        return nsNumber.intValue
+                    } else {
+                        return nsNumber.doubleValue
+                    }
+                }
+            }
+            if let intValue = value as? Int { return intValue }
+            if let doubleValue = value as? Double { return doubleValue }
+            if let floatValue = value as? Float { return floatValue }
+            return nil
+        }()
+        
+        // Parse display properties (existing)
         let expectedLength = data["expectedLength"] as? Int
         let displayWidth = data["displayWidth"] as? String
         let showCharacterCounter = data["showCharacterCounter"] as? Bool ?? false
@@ -100,6 +130,12 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
         let metadata = data["metadata"] as? [String: String] ?? [:]
         
         return FieldDisplayHints(
+            // Type information (new)
+            fieldType: fieldType,
+            isOptional: isOptional,
+            isArray: isArray,
+            defaultValue: defaultValue,
+            // Display properties (existing)
             expectedLength: expectedLength,
             displayWidth: displayWidth,
             showCharacterCounter: showCharacterCounter,
@@ -112,6 +148,21 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
     private func serializeFieldHints(_ hint: FieldDisplayHints) -> [String: Any] {
         var result: [String: Any] = [:]
         
+        // Serialize type information (new)
+        if let fieldType = hint.fieldType {
+            result["fieldType"] = fieldType
+        }
+        if let isOptional = hint.isOptional {
+            result["isOptional"] = isOptional
+        }
+        if let isArray = hint.isArray {
+            result["isArray"] = isArray
+        }
+        if let defaultValue = hint.defaultValue {
+            result["defaultValue"] = defaultValue
+        }
+        
+        // Serialize display properties (existing)
         if let expectedLength = hint.expectedLength {
             result["expectedLength"] = expectedLength
         }
