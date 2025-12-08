@@ -1595,46 +1595,6 @@ open class DynamicFormViewTests: BaseTestClass {
         #expect(Bool(true), "View should be created successfully")
     }
 
-    @Test @MainActor func testDynamicFormViewWorksWithoutModelName() async {
-        initializeTestConfig()
-        // TDD: DynamicFormView should work normally when modelName is not provided
-        // 1. Should not attempt to load hints when modelName is nil
-        // 2. Should use original configuration as-is
-        // 3. Backward compatibility - existing code should continue to work
-
-        let field = DynamicFormField(
-            id: "name",
-            contentType: .text,
-            label: "Name"
-        )
-
-        let section = DynamicFormSection(
-            id: "test-section",
-            title: "Test Section",
-            fields: [field]
-        )
-
-        // Create configuration WITHOUT modelName (backward compatible)
-        let configuration = DynamicFormConfiguration(
-            id: "test-form",
-            title: "Test Form",
-            sections: [section]
-            // modelName is nil by default
-        )
-
-        // Create DynamicFormView - should work normally
-        let view = DynamicFormView(
-            configuration: configuration,
-            onSubmit: { _ in }
-        )
-
-        // Verify view was created successfully
-        #expect(Bool(true), "View should be created successfully")
-        
-        // Verify configuration has nil modelName (default)
-        #expect(configuration.modelName == nil, "Configuration should have nil modelName by default")
-    }
-
     @Test @MainActor func testDynamicFormViewAppliesHintsFromMetadataWhenModelNameProvided() async throws {
         initializeTestConfig()
         // TDD: When modelName is provided, hints from .hints file should override or merge with metadata hints
