@@ -1053,6 +1053,11 @@ public struct FieldDisplayHints: Sendable {
     /// Each option contains a value (stored in model) and label (displayed in UI)
     public let pickerOptions: [PickerOption]?
     
+    /// Whether this field should be hidden from forms and UI
+    /// When true, the field is excluded from form generation and display
+    /// Useful for internal fields like cloud sync IDs, internal metadata, etc.
+    public let isHidden: Bool
+    
     public init(
         // Type information (new - optional for backward compatibility)
         fieldType: String? = nil,
@@ -1070,7 +1075,8 @@ public struct FieldDisplayHints: Sendable {
         ocrHints: [String]? = nil,
         calculationGroups: [CalculationGroup]? = nil,
         inputType: String? = nil,
-        pickerOptions: [PickerOption]? = nil
+        pickerOptions: [PickerOption]? = nil,
+        isHidden: Bool = false
     ) {
         self.fieldType = fieldType
         self.isOptional = isOptional
@@ -1087,6 +1093,7 @@ public struct FieldDisplayHints: Sendable {
         self.calculationGroups = calculationGroups
         self.inputType = inputType
         self.pickerOptions = pickerOptions
+        self.isHidden = isHidden
     }
     
     /// Get display width as CGFloat if a specific numeric value is provided

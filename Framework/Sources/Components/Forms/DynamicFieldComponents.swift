@@ -76,6 +76,48 @@ public struct CustomFieldView: View {
     }
 }
 
+// MARK: - Character Counter Component
+
+/// Reusable character counter view that displays character count for fields with maxLength validation
+/// Shows format "X / Y characters" and warning color when approaching limit (>80%)
+@MainActor
+struct CharacterCounterView: View {
+    let currentLength: Int
+    let maxLength: Int
+    let warningThreshold: Double = 0.8 // Show warning when >80% of max
+    
+    private var isWarning: Bool {
+        Double(currentLength) > Double(maxLength) * warningThreshold
+    }
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Text("\(currentLength) / \(maxLength) characters")
+                .font(.caption)
+                .foregroundColor(isWarning ? .orange : .secondary)
+                .accessibilityLabel("\(currentLength) of \(maxLength) characters")
+                .accessibilityValue(isWarning ? "Warning: approaching character limit" : "")
+                .automaticCompliance(named: "CharacterCounter")
+        }
+    }
+}
+
+// MARK: - Helper Extensions
+
+extension DynamicFormField {
+    /// Extracts maxLength from validationRules if present and valid
+    var maxLength: Int? {
+        guard let validationRules = validationRules,
+              let maxLengthStr = validationRules["maxLength"],
+              let maxLength = Int(maxLengthStr),
+              maxLength > 0 else {
+            return nil
+        }
+        return maxLength
+    }
+}
+
 // MARK: - Individual Field Components (TDD Red Phase Stubs)
 
 /// Text field component
@@ -91,7 +133,7 @@ public struct DynamicTextField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -125,6 +167,12 @@ public struct DynamicTextField: View {
                 .textFieldStyle(.roundedBorder)
                 .automaticCompliance()
             }
+            
+            // Character counter for fields with maxLength validation
+            if let maxLength = field.maxLength {
+                let currentValue = formState.getValue(for: field.id) ?? field.defaultValue ?? ""
+                CharacterCounterView(currentLength: currentValue.count, maxLength: maxLength)
+            }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
@@ -145,7 +193,7 @@ public struct DynamicEmailField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -158,6 +206,12 @@ public struct DynamicEmailField: View {
             .keyboardType(UIKeyboardType.emailAddress)
             #endif
             .automaticCompliance()
+            
+            // Character counter for fields with maxLength validation
+            if let maxLength = field.maxLength {
+                let currentValue = formState.getValue(for: field.id) ?? field.defaultValue ?? ""
+                CharacterCounterView(currentLength: currentValue.count, maxLength: maxLength)
+            }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
@@ -208,7 +262,7 @@ public struct DynamicPhoneField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -221,6 +275,12 @@ public struct DynamicPhoneField: View {
             .keyboardType(UIKeyboardType.phonePad)
             #endif
             .automaticCompliance()
+            
+            // Character counter for fields with maxLength validation
+            if let maxLength = field.maxLength {
+                let currentValue = formState.getValue(for: field.id) ?? field.defaultValue ?? ""
+                CharacterCounterView(currentLength: currentValue.count, maxLength: maxLength)
+            }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
@@ -241,7 +301,7 @@ public struct DynamicURLField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -254,6 +314,12 @@ public struct DynamicURLField: View {
             .keyboardType(UIKeyboardType.URL)
             #endif
             .automaticCompliance()
+            
+            // Character counter for fields with maxLength validation
+            if let maxLength = field.maxLength {
+                let currentValue = formState.getValue(for: field.id) ?? field.defaultValue ?? ""
+                CharacterCounterView(currentLength: currentValue.count, maxLength: maxLength)
+            }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label)
@@ -901,6 +967,12 @@ public struct DynamicAutocompleteField: View {
             .onAppear {
                 searchText = formState.fieldValues[field.id] as? String ?? ""
             }
+            
+            // Character counter for fields with maxLength validation
+            if let maxLength = field.maxLength {
+                let currentValue = formState.fieldValues[field.id] as? String ?? field.defaultValue ?? ""
+                CharacterCounterView(currentLength: currentValue.count, maxLength: maxLength)
+            }
 
             if showSuggestions, let options = field.options {
                 let filtered = options.filter { $0.localizedCaseInsensitiveContains(searchText) }
@@ -1108,6 +1180,12 @@ public struct DynamicTextAreaField: View {
             .lineLimit(5...10)
             .automaticCompliance(named: "TextArea")
             #endif
+            
+            // Character counter for fields with maxLength validation
+            if let maxLength = field.maxLength {
+                let currentValue = formState.fieldValues[field.id] as? String ?? field.defaultValue ?? ""
+                CharacterCounterView(currentLength: currentValue.count, maxLength: maxLength)
+            }
         }
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation

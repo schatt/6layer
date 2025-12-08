@@ -128,6 +128,7 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
         let maxLength = data["maxLength"] as? Int
         let minLength = data["minLength"] as? Int
         let metadata = data["metadata"] as? [String: String] ?? [:]
+        let isHidden = data["isHidden"] as? Bool ?? false
         
         return FieldDisplayHints(
             // Type information (new)
@@ -141,7 +142,8 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
             showCharacterCounter: showCharacterCounter,
             maxLength: maxLength,
             minLength: minLength,
-            metadata: metadata
+            metadata: metadata,
+            isHidden: isHidden
         )
     }
     
@@ -180,6 +182,9 @@ public class JSONFieldHintsStore: FieldHintsStore, @unchecked Sendable {
         }
         if !hint.metadata.isEmpty {
             result["metadata"] = hint.metadata
+        }
+        if hint.isHidden {
+            result["isHidden"] = true
         }
         
         return result

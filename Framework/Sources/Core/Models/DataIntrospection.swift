@@ -19,7 +19,8 @@ public struct DataIntrospectionEngine {
     
     /// Analyze a data model and provide UI recommendations
     /// Supports Core Data (NSManagedObject), SwiftData (PersistentModel), and regular Swift types
-        public static func analyze<T>(_ data: T) -> DataAnalysisResult {
+    /// Uses hints-first discovery: checks for fully declarative hints, falls back to Mirror introspection
+    public static func analyze<T>(_ data: T) -> DataAnalysisResult {
         // Check if this is a Core Data managed object
         if let managedObject = data as? NSManagedObject {
             return analyzeCoreData(managedObject)
@@ -33,12 +34,17 @@ public struct DataIntrospectionEngine {
             if data is any PersistentModel {
                 // SwiftData models can be analyzed using standard Mirror introspection
                 // The @Model macro doesn't hide properties from Mirror
-                // Fall through to standard Mirror analysis below
+                // Fall through to hints-first analysis below
             }
         }
         #endif
 
-        // Use standard Mirror introspection for non-Core Data objects (including SwiftData)
+        // Try hints-first discovery, fall back to Mirror introspection
+        if let hintsResult = tryHintsFirstDiscovery(for: data) {
+            return hintsResult
+        }
+
+        // Use standard Mirror introspection as fallback
         let mirror = Mirror(reflecting: data)
         let fields = extractFields(from: mirror)
         let complexity = calculateComplexity(fields: fields, data: data)
@@ -59,8 +65,158 @@ public struct DataIntrospectionEngine {
     
 
     
+    // MARK: - Hints-First Discovery
+    
+    /// Try to discover fields using hints first, falling back to Mirror if hints are incomplete
+    /// Returns nil if hints are not available or not fully declarative
+    private static func tryHintsFirstDiscovery<T>(for data: T) -> DataAnalysisResult? {
+        // Determine model name from type
+        let modelName = String(describing: type(of: data))
+            .components(separatedBy: ".").last ?? String(describing: type(of: data))
+        
+        // Load hints
+        let hintsLoader = FileBasedDataHintsLoader()
+        let hintsResult = hintsLoader.loadHintsResult(for: modelName)
+        
+        // Check if we have any hints
+        guard !hintsResult.fieldHints.isEmpty else {
+            return nil // No hints available, fall back to Mirror
+        }
+        
+        // Check if all hints are fully declarative
+        let allFullyDeclarative = hintsResult.fieldHints.values.allSatisfy { $0.isFullyDeclarative }
+        
+        if allFullyDeclarative {
+            // All hints are fully declarative - use hints-only discovery
+            return analyzeFromHints(hints: hintsResult.fieldHints, data: data)
+        } else {
+            // Some hints are partial - use hybrid approach (hints + Mirror)
+            return analyzeHybrid(hints: hintsResult.fieldHints, data: data)
+        }
+    }
+    
+    /// Analyze fields from fully declarative hints only
+    private static func analyzeFromHints<T>(hints: [String: FieldDisplayHints], data: T) -> DataAnalysisResult {
+        var fields: [DataField] = []
+        
+        for (fieldName, hint) in hints {
+            // Skip hidden fields
+            guard !hint.isHidden else { continue }
+            // Only use fully declarative hints
+            guard hint.isFullyDeclarative else { continue }
+            
+            let fieldType = convertFieldTypeStringToEnum(hint.fieldType ?? "custom")
+            let field = DataField(
+                name: fieldName,
+                type: fieldType,
+                isOptional: hint.isOptional ?? false,
+                isArray: hint.isArray ?? false,
+                isIdentifiable: fieldName == "id" || fieldName.hasSuffix("ID"),
+                hasDefaultValue: hint.defaultValue != nil
+            )
+            fields.append(field)
+        }
+        
+        let complexity = calculateComplexity(fields: fields, data: data)
+        let patterns = detectPatterns(fields: fields)
+        let recommendations = generateRecommendations(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns
+        )
+        
+        return DataAnalysisResult(
+            fields: fields,
+            complexity: complexity,
+            patterns: patterns,
+            recommendations: recommendations
+        )
+    }
+    
+    /// Analyze using hybrid approach: hints for fully declarative fields, Mirror for others
+    private static func analyzeHybrid<T>(hints: [String: FieldDisplayHints], data: T) -> DataAnalysisResult {
+        // Get Mirror fields first
+        let mirror = Mirror(reflecting: data)
+        let mirrorFields = extractFields(from: mirror)
+        
+        // Create a map of hint-based fields (only fully declarative, not hidden)
+        var hintFields: [String: DataField] = [:]
+        for (fieldName, hint) in hints {
+            // Skip hidden fields
+            guard !hint.isHidden else { continue }
+            guard hint.isFullyDeclarative else { continue }
+            
+            let fieldType = convertFieldTypeStringToEnum(hint.fieldType ?? "custom")
+            let field = DataField(
+                name: fieldName,
+                type: fieldType,
+                isOptional: hint.isOptional ?? false,
+                isArray: hint.isArray ?? false,
+                isIdentifiable: fieldName == "id" || fieldName.hasSuffix("ID"),
+                hasDefaultValue: hint.defaultValue != nil
+            )
+            hintFields[fieldName] = field
+        }
+        
+        // Merge: prefer hints over Mirror for fields that have fully declarative hints
+        var mergedFields: [DataField] = []
+        var processedNames = Set<String>()
+        
+        // Add hint-based fields first (they take priority)
+        for (name, field) in hintFields {
+            mergedFields.append(field)
+            processedNames.insert(name)
+        }
+        
+        // Add Mirror fields that don't have hints
+        for field in mirrorFields {
+            if !processedNames.contains(field.name) {
+                mergedFields.append(field)
+            }
+        }
+        
+        let complexity = calculateComplexity(fields: mergedFields, data: data)
+        let patterns = detectPatterns(fields: mergedFields)
+        let recommendations = generateRecommendations(
+            fields: mergedFields,
+            complexity: complexity,
+            patterns: patterns
+        )
+        
+        return DataAnalysisResult(
+            fields: mergedFields,
+            complexity: complexity,
+            patterns: patterns,
+            recommendations: recommendations
+        )
+    }
+    
+    /// Convert fieldType string to FieldType enum
+    private static func convertFieldTypeStringToEnum(_ fieldTypeString: String) -> FieldType {
+        switch fieldTypeString.lowercased() {
+        case "string":
+            return .string
+        case "number":
+            return .number
+        case "boolean":
+            return .boolean
+        case "date":
+            return .date
+        case "url":
+            return .url
+        case "uuid":
+            return .uuid
+        case "document":
+            return .document
+        case "image":
+            return .image
+        default:
+            return .custom
+        }
+    }
+    
     /// Analyze a collection of data items
-        public static func analyzeCollection<T>(_ items: [T]) -> CollectionAnalysisResult {
+    public static func analyzeCollection<T>(_ items: [T]) -> CollectionAnalysisResult {
         guard let firstItem = items.first else {
             return CollectionAnalysisResult(
                 itemCount: 0,

@@ -66,16 +66,50 @@ struct SwiftModelParser {
                 }
             }
             
+            // Determine if field should be hidden
+            // Common patterns: cloudSyncId, syncId, internalId, _id, etc.
+            let isHidden = shouldHideField(name: name, type: fieldType)
+            
             fields.append(FieldInfo(
                 name: name,
                 fieldType: fieldType,
                 isOptional: isOptional,
                 isArray: isArray,
-                defaultValue: defaultValue
+                defaultValue: defaultValue,
+                isHidden: isHidden
             ))
         }
         
         return fields.isEmpty ? nil : fields
+    }
+    
+    /// Determine if a field should be hidden based on naming patterns
+    private static func shouldHideField(name: String, type: String) -> Bool {
+        let lowercased = name.lowercased()
+        
+        // Common patterns for internal/hidden fields
+        let hiddenPatterns = [
+            "cloudsyncid", "cloud_sync_id", "cloudSyncId",
+            "syncid", "sync_id", "syncId",
+            "internalid", "internal_id", "internalId",
+            "_id", "_uuid", "_sync",
+            "metadata", "internalmetadata",
+            "systemid", "system_id", "systemId"
+        ]
+        
+        // Check if field name matches any hidden pattern
+        for pattern in hiddenPatterns {
+            if lowercased.contains(pattern) {
+                return true
+            }
+        }
+        
+        // Fields starting with underscore are typically internal
+        if name.hasPrefix("_") {
+            return true
+        }
+        
+        return false
     }
     
     /// Map Swift type names to fieldType strings
@@ -209,12 +243,16 @@ struct CoreDataModelParser {
                 
                 let fieldType = mapCoreDataAttributeType(attributeType)
                 
+                // Determine if field should be hidden
+                let isHidden = shouldHideField(name: name, type: fieldType)
+                
                 fields.append(FieldInfo(
                     name: name,
                     fieldType: fieldType,
                     isOptional: isOptional,
                     isArray: false, // Core Data attributes are not arrays (use relationships)
-                    defaultValue: nil
+                    defaultValue: nil,
+                    isHidden: isHidden
                 ))
             }
             
@@ -222,6 +260,35 @@ struct CoreDataModelParser {
         }
         
         return entities.isEmpty ? nil : entities
+    }
+    
+    /// Determine if a field should be hidden based on naming patterns
+    private static func shouldHideField(name: String, type: String) -> Bool {
+        let lowercased = name.lowercased()
+        
+        // Common patterns for internal/hidden fields
+        let hiddenPatterns = [
+            "cloudsyncid", "cloud_sync_id", "cloudSyncId",
+            "syncid", "sync_id", "syncId",
+            "internalid", "internal_id", "internalId",
+            "_id", "_uuid", "_sync",
+            "metadata", "internalmetadata",
+            "systemid", "system_id", "systemId"
+        ]
+        
+        // Check if field name matches any hidden pattern
+        for pattern in hiddenPatterns {
+            if lowercased.contains(pattern) {
+                return true
+            }
+        }
+        
+        // Fields starting with underscore are typically internal
+        if name.hasPrefix("_") {
+            return true
+        }
+        
+        return false
     }
     
     /// Map Core Data attribute types to fieldType strings
@@ -253,6 +320,7 @@ struct FieldInfo {
     let isOptional: Bool
     let isArray: Bool
     let defaultValue: (any Sendable)?
+    let isHidden: Bool  // Whether field should be hidden from forms
 }
 
 struct EntityInfo {
@@ -265,13 +333,34 @@ struct EntityInfo {
 /// Generates .hints JSON files from parsed model information
 struct HintsGenerator {
     /// Generate hints file content from field information
-    static func generateHintsJSON(fields: [FieldInfo], existingHints: [String: [String: Any]]? = nil) -> [String: Any] {
+    /// Returns both the hints dictionary and the field order (to preserve custom ordering)
+    /// For existing fields, preserves all properties exactly as they are
+    /// Only adds type information if missing (for fully declarative hints)
+    static func generateHintsJSON(
+        fields: [FieldInfo], 
+        existingHints: [String: [String: Any]]? = nil
+    ) -> (hints: [String: Any], fieldOrder: [String]) {
         var hints: [String: Any] = existingHints ?? [:]
+        var fieldOrder: [String] = []
         
+        // Preserve order from existing hints first
+        if let existing = existingHints {
+            fieldOrder = Array(existing.keys) // Preserve existing order
+        }
+        
+        // Process fields from model (in source order)
+        // Skip __example field if it exists (it's documentation only)
         for field in fields {
-            var fieldHints: [String: Any] = hints[field.name] as? [String: Any] ?? [:]
+            // Skip __example - it's a documentation field, not a real model field
+            if field.name == "__example" {
+                continue
+            }
             
-            // Add type information (only if not already present in existing hints)
+            let existingFieldHints = hints[field.name] as? [String: Any]
+            var fieldHints: [String: Any] = existingFieldHints ?? [:]
+            
+            // Always include type information (core fields for fully declarative hints)
+            // Only override if not already present in existing hints
             if fieldHints["fieldType"] == nil {
                 fieldHints["fieldType"] = field.fieldType
             }
@@ -284,16 +373,104 @@ struct HintsGenerator {
             if field.defaultValue != nil && fieldHints["defaultValue"] == nil {
                 fieldHints["defaultValue"] = field.defaultValue
             }
+            // Add isHidden (only if not already present, to allow manual override)
+            if fieldHints["isHidden"] == nil {
+                fieldHints["isHidden"] = field.isHidden
+            }
+            
+            // For existing fields: don't add any properties that weren't already there
+            // This preserves developer's choice to remove properties
+            // New fields get minimal type info only - see __example for all options
             
             hints[field.name] = fieldHints
+            
+            // Add to order if not already present (new fields go at end)
+            if !fieldOrder.contains(field.name) {
+                fieldOrder.append(field.name)
+            }
         }
         
-        return hints
+        return (hints, fieldOrder)
     }
     
     /// Write hints to a .hints file
-    static func writeHints(_ hints: [String: Any], to url: URL) throws {
-        let data = try JSONSerialization.data(withJSONObject: hints, options: [.prettyPrinted, .sortedKeys])
+    /// Preserves field order from existing hints, then appends new fields
+    /// Note: JSONSerialization doesn't guarantee order, so we manually construct JSON
+    static func writeHints(_ hints: [String: Any], to url: URL, preserveOrder: [String]? = nil) throws {
+        // Build JSON string manually to preserve order
+        var jsonLines: [String] = ["{"]
+        
+        let fieldOrder = preserveOrder ?? Array(hints.keys).sorted()
+        var isFirst = true
+        
+        for fieldName in fieldOrder {
+            guard let fieldHints = hints[fieldName] as? [String: Any] else { continue }
+            
+            if !isFirst {
+                jsonLines[jsonLines.count - 1] += ","
+            }
+            isFirst = false
+            
+            // Field name
+            jsonLines.append("  \"\(fieldName)\": {")
+            
+            // Field properties (sorted for consistency within each field)
+            let sortedKeys = fieldHints.keys.sorted()
+            var isFirstProp = true
+            for key in sortedKeys {
+                guard let value = fieldHints[key] else { continue }
+                
+                if !isFirstProp {
+                    jsonLines[jsonLines.count - 1] += ","
+                }
+                isFirstProp = false
+                
+                // Format value based on type
+                let valueString: String
+                if value is NSNull {
+                    valueString = "null"
+                } else if let stringValue = value as? String {
+                    // Escape quotes in strings
+                    let escaped = stringValue.replacingOccurrences(of: "\"", with: "\\\"")
+                    valueString = "\"\(escaped)\""
+                } else if let boolValue = value as? Bool {
+                    valueString = boolValue ? "true" : "false"
+                } else if let numberValue = value as? NSNumber {
+                    valueString = "\(numberValue)"
+                } else if let dictValue = value as? [String: Any] {
+                    // Handle dictionaries (like metadata: {})
+                    if dictValue.isEmpty {
+                        valueString = "{}"
+                    } else {
+                        // Fallback: use JSONSerialization for non-empty dicts
+                        if let jsonData = try? JSONSerialization.data(withJSONObject: dictValue, options: []),
+                           let jsonString = String(data: jsonData, encoding: .utf8) {
+                            valueString = jsonString
+                        } else {
+                            valueString = "{}"
+                        }
+                    }
+                } else {
+                    // Fallback: use JSONSerialization for complex types
+                    if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
+                       let jsonString = String(data: jsonData, encoding: .utf8) {
+                        valueString = jsonString
+                    } else {
+                        valueString = "null"
+                    }
+                }
+                
+                jsonLines.append("    \"\(key)\": \(valueString)")
+            }
+            
+            jsonLines.append("  }")
+        }
+        
+        jsonLines.append("}")
+        
+        // Join with proper spacing
+        let jsonString = jsonLines.joined(separator: "\n")
+        let data = jsonString.data(using: .utf8)!
         try data.write(to: url)
     }
 }
@@ -331,12 +508,34 @@ func main() {
     let outputDir = outputURL.deletingLastPathComponent()
     try? FileManager.default.createDirectory(at: outputDir, withIntermediateDirectories: true)
     
-    // Load existing hints if they exist
+    // Load existing hints if they exist, preserving field order
     var existingHints: [String: [String: Any]]? = nil
+    var existingFieldOrder: [String] = []
+    
     if FileManager.default.fileExists(atPath: outputURL.path),
        let data = try? Data(contentsOf: outputURL),
+       let jsonString = String(data: data, encoding: .utf8),
        let json = try? JSONSerialization.jsonObject(with: data) as? [String: [String: Any]] {
         existingHints = json
+        
+        // Extract field order from JSON string (fields appear in order in JSON)
+        // Simple regex to find field names in order: "fieldName": {
+        let fieldPattern = #""([^"]+)":\s*\{"#
+        let regex = try? NSRegularExpression(pattern: fieldPattern, options: [])
+        let nsString = jsonString as NSString
+        let matches = regex?.matches(in: jsonString, options: [], range: NSRange(location: 0, length: nsString.length)) ?? []
+        for match in matches {
+            if match.numberOfRanges >= 2 {
+                let fieldNameRange = match.range(at: 1)
+                if fieldNameRange.location != NSNotFound {
+                    let fieldName = nsString.substring(with: fieldNameRange)
+                    // Skip __example when tracking order (it's added at end)
+                    if fieldName != "__example" && !existingFieldOrder.contains(fieldName) {
+                        existingFieldOrder.append(fieldName)
+                    }
+                }
+            }
+        }
     }
     
     // Parse model file
@@ -361,12 +560,60 @@ func main() {
         exit(1)
     }
     
-    // Generate hints
-    let hints = HintsGenerator.generateHintsJSON(fields: fields, existingHints: existingHints)
-    
-    // Write hints file
-    do {
-        try HintsGenerator.writeHints(hints, to: outputURL)
+        // Generate hints (returns both hints and field order)
+        let (hints, newFieldOrder) = HintsGenerator.generateHintsJSON(
+            fields: fields, 
+            existingHints: existingHints
+        )
+        
+        // Add/update __example field with all possible properties and defaults
+        // This serves as documentation showing all available options
+        // Always ensure it has all properties, even if it existed before
+        var finalHints = hints
+        finalHints["__example"] = [
+            "fieldType": "string",  // string, number, boolean, date, url, uuid, document, image, custom
+            "isOptional": false,
+            "isArray": false,
+            "defaultValue": NSNull(),  // Can be String, Int, Bool, Double, etc.
+            "isHidden": false,
+            "expectedLength": NSNull(),  // Int or null
+            "displayWidth": NSNull(),  // "narrow", "medium", "wide", or numeric value
+            "showCharacterCounter": false,
+            "maxLength": NSNull(),  // Int or null
+            "minLength": NSNull(),  // Int or null
+            "expectedRange": NSNull(),  // {"min": 0.0, "max": 100.0} or null
+            "metadata": [:],  // Dictionary of string key-value pairs
+            "ocrHints": NSNull(),  // ["keyword1", "keyword2"] or null
+            "calculationGroups": NSNull(),  // [{"id": "...", "formula": "...", ...}] or null
+            "inputType": NSNull(),  // "picker", "text", etc. or null
+            "pickerOptions": NSNull()  // [{"value": "...", "label": "..."}] or null
+        ] as [String: Any]
+        
+        // Use existing field order if available, otherwise use new order
+        // Always ensure __example is at the end
+        let finalFieldOrder: [String] = {
+            var merged: [String]
+            if existingFieldOrder.isEmpty {
+                // New file: use new order
+                merged = newFieldOrder
+            } else {
+                // Existing file: merge existing order with new fields
+                merged = existingFieldOrder
+                for fieldName in newFieldOrder {
+                    if !merged.contains(fieldName) {
+                        merged.append(fieldName)
+                    }
+                }
+            }
+            // Always move __example to the end (remove if present, then append)
+            merged.removeAll { $0 == "__example" }
+            merged.append("__example")
+            return merged
+        }()
+        
+        // Write hints file (preserving field order)
+        do {
+            try HintsGenerator.writeHints(finalHints, to: outputURL, preserveOrder: finalFieldOrder)
         print("✅ Generated hints file: \(outputPath)")
         print("   Found \(fields.count) fields")
     } catch {

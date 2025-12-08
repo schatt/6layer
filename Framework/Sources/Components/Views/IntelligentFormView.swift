@@ -99,6 +99,10 @@ public struct IntelligentFormView {
     
     /// Generate a form for creating new data with data binding integration
     ///
+    /// **Type-Only Form Generation**:
+    /// If `initialData` is `nil` but fully declarative hints are available, the form can be
+    /// generated from hints alone. This enables form generation without requiring instance data.
+    ///
     /// **Automatic Data Binding**:
     /// By default (`autoBind: true`), a `DataBinder` is automatically created if:
     /// - No `dataBinder` is explicitly provided
@@ -112,7 +116,7 @@ public struct IntelligentFormView {
     ///
     /// - Parameters:
     ///   - dataType: The type of data model
-    ///   - initialData: Initial data instance (required for analysis)
+    ///   - initialData: Initial data instance (optional if fully declarative hints are available)
     ///   - dataBinder: Optional explicit DataBinder. If provided, `autoBind` is ignored.
     ///   - autoBind: Whether to automatically create a DataBinder (default: true)
     ///   - inputHandlingManager: Optional input handling manager
@@ -130,12 +134,19 @@ public struct IntelligentFormView {
         onSubmit: @escaping (T) -> Void = { _ in },
         onCancel: @escaping () -> Void = { }
     ) -> some View {
-        // For now, require an initial instance for analysis
-        // In a future version, we could implement type introspection
+        // DataIntrospectionEngine.analyze() now uses hints-first discovery:
+        // - If hints are fully declarative, uses hints for field discovery
+        // - If hints are partial or missing, falls back to Mirror introspection
+        // This means forms automatically benefit from hints when available
         guard let initialData = initialData else {
-            // fatalError("IntelligentFormView.generateForm requires an initial instance for analysis. Please provide initialData.")
+            // Note: We still require initialData for data binding purposes.
+            // However, field discovery will use hints-first if available.
+            // Full type-only form generation (without instance data) would require
+            // instance creation from hints, which is a future enhancement.
             return AnyView(EmptyView())
         }
+        
+        // Analyze data - will use hints-first if available, Mirror as fallback
         let analysis = DataIntrospectionEngine.analyze(initialData)
         let formStrategy = determineFormStrategy(analysis: analysis)
         
@@ -410,7 +421,8 @@ public struct IntelligentFormView {
                     dataBinder: dataBinder,
                     inputHandlingManager: inputHandlingManager,
                     customFieldView: customFieldView,
-                    formStrategy: formStrategy
+                    formStrategy: formStrategy,
+                    fieldHints: fieldHints
                 )
                 
             case .compact, .standard, .spacious:
@@ -426,6 +438,14 @@ public struct IntelligentFormView {
         }
     }
     
+    /// Filter out hidden fields based on hints
+    private static func filterHiddenFields(_ fields: [DataField], hints: [String: FieldDisplayHints]) -> [DataField] {
+        return fields.filter { field in
+            guard let hint = hints[field.name] else { return true } // Show if no hint
+            return !hint.isHidden // Hide if hint says so
+        }
+    }
+    
     /// Generate vertical field layout with intelligent grouping
     private static func generateVerticalLayout<T>(
         analysis: DataAnalysisResult,
@@ -437,7 +457,8 @@ public struct IntelligentFormView {
     ) -> some View {
         VStack(spacing: 16) {
             // Prefer explicit important fields first (e.g., title/name), avoid alphabetic-by-type
-            let orderedFields = orderFieldsByPriority(analysis.fields)
+            let visibleFields = filterHiddenFields(analysis.fields, hints: fieldHints)
+            let orderedFields = orderFieldsByPriority(visibleFields)
             ForEach(orderedFields, id: \.name) { field in
                 generateFieldView(
                     field: field,
@@ -487,10 +508,10 @@ public struct IntelligentFormView {
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
-        let columns = min(3, max(1, Int(sqrt(Double(analysis.fields.count)))))
-        
+        let visibleFields = filterHiddenFields(analysis.fields, hints: fieldHints)
+        let columns = min(3, max(1, Int(sqrt(Double(visibleFields.count)))))
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
-            let orderedFields = orderFieldsByPriority(analysis.fields)
+            let orderedFields = orderFieldsByPriority(visibleFields)
             ForEach(orderedFields, id: \.name) { field in
                 generateFieldView(
                     field: field,
@@ -511,31 +532,36 @@ public struct IntelligentFormView {
         dataBinder: DataBinder<T>?,
         inputHandlingManager: InputHandlingManager?,
         customFieldView: @escaping (String, Any, FieldType) -> some View,
-        formStrategy: FormStrategy
+        formStrategy: FormStrategy,
+        fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
-        if analysis.fields.count <= 4 {
-            AnyView(generateVerticalLayout(
+        let visibleFields = filterHiddenFields(analysis.fields, hints: fieldHints)
+        if visibleFields.count <= 4 {
+            return AnyView(generateVerticalLayout(
                 analysis: analysis,
                 initialData: initialData,
                 dataBinder: dataBinder,
                 inputHandlingManager: inputHandlingManager,
-                customFieldView: customFieldView
+                customFieldView: customFieldView,
+                fieldHints: fieldHints
             ))
-        } else if analysis.fields.count <= 8 {
-            AnyView(generateHorizontalLayout(
+        } else if visibleFields.count <= 8 {
+            return AnyView(generateHorizontalLayout(
                 analysis: analysis,
                 initialData: initialData,
                 dataBinder: dataBinder,
                 inputHandlingManager: inputHandlingManager,
-                customFieldView: customFieldView
+                customFieldView: customFieldView,
+                fieldHints: fieldHints
             ))
         } else {
-            AnyView(generateGridLayout(
+            return AnyView(generateGridLayout(
                 analysis: analysis,
                 initialData: initialData,
                 dataBinder: dataBinder,
                 inputHandlingManager: inputHandlingManager,
-                customFieldView: customFieldView
+                customFieldView: customFieldView,
+                fieldHints: fieldHints
             ))
         }
     }

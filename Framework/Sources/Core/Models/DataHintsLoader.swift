@@ -132,10 +132,13 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
         // Get language code for OCR hints lookup (e.g., "en", "es", "fr")
         let languageCode = locale.language.languageCode?.identifier ?? "en"
         
-        // Parse field hints (all keys except _sections)
+        // Parse field hints (all keys except _sections and __example)
         for (key, value) in json {
             if key == "_sections" {
                 continue // Handle sections separately
+            }
+            if key == "__example" {
+                continue // Skip __example - it's documentation only
             }
             
             if let properties = value as? [String: Any] {
@@ -171,7 +174,7 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 for (propKey, propValue) in properties {
                     if !["expectedLength", "displayWidth", "showCharacterCounter", "maxLength", "minLength", 
                          "expectedRange", "ocrHints", "calculationGroups", "inputType", "options",
-                         "fieldType", "isOptional", "isArray", "defaultValue"].contains(propKey) &&
+                         "fieldType", "isOptional", "isArray", "defaultValue", "isHidden"].contains(propKey) &&
                        !propKey.hasPrefix("ocrHints.") {
                         if let stringValue = propValue as? String {
                             metadata[propKey] = stringValue
@@ -188,6 +191,10 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                 // Parse input type and picker options
                 let inputType = properties["inputType"] as? String
                 let pickerOptions = parsePickerOptions(from: properties)
+                
+                // Parse isHidden flag
+                let isHidden = (properties["isHidden"] as? String) == "true" ||
+                              (properties["isHidden"] as? Bool) == true
                 
                 fieldHints[key] = FieldDisplayHints(
                     // Type information (new)
@@ -206,7 +213,8 @@ public class FileBasedDataHintsLoader: DataHintsLoader {
                     ocrHints: ocrHints,
                     calculationGroups: calculationGroups,
                     inputType: inputType,
-                    pickerOptions: pickerOptions
+                    pickerOptions: pickerOptions,
+                    isHidden: isHidden
                 )
             }
         }
