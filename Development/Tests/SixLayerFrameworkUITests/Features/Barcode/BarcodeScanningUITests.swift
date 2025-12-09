@@ -410,17 +410,16 @@ open class BarcodeScanningUITests: BaseTestClass {
             confidenceThreshold: 0.8
         )
         
-        // Verify function exists and can be called
+        // Verify function exists and can be called without hanging
+        // We don't host the view because it has .task that auto-starts processing
         let barcodeView = platformScanBarcode_L1(
             image: testImage,
             context: context,
-            onResult: { _ in
-                // Result callback - would be called when barcode is detected
-            }
+            onResult: { _ in }
         )
         
-        // Just verify the view type is correct - don't host it to avoid triggering .task
-        // The .task modifier would start async processing which can hang tests
+        // Just verify the function compiles and returns a view type
+        // Don't host the view to avoid triggering .task which hangs tests
         #expect(Bool(true), "platformScanBarcode_L1 should return a view type")
         
         // Note: Actual barcode scanning would require real image processing

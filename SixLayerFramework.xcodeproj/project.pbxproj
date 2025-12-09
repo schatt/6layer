@@ -101,6 +101,7 @@
 		1CD97F6899A6651C960ACA64 /* PlatformUIIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF8FF312620F73555167A43 /* PlatformUIIntegration.swift */; };
 		1DC08A851901FB593599F182 /* TestSharedConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647BFE6918C270D5144174E8 /* TestSharedConfig.swift */; };
 		1DD5C96E771D984B9E356B3C /* PlatformStylingLayer4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DB29867EEB045EEBCFBBD5 /* PlatformStylingLayer4Tests.swift */; };
+		1DFF601A3AB01AC07030182F /* BarcodeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009307A111B965BE97C66E6A /* BarcodeServiceTests.swift */; };
 		1E2C7A5B9F44BEED9538C8F3 /* FormWizardTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4DD6E1E4B678C9B1B518A6 /* FormWizardTypes.swift */; };
 		1E3F0CC21B500F345DCD6F9B /* IntelligentFormViewAutoBindingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13A3E05AA19B9069CCFB0EF /* IntelligentFormViewAutoBindingTests.swift */; };
 		1E84518CCBBF1B5A19F79121 /* PlatformButtonsLayer4.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B59566E18D2E4094FCA2B7 /* PlatformButtonsLayer4.swift */; };
@@ -118,6 +119,7 @@
 		21416EA54C154C8812AD86A7 /* DataIntrospection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695DDD54FFCD07A5A3248357 /* DataIntrospection.swift */; };
 		21470691BB66409B8BE77491 /* SixLayerFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FFFF642D6993C525230D91 /* SixLayerFramework.framework */; };
 		21480371465D466C21E0D174 /* PlatformRecognitionLayer5.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13030B41DBD414B673D289A /* PlatformRecognitionLayer5.swift */; };
+		21783310B05C81B7C9132A22 /* BarcodeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89A1FB94DEA236B3CD0DA4 /* BarcodeOverlayView.swift */; };
 		2195439F5D2D950015CBDD2B /* AdvancedFieldTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EF531CE9E02639FA372DF9 /* AdvancedFieldTypes.swift */; };
 		224662D528C36A7CCD9C013F /* AccessibilityFeaturesLayer5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB433AEF8D1FB96C967FACC /* AccessibilityFeaturesLayer5.swift */; };
 		2286B28329A23EE25247834E /* ImageMetadataIntelligenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544370B5F6C563A32941CBDB /* ImageMetadataIntelligenceTests.swift */; };
@@ -212,6 +214,7 @@
 		3533BF547550F389DBC04A86 /* DataPresentationIntelligence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9528C3BB8701ACDB9F949476 /* DataPresentationIntelligence.swift */; };
 		3535A5001FA13C52AB038B1E /* CoreViewFunctionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C8E80F1E6EE5EE0B6E3442 /* CoreViewFunctionTests.swift */; };
 		354AE5B1318F444C2A250B0F /* PlatformSemanticLayer1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35567009A4175D017A997F5B /* PlatformSemanticLayer1Tests.swift */; };
+		358A237244CE5324453DD6AC /* BarcodeOverlayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFE1F200F268A072CF6C215 /* BarcodeOverlayConfiguration.swift */; };
 		35EF4159305FE6E70BA8A4BF /* ExtensibleHints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8996A5C0690CAC02907C7FD2 /* ExtensibleHints.swift */; };
 		36150B85819E12D30815758A /* DynamicFormViewComponentAccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193DC5118C06D471F230104 /* DynamicFormViewComponentAccessibilityTests.swift */; };
 		364ED0290BF2938282BB843A /* Layer1CallbackFunctionalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DB1DDDD941C2004EB54764 /* Layer1CallbackFunctionalTests.swift */; };
@@ -245,6 +248,7 @@
 		3CB1830D17223A076CE17985 /* HIGComplianceFocusIndicatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B217B90BF10086680A70BE70 /* HIGComplianceFocusIndicatorsTests.swift */; };
 		3CD4C7EE0167FFB2E679EF75 /* ErrorPropagationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355865BEE201EF47FD082BBF /* ErrorPropagationTests.swift */; };
 		3CECDE713B2BC48E92D12898 /* IntelligentFormView+AutoBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE900AFCC4AACA688A84042 /* IntelligentFormView+AutoBinding.swift */; };
+		3D5C4FF6F1CAC4215C8CEEA7 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37405429B83A1ADB367AB7C5 /* BarcodeService.swift */; };
 		3DFC4C0D021C6642809BADF2 /* PlatformPrintLayer4.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8DAF63AF2ABB2AD6E2113D /* PlatformPrintLayer4.swift */; };
 		3E00C6C607BD896FA45915EC /* SixLayerFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C263F30766391143C12BAF70 /* SixLayerFramework.framework */; };
 		3E3933DF223C5FD079681B88 /* CoreArchitectureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F4CE32B5BBDFEF613CD919 /* CoreArchitectureTests.swift */; };
@@ -465,6 +469,7 @@
 		704FF7640B92661645A9B0B3 /* PlatformSemanticLayer1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35567009A4175D017A997F5B /* PlatformSemanticLayer1Tests.swift */; };
 		70511DEA5A9BC4655510E0B1 /* CollectionEmptyStateViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3275F552ECBF4C9CE5DDC908 /* CollectionEmptyStateViewTests.swift */; };
 		70AED5591B452FC4C47F72D3 /* AccessibilityIdentifierEdgeCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C7586E53EB4512C66D2E39 /* AccessibilityIdentifierEdgeCaseTests.swift */; };
+		70C32A8F6DE5D7643E26A049 /* BarcodeScanningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A973669E5BEA12C9A736E9 /* BarcodeScanningUITests.swift */; };
 		7102E8D5A8D0E6D21A64CE9F /* macOSSpecificHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F079FE15A3445C97332D7006 /* macOSSpecificHelpers.swift */; };
 		7112D664F3E0894D37F03136 /* PlatformOCRSemanticLayer1AccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1A06150959582C4A53786 /* PlatformOCRSemanticLayer1AccessibilityTests.swift */; };
 		712E1505BE84EAEE470BABB6 /* AccessibilityIdentifierGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAEECE5832AC79F2AC2D205 /* AccessibilityIdentifierGenerator.swift */; };
@@ -545,6 +550,7 @@
 		821EEF3D1EC0B761975B8D9E /* UnifiedImagePickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C440D8BD8808C89CE87ED8EB /* UnifiedImagePickerTests.swift */; };
 		826FA933936A5469893399CF /* PlatformImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048F07172808CEB22C5B6065 /* PlatformImageExtensions.swift */; };
 		82AFF1FB3C8ED86AF6715EAD /* NavigationStackLayer1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5E27F688FC14A8DFA1A0F5 /* NavigationStackLayer1Tests.swift */; };
+		82C41D306C30585250FA4D58 /* PlatformBarcodeSemanticLayer1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5864720CF968FCFB1F1C92 /* PlatformBarcodeSemanticLayer1.swift */; };
 		82FD4EA5B71B93174D8232A7 /* PlatformColorSystemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28754605478BC396694FA796 /* PlatformColorSystemExtensions.swift */; };
 		83623B34F6A003B736477131 /* AccessibilityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70CBB6B3A5CF69BD03AB665 /* AccessibilityTypes.swift */; };
 		83D0DA8551771C26AC0C8B2C /* PlatformTypesCompilationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B52C5563B7550031E55A8B /* PlatformTypesCompilationTests.swift */; };
@@ -575,6 +581,7 @@
 		8B1AFBF2E74A2A6231D511F3 /* PlatformSafety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7179F6C5C81A2F929A73299F /* PlatformSafety.swift */; };
 		8B2F1283C7077DA7E53AF317 /* ImageProcessingPipelineAccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B55F8BEB9FF1BBD9B10C6C1 /* ImageProcessingPipelineAccessibilityTests.swift */; };
 		8B4F80E5EA295859711D3A78 /* TestingFailureDemonstrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6117177BB1AA7EA5FF4967E3 /* TestingFailureDemonstrationTests.swift */; };
+		8B58AB8284DFBD6B0F2897D7 /* BarcodeOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89A1FB94DEA236B3CD0DA4 /* BarcodeOverlayView.swift */; };
 		8B60DB05F67D5C28B65A4125 /* LiquidGlassCapabilityDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8E30DEBD2DCC98E205EA66 /* LiquidGlassCapabilityDetection.swift */; };
 		8BFA8D47073F724AE2F08F39 /* EnvironmentVariableDebugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065B03900AF1DC18672E32DF /* EnvironmentVariableDebugTests.swift */; };
 		8C0DF409127D964CB1F461BF /* OCROverlayTestableInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AF8D780A16CE8C7500B357 /* OCROverlayTestableInterfaceTests.swift */; };
@@ -639,6 +646,7 @@
 		9B1EA993A2A61786B396F11C /* OCRSemanticLayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EBC75E75702BF77044A975 /* OCRSemanticLayerTests.swift */; };
 		9B2F582DE6FA185E18328CBA /* PlatformNavigationStackOptimizationsLayer5.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11A5933DE623D62A703DEE6 /* PlatformNavigationStackOptimizationsLayer5.swift */; };
 		9B5E65A10A76FBC93EA0D6EB /* AccessibilityIdentifierEdgeCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C7586E53EB4512C66D2E39 /* AccessibilityIdentifierEdgeCaseTests.swift */; };
+		9B6649A5B6F93301AEA76310 /* PlatformBarcodeSemanticLayer1.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5864720CF968FCFB1F1C92 /* PlatformBarcodeSemanticLayer1.swift */; };
 		9B7CEE070F7065D677185331 /* PlatformSplitViewOptimizationsLayer5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F85F34804B03D3317A7A7 /* PlatformSplitViewOptimizationsLayer5.swift */; };
 		9B82F708BBFBA81719E8B0DD /* NavigationStackLayer5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1B95639D24A95365CC9506 /* NavigationStackLayer5Tests.swift */; };
 		9BA315B1E45F5DD70AA89584 /* ImageProcessingTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA36EF6227359005A2068B3D /* ImageProcessingTypes.swift */; };
@@ -801,6 +809,7 @@
 		C2F49F4CEF48B36320F9CC8C /* Layer1AccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4522C49A58B5EA234AB1DC /* Layer1AccessibilityTests.swift */; };
 		C39FCFA6BDD4BCC115AF8790 /* PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6581558CA5F2A7C87F360D81 /* PlatformSemanticLayer1HierarchicalTemporalAccessibilityTests.swift */; };
 		C3D93406F5B4577F4B08D219 /* DataPresentationIntelligenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF4A0DB4908F4768E884F3C /* DataPresentationIntelligenceTests.swift */; };
+		C3F141BA446533466E9A3A30 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37405429B83A1ADB367AB7C5 /* BarcodeService.swift */; };
 		C41247D1BF138C7FD518CBAC /* Layer4PlatformImageArchitectureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BDD359030E59E4C1A4F3EC /* Layer4PlatformImageArchitectureTests.swift */; };
 		C43FAB4AA6F80E390EEC90BF /* PlatformContextMenuExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F7ACAC4B88AC851DBFB850 /* PlatformContextMenuExtensions.swift */; };
 		C4525599D8205E92D915BA35 /* FormProcessingWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7AFE58993D8F6D3337C6FE /* FormProcessingWorkflowTests.swift */; };
@@ -823,6 +832,7 @@
 		C7C373CF94CCD058219716B9 /* UIGenerationVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74072A0F7C82E716D7218B4B /* UIGenerationVerificationTests.swift */; };
 		C7CF7C1F04985650DC2B3D9A /* PlatformButtonsLayer4.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B59566E18D2E4094FCA2B7 /* PlatformButtonsLayer4.swift */; };
 		C804DC8C591466A8838453FB /* TestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8135B586D87BFD979C5A809F /* TestUtilities.swift */; };
+		C829090C35272B6C7E765854 /* BarcodeScanningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A973669E5BEA12C9A736E9 /* BarcodeScanningUITests.swift */; };
 		C85823A8FAE67E713B3A376F /* PlatformImageBreakingChangeDetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774BC2A72555B3F0704FA21D /* PlatformImageBreakingChangeDetectionTests.swift */; };
 		C8587C5846B66A7BD78666D8 /* PlatformUITypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CFE982A39BDB47D56B73B /* PlatformUITypes.swift */; };
 		C91BE1B8455245D649F6C006 /* IntelligentCardExpansionLayer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59EFA2BD7FB4254A5634FD4 /* IntelligentCardExpansionLayer2.swift */; };
@@ -924,6 +934,7 @@
 		E087577EFBF37B3E15954C0F /* AppleHIGComplianceExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B29E9A5671C83CD7F638332 /* AppleHIGComplianceExamples.swift */; };
 		E0B69BE22FB7731BA3DD3B83 /* PlatformTabStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DFF357E6006CA31E9B8C83 /* PlatformTabStrip.swift */; };
 		E1032D69119688CF6E8B7B8F /* FieldDisplayHintsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7AF054C80396886AD8549F /* FieldDisplayHintsTests.swift */; };
+		E11E8B63DD0176874126CC5D /* BarcodeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009307A111B965BE97C66E6A /* BarcodeServiceTests.swift */; };
 		E18EF7B851EB8EACA081A3B1 /* AutomaticHIGComplianceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7869679E42C75BED58BA2851 /* AutomaticHIGComplianceTests.swift */; };
 		E1B8FBD81390828BF96E399E /* DataBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2413EC9270CB123303ACC79 /* DataBinding.swift */; };
 		E1CF31FBBB29301A70F5E851 /* OCROverlayViewAccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020A8FEA0F305045EEE21BFA /* OCROverlayViewAccessibilityTests.swift */; };
@@ -931,6 +942,7 @@
 		E21CBB7E712B1932A0AB012D /* FormWizardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1B1B916598CCAA5D92F2C7 /* FormWizardViewTests.swift */; };
 		E21EAAE5692A83FB9D548E99 /* PlatformMapComponentsLayer4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB2BECC1F58977CC02C8DB /* PlatformMapComponentsLayer4Tests.swift */; };
 		E22FDE7D9EB512C12BD60945 /* PlatformOCRSemanticLayer1AccessibilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1A06150959582C4A53786 /* PlatformOCRSemanticLayer1AccessibilityTests.swift */; };
+		E255123443ED719B9A8CF8D4 /* BarcodeOverlayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFE1F200F268A072CF6C215 /* BarcodeOverlayConfiguration.swift */; };
 		E27476448AC604E0F2D41577 /* HIGPlatformSpecificCategoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03DC263BD5CBD078307C12 /* HIGPlatformSpecificCategoriesTests.swift */; };
 		E27A87D425679EAEFD4C69FC /* OCRL1VisualCorrectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5E09836BEAF088735EC3DC /* OCRL1VisualCorrectionTests.swift */; };
 		E295138B5DCFE5D752B368CC /* ViewInspectorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3722E33B6971EDC279F421 /* ViewInspectorWrapper.swift */; };
@@ -1152,6 +1164,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		009307A111B965BE97C66E6A /* BarcodeServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeServiceTests.swift; sourceTree = "<group>"; };
 		009B994C2C8E2B8A5E57105F /* PhotoSelectionL1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSelectionL1Tests.swift; sourceTree = "<group>"; };
 		00C197ECAA9DD195CF6CAC6B /* AssistiveTouchManagerAccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistiveTouchManagerAccessibilityTests.swift; sourceTree = "<group>"; };
 		0172104779D08CE3AE817FD7 /* OCRDisambiguationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRDisambiguationView.swift; sourceTree = "<group>"; };
@@ -1271,6 +1284,7 @@
 		359D9E4D959B4817A3861DAF /* PlatformLocationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformLocationExtensions.swift; sourceTree = "<group>"; };
 		3629E0FA6D897FA67A244CAC /* PlatformMenuSystemExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformMenuSystemExtensions.swift; sourceTree = "<group>"; };
 		36E7F1424D12A76319BE39FA /* GenericItemCollectionViewAccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItemCollectionViewAccessibilityTests.swift; sourceTree = "<group>"; };
+		37405429B83A1ADB367AB7C5 /* BarcodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeService.swift; sourceTree = "<group>"; };
 		37BDD359030E59E4C1A4F3EC /* Layer4PlatformImageArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer4PlatformImageArchitectureTests.swift; sourceTree = "<group>"; };
 		390E3A6064BAC661AE1437D1 /* PlatformSplitViewSizingLayer4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSplitViewSizingLayer4Tests.swift; sourceTree = "<group>"; };
 		391F24462104C647E4AEF81D /* DynamicFormGridLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFormGridLayoutTests.swift; sourceTree = "<group>"; };
@@ -1349,6 +1363,7 @@
 		5AF904C1787F91178FB2E7B4 /* IntelligentCardExpansionComponentAccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntelligentCardExpansionComponentAccessibilityTests.swift; sourceTree = "<group>"; };
 		5B22376B58446D17F679564B /* EnhancedDeviceDetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedDeviceDetectionTests.swift; sourceTree = "<group>"; };
 		5BC69A0813B94F7DBBA4F318 /* DefensiveCapabilityTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefensiveCapabilityTypes.swift; sourceTree = "<group>"; };
+		5CFE1F200F268A072CF6C215 /* BarcodeOverlayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeOverlayConfiguration.swift; sourceTree = "<group>"; };
 		5E7E3EBD0ED01BDA4C766DB1 /* PlatformImageEXIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformImageEXIF.swift; sourceTree = "<group>"; };
 		5EA899D32AD85BF937BD2708 /* LocationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceTests.swift; sourceTree = "<group>"; };
 		5F013CB3E81488D6A31378F9 /* ImageMetadataIntelligence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMetadataIntelligence.swift; sourceTree = "<group>"; };
@@ -1405,6 +1420,7 @@
 		782CF18A5D6CB7DD67474650 /* TestPatterns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPatterns.swift; sourceTree = "<group>"; };
 		7869679E42C75BED58BA2851 /* AutomaticHIGComplianceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutomaticHIGComplianceTests.swift; sourceTree = "<group>"; };
 		7931A9A6CD7ED530901663D7 /* InternationalizationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternationalizationTypes.swift; sourceTree = "<group>"; };
+		79A973669E5BEA12C9A736E9 /* BarcodeScanningUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScanningUITests.swift; sourceTree = "<group>"; };
 		79CF69628F12370ECAE3BCBD /* ViewGenerationIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewGenerationIntegrationTests.swift; sourceTree = "<group>"; };
 		7B2573259F44427AFFD55D83 /* Layer6ComponentAccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer6ComponentAccessibilityTests.swift; sourceTree = "<group>"; };
 		7BE0A4EC9D131C7148513675 /* LayoutDecisionReasoningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutDecisionReasoningTests.swift; sourceTree = "<group>"; };
@@ -1592,6 +1608,7 @@
 		D9C830FDFD45FBE080DC1BD5 /* PlatformButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformButtonExtensions.swift; sourceTree = "<group>"; };
 		DA36EF6227359005A2068B3D /* ImageProcessingTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingTypes.swift; sourceTree = "<group>"; };
 		DA400B7F9623E60BEC7DDAEE /* PlatformImageImplicitConversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformImageImplicitConversionTests.swift; sourceTree = "<group>"; };
+		DA5864720CF968FCFB1F1C92 /* PlatformBarcodeSemanticLayer1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformBarcodeSemanticLayer1.swift; sourceTree = "<group>"; };
 		DB23279DC451C23C6F2D1A4B /* AccessibilityIdentifierPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifierPersistenceTests.swift; sourceTree = "<group>"; };
 		DB960C1ACA9C3DC0EF0D2F01 /* FormUsageExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUsageExample.swift; sourceTree = "<group>"; };
 		DC5E09836BEAF088735EC3DC /* OCRL1VisualCorrectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRL1VisualCorrectionTests.swift; sourceTree = "<group>"; };
@@ -1636,6 +1653,7 @@
 		ED1DD69A624756436B0CD9F0 /* ResponsiveLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveLayoutTests.swift; sourceTree = "<group>"; };
 		EE191D78894AF65FCEA5047E /* PlatformTestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformTestUtilities.swift; sourceTree = "<group>"; };
 		EE5BF5819B6E3FD7441A7E48 /* PlatformOCRSemanticLayer1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformOCRSemanticLayer1Tests.swift; sourceTree = "<group>"; };
+		EE89A1FB94DEA236B3CD0DA4 /* BarcodeOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeOverlayView.swift; sourceTree = "<group>"; };
 		EF51416E3AD00D3E793DB7B8 /* CoreDataTestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataTestUtilities.swift; sourceTree = "<group>"; };
 		EFF8FF312620F73555167A43 /* PlatformUIIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformUIIntegration.swift; sourceTree = "<group>"; };
 		F079FE15A3445C97332D7006 /* macOSSpecificHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOSSpecificHelpers.swift; sourceTree = "<group>"; };
@@ -1806,6 +1824,7 @@
 			isa = PBXGroup;
 			children = (
 				93DAB20E27C468AAA2157A24 /* Accessibility */,
+				8E8BCE5AC1A53FCC232A081A /* Barcode */,
 				F468F82D039AC4F43357D878 /* Collections */,
 				961FEFD1BFDC66386B42C472 /* Forms */,
 				0CD393AA432D014E350378B4 /* Images */,
@@ -1833,6 +1852,7 @@
 			isa = PBXGroup;
 			children = (
 				2D765F48CBF196F65F2DD751 /* Accessibility */,
+				C8DADFFA2B9772E3FC05CA00 /* Barcode */,
 				A52B08DF16F3B9264C0266C5 /* Collections */,
 				B03437914612F3F0B418B1C8 /* DeviceDetection */,
 				1A03EBE44AED13DAAEBE2F07 /* Forms */,
@@ -2169,6 +2189,7 @@
 				8C9E4B02788B28764D4ED21E /* PlatformAdvancedContainerExtensions.swift */,
 				4E13207FD966EB91C1BD0E88 /* PlatformAnimationSystemExtensions.swift */,
 				CB7E83037085D9DAB37DC1A1 /* PlatformAnyShapeStyle.swift */,
+				DA5864720CF968FCFB1F1C92 /* PlatformBarcodeSemanticLayer1.swift */,
 				E1F1D7C4EB0205747D512B6C /* PlatformBasicContainerExtensions.swift */,
 				D9C830FDFD45FBE080DC1BD5 /* PlatformButtonExtensions.swift */,
 				2FF5B1D70A34EDD6D353B5E7 /* PlatformColorEncodeExtensions.swift */,
@@ -2286,6 +2307,7 @@
 		68BB6760E22D56C18A5DD109 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				37405429B83A1ADB367AB7C5 /* BarcodeService.swift */,
 				5F013CB3E81488D6A31378F9 /* ImageMetadataIntelligence.swift */,
 				15643EB387561B3850E61245 /* ImageProcessingPipeline.swift */,
 				3D93C6914566A356E50A3197 /* InternationalizationService.swift */,
@@ -2443,6 +2465,14 @@
 			path = Internationalization;
 			sourceTree = "<group>";
 		};
+		8E8BCE5AC1A53FCC232A081A /* Barcode */ = {
+			isa = PBXGroup;
+			children = (
+				79A973669E5BEA12C9A736E9 /* BarcodeScanningUITests.swift */,
+			);
+			path = Barcode;
+			sourceTree = "<group>";
+		};
 		93943535FCBF80A87E5FCA07 /* Layer4-Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -2596,6 +2626,7 @@
 		A44945DF5616AF250F750170 /* Layer3-Strategy */ = {
 			isa = PBXGroup;
 			children = (
+				5CFE1F200F268A072CF6C215 /* BarcodeOverlayConfiguration.swift */,
 				C33525F4FAE35F239E081EAD /* IntelligentCardExpansionLayer3.swift */,
 				2CBC59F8E4FB7B8B8CB45F8D /* OCROverlayConfiguration.swift */,
 				02E0FB1A5B8C0D87DB4C0846 /* PlatformNavigationStrategySelectionLayer3.swift */,
@@ -2719,6 +2750,14 @@
 				51E8F824C2A8F647E296FA8F /* WindowDetection */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		C8DADFFA2B9772E3FC05CA00 /* Barcode */ = {
+			isa = PBXGroup;
+			children = (
+				009307A111B965BE97C66E6A /* BarcodeServiceTests.swift */,
+			);
+			path = Barcode;
 			sourceTree = "<group>";
 		};
 		D1FD7AC6E676C8FC1ACD996C /* Platform */ = {
@@ -3053,6 +3092,7 @@
 		FAAE2C2D64D03E51FE695691 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EE89A1FB94DEA236B3CD0DA4 /* BarcodeOverlayView.swift */,
 				28B6AC17046E4EC31EBA88BC /* CrossPlatformOptimization.swift */,
 				7C82C686B5CB8D7A0AF5C65D /* IntelligentDetailView.swift */,
 				C00E448F76035EF4BDDB7251 /* IntelligentFormView.swift */,
@@ -3380,6 +3420,7 @@
 				674F9DEE82853129FD338B2F /* AutomaticHIGComplianceDemonstrationTests.swift in Sources */,
 				81C3DF9C82D30DC5CF450E9C /* AutomaticHIGComplianceTests.swift in Sources */,
 				D058C4D8FAAB4A81E902B6F8 /* AutomaticHIGStylingTests.swift in Sources */,
+				1DFF601A3AB01AC07030182F /* BarcodeServiceTests.swift in Sources */,
 				EBF49E35D893DE3F88686C15 /* BaseTestClass.swift in Sources */,
 				90109B674B912664BA90D5DD /* ButtonStyleCompatibilityTests.swift in Sources */,
 				4984F1B9329F0D4357559D65 /* CallbackFunctionalTests.swift in Sources */,
@@ -3571,6 +3612,7 @@
 				992306D3C995ECA818A52F4F /* AutomaticAccessibilityIdentifierTests.swift in Sources */,
 				DCE847EE624055DEC83760F7 /* AutomaticAccessibilityIdentifiersComponentAccessibilityTests.swift in Sources */,
 				A18A4D5144F4251EEF88D5AD /* AutomaticAccessibilityIdentifiersTests.swift in Sources */,
+				C829090C35272B6C7E765854 /* BarcodeScanningUITests.swift in Sources */,
 				E8AF2CE06D73FEC0636F524D /* BaseTestClass.swift in Sources */,
 				9C4075332EC5744608F6A904 /* CentralizedTestFunctions.swift in Sources */,
 				D3668D7A1ECA79531F5E73D0 /* CollectionEmptyStateViewTests.swift in Sources */,
@@ -3720,6 +3762,7 @@
 				589F5C2442CAF080AB0B1951 /* AutomaticAccessibilityIdentifierTests.swift in Sources */,
 				292FE342E3A58CC9A8BD417A /* AutomaticAccessibilityIdentifiersComponentAccessibilityTests.swift in Sources */,
 				7D242294F936CF4533443B8B /* AutomaticAccessibilityIdentifiersTests.swift in Sources */,
+				70C32A8F6DE5D7643E26A049 /* BarcodeScanningUITests.swift in Sources */,
 				6C6D507BE6B98CB1B1EBFBAB /* BaseTestClass.swift in Sources */,
 				59901F845B5D5168639C7EDE /* CentralizedTestFunctions.swift in Sources */,
 				70511DEA5A9BC4655510E0B1 /* CollectionEmptyStateViewTests.swift in Sources */,
@@ -3857,6 +3900,9 @@
 				768390D8493919A5635E311F /* AppleHIGComplianceModifiers.swift in Sources */,
 				BA0BA6082E95C813C4F7FCC3 /* AssistiveTouchManager.swift in Sources */,
 				091EE3A277B7DFE63CADC1F3 /* AutomaticAccessibilityIdentifiers.swift in Sources */,
+				358A237244CE5324453DD6AC /* BarcodeOverlayConfiguration.swift in Sources */,
+				8B58AB8284DFBD6B0F2897D7 /* BarcodeOverlayView.swift in Sources */,
+				3D5C4FF6F1CAC4215C8CEEA7 /* BarcodeService.swift in Sources */,
 				74282D20D9DF3A2EB1A81234 /* CardDisplayable.swift in Sources */,
 				BF3CB122E5BF7D83C250DA75 /* CrossPlatformNavigation.swift in Sources */,
 				3C3CA2384CD04FCA7C3C9FA9 /* CrossPlatformOptimization.swift in Sources */,
@@ -3920,6 +3966,7 @@
 				7728DC056AB0A617A95F276E /* PlatformAdvancedContainerExtensions.swift in Sources */,
 				90CAF46D2283E266AF22BC3C /* PlatformAnimationSystemExtensions.swift in Sources */,
 				014C465F30070F7C4CA42262 /* PlatformAnyShapeStyle.swift in Sources */,
+				82C41D306C30585250FA4D58 /* PlatformBarcodeSemanticLayer1.swift in Sources */,
 				67E39EB223587880F953CC63 /* PlatformBasicContainerExtensions.swift in Sources */,
 				0C9C0AEE903152F49DBF62E4 /* PlatformButtonExtensions.swift in Sources */,
 				C7CF7C1F04985650DC2B3D9A /* PlatformButtonsLayer4.swift in Sources */,
@@ -4054,6 +4101,7 @@
 				8404D9310063596A5207511E /* AutomaticHIGComplianceDemonstrationTests.swift in Sources */,
 				E18EF7B851EB8EACA081A3B1 /* AutomaticHIGComplianceTests.swift in Sources */,
 				3E98C477C39AFED623A47DAA /* AutomaticHIGStylingTests.swift in Sources */,
+				E11E8B63DD0176874126CC5D /* BarcodeServiceTests.swift in Sources */,
 				42AC90AC7860BDC7C8294AAD /* BaseTestClass.swift in Sources */,
 				B89C33A871246A0B7323535B /* ButtonStyleCompatibilityTests.swift in Sources */,
 				9157BB3273ACE1B1E8C459DD /* CallbackFunctionalTests.swift in Sources */,
@@ -4249,6 +4297,9 @@
 				A767245C6F29906C820C5F19 /* AppleHIGComplianceModifiers.swift in Sources */,
 				854E149A4EDE2B705C0BFC5B /* AssistiveTouchManager.swift in Sources */,
 				0A8F05779E62BA010375350C /* AutomaticAccessibilityIdentifiers.swift in Sources */,
+				E255123443ED719B9A8CF8D4 /* BarcodeOverlayConfiguration.swift in Sources */,
+				21783310B05C81B7C9132A22 /* BarcodeOverlayView.swift in Sources */,
+				C3F141BA446533466E9A3A30 /* BarcodeService.swift in Sources */,
 				B9B30FC4527D5C972BF032D7 /* CardDisplayable.swift in Sources */,
 				95FE36C1BDB8DB27ABF3A224 /* CrossPlatformNavigation.swift in Sources */,
 				95F901725FF74A74A61EA031 /* CrossPlatformOptimization.swift in Sources */,
@@ -4312,6 +4363,7 @@
 				7E58F0B50004DA08784B440D /* PlatformAdvancedContainerExtensions.swift in Sources */,
 				10B90421D484099DE896834C /* PlatformAnimationSystemExtensions.swift in Sources */,
 				19291B78D4D8130CFA207F09 /* PlatformAnyShapeStyle.swift in Sources */,
+				9B6649A5B6F93301AEA76310 /* PlatformBarcodeSemanticLayer1.swift in Sources */,
 				1F91F9BF26C76D3964B5809B /* PlatformBasicContainerExtensions.swift in Sources */,
 				04E20F7AA18E474392AEA578 /* PlatformButtonExtensions.swift in Sources */,
 				1E84518CCBBF1B5A19F79121 /* PlatformButtonsLayer4.swift in Sources */,

@@ -1008,4 +1008,156 @@ open class PlatformColorsTests: BaseTestClass {
             } }
         }
     }
+    
+    // MARK: - Color.named() Tests
+    
+    @Test func testColorNamedBackground() {
+        // Given: A request for "background" color name
+        // When: Resolving via Color.named()
+        let color = Color.named("background")
+        
+        // Then: Should return backgroundColor (maps to platform background)
+        #expect(color != nil, "Color.named('background') should return a color")
+        #expect(color == Color.backgroundColor, "Color.named('background') should map to backgroundColor")
+    }
+    
+    @Test func testColorNamedBackgroundMapsToPlatformBackground() {
+        // Given: A request for "background" color name
+        // When: Resolving via Color.named()
+        let namedColor = Color.named("background")
+        
+        // Then: Should map to platform-appropriate background color
+        #expect(namedColor != nil, "Color.named('background') should return a color")
+        let backgroundColor = Color.backgroundColor
+        
+        // Verify they're the same (both map to platformBackground)
+        #expect(namedColor == backgroundColor, "Color.named('background') should equal Color.backgroundColor")
+    }
+    
+    @Test func testColorNamedInvalidNameReturnsNil() {
+        // Given: An invalid color name
+        // When: Resolving via Color.named()
+        let color = Color.named("invalidColorName")
+        
+        // Then: Should return nil
+        #expect(color == nil, "Color.named() with invalid name should return nil")
+    }
+    
+    @Test func testColorNamedEmptyStringReturnsNil() {
+        // Given: An empty string
+        // When: Resolving via Color.named()
+        let color = Color.named("")
+        
+        // Then: Should return nil
+        #expect(color == nil, "Color.named() with empty string should return nil")
+    }
+    
+    @Test func testColorNamedNilReturnsNil() {
+        // Given: A nil color name
+        // When: Resolving via Color.named()
+        let color = Color.named(nil)
+        
+        // Then: Should return nil
+        #expect(color == nil, "Color.named() with nil should return nil")
+    }
+    
+    // MARK: - Material.named() Tests
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedRegularMaterial() {
+        // Given: A request for "regularMaterial" name
+        // When: Resolving via Material.named()
+        let material = Material.named("regularMaterial")
+        
+        // Then: Should return .regularMaterial
+        #expect(material != nil, "Material.named('regularMaterial') should return a material")
+        // Note: Material doesn't conform to Equatable, so we verify it's not nil
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedThinMaterial() {
+        // Given: A request for "thinMaterial" name
+        // When: Resolving via Material.named()
+        let material = Material.named("thinMaterial")
+        
+        // Then: Should return .thinMaterial
+        #expect(material != nil, "Material.named('thinMaterial') should return a material")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedThickMaterial() {
+        // Given: A request for "thickMaterial" name
+        // When: Resolving via Material.named()
+        let material = Material.named("thickMaterial")
+        
+        // Then: Should return .thickMaterial
+        #expect(material != nil, "Material.named('thickMaterial') should return a material")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedUltraThinMaterial() {
+        // Given: A request for "ultraThinMaterial" name
+        // When: Resolving via Material.named()
+        let material = Material.named("ultraThinMaterial")
+        
+        // Then: Should return .ultraThinMaterial
+        #expect(material != nil, "Material.named('ultraThinMaterial') should return a material")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedUltraThickMaterial() {
+        // Given: A request for "ultraThickMaterial" name
+        // When: Resolving via Material.named()
+        let material = Material.named("ultraThickMaterial")
+        
+        // Then: Should return .ultraThickMaterial
+        #expect(material != nil, "Material.named('ultraThickMaterial') should return a material")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedInvalidNameReturnsNil() {
+        // Given: An invalid material name
+        // When: Resolving via Material.named()
+        let material = Material.named("invalidMaterialName")
+        
+        // Then: Should return nil
+        #expect(material == nil, "Material.named() with invalid name should return nil")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedEmptyStringReturnsNil() {
+        // Given: An empty string
+        // When: Resolving via Material.named()
+        let material = Material.named("")
+        
+        // Then: Should return nil
+        #expect(material == nil, "Material.named() with empty string should return nil")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test func testMaterialNamedNilReturnsNil() {
+        // Given: A nil material name
+        // When: Resolving via Material.named()
+        let material = Material.named(nil)
+        
+        // Then: Should return nil
+        #expect(material == nil, "Material.named() with nil should return nil")
+    }
+    
+    @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+    @Test @MainActor func testMaterialNamedCanBeUsedInViews() {
+        // Given: Material names
+        let materialNames = ["regularMaterial", "thinMaterial", "thickMaterial", "ultraThinMaterial", "ultraThickMaterial"]
+        
+        // When: Resolving materials and using in views
+        for materialName in materialNames {
+            let material = Material.named(materialName)
+            #expect(material != nil, "Material.named('\(materialName)') should return a material")
+            
+            // Verify material can be used in a view
+            let view = Rectangle()
+                .background(material!)
+            #expect(Bool(true), "Material should be usable in views")
+        }
+    }
 }

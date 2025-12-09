@@ -8,6 +8,7 @@ import UIKit
 /// Defensive enum for color names to prevent string-based anti-patterns
 public enum ColorName: String, CaseIterable {
     // Background colors
+    case background = "background"
     case backgroundColor = "backgroundColor"
     case secondaryBackgroundColor = "secondaryBackgroundColor"
     case tertiaryBackgroundColor = "tertiaryBackgroundColor"
@@ -608,6 +609,8 @@ public extension Color {
         
         // Map business logic color names to platform colors using enum
         switch colorNameEnum {
+        case .background:
+            return backgroundColor
         case .backgroundColor:
             return backgroundColor
         case .secondaryBackgroundColor:
@@ -1046,5 +1049,60 @@ public extension View {
     /// iOS: systemBlue; macOS: systemBlueColor
     func platformInfoColor() -> some View {
         self.foregroundColor(Color.platformInfo)
+    }
+}
+
+// MARK: - Material Name Types
+
+/// Defensive enum for material names to prevent string-based anti-patterns
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public enum MaterialName: String, CaseIterable {
+    case regularMaterial = "regularMaterial"
+    case thinMaterial = "thinMaterial"
+    case thickMaterial = "thickMaterial"
+    case ultraThinMaterial = "ultraThinMaterial"
+    case ultraThickMaterial = "ultraThickMaterial"
+    
+    var displayName: String {
+        return self.rawValue
+    }
+    
+    /// Safe factory method that can't fail at runtime
+    static func from(string: String) -> MaterialName? {
+        return MaterialName(rawValue: string)
+    }
+}
+
+// MARK: - Material Extension
+
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+public extension Material {
+    
+    /// Resolves a material by name for business logic
+    /// Supports SwiftUI semantic material names
+    /// Thread-safe and cross-platform
+    static func named(_ materialName: String?) -> Material? {
+        guard let materialName = materialName, !materialName.isEmpty else { return nil }
+        
+        // Use enum-based approach instead of string matching
+        guard let materialNameEnum = MaterialName(rawValue: materialName) else {
+            // Unknown material name - log for debugging but don't crash
+            print("Warning: Unknown material name '\(materialName)', returning nil")
+            return nil
+        }
+        
+        // Map material names to SwiftUI materials using enum
+        switch materialNameEnum {
+        case .regularMaterial:
+            return .regularMaterial
+        case .thinMaterial:
+            return .thinMaterial
+        case .thickMaterial:
+            return .thickMaterial
+        case .ultraThinMaterial:
+            return .ultraThinMaterial
+        case .ultraThickMaterial:
+            return .ultraThickMaterial
+        }
     }
 }

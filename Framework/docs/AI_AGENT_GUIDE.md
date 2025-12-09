@@ -1906,6 +1906,122 @@ VStack {
 
 ## 🔍 **OCR Functionality Usage Guide**
 
+### **Barcode Scanning System Overview**
+The SixLayer Framework includes comprehensive barcode scanning capabilities using Apple Vision's `VNDetectBarcodesRequest`. This complements the existing OCR functionality and provides a complete document scanning solution.
+
+### **Core Barcode Scanning Philosophy**
+Just like OCR, barcode scanning follows the **Layer 1 Semantic Intent** principle:
+- **Apps express WHAT they want to scan, not HOW to implement it**
+- **Framework handles all Vision framework complexity internally**
+- **Supports both 1D and 2D barcode types**
+
+### **Available Barcode Scanning Functions**
+
+#### **1. Basic Barcode Scanning (Primary Function)**
+```swift
+// ✅ CORRECT: Express intent, let framework handle implementation
+let barcodeView = platformScanBarcode_L1(
+    image: myImage,
+    context: BarcodeContext(
+        supportedBarcodeTypes: [.qrCode, .code128],
+        confidenceThreshold: 0.8
+    )
+) { result in
+    if result.hasBarcodes {
+        for barcode in result.barcodes {
+            print("Barcode: \(barcode.payload)")
+            print("Type: \(barcode.barcodeType.displayName)")
+        }
+    }
+}
+```
+
+#### **2. Using BarcodeService Directly**
+```swift
+// ✅ CORRECT: Use service directly for programmatic access
+let service = BarcodeServiceFactory.create()
+let result = try await service.processImage(image, context: context)
+
+if result.hasBarcodes {
+    // Process detected barcodes
+    for barcode in result.barcodes {
+        processBarcode(barcode)
+    }
+}
+```
+
+#### **3. Integration with Dynamic Forms**
+```swift
+// ✅ CORRECT: Add barcode scanning to form fields
+let productField = DynamicFormField(
+    id: "product-barcode",
+    contentType: .text,
+    label: "Product Barcode",
+    supportsBarcodeScanning: true,
+    barcodeHint: "Scan product barcode",
+    supportedBarcodeTypes: [.ean13, .code128]
+)
+```
+
+### **Supported Barcode Types**
+
+#### **1D Barcodes**
+- EAN-8, EAN-13
+- UPC-A, UPC-E
+- Code 128, Code 39, Code 93
+- Codabar, Interleaved 2 of 5, ITF-14
+- MSI Plessey (iOS 17.0+, macOS 14.0+)
+
+#### **2D Barcodes**
+- QR Code
+- Data Matrix
+- PDF417
+- Aztec
+
+### **Barcode Result Handling**
+
+```swift
+let barcodeView = platformScanBarcode_L1(
+    image: myImage,
+    context: context
+) { result in
+    // Check if barcodes were found
+    if result.hasBarcodes {
+        // Access all detected barcodes
+        for barcode in result.barcodes {
+            print("Payload: \(barcode.payload)")
+            print("Type: \(barcode.barcodeType.displayName)")
+            print("Confidence: \(barcode.confidence)")
+            print("Bounding Box: \(barcode.boundingBox)")
+        }
+        
+        // Access average confidence
+        print("Average confidence: \(result.confidence)")
+    } else {
+        print("No barcodes detected")
+    }
+}
+```
+
+### **Barcode Error Handling**
+
+```swift
+do {
+    let result = try await service.processImage(image, context: context)
+    // Process result
+} catch BarcodeError.visionUnavailable {
+    print("Vision framework not available")
+} catch BarcodeError.invalidImage {
+    print("Invalid or unprocessable image")
+} catch BarcodeError.noBarcodeFound {
+    print("No barcodes detected in image")
+} catch BarcodeError.processingFailed {
+    print("Barcode processing failed")
+} catch BarcodeError.unsupportedPlatform {
+    print("Barcode scanning not supported on this platform")
+}
+```
+
 ### **OCR System Overview**
 The SixLayer Framework includes a comprehensive OCR (Optical Character Recognition) system that follows the 6-layer architecture. OCR functionality is available through Layer 1 semantic functions that express intent rather than implementation details.
 

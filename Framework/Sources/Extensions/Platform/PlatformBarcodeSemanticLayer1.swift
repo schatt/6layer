@@ -84,9 +84,11 @@ private struct BarcodeScanningWrapper: View {
             }
         }
         .automaticCompliance()
-        .task {
-            // Process image when view appears
-            processImage()
+        .onAppear {
+            // Process image when view appears (only if not already processing)
+            if !isProcessing && barcodeResult == nil && errorMessage == nil {
+                processImage()
+            }
         }
     }
     

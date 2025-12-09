@@ -44,13 +44,15 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **Autocomplete** - Smart suggestion-based input fields
 - **Custom Fields** - Extensible custom field component system
 
-### 📸 OCR & Visual Features
+### 📸 OCR & Barcode Scanning
 - **[OCROverlayGuide.md](OCROverlayGuide.md)** - **NEW!** Complete guide to OCR overlay system
+- **[BarcodeScanningGuide.md](BarcodeScanningGuide.md)** - **NEW!** Complete guide to barcode scanning
 - **[StructuredOCRExtractionGuide.md](StructuredOCRExtractionGuide.md)** - **NEW!** Complete guide to structured OCR data extraction
 - **[HIGVisualDesignCategoriesGuide.md](HIGVisualDesignCategoriesGuide.md)** - **NEW v5.9.0!** Complete guide to HIG-compliant visual design categories
 - **OCR Overlay System** - Interactive visual text correction with bounding box editing
 - **OCR Disambiguation** - Smart text recognition with user selection capabilities
 - **Visual Text Correction** - Tap-to-edit functionality for OCR results
+- **Barcode Scanning** - **NEW!** Detect 1D and 2D barcodes (QR Code, Code 128, EAN-13, etc.)
 - **Structured Data Extraction** - **NEW!** Extract structured data from documents using regex patterns and hints
 - **Visual Design Categories** - **NEW v5.9.0!** HIG-compliant animations, shadows, corner radius, borders, opacity, and blur effects
 
