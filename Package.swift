@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.1.0 - Form UX Enhancements & Platform Extensions
+// SixLayerFramework v6.1.1 - Color.named() Extensions
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
