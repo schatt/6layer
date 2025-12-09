@@ -6,7 +6,7 @@ import Foundation
 /// Helper view for barcode scanning workflow in field actions
 /// Presents image picker, processes barcode, and returns result
 @MainActor
-struct FieldActionBarcodeScanner: View {
+public struct FieldActionBarcodeScanner: View {
     @Binding var isPresented: Bool
     let onResult: (String?) -> Void
     let onError: (Error) -> Void
@@ -16,7 +16,21 @@ struct FieldActionBarcodeScanner: View {
     @State private var showImagePicker = false
     @State private var isProcessing = false
     
-    var body: some View {
+    public init(
+        isPresented: Binding<Bool>,
+        onResult: @escaping (String?) -> Void,
+        onError: @escaping (Error) -> Void,
+        hint: String?,
+        supportedTypes: [BarcodeType]?
+    ) {
+        self._isPresented = isPresented
+        self.onResult = onResult
+        self.onError = onError
+        self.hint = hint
+        self.supportedTypes = supportedTypes
+    }
+    
+    public var body: some View {
         EmptyView()
             .sheet(isPresented: $showImagePicker) {
                 UnifiedImagePicker { image in
@@ -65,7 +79,7 @@ struct FieldActionBarcodeScanner: View {
 /// Helper view for OCR scanning workflow in field actions
 /// Presents image picker, processes OCR, and returns result
 @MainActor
-struct FieldActionOCRScanner: View {
+public struct FieldActionOCRScanner: View {
     @Binding var isPresented: Bool
     let onResult: (String?) -> Void
     let onError: (Error) -> Void
@@ -75,7 +89,21 @@ struct FieldActionOCRScanner: View {
     @State private var showImagePicker = false
     @State private var isProcessing = false
     
-    var body: some View {
+    public init(
+        isPresented: Binding<Bool>,
+        onResult: @escaping (String?) -> Void,
+        onError: @escaping (Error) -> Void,
+        hint: String?,
+        validationTypes: [TextType]?
+    ) {
+        self._isPresented = isPresented
+        self.onResult = onResult
+        self.onError = onError
+        self.hint = hint
+        self.validationTypes = validationTypes
+    }
+    
+    public var body: some View {
         EmptyView()
             .sheet(isPresented: $showImagePicker) {
                 UnifiedImagePicker { image in

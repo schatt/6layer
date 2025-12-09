@@ -15,6 +15,9 @@ public struct FieldActionRenderer: View {
     @State private var isActionMenuPresented = false
     @State private var actionLoadingState: [String: Bool] = [:]
     @State private var actionErrors: [String: Error] = [:]
+    @State private var showBarcodeScanner = false
+    @State private var showOCRScanner = false
+    @State private var scanningFieldId: String?
     
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -36,40 +39,36 @@ public struct FieldActionRenderer: View {
             }
         }
         .sheet(isPresented: $showBarcodeScanner) {
-            if let barcodeAction = actions.first(where: { $0.id == "barcode-scan" }) as? any FieldAction {
-                // Extract hint and types from field
-                FieldActionBarcodeScanner(
-                    isPresented: $showBarcodeScanner,
-                    onResult: { result in
-                        if let result = result {
-                            formState.setValue(result, for: field.id)
-                        }
-                    },
-                    onError: { error in
-                        formState.addError(error.localizedDescription, for: field.id)
-                    },
-                    hint: field.barcodeHint,
-                    supportedTypes: field.supportedBarcodeTypes
-                )
-            }
+            // Extract hint and types from field (backward compatibility)
+            FieldActionBarcodeScanner(
+                isPresented: $showBarcodeScanner,
+                onResult: { result in
+                    if let result = result {
+                        formState.setValue(result, for: field.id)
+                    }
+                },
+                onError: { error in
+                    formState.addError(error.localizedDescription, for: field.id)
+                },
+                hint: field.barcodeHint,
+                supportedTypes: field.supportedBarcodeTypes
+            )
         }
         .sheet(isPresented: $showOCRScanner) {
-            if let ocrAction = actions.first(where: { $0.id == "ocr-scan" }) as? any FieldAction {
-                // Extract hint and types from field
-                FieldActionOCRScanner(
-                    isPresented: $showOCRScanner,
-                    onResult: { result in
-                        if let result = result {
-                            formState.setValue(result, for: field.id)
-                        }
-                    },
-                    onError: { error in
-                        formState.addError(error.localizedDescription, for: field.id)
-                    },
-                    hint: field.ocrHint,
-                    validationTypes: field.ocrValidationTypes
-                )
-            }
+            // Extract hint and types from field (backward compatibility)
+            FieldActionOCRScanner(
+                isPresented: $showOCRScanner,
+                onResult: { result in
+                    if let result = result {
+                        formState.setValue(result, for: field.id)
+                    }
+                },
+                onError: { error in
+                    formState.addError(error.localizedDescription, for: field.id)
+                },
+                hint: field.ocrHint,
+                validationTypes: field.ocrValidationTypes
+            )
         }
     }
     
@@ -179,9 +178,6 @@ public struct FieldActionRenderer: View {
     }
     
     /// Present scanning UI for barcode or OCR
-    @State private var showBarcodeScanner = false
-    @State private var showOCRScanner = false
-    
     private func presentScanningUI(
         type: FieldActionError.ScanningType,
         hint: String?,
