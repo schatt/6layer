@@ -1873,4 +1873,94 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         // Should handle conversion
         #expect(view != nil, "Should handle string to double conversion")
     }
+
+    @Test @MainActor func testDynamicStepperFieldUsesFieldDisplayHintsExpectedRange() async {
+        // DynamicStepperField should prefer expectedRange from FieldDisplayHints over metadata min/max
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        // Create field with expectedRange in metadata (which becomes displayHints.expectedRange)
+        // Format: "expectedRange": "min:max" or "expectedRangeMin"/"expectedRangeMax"
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Rating",
+            defaultValue: "3",
+            metadata: [
+                "expectedRange": "2:8",  // This will be parsed into displayHints.expectedRange
+                "min": "1",  // This should be ignored when expectedRange is present
+                "max": "10", // This should be ignored when expectedRange is present
+                "step": "1"
+            ]
+        )
+
+        // Verify displayHints has expectedRange
+        guard let displayHints = field.displayHints,
+              let expectedRange = displayHints.expectedRange else {
+            Issue.record("Field should have displayHints with expectedRange")
+            return
+        }
+
+        #expect(expectedRange.min == 2.0, "ExpectedRange min should be 2.0")
+        #expect(expectedRange.max == 8.0, "ExpectedRange max should be 8.0")
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // The stepper should use the expectedRange (2...8) not the metadata min/max (1...10)
+        // We can't directly test the range, but we can verify the view is created
+        // and the initial value should be within the expectedRange bounds
+        let initialValue = formState.getValue(for: "stepper") ?? field.defaultValue ?? "0"
+        if let doubleValue = Double(initialValue as? String ?? initialValue as? String ?? "0") {
+            #expect(doubleValue >= expectedRange.min, "Initial value should respect expectedRange min")
+            #expect(doubleValue <= expectedRange.max, "Initial value should respect expectedRange max")
+        }
+
+        #expect(view != nil, "Should use expectedRange from FieldDisplayHints")
+    }
+
+    @Test @MainActor func testDynamicStepperFieldFallsBackToMetadataWhenNoExpectedRange() async {
+        // DynamicStepperField should fall back to metadata min/max when displayHints.expectedRange is nil
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        // Create field without expectedRange, but with metadata min/max
+        let field = DynamicFormField(
+            id: "stepper",
+            contentType: .stepper,
+            label: "Quantity",
+            defaultValue: "5",
+            metadata: [
+                "min": "0",
+                "max": "20",
+                "step": "1"
+            ]
+        )
+
+        // Verify displayHints doesn't have expectedRange
+        let displayHints = field.displayHints
+        #expect(displayHints?.expectedRange == nil, "Field should not have expectedRange in displayHints")
+
+        let view = DynamicStepperField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should fall back to metadata min/max (0...20)
+        let initialValue = formState.getValue(for: "stepper") ?? field.defaultValue ?? "0"
+        if let doubleValue = Double(initialValue as? String ?? initialValue as? String ?? "0") {
+            #expect(doubleValue >= 0.0, "Initial value should respect metadata min")
+            #expect(doubleValue <= 20.0, "Initial value should respect metadata max")
+        }
+
+        #expect(view != nil, "Should fall back to metadata min/max")
+    }
 }

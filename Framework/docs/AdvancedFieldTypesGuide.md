@@ -48,6 +48,14 @@ The Advanced Field Types system provides a comprehensive set of sophisticated fo
 - **Type Safety** - Full compile-time type checking
 - **Cross-Platform** - Consistent behavior across iOS, macOS, and other platforms
 
+### 🔢 Stepper Field (v6.0.0+)
+- **Increment/Decrement Controls** - Native SwiftUI Stepper with +/- buttons
+- **Range Configuration** - Supports min/max values via `FieldDisplayHints.expectedRange` or metadata
+- **Step Size** - Configurable increment/decrement step size
+- **Value Display** - Shows current value with appropriate formatting (integer or decimal)
+- **Form State Integration** - Seamless integration with `DynamicFormState`
+- **Accessibility** - Full VoiceOver support with proper labels and hints
+
 ## Architecture
 
 ### Layer 1: Semantic - Field Types
@@ -65,6 +73,7 @@ public enum DynamicFieldType: String, CaseIterable, Hashable {
     case array = "array"          // Medium Priority: Native array support
     case data = "data"            // Medium Priority: Native Data support
     case `enum` = "enum"          // Low Priority: Native enum support
+    case stepper = "stepper"      // Increment/decrement control (v6.0.0+)
     case datetime = "datetime"
     case custom = "custom"
     // ... other field types
@@ -183,6 +192,43 @@ EnhancedFileUploadField(
 )
 ```
 
+### Stepper Field
+
+```swift
+// Using metadata for min/max/step
+let field = DynamicFormField(
+    id: "quantity",
+    contentType: .stepper,
+    label: "Quantity",
+    defaultValue: "1",
+    metadata: [
+        "min": "0",
+        "max": "100",
+        "step": "1"
+    ]
+)
+
+// Using FieldDisplayHints.expectedRange (preferred)
+let fieldWithHints = DynamicFormField(
+    id: "rating",
+    contentType: .stepper,
+    label: "Rating",
+    defaultValue: "3",
+    metadata: [
+        "expectedRange": "1:5",  // min:max format
+        "step": "1"
+    ]
+)
+
+DynamicStepperField(field: field, formState: formState)
+```
+
+**Configuration Options:**
+- **Range**: Use `FieldDisplayHints.expectedRange` (preferred) or `metadata["min"]`/`metadata["max"]` (fallback)
+- **Step Size**: Configure via `metadata["step"]` (default: 1.0)
+- **Default Value**: Set via `defaultValue` parameter
+- **Formatting**: Automatically formats as integer when step is whole number, decimal otherwise
+
 ### Custom Field Components
 
 ```swift
@@ -238,6 +284,25 @@ public struct DatePickerField: View {
     public var body: some View
 }
 ```
+
+### DynamicStepperField
+
+```swift
+public struct DynamicStepperField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public var body: some View
+}
+```
+
+**Features:**
+- Prefers `FieldDisplayHints.expectedRange` for min/max configuration
+- Falls back to `metadata["min"]` and `metadata["max"]` when `expectedRange` is not available
+- Configurable step size via `metadata["step"]`
+- Automatic value formatting (integer vs decimal based on step size)
+- Full accessibility support with automatic identifier generation
+- Real-time form state updates
 
 **Features:**
 - Compact date picker interface

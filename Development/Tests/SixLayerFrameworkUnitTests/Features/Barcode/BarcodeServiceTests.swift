@@ -30,11 +30,9 @@ import Foundation
 import Vision
 #endif
 
-#if os(macOS)
-import AppKit
-#endif
-
-#if os(macOS)
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
 import AppKit
 #endif
 

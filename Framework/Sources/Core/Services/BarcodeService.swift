@@ -93,6 +93,10 @@ public class BarcodeService: BarcodeServiceProtocol, @unchecked Sendable {
         guard #available(macOS 10.15, *) else {
             throw BarcodeError.unsupportedPlatform
         }
+        #elseif os(visionOS)
+        guard #available(visionOS 1.0, *) else {
+            throw BarcodeError.unsupportedPlatform
+        }
         #endif
         
         return try await withCheckedThrowingContinuation { continuation in
@@ -136,7 +140,7 @@ public class BarcodeService: BarcodeServiceProtocol, @unchecked Sendable {
     }
     
     #if canImport(Vision)
-    @available(iOS 11.0, macOS 10.15, *)
+    @available(iOS 11.0, macOS 10.15, visionOS 1.0, *)
     private func configureVisionBarcodeRequest(
         _ request: VNDetectBarcodesRequest,
         context: BarcodeContext
@@ -154,7 +158,7 @@ public class BarcodeService: BarcodeServiceProtocol, @unchecked Sendable {
         }
     }
     
-    @available(iOS 11.0, macOS 10.15, *)
+    @available(iOS 11.0, macOS 10.15, visionOS 1.0, *)
     private func processVisionBarcodeResults(
         observations: [VNBarcodeObservation],
         context: BarcodeContext
@@ -201,7 +205,7 @@ public class BarcodeService: BarcodeServiceProtocol, @unchecked Sendable {
         )
     }
     
-    @available(iOS 11.0, macOS 10.15, *)
+    @available(iOS 11.0, macOS 10.15, visionOS 1.0, *)
     private func convertSymbologyToBarcodeType(_ symbology: VNBarcodeSymbology) -> BarcodeType {
         // Handle all known symbologies
         if symbology == .ean8 { return .ean8 }
@@ -253,6 +257,10 @@ public class BarcodeService: BarcodeServiceProtocol, @unchecked Sendable {
         if #available(macOS 10.15, *) {
             return true
         }
+        #elseif os(visionOS)
+        if #available(visionOS 1.0, *) {
+            return true
+        }
         #endif
         #endif
         return false
@@ -276,6 +284,15 @@ public class BarcodeService: BarcodeServiceProtocol, @unchecked Sendable {
                 supportedBarcodeTypes: BarcodeType.allCases,
                 maxImageSize: CGSize(width: 8192, height: 8192),
                 processingTimeEstimate: 0.8
+            )
+        }
+        #elseif os(visionOS)
+        if #available(visionOS 1.0, *) {
+            return BarcodeCapabilities(
+                supportsVision: true,
+                supportedBarcodeTypes: BarcodeType.allCases,
+                maxImageSize: CGSize(width: 4096, height: 4096),
+                processingTimeEstimate: 1.0
             )
         }
         #endif

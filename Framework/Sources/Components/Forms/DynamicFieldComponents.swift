@@ -255,25 +255,44 @@ public struct DynamicTextField: View {
                         .textFieldStyle(.roundedBorder)
                         .automaticCompliance()
                 }
-            } else if field.supportsOCR {
-                // Render text field with OCR support
+            } else if field.supportsOCR || field.supportsBarcodeScanning {
+                // Render text field with OCR and/or barcode scanning support
                 HStack {
                     TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
                         .textFieldStyle(.roundedBorder)
                         .automaticCompliance()
 
-                    Button(action: {
-                        // TODO: Implement OCR scanning workflow
-                        // This should trigger OCROverlayView and populate the field
-                        print("OCR scan requested for field: \(field.id)")
-                    }) {
-                        Image(systemName: "camera.viewfinder")
-                            .foregroundColor(.blue)
+                    // OCR button
+                    if field.supportsOCR {
+                        Button(action: {
+                            // TODO: Implement OCR scanning workflow
+                            // This should trigger OCROverlayView and populate the field
+                            print("OCR scan requested for field: \(field.id)")
+                        }) {
+                            Image(systemName: "camera.viewfinder")
+                                .foregroundColor(.blue)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel("Scan with OCR")
+                        .accessibilityHint(field.ocrHint ?? "Scan document to fill this field")
+                        .automaticCompliance()
                     }
-                    .buttonStyle(.borderless)
-                    .accessibilityLabel("Scan with OCR")
-                    .accessibilityHint(field.ocrHint ?? "Scan document to fill this field")
-                    .automaticCompliance()
+                    
+                    // Barcode scanning button
+                    if field.supportsBarcodeScanning {
+                        Button(action: {
+                            // TODO: Implement barcode scanning workflow
+                            // This should trigger BarcodeOverlayView and populate the field
+                            print("Barcode scan requested for field: \(field.id)")
+                        }) {
+                            Image(systemName: "barcode.viewfinder")
+                                .foregroundColor(.green)
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel("Scan barcode")
+                        .accessibilityHint(field.barcodeHint ?? "Scan barcode to fill this field")
+                        .automaticCompliance()
+                    }
                 }
             } else {
                 // Default text field
@@ -540,7 +559,14 @@ public struct DynamicStepperField: View {
         )
     }
 
+    /// Get range from displayHints (preferred) or metadata (fallback)
     private var range: ClosedRange<Double> {
+        // Prefer expectedRange from displayHints (has structured range)
+        if let hints = field.displayHints,
+           let expectedRange = hints.expectedRange {
+            return expectedRange.min...expectedRange.max
+        }
+        // Fallback to metadata min/max keys
         let min = Double(field.metadata?["min"] ?? "0") ?? 0.0
         let max = Double(field.metadata?["max"] ?? "100") ?? 100.0
         return min...max
