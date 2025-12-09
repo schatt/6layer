@@ -96,7 +96,9 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     @Published public var enableUITestIntegration: Bool = false
     
     /// Debug log entries
-    @Published private var debugLogEntries: [String] = []
+    /// CRITICAL: NOT @Published - accessing @Published properties from view body causes infinite recursion
+    /// This is only used for debugging, not for reactive UI updates
+    private var debugLogEntries: [String] = []
     
     /// Maximum number of debug log entries to keep
     private let maxDebugLogEntries = 1000
@@ -188,8 +190,13 @@ public class AccessibilityIdentifierConfig: ObservableObject {
     }
     
     /// Add an entry to the debug log (internal method)
-    internal func addDebugLogEntry(_ entry: String) {
-        guard enableDebugLogging else { return }
+    /// CRITICAL: Accepts `enabled` parameter instead of accessing @Published property
+    /// to avoid creating SwiftUI dependencies that cause infinite recursion when called from view body
+    /// - Parameters:
+    ///   - entry: The debug log entry to add
+    ///   - enabled: Whether debug logging is enabled (use captured value, not @Published property)
+    internal func addDebugLogEntry(_ entry: String, enabled: Bool) {
+        guard enabled else { return }
         
         let timestamp = DateFormatter.debugTimestamp.string(from: Date())
         let formattedEntry = "[\(timestamp)] \(entry)"

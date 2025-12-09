@@ -98,7 +98,7 @@ public class AccessibilityIdentifierGenerator {
         // CRITICAL: Use captured value instead of accessing @Published property directly
         if capturedEnableDebugLogging {
             let logEntry = "Generated ID: \(generatedID) for: \(componentName) role: \(role) context: \(context)"
-            config.addDebugLogEntry(logEntry)
+            config.addDebugLogEntry(logEntry, enabled: capturedEnableDebugLogging)
         }
         
         return generatedID
