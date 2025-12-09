@@ -1,12 +1,48 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.0.3 - Critical Bug Fix: Additional Infinite Recursion Fixes in Accessibility Identifiers** 🎯
+## 📍 **Current Release: v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers** 🎯
 
 **Release Date**: December 8, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.0.2 - Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers
-**Note**: Critical patch release fixing 7 additional instances of infinite recursion crashes in accessibility identifier generation. Fixed by capturing all @Published config values (namespace, globalPrefix, enableAutoIDs, etc.) as local variables before use.
+**Previous Release**: v6.0.4 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers
+**Note**: Critical patch release fixing infinite recursion crash in HIG compliance modifiers. Fixed by removing recursive `.automaticCompliance()` calls from 5 modifiers (SystemColorModifier, SystemTypographyModifier, SpacingModifier, PlatformStylingModifier, PlatformIconModifier) that are already applied within the compliance feature chain.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers** (December 8, 2025)
+
+### **Critical Bug Fix:**
+
+#### **🚨 Infinite Recursion Crash in HIG Compliance Modifiers**
+- **Fixed**: Infinite recursion causing stack overflow when `.automaticCompliance()` modifier is applied
+- **Fixed**: Circular dependency between `AutomaticComplianceModifier.applyHIGComplianceFeatures()` and modifier body methods
+- **Fixed**: 5 modifiers calling `.automaticCompliance()` recursively within the compliance feature chain
+- **Solution**: Removed `.automaticCompliance()` calls from modifiers that are already part of the compliance chain
+- **Impact**: All users of `.automaticCompliance()` modifier should upgrade immediately
+
+**Technical Details**:
+- Removed recursive `.automaticCompliance()` calls from: `SystemColorModifier`, `SystemTypographyModifier`, `SpacingModifier`, `PlatformStylingModifier`, and `PlatformIconModifier`
+- These modifiers are already applied within `AutomaticComplianceModifier.applyHIGComplianceFeatures()`, so calling `.automaticCompliance()` again creates a circular dependency
+- Added comments explaining why these calls were removed to prevent future regressions
+
+**Why Tests Didn't Catch**: Tests use ViewInspector which doesn't trigger SwiftUI's AttributeGraph update cycle. The recursion only occurs during actual view rendering in real apps.
+
+**Migration**: No code changes required - upgrade to v6.0.5 to fix the crashes.
+
+---
+
+## 🎯 **v6.0.4 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers** (December 8, 2025)
+
+### **Critical Bug Fix:**
+
+#### **🚨 Infinite Recursion Crash in HIG Compliance Modifiers**
+- **Fixed**: Infinite recursion causing stack overflow when `.automaticCompliance()` modifier is applied
+- **Fixed**: Circular dependency between `AutomaticComplianceModifier.applyHIGComplianceFeatures()` and modifier body methods
+- **Solution**: Removed `.automaticCompliance()` calls from modifiers used within the compliance feature chain
+- **Impact**: All users of `.automaticCompliance()` modifier should upgrade immediately
+
+**Migration**: No code changes required - upgrade to v6.0.4 to fix the crashes.
 
 ---
 
