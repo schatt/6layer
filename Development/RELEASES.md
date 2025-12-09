@@ -1,12 +1,51 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers** 🎯
+## 📍 **Current Release: v6.1.0 - Form UX Enhancements & Platform Extensions** 🎯
 
 **Release Date**: December 8, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.0.4 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers
-**Note**: Critical patch release fixing infinite recursion crash in HIG compliance modifiers. Fixed by removing recursive `.automaticCompliance()` calls from 5 modifiers (SystemColorModifier, SystemTypographyModifier, SpacingModifier, PlatformStylingModifier, PlatformIconModifier) that are already applied within the compliance feature chain.
+**Previous Release**: v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers
+**Note**: Minor release focused on form UX improvements and platform extensions. Includes collapsible sections, required field indicators, character counters, validation summary, Stepper field type, Link component for URLs, barcode scanning support, semantic background colors, declarative field hints with Mirror fallback, batch OCR workflow, string sanitization, and various platform extensions.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.1.0 - Form UX Enhancements & Platform Extensions** (December 8, 2025)
+
+### **What's New:**
+
+#### **📝 Form UX Enhancements (Issues #74, #75, #76, #78, #86, #87)**
+- **Collapsible Sections**: Implemented collapsible sections in `DynamicFormSectionView` for better organization of long forms
+- **Required Field Indicators**: Added visual indicators to `DynamicFormFieldView` showing which fields are required
+- **Character Counters**: Added character counters for text fields with `maxLength` validation
+- **Validation Summary**: Added form validation summary view showing all errors at once
+- **Stepper Field Type**: Added Stepper as dedicated `DynamicFormField` type for better number input UX
+- **Link Component for URLs**: Use `Link` component for read-only URL fields instead of `TextField`
+
+#### **🔍 OCR & Data Processing (Issues #83, #90)**
+- **Batch OCR Workflow**: Implemented batch OCR workflow for filling multiple fields from single scan
+- **Declarative Field Hints**: Made field hints fully declarative with Mirror fallback for automatic property discovery
+
+#### **🎨 UI Enhancements (Issues #94, #93)**
+- **Semantic Background Colors**: Added support for SwiftUI semantic background colors via `Color.named()`
+- **Barcode Scanning Support**: Added barcode scanning support for data capture
+
+#### **🛠️ Platform Extensions (Issues #64, #65, #66, #67, #69, #70)**
+- **Platform Sidebar Pull Indicator**: Added platform sidebar pull indicator extension
+- **Platform Container Extensions**: Added extensions for LazyVGrid, Tab, and Scroll containers
+- **Platform List Toolbar Extension**: Added toolbar extension for List components
+- **Platform Animation System Extensions**: Added animation system extensions (experimental)
+- **tvOS Toolbar Placement Research**: Researched and documented tvOS toolbar placement support
+- **String Sanitization Function**: Added general-purpose string sanitization function
+
+### **Why It Matters**
+- Enhanced form UX makes data entry more intuitive and user-friendly
+- Collapsible sections improve navigation in long forms
+- Visual indicators help users understand required fields and validation status
+- Platform extensions provide consistent cross-platform abstractions
+- Batch OCR workflow improves efficiency for multi-field data capture
+
+**See [RELEASE_v6.1.0.md](RELEASE_v6.1.0.md) for complete release notes.**
 
 ---
 

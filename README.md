@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.0.3")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.1.0")
 ]
 ```
 
@@ -41,12 +41,13 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.0.3
+## 🆕 Latest Release: v6.1.0
 
-### **Critical Bug Fix: Additional Infinite Recursion Fixes in Accessibility Identifiers**
-🚨 **Critical fix**: Fixed additional infinite recursion crashes in accessibility identifier generation.  
-✅ **Stable**: All users of automatic accessibility identifier generation should upgrade immediately.  
-🔧 **Technical**: Fixed 7 additional instances where `@Published` properties were accessed directly during view body evaluation, including `namespace`, `globalPrefix`, and `enableAutoIDs`.
+### **Form UX Enhancements & Platform Extensions**
+📝 **Form improvements**: Collapsible sections, required field indicators, character counters, validation summary, Stepper field type, and Link component for URLs.  
+🔍 **OCR enhancements**: Batch OCR workflow for filling multiple fields from single scan, declarative field hints with Mirror fallback.  
+🎨 **UI enhancements**: Semantic background colors via `Color.named()`, barcode scanning support.  
+🛠️ **Platform extensions**: Sidebar pull indicator, container extensions, list toolbar extension, animation system extensions, string sanitization function.
 
 ### **Previous Release: v6.0.0 - Intelligent Device-Aware Navigation & Cross-Platform Utilities**
 🧭 **Intelligent navigation**: Device-aware app navigation with automatic pattern selection (NavigationSplitView vs detail-only).  
@@ -121,8 +122,8 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.0.2 (Critical Bug Fix: Infinite Recursion Crash in Accessibility Identifiers)
-**Phase**: Patch Release
+**Version**: v6.1.0 (Form UX Enhancements & Platform Extensions)
+**Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
 ## 🤝 Contributing

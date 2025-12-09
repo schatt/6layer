@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers
+// SixLayerFramework v6.1.0 - Form UX Enhancements & Platform Extensions
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
