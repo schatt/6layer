@@ -236,68 +236,7 @@ public struct DynamicTextField: View {
 
     public var body: some View {
         field.fieldContainer(content: {
-            field.fieldLabel()
-
-            // Check if field should render as picker based on hints
-            if field.shouldRenderAsPicker {
-                // Render picker when inputType == "picker" and pickerOptions exist
-                let pickerOptions = field.pickerOptionsFromHints
-                if !pickerOptions.isEmpty {
-                    Picker(field.placeholder ?? "Select", selection: field.textBinding(formState: formState)) {
-                        ForEach(pickerOptions, id: \.value) { option in
-                            Text(option.label).tag(option.value)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    .automaticCompliance()
-                } else {
-                    // Fallback to text field if no options
-                    textFieldView
-                }
-            } else if field.supportsOCR || field.supportsBarcodeScanning {
-                // Render text field with OCR and/or barcode scanning support
-                HStack {
-                    textFieldView
-
-                    // OCR button
-                    if field.supportsOCR {
-                        Button(action: {
-                            // TODO: Implement OCR scanning workflow
-                            // This should trigger OCROverlayView and populate the field
-                            print("OCR scan requested for field: \(field.id)")
-                        }) {
-                            Image(systemName: "camera.viewfinder")
-                                .foregroundColor(.blue)
-                        }
-                        .buttonStyle(.borderless)
-                        .accessibilityLabel("Scan with OCR")
-                        .accessibilityHint(field.ocrHint ?? "Scan document to fill this field")
-                        .automaticCompliance()
-                    }
-                    
-                    // Barcode scanning button
-                    if field.supportsBarcodeScanning {
-                        Button(action: {
-                            // TODO: Implement barcode scanning workflow
-                            // This should trigger BarcodeOverlayView and populate the field
-                            print("Barcode scan requested for field: \(field.id)")
-                        }) {
-                            Image(systemName: "barcode.viewfinder")
-                                .foregroundColor(.green)
-                        }
-                        .buttonStyle(.borderless)
-                        .accessibilityLabel("Scan barcode")
-                        .accessibilityHint(field.barcodeHint ?? "Scan barcode to fill this field")
-                        .automaticCompliance()
-                    }
-                }
-            } else {
-                // Default text field
-                textFieldView
-            }
-            
-            // Character counter for fields with maxLength validation
-            field.characterCounterView(formState: formState)
+            fieldContent
         }, componentName: "DynamicTextField")
         .onChange(of: formState.focusedFieldId) { oldValue, newValue in
             // Sync focus state with formState
@@ -310,6 +249,64 @@ public struct DynamicTextField: View {
             } else if formState.focusedFieldId == field.id {
                 formState.focusedFieldId = nil
             }
+        }
+    }
+    
+    /// Field content view - extracted to simplify type checking
+    @ViewBuilder
+    private var fieldContent: some View {
+        field.fieldLabel()
+
+        // Check if field should render as picker based on hints
+        if field.shouldRenderAsPicker {
+            pickerContent
+        } else {
+            textFieldWithActions
+        }
+        
+        // Character counter for fields with maxLength validation
+        field.characterCounterView(formState: formState)
+    }
+    
+    /// Picker content view
+    @ViewBuilder
+    private var pickerContent: some View {
+        let pickerOptions = field.pickerOptionsFromHints
+        if !pickerOptions.isEmpty {
+            Picker(field.placeholder ?? "Select", selection: field.textBinding(formState: formState)) {
+                ForEach(pickerOptions, id: \.value) { option in
+                    Text(option.label).tag(option.value)
+                }
+            }
+            .pickerStyle(.menu)
+            .automaticCompliance()
+        } else {
+            // Fallback to text field if no options
+            textFieldView
+        }
+    }
+    
+    /// Text field with actions view
+    @ViewBuilder
+    private var textFieldWithActions: some View {
+        let hasActions = !field.effectiveActions.isEmpty
+        let hasTrailingView = field.trailingView != nil
+        
+        if hasActions || hasTrailingView {
+            HStack {
+                textFieldView
+                
+                // Render actions (unified system - Issue #95)
+                FieldActionRenderer(field: field, formState: formState)
+                
+                // Render custom trailing view if provided
+                if let trailingView = field.trailingView {
+                    trailingView(field, formState)
+                }
+            }
+        } else {
+            // Default text field (no actions)
+            textFieldView
         }
     }
     
