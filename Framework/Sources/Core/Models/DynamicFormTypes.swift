@@ -753,6 +753,9 @@ public struct DynamicFormConfiguration: Identifiable {
             return self
         }
         
+        // Collect fields without hints for debug warning
+        var fieldsWithoutHints: [String] = []
+        
         // Apply hints to fields in sections
         let sectionsWithHints = sections.map { section in
             DynamicFormSection(
@@ -763,6 +766,8 @@ public struct DynamicFormConfiguration: Identifiable {
                     if let hints = fieldHints[field.id] {
                         return field.applying(hints: hints)
                     }
+                    // Field exists but has no hints - collect for warning
+                    fieldsWithoutHints.append(field.id)
                     return field
                 },
                 isCollapsible: section.isCollapsible,
@@ -771,6 +776,13 @@ public struct DynamicFormConfiguration: Identifiable {
                 layoutStyle: section.layoutStyle
             )
         }
+        
+        // Debug warning: fields exist that aren't in hints file (hints file may be out of date)
+        #if DEBUG
+        if !fieldsWithoutHints.isEmpty {
+            print("⚠️ Warning: Form configuration for model '\(modelName)' has fields without hints: \(fieldsWithoutHints.joined(separator: ", ")). Consider updating \(modelName).hints file.")
+        }
+        #endif
         
         // Create configuration with hints-applied sections
         return DynamicFormConfiguration(
