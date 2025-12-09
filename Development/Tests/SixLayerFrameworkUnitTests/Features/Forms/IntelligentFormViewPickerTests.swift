@@ -190,7 +190,7 @@ open class IntelligentFormViewPickerTests: BaseTestClass {
             // Create hints file with picker configuration
             // This will be set up in test setup/teardown
             
-            let view = IntelligentFormView.generateForm(
+            _ = IntelligentFormView.generateForm(
                 for: TestModelWithEnum.self,
                 initialData: testData
             )

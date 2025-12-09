@@ -77,15 +77,15 @@ open class MaterialAccessibilityTests: BaseTestClass {
         voiceOverSettings.voiceOverSupport = true
         
         // When: Selecting materials based on accessibility settings
-        let highContrastMaterial = MaterialAccessibilityManager.selectMaterial(
+        _ = MaterialAccessibilityManager.selectMaterial(
             for: .regular,
             accessibilitySettings: highContrastSettings
         )
-        let reducedMotionMaterial = MaterialAccessibilityManager.selectMaterial(
+        _ = MaterialAccessibilityManager.selectMaterial(
             for: .regular,
             accessibilitySettings: reducedMotionSettings
         )
-        let voiceOverMaterial = MaterialAccessibilityManager.selectMaterial(
+        _ = MaterialAccessibilityManager.selectMaterial(
             for: .regular,
             accessibilitySettings: voiceOverSettings
         )
@@ -137,7 +137,7 @@ open class MaterialAccessibilityTests: BaseTestClass {
         .background(.regularMaterial)
         
         // When: Applying material accessibility enhancement
-        let enhancedView = view.accessibilityMaterialEnhanced()
+        _ = view.accessibilityMaterialEnhanced()
         
         // Then: View should have accessibility enhancements
         #expect(Bool(true), "enhancedView is non-optional")  // enhancedView is non-optional

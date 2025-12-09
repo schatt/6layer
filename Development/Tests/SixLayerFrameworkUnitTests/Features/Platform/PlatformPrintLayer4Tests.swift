@@ -44,7 +44,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         var callbackExecuted = false
         
         // When: Create print modifier with callback
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: .text("Test content"),
@@ -93,7 +93,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         let textContent = PrintContent.text("Test document content")
         
         // When: Create print modifier with text
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: textContent
@@ -112,7 +112,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         let imageContent = PrintContent.image(testImage)
         
         // When: Create print modifier with image
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: imageContent
@@ -131,7 +131,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         let pdfContent = PrintContent.pdf(pdfData)
         
         // When: Create print modifier with PDF
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: pdfContent
@@ -149,7 +149,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         let viewContent = PrintContent.view(AnyView(Text("Test View")))
         
         // When: Create print modifier with view
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: viewContent
@@ -170,7 +170,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         let content = PrintContent.text("Test")
         
         // When: Create print modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: content
@@ -194,7 +194,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         let content = PrintContent.text("Test")
         
         // When: Create print modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: content
@@ -223,7 +223,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         )
         
         // When: Create print modifier with options
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: .text("Test"),
@@ -244,7 +244,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
         var callbackExecuted = false
         var callbackSuccess: Bool?
         
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: .text("Test"),
@@ -274,7 +274,7 @@ open class PlatformPrintLayer4Tests: BaseTestClass {
     /// METHODOLOGY: Test accessibility compliance
     @Test @MainActor func testPlatformPrint_AccessibilityIdentifiers() {
         // Given: Print modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformPrint_L4(
                 isPresented: .constant(false),
                 content: .text("Test")

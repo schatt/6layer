@@ -223,7 +223,7 @@ open class HIGPlatformSpecificCategoriesTests: BaseTestClass {
             enableHapticFeedback: true
         )
         
-        let testView = Button("Test") { }
+        _ = Button("Test") { }
             .modifier(HapticFeedbackModifier(platform: .iOS, iOSConfig: iOSConfig))
         
         // When: Modifier is applied
@@ -240,7 +240,7 @@ open class HIGPlatformSpecificCategoriesTests: BaseTestClass {
             enableTouchTargetValidation: true
         )
         
-        let testView = Text("Test")
+        _ = Text("Test")
             .modifier(TouchTargetModifier(platform: .iOS, iOSConfig: iOSConfig))
         
         // When: Modifier is applied
@@ -255,7 +255,7 @@ open class HIGPlatformSpecificCategoriesTests: BaseTestClass {
             enableSafeAreaCompliance: true
         )
         
-        let testView = Text("Test")
+        _ = Text("Test")
             .modifier(SafeAreaComplianceModifier(platform: .iOS, iOSConfig: iOSConfig))
         
         // When: Modifier is applied
@@ -270,7 +270,7 @@ open class HIGPlatformSpecificCategoriesTests: BaseTestClass {
             enableMouseInteractions: true
         )
         
-        let testView = Button("Test") { }
+        _ = Button("Test") { }
             .modifier(PlatformInteractionModifier(platform: .macOS, macOSConfig: macOSConfig))
         
         // When: Modifier is applied

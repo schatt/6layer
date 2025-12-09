@@ -227,6 +227,7 @@ extension DynamicFormField {
 public struct DynamicTextField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @FocusState private var isFocused: Bool
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -251,16 +252,12 @@ public struct DynamicTextField: View {
                     .automaticCompliance()
                 } else {
                     // Fallback to text field if no options
-                    TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
-                        .textFieldStyle(.roundedBorder)
-                        .automaticCompliance()
+                    textFieldView
                 }
             } else if field.supportsOCR || field.supportsBarcodeScanning {
                 // Render text field with OCR and/or barcode scanning support
                 HStack {
-                    TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
-                        .textFieldStyle(.roundedBorder)
-                        .automaticCompliance()
+                    textFieldView
 
                     // OCR button
                     if field.supportsOCR {
@@ -296,14 +293,37 @@ public struct DynamicTextField: View {
                 }
             } else {
                 // Default text field
-                TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
-                    .textFieldStyle(.roundedBorder)
-                    .automaticCompliance()
+                textFieldView
             }
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicTextField")
+        .onChange(of: formState.focusedFieldId) { oldValue, newValue in
+            // Sync focus state with formState
+            isFocused = (newValue == field.id)
+        }
+        .onChange(of: isFocused) { oldValue, newValue in
+            // Update formState when focus changes locally
+            if newValue {
+                formState.focusedFieldId = field.id
+            } else if formState.focusedFieldId == field.id {
+                formState.focusedFieldId = nil
+            }
+        }
+    }
+    
+    /// Text field view with focus management (Issue #81)
+    @ViewBuilder
+    private var textFieldView: some View {
+        TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+            .textFieldStyle(.roundedBorder)
+            .focused($isFocused)
+            .onSubmit {
+                // Move focus to next field on Enter/Return (Issue #81)
+                formState.focusNextField(from: field.id)
+            }
+            .automaticCompliance()
     }
 }
 
@@ -313,6 +333,7 @@ public struct DynamicTextField: View {
 public struct DynamicEmailField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @FocusState private var isFocused: Bool
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -328,11 +349,26 @@ public struct DynamicEmailField: View {
                 #if os(iOS)
                 .keyboardType(UIKeyboardType.emailAddress)
                 #endif
+                .focused($isFocused)
+                .onSubmit {
+                    // Move focus to next field on Enter/Return (Issue #81)
+                    formState.focusNextField(from: field.id)
+                }
                 .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicEmailField")
+        .onChange(of: formState.focusedFieldId) { oldValue, newValue in
+            isFocused = (newValue == field.id)
+        }
+        .onChange(of: isFocused) { oldValue, newValue in
+            if newValue {
+                formState.focusedFieldId = field.id
+            } else if formState.focusedFieldId == field.id {
+                formState.focusedFieldId = nil
+            }
+        }
     }
 }
 
@@ -342,6 +378,7 @@ public struct DynamicEmailField: View {
 public struct DynamicPasswordField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @FocusState private var isFocused: Bool
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -354,11 +391,26 @@ public struct DynamicPasswordField: View {
 
             SecureField(field.placeholder ?? "Enter password", text: field.textBinding(formState: formState))
                 .textFieldStyle(.roundedBorder)
+                .focused($isFocused)
+                .onSubmit {
+                    // Move focus to next field on Enter/Return (Issue #81)
+                    formState.focusNextField(from: field.id)
+                }
                 .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicPasswordField")
+        .onChange(of: formState.focusedFieldId) { oldValue, newValue in
+            isFocused = (newValue == field.id)
+        }
+        .onChange(of: isFocused) { oldValue, newValue in
+            if newValue {
+                formState.focusedFieldId = field.id
+            } else if formState.focusedFieldId == field.id {
+                formState.focusedFieldId = nil
+            }
+        }
     }
 }
 

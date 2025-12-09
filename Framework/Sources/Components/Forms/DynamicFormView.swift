@@ -260,6 +260,9 @@ public struct DynamicFormView: View {
         
         // Validate form before entity creation
         if !formState.isValid {
+            // Focus first error field (Issue #81)
+            formState.focusFirstError()
+            
             let validationError = NSError(
                 domain: "DynamicFormView",
                 code: 1,

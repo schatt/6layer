@@ -29,7 +29,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
         initializeTestConfig()
         
         // Given: A simple view
-        let testView = Text("Test Content")
+        _ = Text("Test Content")
             .automaticCompliance()
         
         // When: View is created with automatic compliance
@@ -50,7 +50,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
             setCapabilitiesForPlatform(platform)
             
             // When: Creating view with automatic compliance
-            let testView = Text("Test")
+            _ = Text("Test")
                 .automaticCompliance()
             
             // Then: Platform-specific colors should be applied
@@ -67,7 +67,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
         initializeTestConfig()
         
         // Given: A view that needs spacing
-        let testView = VStack {
+        _ = VStack {
             Text("Item 1")
             Text("Item 2")
         }
@@ -90,7 +90,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
             setCapabilitiesForPlatform(platform)
             
             // When: Creating view with automatic compliance
-            let testView = Text("Test")
+            _ = Text("Test")
                 .automaticCompliance()
             
             // Then: Platform-appropriate spacing should be applied
@@ -107,7 +107,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
         initializeTestConfig()
         
         // Given: A text view
-        let testView = Text("Test Content")
+        _ = Text("Test Content")
             .automaticCompliance()
         
         // When: View is created with automatic compliance
@@ -127,7 +127,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
             setCapabilitiesForPlatform(platform)
             
             // When: Creating view with automatic compliance
-            let testView = Text("Test")
+            _ = Text("Test")
                 .automaticCompliance()
             
             // Then: Platform-appropriate typography should be applied
@@ -145,13 +145,13 @@ open class AutomaticHIGStylingTests: BaseTestClass {
         
         // Test iOS patterns
         setCapabilitiesForPlatform(.iOS)
-        let iOSView = Text("iOS Content")
+        _ = Text("iOS Content")
             .automaticCompliance()
         #expect(Bool(true), "iOS-specific patterns should be applied")
         
         // Test macOS patterns
         setCapabilitiesForPlatform(.macOS)
-        let macOSView = Text("macOS Content")
+        _ = Text("macOS Content")
             .automaticCompliance()
         #expect(Bool(true), "macOS-specific patterns should be applied")
     }
@@ -163,7 +163,7 @@ open class AutomaticHIGStylingTests: BaseTestClass {
         initializeTestConfig()
         
         // Given: Layer 1 function creates a view
-        let collectionView = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test", subtitle: "Description")],
             hints: PresentationHints()
         )
@@ -180,21 +180,21 @@ open class AutomaticHIGStylingTests: BaseTestClass {
         initializeTestConfig()
         
         // Test collection view
-        let collectionView = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: [TestItem(id: "1", title: "Test", subtitle: "Description")],
             hints: PresentationHints()
         )
         #expect(Bool(true), "Collection view should have automatic styling")
         
         // Test numeric data view
-        let numericView = platformPresentNumericData_L1(
+        _ = platformPresentNumericData_L1(
             data: [GenericNumericData(value: 42.0, label: "Value", unit: "units")],
             hints: PresentationHints()
         )
         #expect(Bool(true), "Numeric view should have automatic styling")
         
         // Test content view
-        let contentView = platformPresentContent_L1(
+        _ = platformPresentContent_L1(
             content: "Test Content",
             hints: PresentationHints()
         )

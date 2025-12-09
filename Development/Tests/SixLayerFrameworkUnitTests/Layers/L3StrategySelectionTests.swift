@@ -41,7 +41,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         // strategy is a non-optional struct, so it exists if we reach here
         
         // Test that the strategy can be used to create a functional view
-        let testView = createTestViewWithCardLayoutStrategy(strategy)
+        _ = createTestViewWithCardLayoutStrategy(strategy)
         // testView is a non-optional View, so it exists if we reach here
         
         #expect(strategy.columns > 0, "Should have at least 1 column")
@@ -68,7 +68,7 @@ open class L3StrategySelectionTests: BaseTestClass {
         // strategy is a non-optional struct, so it exists if we reach here
         
         // Test that the strategy can be used to create a functional view
-        let testView = createTestViewWithCardLayoutStrategy(strategy)
+        _ = createTestViewWithCardLayoutStrategy(strategy)
         // testView is a non-optional View, so it exists if we reach here
         
         #expect(strategy.columns > 1, "Should have multiple columns for large content")
@@ -88,7 +88,7 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let phoneTestView = createTestViewWithCardLayoutStrategy(phoneStrategy)
+        _ = createTestViewWithCardLayoutStrategy(phoneStrategy)
         // phoneTestView is a non-optional View, so it exists if we reach here
         
         // Test pad
@@ -99,7 +99,7 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let padTestView = createTestViewWithCardLayoutStrategy(padStrategy)
+        _ = createTestViewWithCardLayoutStrategy(padStrategy)
         // padTestView is a non-optional View, so it exists if we reach here
         
         // Test mac
@@ -110,8 +110,8 @@ open class L3StrategySelectionTests: BaseTestClass {
             contentComplexity: complexity
         )
         // Test that the strategy can be used to create a functional view
-        let macTestView = createTestViewWithCardLayoutStrategy(macStrategy)
-        #expect(Bool(true), "Should be able to create view with mac card layout strategy")  // macTestView is non-optional
+        _ = createTestViewWithCardLayoutStrategy(macStrategy)
+        #expect(Bool(true), "Should be able to create view with mac card layout strategy")
     }
     
     @Test @MainActor func testSelectCardLayoutStrategy_L3_WithDifferentComplexityLevels() {
@@ -120,31 +120,31 @@ open class L3StrategySelectionTests: BaseTestClass {
         let deviceType = DeviceType.phone
         
         // Test simple complexity
-        let simpleStrategy = selectCardLayoutStrategy_L3(
+        _ = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .simple
         )
-        #expect(Bool(true), "Simple complexity should return a strategy")  // simpleStrategy is non-optional
+        #expect(Bool(true), "Simple complexity should return a strategy")
         
         // Test moderate complexity
-        let moderateStrategy = selectCardLayoutStrategy_L3(
+        _ = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .moderate
         )
-        #expect(Bool(true), "Moderate complexity should return a strategy")  // moderateStrategy is non-optional
+        #expect(Bool(true), "Moderate complexity should return a strategy")
         
         // Test complex complexity
-        let complexStrategy = selectCardLayoutStrategy_L3(
+        _ = selectCardLayoutStrategy_L3(
             contentCount: contentCount,
             screenWidth: screenWidth,
             deviceType: deviceType,
             contentComplexity: .complex
         )
-        #expect(Bool(true), "Complex complexity should return a strategy")  // complexStrategy is non-optional
+        #expect(Bool(true), "Complex complexity should return a strategy")
     }
     
     // MARK: - chooseGridStrategy Tests

@@ -761,7 +761,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -787,7 +787,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -839,7 +839,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -865,7 +865,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -1389,6 +1389,209 @@ open class DynamicFormTests: BaseTestClass {
         
         #expect(visibleFieldsAfter.count == 3, "Should show all fields when accountType is business")
         #expect(visibleFieldsAfter.contains { $0.id == "companyName" })
+    }
+    
+    // MARK: - Focus Management Tests (Issue #81)
+    
+    /// BUSINESS PURPOSE: Validate focus management moves to next field in order
+    /// TESTING SCOPE: Tests focusNextField() method moves focus to next field correctly
+    /// METHODOLOGY: Create form with multiple fields and verify focus moves through fields in order
+    @Test func testFocusNextField() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Initially no field is focused
+        #expect(state.focusedFieldId == nil)
+        
+        // Focus first field
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == "field2", "Should focus next field")
+        
+        // Focus next field
+        state.focusNextField(from: "field2")
+        #expect(state.focusedFieldId == "field3", "Should focus next field")
+        
+        // On last field, should not wrap around (or wrap if implemented)
+        state.focusNextField(from: "field3")
+        // Behavior depends on implementation - could be nil or wrap to first
+        // For now, expect nil (no wrap)
+        #expect(state.focusedFieldId == nil || state.focusedFieldId == "field1")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management skips non-focusable fields
+    /// TESTING SCOPE: Tests focusNextField() skips fields that don't support keyboard focus
+    /// METHODOLOGY: Create form with mixed field types and verify focus skips date pickers
+    @Test func testFocusNextFieldSkipsNonFocusableFields() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .date, label: "Date Field"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Focus should skip date field and go to next text field
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == "field3", "Should skip date field and focus next text field")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus moves to first error field after validation
+    /// TESTING SCOPE: Tests focusFirstError() method focuses first field with error
+    /// METHODOLOGY: Add errors to multiple fields and verify focus goes to first error
+    @Test func testFocusFirstError() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Add errors to fields
+        state.addError("Error 1", for: "field2")
+        state.addError("Error 2", for: "field1")
+        state.addError("Error 3", for: "field3")
+        
+        // Focus first error (should be field1 based on field order)
+        state.focusFirstError()
+        #expect(state.focusedFieldId == "field1", "Should focus first field with error in order")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focusFirstError handles no errors gracefully
+    /// TESTING SCOPE: Tests focusFirstError() when no errors exist
+    /// METHODOLOGY: Call focusFirstError with no errors and verify no crash
+    @Test func testFocusFirstErrorWithNoErrors() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // No errors - should not crash
+        state.focusFirstError()
+        #expect(state.focusedFieldId == nil, "Should not focus anything when no errors")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management works across multiple sections
+    /// TESTING SCOPE: Tests focusNextField() works across section boundaries
+    /// METHODOLOGY: Create form with multiple sections and verify focus moves correctly
+    @Test func testFocusNextFieldAcrossSections() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                ),
+                DynamicFormSection(
+                    id: "section2",
+                    title: "Section 2",
+                    fields: [
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Focus should move from last field of section1 to first field of section2
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == "field2", "Should focus first field of next section")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management handles empty forms
+    /// TESTING SCOPE: Tests focus methods don't crash on empty forms
+    /// METHODOLOGY: Create form with no fields and verify methods handle gracefully
+    @Test func testFocusManagementWithEmptyForm() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Should not crash
+        state.focusNextField(from: "nonexistent")
+        #expect(state.focusedFieldId == nil)
+        
+        state.focusFirstError()
+        #expect(state.focusedFieldId == nil)
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management handles single field forms
+    /// TESTING SCOPE: Tests focusNextField() on last/only field
+    /// METHODOLOGY: Create form with single field and verify behavior
+    @Test func testFocusNextFieldOnLastField() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // On last/only field, should not focus anything (or wrap)
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == nil || state.focusedFieldId == "field1")
     }
 }
     

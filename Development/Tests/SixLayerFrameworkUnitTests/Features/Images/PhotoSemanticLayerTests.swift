@@ -20,7 +20,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         )
         
         // When: Creating semantic photo capture interface
-        let captureInterface = platformPhotoCapture_L1(purpose: purpose, context: context) { _ in }
+        _ = platformPhotoCapture_L1(purpose: purpose, context: context) { _ in }
         
         // Then: Capture interface should be created
         #expect(Bool(true), "captureInterface is non-optional")  // captureInterface is non-optional
@@ -37,7 +37,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         )
         
         // When: Creating semantic photo selection interface
-        let selectionInterface = platformPhotoSelection_L1(purpose: purpose, context: context) { _ in }
+        _ = platformPhotoSelection_L1(purpose: purpose, context: context) { _ in }
         
         // Then: Selection interface should be created
         #expect(Bool(true), "selectionInterface is non-optional")  // selectionInterface is non-optional
@@ -55,7 +55,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         let testImage = PlatformImage.createPlaceholder()
         
         // When: Creating semantic photo display
-        let displayInterface = platformPhotoDisplay_L1(purpose: purpose, context: context, image: testImage)
+        _ = platformPhotoDisplay_L1(purpose: purpose, context: context, image: testImage)
         
         // Then: Display interface should be created
         #expect(Bool(true), "displayInterface is non-optional")  // displayInterface is non-optional
@@ -93,7 +93,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         let purpose = PhotoPurpose.maintenance
         
         // When: Determining capture strategy
-        let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
+        _ = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then: Strategy should be determined
         #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
@@ -112,7 +112,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         let purpose = PhotoPurpose.expense
         
         // When: Selecting capture strategy
-        let strategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
+        _ = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
         
         // Then: Strategy should be selected
         #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
@@ -129,7 +129,7 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         let purpose = PhotoPurpose.document
         
         // When: Selecting display strategy
-        let strategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
+        _ = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
         
         // Then: Strategy should be selected
         #expect(Bool(true), "strategy is non-optional")  // strategy is non-optional
@@ -149,8 +149,8 @@ open class PhotoSemanticLayerTests: BaseTestClass {
         
         // When: Running complete semantic workflow
         let layout = determineOptimalPhotoLayout_L2(purpose: purpose, context: context)
-        let captureStrategy = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
-        let displayStrategy = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
+        _ = selectPhotoCaptureStrategy_L3(purpose: purpose, context: context)
+        _ = selectPhotoDisplayStrategy_L3(purpose: purpose, context: context)
         
         // Then: All components should work together
         #expect(layout.width > 0)

@@ -303,8 +303,8 @@ open class WindowDetectionTests: BaseTestClass {
         
         // WHEN: Detect window size modifier is applied
         // THEN: Should return modified view without crashing
-        let modifiedView = view.detectWindowSize()
-        #expect(Bool(true), "modifiedView is non-optional")  // modifiedView is non-optional
+        _ = view.detectWindowSize()
+        #expect(Bool(true), "modifiedView is non-optional")
     }
     
     @Test @MainActor func testDetectWindowSizeOnDifferentViewTypes() {

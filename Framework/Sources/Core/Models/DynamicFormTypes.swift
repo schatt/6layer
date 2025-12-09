@@ -763,6 +763,7 @@ public class DynamicFormState: ObservableObject {
     @Published public var sectionStates: [String: Bool] = [:] // collapsed state
     @Published public var isSubmitting: Bool = false
     @Published public var isDirty: Bool = false
+    @Published public var focusedFieldId: String? // Focus management (Issue #81)
     
     private let configuration: DynamicFormConfiguration
     
@@ -1280,6 +1281,96 @@ public class DynamicFormState: ObservableObject {
         // Start new debounce timer
         debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceDelay, repeats: false) { [weak self] _ in
             self?.saveDraft()
+        }
+    }
+    
+    // MARK: - Focus Management Methods (Issue #81)
+    
+    /// Move focus to the next field in form order
+    /// - Parameter currentFieldId: The ID of the currently focused field
+    /// Skips non-focusable fields (e.g., date pickers that don't support keyboard focus)
+    public func focusNextField(from currentFieldId: String) {
+        let allFields = configuration.allFields
+        
+        // Find current field index
+        guard let currentIndex = allFields.firstIndex(where: { $0.id == currentFieldId }) else {
+            return
+        }
+        
+        // Find next focusable field
+        let nextIndex = currentIndex + 1
+        if nextIndex < allFields.count {
+            // Check if next field is focusable (text-based fields)
+            let nextField = allFields[nextIndex]
+            if isFieldFocusable(nextField) {
+                focusedFieldId = nextField.id
+            } else {
+                // Skip non-focusable field and try next
+                if nextIndex + 1 < allFields.count {
+                    let nextNextField = allFields[nextIndex + 1]
+                    if isFieldFocusable(nextNextField) {
+                        focusedFieldId = nextNextField.id
+                    } else {
+                        // No more focusable fields, clear focus
+                        focusedFieldId = nil
+                    }
+                } else {
+                    // At end, clear focus
+                    focusedFieldId = nil
+                }
+            }
+        } else {
+            // At last field, clear focus (no wrap)
+            focusedFieldId = nil
+        }
+    }
+    
+    /// Move focus to the first field with a validation error
+    /// Focuses the first field in form order that has errors
+    public func focusFirstError() {
+        guard !fieldErrors.isEmpty else {
+            focusedFieldId = nil
+            return
+        }
+        
+        // Get all fields in order
+        let allFields = configuration.allFields
+        
+        // Find first field with error
+        for field in allFields {
+            if hasErrors(for: field.id) && isFieldFocusable(field) {
+                focusedFieldId = field.id
+                return
+            }
+        }
+        
+        // No focusable fields with errors
+        focusedFieldId = nil
+    }
+    
+    /// Check if a field supports keyboard focus
+    /// - Parameter field: The field to check
+    /// - Returns: True if field supports keyboard focus (text-based fields)
+    private func isFieldFocusable(_ field: DynamicFormField) -> Bool {
+        // Text-based fields support focus
+        switch field.contentType {
+        case .text, .email, .password, .phone, .url, .number, .integer, .textarea, .autocomplete:
+            return true
+        case .date, .time, .datetime:
+            // Date pickers don't support keyboard focus in the same way
+            return false
+        case .select, .multiselect, .radio, .checkbox:
+            // These can be focused but navigation is different
+            return true
+        case .toggle, .range, .stepper:
+            // These can be focused
+            return true
+        case .file, .image, .color, .richtext, .data, .array, .enum, .custom:
+            // These may or may not support focus depending on implementation
+            return true
+        case .none:
+            // If no contentType, check textContentType
+            return field.textContentType != nil
         }
     }
     

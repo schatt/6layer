@@ -53,7 +53,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         // Then: Should initialize successfully and be hostable
-        let hostingView = hostRootPlatformView(overlayView)
+        _ = hostRootPlatformView(overlayView)
         #expect(Bool(true), "OCR overlay view should be hostable")  // hostingView is non-optional
         // OCROverlayView is non-optional - no need to check for nil
     }
@@ -71,7 +71,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Creating overlay with empty result
         let testImage = PlatformImage()
-        let overlayView = OCROverlayView(
+        _ = OCROverlayView(
             image: testImage,
             result: emptyResult,
             onTextEdit: { _, _ in },
@@ -175,7 +175,7 @@ open class OCROverlayTests: BaseTestClass {
         let detectedRegion = overlayView.detectTappedTextRegion(at: tapPoint)
         
         // Then: Should detect correct region
-        #expect(Bool(true), "Should detect tapped text region")  // detectedRegion is non-optional
+        #expect(Bool(true), "Should detect tapped text region")
         #expect(detectedRegion == testBoundingBoxes[0], "Should return correct bounding box")
     }
     
@@ -467,7 +467,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Checking accessibility
         // Then: Should provide accessibility labels and be hostable
-        let hostingView = hostRootPlatformView(overlayView)
+        _ = hostRootPlatformView(overlayView)
         #expect(Bool(true), "OCR overlay view should be hostable with accessibility")  // hostingView is non-optional
         // Note: We can't directly test SwiftUI accessibility modifiers in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
@@ -503,7 +503,7 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Checking VoiceOver support
         // Then: Should provide proper accessibility elements and be hostable
-        let hostingView = hostRootPlatformView(overlayView)
+        _ = hostRootPlatformView(overlayView)
         #expect(Bool(true), "OCR overlay view should be hostable with VoiceOver support")  // hostingView is non-optional
         // Note: We can't directly test SwiftUI accessibility elements in unit tests,
         // but we can verify the view can be hosted and the modifiers are applied
@@ -537,10 +537,10 @@ open class OCROverlayTests: BaseTestClass {
         
         // When: Tapping in overlap area
         let tapPoint = CGPoint(x: 40, y: 20) // In overlap area
-        let detectedRegion = overlayView.detectTappedTextRegion(at: tapPoint)
+        _ = overlayView.detectTappedTextRegion(at: tapPoint)
         
         // Then: Should handle overlap gracefully
-        #expect(Bool(true), "Should detect region despite overlap")  // detectedRegion is non-optional
+        #expect(Bool(true), "Should detect region despite overlap")
     }
     
     @Test @MainActor func testZeroSizeBoundingBoxes() {
@@ -561,7 +561,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         let testImage = PlatformImage()
-        let overlayView = OCROverlayView(
+        _ = OCROverlayView(
             image: testImage,
             result: zeroSizeResult,
             onTextEdit: { _, _ in },
@@ -590,7 +590,7 @@ open class OCROverlayTests: BaseTestClass {
         )
         
         let testImage = PlatformImage()
-        let overlayView = OCROverlayView(
+        _ = OCROverlayView(
             image: testImage,
             result: negativeResult,
             onTextEdit: { _, _ in },
@@ -604,7 +604,7 @@ open class OCROverlayTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testOCROverlayWithDisambiguationIntegration() {
+    @Test @MainActor func testOCROverlayWithDisambiguationIntegration() {
         // Given: OCR disambiguation result
         let candidates = [
             OCRDataCandidate(

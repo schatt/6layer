@@ -62,14 +62,14 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
             customPreferences: [:]
         )
 
-        let view = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
         // That's it! HIG compliance is automatically applied.
 
         // Verify the view is created successfully with automatic compliance
-        #expect(Bool(true), "Layer 1 function should create a view with automatic HIG compliance")  // view is non-optional
+        #expect(Bool(true), "Layer 1 function should create a view with automatic HIG compliance")
 
         // The fact that this compiles and runs means the automatic modifiers are working
         #expect(Bool(true), "Automatic HIG compliance is now working!")
@@ -89,27 +89,27 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
 
         // Test with VoiceOver enabled
         RuntimeCapabilityDetection.setTestVoiceOver(true)
-        let voiceOverView = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
-        #expect(Bool(true), "View should work with VoiceOver enabled")  // voiceOverView is non-optional
+        #expect(Bool(true), "View should work with VoiceOver enabled")
         #expect(RuntimeCapabilityDetection.supportsVoiceOver, "VoiceOver should be enabled")
 
         // Test with Switch Control enabled
         RuntimeCapabilityDetection.setTestVoiceOver(false)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
-        let switchControlView = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
-        #expect(Bool(true), "View should work with Switch Control enabled")  // switchControlView is non-optional
+        #expect(Bool(true), "View should work with Switch Control enabled")
         #expect(RuntimeCapabilityDetection.supportsSwitchControl, "Switch Control should be enabled")
 
         // Test with AssistiveTouch enabled
         RuntimeCapabilityDetection.setTestSwitchControl(false)
         RuntimeCapabilityDetection.setTestAssistiveTouch(true)
-        let assistiveTouchView = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
@@ -138,12 +138,12 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)
 
-            let view = platformPresentItemCollection_L1(
+            _ = platformPresentItemCollection_L1(
                 items: testItems,
                 hints: testHints
             )
 
-            #expect(Bool(true), "View should work on \(platform)")  // view is non-optional
+            #expect(Bool(true), "View should work on \(platform)")
             #expect(Bool(true), "Automatic HIG compliance works on \(platform)")
         }
     }
@@ -160,21 +160,21 @@ open class AutomaticHIGComplianceDemonstrationTests: BaseTestClass {
         let testHints = PresentationHints()
 
         // Test platformPresentItemCollection_L1
-        let collectionView = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: testItems,
             hints: testHints
         )
-        #expect(Bool(true), "Collection view should have automatic compliance")  // collectionView is non-optional
+        #expect(Bool(true), "Collection view should have automatic compliance")
 
         // Test platformPresentNumericData_L1
         let numericData = [
             GenericNumericData(value: 42.0, label: "Test Value", unit: "units")
         ]
-        let numericView = platformPresentNumericData_L1(
+        _ = platformPresentNumericData_L1(
             data: numericData,
             hints: testHints
         )
-        #expect(Bool(true), "Numeric view should have automatic compliance")  // numericView is non-optional
+        #expect(Bool(true), "Numeric view should have automatic compliance")
 
         // Both views should automatically have HIG compliance applied
         #expect(Bool(true), "All Layer 1 functions now have automatic HIG compliance!")

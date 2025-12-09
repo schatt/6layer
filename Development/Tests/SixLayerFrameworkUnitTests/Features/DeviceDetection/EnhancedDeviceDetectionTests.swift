@@ -159,9 +159,9 @@ open class EnhancedDeviceDetectionTests: BaseTestClass {
         initializeTestConfig()
         // Given & When & Then
         // Test that static properties are accessible
-        let deviceType = PlatformDeviceCapabilities.deviceType
-        let supportsHaptic = PlatformDeviceCapabilities.supportsHapticFeedback
-        let supportsKeyboard = PlatformDeviceCapabilities.supportsKeyboardShortcuts
+        _ = PlatformDeviceCapabilities.deviceType
+        _ = PlatformDeviceCapabilities.supportsHapticFeedback
+        _ = PlatformDeviceCapabilities.supportsKeyboardShortcuts
         
         // Then
         #expect(Bool(true), "deviceType is non-optional")  // deviceType is non-optional
@@ -232,7 +232,7 @@ open class EnhancedDeviceDetectionTests: BaseTestClass {
     
     @Test func testDeviceDetectionPerformance() {
         // Given
-        let screenSizes = [
+        _ = [
             CGSize(width: 375, height: 667),  // iPhone SE
             CGSize(width: 414, height: 896),  // iPhone XR
             CGSize(width: 390, height: 844),  // iPhone 12
