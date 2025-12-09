@@ -1219,7 +1219,7 @@ open class DynamicFormTests: BaseTestClass {
             contentType: .text,
             label: "Company Name",
             visibilityCondition: { state in
-                return state.getValue<String>(for: "accountType") == "business"
+                return (state.getValue(for: "accountType") as String?) == "business"
             }
         )
         
@@ -1272,7 +1272,7 @@ open class DynamicFormTests: BaseTestClass {
             contentType: .text,
             label: "Company Name",
             visibilityCondition: { state in
-                return state.getValue<String>(for: "accountType") == "business"
+                return (state.getValue(for: "accountType") as String?) == "business"
             }
         )
         
@@ -1306,8 +1306,8 @@ open class DynamicFormTests: BaseTestClass {
             contentType: .text,
             label: "Business Details",
             visibilityCondition: { state in
-                let accountType = state.getValue<String>(for: "accountType")
-                let hasBusinessLicense = state.getValue<Bool>(for: "hasBusinessLicense")
+                let accountType = state.getValue(for: "accountType") as String?
+                let hasBusinessLicense = state.getValue(for: "hasBusinessLicense") as Bool?
                 return accountType == "business" && (hasBusinessLicense ?? false)
             }
         )
