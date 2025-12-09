@@ -5,7 +5,7 @@
 **Release Date**: December 8, 2025
 **Status**: ✅ **COMPLETE**
 **Previous Release**: v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers
-**Note**: Minor release focused on form UX improvements and platform extensions. Includes collapsible sections, required field indicators, character counters, validation summary, Stepper field type, Link component for URLs, barcode scanning support, semantic background colors, declarative field hints with Mirror fallback, batch OCR workflow, string sanitization, and various platform extensions.
+**Note**: Minor release focused on form UX improvements and platform extensions. Includes collapsible sections, required field indicators, character counters, validation summary, Stepper field type, Link component for URLs, entity creation in DynamicFormView, barcode scanning support, semantic background colors, declarative field hints with Mirror fallback, batch OCR workflow, string sanitization, and various platform extensions.
 **Next Release**: TBD
 
 ---
@@ -14,13 +14,14 @@
 
 ### **What's New:**
 
-#### **📝 Form UX Enhancements (Issues #74, #75, #76, #78, #86, #87)**
+#### **📝 Form UX Enhancements (Issues #74, #75, #76, #78, #86, #87, #92)**
 - **Collapsible Sections**: Implemented collapsible sections in `DynamicFormSectionView` for better organization of long forms
 - **Required Field Indicators**: Added visual indicators to `DynamicFormFieldView` showing which fields are required
 - **Character Counters**: Added character counters for text fields with `maxLength` validation
 - **Validation Summary**: Added form validation summary view showing all errors at once
 - **Stepper Field Type**: Added Stepper as dedicated `DynamicFormField` type for better number input UX
 - **Link Component for URLs**: Use `Link` component for read-only URL fields instead of `TextField`
+- **Entity Creation in DynamicFormView**: Added automatic entity creation to `DynamicFormView` when `modelName` is provided, making it consistent with `IntelligentFormView` in entity creation capabilities
 
 #### **🔍 OCR & Data Processing (Issues #83, #90)**
 - **Batch OCR Workflow**: Implemented batch OCR workflow for filling multiple fields from single scan

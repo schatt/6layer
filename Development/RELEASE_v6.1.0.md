@@ -9,7 +9,7 @@
 
 ## 🎯 Release Summary
 
-Minor release focused on form UX improvements and platform extensions. This release includes collapsible sections, required field indicators, character counters, validation summary, Stepper field type, Link component for URLs, barcode scanning support, semantic background colors, declarative field hints with Mirror fallback, batch OCR workflow, string sanitization, and various platform extensions.
+Minor release focused on form UX improvements and platform extensions. This release includes collapsible sections, required field indicators, character counters, validation summary, Stepper field type, Link component for URLs, entity creation in DynamicFormView, barcode scanning support, semantic background colors, declarative field hints with Mirror fallback, batch OCR workflow, string sanitization, and various platform extensions.
 
 ---
 
@@ -52,6 +52,14 @@ Minor release focused on form UX improvements and platform extensions. This rele
 - Better UX for URL display and interaction
 - Automatic link detection and handling
 - Follows platform conventions for URL presentation
+
+#### **Entity Creation in DynamicFormView (Issue #92)**
+- Added automatic entity creation to `DynamicFormView` when `modelName` is provided
+- Makes `DynamicFormView` and `IntelligentFormView` consistent in entity creation capabilities
+- Supports both Core Data and SwiftData entity creation
+- Optional `onEntityCreated` callback for handling created entities
+- Backward compatible: existing `onSubmit` callback always called with dictionary
+- Reduces boilerplate by eliminating manual entity creation code
 
 ### **🔍 OCR & Data Processing**
 
@@ -218,6 +226,21 @@ DynamicFormFieldView(
     field: urlField,
     // Uses Link component automatically for read-only URLs
 )
+
+// Entity creation in DynamicFormView
+DynamicFormView(
+    configuration: DynamicFormConfiguration(
+        modelName: "User"  // Entity name
+    ),
+    onSubmit: { values in
+        // Dictionary of form values (always called)
+    },
+    onEntityCreated: { entity in
+        // Created entity (optional, called if modelName provided)
+        // Works with both Core Data and SwiftData
+    },
+    entityType: User.self  // Optional: Required for SwiftData entity creation
+)
 ```
 
 ---
@@ -249,6 +272,7 @@ This release resolves the following GitHub issues:
 - Resolves [Issue #86](https://github.com/schatt/6layer/issues/86) - Add Stepper as dedicated DynamicFormField type
 - Resolves [Issue #87](https://github.com/schatt/6layer/issues/87) - Use Link component for read-only URL fields instead of TextField
 - Resolves [Issue #90](https://github.com/schatt/6layer/issues/90) - Make Field Hints Fully Declarative with Mirror Fallback
+- Resolves [Issue #92](https://github.com/schatt/6layer/issues/92) - Add Entity Creation to DynamicFormView
 - Resolves [Issue #93](https://github.com/schatt/6layer/issues/93) - Add Barcode Scanning Support
 - Resolves [Issue #94](https://github.com/schatt/6layer/issues/94) - Add support for SwiftUI semantic background colors via Color.named()
 
@@ -270,6 +294,7 @@ This release resolves the following GitHub issues:
    - Use Stepper fields for numeric input
    - Use Link components for URL fields
    - Add validation summary views to your forms
+   - Use automatic entity creation in DynamicFormView with `modelName`
 
 ---
 
