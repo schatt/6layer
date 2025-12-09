@@ -77,7 +77,7 @@ struct DataIntrospectionHintsFirstTests {
         // When: Analyzing a TestUser instance (hints file name must match type name)
         // Note: The model name in hints file needs to match the type name
         // For this test, we'll create a TestUser instance and verify hints are used
-        let user = TestUser(username: "test", email: "test@example.com", age: 30, isActive: true)
+        _ = TestUser(username: "test", email: "test@example.com", age: 30, isActive: true)
         
         // The analyze method will look for hints using the type name
         // Since we can't easily change the type name, we'll test the hints loading directly

@@ -103,15 +103,14 @@ open class PlatformHapticFeedbackExtensionsTests: BaseTestClass {
     @Test @MainActor func testPlatformHapticFeedbackWithAction() {
         initializeTestConfig()
         runWithTaskLocalConfig {
-            // Given: A view and action flag
-            var actionExecuted = false
+            // Given: A view
             let testView = Text("Test")
             
             // When: Apply modifier with action
             // Then: Should not crash
             #expect(throws: Never.self) {
                 let _ = testView.platformHapticFeedback(.light) {
-                    actionExecuted = true
+                    // Action callback - not executed on construction, only on tap
                 }
             }
             
@@ -197,9 +196,8 @@ open class PlatformHapticFeedbackExtensionsTests: BaseTestClass {
         initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A button
-            var buttonTapped = false
             let button = Button("Tap me") {
-                buttonTapped = true
+                // Button action
             }
             .platformHapticFeedback(.success)
             
@@ -221,10 +219,9 @@ open class PlatformHapticFeedbackExtensionsTests: BaseTestClass {
         initializeTestConfig()
         runWithTaskLocalConfig {
             // Given: A button with haptic feedback and action
-            var buttonTapped = false
             var actionExecuted = false
             let button = Button("Save") {
-                buttonTapped = true
+                // Button action
             }
             .platformHapticFeedback(.success) {
                 actionExecuted = true

@@ -20,14 +20,12 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         // When: Categories are accessed
         // Then: Should have EaseInOut, spring, and custom timing function categories
         let animationSystem = HIGAnimationSystem(for: .iOS)
-        let easeInOutAnimation = animationSystem.animation(for: .easeInOut)
-        let springAnimation = animationSystem.animation(for: .spring)
-        let customAnimation = animationSystem.animation(for: .custom(.easeIn))
+        // Verify animations are created (Animation is non-optional, so this verifies compilation)
+        _ = animationSystem.animation(for: .easeInOut)
+        _ = animationSystem.animation(for: .spring)
+        _ = animationSystem.animation(for: .custom(.easeIn))
         
-        // Verify animations are created
-        #expect(easeInOutAnimation != nil)
-        #expect(springAnimation != nil)
-        #expect(customAnimation != nil)
+        #expect(Bool(true), "Animations should be created successfully")
     }
     
     @Test @MainActor func testEaseInOutAnimationCategory() {
@@ -35,8 +33,8 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         // When: Animation is created
         // Then: Should provide HIG-compliant easeInOut animation
         let animationSystem = HIGAnimationSystem(for: .iOS)
-        let animation = animationSystem.animation(for: .easeInOut)
-        #expect(animation != nil)
+        _ = animationSystem.animation(for: .easeInOut)
+        #expect(Bool(true), "EaseInOut animation should be created")
     }
     
     @Test @MainActor func testSpringAnimationCategory() {
@@ -44,8 +42,8 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         // When: Animation is created
         // Then: Should provide HIG-compliant spring animation
         let animationSystem = HIGAnimationSystem(for: .iOS)
-        let animation = animationSystem.animation(for: .spring)
-        #expect(animation != nil)
+        _ = animationSystem.animation(for: .spring)
+        #expect(Bool(true), "Spring animation should be created")
     }
     
     @Test @MainActor func testCustomTimingFunctionAnimationCategory() {
@@ -53,8 +51,8 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         // When: Animation is created with custom timing
         // Then: Should provide custom timing function animation
         let animationSystem = HIGAnimationSystem(for: .iOS)
-        let animation = animationSystem.animation(for: .custom(.easeIn))
-        #expect(animation != nil)
+        _ = animationSystem.animation(for: .custom(.easeIn))
+        #expect(Bool(true), "Custom animation should be created")
     }
     
     @Test @MainActor func testPlatformAppropriateAnimationDefaults() {
@@ -426,48 +424,48 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         // Given: A view
         // When: Animation category modifier is applied
         // Then: Should apply animation category
-        let view = Text("Test").higAnimationCategory(.easeInOut)
-        #expect(view != nil)
+        _ = Text("Test").higAnimationCategory(.easeInOut)
+        #expect(Bool(true), "Animation category modifier should apply")
     }
     
     @Test @MainActor func testShadowCategoryModifier() {
         // Given: A view
         // When: Shadow category modifier is applied
         // Then: Should apply shadow category
-        let view = Text("Test").higShadowCategory(.elevated)
-        #expect(view != nil)
+        _ = Text("Test").higShadowCategory(.elevated)
+        #expect(Bool(true), "Shadow category modifier should apply")
     }
     
     @Test @MainActor func testCornerRadiusCategoryModifier() {
         // Given: A view
         // When: Corner radius category modifier is applied
         // Then: Should apply corner radius category
-        let view = Text("Test").higCornerRadiusCategory(.medium)
-        #expect(view != nil)
+        _ = Text("Test").higCornerRadiusCategory(.medium)
+        #expect(Bool(true), "Corner radius category modifier should apply")
     }
     
     @Test @MainActor func testBorderWidthCategoryModifier() {
         // Given: A view
         // When: Border width category modifier is applied
         // Then: Should apply border width category
-        let view = Text("Test").higBorderWidthCategory(.thin)
-        #expect(view != nil)
+        _ = Text("Test").higBorderWidthCategory(.thin)
+        #expect(Bool(true), "Border width category modifier should apply")
     }
     
     @Test @MainActor func testOpacityCategoryModifier() {
         // Given: A view
         // When: Opacity category modifier is applied
         // Then: Should apply opacity category
-        let view = Text("Test").higOpacityCategory(.primary)
-        #expect(view != nil)
+        _ = Text("Test").higOpacityCategory(.primary)
+        #expect(Bool(true), "Opacity category modifier should apply")
     }
     
     @Test @MainActor func testBlurCategoryModifier() {
         // Given: A view
         // When: Blur category modifier is applied
         // Then: Should apply blur category
-        let view = Text("Test").higBlurCategory(.light)
-        #expect(view != nil)
+        _ = Text("Test").higBlurCategory(.light)
+        #expect(Bool(true), "Blur category modifier should apply")
     }
     
     // MARK: - VisualConsistencyModifier Integration Tests
@@ -482,13 +480,13 @@ open class HIGVisualDesignCategoriesTests: BaseTestClass {
         // When: Applied to a view
         // Then: Should use visual design system from PlatformDesignSystem
         let designSystem = PlatformDesignSystem(for: .iOS)
-        let view = Text("Test").modifier(VisualConsistencyModifier(
+        _ = Text("Test").modifier(VisualConsistencyModifier(
             designSystem: designSystem,
             platform: .iOS,
             visualDesignConfig: HIGVisualDesignCategoryConfig.default(for: .iOS),
             iOSConfig: HIGiOSCategoryConfig()
         ))
-        #expect(view != nil)
+        #expect(Bool(true), "VisualConsistencyModifier should apply")
     }
 }
 

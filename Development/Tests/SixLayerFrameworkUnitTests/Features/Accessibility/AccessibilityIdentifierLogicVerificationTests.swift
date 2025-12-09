@@ -74,21 +74,19 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         // We can't easily test the environment variable directly in unit tests,
         // but we can verify that the modifier chain compiles and the configuration is correct
 
-        let testView1 = PlatformInteractionButton(style: .primary, action: {}) {
+        // Verify that all modifier chains compile successfully
+        _ = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
         .named("TestButton")
 
-        let testView2 = PlatformInteractionButton(style: .primary, action: {}) {
+        _ = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
 
-        let testView3 = PlatformInteractionButton(style: .primary, action: {}) {
+        _ = PlatformInteractionButton(style: .primary, action: {}) {
             platformPresentContent_L1(content: "Test", hints: PresentationHints())
         }
-
-        // Verify that all modifier chains compile successfully
-        // All views are non-optional, not used further
 
         // Verify configuration is correct
         #expect(config.enableAutoIDs, "Automatic IDs should be enabled")
@@ -152,13 +150,13 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         config.enableDebugLogging = true
 
         // When: Using the exact combination from the bug report
-        let testView = Button(action: {}) {
+        _ = Button(action: {}) {
             Label("Add Fuel", systemImage: "plus")
         }
         .named("AddFuelButton")
 
         // Then: The view should be created successfully
-        #expect(Bool(true), "The exact bug scenario should now work correctly")  // testView is non-optional
+        #expect(Bool(true), "The exact bug scenario should now work correctly")
 
         // Verify that all configuration is correct
         #expect(config.enableAutoIDs, "Auto IDs should be enabled")
@@ -183,7 +181,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         config.namespace = "defaultApp"
 
         // When: Creating a view with explicitly enabled config
-        let testView = Text("Hello World")
+        _ = Text("Hello World")
             .automaticCompliance()
 
         // Then: The view should be created successfully
@@ -204,7 +202,7 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
 
         // When: Creating view with manual identifier
         let manualID = "manual-custom-id"
-        let testView = Text("Test")
+        _ = Text("Test")
             .accessibilityIdentifier(manualID)
             .automaticCompliance()
 
@@ -228,12 +226,12 @@ open class AccessibilityIdentifierLogicVerificationTests: BaseTestClass {
         config.namespace = "test"
 
         // When: Creating view with opt-out modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .disableAutomaticAccessibilityIdentifiers()
             .automaticCompliance()
 
         // Then: View should be created successfully (but no automatic ID generated)
-        #expect(Bool(true), "View with opt-out should be created successfully")  // testView is non-optional
+        #expect(Bool(true), "View with opt-out should be created successfully")
 
         // Verify configuration is correct
         #expect(config.enableAutoIDs, "Automatic IDs should be enabled globally")

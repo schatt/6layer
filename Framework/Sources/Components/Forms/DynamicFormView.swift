@@ -162,6 +162,26 @@ public struct DynamicFormView: View {
             .padding()
             .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
             .automaticCompliance(named: "DynamicFormView")
+            .onAppear {
+                // Load draft if it exists (Issue #80)
+                if formState.loadDraft() {
+                    // Draft was loaded - form state is already updated
+                }
+                // Start auto-save timer
+                formState.startAutoSave()
+            }
+            .onDisappear {
+                // Save draft when form disappears (Issue #80)
+                formState.saveDraft()
+                // Stop auto-save timer
+                formState.stopAutoSave()
+            }
+            .onChange(of: formState.isDirty) { _ in
+                // Trigger debounced save when form becomes dirty (Issue #80)
+                if formState.isDirty {
+                    formState.triggerDebouncedSave()
+                }
+            }
         }
     }
     
@@ -229,6 +249,9 @@ public struct DynamicFormView: View {
     
     /// Handle form submission: validate, create entity if modelName provided, then call callbacks
     private func handleSubmit() {
+        // Clear draft when form is successfully submitted (Issue #80)
+        formState.clearDraft()
+        
         // Always call onSubmit with dictionary (backward compatible)
         onSubmit(formState.fieldValues)
         
@@ -259,10 +282,9 @@ public struct DynamicFormView: View {
             onError?(error)
             return
         }
-        #endif
-        
+        #elseif canImport(SwiftData)
         // Try to create SwiftData entity (requires entityType)
-        #if canImport(SwiftData)
+        // Only used when CoreData is not available
         if #available(macOS 14.0, iOS 17.0, *) {
             if let entityType = entityType {
                 do {

@@ -147,7 +147,6 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
     @Test @MainActor func testOCRCallback_ExactProductionPattern() {
         // This test verifies the EXACT pattern used in production OCR callbacks
         
-        let testImage = PlatformImage.createPlaceholder()
         var ocrResult: OCRResult?
         
         // This is the exact production code pattern
@@ -176,10 +175,6 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
     /// METHODOLOGY: Verify callback signature matches expected type
     @Test @MainActor func testOCRCallback_ParameterTypeConsistency() {
         // This test would fail if OCRResult type changed
-        
-        let testImage = PlatformImage.createPlaceholder()
-        let context = Layer4APITestHelpers.createTestOCRContext()
-        let strategy = Layer4APITestHelpers.createTestOCRStrategy()
         
         // Verify callback accepts OCRResult
         let callback: (OCRResult) -> Void = { result in

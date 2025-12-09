@@ -512,9 +512,8 @@ open class Layer4APISignatureTests: BaseTestClass {
     /// METHODOLOGY: Test exact callback signature that would break if changed
     @Test @MainActor func testPlatformOCRImplementation_L4_CallbackParameterType() {
         // Given: Callback that expects OCRResult
-        var capturedResult: OCRResult?
-        let callback: (OCRResult) -> Void = { result in
-            capturedResult = result  // This would fail if parameter type changed
+        let callback: (OCRResult) -> Void = { _ in
+            // This would fail if parameter type changed - compile-time check
         }
         
         // When: Creating the view with callback

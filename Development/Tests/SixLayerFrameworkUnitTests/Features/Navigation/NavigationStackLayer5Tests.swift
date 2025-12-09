@@ -37,7 +37,7 @@ open class NavigationStackLayer5Tests: BaseTestClass {
         let content = Text("Test Content")
         
         // When: Applying navigation stack optimizations
-        let optimizedView = content
+        _ = content
             .platformNavigationStackOptimizations_L5()
         
         // Then: Should return an optimized view
@@ -52,7 +52,7 @@ open class NavigationStackLayer5Tests: BaseTestClass {
             }
         
         // When: Applying optimizations
-        let optimizedView = content
+        _ = content
             .platformNavigationStackOptimizations_L5()
         
         // Then: Should return an optimized view

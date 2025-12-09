@@ -353,7 +353,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         #expect(fileInfo.size == size)
         #expect(fileInfo.type == type)
         #expect(fileInfo.url == url)
-        #expect(fileInfo.id != nil)
+        // UUID is non-optional, so id is always non-nil
     }
     
     @Test @MainActor func testFileListDisplay() {

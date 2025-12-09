@@ -448,7 +448,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let hintsResult = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
         
         // Simulate extracted data
-        var structuredData: [String: String] = [
+        let structuredData: [String: String] = [
             "totalCost": "32.88",
             "gallons": "8.022"
         ]

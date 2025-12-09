@@ -25,10 +25,8 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         initializeTestConfig()
 
         // Given: A view to call the extension on
-        let testView = Text("Test")
-
         // When: Calling keyboardType extension with a KeyboardType
-        let resultView = testView.keyboardType(KeyboardType.default)
+        _ = Text("Test").keyboardType(KeyboardType.default)
 
         // Then: Should return a View (non-optional)
         #expect(Bool(true), "keyboardType extension should return a View")
@@ -46,7 +44,7 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
 
         // When & Then: Each enum case should work with the extension
         for keyboardType in allCases {
-            let resultView = testView.keyboardType(keyboardType)
+            _ = testView.keyboardType(keyboardType)
             #expect(Bool(true), "keyboardType extension should accept \(keyboardType)")
         }
     }
@@ -96,7 +94,7 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         let testView = Text("Test")
 
         // When: Applying keyboardType extension
-        let resultView = testView.keyboardType(.phonePad)
+        _ = testView.keyboardType(.phonePad)
 
         // Then: Should return a View (keyboard types don't apply on macOS)
         #expect(Bool(true), "macOS keyboardType extension should return a View")
@@ -117,7 +115,7 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         let typesToTest: [KeyboardType] = [.default, .emailAddress, .phonePad, .numberPad]
 
         for keyboardType in typesToTest {
-            let resultView = testView.keyboardType(keyboardType)
+            _ = testView.keyboardType(keyboardType)
             #expect(Bool(true), "keyboardType extension should work with \(keyboardType)")
         }
     }
@@ -131,7 +129,7 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         initializeTestConfig()
 
         // Given: A view that uses keyboardType in a modifier chain
-        let chainedView = Text("Test")
+        _ = Text("Test")
             .keyboardType(KeyboardType.emailAddress)
             .padding()
             .background(Color.blue.opacity(0.1))
@@ -147,11 +145,11 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         initializeTestConfig()
 
         // Test with TextField (most common use case)
-        let textField = TextField("Enter text", text: .constant("test"))
+        _ = TextField("Enter text", text: .constant("test"))
             .keyboardType(KeyboardType.emailAddress)
 
         // Test with SecureField
-        let secureField = SecureField("Enter password", text: .constant("password"))
+        _ = SecureField("Enter password", text: .constant("password"))
             .keyboardType(KeyboardType.default)
 
         #expect(Bool(true), "keyboardType should work with TextField and SecureField")
@@ -168,8 +166,8 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         let testView = Text("Test")
 
         // Test multiple calls (should not cause issues)
-        let result1 = testView.keyboardType(KeyboardType.default)
-        let result2 = testView.keyboardType(KeyboardType.phonePad).keyboardType(KeyboardType.emailAddress)
+        _ = testView.keyboardType(KeyboardType.default)
+        _ = testView.keyboardType(KeyboardType.phonePad).keyboardType(KeyboardType.emailAddress)
 
         #expect(Bool(true), "keyboardType extension should handle multiple calls gracefully")
     }
@@ -183,7 +181,7 @@ open class KeyboardTypeViewExtensionTests: BaseTestClass {
         initializeTestConfig()
 
         // Test that it works with framework's automatic compliance
-        let testView = Text("Test")
+        _ = Text("Test")
             .keyboardType(KeyboardType.phonePad)
             .automaticCompliance()
 

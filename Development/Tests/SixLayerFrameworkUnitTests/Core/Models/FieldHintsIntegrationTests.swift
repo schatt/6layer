@@ -45,7 +45,7 @@ struct FieldHintsIntegrationTests {
         
         // Load using model name (will look for bundle first, won't find it)
         // This test verifies structure works
-        let loaded = loader.loadHints(for: "TestModel")
+        _ = loader.loadHints(for: "TestModel")
         
         // Clean up
         try? FileManager.default.removeItem(at: testFile)
@@ -116,7 +116,7 @@ struct FieldHintsIntegrationTests {
     
     @Test func testFieldHintsWorkflowWithPresentationHints() {
         // Test that hints from fields work with PresentationHints
-        let fields = [
+        _ = [
             DynamicFormField(
                 id: "username",
                 contentType: .text,
@@ -169,7 +169,7 @@ struct FieldHintsIntegrationTests {
     
     @Test func testHintsMergingPriority() {
         // Test that manually provided hints take precedence over loaded hints
-        let loadedHints = [
+        _ = [
             "username": FieldDisplayHints(expectedLength: 10, displayWidth: "medium")
         ]
         

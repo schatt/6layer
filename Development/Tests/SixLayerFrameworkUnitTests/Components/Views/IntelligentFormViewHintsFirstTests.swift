@@ -76,7 +76,7 @@ struct IntelligentFormViewHintsFirstTests {
         // When: Analyzing a TestUserModel instance
         // Note: The hints file name needs to match the type name for hints-first to work
         // For this test, we'll verify that DataIntrospectionEngine uses hints when available
-        let user = TestUserModel(username: "testuser", email: "test@example.com", age: 30, isActive: true)
+        _ = TestUserModel(username: "testuser", email: "test@example.com", age: 30, isActive: true)
         
         // The analyze method will look for hints using the type name
         // Since we can't easily change the type name, we'll test the hints loading directly

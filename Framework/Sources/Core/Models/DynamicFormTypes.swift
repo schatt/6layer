@@ -766,8 +766,37 @@ public class DynamicFormState: ObservableObject {
     
     private let configuration: DynamicFormConfiguration
     
-    public init(configuration: DynamicFormConfiguration) {
+    // MARK: - Auto-Save Properties (Issue #80)
+    
+    /// Storage for form drafts
+    private let storage: FormStateStorage
+    
+    /// Auto-save timer for periodic saves
+    private var autoSaveTimer: Timer?
+    
+    /// Debounce timer for change-based saves
+    private var debounceTimer: Timer?
+    
+    /// Auto-save configuration
+    public var autoSaveEnabled: Bool = true
+    public var autoSaveInterval: TimeInterval = 30.0 // seconds
+    public var debounceDelay: TimeInterval = 2.0 // seconds
+    
+    /// Form ID for draft storage (uses configuration.id)
+    private var formId: String {
+        return configuration.id
+    }
+    
+    /// Initialize with configuration and optional storage
+    /// - Parameters:
+    ///   - configuration: Form configuration
+    ///   - storage: Optional storage implementation (defaults to UserDefaultsFormStateStorage)
+    public init(
+        configuration: DynamicFormConfiguration,
+        storage: FormStateStorage? = nil
+    ) {
         self.configuration = configuration
+        self.storage = storage ?? UserDefaultsFormStateStorage()
         setupInitialState()
     }
     
@@ -1166,11 +1195,97 @@ public class DynamicFormState: ObservableObject {
                 fieldValues[field.id] = defaultValue
             }
         }
-        
+
         // Set initial section states
         for section in configuration.sections {
             sectionStates[section.id] = section.isCollapsed
         }
+    }
+    
+    // MARK: - Auto-Save Methods (Issue #80)
+    
+    /// Start auto-save timer
+    /// - Parameter interval: Save interval in seconds (defaults to autoSaveInterval)
+    public func startAutoSave(interval: TimeInterval? = nil) {
+        guard autoSaveEnabled else { return }
+        
+        stopAutoSave()
+        
+        let saveInterval = interval ?? autoSaveInterval
+        autoSaveTimer = Timer.scheduledTimer(withTimeInterval: saveInterval, repeats: true) { [weak self] _ in
+            self?.saveDraft()
+        }
+    }
+    
+    /// Stop auto-save timer
+    public func stopAutoSave() {
+        autoSaveTimer?.invalidate()
+        autoSaveTimer = nil
+    }
+    
+    /// Save current form state as draft
+    public func saveDraft() {
+        guard autoSaveEnabled else { return }
+        
+        let draft = FormDraft(
+            formId: formId,
+            fieldValues: fieldValues,
+            timestamp: Date()
+        )
+        
+        do {
+            try storage.saveDraft(draft)
+        } catch {
+            // Log error but don't crash - form should continue to function
+            print("Error saving form draft: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Load draft state if it exists
+    /// - Returns: True if draft was loaded, false otherwise
+    @discardableResult
+    public func loadDraft() -> Bool {
+        guard let draft = storage.loadDraft(formId: formId) else {
+            return false
+        }
+        
+        // Restore field values from draft
+        fieldValues = draft.toFieldValues()
+        return true
+    }
+    
+    /// Clear draft state
+    public func clearDraft() {
+        do {
+            try storage.clearDraft(formId: formId)
+        } catch {
+            // Log error but don't crash
+            print("Error clearing form draft: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Check if draft exists
+    public func hasDraft() -> Bool {
+        return storage.hasDraft(formId: formId)
+    }
+    
+    /// Trigger debounced save on field change
+    /// This should be called when fieldValues change
+    public func triggerDebouncedSave() {
+        guard autoSaveEnabled else { return }
+        
+        // Cancel existing debounce timer
+        debounceTimer?.invalidate()
+        
+        // Start new debounce timer
+        debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceDelay, repeats: false) { [weak self] _ in
+            self?.saveDraft()
+        }
+    }
+    
+    deinit {
+        stopAutoSave()
+        debounceTimer?.invalidate()
     }
 }
 
