@@ -10,11 +10,13 @@ public enum ColorName: String, CaseIterable {
     // Background colors
     case background = "background"
     case backgroundColor = "backgroundColor"
+    case systemBackground = "systemBackground"
     case secondaryBackgroundColor = "secondaryBackgroundColor"
     case tertiaryBackgroundColor = "tertiaryBackgroundColor"
     case groupedBackgroundColor = "groupedBackgroundColor"
     case secondaryGroupedBackgroundColor = "secondaryGroupedBackgroundColor"
     case tertiaryGroupedBackgroundColor = "tertiaryGroupedBackgroundColor"
+    case cardBackground = "cardBackground"
     
     // Foreground colors
     case foregroundColor = "foregroundColor"
@@ -23,7 +25,11 @@ public enum ColorName: String, CaseIterable {
     case quaternaryForegroundColor = "quaternaryForegroundColor"
     case placeholderForegroundColor = "placeholderForegroundColor"
     case separatorColor = "separatorColor"
+    case separator = "separator"
     case linkColor = "linkColor"
+    case label = "label"
+    case secondaryLabel = "secondaryLabel"
+    case tertiaryLabel = "tertiaryLabel"
     
     // System colors
     case blue = "blue"
@@ -613,6 +619,8 @@ public extension Color {
             return backgroundColor
         case .backgroundColor:
             return backgroundColor
+        case .systemBackground:
+            return backgroundColor
         case .secondaryBackgroundColor:
             return secondaryBackgroundColor
         case .tertiaryBackgroundColor:
@@ -623,6 +631,8 @@ public extension Color {
             return secondaryGroupedBackgroundColor
         case .tertiaryGroupedBackgroundColor:
             return tertiaryGroupedBackgroundColor
+        case .cardBackground:
+            return cardBackground
         case .foregroundColor:
             return foregroundColor
         case .secondaryForegroundColor:
@@ -635,8 +645,16 @@ public extension Color {
             return placeholderForegroundColor
         case .separatorColor:
             return separatorColor
+        case .separator:
+            return separator
         case .linkColor:
             return linkColor
+        case .label:
+            return label
+        case .secondaryLabel:
+            return secondaryLabel
+        case .tertiaryLabel:
+            return platformTertiaryLabel
         // System colors
         case .blue:
             return Color.blue
@@ -667,6 +685,16 @@ public extension Color {
         case .accentColor:
             return Color.accentColor
         }
+    }
+    
+    /// Resolves a color by name with a default fallback
+    /// Returns the named color if found, otherwise returns the default color
+    /// - Parameters:
+    ///   - colorName: The name of the color to resolve
+    ///   - default: The default color to return if the named color is not found
+    /// - Returns: A non-optional Color
+    static func named(_ colorName: String?, default: Color) -> Color {
+        return named(colorName) ?? `default`
     }
 
     /// Cross-platform setFill method for graphics contexts
