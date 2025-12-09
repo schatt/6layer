@@ -1,5 +1,6 @@
 import Testing
 import Foundation
+import SwiftUI
 
 //
 //  FieldActionsTests.swift
@@ -164,7 +165,7 @@ open class FieldActionsTests: BaseTestClass {
         // TDD GREEN: BuiltInFieldAction.ocrScan should create proper action
         let action = BuiltInFieldAction.ocrScan(
             hint: "Scan document",
-            validationTypes: [.general, .phoneNumber]
+            validationTypes: [.general, .phone]
         ).toFieldAction()
         
         #expect(action.id == "ocr-scan")
@@ -208,12 +209,17 @@ open class FieldActionsTests: BaseTestClass {
     /// METHODOLOGY: Create generate action with closure, verify it executes and returns generated value
     @Test @MainActor func testBuiltInGenerateAction() async throws {
         // TDD GREEN: BuiltInFieldAction.generate should create proper action
-        var generateCalled = false
+        // Use a class with @unchecked Sendable to track closure execution
+        // This is safe because we're on MainActor and the closure is @Sendable
+        final class CallTracker: @unchecked Sendable {
+            var generateCalled = false
+        }
+        let tracker = CallTracker()
         
         let action = BuiltInFieldAction.generate(
             label: "Generate ID",
             perform: {
-                generateCalled = true
+                tracker.generateCalled = true
                 return UUID().uuidString
             }
         ).toFieldAction()
@@ -225,7 +231,7 @@ open class FieldActionsTests: BaseTestClass {
         let formState = createTestFormState()
         let result = try await action.perform(fieldId: "id", currentValue: nil, formState: formState)
         
-        #expect(generateCalled)
+        #expect(tracker.generateCalled)
         #expect(result as? String != nil)
         #expect((result as? String)?.isEmpty == false)
     }
