@@ -489,7 +489,8 @@ public struct PlatformStylingModifier: ViewModifier {
         content
             .foregroundStyle(designSystem.colorSystem.text)
             .background(designSystem.colorSystem.background)
-            .automaticCompliance()
+        // CRITICAL: Do NOT call .automaticCompliance() here - it causes infinite recursion
+        // This modifier is already applied within AutomaticComplianceModifier.applyHIGComplianceFeatures
     }
 }
 
@@ -500,7 +501,8 @@ public struct PlatformIconModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .imageScale(.medium)
-            .automaticCompliance()
+        // CRITICAL: Do NOT call .automaticCompliance() here - it causes infinite recursion
+        // This modifier is already applied within AutomaticComplianceModifier.applyHIGComplianceFeatures
     }
 }
 
@@ -512,7 +514,8 @@ public struct SystemColorModifier: ViewModifier {
         content
             .foregroundStyle(colorSystem.text)
             .background(colorSystem.background)
-            .automaticCompliance()
+        // CRITICAL: Do NOT call .automaticCompliance() here - it causes infinite recursion
+        // This modifier is already applied within AutomaticComplianceModifier.applyHIGComplianceFeatures
     }
 }
 
@@ -523,7 +526,8 @@ public struct SystemTypographyModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .font(typographySystem.body)
-            .automaticCompliance()
+        // CRITICAL: Do NOT call .automaticCompliance() here - it causes infinite recursion
+        // This modifier is already applied within AutomaticComplianceModifier.applyHIGComplianceFeatures
     }
 }
 
@@ -534,7 +538,8 @@ public struct SpacingModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .padding(spacingSystem.md)
-            .automaticCompliance()
+        // CRITICAL: Do NOT call .automaticCompliance() here - it causes infinite recursion
+        // This modifier is already applied within AutomaticComplianceModifier.applyHIGComplianceFeatures
     }
 }
 
