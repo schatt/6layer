@@ -158,6 +158,10 @@ public struct DynamicFormField: Identifiable {
     public let calculationDependencies: [String]? // Field IDs this calculation depends on
     public let calculationGroups: [CalculationGroup]? // Groups of calculations that can compute this field
 
+    // Visibility Configuration
+    /// Condition that determines if this field should be visible
+    /// Returns true if field should be shown, false to hide
+    public let visibilityCondition: ((DynamicFormState) -> Bool)?
 
     public init(
         id: String,
@@ -184,7 +188,8 @@ public struct DynamicFormField: Identifiable {
         isCalculated: Bool = false,
         calculationFormula: String? = nil,
         calculationDependencies: [String]? = nil,
-        calculationGroups: [CalculationGroup]? = nil
+        calculationGroups: [CalculationGroup]? = nil,
+        visibilityCondition: ((DynamicFormState) -> Bool)? = nil
     ) {
         self.id = id
         self.textContentType = textContentType
@@ -211,6 +216,7 @@ public struct DynamicFormField: Identifiable {
         self.calculationFormula = calculationFormula
         self.calculationDependencies = calculationDependencies
         self.calculationGroups = calculationGroups
+        self.visibilityCondition = visibilityCondition
     }
     
     /// Convenience initializer for text fields using cross-platform text content type
@@ -311,6 +317,7 @@ public struct DynamicFormField: Identifiable {
         self.calculationFormula = nil
         self.calculationDependencies = nil
         self.calculationGroups = nil
+        self.visibilityCondition = nil
     }
     
 

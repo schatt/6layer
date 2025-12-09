@@ -404,6 +404,13 @@ public struct DynamicFormSectionView: View {
     
     // MARK: - DRY: Field Layout Helper
     
+    /// Filtered list of visible fields based on visibility conditions
+    private var visibleFields: [DynamicFormField] {
+        section.fields.filter { field in
+            field.visibilityCondition?(formState) ?? true
+        }
+    }
+    
     @ViewBuilder
     private var fieldLayoutView: some View {
         let layoutStyle = section.layoutStyle ?? .vertical // Default to vertical
@@ -412,8 +419,9 @@ public struct DynamicFormSectionView: View {
         case .vertical, .standard, .compact, .spacious:
             // Vertical stack (default)
             VStack(spacing: 16) {
-                ForEach(section.fields) { field in
+                ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
+                        .transition(.opacity)
                 }
             }
             
@@ -423,42 +431,47 @@ public struct DynamicFormSectionView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ], spacing: 16) {
-                ForEach(section.fields) { field in
+                ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
+                        .transition(.opacity)
                 }
             }
             
         case .grid:
             // Grid layout (adaptive columns)
-            let columns = min(3, max(1, Int(sqrt(Double(section.fields.count)))))
+            let columns = min(3, max(1, Int(sqrt(Double(visibleFields.count)))))
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
-                ForEach(section.fields) { field in
+                ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
+                        .transition(.opacity)
                 }
             }
             
         case .adaptive:
             // Adaptive: choose layout based on field count
-            if section.fields.count <= 4 {
+            if visibleFields.count <= 4 {
                 VStack(spacing: 16) {
-                    ForEach(section.fields) { field in
+                    ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
+                            .transition(.opacity)
                     }
                 }
-            } else if section.fields.count <= 8 {
+            } else if visibleFields.count <= 8 {
                 LazyVGrid(columns: [
                     GridItem(.flexible()),
                     GridItem(.flexible())
                 ], spacing: 16) {
-                    ForEach(section.fields) { field in
+                    ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
+                            .transition(.opacity)
                     }
                 }
             } else {
-                let columns = min(3, max(1, Int(sqrt(Double(section.fields.count)))))
+                let columns = min(3, max(1, Int(sqrt(Double(visibleFields.count)))))
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
-                    ForEach(section.fields) { field in
+                    ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
+                            .transition(.opacity)
                     }
                 }
             }
