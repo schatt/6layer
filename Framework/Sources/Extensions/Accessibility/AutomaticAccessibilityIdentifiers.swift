@@ -173,7 +173,7 @@ public struct AutomaticComplianceModifier: ViewModifier {
             let debugMsg = "🔍 MODIFIER DEBUG: body() called - enableAutoIDs=\(capturedEnableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)"
             print(debugMsg)
             fflush(stdout) // Ensure output appears immediately
-            config.addDebugLogEntry(debugMsg)
+            config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
         }
         
         if shouldApply {
@@ -195,7 +195,7 @@ public struct AutomaticComplianceModifier: ViewModifier {
             if capturedEnableDebugLogging {
                 let debugMsg = "🔍 MODIFIER DEBUG: Applying identifier '\(identifier)' to view"
                 print(debugMsg)
-                config.addDebugLogEntry(debugMsg)
+                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
             }
             // Apply accessibility identifier first, then HIG compliance features
             let viewWithIdentifier = content.accessibilityIdentifier(identifier)
@@ -211,7 +211,7 @@ public struct AutomaticComplianceModifier: ViewModifier {
             if capturedEnableDebugLogging {
                 let debugMsg = "🔍 MODIFIER DEBUG: NOT applying identifier - conditions not met"
                 print(debugMsg)
-                config.addDebugLogEntry(debugMsg)
+                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
             }
             // Even if identifiers are disabled, still apply HIG compliance
             let viewWithHIGCompliance = applyHIGComplianceFeatures(
@@ -317,12 +317,12 @@ public struct AutomaticComplianceModifier: ViewModifier {
             for line in debugLines {
                 print(line)
                 fflush(stdout) // Ensure output appears immediately
-                config.addDebugLogEntry(line)
+                config.addDebugLogEntry(line, enabled: capturedEnableDebugLogging)
             }
             
             // Also add a concise summary entry
             let summaryEntry = "Generated identifier '\(identifier)' for component: '\(componentName)' role: '\(elementType)' context: '\(viewHierarchyPath)'"
-            config.addDebugLogEntry(summaryEntry)
+            config.addDebugLogEntry(summaryEntry, enabled: capturedEnableDebugLogging)
         }
         
         return identifier
@@ -456,7 +456,7 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
             let debugMsg = "🔍 NAMED MODIFIER DEBUG: body() called for '\(componentName)' - enableAutoIDs=\(capturedEnableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)"
             print(debugMsg)
             fflush(stdout)
-            config.addDebugLogEntry(debugMsg)
+            config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
         }
         
         if shouldApply {
@@ -475,7 +475,7 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
                 let debugMsg = "🔍 NAMED MODIFIER DEBUG: Applying identifier '\(identifier)' to view '\(componentName)'"
                 print(debugMsg)
                 fflush(stdout)
-                config.addDebugLogEntry(debugMsg)
+                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
             }
             // Wrap in AnyView to satisfy type erasure requirement (different branches return different types)
             return AnyView(content.accessibilityIdentifier(identifier))
@@ -484,7 +484,7 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
                 let debugMsg = "🔍 NAMED MODIFIER DEBUG: NOT applying identifier for '\(componentName)' - conditions not met"
                 print(debugMsg)
                 fflush(stdout)
-                config.addDebugLogEntry(debugMsg)
+                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
             }
             return AnyView(content)
         }
