@@ -258,6 +258,149 @@ ERRORS_BEFORE_ISSUES=$ERRORS_FOUND
 
 RELEASE_FILE="Development/RELEASE_v$VERSION.md"
 
+# Always check for milestones and recently closed issues (even if release file doesn't exist)
+if command -v gh &> /dev/null; then
+    # Initialize milestone issues list (used for filtering recently closed issues)
+    ALL_MILESTONE_ISSUES=""
+    CLOSED_ISSUES=""
+    OPEN_ISSUES=""
+    CLOSED_COUNT=0
+    OPEN_COUNT=0
+    MILESTONE_NUMBER=""
+    
+    # Check for milestone matching this version
+    MILESTONE_TITLE="v$VERSION"
+    echo "🔍 Checking for milestone: $MILESTONE_TITLE..."
+    
+    # Get milestone by title
+    MILESTONE_DATA=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.title == \"$MILESTONE_TITLE\")" 2>/dev/null || echo "")
+    
+    if [ -n "$MILESTONE_DATA" ] && [ "$MILESTONE_DATA" != "null" ]; then
+        MILESTONE_NUMBER=$(echo "$MILESTONE_DATA" | jq -r '.number' 2>/dev/null || echo "")
+        
+        if [ -n "$MILESTONE_NUMBER" ] && [ "$MILESTONE_NUMBER" != "null" ]; then
+            # Get all issues in this milestone (both open and closed) with their states
+            # jq outputs each object on a new line, so we can process line by line
+            MILESTONE_ISSUES_JSON=$(gh api "repos/:owner/:repo/issues?state=all" --jq ".[] | select(.milestone != null and .milestone.number == $MILESTONE_NUMBER) | \"\(.number)|\(.state)\"" 2>/dev/null || echo "")
+        
+            if [ -n "$MILESTONE_ISSUES_JSON" ]; then
+                echo "✅ Found milestone $MILESTONE_TITLE with issues"
+                
+                # Parse issues and separate by state (format: "number|state")
+                while IFS= read -r ISSUE_LINE; do
+                    if [ -n "$ISSUE_LINE" ]; then
+                        ISSUE_NUM=$(echo "$ISSUE_LINE" | cut -d'|' -f1)
+                        ISSUE_STATE=$(echo "$ISSUE_LINE" | cut -d'|' -f2)
+                        
+                        if [ -n "$ISSUE_NUM" ] && [ "$ISSUE_NUM" != "null" ]; then
+                            # Add to all milestone issues list
+                            if [ -z "$ALL_MILESTONE_ISSUES" ]; then
+                                ALL_MILESTONE_ISSUES="$ISSUE_NUM"
+                            else
+                                ALL_MILESTONE_ISSUES="$ALL_MILESTONE_ISSUES $ISSUE_NUM"
+                            fi
+                            
+                            if [ "$ISSUE_STATE" = "closed" ]; then
+                                CLOSED_COUNT=$((CLOSED_COUNT + 1))
+                                if [ -z "$CLOSED_ISSUES" ]; then
+                                    CLOSED_ISSUES="$ISSUE_NUM"
+                                else
+                                    CLOSED_ISSUES="$CLOSED_ISSUES $ISSUE_NUM"
+                                fi
+                            else
+                                OPEN_COUNT=$((OPEN_COUNT + 1))
+                                if [ -z "$OPEN_ISSUES" ]; then
+                                    OPEN_ISSUES="$ISSUE_NUM"
+                                else
+                                    OPEN_ISSUES="$OPEN_ISSUES $ISSUE_NUM"
+                                fi
+                            fi
+                        fi
+                    fi
+                done <<< "$MILESTONE_ISSUES_JSON"
+                
+                # Show summary
+                if [ $CLOSED_COUNT -gt 0 ] || [ $OPEN_COUNT -gt 0 ]; then
+                    echo "📊 Milestone summary: $CLOSED_COUNT closed, $OPEN_COUNT open"
+                fi
+                
+                # Show closed issues that should be documented
+                if [ $CLOSED_COUNT -gt 0 ]; then
+                    echo "📝 Closed issues that should be documented in release notes: $CLOSED_ISSUES"
+                    if [ ! -f "$RELEASE_FILE" ]; then
+                        echo "💡 These issues should be documented when you create $RELEASE_FILE"
+                        echo "💡 Format: 'Resolves Issue #123' or 'Implements [Issue #123](https://github.com/schatt/6layer/issues/123)'"
+                    fi
+                fi
+                
+                # Error on open issues in milestone (they should be closed or removed before release)
+                if [ $OPEN_COUNT -gt 0 ]; then
+                    log_error "Milestone $MILESTONE_TITLE has $OPEN_COUNT open issue(s): $OPEN_ISSUES"
+                    echo "💡 All issues in the release milestone must be closed or removed before creating the release"
+                    echo "💡 Close these issues if they're completed and part of v$VERSION, or remove them from the milestone if they're not part of this release"
+                    echo "💡 View milestone: https://github.com/schatt/6layer/milestone/$MILESTONE_NUMBER"
+                fi
+            else
+                echo "ℹ️  Milestone $MILESTONE_TITLE exists but has no issues assigned"
+            fi
+        else
+            echo "⚠️  Warning: Could not retrieve milestone number for $MILESTONE_TITLE"
+        fi
+    else
+        echo "⚠️  Warning: No milestone found for v$VERSION"
+        echo "💡 Consider creating a milestone and assigning issues to it for better release tracking"
+        echo "💡 Create milestone: gh api repos/:owner/:repo/milestones -X POST -f title=\"v$VERSION\""
+    fi
+    
+    # Also show recently closed issues as a reminder (for issues not in milestone)
+    echo "🔍 Checking for recently closed issues (reminder only)..."
+    
+    # Build jq filter to exclude milestone issues
+    if [ -n "$ALL_MILESTONE_ISSUES" ]; then
+        # Build array of milestone issue numbers for jq
+        MILESTONE_ARRAY="["
+        FIRST=true
+        for ISSUE_NUM in $ALL_MILESTONE_ISSUES; do
+            if [ "$FIRST" = true ]; then
+                MILESTONE_ARRAY="${MILESTONE_ARRAY}$ISSUE_NUM"
+                FIRST=false
+            else
+                MILESTONE_ARRAY="${MILESTONE_ARRAY},$ISSUE_NUM"
+            fi
+        done
+        MILESTONE_ARRAY="${MILESTONE_ARRAY}]"
+        
+        # Filter out milestone issues using jq (exclude if number is in milestone array)
+        RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq ".[] | select(.number as \$n | ($MILESTONE_ARRAY | index(\$n)) == null) | \"  - Issue #\(.number): \(.title) (closed: \(.closedAt))\"" 2>/dev/null || echo "")
+    else
+        # No milestone issues to filter, show all recently closed
+        RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq '.[] | "  - Issue #\(.number): \(.title) (closed: \(.closedAt))"' 2>/dev/null || echo "")
+    fi
+    
+    if [ -n "$RECENT_CLOSED" ]; then
+        echo "ℹ️  Recently closed issues (excluding milestone issues - review to ensure they're documented if significant):"
+        echo "$RECENT_CLOSED"
+        echo "💡 Review these at: https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
+        if [ -f "$RELEASE_FILE" ]; then
+            echo "💡 Add significant issues to $RELEASE_FILE if not already documented"
+        else
+            echo "💡 Add significant issues to $RELEASE_FILE when you create it"
+        fi
+    else
+        echo "ℹ️  No recently closed issues found (excluding milestone issues)"
+    fi
+else
+    echo "ℹ️  GitHub CLI (gh) not available"
+    echo "💡 Manual checklist: Review closed issues at https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
+    echo "💡 Check milestone: https://github.com/schatt/6layer/milestones"
+    if [ -f "$RELEASE_FILE" ]; then
+        echo "💡 Ensure significant resolved issues are documented in $RELEASE_FILE"
+    else
+        echo "💡 Ensure significant resolved issues are documented in $RELEASE_FILE when you create it"
+    fi
+fi
+
+# If release file exists, validate that issues are documented
 if [ -f "$RELEASE_FILE" ]; then
     # Always check for common issue reference patterns in release file
     if ! grep -qE "#[0-9]+|Issue #[0-9]+|github\.com.*issues" "$RELEASE_FILE"; then
@@ -268,181 +411,52 @@ if [ -f "$RELEASE_FILE" ]; then
         echo "✅ Release notes contain issue references"
     fi
     
-    # If GitHub CLI is available, check milestone and validate issue documentation
-    if command -v gh &> /dev/null; then
-        # Initialize milestone issues list (used for filtering recently closed issues)
-        ALL_MILESTONE_ISSUES=""
+    # Validate that closed milestone issues are documented
+    if [ -n "$CLOSED_ISSUES" ] && [ $CLOSED_COUNT -gt 0 ]; then
+        echo "🔍 Validating that all closed milestone issues are documented in release notes..."
         
-        # Check for milestone matching this version
-        MILESTONE_TITLE="v$VERSION"
-        echo "🔍 Checking for milestone: $MILESTONE_TITLE..."
+        MISSING_CLOSED_ISSUES=""
         
-        # Get milestone by title
-        MILESTONE_DATA=$(gh api repos/:owner/:repo/milestones --jq ".[] | select(.title == \"$MILESTONE_TITLE\")" 2>/dev/null || echo "")
-        
-        if [ -n "$MILESTONE_DATA" ] && [ "$MILESTONE_DATA" != "null" ]; then
-            MILESTONE_NUMBER=$(echo "$MILESTONE_DATA" | jq -r '.number' 2>/dev/null || echo "")
-            
-            if [ -n "$MILESTONE_NUMBER" ] && [ "$MILESTONE_NUMBER" != "null" ]; then
-                # Get all issues in this milestone (both open and closed) with their states
-                # jq outputs each object on a new line, so we can process line by line
-                MILESTONE_ISSUES_JSON=$(gh api "repos/:owner/:repo/issues?state=all" --jq ".[] | select(.milestone != null and .milestone.number == $MILESTONE_NUMBER) | \"\(.number)|\(.state)\"" 2>/dev/null || echo "")
-            
-                if [ -n "$MILESTONE_ISSUES_JSON" ]; then
-                    echo "✅ Found milestone $MILESTONE_TITLE with issues"
-                    
-                    # Separate closed and open issues
-                    CLOSED_ISSUES=""
-                    OPEN_ISSUES=""
-                    ALL_MILESTONE_ISSUES=""  # Track all milestone issues for filtering
-                    CLOSED_COUNT=0
-                    OPEN_COUNT=0
-                    
-                    # Parse issues and separate by state (format: "number|state")
-                    while IFS= read -r ISSUE_LINE; do
-                        if [ -n "$ISSUE_LINE" ]; then
-                            ISSUE_NUM=$(echo "$ISSUE_LINE" | cut -d'|' -f1)
-                            ISSUE_STATE=$(echo "$ISSUE_LINE" | cut -d'|' -f2)
-                            
-                            if [ -n "$ISSUE_NUM" ] && [ "$ISSUE_NUM" != "null" ]; then
-                                # Add to all milestone issues list
-                                if [ -z "$ALL_MILESTONE_ISSUES" ]; then
-                                    ALL_MILESTONE_ISSUES="$ISSUE_NUM"
-                                else
-                                    ALL_MILESTONE_ISSUES="$ALL_MILESTONE_ISSUES $ISSUE_NUM"
-                                fi
-                                
-                                if [ "$ISSUE_STATE" = "closed" ]; then
-                                    CLOSED_COUNT=$((CLOSED_COUNT + 1))
-                                    if [ -z "$CLOSED_ISSUES" ]; then
-                                        CLOSED_ISSUES="$ISSUE_NUM"
-                                    else
-                                        CLOSED_ISSUES="$CLOSED_ISSUES $ISSUE_NUM"
-                                    fi
-                                else
-                                    OPEN_COUNT=$((OPEN_COUNT + 1))
-                                    if [ -z "$OPEN_ISSUES" ]; then
-                                        OPEN_ISSUES="$ISSUE_NUM"
-                                    else
-                                        OPEN_ISSUES="$OPEN_ISSUES $ISSUE_NUM"
-                                    fi
-                                fi
-                            fi
-                        fi
-                    done <<< "$MILESTONE_ISSUES_JSON"
-                    
-                    # Show summary
-                    if [ $CLOSED_COUNT -gt 0 ] || [ $OPEN_COUNT -gt 0 ]; then
-                        echo "📊 Milestone summary: $CLOSED_COUNT closed, $OPEN_COUNT open"
-                    fi
-                    
-                    # Check closed issues (must be documented)
-                    if [ $CLOSED_COUNT -gt 0 ]; then
-                        echo "🔍 Validating that all closed milestone issues are documented in release notes..."
-                        
-                        MISSING_CLOSED_ISSUES=""
-                        
-                        for ISSUE_NUM in $CLOSED_ISSUES; do
-                            # Check if issue is referenced in release notes (multiple patterns)
-                            if ! grep -qE "#$ISSUE_NUM\b|Issue #$ISSUE_NUM\b|issues/$ISSUE_NUM\b" "$RELEASE_FILE"; then
-                                if [ -z "$MISSING_CLOSED_ISSUES" ]; then
-                                    MISSING_CLOSED_ISSUES="$ISSUE_NUM"
-                                else
-                                    MISSING_CLOSED_ISSUES="$MISSING_CLOSED_ISSUES $ISSUE_NUM"
-                                fi
-                            fi
-                        done
-                        
-                        if [ -n "$MISSING_CLOSED_ISSUES" ]; then
-                            log_error "Milestone $MILESTONE_TITLE has $CLOSED_COUNT closed issue(s), but the following are not documented in release notes: $MISSING_CLOSED_ISSUES"
-                            echo "💡 Add references to these issues in $RELEASE_FILE"
-                            echo "💡 Format: 'Resolves Issue #123' or 'Implements [Issue #123](https://github.com/schatt/6layer/issues/123)'"
-                            echo "💡 View milestone: https://github.com/schatt/6layer/milestone/$MILESTONE_NUMBER"
-                        else
-                            echo "✅ All $CLOSED_COUNT closed issue(s) from milestone $MILESTONE_TITLE are documented in release notes"
-                        fi
-                    fi
-                    
-                    # Error on open issues in milestone (they should be closed or removed before release)
-                    if [ $OPEN_COUNT -gt 0 ]; then
-                        log_error "Milestone $MILESTONE_TITLE has $OPEN_COUNT open issue(s): $OPEN_ISSUES"
-                        echo "💡 All issues in the release milestone must be closed or removed before creating the release"
-                        echo "💡 Close these issues if they're completed and part of v$VERSION, or remove them from the milestone if they're not part of this release"
-                        
-                        # Also check if any open issues are documented in release notes (double error)
-                        DOCUMENTED_OPEN_ISSUES=""
-                        for ISSUE_NUM in $OPEN_ISSUES; do
-                            if grep -qE "#$ISSUE_NUM\b|Issue #$ISSUE_NUM\b|issues/$ISSUE_NUM\b" "$RELEASE_FILE"; then
-                                if [ -z "$DOCUMENTED_OPEN_ISSUES" ]; then
-                                    DOCUMENTED_OPEN_ISSUES="$ISSUE_NUM"
-                                else
-                                    DOCUMENTED_OPEN_ISSUES="$DOCUMENTED_OPEN_ISSUES $ISSUE_NUM"
-                                fi
-                            fi
-                        done
-                        
-                        if [ -n "$DOCUMENTED_OPEN_ISSUES" ]; then
-                            log_error "The following OPEN issues are documented in release notes: $DOCUMENTED_OPEN_ISSUES"
-                            echo "💡 Release notes should only document completed (closed) issues"
-                            echo "💡 Either close these issues if they're done, or remove them from the release notes"
-                        fi
-                        
-                        echo "💡 View milestone: https://github.com/schatt/6layer/milestone/$MILESTONE_NUMBER"
-                    fi
+        for ISSUE_NUM in $CLOSED_ISSUES; do
+            # Check if issue is referenced in release notes (multiple patterns)
+            if ! grep -qE "#$ISSUE_NUM\b|Issue #$ISSUE_NUM\b|issues/$ISSUE_NUM\b" "$RELEASE_FILE"; then
+                if [ -z "$MISSING_CLOSED_ISSUES" ]; then
+                    MISSING_CLOSED_ISSUES="$ISSUE_NUM"
                 else
-                    echo "ℹ️  Milestone $MILESTONE_TITLE exists but has no issues assigned"
+                    MISSING_CLOSED_ISSUES="$MISSING_CLOSED_ISSUES $ISSUE_NUM"
                 fi
-            else
-                echo "⚠️  Warning: Could not retrieve milestone number for $MILESTONE_TITLE"
             fi
-        else
-            echo "⚠️  Warning: No milestone found for v$VERSION"
-            echo "💡 Consider creating a milestone and assigning issues to it for better release tracking"
-            echo "💡 Create milestone: gh api repos/:owner/:repo/milestones -X POST -f title=\"v$VERSION\""
-        fi
+        done
         
-        # Also show recently closed issues as a reminder (for issues not in milestone)
-        echo "🔍 Checking for recently closed issues (reminder only)..."
-        
-        # Build jq filter to exclude milestone issues
-        if [ -n "$ALL_MILESTONE_ISSUES" ]; then
-            # Build array of milestone issue numbers for jq
-            MILESTONE_ARRAY="["
-            FIRST=true
-            for ISSUE_NUM in $ALL_MILESTONE_ISSUES; do
-                if [ "$FIRST" = true ]; then
-                    MILESTONE_ARRAY="${MILESTONE_ARRAY}$ISSUE_NUM"
-                    FIRST=false
-                else
-                    MILESTONE_ARRAY="${MILESTONE_ARRAY},$ISSUE_NUM"
-                fi
-            done
-            MILESTONE_ARRAY="${MILESTONE_ARRAY}]"
-            
-            # Filter out milestone issues using jq (exclude if number is in milestone array)
-            RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq ".[] | select(.number as \$n | ($MILESTONE_ARRAY | index(\$n)) == null) | \"  - Issue #\(.number): \(.title) (closed: \(.closedAt))\"" 2>/dev/null || echo "")
+        if [ -n "$MISSING_CLOSED_ISSUES" ]; then
+            log_error "Milestone $MILESTONE_TITLE has $CLOSED_COUNT closed issue(s), but the following are not documented in release notes: $MISSING_CLOSED_ISSUES"
+            echo "💡 Add references to these issues in $RELEASE_FILE"
+            echo "💡 Format: 'Resolves Issue #123' or 'Implements [Issue #123](https://github.com/schatt/6layer/issues/123)'"
+            echo "💡 View milestone: https://github.com/schatt/6layer/milestone/$MILESTONE_NUMBER"
         else
-            # No milestone issues to filter, show all recently closed
-            RECENT_CLOSED=$(gh issue list --state closed --limit 10 --json number,title,closedAt --jq '.[] | "  - Issue #\(.number): \(.title) (closed: \(.closedAt))"' 2>/dev/null || echo "")
+            echo "✅ All $CLOSED_COUNT closed issue(s) from milestone $MILESTONE_TITLE are documented in release notes"
         fi
-        
-        if [ -n "$RECENT_CLOSED" ]; then
-            echo "ℹ️  Recently closed issues (excluding milestone issues - review to ensure they're documented if significant):"
-            echo "$RECENT_CLOSED"
-            echo "💡 Review these at: https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
-            echo "💡 Add significant issues to $RELEASE_FILE if not already documented"
-        else
-            echo "ℹ️  No recently closed issues found (excluding milestone issues)"
-        fi
-    else
-        echo "ℹ️  GitHub CLI (gh) not available"
-        echo "💡 Manual checklist: Review closed issues at https://github.com/schatt/6layer/issues?q=is%3Aissue+is%3Aclosed"
-        echo "💡 Check milestone: https://github.com/schatt/6layer/milestones"
-        echo "💡 Ensure significant resolved issues are documented in $RELEASE_FILE"
     fi
-else
-    echo "⚠️  Cannot check issues - release file not found yet"
-    echo "💡 After creating $RELEASE_FILE, review closed issues to ensure they're documented"
+    
+    # Check if any open issues are documented in release notes (double error)
+    if [ -n "$OPEN_ISSUES" ] && [ $OPEN_COUNT -gt 0 ]; then
+        DOCUMENTED_OPEN_ISSUES=""
+        for ISSUE_NUM in $OPEN_ISSUES; do
+            if grep -qE "#$ISSUE_NUM\b|Issue #$ISSUE_NUM\b|issues/$ISSUE_NUM\b" "$RELEASE_FILE"; then
+                if [ -z "$DOCUMENTED_OPEN_ISSUES" ]; then
+                    DOCUMENTED_OPEN_ISSUES="$ISSUE_NUM"
+                else
+                    DOCUMENTED_OPEN_ISSUES="$DOCUMENTED_OPEN_ISSUES $ISSUE_NUM"
+                fi
+            fi
+        done
+        
+        if [ -n "$DOCUMENTED_OPEN_ISSUES" ]; then
+            log_error "The following OPEN issues are documented in release notes: $DOCUMENTED_OPEN_ISSUES"
+            echo "💡 Release notes should only document completed (closed) issues"
+            echo "💡 Either close these issues if they're done, or remove them from the release notes"
+        fi
+    fi
 fi
 
 if [ $ERRORS_BEFORE_ISSUES -eq $ERRORS_FOUND ]; then

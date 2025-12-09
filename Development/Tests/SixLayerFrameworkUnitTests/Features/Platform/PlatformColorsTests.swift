@@ -1155,7 +1155,7 @@ open class PlatformColorsTests: BaseTestClass {
             #expect(material != nil, "Material.named('\(materialName)') should return a material")
             
             // Verify material can be used in a view
-            let view = Rectangle()
+            let _ = Rectangle()
                 .background(material!)
             #expect(Bool(true), "Material should be usable in views")
         }

@@ -281,9 +281,9 @@ open class PlatformOpenSettingsTests: BaseTestClass {
         }
         
         // Then: View should compile and be creatable, and function should return Bool
-        let testView = TestView()
-        #expect(testView is TestView, "View with Environment.openURL should be creatable")
+        let _ = TestView()
         // Note: The return type is verified at compile time - if it weren't Bool, this wouldn't compile
+        // The view creation itself verifies it compiles correctly
         // Error logging happens internally and can't be directly tested in unit tests
     }
 }

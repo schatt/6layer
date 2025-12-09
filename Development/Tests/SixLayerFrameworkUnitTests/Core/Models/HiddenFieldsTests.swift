@@ -132,7 +132,7 @@ struct HiddenFieldsTests {
             let email: String?
         }
         
-        let user = TestUser(username: "test", cloudSyncId: "sync-123", email: "test@example.com")
+        let _ = TestUser(username: "test", cloudSyncId: "sync-123", email: "test@example.com")
         
         // When: Analyzing with hints
         // Note: The hints file name needs to match the type name
