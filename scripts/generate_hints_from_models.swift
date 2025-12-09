@@ -289,12 +289,33 @@ struct SwiftModelParser {
 struct CoreDataModelParser {
     /// Parse a Core Data model file and extract entity/attribute information
     static func parseCoreDataModel(at url: URL) -> [EntityInfo]? {
-        // .xcdatamodel is a directory containing contents.xml
-        let contentsURL = url.appendingPathComponent("contents.xml")
+        // .xcdatamodel is a directory containing contents.xml or contents (without extension)
+        let contentsXMLURL = url.appendingPathComponent("contents.xml")
+        let contentsURL = url.appendingPathComponent("contents")
         
-        guard FileManager.default.fileExists(atPath: contentsURL.path),
-              let xmlData = try? Data(contentsOf: contentsURL),
-              let xmlString = String(data: xmlData, encoding: .utf8) else {
+        // Try contents.xml first, then contents (without extension)
+        let actualContentsURL: URL
+        if FileManager.default.fileExists(atPath: contentsXMLURL.path) {
+            actualContentsURL = contentsXMLURL
+        } else if FileManager.default.fileExists(atPath: contentsURL.path) {
+            actualContentsURL = contentsURL
+        } else {
+            print("Error: Neither contents.xml nor contents found in: \(url.path)")
+            print("   Model directory: \(url.path)")
+            // List contents of the directory for debugging
+            if let contents = try? FileManager.default.contentsOfDirectory(atPath: url.path) {
+                print("   Directory contents: \(contents.joined(separator: ", "))")
+            }
+            return nil
+        }
+        
+        guard let xmlData = try? Data(contentsOf: actualContentsURL) else {
+            print("Error: Could not read contents file from: \(actualContentsURL.path)")
+            return nil
+        }
+        
+        guard let xmlString = String(data: xmlData, encoding: .utf8) else {
+            print("Error: Could not decode contents file as UTF-8 from: \(actualContentsURL.path)")
             return nil
         }
         
@@ -307,6 +328,13 @@ struct CoreDataModelParser {
         
         let nsString = xmlString as NSString
         let entityMatches = entityRegex?.matches(in: xmlString, options: [], range: NSRange(location: 0, length: nsString.length)) ?? []
+        
+        if entityMatches.isEmpty {
+            print("Warning: No entities found in XML. XML length: \(xmlString.count) characters")
+            // Print first 500 characters for debugging
+            let preview = xmlString.count > 500 ? String(xmlString.prefix(500)) + "..." : xmlString
+            print("   XML preview: \(preview)")
+        }
         
         for entityMatch in entityMatches {
             guard entityMatch.numberOfRanges >= 2 else { continue }
@@ -325,27 +353,50 @@ struct CoreDataModelParser {
             let entityEnd = endMatches?.first?.range.location ?? xmlString.count
             let entityContent = nsString.substring(with: NSRange(location: entityStart, length: entityEnd - entityStart))
             
-            // Parse attributes
+            // Parse attributes - use a simpler approach that finds all attribute tags
             var fields: [FieldInfo] = []
-            let attributePattern = #"<attribute\s+name="([^"]+)"[^>]*attributeType="([^"]+)"[^>]*(?:optional="([^"]+)")?[^>]*/>"#
-            let attributeRegex = try? NSRegularExpression(pattern: attributePattern, options: [])
-            let attributeMatches = attributeRegex?.matches(in: entityContent, options: [], range: NSRange(location: 0, length: entityContent.count))
+            // Pattern to match <attribute ... /> tags (handles multi-line and different attribute orders)
+            let attributeTagPattern = #"<attribute\s+[^>]*?/>"#
+            let attributeTagRegex = try? NSRegularExpression(pattern: attributeTagPattern, options: [.dotMatchesLineSeparators])
+            let attributeTagMatches = attributeTagRegex?.matches(in: entityContent, options: [], range: NSRange(location: 0, length: entityContent.count)) ?? []
             
-            for attrMatch in attributeMatches ?? [] {
-                guard attrMatch.numberOfRanges >= 3 else { continue }
+            for tagMatch in attributeTagMatches {
+                let tagRange = tagMatch.range
+                guard tagRange.location != NSNotFound else { continue }
                 
-                let nameRange = attrMatch.range(at: 1)
-                let typeRange = attrMatch.range(at: 2)
+                let attributeTag = (entityContent as NSString).substring(with: tagRange)
                 
-                guard nameRange.location != NSNotFound,
-                      typeRange.location != NSNotFound else { continue }
+                // Extract name
+                let namePattern = #"name="([^"]+)""#
+                let nameRegex = try? NSRegularExpression(pattern: namePattern, options: [])
+                guard let nameMatch = nameRegex?.firstMatch(in: attributeTag, options: [], range: NSRange(location: 0, length: attributeTag.count)),
+                      nameMatch.numberOfRanges >= 2,
+                      nameMatch.range(at: 1).location != NSNotFound else {
+                    continue
+                }
+                let name = (attributeTag as NSString).substring(with: nameMatch.range(at: 1))
                 
-                let name = (entityContent as NSString).substring(with: nameRange)
-                let attributeType = (entityContent as NSString).substring(with: typeRange)
+                // Extract attributeType
+                let typePattern = #"attributeType="([^"]+)""#
+                let typeRegex = try? NSRegularExpression(pattern: typePattern, options: [])
+                guard let typeMatch = typeRegex?.firstMatch(in: attributeTag, options: [], range: NSRange(location: 0, length: attributeTag.count)),
+                      typeMatch.numberOfRanges >= 2,
+                      typeMatch.range(at: 1).location != NSNotFound else {
+                    print("Warning: Could not find attributeType for attribute '\(name)' in entity '\(entityName)'")
+                    continue
+                }
+                let attributeType = (attributeTag as NSString).substring(with: typeMatch.range(at: 1))
                 
-                let isOptional = attrMatch.numberOfRanges >= 4 && attrMatch.range(at: 3).location != NSNotFound
-                    ? (entityContent as NSString).substring(with: attrMatch.range(at: 3)) == "YES"
-                    : false
+                // Extract optional flag (defaults to false if not present)
+                var isOptional = false
+                let optionalPattern = #"optional="([^"]+)""#
+                let optionalRegex = try? NSRegularExpression(pattern: optionalPattern, options: [])
+                if let optionalMatch = optionalRegex?.firstMatch(in: attributeTag, options: [], range: NSRange(location: 0, length: attributeTag.count)),
+                   optionalMatch.numberOfRanges >= 2,
+                   optionalMatch.range(at: 1).location != NSNotFound {
+                    let optionalStr = (attributeTag as NSString).substring(with: optionalMatch.range(at: 1))
+                    isOptional = optionalStr == "YES"
+                }
                 
                 let fieldType = mapCoreDataAttributeType(attributeType)
                 
@@ -450,7 +501,7 @@ struct HintsGenerator {
         fields: [FieldInfo], 
         existingHints: [String: Any]? = nil
     ) -> (hints: [String: Any], fieldOrder: [String]) {
-        var hints: [String: Any] = existingHints ?? [:]
+        let hints: [String: Any] = existingHints ?? [:]
         var fieldOrder: [String] = []
         
         // Extract field hints (everything except _sections and __example)
@@ -815,11 +866,11 @@ struct Arguments {
     }
     
     static func printUsage() {
-        print("Usage: generate_hints_from_models.swift -model <swift_file> | -modeld <xcdatamodel> [options]")
+        print("Usage: generate_hints_from_models.swift -model <swift_file> | -modeld <xcdatamodel|xcdatamodeld> [options]")
         print("")
         print("Options:")
         print("  -model <path>          Swift .swift file to process")
-        print("  -modeld <path>         Core Data .xcdatamodel directory to process")
+        print("  -modeld <path>         Core Data .xcdatamodel directory or .xcdatamodeld bundle to process")
         print("  -extensionsdir <path>  Directory to search for extension files (can be specified multiple times)")
         print("  -outputdir <path>      Output directory for .hints files (defaults to ./Hints)")
         print("  -h, -help, --help      Show this help message")
@@ -833,6 +884,9 @@ struct Arguments {
         print("")
         print("  # Core Data model with extensions")
         print("  ./scripts/generate_hints_from_models.swift -modeld MyModel.xcdatamodel -extensionsdir Extensions/")
+        print("")
+        print("  # Core Data model bundle (.xcdatamodeld)")
+        print("  ./scripts/generate_hints_from_models.swift -modeld MyModel.xcdatamodeld -extensionsdir Extensions/")
         print("")
         print("  # Custom output directory")
         print("  ./scripts/generate_hints_from_models.swift -model Models/User.swift -outputdir Generated/Hints/")
@@ -938,53 +992,92 @@ func main() {
         
     } else if modelURL.pathExtension == "xcdatamodel" || modelURL.lastPathComponent.hasSuffix(".xcdatamodel") {
         // Core Data model: multiple entities, generate/update one hints file per entity
-        guard let entities = CoreDataModelParser.parseCoreDataModel(at: modelURL) else {
-            print("Error: Could not parse Core Data model or no entities found")
+        processCoreDataModel(at: modelURL, outputDir: outputDir, extensionSearchPaths: extensionSearchPaths)
+        
+    } else if modelURL.pathExtension == "xcdatamodeld" || modelURL.lastPathComponent.hasSuffix(".xcdatamodeld") {
+        // Core Data model bundle: contains one or more .xcdatamodel directories
+        // Find the current model version from .xccurrentversion (if multiple versions exist)
+        
+        // Enumerate all .xcdatamodel directories within the bundle
+        var modelDirectories: [URL] = []
+        
+        guard let enumerator = FileManager.default.enumerator(
+            at: modelURL,
+            includingPropertiesForKeys: [.isDirectoryKey],
+            options: [.skipsHiddenFiles]
+        ) else {
+            print("Error: Could not enumerate contents of .xcdatamodeld bundle: \(modelURL.path)")
             exit(1)
         }
         
-        if entities.isEmpty {
-            print("Error: No entities found in Core Data model")
-            exit(1)
-        }
-        
-        print("Found \(entities.count) entity/entities in Core Data model:")
-        for entity in entities {
-            // For each entity, look for extension files in search paths
-            var entityFields = entity.fields
-            
-            // Search for extension files for this entity
-            var searchDirs = extensionSearchPaths
-            if searchDirs.isEmpty {
-                // If no search paths provided, try the model directory and common locations
-                searchDirs = [
-                    modelURL.deletingLastPathComponent(), // Same directory as .xcdatamodel
-                    modelURL.deletingLastPathComponent().deletingLastPathComponent() // Parent directory
-                ]
+        for case let fileURL as URL in enumerator {
+            if fileURL.pathExtension == "xcdatamodel" || fileURL.lastPathComponent.hasSuffix(".xcdatamodel") {
+                var isDirectory: ObjCBool = false
+                if FileManager.default.fileExists(atPath: fileURL.path, isDirectory: &isDirectory), isDirectory.boolValue {
+                    modelDirectories.append(fileURL)
+                }
             }
+        }
+        
+        if modelDirectories.isEmpty {
+            print("Error: No .xcdatamodel directories found in .xcdatamodeld bundle: \(modelURL.path)")
+            exit(1)
+        }
+        
+        // If only one version exists, use it directly (no .xccurrentversion needed)
+        let modelToProcess: URL
+        if modelDirectories.count == 1 {
+            modelToProcess = modelDirectories[0]
+            print("Processing model version: \(modelToProcess.deletingPathExtension().lastPathComponent)")
+        } else {
+            // Multiple versions exist - read .xccurrentversion to find current version
+            let currentVersionURL = modelURL.appendingPathComponent(".xccurrentversion")
+            var currentVersionName: String? = nil
             
-            // Find extension files by parsing Swift files and matching extension declarations
-            // This is more robust than filename pattern matching
-            let extensionFiles = SwiftModelParser.findExtensionFiles(for: entity.name, in: searchDirs)
-            
-            // Parse extension files and add their fields
-            for extFile in extensionFiles {
-                if let result = SwiftModelParser.parseSwiftFile(at: extFile) {
-                    entityFields.append(contentsOf: result.fields)
+            if FileManager.default.fileExists(atPath: currentVersionURL.path),
+               let plistData = try? Data(contentsOf: currentVersionURL),
+               let plist = try? PropertyListSerialization.propertyList(from: plistData, options: [], format: nil) as? [String: Any] {
+                // Try different possible keys for the current version name
+                if let versionName = plist["_XCCurrentVersionName"] as? String {
+                    currentVersionName = versionName
+                } else if let versionName = plist["NSManagedObjectModel_CurrentVersionName"] as? String {
+                    currentVersionName = versionName
+                } else if let versionName = plist["currentVersion"] as? String {
+                    currentVersionName = versionName
                 }
             }
             
-            let outputURL = outputDir.appendingPathComponent("\(entity.name).hints")
-            generateHintsFile(for: entityFields, outputURL: outputURL)
-            print("✅ Generated/updated hints file: \(outputURL.path)")
-            print("   Entity: \(entity.name), Found \(entityFields.count) fields")
-            if !extensionFiles.isEmpty {
-                print("   Extension files: \(extensionFiles.map { $0.lastPathComponent }.joined(separator: ", "))")
+            // Find the current model directory
+            var currentModelDirectory: URL? = nil
+            for modelDir in modelDirectories {
+                let modelName = modelDir.deletingPathExtension().lastPathComponent
+                if let currentVersion = currentVersionName, modelName == currentVersion {
+                    currentModelDirectory = modelDir
+                    break
+                }
+            }
+            
+            // Use current version if found, otherwise use the first one with a warning
+            if let current = currentModelDirectory {
+                modelToProcess = current
+                if let versionName = currentVersionName {
+                    print("Processing current model version: \(versionName)")
+                }
+            } else {
+                if let versionName = currentVersionName {
+                    print("Warning: Current version '\(versionName)' not found in bundle. Found versions: \(modelDirectories.map { $0.deletingPathExtension().lastPathComponent }.joined(separator: ", "))")
+                } else {
+                    print("Warning: Could not determine current version from .xccurrentversion. Found versions: \(modelDirectories.map { $0.deletingPathExtension().lastPathComponent }.joined(separator: ", "))")
+                }
+                print("Processing first available version: \(modelDirectories[0].deletingPathExtension().lastPathComponent)")
+                modelToProcess = modelDirectories[0]
             }
         }
         
+        processCoreDataModel(at: modelToProcess, outputDir: outputDir, extensionSearchPaths: extensionSearchPaths)
+        
     } else {
-        print("Error: Unsupported model file type. Supported: .swift, .xcdatamodel")
+        print("Error: Unsupported model file type. Supported: .swift, .xcdatamodel, .xcdatamodeld")
         exit(1)
     }
 }
@@ -1083,6 +1176,54 @@ func generateHintsFile(for fields: [FieldInfo], outputURL: URL) {
     } catch {
         print("Error: Failed to write hints file \(outputURL.path): \(error)")
         exit(1)
+    }
+}
+
+/// Process a Core Data model (.xcdatamodel) and generate hints files for all entities
+func processCoreDataModel(at modelURL: URL, outputDir: URL, extensionSearchPaths: [URL]) {
+    guard let entities = CoreDataModelParser.parseCoreDataModel(at: modelURL) else {
+        print("Error: Could not parse Core Data model or no entities found")
+        exit(1)
+    }
+    
+    if entities.isEmpty {
+        print("Error: No entities found in Core Data model")
+        exit(1)
+    }
+    
+    print("Found \(entities.count) entity/entities in Core Data model:")
+    for entity in entities {
+        // For each entity, look for extension files in search paths
+        var entityFields = entity.fields
+        
+        // Search for extension files for this entity
+        var searchDirs = extensionSearchPaths
+        if searchDirs.isEmpty {
+            // If no search paths provided, try the model directory and common locations
+            searchDirs = [
+                modelURL.deletingLastPathComponent(), // Same directory as .xcdatamodel
+                modelURL.deletingLastPathComponent().deletingLastPathComponent() // Parent directory
+            ]
+        }
+        
+        // Find extension files by parsing Swift files and matching extension declarations
+        // This is more robust than filename pattern matching
+        let extensionFiles = SwiftModelParser.findExtensionFiles(for: entity.name, in: searchDirs)
+        
+        // Parse extension files and add their fields
+        for extFile in extensionFiles {
+            if let result = SwiftModelParser.parseSwiftFile(at: extFile) {
+                entityFields.append(contentsOf: result.fields)
+            }
+        }
+        
+        let outputURL = outputDir.appendingPathComponent("\(entity.name).hints")
+        generateHintsFile(for: entityFields, outputURL: outputURL)
+        print("✅ Generated/updated hints file: \(outputURL.path)")
+        print("   Entity: \(entity.name), Found \(entityFields.count) fields")
+        if !extensionFiles.isEmpty {
+            print("   Extension files: \(extensionFiles.map { $0.lastPathComponent }.joined(separator: ", "))")
+        }
     }
 }
 
