@@ -11,10 +11,12 @@
 **MANDATORY RELEASE RULE**: Never create, suggest, or assist with any release (major, minor, patch, or pre-release) unless the test suite passes completely.
 
 ### Before Any Release:
-1. **ALWAYS** run `swift test` first
-2. **VERIFY** all tests pass without failures
-3. **CONFIRM** no compilation errors exist
-4. **ONLY THEN** proceed with release activities
+1. **ALWAYS** use the release script "./Development/scripts/release-process.sh major|minor|patch [version]"
+   - Specify the release type: `major`, `minor`, or `patch`
+   - Optionally specify the version number (e.g., `6.1.1`)
+   - Example: `./Development/scripts/release-process.sh patch 6.1.1`
+2. **VERIFY** release script passes.
+3. **ONLY THEN** proceed with release activities
 
 ### If Tests Fail:
 - **STOP** all release activities immediately

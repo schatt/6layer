@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **v6.1.1** - Color.named() Extensions (patch release - use v6.1.0 guide)
 - **[AI_AGENT_v6.1.0.md](AI_AGENT_v6.1.0.md)** - Form UX enhancements & platform extensions
 - **[AI_AGENT_v6.0.3.md](AI_AGENT_v6.0.3.md)** - Critical bug fix: Additional infinite recursion fixes in accessibility identifiers
 - **[AI_AGENT_v6.0.2.md](AI_AGENT_v6.0.2.md)** - Critical bug fix: Infinite recursion crash in accessibility identifiers

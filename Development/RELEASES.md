@@ -1,12 +1,26 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.1.0 - Form UX Enhancements & Platform Extensions** 🎯
+## 📍 **Current Release: v6.1.1 - Color.named() Extensions** 🎯
 
 **Release Date**: December 8, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.0.5 - Critical Bug Fix: Infinite Recursion in HIG Compliance Modifiers
-**Note**: Minor release focused on form UX improvements and platform extensions. Includes collapsible sections, required field indicators, character counters, validation summary, Stepper field type, Link component for URLs, entity creation in DynamicFormView, barcode scanning support, semantic background colors, declarative field hints with Mirror fallback, batch OCR workflow, string sanitization, and various platform extensions.
+**Previous Release**: v6.1.0 - Form UX Enhancements & Platform Extensions
+**Note**: Patch release extending Color.named() API to support systemBackground and other commonly used color names. Adds convenience method Color.named(_:default:) that returns a non-optional Color with a fallback, preventing compiler type-checking issues when chaining optionals.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.1.1 - Color.named() Extensions** (December 8, 2025)
+
+### **What's New:**
+
+#### **🎨 Color.named() Extensions (Issue #94)**
+- **systemBackground Support**: Added `systemBackground` to `ColorName` enum, mapping to `Color.backgroundColor`
+- **Additional Color Names**: Added support for `cardBackground`, `label`, `secondaryLabel`, `tertiaryLabel`, and `separator`
+- **Convenience Method**: Added `Color.named(_:default:)` method that returns a non-optional `Color` with a fallback
+- **Compiler Fixes**: Resolves compiler type-checking timeouts when chaining multiple optionals
+
+**See [RELEASE_v6.1.1.md](RELEASE_v6.1.1.md) for complete release notes.**
 
 ---
 

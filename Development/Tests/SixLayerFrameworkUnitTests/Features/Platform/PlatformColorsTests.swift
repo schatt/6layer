@@ -1061,6 +1061,111 @@ open class PlatformColorsTests: BaseTestClass {
         #expect(color == nil, "Color.named() with nil should return nil")
     }
     
+    @Test func testColorNamedSystemBackground() {
+        // Given: A request for "systemBackground" color name
+        // When: Resolving via Color.named()
+        let color = Color.named("systemBackground")
+        
+        // Then: Should return a color that maps to backgroundColor
+        #expect(color != nil, "Color.named('systemBackground') should return a color")
+        #expect(color == Color.backgroundColor, "Color.named('systemBackground') should map to backgroundColor")
+    }
+    
+    @Test func testColorNamedWithDefaultFallback() {
+        // Given: An invalid color name and a default color
+        let defaultColor = Color.blue
+        
+        // When: Resolving via Color.named() with default
+        let color = Color.named("invalidColorName", default: defaultColor)
+        
+        // Then: Should return the default color
+        #expect(color == defaultColor, "Color.named() with invalid name should return default color")
+    }
+    
+    @Test func testColorNamedWithDefaultFallbackValidName() {
+        // Given: A valid color name and a default color
+        let defaultColor = Color.blue
+        
+        // When: Resolving via Color.named() with default
+        let color = Color.named("background", default: defaultColor)
+        
+        // Then: Should return the named color, not the default
+        #expect(color != defaultColor, "Color.named() with valid name should return named color, not default")
+        #expect(color == Color.backgroundColor, "Color.named('background') should map to backgroundColor")
+    }
+    
+    @Test func testColorNamedCardBackground() {
+        // Given: A request for "cardBackground" color name
+        // When: Resolving via Color.named()
+        let color = Color.named("cardBackground")
+        
+        // Then: Should return cardBackground color
+        #expect(color != nil, "Color.named('cardBackground') should return a color")
+        #expect(color == Color.cardBackground, "Color.named('cardBackground') should map to cardBackground")
+    }
+    
+    @Test func testColorNamedLabel() {
+        // Given: A request for "label" color name
+        // When: Resolving via Color.named()
+        let color = Color.named("label")
+        
+        // Then: Should return label color
+        #expect(color != nil, "Color.named('label') should return a color")
+        #expect(color == Color.label, "Color.named('label') should map to label")
+    }
+    
+    @Test func testColorNamedSeparator() {
+        // Given: A request for "separator" color name
+        // When: Resolving via Color.named()
+        let color = Color.named("separator")
+        
+        // Then: Should return separator color
+        #expect(color != nil, "Color.named('separator') should return a color")
+        #expect(color == Color.separator, "Color.named('separator') should map to separator")
+    }
+    
+    @Test func testColorNamedSystemColors() {
+        // Given: System color names
+        let systemColors: [(String, Color)] = [
+            ("red", Color.red),
+            ("blue", Color.blue),
+            ("green", Color.green),
+            ("orange", Color.orange),
+            ("yellow", Color.yellow),
+            ("purple", Color.purple),
+            ("pink", Color.pink),
+            ("gray", Color.gray),
+            ("black", Color.black),
+            ("white", Color.white),
+            ("clear", Color.clear),
+            ("primary", Color.primary),
+            ("secondary", Color.secondary),
+            ("accentColor", Color.accentColor)
+        ]
+        
+        // When & Then: Each system color should resolve correctly
+        for (name, expectedColor) in systemColors {
+            let color = Color.named(name)
+            #expect(color != nil, "Color.named('\(name)') should return a color")
+            #expect(color == expectedColor, "Color.named('\(name)') should map to \(name)")
+        }
+    }
+    
+    @Test func testColorNamedSystemColorsWithDefault() {
+        // Given: System color names with default fallback
+        let defaultColor = Color.gray
+        
+        // When: Resolving system colors with default
+        let red = Color.named("red", default: defaultColor)
+        let blue = Color.named("blue", default: defaultColor)
+        let invalid = Color.named("invalidColor", default: defaultColor)
+        
+        // Then: Should return the named color for valid names, default for invalid
+        #expect(red == Color.red, "Color.named('red', default:) should return red")
+        #expect(blue == Color.blue, "Color.named('blue', default:) should return blue")
+        #expect(invalid == defaultColor, "Color.named('invalidColor', default:) should return default")
+    }
+    
     // MARK: - Material.named() Tests
     
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
