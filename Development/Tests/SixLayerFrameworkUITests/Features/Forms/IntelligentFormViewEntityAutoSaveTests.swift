@@ -175,7 +175,7 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate auto-save interval is configurable
     /// TESTING SCOPE: Tests that auto-save interval can be customized
     /// METHODOLOGY: Set custom interval, verify it's used
-    @Test func testAutoSaveIntervalIsConfigurable() {
+    @Test @MainActor func testAutoSaveIntervalIsConfigurable() {
         // This tests the API - actual interval testing would require time-based tests
         let interval1: TimeInterval = 30.0
         let interval2: TimeInterval = 60.0
@@ -188,7 +188,7 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate auto-save can be disabled
     /// TESTING SCOPE: Tests that auto-save can be disabled by setting interval to 0
     /// METHODOLOGY: Set interval to 0, verify auto-save is disabled
-    @Test func testAutoSaveCanBeDisabled() {
+    @Test @MainActor func testAutoSaveCanBeDisabled() {
         let disabledInterval: TimeInterval = 0.0
         #expect(disabledInterval == 0.0)
         

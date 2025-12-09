@@ -33,7 +33,7 @@ open class DynamicFormViewAutoSaveTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate draft is loaded when form appears
     /// TESTING SCOPE: Tests that draft state is restored on form appear
     /// METHODOLOGY: Save draft, create new form, verify draft loads
-    @Test func testDraftLoadsOnAppear() {
+    @Test @MainActor func testDraftLoadsOnAppear() {
         let testDefaults = UserDefaults(suiteName: "test_form_view_autosave")!
         testDefaults.removePersistentDomain(forName: "test_form_view_autosave")
         
@@ -69,7 +69,7 @@ open class DynamicFormViewAutoSaveTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate draft is saved when form disappears
     /// TESTING SCOPE: Tests that form state is saved on disappear
     /// METHODOLOGY: Set values, simulate disappear, verify draft saved
-    @Test func testDraftSavesOnDisappear() {
+    @Test @MainActor func testDraftSavesOnDisappear() {
         let testDefaults = UserDefaults(suiteName: "test_form_view_autosave")!
         testDefaults.removePersistentDomain(forName: "test_form_view_autosave")
         
@@ -98,7 +98,7 @@ open class DynamicFormViewAutoSaveTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate draft is cleared on submit
     /// TESTING SCOPE: Tests that draft is cleared when form is submitted
     /// METHODOLOGY: Save draft, simulate submit, verify draft cleared
-    @Test func testDraftClearedOnSubmit() {
+    @Test @MainActor func testDraftClearedOnSubmit() {
         let testDefaults = UserDefaults(suiteName: "test_form_view_autosave")!
         testDefaults.removePersistentDomain(forName: "test_form_view_autosave")
         
@@ -126,7 +126,7 @@ open class DynamicFormViewAutoSaveTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate multiple forms can have separate drafts
     /// TESTING SCOPE: Tests that different forms maintain separate draft state
     /// METHODOLOGY: Save drafts for multiple forms, verify they don't interfere
-    @Test func testMultipleFormsSeparateDrafts() {
+    @Test @MainActor func testMultipleFormsSeparateDrafts() {
         let testDefaults = UserDefaults(suiteName: "test_form_view_autosave")!
         testDefaults.removePersistentDomain(forName: "test_form_view_autosave")
         
