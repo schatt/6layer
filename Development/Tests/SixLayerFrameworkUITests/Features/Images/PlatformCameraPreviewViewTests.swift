@@ -230,3 +230,4 @@ open class PlatformCameraPreviewViewTests: BaseTestClass {
         }
     }
 }
+
