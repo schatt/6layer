@@ -483,10 +483,12 @@ public struct DynamicFormSectionView: View {
 
 /// Field view for dynamic forms
 /// GREEN PHASE: Full implementation of dynamic field rendering
+/// Issue #79: Added field-level help tooltips/info buttons for field descriptions
 @MainActor
 public struct DynamicFormFieldView: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @State private var showHelpPopover = false
     
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -495,8 +497,8 @@ public struct DynamicFormFieldView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Field label with required indicator
-            HStack {
+            // Field label with required indicator and info button
+            HStack(spacing: 4) {
                 Text(field.label)
                     .font(.subheadline)
                     .bold()
@@ -505,17 +507,41 @@ public struct DynamicFormFieldView: View {
                         .foregroundColor(.red)
                         .fontWeight(.bold)
                 }
+                // Info button for field description (Issue #79)
+                if let description = field.description {
+                    Button(action: {
+                        showHelpPopover.toggle()
+                    }) {
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.blue)
+                            .font(.caption)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Help for \(field.label)")
+                    .accessibilityHint(description)
+                    #if os(macOS)
+                    .help(description) // macOS native tooltip on hover
+                    #endif
+                    .platformPopover_L4(
+                        isPresented: $showHelpPopover,
+                        attachmentAnchor: .point(.top),
+                        arrowEdge: .bottom
+                    ) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(description)
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .padding()
+                                .frame(maxWidth: 300)
+                        }
+                    }
+                }
             }
             .automaticCompliance(named: "FieldLabel")
             .accessibilityLabel(field.isRequired ? "\(field.label), required" : field.label)
 
-            // Field description if present
-            if let description = field.description {
-                Text(description)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .automaticCompliance(named: "FieldDescription")
-            }
+            // Field description is now shown in popover/tooltip, not as plain text (Issue #79)
+            // This saves vertical space and reduces form clutter
 
             // Field input based on type
             fieldInputView()
