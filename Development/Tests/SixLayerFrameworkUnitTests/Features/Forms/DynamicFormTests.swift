@@ -1198,6 +1198,198 @@ open class DynamicFormTests: BaseTestClass {
         // This allows scrolling to the field using ScrollViewReader
         // Test verifies the data structure supports this functionality
     }
+    
+    // MARK: - Conditional Field Visibility Tests
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormField supports visibilityCondition property
+    /// TESTING SCOPE: Tests DynamicFormField initialization with visibilityCondition
+    /// METHODOLOGY: Create DynamicFormField with visibilityCondition and verify property is set correctly
+    @Test func testDynamicFormFieldWithVisibilityCondition() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Field with visibility condition
+        let field = DynamicFormField(
+            id: "companyName",
+            contentType: .text,
+            label: "Company Name",
+            visibilityCondition: { state in
+                return state.getValue(for: "accountType") as? String == "business"
+            }
+        )
+        
+        // Verify field has visibility condition
+        #expect(field.visibilityCondition != nil)
+        
+        // Test condition evaluation - should be false initially
+        let shouldShow = field.visibilityCondition?(formState) ?? true
+        #expect(!shouldShow, "Field should be hidden when accountType is not 'business'")
+        
+        // Set accountType to business - should show
+        formState.setValue("business", for: "accountType")
+        let shouldShowAfter = field.visibilityCondition?(formState) ?? true
+        #expect(shouldShowAfter, "Field should be visible when accountType is 'business'")
+    }
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormField without visibilityCondition is always visible
+    /// TESTING SCOPE: Tests backward compatibility - fields without condition are always visible
+    /// METHODOLOGY: Create DynamicFormField without visibilityCondition and verify it's always visible
+    @Test func testDynamicFormFieldWithoutVisibilityCondition() {
+        // Field without visibility condition should always be visible
+        let field = DynamicFormField(
+            id: "firstName",
+            contentType: .text,
+            label: "First Name"
+        )
+        
+        // Verify field has no visibility condition
+        #expect(field.visibilityCondition == nil)
+        
+        // Field without condition should default to visible (handled in view layer)
+        // This test verifies the property exists and can be nil
+    }
+    
+    /// BUSINESS PURPOSE: Validate visibilityCondition re-evaluates when dependent field changes
+    /// TESTING SCOPE: Tests that visibility conditions respond to form state changes
+    /// METHODOLOGY: Create field with condition, change dependent field, verify condition re-evaluates
+    @Test func testVisibilityConditionReevaluation() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Field that depends on accountType
+        let field = DynamicFormField(
+            id: "companyName",
+            contentType: .text,
+            label: "Company Name",
+            visibilityCondition: { state in
+                return state.getValue(for: "accountType") as? String == "business"
+            }
+        )
+        
+        // Initially hidden
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+        
+        // Change to business - should show
+        formState.setValue("business", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == true)
+        
+        // Change to personal - should hide
+        formState.setValue("personal", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+    }
+    
+    /// BUSINESS PURPOSE: Validate complex visibility conditions with multiple dependencies
+    /// TESTING SCOPE: Tests visibility conditions that depend on multiple fields
+    /// METHODOLOGY: Create field with condition depending on multiple fields, verify complex logic works
+    @Test func testComplexVisibilityCondition() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Field that depends on multiple fields
+        let field = DynamicFormField(
+            id: "businessDetails",
+            contentType: .text,
+            label: "Business Details",
+            visibilityCondition: { state in
+                let accountType: String? = state.getValue(for: "accountType")
+                let hasBusinessLicense: Bool? = state.getValue(for: "hasBusinessLicense")
+                return accountType == "business" && (hasBusinessLicense ?? false)
+            }
+        )
+        
+        // Initially hidden (no accountType)
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+        
+        // Set accountType but no license - still hidden
+        formState.setValue("business", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+        
+        // Set both - should show
+        formState.setValue(true, for: "hasBusinessLicense")
+        #expect(field.visibilityCondition?(formState) ?? true == true)
+        
+        // Change accountType - should hide
+        formState.setValue("personal", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+    }
+    
+    /// BUSINESS PURPOSE: Validate visibilityCondition works with DynamicFormSectionView filtering
+    /// TESTING SCOPE: Tests that section view filters fields based on visibility conditions
+    /// METHODOLOGY: Create section with visible and hidden fields, verify only visible fields are rendered
+    @Test func testSectionViewFiltersFieldsByVisibility() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "account",
+                    title: "Account Information",
+                    fields: [
+                        DynamicFormField(
+                            id: "accountType",
+                            contentType: .select,
+                            label: "Account Type",
+                            options: ["personal", "business"]
+                        ),
+                        DynamicFormField(
+                            id: "companyName",
+                            contentType: .text,
+                            label: "Company Name",
+                            visibilityCondition: { state in
+                                return state.getValue(for: "accountType") as? String == "business"
+                            }
+                        ),
+                        DynamicFormField(
+                            id: "firstName",
+                            contentType: .text,
+                            label: "First Name"
+                        )
+                    ]
+                )
+            ]
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Get all fields from section
+        let section = config.sections[0]
+        #expect(section.fields.count == 3)
+        
+        // Filter fields based on visibility (simulating what view does)
+        let visibleFields = section.fields.filter { field in
+            field.visibilityCondition?(formState) ?? true
+        }
+        
+        // Initially, companyName should be hidden
+        #expect(visibleFields.count == 2, "Should show accountType and firstName")
+        #expect(visibleFields.contains { $0.id == "accountType" })
+        #expect(visibleFields.contains { $0.id == "firstName" })
+        #expect(!visibleFields.contains { $0.id == "companyName" })
+        
+        // Set accountType to business - companyName should appear
+        formState.setValue("business", for: "accountType")
+        let visibleFieldsAfter = section.fields.filter { field in
+            field.visibilityCondition?(formState) ?? true
+        }
+        
+        #expect(visibleFieldsAfter.count == 3, "Should show all fields when accountType is business")
+        #expect(visibleFieldsAfter.contains { $0.id == "companyName" })
+    }
 }
     
 
