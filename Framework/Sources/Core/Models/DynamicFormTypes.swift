@@ -162,6 +162,20 @@ public struct DynamicFormField: Identifiable {
     /// Condition that determines if this field should be visible
     /// Returns true if field should be shown, false to hide
     public let visibilityCondition: ((DynamicFormState) -> Bool)?
+    
+    // Field Actions Configuration (Issue #95)
+    /// Simple action for common cases (replaces/supplements supportsOCR/supportsBarcodeScanning)
+    public let fieldAction: (any FieldAction)?
+    
+    /// View builder for complex custom actions
+    /// Provides field and formState for building custom trailing UI
+    public let trailingView: ((DynamicFormField, DynamicFormState) -> AnyView)?
+    
+    /// Maximum number of actions to show as buttons before using menu
+    public let maxVisibleActions: Int // Default: 2
+    
+    /// Whether to show actions in a menu when there are multiple
+    public let useActionMenu: Bool // Default: true when actions > maxVisibleActions
 
     public init(
         id: String,
@@ -189,7 +203,11 @@ public struct DynamicFormField: Identifiable {
         calculationFormula: String? = nil,
         calculationDependencies: [String]? = nil,
         calculationGroups: [CalculationGroup]? = nil,
-        visibilityCondition: ((DynamicFormState) -> Bool)? = nil
+        visibilityCondition: ((DynamicFormState) -> Bool)? = nil,
+        fieldAction: (any FieldAction)? = nil,
+        trailingView: ((DynamicFormField, DynamicFormState) -> AnyView)? = nil,
+        maxVisibleActions: Int = 2,
+        useActionMenu: Bool = true
     ) {
         self.id = id
         self.textContentType = textContentType
@@ -217,6 +235,10 @@ public struct DynamicFormField: Identifiable {
         self.calculationDependencies = calculationDependencies
         self.calculationGroups = calculationGroups
         self.visibilityCondition = visibilityCondition
+        self.fieldAction = fieldAction
+        self.trailingView = trailingView
+        self.maxVisibleActions = maxVisibleActions
+        self.useActionMenu = useActionMenu
     }
     
     /// Convenience initializer for text fields using cross-platform text content type
@@ -247,10 +269,19 @@ public struct DynamicFormField: Identifiable {
             ocrHint: nil,
             ocrValidationTypes: nil,
             ocrFieldIdentifier: nil,
+            ocrValidationRules: nil,
+            ocrHints: nil,
             supportsBarcodeScanning: false,
             barcodeHint: nil,
             supportedBarcodeTypes: nil,
-            barcodeFieldIdentifier: nil
+            barcodeFieldIdentifier: nil,
+            isCalculated: false,
+            calculationFormula: nil,
+            calculationDependencies: nil,
+            calculationGroups: nil,
+            visibilityCondition: nil,
+            fieldAction: nil,
+            trailingView: nil
         )
     }
     
@@ -283,10 +314,19 @@ public struct DynamicFormField: Identifiable {
             ocrHint: nil,
             ocrValidationTypes: nil,
             ocrFieldIdentifier: nil,
+            ocrValidationRules: nil,
+            ocrHints: nil,
             supportsBarcodeScanning: false,
             barcodeHint: nil,
             supportedBarcodeTypes: nil,
-            barcodeFieldIdentifier: nil
+            barcodeFieldIdentifier: nil,
+            isCalculated: false,
+            calculationFormula: nil,
+            calculationDependencies: nil,
+            calculationGroups: nil,
+            visibilityCondition: nil,
+            fieldAction: nil,
+            trailingView: nil
         )
     }
     
@@ -318,6 +358,10 @@ public struct DynamicFormField: Identifiable {
         self.calculationDependencies = nil
         self.calculationGroups = nil
         self.visibilityCondition = nil
+        self.fieldAction = nil
+        self.trailingView = nil
+        self.maxVisibleActions = 2
+        self.useActionMenu = true
     }
     
 
@@ -447,6 +491,38 @@ public struct DynamicFormField: Identifiable {
         )
     }
     
+    /// Get effective actions for this field
+    /// Returns explicit fieldAction if set, otherwise converts supportsOCR/supportsBarcodeScanning flags to actions
+    /// This ensures backward compatibility while supporting the new action system
+    @MainActor
+    public var effectiveActions: [any FieldAction] {
+        // If explicit fieldAction is set, use it (takes precedence over flags)
+        if let fieldAction = fieldAction {
+            return [fieldAction]
+        }
+        
+        // Otherwise, convert flags to actions for backward compatibility
+        var actions: [any FieldAction] = []
+        
+        if supportsOCR {
+            let ocrAction = BuiltInFieldAction.ocrScan(
+                hint: ocrHint,
+                validationTypes: ocrValidationTypes
+            ).toFieldAction()
+            actions.append(ocrAction)
+        }
+        
+        if supportsBarcodeScanning {
+            let barcodeAction = BuiltInFieldAction.barcodeScan(
+                hint: barcodeHint,
+                supportedTypes: supportedBarcodeTypes
+            ).toFieldAction()
+            actions.append(barcodeAction)
+        }
+        
+        return actions
+    }
+    
     /// Apply hints to this field, creating a new field with updated properties
     /// - Parameter hints: The hints to apply
     /// - Returns: A new field with hints applied
@@ -476,7 +552,12 @@ public struct DynamicFormField: Identifiable {
             isCalculated: hints.calculationGroups != nil ? true : self.isCalculated,
             calculationFormula: self.calculationFormula,
             calculationDependencies: self.calculationDependencies,
-            calculationGroups: hints.calculationGroups ?? self.calculationGroups
+            calculationGroups: hints.calculationGroups ?? self.calculationGroups,
+            visibilityCondition: self.visibilityCondition,
+            fieldAction: self.fieldAction,
+            trailingView: self.trailingView,
+            maxVisibleActions: self.maxVisibleActions,
+            useActionMenu: self.useActionMenu
         )
     }
 }
