@@ -133,16 +133,14 @@ public struct FieldViewTypeDeterminer {
             return .dataInput
         case .array:
             return .arrayInput
-        case .range:
-            return .toggle  // Range/slider uses toggle-like component
+        case .range, .gauge:
+            return .toggle  // Range/slider/gauge uses toggle-like component
         case .stepper:
             return .textField(keyboardType: FormKeyboardType.decimalPad, autocapitalization: FormAutocapitalizationType.none)  // Stepper uses numeric input
         case .display:
             return .textField(keyboardType: nil, autocapitalization: FormAutocapitalizationType.none)  // Display fields are read-only text
         case .custom:
             return .custom
-        case .multiDate, .dateRange:
-            return .datePicker(displayedComponents: FormDatePickerComponents.date)
         @unknown default:
             // Handle any future cases or unknown cases gracefully
             return .textField(keyboardType: FormKeyboardType.default, autocapitalization: FormAutocapitalizationType.sentences)
