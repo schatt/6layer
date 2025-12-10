@@ -13,12 +13,6 @@ import ViewInspector
 @Suite("Dynamic Form Progress Indicator UI")
 open class DynamicFormProgressIndicatorTests: BaseTestClass {
     
-    // MARK: - Test Setup
-    
-    private func cleanupTestEnvironment() async {
-        await AccessibilityTestUtilities.cleanupAccessibilityTestEnvironment()
-    }
-    
     // MARK: - Progress Indicator Display Tests
     
     /// BUSINESS PURPOSE: Verify progress indicator displays when enabled
@@ -153,7 +147,7 @@ open class DynamicFormProgressIndicatorTests: BaseTestClass {
                 
                 if let countText = fieldCountText {
                     let textString = try? countText.sixLayerString()
-                    #expect(textString?.contains("0 of 3 field") ?? false, "Should display '0 of 3 fields' for empty form")
+                    #expect(textString?.contains("0 of 3 fields") ?? false, "Should display '0 of 3 fields' for empty form")
                 }
             }
         }
