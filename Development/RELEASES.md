@@ -1,12 +1,43 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.1.1 - Color.named() Extensions** 🎯
+## 📍 **Current Release: v6.2.0 - Form Enhancements & Advanced Field Types** 🎯
 
-**Release Date**: December 8, 2025
+**Release Date**: December 10, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.1.0 - Form UX Enhancements & Platform Extensions
-**Note**: Patch release extending Color.named() API to support systemBackground and other commonly used color names. Adds convenience method Color.named(_:default:) that returns a non-optional Color with a fallback, preventing compiler type-checking issues when chaining optionals.
+**Previous Release**: v6.1.1 - Color.named() Extensions
+**Note**: Minor release focused on comprehensive form enhancements and advanced field types. Includes form auto-save and draft functionality, field focus management, conditional field visibility, field-level help tooltips, form progress indicators, custom field actions, advanced field types (Gauge, MultiDatePicker, LabeledContent, TextField with axis), cross-platform camera preview, and debug warnings for missing hints.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.2.0 - Form Enhancements & Advanced Field Types** (December 10, 2025)
+
+### **What's New:**
+
+#### **📝 Form State Management (Issues #80, #81, #77)**
+- **Form Auto-Save**: Automatic form state saving to prevent data loss with configurable intervals
+- **Draft Functionality**: Resume incomplete forms with persistent storage
+- **Field Focus Management**: Automatic focus progression and error-focused navigation
+- **Conditional Field Visibility**: Dynamic field showing/hiding based on other field values
+
+#### **🎨 Advanced Field Types (Issues #88, #85, #84, #89)**
+- **Gauge Component**: Visual gauge/level display for iOS 16+/macOS 13+ with circular/linear styles
+- **MultiDatePicker**: Multiple date selection support for iOS 16+/macOS 13+
+- **LabeledContent**: Read-only/display fields using LabeledContent (iOS 16+/macOS 13+)
+- **TextField with Axis**: Multi-line text fields with axis parameter (iOS 16+)
+
+#### **🔧 Form UX Enhancements (Issues #82, #95, #79)**
+- **Form Progress Indicator**: Visual progress indicator for non-wizard forms
+- **Custom Field Actions**: Per-field actions like scanning, OCR, and custom actions
+- **Field-Level Help Tooltips**: Info buttons and tooltips for field descriptions
+
+#### **📷 Platform Extensions (Issue #96)**
+- **PlatformCameraPreviewView**: Cross-platform camera preview abstraction
+
+#### **🛠️ Developer Experience (Issue #97)**
+- **Debug Warnings**: Warnings when fields exist without hints to improve development workflow
+
+**See [RELEASE_v6.2.0.md](RELEASE_v6.2.0.md) for complete release notes.**
 
 ---
 

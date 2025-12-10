@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.1.1")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.2.0")
 ]
 ```
 
@@ -41,9 +41,16 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.1.1
+## 🆕 Latest Release: v6.2.0
 
-### **Color.named() Extensions**
+### **Form Enhancements & Advanced Field Types**
+📝 **Form state management**: Form auto-save and draft functionality, field focus management, conditional field visibility.  
+🎨 **Advanced field types**: Gauge component, MultiDatePicker, LabeledContent, TextField with axis parameter.  
+🔧 **Form UX enhancements**: Form progress indicators, custom field actions, field-level help tooltips.  
+📷 **Platform extensions**: PlatformCameraPreviewView for cross-platform camera preview.  
+🛠️ **Developer experience**: Debug warnings for missing hints.
+
+### **Previous Release: v6.1.1 - Color.named() Extensions**
 🎨 **Color API improvements**: Extended `Color.named()` to support `systemBackground` and other commonly used color names (`cardBackground`, `label`, `secondaryLabel`, `tertiaryLabel`, `separator`).  
 🔧 **Convenience method**: Added `Color.named(_:default:)` that returns a non-optional `Color` with a fallback, preventing compiler type-checking issues.  
 🐛 **Bug fixes**: Resolved compiler type-checking timeouts when chaining multiple optionals with `Color.named()`.
@@ -127,7 +134,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.1.1 (Color.named() Extensions)
+**Version**: v6.2.0 (Form Enhancements & Advanced Field Types)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
