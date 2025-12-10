@@ -75,9 +75,8 @@ open class ImageProcessingPipelineTests: BaseTestClass {
             
             // Then
             #expect(Bool(true), "processedImage is non-optional")  // processedImage is non-optional
-            #expect(processedImage.originalImage != nil)
+            // originalImage and metadata are non-optional
             #expect(processedImage.purpose == purpose)
-            #expect(processedImage.metadata != nil)
             
             RuntimeCapabilityDetection.clearAllCapabilityOverrides()
         }
@@ -220,7 +219,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         )
         
         // When
-        let enhancedImage = try await processor.enhance(image, with: options)
+        _ = try await processor.enhance(image, with: options)
         
         // Then
         #expect(Bool(true), "enhancedImage is non-optional")  // enhancedImage is non-optional
@@ -240,8 +239,8 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         
         // Then
         #expect(Bool(true), "analysis is non-optional")  // analysis is non-optional
-        #expect(analysis.qualityScore != nil)
-        #expect(analysis.dimensions != nil)
+        // qualityScore and dimensions are non-optional (Double and CGSize)
+        // colorPalette is optional, so this check is valid
         #expect(analysis.colorPalette != nil)
     }
     
@@ -272,7 +271,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         let strategy = OCREnhancementStrategy()
         
         // When
-        let textRegions = try await strategy.detectTextRegions(image)
+        _ = try await strategy.detectTextRegions(image)
         
         // Then
         #expect(Bool(true), "textRegions is non-optional")  // textRegions is non-optional
@@ -371,7 +370,7 @@ open class ImageProcessingPipelineTests: BaseTestClass {
         #expect(results.count == purposes.count)
         for (index, result) in results.enumerated() {
             #expect(result.purpose == purposes[index])
-            #expect(result.originalImage != nil)
+            // originalImage is non-optional
         }
     }
 }

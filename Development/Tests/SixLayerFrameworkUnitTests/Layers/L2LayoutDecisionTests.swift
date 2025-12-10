@@ -93,7 +93,7 @@ open class L2LayoutDecisionTests: BaseTestClass {
             complexity: .simple,
             context: .dashboard
         )
-        let simpleDecision = determineOptimalLayout_L2(
+        _ = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: simpleHints,
             screenWidth: 375,
@@ -108,13 +108,13 @@ open class L2LayoutDecisionTests: BaseTestClass {
             complexity: .moderate,
             context: .browse
         )
-        let moderateDecision = determineOptimalLayout_L2(
+        _ = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: moderateHints,
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(Bool(true), "Moderate complexity should return a decision")  // moderateDecision is non-optional
+        #expect(Bool(true), "Moderate complexity should return a decision")
         
         // Test complex complexity
         let complexHints = PresentationHints(
@@ -123,44 +123,44 @@ open class L2LayoutDecisionTests: BaseTestClass {
             complexity: .complex,
             context: .detail
         )
-        let complexDecision = determineOptimalLayout_L2(
+        _ = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: complexHints,
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(Bool(true), "Complex complexity should return a decision")  // complexDecision is non-optional
+        #expect(Bool(true), "Complex complexity should return a decision")
     }
     
     @Test @MainActor func testDetermineOptimalLayout_L2_WithDifferentDeviceTypes() {
         let hints = PresentationHints()
         
         // Test phone
-        let phoneDecision = determineOptimalLayout_L2(
+        _ = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: hints,
             screenWidth: 375,
             deviceType: .phone
         )
-        #expect(Bool(true), "Phone device type should return a decision")  // phoneDecision is non-optional
+        #expect(Bool(true), "Phone device type should return a decision")
         
         // Test pad
-        let padDecision = determineOptimalLayout_L2(
+        _ = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: hints,
             screenWidth: 768,
             deviceType: .pad
         )
-        #expect(Bool(true), "Pad device type should return a decision")  // padDecision is non-optional
+        #expect(Bool(true), "Pad device type should return a decision")
         
         // Test mac
-        let macDecision = determineOptimalLayout_L2(
+        _ = determineOptimalLayout_L2(
             items: createSampleItems(),
             hints: hints,
             screenWidth: 1024,
             deviceType: .mac
         )
-        #expect(Bool(true), "Mac device type should return a decision")  // macDecision is non-optional
+        #expect(Bool(true), "Mac device type should return a decision")
     }
     
     // MARK: - Form Layout Decision Tests
@@ -250,31 +250,31 @@ open class L2LayoutDecisionTests: BaseTestClass {
         let complexity = ContentComplexity.moderate
         
         // Test phone
-        let phoneDecision = determineOptimalCardLayout_L2(
+        _ = determineOptimalCardLayout_L2(
             contentCount: contentCount,
             screenWidth: 375,
             deviceType: .phone,
             contentComplexity: complexity
         )
-        #expect(Bool(true), "Phone device type should return a decision")  // phoneDecision is non-optional
+        #expect(Bool(true), "Phone device type should return a decision")
         
         // Test pad
-        let padDecision = determineOptimalCardLayout_L2(
+        _ = determineOptimalCardLayout_L2(
             contentCount: contentCount,
             screenWidth: 768,
             deviceType: .pad,
             contentComplexity: complexity
         )
-        #expect(Bool(true), "Pad device type should return a decision")  // padDecision is non-optional
+        #expect(Bool(true), "Pad device type should return a decision")
         
         // Test mac
-        let macDecision = determineOptimalCardLayout_L2(
+        _ = determineOptimalCardLayout_L2(
             contentCount: contentCount,
             screenWidth: 1024,
             deviceType: .mac,
             contentComplexity: complexity
         )
-        #expect(Bool(true), "Mac device type should return a decision")  // macDecision is non-optional
+        #expect(Bool(true), "Mac device type should return a decision")
     }
     
     // MARK: - Intelligent Card Layout Decision Tests
@@ -503,10 +503,10 @@ open class L2LayoutDecisionTests: BaseTestClass {
         let context = createSamplePhotoContext()
         
         // When
-        let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
+        _ = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then
-        #expect(Bool(true), "determinePhotoCaptureStrategy_L2 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "determinePhotoCaptureStrategy_L2 should return a strategy")
     }
     
     @Test @MainActor func testDeterminePhotoCaptureStrategy_L2_WithFuelReceipt() {
@@ -515,10 +515,10 @@ open class L2LayoutDecisionTests: BaseTestClass {
         let context = createSamplePhotoContext()
         
         // When
-        let strategy = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
+        _ = determinePhotoCaptureStrategy_L2(purpose: purpose, context: context)
         
         // Then
-        #expect(Bool(true), "determinePhotoCaptureStrategy_L2 should return a strategy")  // strategy is non-optional
+        #expect(Bool(true), "determinePhotoCaptureStrategy_L2 should return a strategy")
     }
     
     // MARK: - Performance Tests

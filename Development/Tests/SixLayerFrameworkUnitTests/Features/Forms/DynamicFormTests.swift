@@ -761,7 +761,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -787,7 +787,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -839,7 +839,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -865,7 +865,7 @@ open class DynamicFormTests: BaseTestClass {
         )
         
         // When: Creating the field view
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(
+        _ = DynamicFormState(configuration: DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form"
         ))
@@ -1197,6 +1197,732 @@ open class DynamicFormTests: BaseTestClass {
         // When onErrorTap is called, it should receive the fieldId
         // This allows scrolling to the field using ScrollViewReader
         // Test verifies the data structure supports this functionality
+    }
+    
+    // MARK: - Conditional Field Visibility Tests
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormField supports visibilityCondition property
+    /// TESTING SCOPE: Tests DynamicFormField initialization with visibilityCondition
+    /// METHODOLOGY: Create DynamicFormField with visibilityCondition and verify property is set correctly
+    @Test func testDynamicFormFieldWithVisibilityCondition() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Field with visibility condition
+        let field = DynamicFormField(
+            id: "companyName",
+            contentType: .text,
+            label: "Company Name",
+            visibilityCondition: { state in
+                return (state.getValue(for: "accountType") as String?) == "business"
+            }
+        )
+        
+        // Verify field has visibility condition
+        #expect(field.visibilityCondition != nil)
+        
+        // Test condition evaluation - should be false initially
+        let shouldShow = field.visibilityCondition?(formState) ?? true
+        #expect(!shouldShow, "Field should be hidden when accountType is not 'business'")
+        
+        // Set accountType to business - should show
+        formState.setValue("business", for: "accountType")
+        let shouldShowAfter = field.visibilityCondition?(formState) ?? true
+        #expect(shouldShowAfter, "Field should be visible when accountType is 'business'")
+    }
+    
+    /// BUSINESS PURPOSE: Validate DynamicFormField without visibilityCondition is always visible
+    /// TESTING SCOPE: Tests backward compatibility - fields without condition are always visible
+    /// METHODOLOGY: Create DynamicFormField without visibilityCondition and verify it's always visible
+    @Test func testDynamicFormFieldWithoutVisibilityCondition() {
+        // Field without visibility condition should always be visible
+        let field = DynamicFormField(
+            id: "firstName",
+            contentType: .text,
+            label: "First Name"
+        )
+        
+        // Verify field has no visibility condition
+        #expect(field.visibilityCondition == nil)
+        
+        // Field without condition should default to visible (handled in view layer)
+        // This test verifies the property exists and can be nil
+    }
+    
+    /// BUSINESS PURPOSE: Validate visibilityCondition re-evaluates when dependent field changes
+    /// TESTING SCOPE: Tests that visibility conditions respond to form state changes
+    /// METHODOLOGY: Create field with condition, change dependent field, verify condition re-evaluates
+    @Test func testVisibilityConditionReevaluation() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Field that depends on accountType
+        let field = DynamicFormField(
+            id: "companyName",
+            contentType: .text,
+            label: "Company Name",
+            visibilityCondition: { state in
+                return (state.getValue(for: "accountType") as String?) == "business"
+            }
+        )
+        
+        // Initially hidden
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+        
+        // Change to business - should show
+        formState.setValue("business", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == true)
+        
+        // Change to personal - should hide
+        formState.setValue("personal", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+    }
+    
+    /// BUSINESS PURPOSE: Validate complex visibility conditions with multiple dependencies
+    /// TESTING SCOPE: Tests visibility conditions that depend on multiple fields
+    /// METHODOLOGY: Create field with condition depending on multiple fields, verify complex logic works
+    @Test func testComplexVisibilityCondition() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Field that depends on multiple fields
+        let field = DynamicFormField(
+            id: "businessDetails",
+            contentType: .text,
+            label: "Business Details",
+            visibilityCondition: { state in
+                let accountType = state.getValue(for: "accountType") as String?
+                let hasBusinessLicense = state.getValue(for: "hasBusinessLicense") as Bool?
+                return accountType == "business" && (hasBusinessLicense ?? false)
+            }
+        )
+        
+        // Initially hidden (no accountType)
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+        
+        // Set accountType but no license - still hidden
+        formState.setValue("business", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+        
+        // Set both - should show
+        formState.setValue(true, for: "hasBusinessLicense")
+        #expect(field.visibilityCondition?(formState) ?? true == true)
+        
+        // Change accountType - should hide
+        formState.setValue("personal", for: "accountType")
+        #expect(field.visibilityCondition?(formState) ?? true == false)
+    }
+    
+    /// BUSINESS PURPOSE: Validate visibilityCondition works with DynamicFormSectionView filtering
+    /// TESTING SCOPE: Tests that section view filters fields based on visibility conditions
+    /// METHODOLOGY: Create section with visible and hidden fields, verify only visible fields are rendered
+    @Test func testSectionViewFiltersFieldsByVisibility() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "account",
+                    title: "Account Information",
+                    fields: [
+                        DynamicFormField(
+                            id: "accountType",
+                            contentType: .select,
+                            label: "Account Type",
+                            options: ["personal", "business"]
+                        ),
+                        DynamicFormField(
+                            id: "companyName",
+                            contentType: .text,
+                            label: "Company Name",
+                            visibilityCondition: { state in
+                                return state.getValue(for: "accountType") as String? == "business"
+                            }
+                        ),
+                        DynamicFormField(
+                            id: "firstName",
+                            contentType: .text,
+                            label: "First Name"
+                        )
+                    ]
+                )
+            ]
+        )
+        
+        let formState = DynamicFormState(configuration: config)
+        
+        // Get all fields from section
+        let section = config.sections[0]
+        #expect(section.fields.count == 3)
+        
+        // Filter fields based on visibility (simulating what view does)
+        let visibleFields = section.fields.filter { field in
+            field.visibilityCondition?(formState) ?? true
+        }
+        
+        // Initially, companyName should be hidden
+        #expect(visibleFields.count == 2, "Should show accountType and firstName")
+        #expect(visibleFields.contains { $0.id == "accountType" })
+        #expect(visibleFields.contains { $0.id == "firstName" })
+        #expect(!visibleFields.contains { $0.id == "companyName" })
+        
+        // Set accountType to business - companyName should appear
+        formState.setValue("business", for: "accountType")
+        let visibleFieldsAfter = section.fields.filter { field in
+            field.visibilityCondition?(formState) ?? true
+        }
+        
+        #expect(visibleFieldsAfter.count == 3, "Should show all fields when accountType is business")
+        #expect(visibleFieldsAfter.contains { $0.id == "companyName" })
+    }
+    
+    // MARK: - Focus Management Tests (Issue #81)
+    
+    /// BUSINESS PURPOSE: Validate focus management moves to next field in order
+    /// TESTING SCOPE: Tests focusNextField() method moves focus to next field correctly
+    /// METHODOLOGY: Create form with multiple fields and verify focus moves through fields in order
+    @Test func testFocusNextField() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Initially no field is focused
+        #expect(state.focusedFieldId == nil)
+        
+        // Focus first field
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == "field2", "Should focus next field")
+        
+        // Focus next field
+        state.focusNextField(from: "field2")
+        #expect(state.focusedFieldId == "field3", "Should focus next field")
+        
+        // On last field, should not wrap around (or wrap if implemented)
+        state.focusNextField(from: "field3")
+        // Behavior depends on implementation - could be nil or wrap to first
+        // For now, expect nil (no wrap)
+        #expect(state.focusedFieldId == nil || state.focusedFieldId == "field1")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management skips non-focusable fields
+    /// TESTING SCOPE: Tests focusNextField() skips fields that don't support keyboard focus
+    /// METHODOLOGY: Create form with mixed field types and verify focus skips date pickers
+    @Test func testFocusNextFieldSkipsNonFocusableFields() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .date, label: "Date Field"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Focus should skip date field and go to next text field
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == "field3", "Should skip date field and focus next text field")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus moves to first error field after validation
+    /// TESTING SCOPE: Tests focusFirstError() method focuses first field with error
+    /// METHODOLOGY: Add errors to multiple fields and verify focus goes to first error
+    @Test func testFocusFirstError() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1"),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2"),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Add errors to fields
+        state.addError("Error 1", for: "field2")
+        state.addError("Error 2", for: "field1")
+        state.addError("Error 3", for: "field3")
+        
+        // Focus first error (should be field1 based on field order)
+        state.focusFirstError()
+        #expect(state.focusedFieldId == "field1", "Should focus first field with error in order")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focusFirstError handles no errors gracefully
+    /// TESTING SCOPE: Tests focusFirstError() when no errors exist
+    /// METHODOLOGY: Call focusFirstError with no errors and verify no crash
+    @Test func testFocusFirstErrorWithNoErrors() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // No errors - should not crash
+        state.focusFirstError()
+        #expect(state.focusedFieldId == nil, "Should not focus anything when no errors")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management works across multiple sections
+    /// TESTING SCOPE: Tests focusNextField() works across section boundaries
+    /// METHODOLOGY: Create form with multiple sections and verify focus moves correctly
+    @Test func testFocusNextFieldAcrossSections() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                ),
+                DynamicFormSection(
+                    id: "section2",
+                    title: "Section 2",
+                    fields: [
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Focus should move from last field of section1 to first field of section2
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == "field2", "Should focus first field of next section")
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management handles empty forms
+    /// TESTING SCOPE: Tests focus methods don't crash on empty forms
+    /// METHODOLOGY: Create form with no fields and verify methods handle gracefully
+    @Test func testFocusManagementWithEmptyForm() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Should not crash
+        state.focusNextField(from: "nonexistent")
+        #expect(state.focusedFieldId == nil)
+        
+        state.focusFirstError()
+        #expect(state.focusedFieldId == nil)
+    }
+    
+    /// BUSINESS PURPOSE: Validate focus management handles single field forms
+    /// TESTING SCOPE: Tests focusNextField() on last/only field
+    /// METHODOLOGY: Create form with single field and verify behavior
+    @Test func testFocusNextFieldOnLastField() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1")
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // On last/only field, should not focus anything (or wrap)
+        state.focusNextField(from: "field1")
+        #expect(state.focusedFieldId == nil || state.focusedFieldId == "field1")
+    }
+    
+    // MARK: - Form Progress Tests (Issue #82)
+    
+    /// BUSINESS PURPOSE: Validate form progress calculation with all fields empty
+    /// TESTING SCOPE: Tests FormProgress calculation when no required fields are filled
+    /// METHODOLOGY: Create form with required fields and verify progress is 0% when empty
+    @Test func testFormProgressAllFieldsEmpty() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: true),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: true),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 0)
+        #expect(progress.total == 3)
+        #expect(progress.percentage == 0.0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress calculation with all fields filled
+    /// TESTING SCOPE: Tests FormProgress calculation when all required fields are filled
+    /// METHODOLOGY: Create form with required fields, fill them all, and verify progress is 100%
+    @Test func testFormProgressAllFieldsFilled() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: true),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: true),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        state.setValue("value1", for: "field1")
+        state.setValue("value2", for: "field2")
+        state.setValue("value3", for: "field3")
+        
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 3)
+        #expect(progress.total == 3)
+        #expect(progress.percentage == 1.0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress calculation with partial completion
+    /// TESTING SCOPE: Tests FormProgress calculation when some required fields are filled
+    /// METHODOLOGY: Create form with required fields, fill some, and verify progress percentage is correct
+    @Test func testFormProgressPartialCompletion() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: true),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: true),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3", isRequired: true),
+                        DynamicFormField(id: "field4", contentType: .text, label: "Field 4", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        state.setValue("value1", for: "field1")
+        state.setValue("value2", for: "field2")
+        
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 2)
+        #expect(progress.total == 4)
+        #expect(progress.percentage == 0.5)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress calculation excludes optional fields
+    /// TESTING SCOPE: Tests FormProgress calculation only counts required fields, not optional ones
+    /// METHODOLOGY: Create form with required and optional fields, fill only optional fields, verify progress is 0%
+    @Test func testFormProgressOnlyOptionalFieldsFilled() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "required1", contentType: .text, label: "Required 1", isRequired: true),
+                        DynamicFormField(id: "required2", contentType: .text, label: "Required 2", isRequired: true),
+                        DynamicFormField(id: "optional1", contentType: .text, label: "Optional 1", isRequired: false),
+                        DynamicFormField(id: "optional2", contentType: .text, label: "Optional 2", isRequired: false)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        state.setValue("value1", for: "optional1")
+        state.setValue("value2", for: "optional2")
+        
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 0)
+        #expect(progress.total == 2)
+        #expect(progress.percentage == 0.0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress calculation with mixed required and optional fields
+    /// TESTING SCOPE: Tests FormProgress calculation correctly handles mix of required and optional fields
+    /// METHODOLOGY: Create form with required and optional fields, fill some of each, verify progress counts only required
+    @Test func testFormProgressMixedRequiredAndOptional() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "required1", contentType: .text, label: "Required 1", isRequired: true),
+                        DynamicFormField(id: "required2", contentType: .text, label: "Required 2", isRequired: true),
+                        DynamicFormField(id: "required3", contentType: .text, label: "Required 3", isRequired: true),
+                        DynamicFormField(id: "optional1", contentType: .text, label: "Optional 1", isRequired: false),
+                        DynamicFormField(id: "optional2", contentType: .text, label: "Optional 2", isRequired: false)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        state.setValue("value1", for: "required1")
+        state.setValue("value2", for: "required2")
+        state.setValue("value3", for: "optional1")
+        
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 2)
+        #expect(progress.total == 3)
+        #expect(abs(progress.percentage - 0.6666666666666666) < 0.0001) // 2/3 ≈ 0.6667
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress updates when field values change
+    /// TESTING SCOPE: Tests FormProgress calculation updates in real-time as fields are filled
+    /// METHODOLOGY: Create form, fill fields incrementally, verify progress updates correctly each time
+    @Test func testFormProgressUpdatesWhenFieldsChange() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: true),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: true),
+                        DynamicFormField(id: "field3", contentType: .text, label: "Field 3", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Initially empty
+        var progress = state.formProgress
+        #expect(progress.completed == 0)
+        #expect(progress.total == 3)
+        #expect(progress.percentage == 0.0)
+        
+        // Fill first field
+        state.setValue("value1", for: "field1")
+        progress = state.formProgress
+        #expect(progress.completed == 1)
+        #expect(progress.percentage == 1.0 / 3.0)
+        
+        // Fill second field
+        state.setValue("value2", for: "field2")
+        progress = state.formProgress
+        #expect(progress.completed == 2)
+        #expect(progress.percentage == 2.0 / 3.0)
+        
+        // Fill third field
+        state.setValue("value3", for: "field3")
+        progress = state.formProgress
+        #expect(progress.completed == 3)
+        #expect(progress.percentage == 1.0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress handles empty string values as incomplete
+    /// TESTING SCOPE: Tests FormProgress calculation treats empty strings as incomplete fields
+    /// METHODOLOGY: Create form, set empty string values, verify they are not counted as completed
+    @Test func testFormProgressEmptyStringNotCounted() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: true),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        state.setValue("", for: "field1")
+        state.setValue("value2", for: "field2")
+        
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 1)
+        #expect(progress.total == 2)
+        #expect(progress.percentage == 0.5)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress handles non-string field types correctly
+    /// TESTING SCOPE: Tests FormProgress calculation correctly counts non-string field types (has value = complete)
+    /// METHODOLOGY: Create form with various field types, set values, verify non-string values are counted as complete
+    @Test func testFormProgressNonStringFieldTypes() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "textField", contentType: .text, label: "Text Field", isRequired: true),
+                        DynamicFormField(id: "numberField", contentType: .number, label: "Number Field", isRequired: true),
+                        DynamicFormField(id: "boolField", contentType: .boolean, label: "Boolean Field", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        state.setValue("text", for: "textField")
+        state.setValue(42, for: "numberField")
+        state.setValue(true, for: "boolField")
+        
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 3)
+        #expect(progress.total == 3)
+        #expect(progress.percentage == 1.0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress handles edge case with zero required fields
+    /// TESTING SCOPE: Tests FormProgress calculation when form has no required fields
+    /// METHODOLOGY: Create form with only optional fields, verify progress handles edge case correctly
+    @Test func testFormProgressZeroRequiredFields() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: false),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: false)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        let progress = state.formProgress
+        
+        #expect(progress.completed == 0)
+        #expect(progress.total == 0)
+        #expect(progress.percentage == 0.0)
+    }
+    
+    /// BUSINESS PURPOSE: Validate form progress handles clearing field values
+    /// TESTING SCOPE: Tests FormProgress calculation updates when fields are cleared
+    /// METHODOLOGY: Create form, fill fields, then clear them, verify progress decreases
+    @Test func testFormProgressDecreasesWhenFieldsCleared() {
+        let config = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: [
+                DynamicFormSection(
+                    id: "section1",
+                    title: "Section 1",
+                    fields: [
+                        DynamicFormField(id: "field1", contentType: .text, label: "Field 1", isRequired: true),
+                        DynamicFormField(id: "field2", contentType: .text, label: "Field 2", isRequired: true)
+                    ]
+                )
+            ]
+        )
+        
+        let state = DynamicFormState(configuration: config)
+        
+        // Fill both fields
+        state.setValue("value1", for: "field1")
+        state.setValue("value2", for: "field2")
+        var progress = state.formProgress
+        #expect(progress.completed == 2)
+        #expect(progress.percentage == 1.0)
+        
+        // Clear one field
+        state.setValue("", for: "field1")
+        progress = state.formProgress
+        #expect(progress.completed == 1)
+        #expect(progress.percentage == 0.5)
     }
 }
     

@@ -66,7 +66,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should detect grid fields
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -88,7 +88,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should not detect grid fields
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -113,7 +113,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should calculate 4 columns
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -135,7 +135,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should calculate 5 columns (max value)
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -232,7 +232,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle gracefully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -251,7 +251,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle gracefully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -270,7 +270,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating section view
-        let view = DynamicFormSectionView(section: section, formState: formState)
+        _ = DynamicFormSectionView(section: section, formState: formState)
         
         // Then: Should handle single field
         #expect(Bool(true), "view is non-optional")  // view is non-optional

@@ -180,7 +180,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: fieldsWithOptions, hints: EnhancedPresentationHints(
+        _ = platformPresentFormData_L1(fields: fieldsWithOptions, hints: EnhancedPresentationHints(
             dataType: standardHints.dataType,
             presentationPreference: standardHints.presentationPreference,
             complexity: standardHints.complexity,
@@ -207,7 +207,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: multiValueFields, hints: EnhancedPresentationHints(
+        _ = platformPresentFormData_L1(fields: multiValueFields, hints: EnhancedPresentationHints(
             dataType: standardHints.dataType,
             presentationPreference: standardHints.presentationPreference,
             complexity: standardHints.complexity,
@@ -295,7 +295,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form with multiple extensible hints
-        let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
+        _ = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
 
         // Then: Should process all extensible hints
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -363,7 +363,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form presentation
-        let view = platformPresentFormData_L1(fields: keyboardTestFields, hints: EnhancedPresentationHints(
+        _ = platformPresentFormData_L1(fields: keyboardTestFields, hints: EnhancedPresentationHints(
             dataType: standardHints.dataType,
             presentationPreference: standardHints.presentationPreference,
             complexity: standardHints.complexity,
@@ -433,7 +433,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form with validation scenarios
-        let view = platformPresentFormData_L1(fields: validationFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
+        _ = platformPresentFormData_L1(fields: validationFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
         // Verify field requirements
         let requiredFields = validationFields.filter { $0.isRequired }
@@ -469,7 +469,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form with edge case values
-        let view = platformPresentFormData_L1(fields: edgeCaseFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
+        _ = platformPresentFormData_L1(fields: edgeCaseFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
         // Verify edge case handling
         let emptyValueFields = edgeCaseFields.filter { $0.defaultValue?.isEmpty == true }
@@ -509,7 +509,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form with special characters
-        let view = platformPresentFormData_L1(fields: specialCharFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
+        _ = platformPresentFormData_L1(fields: specialCharFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
         // Then: Should handle special characters correctly
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -541,7 +541,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
 
         // When: Testing all hint combinations
         for (index, hints) in hintCombinations.enumerated() {
-            let view = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
+            _ = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Each combination should work
             #expect(Bool(true), "Hint combination \(index) should work")  // view is non-optional
@@ -571,7 +571,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form with custom preferences
-        let view = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hintsWithPreferences))
+        _ = platformPresentFormData_L1(fields: fields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hintsWithPreferences))
 
         // Then: Should integrate custom preferences
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -619,7 +619,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         )
 
         // When: Creating accessible form
-        let view = platformPresentFormData_L1(fields: accessibilityFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: accessibilityHints))
+        _ = platformPresentFormData_L1(fields: accessibilityFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: accessibilityHints))
 
         // Then: Should support accessibility
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -691,11 +691,15 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
             return "14:30"
         case .datetime:
             return "2024-01-15T14:30:00Z"
+        case .multiDate:
+            return "2024-01-15,2024-01-16,2024-01-17"
+        case .dateRange:
+            return "2024-01-15,2024-01-20"
         case .select, .radio:
             return "option1"
         case .multiselect:
             return "option1,option2"
-        case .checkbox, .toggle:
+        case .checkbox, .toggle, .boolean:
             return "true"
         case .color:
             return "#FF5733"
@@ -705,6 +709,8 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
             return "autocomplete_value"
         case .custom:
             return "custom_value"
+        case .display:
+            return "display_value"
         // Performance test removed - performance monitoring was removed from framework
         }
     }

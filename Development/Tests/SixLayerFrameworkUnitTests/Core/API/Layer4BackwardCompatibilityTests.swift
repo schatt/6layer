@@ -39,6 +39,76 @@ import AppKit
 @Suite("Layer 4 Backward Compatibility")
 open class Layer4BackwardCompatibilityTests: BaseTestClass {
     
+    // MARK: - Helper Functions for Deprecated API Calls
+    
+    // Helper functions to suppress deprecation warnings when intentionally testing deprecated APIs
+    
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedOCRImplementation(
+        image: PlatformImage,
+        context: OCRContext,
+        strategy: OCRStrategy,
+        onResult: @escaping (OCRResult) -> Void
+    ) -> some View {
+        return platformOCRImplementation_L4(
+            image: image,
+            context: context,
+            strategy: strategy,
+            onResult: onResult
+        )
+    }
+    
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedTextExtraction(
+        image: PlatformImage,
+        context: OCRContext,
+        layout: OCRLayout,
+        strategy: OCRStrategy,
+        onResult: @escaping (OCRResult) -> Void
+    ) -> some View {
+        return platformTextExtraction_L4(
+            image: image,
+            context: context,
+            layout: layout,
+            strategy: strategy,
+            onResult: onResult
+        )
+    }
+    
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedTextRecognition(
+        image: PlatformImage,
+        options: TextRecognitionOptions,
+        onResult: @escaping (OCRResult) -> Void
+    ) -> some View {
+        return platformTextRecognition_L4(
+            image: image,
+            options: options,
+            onResult: onResult
+        )
+    }
+    
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedSafeOCRImplementation(
+        image: PlatformImage,
+        context: OCRContext,
+        strategy: OCRStrategy,
+        onResult: @escaping (OCRResult) -> Void,
+        onError: @escaping (Error) -> Void
+    ) -> some View {
+        return safePlatformOCRImplementation_L4(
+            image: image,
+            context: context,
+            strategy: strategy,
+            onResult: onResult,
+            onError: onError
+        )
+    }
+    
     // MARK: - Deprecated OCR APIs Backward Compatibility
     
     /// BUSINESS PURPOSE: Test deprecated platformOCRImplementation_L4 still works
@@ -59,14 +129,15 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         
         // When: Using deprecated API (should still work)
         // Note: This API is deprecated but should still function
-        let _ = platformOCRImplementation_L4(
+        let _ = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
-            strategy: strategy
-        ) { result in
-            ocrResult = result
-            callbackExecuted = true
-        }
+            strategy: strategy,
+            onResult: { result in
+                ocrResult = result
+                callbackExecuted = true
+            }
+        )
         
         // Then: Deprecated API should still work
         // The deprecated API calls the callback in onAppear, so we test the callback directly
@@ -115,15 +186,16 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         
         // When: Using deprecated API (should still work)
         // Note: This API is deprecated but should still function
-        let _ = platformTextExtraction_L4(
+        let _ = callDeprecatedTextExtraction(
             image: testImage,
             context: context,
             layout: layout,
-            strategy: strategy
-        ) { result in
-            ocrResult = result
-            callbackExecuted = true
-        }
+            strategy: strategy,
+            onResult: { result in
+                ocrResult = result
+                callbackExecuted = true
+            }
+        )
         
         // Then: Deprecated API should still work
         // The deprecated API calls the callback in onAppear, so we test the callback directly
@@ -160,13 +232,14 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         
         // When: Using deprecated API (should still work)
         // Note: This API is deprecated but should still function
-        let _ = platformTextRecognition_L4(
+        let _ = callDeprecatedTextRecognition(
             image: testImage,
-            options: options
-        ) { result in
-            ocrResult = result
-            callbackExecuted = true
-        }
+            options: options,
+            onResult: { result in
+                ocrResult = result
+                callbackExecuted = true
+            }
+        )
         
         // Then: Deprecated API should still work
         // The deprecated API calls the callback in onAppear, so we test the callback directly
@@ -210,7 +283,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         
         // When: Using deprecated API (should still work)
         // Note: This API is deprecated but should still function
-        let _ = safePlatformOCRImplementation_L4(
+        let _ = callDeprecatedSafeOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -280,7 +353,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         }
         
         // Test that deprecated API still works
-        let _ = platformOCRImplementation_L4(
+        let _ = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -329,7 +402,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         // This would fail if parameter types changed
         
         // platformOCRImplementation_L4
-        let _ = platformOCRImplementation_L4(
+        let _ = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -337,7 +410,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         )
         
         // platformTextExtraction_L4
-        let _ = platformTextExtraction_L4(
+        let _ = callDeprecatedTextExtraction(
             image: testImage,
             context: context,
             layout: layout,
@@ -346,14 +419,14 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         )
         
         // platformTextRecognition_L4
-        let _ = platformTextRecognition_L4(
+        let _ = callDeprecatedTextRecognition(
             image: testImage,
             options: options,
             onResult: { _ in }
         )
         
         // safePlatformOCRImplementation_L4
-        let _ = safePlatformOCRImplementation_L4(
+        let _ = callDeprecatedSafeOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -384,7 +457,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         // This would fail if return types changed
         
         // platformOCRImplementation_L4 returns some View
-        let ocrView: some View = platformOCRImplementation_L4(
+        let ocrView: some View = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -397,7 +470,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
             maxImageSize: CGSize(width: 1024, height: 1024),
             recommendedImageSize: CGSize(width: 512, height: 512)
         )
-        let extractionView: some View = platformTextExtraction_L4(
+        let extractionView: some View = callDeprecatedTextExtraction(
             image: testImage,
             context: context,
             layout: layout,
@@ -408,7 +481,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         
         // platformTextRecognition_L4 returns some View
         let options = TextRecognitionOptions()
-        let recognitionView: some View = platformTextRecognition_L4(
+        let recognitionView: some View = callDeprecatedTextRecognition(
             image: testImage,
             options: options,
             onResult: { _ in }
@@ -416,7 +489,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
         let _ = recognitionView
         
         // safePlatformOCRImplementation_L4 returns some View
-        let safeView: some View = safePlatformOCRImplementation_L4(
+        let safeView: some View = callDeprecatedSafeOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -452,7 +525,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
             let _: OCRResult = result  // Would fail if type changed
         }
         
-        let _ = platformOCRImplementation_L4(
+        let _ = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -468,7 +541,7 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
             let _: Error = error  // Would fail if type changed
         }
         
-        let _ = safePlatformOCRImplementation_L4(
+        let _ = callDeprecatedSafeOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,

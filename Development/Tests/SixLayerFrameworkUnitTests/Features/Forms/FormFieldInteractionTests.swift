@@ -134,7 +134,7 @@ open class FormFieldInteractionTests: BaseTestClass {
             var textValue = ""
             
             // When: Creating text field with binding
-            let view = TextField(
+            _ = TextField(
                 textField.placeholder ?? "Enter text",
                 text: Binding(
                     get: { textValue },

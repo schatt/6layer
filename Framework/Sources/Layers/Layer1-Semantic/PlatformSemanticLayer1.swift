@@ -1247,7 +1247,7 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                     )
-            case .toggle:
+            case .toggle, .boolean:
                 Toggle(field.label, isOn: .constant(false))
             case .select:
                 Picker(field.placeholder ?? "Select option", selection: .constant("")) {
@@ -1263,6 +1263,11 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
                 DatePicker("", selection: .constant(Date()))
                     .datePickerStyle(.compact)
                     .selfLabelingControl(label: field.placeholder ?? "Select date")
+            case .multiDate, .dateRange:
+                // Use DatePicker as fallback for Layer1 (MultiDatePicker requires iOS 16+)
+                DatePicker("", selection: .constant(Date()))
+                    .datePickerStyle(.compact)
+                    .selfLabelingControl(label: field.placeholder ?? "Select dates")
             case .time:
                 DatePicker("", selection: .constant(Date()), displayedComponents: .hourAndMinute)
                     .datePickerStyle(.compact)
@@ -1272,6 +1277,22 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
                     .selfLabelingControl(label: field.label)
             case .range:
                 Slider(value: .constant(0.5), in: 0...1)
+            case .display:
+                // Display fields use LabeledContent or fallback HStack
+                if #available(iOS 16.0, macOS 13.0, *) {
+                    LabeledContent(field.label) {
+                        Text(field.defaultValue ?? "—")
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    HStack {
+                        Text(field.label)
+                            .font(.subheadline)
+                        Spacer()
+                        Text(field.defaultValue ?? "—")
+                            .foregroundColor(.secondary)
+                    }
+                }
             case .multiselect, .radio, .checkbox, .file, .image, .datetime, .array, .data, .custom, .text, .email, .password, .phone, .url, .autocomplete, .enum:
                 TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
                     .textFieldStyle(.roundedBorder)
@@ -2051,7 +2072,7 @@ public struct GenericFormView: View {
                                     .frame(minHeight: 80)
                                     .background(Color.platformSecondaryBackground)
                                     .cornerRadius(8)
-                            case .toggle:
+                            case .toggle, .boolean:
                                 Toggle(field.label, isOn: .constant(false))
                             case .select:
                                 Picker(field.label, selection: .constant("")) {
@@ -2207,6 +2228,11 @@ public struct ModalFormView: View {
                     DatePicker("", selection: .constant(Date()))
                         .datePickerStyle(.compact)
                         .selfLabelingControl(label: field.placeholder ?? "Select date")
+                case .multiDate, .dateRange:
+                    // Use DatePicker as fallback for Layer1 (MultiDatePicker requires iOS 16+)
+                    DatePicker("", selection: .constant(Date()))
+                        .datePickerStyle(.compact)
+                        .selfLabelingControl(label: field.placeholder ?? "Select dates")
                 case .select:
                     Picker(field.placeholder ?? "Select option", selection: .constant("")) {
                         Text("Select an option").tag("")
@@ -2272,7 +2298,7 @@ public struct ModalFormView: View {
                 case .range:
                     Text("Range field: \(field.label)")
                         .foregroundColor(.secondary)
-                case .toggle:
+                case .toggle, .boolean:
                     Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
                 case .richtext:
                     Text("Rich text field: \(field.label)")
@@ -2295,6 +2321,22 @@ public struct ModalFormView: View {
                 case .custom:
                     Text("Custom field: \(field.label)")
                         .foregroundColor(.secondary)
+                case .display:
+                    // Display fields use LabeledContent or fallback HStack
+                    if #available(iOS 16.0, macOS 13.0, *) {
+                        LabeledContent(field.label) {
+                            Text(field.defaultValue ?? "—")
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        HStack {
+                            Text(field.label)
+                                .font(.subheadline)
+                            Spacer()
+                            Text(field.defaultValue ?? "—")
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 case .stepper:
                     Stepper(field.label, value: .constant(0.0), in: 0...100, step: 1.0)
                 case .enum:
@@ -2736,7 +2778,7 @@ public struct SimpleFormView: View {
                             .foregroundColor(.secondary)
                     }
                     
-                case .toggle:
+                case .toggle, .boolean:
                     Toggle(field.placeholder ?? "Toggle", isOn: Binding(
                         get: { field.value.lowercased() == "true" },
                         set: { field.value = $0 ? "true" : "false" }

@@ -24,7 +24,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         let hints = PresentationHints()
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -45,7 +45,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -66,7 +66,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -87,7 +87,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -110,7 +110,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -131,7 +131,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -152,7 +152,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )
@@ -173,7 +173,7 @@ open class ItemCollectionL1Tests: BaseTestClass {
         )
         
         // When
-        let view: some View = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: items,
             hints: hints
         )

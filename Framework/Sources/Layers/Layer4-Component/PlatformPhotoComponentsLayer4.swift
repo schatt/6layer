@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 #if os(iOS) && canImport(PhotosUI)
 import PhotosUI
@@ -59,6 +60,43 @@ public enum PlatformPhotoComponentsLayer4 {
         }
         .automaticCompliance(named: "platformPhotoDisplay_L4")
     }
+    
+    // MARK: - Camera Preview Components
+    
+    /// Creates a cross-platform camera preview view
+    /// Abstracts UIViewControllerRepresentable (iOS) and NSViewRepresentable (macOS)
+    @ViewBuilder
+    public static func platformCameraPreview_L4(session: AVCaptureSession, videoGravity: AVLayerVideoGravity = .resizeAspectFill) -> some View {
+        PlatformCameraPreviewView(session: session, videoGravity: videoGravity)
+            .automaticCompliance(named: "platformCameraPreview_L4")
+    }
+}
+
+// MARK: - Camera Preview View
+
+/// Cross-platform camera preview view
+/// Abstracts UIViewControllerRepresentable (iOS) and NSViewRepresentable (macOS)
+public struct PlatformCameraPreviewView: View {
+    let session: AVCaptureSession
+    let videoGravity: AVLayerVideoGravity
+    
+    public init(
+        session: AVCaptureSession,
+        videoGravity: AVLayerVideoGravity = .resizeAspectFill
+    ) {
+        self.session = session
+        self.videoGravity = videoGravity
+    }
+    
+    public var body: some View {
+        #if os(iOS)
+        CameraPreviewViewController(session: session, videoGravity: videoGravity)
+        #elseif os(macOS)
+        CameraPreviewNSView(session: session, videoGravity: videoGravity)
+        #else
+        Text("Camera preview not available on this platform")
+        #endif
+    }
 }
 
 // MARK: - Supporting Views
@@ -95,6 +133,55 @@ public struct CameraView: UIViewControllerRepresentable {
             }
             picker.dismiss(animated: true)
         }
+    }
+}
+
+/// iOS implementation of camera preview using UIViewControllerRepresentable
+private struct CameraPreviewViewController: UIViewControllerRepresentable {
+    let session: AVCaptureSession
+    let videoGravity: AVLayerVideoGravity
+    
+    func makeUIViewController(context: Context) -> CameraPreviewUIViewController {
+        let controller = CameraPreviewUIViewController()
+        controller.session = session
+        controller.videoGravity = videoGravity
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: CameraPreviewUIViewController, context: Context) {
+        uiViewController.session = session
+        uiViewController.videoGravity = videoGravity
+    }
+}
+
+/// iOS view controller that hosts AVCaptureVideoPreviewLayer
+private class CameraPreviewUIViewController: UIViewController {
+    var session: AVCaptureSession? {
+        didSet {
+            previewLayer?.session = session
+        }
+    }
+    
+    var videoGravity: AVLayerVideoGravity = .resizeAspectFill {
+        didSet {
+            previewLayer?.videoGravity = videoGravity
+        }
+    }
+    
+    private var previewLayer: AVCaptureVideoPreviewLayer?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let layer = AVCaptureVideoPreviewLayer(session: session ?? AVCaptureSession())
+        layer.videoGravity = videoGravity
+        view.layer.addSublayer(layer)
+        previewLayer = layer
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        previewLayer?.frame = view.bounds
     }
 }
 
@@ -270,6 +357,67 @@ public struct MacPhotoPickerView: NSViewControllerRepresentable {
         }
     }
 }
+
+/// macOS implementation of camera preview using NSViewRepresentable
+private struct CameraPreviewNSView: NSViewRepresentable {
+    let session: AVCaptureSession
+    let videoGravity: AVLayerVideoGravity
+    
+    func makeNSView(context: Context) -> CameraPreviewNSViewWrapper {
+        let wrapper = CameraPreviewNSViewWrapper()
+        wrapper.session = session
+        wrapper.videoGravity = videoGravity
+        return wrapper
+    }
+    
+    func updateNSView(_ nsView: CameraPreviewNSViewWrapper, context: Context) {
+        nsView.session = session
+        nsView.videoGravity = videoGravity
+    }
+}
+
+/// macOS view that hosts AVCaptureVideoPreviewLayer
+private class CameraPreviewNSViewWrapper: NSView {
+    var session: AVCaptureSession? {
+        didSet {
+            previewLayer?.session = session
+        }
+    }
+    
+    var videoGravity: AVLayerVideoGravity = .resizeAspectFill {
+        didSet {
+            previewLayer?.videoGravity = videoGravity
+        }
+    }
+    
+    private var previewLayer: AVCaptureVideoPreviewLayer?
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setupPreviewLayer()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupPreviewLayer()
+    }
+    
+    private func setupPreviewLayer() {
+        wantsLayer = true
+        
+        guard let layer = self.layer else { return }
+        
+        let preview = AVCaptureVideoPreviewLayer(session: session ?? AVCaptureSession())
+        preview.videoGravity = videoGravity
+        layer.addSublayer(preview)
+        previewLayer = preview
+    }
+    
+    override func layout() {
+        super.layout()
+        previewLayer?.frame = bounds
+    }
+}
 #endif
 
 // MARK: - Photo Display Views
@@ -378,4 +526,11 @@ public func platformCameraInterface_L4(onImageCaptured: @escaping (PlatformImage
 @MainActor
 public func platformPhotoDisplay_L4(image: PlatformImage?, style: PhotoDisplayStyle) -> some View {
     PlatformPhotoComponentsLayer4.platformPhotoDisplay_L4(image: image, style: style)
+}
+
+/// Creates a cross-platform camera preview (convenience wrapper)
+@ViewBuilder
+@MainActor
+public func platformCameraPreview_L4(session: AVCaptureSession, videoGravity: AVLayerVideoGravity = .resizeAspectFill) -> some View {
+    PlatformPhotoComponentsLayer4.platformCameraPreview_L4(session: session, videoGravity: videoGravity)
 }

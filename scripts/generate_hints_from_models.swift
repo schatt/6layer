@@ -120,12 +120,17 @@ struct SwiftModelParser {
                 }
             }
             
-            // Determine if field should be hidden
+            // Determine if field should be hidden (default suggestion - can be overridden in .hints file)
             // Common patterns: cloudSyncId, syncId, internalId, _id, etc.
+            // UUID fields are hidden by default
             let isHidden = shouldHideField(name: name, type: fieldType)
             
-            // Computed properties are not editable
-            let isEditable = !isComputed
+            // ID fields are non-editable by default (UUID type, exact "id", or contains "ID")
+            // Users can override this in their .hints file by setting isEditable: true
+            let isIDField = shouldBeNonEditableIDField(name: name, type: fieldType)
+            
+            // Computed properties and ID fields are not editable
+            let isEditable = !isComputed && !isIDField
             
             fields.append(FieldInfo(
                 name: name,
@@ -147,10 +152,17 @@ struct SwiftModelParser {
         return result.fields.isEmpty ? nil : result.fields
     }
     
-    /// Recursively find all Swift files in a directory
+    /// Recursively find all Swift files in a directory and all subdirectories
+    /// Searches through the entire directory tree, not just the top level
     static func findSwiftFiles(in directory: URL) -> [URL] {
         var swiftFiles: [URL] = []
-        guard let enumerator = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: [.isRegularFileKey], options: [.skipsHiddenFiles]) else {
+        // Use enumerator with default options to recursively search all subdirectories
+        // .skipsHiddenFiles only skips hidden files, not subdirectories
+        guard let enumerator = FileManager.default.enumerator(
+            at: directory,
+            includingPropertiesForKeys: [.isRegularFileKey],
+            options: [.skipsHiddenFiles] // This does NOT skip subdirectories - search is recursive
+        ) else {
             return swiftFiles
         }
         
@@ -164,13 +176,15 @@ struct SwiftModelParser {
     }
     
     /// Find all Swift files that extend a given type name
+    /// Recursively searches through all subdirectories in each search directory
+    /// to find extension files that extend the specified type
     static func findExtensionFiles(for typeName: String, in searchDirs: [URL]) -> [URL] {
         var extensionFiles: [URL] = []
         
         for searchDir in searchDirs {
             guard FileManager.default.fileExists(atPath: searchDir.path) else { continue }
             
-            // Recursively find all Swift files
+            // Recursively find all Swift files in this directory and all subdirectories
             let swiftFiles = findSwiftFiles(in: searchDir)
             
             // Parse each file to see if it extends the target type
@@ -189,8 +203,15 @@ struct SwiftModelParser {
         return extensionFiles
     }
     
-    /// Determine if a field should be hidden based on naming patterns
+    /// Determine if a field should be hidden based on naming patterns and type
+    /// Note: This is a default suggestion - users can override in their .hints file
     private static func shouldHideField(name: String, type: String) -> Bool {
+        // UUID fields are hidden by default (they're system-managed identifiers)
+        // Users can override this in their .hints file by setting isHidden: false
+        if type == "uuid" {
+            return true
+        }
+        
         let lowercased = name.lowercased()
         
         // Common patterns for internal/hidden fields
@@ -212,6 +233,30 @@ struct SwiftModelParser {
         
         // Fields starting with underscore are typically internal
         if name.hasPrefix("_") {
+            return true
+        }
+        
+        return false
+    }
+    
+    /// Determine if a field should be non-editable based on naming patterns and type
+    /// ID fields (exact "id" or contains "ID") and UUID fields are non-editable by default
+    /// Note: This is a default suggestion - users can override in their .hints file
+    private static func shouldBeNonEditableIDField(name: String, type: String) -> Bool {
+        // UUID fields are non-editable by default (they're system-managed identifiers)
+        // Users can override this in their .hints file by setting isEditable: true
+        if type == "uuid" {
+            return true
+        }
+        
+        // Check for exact "id" (case-insensitive)
+        if name.lowercased() == "id" {
+            return true
+        }
+        
+        // Check if field name contains "ID" (uppercase) - like "calendarEventID", "cloudKitRecordID"
+        // This avoids false positives like "widefield" matching "id"
+        if name.contains("ID") {
             return true
         }
         
@@ -400,10 +445,14 @@ struct CoreDataModelParser {
                 
                 let fieldType = mapCoreDataAttributeType(attributeType)
                 
-                // Determine if field should be hidden
+                // Determine if field should be hidden (default suggestion - can be overridden in .hints file)
+                // UUID fields are hidden by default
                 let isHidden = shouldHideField(name: name, type: fieldType)
                 
-                // Core Data attributes are always stored (editable)
+                // ID fields (UUID type or contains "ID") are non-editable by default (can be overridden in .hints file)
+                let isIDField = shouldBeNonEditableIDField(name: name, type: fieldType)
+                
+                // Core Data attributes are stored, but ID fields should not be editable
                 fields.append(FieldInfo(
                     name: name,
                     fieldType: fieldType,
@@ -411,7 +460,7 @@ struct CoreDataModelParser {
                     isArray: false, // Core Data attributes are not arrays (use relationships)
                     defaultValue: nil,
                     isHidden: isHidden,
-                    isEditable: true
+                    isEditable: !isIDField
                 ))
             }
             
@@ -421,8 +470,13 @@ struct CoreDataModelParser {
         return entities.isEmpty ? nil : entities
     }
     
-    /// Determine if a field should be hidden based on naming patterns
+    /// Determine if a field should be hidden based on naming patterns and type
     private static func shouldHideField(name: String, type: String) -> Bool {
+        // UUID fields are hidden by default (they're system-managed identifiers)
+        if type == "uuid" {
+            return true
+        }
+        
         let lowercased = name.lowercased()
         
         // Common patterns for internal/hidden fields
@@ -444,6 +498,30 @@ struct CoreDataModelParser {
         
         // Fields starting with underscore are typically internal
         if name.hasPrefix("_") {
+            return true
+        }
+        
+        return false
+    }
+    
+    /// Determine if a field should be non-editable based on naming patterns and type
+    /// ID fields (exact "id" or contains "ID") and UUID fields are non-editable by default
+    /// Note: This is a default suggestion - users can override in their .hints file
+    private static func shouldBeNonEditableIDField(name: String, type: String) -> Bool {
+        // UUID fields are non-editable by default (they're system-managed identifiers)
+        // Users can override this in their .hints file by setting isEditable: true
+        if type == "uuid" {
+            return true
+        }
+        
+        // Check for exact "id" (case-insensitive)
+        if name.lowercased() == "id" {
+            return true
+        }
+        
+        // Check if field name contains "ID" (uppercase) - like "calendarEventID", "cloudKitRecordID"
+        // This avoids false positives like "widefield" matching "id"
+        if name.contains("ID") {
             return true
         }
         
@@ -549,11 +627,14 @@ struct HintsGenerator {
                 fieldHintsDict["defaultValue"] = field.defaultValue
             }
             // Add isHidden (only if not already present, to allow manual override)
+            // Users can manually set isHidden: false to show fields that would normally be hidden
+            // (e.g., to show UUID fields or ID fields if needed)
             if fieldHintsDict["isHidden"] == nil {
                 fieldHintsDict["isHidden"] = field.isHidden
             }
             // Add isEditable (only if not already present, to allow manual override)
-            // Computed properties are automatically marked as non-editable
+            // Users can manually set isEditable: true to make fields editable that would normally be read-only
+            // (e.g., UUID fields, ID fields, or computed properties)
             if fieldHintsDict["isEditable"] == nil {
                 fieldHintsDict["isEditable"] = field.isEditable
             }
@@ -575,8 +656,8 @@ struct HintsGenerator {
         
         // Handle sections: preserve existing or create default
         let allFieldNames = fieldOrder.filter { $0 != "__example" }
-        if let existingSections = existingSections, !existingSections.isEmpty {
-            // Preserve existing sections
+        if let existingSections = existingSections {
+            // Preserve existing sections (even if empty - user may have intentionally removed all sections)
             finalHints["_sections"] = existingSections
         } else {
             // Create default section with all fields if no sections exist
@@ -603,15 +684,15 @@ struct HintsGenerator {
         // Separate fields, _sections, and __example
         let fieldOrder = preserveOrder ?? Array(hints.keys).sorted()
         var fieldsToWrite: [String] = []
-        var hasSections = false
+        // Check if _sections exists in hints (not just in fieldOrder, since it's excluded from fieldOrder)
+        let hasSections = hints["_sections"] != nil
         var hasExample = false
         
         for key in fieldOrder {
-            if key == "_sections" {
-                hasSections = true
-            } else if key == "__example" {
+            if key == "__example" {
                 hasExample = true
-            } else {
+            } else if key != "_sections" {
+                // _sections is handled separately, don't add it to fieldsToWrite
                 fieldsToWrite.append(key)
             }
         }
@@ -653,24 +734,50 @@ struct HintsGenerator {
                     valueString = boolValue ? "true" : "false"
                 } else if let numberValue = value as? NSNumber {
                     valueString = "\(numberValue)"
+                } else if let arrayValue = value as? [Any] {
+                    // Handle arrays explicitly to avoid escaping forward slashes
+                    let items = arrayValue.map { item -> String in
+                        if item is NSNull {
+                            return "null"
+                        } else if let stringItem = item as? String {
+                            // Only escape quotes, not forward slashes
+                            let escaped = stringItem.replacingOccurrences(of: "\"", with: "\\\"")
+                            return "\"\(escaped)\""
+                        } else if let boolItem = item as? Bool {
+                            return boolItem ? "true" : "false"
+                        } else if let numberItem = item as? NSNumber {
+                            return "\(numberItem)"
+                        } else {
+                            // For complex array items, use JSONSerialization but unescape forward slashes
+                            if let jsonData = try? JSONSerialization.data(withJSONObject: item, options: []),
+                               let jsonString = String(data: jsonData, encoding: .utf8) {
+                                // Unescape forward slashes (\/ -> /)
+                                return jsonString.replacingOccurrences(of: "\\/", with: "/")
+                            }
+                            return "null"
+                        }
+                    }
+                    valueString = "[\(items.joined(separator: ", "))]"
                 } else if let dictValue = value as? [String: Any] {
                     // Handle dictionaries (like metadata: {})
                     if dictValue.isEmpty {
                         valueString = "{}"
                     } else {
-                        // Fallback: use JSONSerialization for non-empty dicts
+                        // Use JSONSerialization but unescape forward slashes
                         if let jsonData = try? JSONSerialization.data(withJSONObject: dictValue, options: []),
                            let jsonString = String(data: jsonData, encoding: .utf8) {
-                            valueString = jsonString
+                            // Unescape forward slashes (\/ -> /)
+                            valueString = jsonString.replacingOccurrences(of: "\\/", with: "/")
                         } else {
                             valueString = "{}"
                         }
                     }
                 } else {
-                    // Fallback: use JSONSerialization for complex types
+                    // Fallback: use JSONSerialization for complex types, but unescape forward slashes
                     if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
                        let jsonString = String(data: jsonData, encoding: .utf8) {
-                        valueString = jsonString
+                        // Unescape forward slashes (\/ -> /)
+                        valueString = jsonString.replacingOccurrences(of: "\\/", with: "/")
                     } else {
                         valueString = "null"
                     }
@@ -776,25 +883,48 @@ struct HintsGenerator {
         } else if let numberValue = value as? NSNumber {
             return "\(numberValue)"
         } else if let arrayValue = value as? [Any] {
-            let items = arrayValue.map { formatJSONValue($0) }.joined(separator: ", ")
-            return "[\(items)]"
+            // Handle arrays explicitly to avoid escaping forward slashes
+            let items = arrayValue.map { item -> String in
+                if item is NSNull {
+                    return "null"
+                } else if let stringItem = item as? String {
+                    // Only escape quotes, not forward slashes
+                    let escaped = stringItem.replacingOccurrences(of: "\"", with: "\\\"")
+                    return "\"\(escaped)\""
+                } else if let boolItem = item as? Bool {
+                    return boolItem ? "true" : "false"
+                } else if let numberItem = item as? NSNumber {
+                    return "\(numberItem)"
+                } else {
+                    // For complex array items, use JSONSerialization but unescape forward slashes
+                    if let jsonData = try? JSONSerialization.data(withJSONObject: item, options: []),
+                       let jsonString = String(data: jsonData, encoding: .utf8) {
+                        // Unescape forward slashes (\/ -> /)
+                        return jsonString.replacingOccurrences(of: "\\/", with: "/")
+                    }
+                    return "null"
+                }
+            }
+            return "[\(items.joined(separator: ", "))]"
         } else if let dictValue = value as? [String: Any] {
             if dictValue.isEmpty {
                 return "{}"
             } else {
-                // Use JSONSerialization for dictionaries
+                // Use JSONSerialization but unescape forward slashes
                 if let jsonData = try? JSONSerialization.data(withJSONObject: dictValue, options: []),
                    let jsonString = String(data: jsonData, encoding: .utf8) {
-                    return jsonString
+                    // Unescape forward slashes (\/ -> /)
+                    return jsonString.replacingOccurrences(of: "\\/", with: "/")
                 } else {
                     return "{}"
                 }
             }
         } else {
-            // Fallback: use JSONSerialization
+            // Fallback: use JSONSerialization but unescape forward slashes
             if let jsonData = try? JSONSerialization.data(withJSONObject: value, options: []),
                let jsonString = String(data: jsonData, encoding: .utf8) {
-                return jsonString
+                // Unescape forward slashes (\/ -> /)
+                return jsonString.replacingOccurrences(of: "\\/", with: "/")
             } else {
                 return "null"
             }
@@ -871,7 +1001,9 @@ struct Arguments {
         print("Options:")
         print("  -model <path>          Swift .swift file to process")
         print("  -modeld <path>         Core Data .xcdatamodel directory or .xcdatamodeld bundle to process")
-        print("  -extensionsdir <path>  Directory to search for extension files (can be specified multiple times)")
+        print("  -extensionsdir <path>  Additional directory to recursively search for extension files")
+        print("                         (defaults to model's directory and parent directory)")
+        print("                         Can be specified multiple times to search additional directories")
         print("  -outputdir <path>      Output directory for .hints files (defaults to ./Hints)")
         print("  -h, -help, --help      Show this help message")
         print("")
@@ -879,10 +1011,16 @@ struct Arguments {
         print("  # Swift model with extensions in same directory")
         print("  ./scripts/generate_hints_from_models.swift -model Models/User.swift")
         print("")
-        print("  # Swift model with extensions in different directory")
+        print("  # Swift model (automatically searches model's directory and subdirectories)")
+        print("  ./scripts/generate_hints_from_models.swift -model Models/User.swift")
+        print("")
+        print("  # Swift model with extensions in additional directory")
         print("  ./scripts/generate_hints_from_models.swift -model Models/User.swift -extensionsdir Extensions/")
         print("")
-        print("  # Core Data model with extensions")
+        print("  # Core Data model (automatically searches model's directory and subdirectories)")
+        print("  ./scripts/generate_hints_from_models.swift -modeld Shared/Models/MyModel.xcdatamodeld")
+        print("")
+        print("  # Core Data model with extensions in additional directory")
         print("  ./scripts/generate_hints_from_models.swift -modeld MyModel.xcdatamodel -extensionsdir Extensions/")
         print("")
         print("  # Core Data model bundle (.xcdatamodeld)")
@@ -1197,13 +1335,27 @@ func processCoreDataModel(at modelURL: URL, outputDir: URL, extensionSearchPaths
         var entityFields = entity.fields
         
         // Search for extension files for this entity
-        var searchDirs = extensionSearchPaths
-        if searchDirs.isEmpty {
-            // If no search paths provided, try the model directory and common locations
-            searchDirs = [
-                modelURL.deletingLastPathComponent(), // Same directory as .xcdatamodel
-                modelURL.deletingLastPathComponent().deletingLastPathComponent() // Parent directory
-            ]
+        // Always include the model's directory (and subdirectories) in the search
+        var searchDirs: [URL] = []
+        
+        // Add the model's directory (where .xcdatamodel or .xcdatamodeld is located)
+        // This will be searched recursively for extension files
+        let modelDir = modelURL.deletingLastPathComponent()
+        if !searchDirs.contains(where: { $0.path == modelDir.path }) {
+            searchDirs.append(modelDir)
+        }
+        
+        // Also include parent directory as a common location for extensions
+        let parentDir = modelDir.deletingLastPathComponent()
+        if !searchDirs.contains(where: { $0.path == parentDir.path }) {
+            searchDirs.append(parentDir)
+        }
+        
+        // Add any explicitly provided extension search paths
+        for extPath in extensionSearchPaths {
+            if !searchDirs.contains(where: { $0.path == extPath.path }) {
+                searchDirs.append(extPath)
+            }
         }
         
         // Find extension files by parsing Swift files and matching extension declarations

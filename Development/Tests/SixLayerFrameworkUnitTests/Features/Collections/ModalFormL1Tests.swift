@@ -29,7 +29,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -44,7 +44,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -59,7 +59,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.create
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -76,7 +76,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -91,7 +91,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -106,7 +106,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -121,7 +121,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -136,7 +136,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -151,7 +151,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -166,7 +166,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -181,7 +181,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -196,7 +196,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -211,7 +211,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -228,7 +228,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.create
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -243,7 +243,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.edit
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -258,7 +258,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.settings
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -273,7 +273,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.profile
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -288,7 +288,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.search
         
         // When
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -305,7 +305,7 @@ open class ModalFormL1Tests: BaseTestClass {
         let context = PresentationContext.modal
         
         // When & Then: use Layer 1 API
-        let view = platformPresentModalForm_L1(
+        _ = platformPresentModalForm_L1(
             formType: formType,
             context: context
         )
@@ -338,7 +338,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then: Should return a view with custom container
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPresentModalForm_L1 with custom form container should return a view")
     }
     
@@ -356,7 +356,7 @@ open class ModalFormL1Tests: BaseTestClass {
         )
         
         // Then: Should return default view
-        let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+        _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
         #expect(Bool(true), "platformPresentModalForm_L1 with nil custom form container should return default view")
     }
     
@@ -377,7 +377,7 @@ open class ModalFormL1Tests: BaseTestClass {
                         .background(Color.blue.opacity(0.1))
                 }
             )
-            let hostingView = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
+            _ = hostRootPlatformView(view.withGlobalAutoIDsEnabled())
             #expect(Bool(true), "platformPresentModalForm_L1 with custom container should work for \(formType)")
         }
     }

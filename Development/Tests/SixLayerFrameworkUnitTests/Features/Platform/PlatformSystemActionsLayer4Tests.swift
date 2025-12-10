@@ -193,7 +193,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = ["Test text", URL(string: "https://example.com")!]
         
         // When: Create share modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: API should work identically on both platforms
@@ -209,7 +209,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = ["Test text", "Another text"]
         
         // When: Create share modifier with text
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should accept text items
@@ -229,7 +229,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = [url1, url2]
         
         // When: Create share modifier with URLs
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should accept URL items
@@ -248,7 +248,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = ["Test text", url]
         
         // When: Create share modifier with mixed items
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should accept mixed items
@@ -264,7 +264,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = ["Test text"]
         
         // When: Create share modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should use iOS share implementation
@@ -285,7 +285,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = ["Test text"]
         
         // When: Create share modifier
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should use macOS share implementation
@@ -303,7 +303,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
     @Test @MainActor func testPlatformShare_AccessibilityIdentifiers() {
         // Given: Share modifier
         let items: [Any] = ["Test text"]
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should have automatic accessibility compliance
@@ -319,7 +319,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let items: [Any] = []
         
         // When: Create share modifier with empty items
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: nil)
         
         // Then: Should handle gracefully (may not show share sheet, but shouldn't crash)
@@ -335,7 +335,7 @@ open class PlatformSystemActionsLayer4Tests: BaseTestClass {
         let sourceView = Text("Source")
         
         // When: Create share modifier with sourceView
-        let testView = Text("Test")
+        _ = Text("Test")
             .platformShare_L4(items: items, from: sourceView)
         
         // Then: Should accept sourceView parameter

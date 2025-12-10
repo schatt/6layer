@@ -52,7 +52,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = selectField
         
         // When: Creating dynamic select field
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -64,7 +64,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = selectField
         
         // When: Creating dynamic select field
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -77,7 +77,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = selectField
         
         // When: Creating dynamic select field
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -237,7 +237,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         )
         
         // When: Creating select field with no options
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -255,7 +255,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         )
         
         // When: Creating select field with single option
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -274,7 +274,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         )
         
         // When: Creating select field with many options
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -288,7 +288,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         let field = selectField
         
         // When: Creating select field with accessibility
-        let view = DynamicSelectField(field: field, formState: formState)
+        _ = DynamicSelectField(field: field, formState: formState)
             .accessibilityLabel(field.label)
             .accessibilityHint("Choose an option from the dropdown")
         

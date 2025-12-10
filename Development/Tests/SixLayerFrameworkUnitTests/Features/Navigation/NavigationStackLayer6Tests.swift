@@ -40,7 +40,7 @@ open class NavigationStackLayer6Tests: BaseTestClass {
             }
         
         // When: Applying platform enhancements
-        let enhancedView = content
+        _ = content
             .platformNavigationStackEnhancements_L6()
         
         // Then: Should return an enhanced view

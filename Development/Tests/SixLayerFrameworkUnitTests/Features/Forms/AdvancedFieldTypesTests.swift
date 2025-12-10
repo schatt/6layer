@@ -62,10 +62,10 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let richTextField = RichTextEditorField(field: field, formState: formState)
+        _ = RichTextEditorField(field: field, formState: formState)
         
         // Then
-        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
+        #expect(Bool(true), "richTextField is non-optional")
         #expect(field.contentType == .richtext)
         #expect(field.label == "Rich Text Content")
     }
@@ -114,7 +114,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let selectedText = NSRange(location: 0, length: 5)
         
         // When
-        let toolbar = RichTextToolbar(selectedText: .constant(selectedText))
+        _ = RichTextToolbar(selectedText: .constant(selectedText))
         
         // Then
         #expect(Bool(true), "toolbar is non-optional")  // toolbar is non-optional
@@ -127,7 +127,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let testText = "This is **bold** and *italic* text"
         
         // When
-        let preview = RichTextPreview(text: testText)
+        _ = RichTextPreview(text: testText)
         
         // Then
         #expect(Bool(true), "preview is non-optional")  // preview is non-optional
@@ -154,7 +154,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let autocompleteField = AutocompleteField(
+        _ = AutocompleteField(
             field: field,
             formState: formState,
             suggestions: suggestions
@@ -178,7 +178,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let autocompleteField = AutocompleteField(
+        _ = AutocompleteField(
             field: field,
             formState: formState,
             suggestions: suggestions
@@ -203,7 +203,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let autocompleteField = AutocompleteField(
+        _ = AutocompleteField(
             field: field,
             formState: formState,
             suggestions: suggestions
@@ -219,7 +219,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let suggestions = ["Apple", "Banana", "Cherry"]
         
         // When
-        let suggestionsView = AutocompleteSuggestions(
+        _ = AutocompleteSuggestions(
             suggestions: suggestions,
             onSelect: { _ in
                 // Handle selection
@@ -253,7 +253,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: allowedTypes,
@@ -279,7 +279,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: allowedTypes,
@@ -304,7 +304,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: [UTType.image],
@@ -323,7 +323,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         var selectedFiles: [FileInfo] = []
         
         // When
-        let fileUploadArea = FileUploadArea(
+        _ = FileUploadArea(
             isDragOver: .constant(false),
             selectedFiles: .constant(selectedFiles),
             allowedTypes: allowedTypes,
@@ -353,7 +353,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         #expect(fileInfo.size == size)
         #expect(fileInfo.type == type)
         #expect(fileInfo.url == url)
-        #expect(fileInfo.id != nil)
+        // UUID is non-optional, so id is always non-nil
     }
     
     @Test @MainActor func testFileListDisplay() {
@@ -364,7 +364,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         ]
         
         // When
-        let fileList = FileList(files: files) { _ in
+        _ = FileList(files: files) { _ in
             // Handle file removal
         }
         
@@ -378,7 +378,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let file = FileInfo(name: "test.pdf", size: 1024, type: .pdf, url: nil)
         
         // When
-        let fileRow = FileRow(file: file) { _ in
+        _ = FileRow(file: file) { _ in
             // Handle file removal
         }
         
@@ -574,6 +574,219 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         #expect(field.contentType == .datetime)
     }
     
+    // MARK: - MultiDatePicker Tests (TDD RED PHASE)
+    
+    /**
+     * BUSINESS PURPOSE: MultiDatePickerField provides multiple date selection capabilities using Apple's
+     * MultiDatePicker (iOS 16+), enabling users to select multiple individual dates or date ranges for
+     * events, bookings, availability selection, etc.
+     * TESTING SCOPE: Tests field initialization, multiple date selection, date storage, fallback behavior,
+     * and integration with form state
+     * METHODOLOGY: Uses TDD principles - tests written first (RED phase), then implementation (GREEN phase)
+     */
+    
+    @Test func testMultiDateContentTypeExists() {
+        // Given - Test that multiDate content type exists in enum
+        // When - This test will fail until we add the case
+        // Then
+        // This will fail until we add .multiDate to DynamicContentType
+        let allCases = DynamicContentType.allCases
+        let hasMultiDate = allCases.contains { $0.rawValue == "multiDate" }
+        #expect(hasMultiDate, "multiDate content type should exist")
+    }
+    
+    @Test func testDateRangeContentTypeExists() {
+        // Given - Test that dateRange content type exists in enum
+        // When - This test will fail until we add the case
+        // Then
+        // This will fail until we add .dateRange to DynamicContentType
+        let allCases = DynamicContentType.allCases
+        let hasDateRange = allCases.contains { $0.rawValue == "dateRange" }
+        #expect(hasDateRange, "dateRange content type should exist")
+    }
+    
+    @Test @MainActor func testMultiDateFieldInitialization() {
+        // Given
+        let field = DynamicFormField(
+            id: "multiDate",
+            contentType: .multiDate,
+            label: "Select Dates",
+            placeholder: "Choose multiple dates"
+        )
+        let formState = createTestFormState()
+        
+        // When
+        // This will fail until DynamicMultiDateField is created
+        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        
+        // Then
+        #expect(Bool(true), "multiDateField should be created")
+        #expect(field.contentType == .multiDate)
+        #expect(field.label == "Select Dates")
+    }
+    
+    @Test @MainActor func testMultiDateFieldStoresDatesAsArray() {
+        // Given
+        let field = DynamicFormField(
+            id: "multiDate",
+            contentType: .multiDate,
+            label: "Select Dates",
+            placeholder: "Choose multiple dates"
+        )
+        let formState = createTestFormState()
+        let testDates = [
+            Date(timeIntervalSince1970: 1640995200), // 2022-01-01
+            Date(timeIntervalSince1970: 1641081600), // 2022-01-02
+            Date(timeIntervalSince1970: 1641168000)  // 2022-01-03
+        ]
+        
+        // When
+        formState.setValue(testDates, for: field.id)
+        
+        // Then
+        let storedDates: [Date]? = formState.getValue(for: field.id)
+        #expect(storedDates != nil, "Dates should be stored")
+        #expect(storedDates?.count == 3, "Should store 3 dates")
+        #expect(storedDates?[0] == testDates[0], "First date should match")
+    }
+    
+    @Test @MainActor func testMultiDateFieldSupportsMultipleValues() {
+        // Given
+        let contentType = DynamicContentType.multiDate
+        
+        // When
+        let supportsMultiple = contentType.supportsMultipleValues
+        
+        // Then
+        #expect(supportsMultiple, "multiDate should support multiple values")
+    }
+    
+    @Test @MainActor func testCustomFieldViewRendersMultiDateField() {
+        // Given
+        let field = DynamicFormField(
+            id: "multiDate",
+            contentType: .multiDate,
+            label: "Select Dates",
+            placeholder: "Choose multiple dates"
+        )
+        let formState = createTestFormState()
+        
+        // When
+        // This will fail until we add multiDate case to CustomFieldView switch
+        let customFieldView = CustomFieldView(field: field, formState: formState)
+        
+        // Then
+        #expect(Bool(true), "CustomFieldView should render multiDate field")
+        #expect(field.contentType == .multiDate)
+    }
+    
+    @Test @MainActor func testDateRangeFieldInitialization() {
+        // Given
+        let field = DynamicFormField(
+            id: "dateRange",
+            contentType: .dateRange,
+            label: "Select Date Range",
+            placeholder: "Choose start and end dates"
+        )
+        let formState = createTestFormState()
+        
+        // When
+        // This will fail until DynamicDateRangeField is created (or we use DynamicMultiDateField with range mode)
+        // For now, we'll test that the content type exists
+        // Then
+        #expect(field.contentType == .dateRange)
+        #expect(field.label == "Select Date Range")
+    }
+    
+    @Test @MainActor func testDateRangeFieldStoresRangeAsTuple() {
+        // Given
+        let field = DynamicFormField(
+            id: "dateRange",
+            contentType: .dateRange,
+            label: "Select Date Range",
+            placeholder: "Choose start and end dates"
+        )
+        let formState = createTestFormState()
+        let startDate = Date(timeIntervalSince1970: 1640995200) // 2022-01-01
+        let endDate = Date(timeIntervalSince1970: 1641081600)   // 2022-01-02
+        let dateRange = (start: startDate, end: endDate)
+        
+        // When
+        // Store as array for consistency with form state
+        formState.setValue([startDate, endDate], for: field.id)
+        
+        // Then
+        let storedDates: [Date]? = formState.getValue(for: field.id)
+        #expect(storedDates != nil, "Date range should be stored")
+        #expect(storedDates?.count == 2, "Should store 2 dates (start and end)")
+        #expect(storedDates?[0] == startDate, "Start date should match")
+        #expect(storedDates?[1] == endDate, "End date should match")
+    }
+    
+    @Test @MainActor func testMultiDateFieldFallbackForOldOS() {
+        // Given
+        let field = DynamicFormField(
+            id: "multiDate",
+            contentType: .multiDate,
+            label: "Select Dates",
+            placeholder: "Choose multiple dates"
+        )
+        let formState = createTestFormState()
+        
+        // When
+        // This test verifies fallback behavior for iOS < 16 / macOS < 13
+        // The component should show appropriate fallback UI
+        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        
+        // Then
+        // On older OS versions, should show fallback message or alternative UI
+        #expect(Bool(true), "MultiDateField should handle fallback for old OS")
+        // Note: Actual fallback behavior will be tested in implementation
+    }
+    
+    @Test @MainActor func testMultiDateFieldAccessibility() {
+        // Given
+        let field = DynamicFormField(
+            id: "multiDate",
+            contentType: .multiDate,
+            label: "Select Dates",
+            placeholder: "Choose multiple dates"
+        )
+        let formState = createTestFormState()
+        
+        // When
+        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        
+        // Then
+        #expect(Bool(true), "MultiDateField should support accessibility")
+        #expect(field.label == "Select Dates", "Field should have label for accessibility")
+        // Note: Accessibility labels will be verified in implementation
+    }
+    
+    @Test @MainActor func testMultiDateFieldIntegrationWithFormState() {
+        // Given
+        let field = DynamicFormField(
+            id: "multiDate",
+            contentType: .multiDate,
+            label: "Select Dates",
+            placeholder: "Choose multiple dates"
+        )
+        let formState = createTestFormState()
+        let testDates = [
+            Date(timeIntervalSince1970: 1640995200),
+            Date(timeIntervalSince1970: 1641081600)
+        ]
+        
+        // When
+        formState.setValue(testDates, for: field.id)
+        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        
+        // Then
+        let retrievedDates: [Date]? = formState.getValue(for: field.id)
+        #expect(retrievedDates != nil, "Should retrieve dates from form state")
+        #expect(retrievedDates?.count == 2, "Should retrieve 2 dates")
+    }
+    
     // MARK: - Integration Tests
     
     @Test @MainActor func testAdvancedFieldTypesIntegration() {
@@ -602,13 +815,13 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let richTextComponent = RichTextEditorField(field: richTextField, formState: formState)
-        let autocompleteComponent = AutocompleteField(
+        _ = RichTextEditorField(field: richTextField, formState: formState)
+        _ = AutocompleteField(
             field: autocompleteField,
             formState: formState,
             suggestions: ["Option 1", "Option 2"]
         )
-        let fileUploadComponent = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: fileUploadField,
             formState: formState,
             allowedTypes: [UTType.image],
@@ -638,10 +851,10 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let richTextField = RichTextEditorField(field: field, formState: formState)
+        _ = RichTextEditorField(field: field, formState: formState)
         
         // Then
-        #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
+        #expect(Bool(true), "richTextField is non-optional")
         // Test that accessibility labels and hints are properly set
         // This tests the accessibility implementation
     }
@@ -658,7 +871,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let autocompleteField = AutocompleteField(
+        _ = AutocompleteField(
             field: field,
             formState: formState,
             suggestions: ["Option 1", "Option 2"]
@@ -681,7 +894,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: [UTType.image],
@@ -708,7 +921,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: allowedTypes,
@@ -733,7 +946,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: [UTType.image],
@@ -758,7 +971,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let autocompleteField = AutocompleteField(
+        _ = AutocompleteField(
             field: field,
             formState: formState,
             suggestions: emptySuggestions
@@ -805,7 +1018,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let autocompleteField = AutocompleteField(
+        _ = AutocompleteField(
             field: field,
             formState: formState,
             suggestions: largeSuggestions
@@ -828,7 +1041,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let fileUploadField = EnhancedFileUploadField(
+        _ = EnhancedFileUploadField(
             field: field,
             formState: formState,
             allowedTypes: [UTType.image],

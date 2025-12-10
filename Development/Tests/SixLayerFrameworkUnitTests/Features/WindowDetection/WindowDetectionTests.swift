@@ -303,8 +303,8 @@ open class WindowDetectionTests: BaseTestClass {
         
         // WHEN: Detect window size modifier is applied
         // THEN: Should return modified view without crashing
-        let modifiedView = view.detectWindowSize()
-        #expect(Bool(true), "modifiedView is non-optional")  // modifiedView is non-optional
+        _ = view.detectWindowSize()
+        #expect(Bool(true), "modifiedView is non-optional")
     }
     
     @Test @MainActor func testDetectWindowSizeOnDifferentViewTypes() {
@@ -357,7 +357,7 @@ open class WindowDetectionTests: BaseTestClass {
         
         // Test that we can call updateWindowInfo from a background queue
         // The method should handle this gracefully
-        await Task { @MainActor in
+        Task { @MainActor in
             #expect(throws: Never.self) { windowDetection.updateWindowInfo() }
         }
     }

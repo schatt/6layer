@@ -108,7 +108,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         )
         
         // WHEN: Extracting structured data using the service's internal extraction
-        let service = OCRService()
+        _ = OCRService()
         // We'll test by creating a minimal image and calling processStructuredExtraction
         // But first, let's verify that loadHintsPatterns would be called
         // by checking if entityName is set correctly
@@ -153,7 +153,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         )
         
         // WHEN: Setting up for calculation group application
-        let service = OCRService()
+        _ = OCRService()
         
         // THEN: Context should be configured for calculation groups
         #expect(context.entityName == "FuelPurchase", 
@@ -363,7 +363,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let (modelName, cleanup) = try createFuelPurchaseHintsFile()
         defer { try? cleanup() }
         
-        let context = OCRContext(
+        _ = OCRContext(
             textTypes: [.price, .number],
             language: .english,
             extractionMode: .automatic,
@@ -374,7 +374,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         // Expected: totalCost="32.88", gallons="8.022", pricePerGallon="4.10"
         let ocrText = "Total: 32.88\nGallons: 8.022\nPrice per gallon: 4.10"
         
-        let baseResult = OCRResult(
+        _ = OCRResult(
             extractedText: ocrText,
             confidence: 0.9,
             boundingBoxes: [],
@@ -384,7 +384,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         )
         
         // WHEN: Extracting structured data
-        let service = OCRService()
+        _ = OCRService()
         // Use reflection or internal method to test extraction
         // Since extractStructuredData is private, we'll test via processStructuredExtraction
         // But for unit testing, we need to create a minimal image or mock the OCR processing
@@ -423,7 +423,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let (modelName, cleanup) = try createFuelPurchaseHintsFile()
         defer { try? cleanup() }
         
-        let context = OCRContext(
+        _ = OCRContext(
             textTypes: [.price, .number],
             language: .english,
             extractionMode: .automatic,
@@ -433,7 +433,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         // OCR text missing pricePerGallon - should be calculated
         let ocrText = "Total: 32.88\nGallons: 8.022"
         
-        let baseResult = OCRResult(
+        _ = OCRResult(
             extractedText: ocrText,
             confidence: 0.9,
             boundingBoxes: [],
@@ -448,7 +448,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let hintsResult = loader.loadHintsResult(for: modelName, locale: Locale(identifier: "en"))
         
         // Simulate extracted data
-        var structuredData: [String: String] = [
+        let structuredData: [String: String] = [
             "totalCost": "32.88",
             "gallons": "8.022"
         ]
@@ -479,7 +479,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         let (modelName, cleanup) = try createFuelPurchaseHintsFile()
         defer { try? cleanup() }
         
-        let context = OCRContext(
+        _ = OCRContext(
             textTypes: [.price, .number],
             language: .english,
             extractionMode: .automatic,
@@ -489,7 +489,7 @@ final class OCRServiceAutomaticHintsTests: BaseTestClass {
         // OCR text that might match generic text types
         let ocrText = "Total: 32.88\nGallons: 8.022\nPrice per gallon: 4.10"
         
-        let baseResult = OCRResult(
+        _ = OCRResult(
             extractedText: ocrText,
             confidence: 0.9,
             boundingBoxes: [],

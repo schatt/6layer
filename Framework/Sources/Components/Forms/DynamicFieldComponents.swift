@@ -38,6 +38,10 @@ public struct CustomFieldView: View {
                 DynamicTimeField(field: field, formState: formState)
             case .datetime:
                 DynamicDateTimeField(field: field, formState: formState)
+            case .multiDate:
+                DynamicMultiDateField(field: field, formState: formState)
+            case .dateRange:
+                DynamicMultiDateField(field: field, formState: formState)
             case .select:
                 DynamicSelectField(field: field, formState: formState)
             case .multiselect:
@@ -60,7 +64,7 @@ public struct CustomFieldView: View {
                 DynamicRangeField(field: field, formState: formState)
             case .stepper:
                 DynamicStepperField(field: field, formState: formState)
-            case .toggle:
+            case .toggle, .boolean:
                 DynamicToggleField(field: field, formState: formState)
             case .array:
                 DynamicArrayField(field: field, formState: formState)
@@ -70,6 +74,8 @@ public struct CustomFieldView: View {
                 DynamicAutocompleteField(field: field, formState: formState)
             case .`enum`:
                 DynamicEnumField(field: field, formState: formState)
+            case .display:
+                DynamicDisplayField(field: field, formState: formState)
             case .custom:
                 DynamicCustomField(field: field, formState: formState)
             }
@@ -127,9 +133,13 @@ extension DynamicFormField {
         return formState.getValue(for: id) as String? ?? defaultValue ?? ""
     }
     
-    /// Check if field is read-only based on displayHints or metadata
+    /// Check if field is read-only based on contentType, displayHints or metadata
     /// Returns true if the field should be displayed as read-only (non-editable)
     var isReadOnly: Bool {
+        // Display fields are always read-only
+        if contentType == .display {
+            return true
+        }
         // Check displayHints first (from metadata["isEditable"])
         if let displayHints = displayHints, !displayHints.isEditable {
             return true
@@ -227,6 +237,7 @@ extension DynamicFormField {
 public struct DynamicTextField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @FocusState private var isFocused: Bool
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -235,75 +246,91 @@ public struct DynamicTextField: View {
 
     public var body: some View {
         field.fieldContainer(content: {
-            field.fieldLabel()
-
-            // Check if field should render as picker based on hints
-            if field.shouldRenderAsPicker {
-                // Render picker when inputType == "picker" and pickerOptions exist
-                let pickerOptions = field.pickerOptionsFromHints
-                if !pickerOptions.isEmpty {
-                    Picker(field.placeholder ?? "Select", selection: field.textBinding(formState: formState)) {
-                        ForEach(pickerOptions, id: \.value) { option in
-                            Text(option.label).tag(option.value)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    .automaticCompliance()
-                } else {
-                    // Fallback to text field if no options
-                    TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
-                        .textFieldStyle(.roundedBorder)
-                        .automaticCompliance()
-                }
-            } else if field.supportsOCR || field.supportsBarcodeScanning {
-                // Render text field with OCR and/or barcode scanning support
-                HStack {
-                    TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
-                        .textFieldStyle(.roundedBorder)
-                        .automaticCompliance()
-
-                    // OCR button
-                    if field.supportsOCR {
-                        Button(action: {
-                            // TODO: Implement OCR scanning workflow
-                            // This should trigger OCROverlayView and populate the field
-                            print("OCR scan requested for field: \(field.id)")
-                        }) {
-                            Image(systemName: "camera.viewfinder")
-                                .foregroundColor(.blue)
-                        }
-                        .buttonStyle(.borderless)
-                        .accessibilityLabel("Scan with OCR")
-                        .accessibilityHint(field.ocrHint ?? "Scan document to fill this field")
-                        .automaticCompliance()
-                    }
-                    
-                    // Barcode scanning button
-                    if field.supportsBarcodeScanning {
-                        Button(action: {
-                            // TODO: Implement barcode scanning workflow
-                            // This should trigger BarcodeOverlayView and populate the field
-                            print("Barcode scan requested for field: \(field.id)")
-                        }) {
-                            Image(systemName: "barcode.viewfinder")
-                                .foregroundColor(.green)
-                        }
-                        .buttonStyle(.borderless)
-                        .accessibilityLabel("Scan barcode")
-                        .accessibilityHint(field.barcodeHint ?? "Scan barcode to fill this field")
-                        .automaticCompliance()
-                    }
-                }
-            } else {
-                // Default text field
-                TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
-                    .textFieldStyle(.roundedBorder)
-                    .automaticCompliance()
-            }
-            
-            // Character counter for fields with maxLength validation
-            field.characterCounterView(formState: formState)
+            fieldContent
         }, componentName: "DynamicTextField")
+        .onChange(of: formState.focusedFieldId) { oldValue, newValue in
+            // Sync focus state with formState
+            isFocused = (newValue == field.id)
+        }
+        .onChange(of: isFocused) { oldValue, newValue in
+            // Update formState when focus changes locally
+            if newValue {
+                formState.focusedFieldId = field.id
+            } else if formState.focusedFieldId == field.id {
+                formState.focusedFieldId = nil
+            }
+        }
+    }
+    
+    /// Field content view - extracted to simplify type checking
+    @ViewBuilder
+    private var fieldContent: some View {
+        field.fieldLabel()
+
+        // Check if field should render as picker based on hints
+        if field.shouldRenderAsPicker {
+            pickerContent
+        } else {
+            textFieldWithActions
+        }
+        
+        // Character counter for fields with maxLength validation
+        field.characterCounterView(formState: formState)
+    }
+    
+    /// Picker content view
+    @ViewBuilder
+    private var pickerContent: some View {
+        let pickerOptions = field.pickerOptionsFromHints
+        if !pickerOptions.isEmpty {
+            Picker(field.placeholder ?? "Select", selection: field.textBinding(formState: formState)) {
+                ForEach(pickerOptions, id: \.value) { option in
+                    Text(option.label).tag(option.value)
+                }
+            }
+            .pickerStyle(.menu)
+            .automaticCompliance()
+        } else {
+            // Fallback to text field if no options
+            textFieldView
+        }
+    }
+    
+    /// Text field with actions view
+    @ViewBuilder
+    private var textFieldWithActions: some View {
+        let hasActions = !field.effectiveActions.isEmpty
+        let hasTrailingView = field.trailingView != nil
+        
+        if hasActions || hasTrailingView {
+            HStack {
+                textFieldView
+                
+                // Render actions (unified system - Issue #95)
+                FieldActionRenderer(field: field, formState: formState)
+                
+                // Render custom trailing view if provided
+                if let trailingView = field.trailingView {
+                    trailingView(field, formState)
+                }
+            }
+        } else {
+            // Default text field (no actions)
+            textFieldView
+        }
+    }
+    
+    /// Text field view with focus management (Issue #81)
+    @ViewBuilder
+    private var textFieldView: some View {
+        TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+            .textFieldStyle(.roundedBorder)
+            .focused($isFocused)
+            .onSubmit {
+                // Move focus to next field on Enter/Return (Issue #81)
+                formState.focusNextField(from: field.id)
+            }
+            .automaticCompliance()
     }
 }
 
@@ -313,6 +340,7 @@ public struct DynamicTextField: View {
 public struct DynamicEmailField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @FocusState private var isFocused: Bool
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -328,11 +356,26 @@ public struct DynamicEmailField: View {
                 #if os(iOS)
                 .keyboardType(UIKeyboardType.emailAddress)
                 #endif
+                .focused($isFocused)
+                .onSubmit {
+                    // Move focus to next field on Enter/Return (Issue #81)
+                    formState.focusNextField(from: field.id)
+                }
                 .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicEmailField")
+        .onChange(of: formState.focusedFieldId) { oldValue, newValue in
+            isFocused = (newValue == field.id)
+        }
+        .onChange(of: isFocused) { oldValue, newValue in
+            if newValue {
+                formState.focusedFieldId = field.id
+            } else if formState.focusedFieldId == field.id {
+                formState.focusedFieldId = nil
+            }
+        }
     }
 }
 
@@ -342,6 +385,7 @@ public struct DynamicEmailField: View {
 public struct DynamicPasswordField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @FocusState private var isFocused: Bool
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -354,11 +398,26 @@ public struct DynamicPasswordField: View {
 
             SecureField(field.placeholder ?? "Enter password", text: field.textBinding(formState: formState))
                 .textFieldStyle(.roundedBorder)
+                .focused($isFocused)
+                .onSubmit {
+                    // Move focus to next field on Enter/Return (Issue #81)
+                    formState.focusNextField(from: field.id)
+                }
                 .automaticCompliance()
             
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicPasswordField")
+        .onChange(of: formState.focusedFieldId) { oldValue, newValue in
+            isFocused = (newValue == field.id)
+        }
+        .onChange(of: isFocused) { oldValue, newValue in
+            if newValue {
+                formState.focusedFieldId = field.id
+            } else if formState.focusedFieldId == field.id {
+                formState.focusedFieldId = nil
+            }
+        }
     }
 }
 
@@ -691,6 +750,97 @@ public struct DynamicDateTimeField: View {
         .padding()
         .environment(\.accessibilityIdentifierLabel, field.label) // TDD GREEN: Pass label to identifier generation
         .automaticCompliance(named: "DynamicDateTimeField")
+    }
+}
+
+/// Multi-date field component
+/// Supports multiple date selection using MultiDatePicker (iOS 16+ / macOS 13+)
+/// Implements Issue #85: Add MultiDatePicker support for multiple date selection
+@MainActor
+public struct DynamicMultiDateField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    @State private var selectedDateComponents: Set<DateComponents> = []
+    
+    // Date range for picker (defaults to current year)
+    private var dateRange: Range<Date> {
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: now)) ?? now
+        let endOfYear = calendar.date(byAdding: .year, value: 1, to: startOfYear) ?? now
+        return startOfYear..<endOfYear
+    }
+    
+    // Fallback view for older OS versions or macOS
+    private var fallbackView: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Multiple date selection requires iOS 16+")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            // Show selected dates if any
+            if let storedDates: [Date] = formState.getValue(for: field.id), !storedDates.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Selected dates:")
+                        .font(.caption)
+                        .bold()
+                    ForEach(storedDates, id: \.self) { date in
+                        Text(date, style: .date)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        }
+    }
+    
+    public init(field: DynamicFormField, formState: DynamicFormState) {
+        self.field = field
+        self.formState = formState
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(field.label)
+                .font(.subheadline)
+                .bold()
+            
+            #if os(iOS)
+            if #available(iOS 16.0, *) {
+                MultiDatePicker(
+                    field.placeholder ?? "Select dates",
+                    selection: $selectedDateComponents,
+                    in: dateRange
+                )
+                .onChange(of: selectedDateComponents) { newComponents in
+                    // Convert Set<DateComponents> to array of Date objects
+                    let calendar = Calendar.current
+                    let dates = newComponents.compactMap { components in
+                        calendar.date(from: components)
+                    }
+                    formState.setValue(dates, for: field.id)
+                }
+                .onAppear {
+                    // Load existing dates from form state
+                    if let storedDates: [Date] = formState.getValue(for: field.id) {
+                        let calendar = Calendar.current
+                        selectedDateComponents = Set(storedDates.map { date in
+                            calendar.dateComponents([.year, .month, .day], from: date)
+                        })
+                    }
+                }
+            } else {
+                // Fallback for iOS < 16
+                fallbackView
+            }
+            #else
+            // macOS fallback - MultiDatePicker not available on macOS
+            fallbackView
+            #endif
+        }
+        .padding()
+        .environment(\.accessibilityIdentifierLabel, field.label)
+        .automaticCompliance(named: "DynamicMultiDateField")
     }
 }
 
@@ -1394,5 +1544,54 @@ public struct DynamicTextAreaField: View {
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicTextAreaField")
+    }
+}
+
+/// Display field component
+/// Uses LabeledContent for read-only/display fields on iOS 16+ and macOS 13+
+/// Provides fallback HStack layout for older OS versions
+@MainActor
+public struct DynamicDisplayField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public init(field: DynamicFormField, formState: DynamicFormState) {
+        self.field = field
+        self.formState = formState
+    }
+    
+    /// Get the current value from form state
+    private var currentValue: Any? {
+        formState.getValue(for: field.id)
+    }
+    
+    /// Get string representation of value
+    private var valueString: String {
+        if let value = currentValue {
+            return String(describing: value)
+        }
+        return "—"
+    }
+    
+    public var body: some View {
+        if #available(iOS 16.0, macOS 13.0, *) {
+            // Use LabeledContent on supported platforms
+            LabeledContent(field.label) {
+                Text(valueString)
+                    .foregroundColor(.secondary)
+            }
+            .automaticCompliance(named: "DynamicDisplayField")
+        } else {
+            // Fallback for older platforms
+            HStack {
+                Text(field.label)
+                    .font(.subheadline)
+                Spacer()
+                Text(valueString)
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .automaticCompliance(named: "DynamicDisplayField")
+        }
     }
 }

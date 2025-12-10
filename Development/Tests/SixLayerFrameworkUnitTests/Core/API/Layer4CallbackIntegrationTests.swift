@@ -155,10 +155,6 @@ open class Layer4CallbackIntegrationTests: BaseTestClass {
         var ocrResult: OCRResult?
         var callbackExecuted = false
         
-        let testImage = PlatformImage.createPlaceholder()
-        let context = Layer4APITestHelpers.createTestOCRContext()
-        let strategy = Layer4APITestHelpers.createTestOCRStrategy()
-        
         // The view calls the callback in onAppear, so we need to trigger that
         // Since we can't easily trigger onAppear in unit tests, we test the callback directly
         let mockResult = Layer4APITestHelpers.createMockOCRResult(

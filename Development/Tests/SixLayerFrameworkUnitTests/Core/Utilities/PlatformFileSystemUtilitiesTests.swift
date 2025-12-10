@@ -221,7 +221,7 @@ struct PlatformFileSystemUtilitiesTests {
     @Test func testGetAvailableDiskSpaceWithNonExistentPath() {
         let nonExistent = FileManager.default.temporaryDirectory.appendingPathComponent("nonexistent_\(UUID().uuidString)")
         // Should still work - uses volume of parent
-        let space = getAvailableDiskSpace(at: nonExistent)
+        _ = getAvailableDiskSpace(at: nonExistent)
         // May return nil or a value - both are acceptable
     }
     

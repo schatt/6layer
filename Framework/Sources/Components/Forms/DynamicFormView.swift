@@ -92,6 +92,11 @@ public struct DynamicFormView: View {
                         .automaticCompliance(named: "FormDescription")
                 }
 
+                // Progress indicator (Issue #82)
+                if configuration.showProgress {
+                    FormProgressIndicator(progress: formState.formProgress)
+                }
+
                 // Validation summary - shows all errors at once
                 if formState.hasValidationErrors {
                     FormValidationSummary(
@@ -162,6 +167,26 @@ public struct DynamicFormView: View {
             .padding()
             .environment(\.accessibilityIdentifierLabel, configuration.title) // TDD GREEN: Pass label to identifier generation
             .automaticCompliance(named: "DynamicFormView")
+            .onAppear {
+                // Load draft if it exists (Issue #80)
+                if formState.loadDraft() {
+                    // Draft was loaded - form state is already updated
+                }
+                // Start auto-save timer
+                formState.startAutoSave()
+            }
+            .onDisappear {
+                // Save draft when form disappears (Issue #80)
+                formState.saveDraft()
+                // Stop auto-save timer
+                formState.stopAutoSave()
+            }
+            .onChange(of: formState.isDirty) { _ in
+                // Trigger debounced save when form becomes dirty (Issue #80)
+                if formState.isDirty {
+                    formState.triggerDebouncedSave()
+                }
+            }
         }
     }
     
@@ -229,6 +254,9 @@ public struct DynamicFormView: View {
     
     /// Handle form submission: validate, create entity if modelName provided, then call callbacks
     private func handleSubmit() {
+        // Clear draft when form is successfully submitted (Issue #80)
+        formState.clearDraft()
+        
         // Always call onSubmit with dictionary (backward compatible)
         onSubmit(formState.fieldValues)
         
@@ -237,6 +265,9 @@ public struct DynamicFormView: View {
         
         // Validate form before entity creation
         if !formState.isValid {
+            // Focus first error field (Issue #81)
+            formState.focusFirstError()
+            
             let validationError = NSError(
                 domain: "DynamicFormView",
                 code: 1,
@@ -259,10 +290,9 @@ public struct DynamicFormView: View {
             onError?(error)
             return
         }
-        #endif
-        
+        #elseif canImport(SwiftData)
         // Try to create SwiftData entity (requires entityType)
-        #if canImport(SwiftData)
+        // Only used when CoreData is not available
         if #available(macOS 14.0, iOS 17.0, *) {
             if let entityType = entityType {
                 do {
@@ -404,6 +434,13 @@ public struct DynamicFormSectionView: View {
     
     // MARK: - DRY: Field Layout Helper
     
+    /// Filtered list of visible fields based on visibility conditions
+    private var visibleFields: [DynamicFormField] {
+        section.fields.filter { field in
+            field.visibilityCondition?(formState) ?? true
+        }
+    }
+    
     @ViewBuilder
     private var fieldLayoutView: some View {
         let layoutStyle = section.layoutStyle ?? .vertical // Default to vertical
@@ -412,8 +449,9 @@ public struct DynamicFormSectionView: View {
         case .vertical, .standard, .compact, .spacious:
             // Vertical stack (default)
             VStack(spacing: 16) {
-                ForEach(section.fields) { field in
+                ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
+                        .transition(.opacity)
                 }
             }
             
@@ -423,42 +461,47 @@ public struct DynamicFormSectionView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ], spacing: 16) {
-                ForEach(section.fields) { field in
+                ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
+                        .transition(.opacity)
                 }
             }
             
         case .grid:
             // Grid layout (adaptive columns)
-            let columns = min(3, max(1, Int(sqrt(Double(section.fields.count)))))
+            let columns = min(3, max(1, Int(sqrt(Double(visibleFields.count)))))
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
-                ForEach(section.fields) { field in
+                ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
+                        .transition(.opacity)
                 }
             }
             
         case .adaptive:
             // Adaptive: choose layout based on field count
-            if section.fields.count <= 4 {
+            if visibleFields.count <= 4 {
                 VStack(spacing: 16) {
-                    ForEach(section.fields) { field in
+                    ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
+                            .transition(.opacity)
                     }
                 }
-            } else if section.fields.count <= 8 {
+            } else if visibleFields.count <= 8 {
                 LazyVGrid(columns: [
                     GridItem(.flexible()),
                     GridItem(.flexible())
                 ], spacing: 16) {
-                    ForEach(section.fields) { field in
+                    ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
+                            .transition(.opacity)
                     }
                 }
             } else {
-                let columns = min(3, max(1, Int(sqrt(Double(section.fields.count)))))
+                let columns = min(3, max(1, Int(sqrt(Double(visibleFields.count)))))
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: columns), spacing: 16) {
-                    ForEach(section.fields) { field in
+                    ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
+                            .transition(.opacity)
                     }
                 }
             }
@@ -470,10 +513,12 @@ public struct DynamicFormSectionView: View {
 
 /// Field view for dynamic forms
 /// GREEN PHASE: Full implementation of dynamic field rendering
+/// Issue #79: Added field-level help tooltips/info buttons for field descriptions
 @MainActor
 public struct DynamicFormFieldView: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
+    @State private var showHelpPopover = false
     
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -482,8 +527,8 @@ public struct DynamicFormFieldView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            // Field label with required indicator
-            HStack {
+            // Field label with required indicator and info button
+            HStack(spacing: 4) {
                 Text(field.label)
                     .font(.subheadline)
                     .bold()
@@ -492,17 +537,41 @@ public struct DynamicFormFieldView: View {
                         .foregroundColor(.red)
                         .fontWeight(.bold)
                 }
+                // Info button for field description (Issue #79)
+                if let description = field.description {
+                    Button(action: {
+                        showHelpPopover.toggle()
+                    }) {
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.blue)
+                            .font(.caption)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Help for \(field.label)")
+                    .accessibilityHint(description)
+                    #if os(macOS)
+                    .help(description) // macOS native tooltip on hover
+                    #endif
+                    .platformPopover_L4(
+                        isPresented: $showHelpPopover,
+                        attachmentAnchor: .point(.top),
+                        arrowEdge: .bottom
+                    ) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(description)
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .padding()
+                                .frame(maxWidth: 300)
+                        }
+                    }
+                }
             }
             .automaticCompliance(named: "FieldLabel")
             .accessibilityLabel(field.isRequired ? "\(field.label), required" : field.label)
 
-            // Field description if present
-            if let description = field.description {
-                Text(description)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .automaticCompliance(named: "FieldDescription")
-            }
+            // Field description is now shown in popover/tooltip, not as plain text (Issue #79)
+            // This saves vertical space and reduces form clutter
 
             // Field input based on type
             fieldInputView()
@@ -607,6 +676,45 @@ public struct FormValidationSummary: View {
             .accessibilityLabel("Validation summary: \(errorCount) error\(errorCount == 1 ? "" : "s")")
             .accessibilityHint("Expand to see all validation errors")
         }
+    }
+}
+
+// MARK: - Form Progress Indicator (Issue #82)
+
+/// Progress indicator for form completion
+/// Shows completion percentage and "X of Y fields completed" text
+public struct FormProgressIndicator: View {
+    let progress: FormProgress
+    
+    public init(progress: FormProgress) {
+        self.progress = progress
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Progress")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                
+                Text("\(progress.completed) of \(progress.total) field\(progress.total == 1 ? "" : "s")")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            ProgressView(value: progress.percentage)
+                .progressViewStyle(.linear)
+                .tint(.blue)
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(8)
+        .automaticCompliance(named: "FormProgressIndicator")
+        .accessibilityLabel("Form progress: \(Int(progress.percentage * 100)) percent complete, \(progress.completed) of \(progress.total) required fields filled")
+        .accessibilityValue("\(progress.completed) of \(progress.total) fields completed")
     }
 }
 

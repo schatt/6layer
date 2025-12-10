@@ -123,7 +123,7 @@ struct HintsGeneratorTests {
     @Test func testGeneratedHintsPreserveDisplayHints() throws {
         // Simulate generating hints for a model that already has display hints
         let modelName = "ExistingHints_testGeneratedHintsPreserveDisplayHints"
-        let existingHints: [String: Any] = [
+        _ = [
             "username": [
                 "expectedLength": 20,
                 "displayWidth": "medium"

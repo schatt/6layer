@@ -158,6 +158,24 @@ public struct DynamicFormField: Identifiable {
     public let calculationDependencies: [String]? // Field IDs this calculation depends on
     public let calculationGroups: [CalculationGroup]? // Groups of calculations that can compute this field
 
+    // Visibility Configuration
+    /// Condition that determines if this field should be visible
+    /// Returns true if field should be shown, false to hide
+    public let visibilityCondition: ((DynamicFormState) -> Bool)?
+    
+    // Field Actions Configuration (Issue #95)
+    /// Simple action for common cases (replaces/supplements supportsOCR/supportsBarcodeScanning)
+    public let fieldAction: (any FieldAction)?
+    
+    /// View builder for complex custom actions
+    /// Provides field and formState for building custom trailing UI
+    public let trailingView: ((DynamicFormField, DynamicFormState) -> AnyView)?
+    
+    /// Maximum number of actions to show as buttons before using menu
+    public let maxVisibleActions: Int // Default: 2
+    
+    /// Whether to show actions in a menu when there are multiple
+    public let useActionMenu: Bool // Default: true when actions > maxVisibleActions
 
     public init(
         id: String,
@@ -184,7 +202,12 @@ public struct DynamicFormField: Identifiable {
         isCalculated: Bool = false,
         calculationFormula: String? = nil,
         calculationDependencies: [String]? = nil,
-        calculationGroups: [CalculationGroup]? = nil
+        calculationGroups: [CalculationGroup]? = nil,
+        visibilityCondition: ((DynamicFormState) -> Bool)? = nil,
+        fieldAction: (any FieldAction)? = nil,
+        trailingView: ((DynamicFormField, DynamicFormState) -> AnyView)? = nil,
+        maxVisibleActions: Int = 2,
+        useActionMenu: Bool = true
     ) {
         self.id = id
         self.textContentType = textContentType
@@ -211,6 +234,11 @@ public struct DynamicFormField: Identifiable {
         self.calculationFormula = calculationFormula
         self.calculationDependencies = calculationDependencies
         self.calculationGroups = calculationGroups
+        self.visibilityCondition = visibilityCondition
+        self.fieldAction = fieldAction
+        self.trailingView = trailingView
+        self.maxVisibleActions = maxVisibleActions
+        self.useActionMenu = useActionMenu
     }
     
     /// Convenience initializer for text fields using cross-platform text content type
@@ -241,10 +269,19 @@ public struct DynamicFormField: Identifiable {
             ocrHint: nil,
             ocrValidationTypes: nil,
             ocrFieldIdentifier: nil,
+            ocrValidationRules: nil,
+            ocrHints: nil,
             supportsBarcodeScanning: false,
             barcodeHint: nil,
             supportedBarcodeTypes: nil,
-            barcodeFieldIdentifier: nil
+            barcodeFieldIdentifier: nil,
+            isCalculated: false,
+            calculationFormula: nil,
+            calculationDependencies: nil,
+            calculationGroups: nil,
+            visibilityCondition: nil,
+            fieldAction: nil,
+            trailingView: nil
         )
     }
     
@@ -277,10 +314,19 @@ public struct DynamicFormField: Identifiable {
             ocrHint: nil,
             ocrValidationTypes: nil,
             ocrFieldIdentifier: nil,
+            ocrValidationRules: nil,
+            ocrHints: nil,
             supportsBarcodeScanning: false,
             barcodeHint: nil,
             supportedBarcodeTypes: nil,
-            barcodeFieldIdentifier: nil
+            barcodeFieldIdentifier: nil,
+            isCalculated: false,
+            calculationFormula: nil,
+            calculationDependencies: nil,
+            calculationGroups: nil,
+            visibilityCondition: nil,
+            fieldAction: nil,
+            trailingView: nil
         )
     }
     
@@ -311,6 +357,11 @@ public struct DynamicFormField: Identifiable {
         self.calculationFormula = nil
         self.calculationDependencies = nil
         self.calculationGroups = nil
+        self.visibilityCondition = nil
+        self.fieldAction = nil
+        self.trailingView = nil
+        self.maxVisibleActions = 2
+        self.useActionMenu = true
     }
     
 
@@ -440,6 +491,38 @@ public struct DynamicFormField: Identifiable {
         )
     }
     
+    /// Get effective actions for this field
+    /// Returns explicit fieldAction if set, otherwise converts supportsOCR/supportsBarcodeScanning flags to actions
+    /// This ensures backward compatibility while supporting the new action system
+    @MainActor
+    public var effectiveActions: [any FieldAction] {
+        // If explicit fieldAction is set, use it (takes precedence over flags)
+        if let fieldAction = fieldAction {
+            return [fieldAction]
+        }
+        
+        // Otherwise, convert flags to actions for backward compatibility
+        var actions: [any FieldAction] = []
+        
+        if supportsOCR {
+            let ocrAction = BuiltInFieldAction.ocrScan(
+                hint: ocrHint,
+                validationTypes: ocrValidationTypes
+            ).toFieldAction()
+            actions.append(ocrAction)
+        }
+        
+        if supportsBarcodeScanning {
+            let barcodeAction = BuiltInFieldAction.barcodeScan(
+                hint: barcodeHint,
+                supportedTypes: supportedBarcodeTypes
+            ).toFieldAction()
+            actions.append(barcodeAction)
+        }
+        
+        return actions
+    }
+    
     /// Apply hints to this field, creating a new field with updated properties
     /// - Parameter hints: The hints to apply
     /// - Returns: A new field with hints applied
@@ -469,7 +552,12 @@ public struct DynamicFormField: Identifiable {
             isCalculated: hints.calculationGroups != nil ? true : self.isCalculated,
             calculationFormula: self.calculationFormula,
             calculationDependencies: self.calculationDependencies,
-            calculationGroups: hints.calculationGroups ?? self.calculationGroups
+            calculationGroups: hints.calculationGroups ?? self.calculationGroups,
+            visibilityCondition: self.visibilityCondition,
+            fieldAction: self.fieldAction,
+            trailingView: self.trailingView,
+            maxVisibleActions: self.maxVisibleActions,
+            useActionMenu: self.useActionMenu
         )
     }
 }
@@ -516,6 +604,8 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     case date = "date"               // Date picker
     case time = "time"               // Time picker
     case datetime = "datetime"       // Date & time picker
+    case multiDate = "multiDate"     // Multiple date selection (iOS 16+)
+    case dateRange = "dateRange"     // Date range selection
     case select = "select"           // Dropdown picker
     case multiselect = "multiselect" // Multi-select picker
     case radio = "radio"             // Radio buttons
@@ -528,10 +618,12 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     case range = "range"             // Slider
     case stepper = "stepper"         // Increment/decrement control
     case toggle = "toggle"           // Toggle switch
+    case boolean = "boolean"         // Boolean value (alias for toggle)
     case array = "array"             // Array input
     case data = "data"               // Data input
     case autocomplete = "autocomplete" // Autocomplete field
     case `enum` = "enum"             // Enum picker
+    case display = "display"         // Read-only display field (uses LabeledContent on iOS 16+/macOS 13+)
     case custom = "custom"            // Custom component
     
     /// Check if content type supports options
@@ -547,7 +639,7 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     /// Check if content type supports multiple values
     public var supportsMultipleValues: Bool {
         switch self {
-        case .multiselect, .checkbox:
+        case .multiselect, .checkbox, .multiDate:
             return true
         default:
             return false
@@ -606,6 +698,8 @@ public struct DynamicFormConfiguration: Identifiable {
     /// Optional model name for auto-loading hints from .hints files
     /// If provided, hints are automatically loaded and applied to fields
     public let modelName: String?
+    /// Whether to show form progress indicator (Issue #82)
+    public let showProgress: Bool
     
     public init(
         id: String,
@@ -615,7 +709,8 @@ public struct DynamicFormConfiguration: Identifiable {
         submitButtonText: String = "Submit",
         cancelButtonText: String? = "Cancel",
         metadata: [String: String]? = nil,
-        modelName: String? = nil
+        modelName: String? = nil,
+        showProgress: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -625,6 +720,7 @@ public struct DynamicFormConfiguration: Identifiable {
         self.cancelButtonText = cancelButtonText
         self.metadata = metadata
         self.modelName = modelName
+        self.showProgress = showProgress
     }
     
     /// Get all fields from all sections
@@ -665,6 +761,9 @@ public struct DynamicFormConfiguration: Identifiable {
             return self
         }
         
+        // Collect fields without hints for debug warning
+        var fieldsWithoutHints: [String] = []
+        
         // Apply hints to fields in sections
         let sectionsWithHints = sections.map { section in
             DynamicFormSection(
@@ -675,6 +774,8 @@ public struct DynamicFormConfiguration: Identifiable {
                     if let hints = fieldHints[field.id] {
                         return field.applying(hints: hints)
                     }
+                    // Field exists but has no hints - collect for warning
+                    fieldsWithoutHints.append(field.id)
                     return field
                 },
                 isCollapsible: section.isCollapsible,
@@ -683,6 +784,13 @@ public struct DynamicFormConfiguration: Identifiable {
                 layoutStyle: section.layoutStyle
             )
         }
+        
+        // Debug warning: fields exist that aren't in hints file (hints file may be out of date)
+        #if DEBUG
+        if !fieldsWithoutHints.isEmpty {
+            print("⚠️ Warning: Form configuration for model '\(modelName)' has fields without hints: \(fieldsWithoutHints.joined(separator: ", ")). Consider updating \(modelName).hints file.")
+        }
+        #endif
         
         // Create configuration with hints-applied sections
         return DynamicFormConfiguration(
@@ -750,17 +858,65 @@ public struct CalculatedFieldResult {
     public let calculatedValue: Double
 }
 
+// MARK: - Form Progress (Issue #82)
+
+/// Represents the progress of form completion
+public struct FormProgress {
+    /// Number of completed required fields
+    public let completed: Int
+    /// Total number of required fields
+    public let total: Int
+    /// Completion percentage (0.0 to 1.0)
+    public let percentage: Double
+    
+    public init(completed: Int, total: Int, percentage: Double) {
+        self.completed = completed
+        self.total = total
+        self.percentage = percentage
+    }
+}
+
 public class DynamicFormState: ObservableObject {
     @Published public var fieldValues: [String: Any] = [:]
     @Published public var fieldErrors: [String: [String]] = [:]
     @Published public var sectionStates: [String: Bool] = [:] // collapsed state
     @Published public var isSubmitting: Bool = false
     @Published public var isDirty: Bool = false
+    @Published public var focusedFieldId: String? // Focus management (Issue #81)
     
     private let configuration: DynamicFormConfiguration
     
-    public init(configuration: DynamicFormConfiguration) {
+    // MARK: - Auto-Save Properties (Issue #80)
+    
+    /// Storage for form drafts
+    private let storage: FormStateStorage
+    
+    /// Auto-save timer for periodic saves
+    private var autoSaveTimer: Timer?
+    
+    /// Debounce timer for change-based saves
+    private var debounceTimer: Timer?
+    
+    /// Auto-save configuration
+    public var autoSaveEnabled: Bool = true
+    public var autoSaveInterval: TimeInterval = 30.0 // seconds
+    public var debounceDelay: TimeInterval = 2.0 // seconds
+    
+    /// Form ID for draft storage (uses configuration.id)
+    private var formId: String {
+        return configuration.id
+    }
+    
+    /// Initialize with configuration and optional storage
+    /// - Parameters:
+    ///   - configuration: Form configuration
+    ///   - storage: Optional storage implementation (defaults to UserDefaultsFormStateStorage)
+    public init(
+        configuration: DynamicFormConfiguration,
+        storage: FormStateStorage? = nil
+    ) {
         self.configuration = configuration
+        self.storage = storage ?? UserDefaultsFormStateStorage()
         setupInitialState()
     }
     
@@ -1150,6 +1306,34 @@ public class DynamicFormState: ObservableObject {
         return fieldValues
     }
     
+    // MARK: - Form Progress (Issue #82)
+    
+    /// Calculate form completion progress based on required fields
+    public var formProgress: FormProgress {
+        let allRequiredFields = configuration.allFields.filter { $0.isRequired }
+        let completedRequiredFields = allRequiredFields.filter { field in
+            if let value = fieldValues[field.id] {
+                // For string values, check if not empty
+                if let stringValue = value as? String {
+                    return !stringValue.isEmpty
+                }
+                // Non-string values are considered filled if they exist
+                return true
+            }
+            return false
+        }
+        
+        let totalFields = allRequiredFields.count
+        let completedFields = completedRequiredFields.count
+        let percentage = totalFields > 0 ? Double(completedFields) / Double(totalFields) : 0.0
+        
+        return FormProgress(
+            completed: completedFields,
+            total: totalFields,
+            percentage: percentage
+        )
+    }
+    
     // MARK: - Private Methods
     
     private func setupInitialState() {
@@ -1159,11 +1343,190 @@ public class DynamicFormState: ObservableObject {
                 fieldValues[field.id] = defaultValue
             }
         }
-        
+
         // Set initial section states
         for section in configuration.sections {
             sectionStates[section.id] = section.isCollapsed
         }
+    }
+    
+    // MARK: - Auto-Save Methods (Issue #80)
+    
+    /// Start auto-save timer
+    /// - Parameter interval: Save interval in seconds (defaults to autoSaveInterval)
+    public func startAutoSave(interval: TimeInterval? = nil) {
+        guard autoSaveEnabled else { return }
+        
+        stopAutoSave()
+        
+        let saveInterval = interval ?? autoSaveInterval
+        autoSaveTimer = Timer.scheduledTimer(withTimeInterval: saveInterval, repeats: true) { [weak self] _ in
+            self?.saveDraft()
+        }
+    }
+    
+    /// Stop auto-save timer
+    public func stopAutoSave() {
+        autoSaveTimer?.invalidate()
+        autoSaveTimer = nil
+    }
+    
+    /// Save current form state as draft
+    public func saveDraft() {
+        guard autoSaveEnabled else { return }
+        
+        let draft = FormDraft(
+            formId: formId,
+            fieldValues: fieldValues,
+            timestamp: Date()
+        )
+        
+        do {
+            try storage.saveDraft(draft)
+        } catch {
+            // Log error but don't crash - form should continue to function
+            print("Error saving form draft: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Load draft state if it exists
+    /// - Returns: True if draft was loaded, false otherwise
+    @discardableResult
+    public func loadDraft() -> Bool {
+        guard let draft = storage.loadDraft(formId: formId) else {
+            return false
+        }
+        
+        // Restore field values from draft
+        fieldValues = draft.toFieldValues()
+        return true
+    }
+    
+    /// Clear draft state
+    public func clearDraft() {
+        do {
+            try storage.clearDraft(formId: formId)
+        } catch {
+            // Log error but don't crash
+            print("Error clearing form draft: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Check if draft exists
+    public func hasDraft() -> Bool {
+        return storage.hasDraft(formId: formId)
+    }
+    
+    /// Trigger debounced save on field change
+    /// This should be called when fieldValues change
+    public func triggerDebouncedSave() {
+        guard autoSaveEnabled else { return }
+        
+        // Cancel existing debounce timer
+        debounceTimer?.invalidate()
+        
+        // Start new debounce timer
+        debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceDelay, repeats: false) { [weak self] _ in
+            self?.saveDraft()
+        }
+    }
+    
+    // MARK: - Focus Management Methods (Issue #81)
+    
+    /// Move focus to the next field in form order
+    /// - Parameter currentFieldId: The ID of the currently focused field
+    /// Skips non-focusable fields (e.g., date pickers that don't support keyboard focus)
+    public func focusNextField(from currentFieldId: String) {
+        let allFields = configuration.allFields
+        
+        // Find current field index
+        guard let currentIndex = allFields.firstIndex(where: { $0.id == currentFieldId }) else {
+            return
+        }
+        
+        // Find next focusable field
+        let nextIndex = currentIndex + 1
+        if nextIndex < allFields.count {
+            // Check if next field is focusable (text-based fields)
+            let nextField = allFields[nextIndex]
+            if isFieldFocusable(nextField) {
+                focusedFieldId = nextField.id
+            } else {
+                // Skip non-focusable field and try next
+                if nextIndex + 1 < allFields.count {
+                    let nextNextField = allFields[nextIndex + 1]
+                    if isFieldFocusable(nextNextField) {
+                        focusedFieldId = nextNextField.id
+                    } else {
+                        // No more focusable fields, clear focus
+                        focusedFieldId = nil
+                    }
+                } else {
+                    // At end, clear focus
+                    focusedFieldId = nil
+                }
+            }
+        } else {
+            // At last field, clear focus (no wrap)
+            focusedFieldId = nil
+        }
+    }
+    
+    /// Move focus to the first field with a validation error
+    /// Focuses the first field in form order that has errors
+    public func focusFirstError() {
+        guard !fieldErrors.isEmpty else {
+            focusedFieldId = nil
+            return
+        }
+        
+        // Get all fields in order
+        let allFields = configuration.allFields
+        
+        // Find first field with error
+        for field in allFields {
+            if hasErrors(for: field.id) && isFieldFocusable(field) {
+                focusedFieldId = field.id
+                return
+            }
+        }
+        
+        // No focusable fields with errors
+        focusedFieldId = nil
+    }
+    
+    /// Check if a field supports keyboard focus
+    /// - Parameter field: The field to check
+    /// - Returns: True if field supports keyboard focus (text-based fields)
+    private func isFieldFocusable(_ field: DynamicFormField) -> Bool {
+        // Text-based fields support focus
+        switch field.contentType {
+        case .text, .email, .password, .phone, .url, .number, .integer, .textarea, .autocomplete:
+            return true
+        case .date, .time, .datetime, .multiDate, .dateRange:
+            // Date pickers don't support keyboard focus in the same way
+            return false
+        case .select, .multiselect, .radio, .checkbox:
+            // These can be focused but navigation is different
+            return true
+        case .toggle, .boolean, .range, .stepper:
+            // These can be focused
+            return true
+        case .file, .image, .color, .richtext, .data, .array, .enum, .custom:
+            // These may or may not support focus depending on implementation
+            return true
+        case .display:
+            // Display fields are read-only and don't support focus
+            return false
+        case .none:
+            // If no contentType, check textContentType
+            return field.textContentType != nil
+        }
+    }
+    
+    deinit {
+        stopAutoSave()
+        debounceTimer?.invalidate()
     }
 }
 

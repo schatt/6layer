@@ -675,7 +675,7 @@ public class OCRService: OCRServiceProtocol, @unchecked Sendable {
     /// Priority: context.fieldRanges (override) > hints file expectedRange
     /// Returns: (validated data, range warnings: fieldId -> description)
     private func validateFieldRanges(in structuredData: [String: String], context: OCRContext) -> ([String: String], [String: String]) {
-        var validatedData = structuredData
+        let validatedData = structuredData
         var rangeWarnings: [String: String] = [:]
         
         // Get hints file ranges if entityName is provided

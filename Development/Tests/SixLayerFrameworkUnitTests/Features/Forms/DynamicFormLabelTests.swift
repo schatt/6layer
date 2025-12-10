@@ -388,7 +388,8 @@ open class DynamicFormLabelTests: BaseTestClass {
             // Then: Each field should be created successfully
             // The actual label duplication prevention is tested by the fact that
             // our implementation uses empty titles and .labelsHidden() modifiers
-            #expect(view != nil, "Failed to create view for \(field.contentType?.rawValue ?? "unknown")")
+            // view is non-optional (AnyView), so this check is always true
+            #expect(Bool(true), "View should be created for \(field.contentType?.rawValue ?? "unknown")")
         }
     }
 }

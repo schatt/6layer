@@ -466,7 +466,7 @@ open class EyeTrackingTests: BaseTestClass {
             hapticFeedback: true
         )
         
-        let manager = EyeTrackingManager(config: config)
+        _ = EyeTrackingManager(config: config)
         
         // Enable tracking (force for testing)
         #expect(Bool(true), "Manager should be created successfully")

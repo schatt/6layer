@@ -43,7 +43,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testAccessibilityStateMonitoring() {
         // Given: AppleHIGComplianceManager
-        let complianceManager = AppleHIGComplianceManager()
+        _ = AppleHIGComplianceManager()
         
         // When: Accessibility state is monitored
         // Then: Should track system accessibility settings
@@ -97,7 +97,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     
     @Test @MainActor func testAppleHIGCompliantModifier() {
         // Given: Framework component (testing our framework, not SwiftUI)
-        let testView = platformPresentContent_L1(
+        _ = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
@@ -105,24 +105,24 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Apple HIG compliance is applied
         // Then: Framework component should have compliance applied
-        #expect(Bool(true), "Framework component with Apple HIG compliance should be valid")  // testView is non-optional
+        #expect(Bool(true), "Framework component with Apple HIG compliance should be valid")
     }
     
     @Test @MainActor func testAutomaticAccessibilityModifier() {
         // Given: Framework component
-        let testView = platformPresentBasicValue_L1(
+        _ = platformPresentBasicValue_L1(
             value: 42,
             hints: PresentationHints()
         )
         
         // When: Automatic accessibility is applied (framework components do this automatically)
         // Then: Framework component should generate accessibility identifiers
-        #expect(Bool(true), "Framework component should support automatic accessibility")  // testView is non-optional
+        #expect(Bool(true), "Framework component should support automatic accessibility")
     }
     
     @Test @MainActor func testPlatformPatternsModifier() {
         // Given: Framework component
-        let testView = platformPresentContent_L1(
+        _ = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
@@ -130,12 +130,12 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Platform patterns are applied
         // Then: Framework component should have platform patterns
-        #expect(Bool(true), "Framework component with platform patterns should be valid")  // testView is non-optional
+        #expect(Bool(true), "Framework component with platform patterns should be valid")
     }
     
     @Test @MainActor func testVisualConsistencyModifier() {
         // Given: Framework component
-        let testView = platformPresentContent_L1(
+        _ = platformPresentContent_L1(
             content: "Test",
             hints: PresentationHints()
         )
@@ -143,12 +143,12 @@ open class AppleHIGComplianceTests: BaseTestClass {
         
         // When: Visual consistency is applied
         // Then: Framework component should have visual consistency
-        #expect(Bool(true), "Framework component with visual consistency should be valid")  // testView is non-optional
+        #expect(Bool(true), "Framework component with visual consistency should be valid")
     }
     
     @Test @MainActor func testInteractionPatternsModifier() {
         // Given: Framework component
-        let testView = platformPresentBasicValue_L1(
+        _ = platformPresentBasicValue_L1(
             value: 42,
             hints: PresentationHints()
         )
@@ -210,7 +210,7 @@ open class AppleHIGComplianceTests: BaseTestClass {
     @Test @MainActor func testAccessibilitySystemStateInitialization() {
         initializeTestConfig()
         // Given: Accessibility system state
-        let state = AccessibilitySystemState()
+        _ = AccessibilitySystemState()
         
         // When: State is initialized
         // Then: Should have default values

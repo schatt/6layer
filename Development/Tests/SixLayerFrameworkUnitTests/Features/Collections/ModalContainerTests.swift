@@ -54,10 +54,9 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid modal container
-        // container is a non-optional View, so it exists if we reach here
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_Popover() {
@@ -69,10 +68,9 @@ open class ModalContainerTests: BaseTestClass {
         )
         
         // When: Creating modal container
-        let container = platformModalContainer_Form_L4(strategy: strategy)
+        _ = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid popover container
-        // container is non-optional View, not used further
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_FullScreen() {
@@ -87,7 +85,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid full screen container
-        #expect(Bool(true), "Full screen container should be created successfully")  // container is non-optional
+        #expect(Bool(true), "Full screen container should be created successfully")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_Custom() {
@@ -102,7 +100,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create valid custom container
-        #expect(Bool(true), "Custom container should be created successfully")  // container is non-optional
+        #expect(Bool(true), "Custom container should be created successfully")
     }
     
     // MARK: - Sizing Tests
@@ -115,14 +113,14 @@ open class ModalContainerTests: BaseTestClass {
         let customStrategy = createTestModalStrategy(sizing: .custom)
         
         // When: Creating containers with different sizes
-        let smallContainer = platformModalContainer_Form_L4(strategy: smallStrategy)
-        let mediumContainer = platformModalContainer_Form_L4(strategy: mediumStrategy)
-        let largeContainer = platformModalContainer_Form_L4(strategy: largeStrategy)
-        let customContainer = platformModalContainer_Form_L4(strategy: customStrategy)
+        _ = platformModalContainer_Form_L4(strategy: smallStrategy)
+        _ = platformModalContainer_Form_L4(strategy: mediumStrategy)
+        _ = platformModalContainer_Form_L4(strategy: largeStrategy)
+        _ = platformModalContainer_Form_L4(strategy: customStrategy)
         
         // Then: All containers should be created successfully
-        #expect(Bool(true), "Small container should be created")  // smallContainer is non-optional
-        #expect(Bool(true), "Medium container should be created")  // mediumContainer is non-optional
+        #expect(Bool(true), "Small container should be created")
+        #expect(Bool(true), "Medium container should be created")
         #expect(Bool(true), "Large container should be created")  // largeContainer is non-optional
         #expect(Bool(true), "Custom container should be created")  // customContainer is non-optional
     }
@@ -137,7 +135,7 @@ open class ModalContainerTests: BaseTestClass {
         let container = platformModalContainer_Form_L4(strategy: strategy)
         
         // Then: Should create container with multiple detents
-        #expect(Bool(true), "Container with multiple detents should be created")  // container is non-optional
+        #expect(Bool(true), "Container with multiple detents should be created")
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_CustomDetent() {

@@ -150,9 +150,39 @@ open class Layer4APISignatureTests: BaseTestClass {
     
     // MARK: - OCR Components API Tests
     
-    /// BUSINESS PURPOSE: Verify platformOCRImplementation_L4 API signature exists and works
-    /// TESTING SCOPE: Tests that platformOCRImplementation_L4 accepts correct parameters
+    // NOTE: Tests for deprecated OCR APIs intentionally use deprecated functions to verify backward compatibility.
+    // Deprecation warnings are expected and acceptable in those specific tests.
+    
+    /// BUSINESS PURPOSE: Verify OCRService.processImage() API signature exists and works
+    /// TESTING SCOPE: Tests that OCRService.processImage() accepts correct parameters
     /// METHODOLOGY: Test API signature compiles with correct parameter types
+    @Test func testOCRService_processImage_APISignature() async throws {
+        // Given: Test image, context, and strategy
+        let testImage = PlatformImage.createPlaceholder()
+        let context = OCRContext()
+        let strategy = OCRStrategy(
+            supportedTextTypes: [.general],
+            supportedLanguages: [.english],
+            processingMode: .standard
+        )
+        let service = OCRService()
+        
+        // When: Calling the new API (may throw, but signature is what we're testing)
+        // Note: We're testing the signature, not the functionality
+        // The signature is: func processImage(_ image: PlatformImage, context: OCRContext, strategy: OCRStrategy) async throws -> OCRResult
+        let processFunction: (PlatformImage, OCRContext, OCRStrategy) async throws -> OCRResult = service.processImage
+        
+        // Verify the function signature matches expected types (compile-time check)
+        let _: (PlatformImage, OCRContext, OCRStrategy) async throws -> OCRResult = processFunction
+        
+        // Then: API should accept the parameters (compile-time check)
+        #expect(Bool(true), "OCRService.processImage() should accept correct parameters")
+    }
+    
+    /// BUSINESS PURPOSE: Verify platformOCRImplementation_L4 API signature exists (deprecated)
+    /// TESTING SCOPE: Tests that deprecated platformOCRImplementation_L4 still has correct signature
+    /// METHODOLOGY: Test API signature compiles with correct parameter types
+    /// NOTE: This test intentionally uses deprecated API to verify backward compatibility
     @Test @MainActor func testPlatformOCRImplementation_L4_APISignature() {
         // Given: Test image, context, strategy, and callback
         let testImage = PlatformImage.createPlaceholder()
@@ -164,8 +194,9 @@ open class Layer4APISignatureTests: BaseTestClass {
         )
         let callback: (OCRResult) -> Void = { _ in }
         
-        // When: Calling the API
-        let _ = platformOCRImplementation_L4(
+        // When: Calling the deprecated API (intentional for backward compatibility testing)
+        // Suppress deprecation warning - this test verifies the deprecated API still works
+        let _ = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -176,9 +207,27 @@ open class Layer4APISignatureTests: BaseTestClass {
         #expect(Bool(true), "platformOCRImplementation_L4 should accept correct parameters")
     }
     
+    // Helper function to call deprecated API (suppresses warning at call site)
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedOCRImplementation(
+        image: PlatformImage,
+        context: OCRContext,
+        strategy: OCRStrategy,
+        onResult: @escaping (OCRResult) -> Void
+    ) -> some View {
+        return platformOCRImplementation_L4(
+            image: image,
+            context: context,
+            strategy: strategy,
+            onResult: onResult
+        )
+    }
+    
     /// BUSINESS PURPOSE: Verify platformTextExtraction_L4 API signature exists (deprecated)
     /// TESTING SCOPE: Tests that deprecated platformTextExtraction_L4 still has correct signature
     /// METHODOLOGY: Test API signature compiles with correct parameter types
+    /// NOTE: This test intentionally uses deprecated API to verify backward compatibility
     @Test @MainActor func testPlatformTextExtraction_L4_APISignature() {
         // Given: Test image, context, layout, strategy, and callback
         let testImage = PlatformImage.createPlaceholder()
@@ -194,8 +243,8 @@ open class Layer4APISignatureTests: BaseTestClass {
         )
         let callback: (OCRResult) -> Void = { _ in }
         
-        // When: Calling the deprecated API
-        let _ = platformTextExtraction_L4(
+        // When: Calling the deprecated API (intentional for backward compatibility testing)
+        let _ = callDeprecatedTextExtraction(
             image: testImage,
             context: context,
             layout: layout,
@@ -207,17 +256,37 @@ open class Layer4APISignatureTests: BaseTestClass {
         #expect(Bool(true), "platformTextExtraction_L4 should maintain signature for backward compatibility")
     }
     
+    // Helper function to call deprecated API (suppresses warning at call site)
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedTextExtraction(
+        image: PlatformImage,
+        context: OCRContext,
+        layout: OCRLayout,
+        strategy: OCRStrategy,
+        onResult: @escaping (OCRResult) -> Void
+    ) -> some View {
+        return platformTextExtraction_L4(
+            image: image,
+            context: context,
+            layout: layout,
+            strategy: strategy,
+            onResult: onResult
+        )
+    }
+    
     /// BUSINESS PURPOSE: Verify platformTextRecognition_L4 API signature exists (deprecated)
     /// TESTING SCOPE: Tests that deprecated platformTextRecognition_L4 still has correct signature
     /// METHODOLOGY: Test API signature compiles with correct parameter types
+    /// NOTE: This test intentionally uses deprecated API to verify backward compatibility
     @Test @MainActor func testPlatformTextRecognition_L4_APISignature() {
         // Given: Test image, options, and callback
         let testImage = PlatformImage.createPlaceholder()
         let options = TextRecognitionOptions()
         let callback: (OCRResult) -> Void = { _ in }
         
-        // When: Calling the deprecated API
-        let _ = platformTextRecognition_L4(
+        // When: Calling the deprecated API (intentional for backward compatibility testing)
+        let _ = callDeprecatedTextRecognition(
             image: testImage,
             options: options,
             onResult: callback
@@ -225,6 +294,21 @@ open class Layer4APISignatureTests: BaseTestClass {
         
         // Then: API should still accept the parameters (backward compatibility)
         #expect(Bool(true), "platformTextRecognition_L4 should maintain signature for backward compatibility")
+    }
+    
+    // Helper function to call deprecated API (suppresses warning at call site)
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedTextRecognition(
+        image: PlatformImage,
+        options: TextRecognitionOptions,
+        onResult: @escaping (OCRResult) -> Void
+    ) -> some View {
+        return platformTextRecognition_L4(
+            image: image,
+            options: options,
+            onResult: onResult
+        )
     }
     
     // MARK: - Map Components API Tests
@@ -433,9 +517,10 @@ open class Layer4APISignatureTests: BaseTestClass {
     
     // MARK: - Safe OCR API Tests
     
-    /// BUSINESS PURPOSE: Verify safePlatformOCRImplementation_L4 API signature exists
-    /// TESTING SCOPE: Tests that safePlatformOCRImplementation_L4 accepts correct parameters
+    /// BUSINESS PURPOSE: Verify safePlatformOCRImplementation_L4 API signature exists (deprecated)
+    /// TESTING SCOPE: Tests that deprecated safePlatformOCRImplementation_L4 still has correct signature
     /// METHODOLOGY: Test API signature compiles with correct parameter types
+    /// NOTE: This test intentionally uses deprecated API to verify backward compatibility
     @Test @MainActor func testSafePlatformOCRImplementation_L4_APISignature() {
         // Given: Test image, context, strategy, and callbacks
         let testImage = PlatformImage.createPlaceholder()
@@ -448,8 +533,8 @@ open class Layer4APISignatureTests: BaseTestClass {
         let callback: (OCRResult) -> Void = { _ in }
         let errorCallback: (Error) -> Void = { _ in }
         
-        // When: Calling the API
-        let _ = safePlatformOCRImplementation_L4(
+        // When: Calling the deprecated API (intentional for backward compatibility testing)
+        let _ = callDeprecatedSafeOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,
@@ -459,6 +544,25 @@ open class Layer4APISignatureTests: BaseTestClass {
         
         // Then: API should accept the parameters (compile-time check)
         #expect(Bool(true), "safePlatformOCRImplementation_L4 should accept correct parameters")
+    }
+    
+    // Helper function to call deprecated API (suppresses warning at call site)
+    @MainActor
+    @available(*, deprecated, message: "Intentional use in backward compatibility test")
+    private func callDeprecatedSafeOCRImplementation(
+        image: PlatformImage,
+        context: OCRContext,
+        strategy: OCRStrategy,
+        onResult: @escaping (OCRResult) -> Void,
+        onError: @escaping (Error) -> Void
+    ) -> some View {
+        return safePlatformOCRImplementation_L4(
+            image: image,
+            context: context,
+            strategy: strategy,
+            onResult: onResult,
+            onError: onError
+        )
     }
     
     // MARK: - Breaking Change Detection Tests
@@ -510,14 +614,14 @@ open class Layer4APISignatureTests: BaseTestClass {
     /// BUSINESS PURPOSE: Verify OCR callback parameter type (breaking change detection)
     /// TESTING SCOPE: Tests that callback parameter is OCRResult, not a different type
     /// METHODOLOGY: Test exact callback signature that would break if changed
+    /// NOTE: This test intentionally uses deprecated API to verify backward compatibility
     @Test @MainActor func testPlatformOCRImplementation_L4_CallbackParameterType() {
         // Given: Callback that expects OCRResult
-        var capturedResult: OCRResult?
-        let callback: (OCRResult) -> Void = { result in
-            capturedResult = result  // This would fail if parameter type changed
+        let callback: (OCRResult) -> Void = { _ in
+            // This would fail if parameter type changed - compile-time check
         }
         
-        // When: Creating the view with callback
+        // When: Creating the view with callback (using deprecated API intentionally)
         let testImage = PlatformImage.createPlaceholder()
         let context = OCRContext()
         let strategy = OCRStrategy(
@@ -525,7 +629,7 @@ open class Layer4APISignatureTests: BaseTestClass {
             supportedLanguages: [.english],
             processingMode: .standard
         )
-        let _ = platformOCRImplementation_L4(
+        let _ = callDeprecatedOCRImplementation(
             image: testImage,
             context: context,
             strategy: strategy,

@@ -390,6 +390,11 @@ public struct IntelligentFormView {
     /// **Opt-Out**: Set `autoBind: false` to disable automatic `DataBinder` creation.
     /// This is useful for read-only forms, immutable models, or external state management.
     ///
+    /// **Entity Auto-Save (Issue #80)**:
+    /// By default, entities are automatically saved periodically (every 30 seconds).
+    /// Set `autoSaveInterval` to 0 to disable auto-save, or customize the interval.
+    /// Draft entities (newly created) are marked and saved automatically.
+    ///
     /// - Parameters:
     ///   - data: The data model instance to edit
     ///   - dataBinder: Optional explicit DataBinder. If provided, `autoBind` is ignored.
@@ -398,6 +403,8 @@ public struct IntelligentFormView {
     ///   - customFieldView: Custom view builder for field rendering
     ///   - onUpdate: Callback when form is updated
     ///   - onCancel: Callback when form is cancelled
+    ///   - isDraft: Whether this entity is a draft (created but not yet submitted) (default: false)
+    ///   - autoSaveInterval: Interval for periodic auto-save in seconds (default: 30.0, set to 0 to disable)
     /// - Returns: A view representing the generated form
     public static func generateForm<T>(
         for data: T,
@@ -406,7 +413,9 @@ public struct IntelligentFormView {
         inputHandlingManager: InputHandlingManager? = nil,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View = { _, _, _ in EmptyView() },
         onUpdate: @escaping (T) -> Void = { _ in },
-        onCancel: @escaping () -> Void = { }
+        onCancel: @escaping () -> Void = { },
+        isDraft: Bool = false,
+        autoSaveInterval: TimeInterval = 30.0
     ) -> some View {
         let analysis = DataIntrospectionEngine.analyze(data)
         let formStrategy = determineFormStrategy(analysis: analysis)
@@ -464,7 +473,8 @@ public struct IntelligentFormView {
                     generateFormActions(
                         initialData: data,
                         onSubmit: { onUpdate($0) },
-                        onCancel: onCancel
+                        onCancel: onCancel,
+                        isDraft: isDraft
                     )
                 )
                 
@@ -501,7 +511,8 @@ public struct IntelligentFormView {
                     generateFormActions(
                         initialData: data,
                         onSubmit: { onUpdate($0) },
-                        onCancel: onCancel
+                        onCancel: onCancel,
+                        isDraft: isDraft
                     )
                 )
             }
@@ -885,7 +896,8 @@ public struct IntelligentFormView {
     private static func generateFormActions<T>(
         initialData: T?,
         onSubmit: @escaping (T) -> Void,
-        onCancel: @escaping () -> Void
+        onCancel: @escaping () -> Void,
+        isDraft: Bool = false
     ) -> some View {
         VStack {
             Spacer()
@@ -904,7 +916,8 @@ public struct IntelligentFormView {
                     handleSubmit(
                         initialData: initialData,
                         modelContext: nil, // TODO: Could be enhanced to get from @Environment(\.modelContext) if available
-                        onSubmit: onSubmit
+                        onSubmit: onSubmit,
+                        isDraft: isDraft
                     )
                 }
                     .buttonStyle(.borderedProminent)
@@ -921,6 +934,7 @@ public struct IntelligentFormView {
     
     /// Handle form submission with auto-persistence for Core Data and SwiftData entities
     /// Implements Issue #8, #9, and #20: Auto-save Core Data and SwiftData entities
+    /// Also implements Issue #80: Clear draft flag when entity is submitted
     /// 
     /// - Parameters:
     ///   - initialData: The data model to save (Core Data NSManagedObject or SwiftData PersistentModel)
@@ -928,11 +942,13 @@ public struct IntelligentFormView {
     ///                  If nil and data is a SwiftData model, will attempt to find context via reflection.
     ///                  For best results, pass the ModelContext explicitly.
     ///   - onSubmit: Callback to execute after auto-save
+    ///   - isDraft: Whether this entity is a draft (will clear draft flag on submit)
     @MainActor
     internal static func handleSubmit<T>(
         initialData: T?,
         modelContext: Any? = nil,
-        onSubmit: @escaping (T) -> Void
+        onSubmit: @escaping (T) -> Void,
+        isDraft: Bool = false
     ) {
         guard let data = initialData else {
             print("Warning: Submit attempted without initialData; ignoring")
@@ -952,6 +968,11 @@ public struct IntelligentFormView {
                     managedObject.setValue(Date(), forKey: "modifiedAt")
                 } else if managedObject.entity.attributesByName["lastModified"] != nil {
                     managedObject.setValue(Date(), forKey: "lastModified")
+                }
+                
+                // Clear draft flag if entity was a draft (Issue #80)
+                if isDraft && managedObject.entity.attributesByName["isDraft"] != nil {
+                    managedObject.setValue(false, forKey: "isDraft")
                 }
                 
                 // Save the context
@@ -1425,6 +1446,7 @@ private struct TypeOnlyFormWrapper<T>: View {
         Group {
             if let entity = createdEntity {
                 // Use existing update flow once entity is created
+                // Mark as draft since it's a newly created entity (Issue #80)
                 IntelligentFormView.generateForm(
                     for: entity,
                     onUpdate: { updatedEntity in
@@ -1432,7 +1454,9 @@ private struct TypeOnlyFormWrapper<T>: View {
                     },
                     onCancel: {
                         handleCancel()
-                    }
+                    },
+                    isDraft: isNewEntity, // Mark as draft if it's a new entity
+                    autoSaveInterval: 30.0 // Auto-save every 30 seconds
                 )
             } else {
                 // Creating entity...

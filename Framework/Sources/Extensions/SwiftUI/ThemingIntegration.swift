@@ -293,7 +293,7 @@ public struct ThemedGenericFormView: View {
                     .padding()
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-            case .toggle:
+            case .toggle, .boolean:
                 Toggle(field.placeholder ?? "Toggle", isOn: Binding(
                     get: { formData[field.id.uuidString] as? Bool ?? false },
                     set: { formData[field.id.uuidString] = $0 }

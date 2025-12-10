@@ -70,7 +70,7 @@ open class PlatformColorEncodeTests: BaseTestClass {
                 #expect(!encodedData.isEmpty, "Encoded data should not be empty")
                 
                 // Verify data can be decoded back
-                let decodedColor = try platformColorDecode(encodedData)
+                _ = try platformColorDecode(encodedData)
                 // decodedColor is non-optional Color, so it exists if we reach here
                 
             } catch {
@@ -171,10 +171,10 @@ open class PlatformColorEncodeTests: BaseTestClass {
         
         for color in edgeCaseColors {
             do {
-                let encodedData = try platformColorEncode(color)
+                _ = try platformColorEncode(color)
                 
                 // Then: Should handle edge cases gracefully
-                #expect(Bool(true), "Should handle edge case color gracefully")  // encodedData is non-optional
+                #expect(Bool(true), "Should handle edge case color gracefully")
                 
             } catch {
                 // Edge cases might throw errors, which is acceptable
@@ -192,10 +192,11 @@ open class PlatformColorEncodeTests: BaseTestClass {
         // When: Encoding and decoding the color
         do {
             let encodedData = try platformColorEncode(originalColor)
-            let decodedColor = try platformColorDecode(encodedData)
+            _ = try platformColorDecode(encodedData)
             
             // Then: Decoded color should match original (within tolerance)
-            #expect(Bool(true), "Should decode color successfully")  // decodedColor is non-optional
+            #expect(Bool(true), "Should decode color successfully")
+            // encodedData is used in assertions above
             
             // Note: Exact color matching might be difficult due to platform differences
             // We'll verify the data was encoded and decoded successfully
