@@ -2326,7 +2326,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
         #endif
 
         // Should read value from form state
-        let value = formState.getValue(for: "gauge")
+        let value: String? = formState.getValue(for: "gauge")
         #expect(value != nil, "Should read value from form state")
     }
 
@@ -2357,8 +2357,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
 
         // Should use metadata min/max (10...50)
-        let value = formState.getValue(for: "gauge")
-        if let stringValue = value as? String,
+        let value: String? = formState.getValue(for: "gauge")
+        if let stringValue = value,
            let doubleValue = Double(stringValue) {
             #expect(doubleValue >= 10.0, "Value should respect metadata min")
             #expect(doubleValue <= 50.0, "Value should respect metadata max")
@@ -2390,8 +2390,8 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
 
         // Should default to 0...100 range
-        let value = formState.getValue(for: "gauge")
-        if let stringValue = value as? String,
+        let value: String? = formState.getValue(for: "gauge")
+        if let stringValue = value,
            let doubleValue = Double(stringValue) {
             #expect(doubleValue >= 0.0, "Value should respect default min (0)")
             #expect(doubleValue <= 100.0, "Value should respect default max (100)")
@@ -2515,9 +2515,9 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
 
         // Should handle Double value
-        let value = formState.getValue(for: "gauge")
-        #expect(value is Double, "Should handle Double value")
-        if let doubleValue = value as? Double {
+        let value: Double? = formState.getValue(for: "gauge")
+        #expect(value != nil, "Should handle Double value")
+        if let doubleValue = value {
             #expect(doubleValue == 75.5, "Should preserve Double value")
         }
 
@@ -2551,9 +2551,9 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
 
         // Should handle Int value
-        let value = formState.getValue(for: "gauge")
-        #expect(value is Int, "Should handle Int value")
-        if let intValue = value as? Int {
+        let value: Int? = formState.getValue(for: "gauge")
+        #expect(value != nil, "Should handle Int value")
+        if let intValue = value {
             #expect(intValue == 42, "Should preserve Int value")
         }
 
@@ -2587,7 +2587,7 @@ open class DynamicFieldComponentsTests: BaseTestClass {
             .enableGlobalAutomaticCompliance()
 
         // Should handle String value
-        let value = formState.getValue(for: "gauge")
+        let value: String? = formState.getValue(for: "gauge")
         #expect(value != nil, "Should handle String value")
 
         #expect(view != nil, "Should handle String value")
