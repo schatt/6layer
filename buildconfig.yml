@@ -45,7 +45,7 @@ tasks:
     # command: "MY_SECRET=foo ./myscript.sh $arg1"
     # command: "MY_SECRET=$arg1 ./myscript.sh $arg2"
     # command: "MY_SECRET=$(secret_key_program.sh) ./myscript.sh $arg2"
-    command: ./Scripts/generate_file_list.sh
+    command: ./Scripts/generate_file_list.py
     log_file: build/logs/generate-file-list.log
     always_run: false
     requires: []
