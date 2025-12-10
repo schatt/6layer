@@ -101,6 +101,10 @@ public struct FieldViewTypeDeterminer {
             return .timePicker
         case .datetime:
             return .dateTimePicker
+        case .multiDate:
+            return .datePicker(displayedComponents: FormDatePickerComponents.date) // Use datePicker as fallback
+        case .dateRange:
+            return .datePicker(displayedComponents: FormDatePickerComponents.date) // Use datePicker as fallback
         case .select:
             return .dynamicSelectField
         case .enum:
@@ -109,7 +113,7 @@ public struct FieldViewTypeDeterminer {
             return .radio(options: options ?? [])
         case .checkbox:
             return .dynamicCheckboxField
-        case .toggle:
+        case .toggle, .boolean:
             return .dynamicToggleField
         case .textarea:
             return .dynamicTextAreaField
@@ -133,8 +137,15 @@ public struct FieldViewTypeDeterminer {
             return .toggle  // Range/slider uses toggle-like component
         case .stepper:
             return .textField(keyboardType: FormKeyboardType.decimalPad, autocapitalization: FormAutocapitalizationType.none)  // Stepper uses numeric input
+        case .display:
+            return .textField(keyboardType: nil, autocapitalization: FormAutocapitalizationType.none)  // Display fields are read-only text
         case .custom:
             return .custom
+        case .multiDate, .dateRange:
+            return .datePicker(displayedComponents: FormDatePickerComponents.date)
+        @unknown default:
+            // Handle any future cases or unknown cases gracefully
+            return .textField(keyboardType: FormKeyboardType.default, autocapitalization: FormAutocapitalizationType.sentences)
         }
     }
     

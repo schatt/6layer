@@ -92,6 +92,11 @@ public struct DynamicFormView: View {
                         .automaticCompliance(named: "FormDescription")
                 }
 
+                // Progress indicator (Issue #82)
+                if configuration.showProgress {
+                    FormProgressIndicator(progress: formState.formProgress)
+                }
+
                 // Validation summary - shows all errors at once
                 if formState.hasValidationErrors {
                     FormValidationSummary(
@@ -671,6 +676,45 @@ public struct FormValidationSummary: View {
             .accessibilityLabel("Validation summary: \(errorCount) error\(errorCount == 1 ? "" : "s")")
             .accessibilityHint("Expand to see all validation errors")
         }
+    }
+}
+
+// MARK: - Form Progress Indicator (Issue #82)
+
+/// Progress indicator for form completion
+/// Shows completion percentage and "X of Y fields completed" text
+public struct FormProgressIndicator: View {
+    let progress: FormProgress
+    
+    public init(progress: FormProgress) {
+        self.progress = progress
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Progress")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                
+                Text("\(progress.completed) of \(progress.total) field\(progress.total == 1 ? "" : "s")")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
+            ProgressView(value: progress.percentage)
+                .progressViewStyle(.linear)
+                .tint(.blue)
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(8)
+        .automaticCompliance(named: "FormProgressIndicator")
+        .accessibilityLabel("Form progress: \(Int(progress.percentage * 100)) percent complete, \(progress.completed) of \(progress.total) required fields filled")
+        .accessibilityValue("\(progress.completed) of \(progress.total) fields completed")
     }
 }
 

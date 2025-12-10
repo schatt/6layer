@@ -604,6 +604,8 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     case date = "date"               // Date picker
     case time = "time"               // Time picker
     case datetime = "datetime"       // Date & time picker
+    case multiDate = "multiDate"     // Multiple date selection (iOS 16+)
+    case dateRange = "dateRange"     // Date range selection
     case select = "select"           // Dropdown picker
     case multiselect = "multiselect" // Multi-select picker
     case radio = "radio"             // Radio buttons
@@ -616,10 +618,12 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     case range = "range"             // Slider
     case stepper = "stepper"         // Increment/decrement control
     case toggle = "toggle"           // Toggle switch
+    case boolean = "boolean"         // Boolean value (alias for toggle)
     case array = "array"             // Array input
     case data = "data"               // Data input
     case autocomplete = "autocomplete" // Autocomplete field
     case `enum` = "enum"             // Enum picker
+    case display = "display"         // Read-only display field (uses LabeledContent on iOS 16+/macOS 13+)
     case custom = "custom"            // Custom component
     
     /// Check if content type supports options
@@ -635,7 +639,7 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     /// Check if content type supports multiple values
     public var supportsMultipleValues: Bool {
         switch self {
-        case .multiselect, .checkbox:
+        case .multiselect, .checkbox, .multiDate:
             return true
         default:
             return false
@@ -694,6 +698,8 @@ public struct DynamicFormConfiguration: Identifiable {
     /// Optional model name for auto-loading hints from .hints files
     /// If provided, hints are automatically loaded and applied to fields
     public let modelName: String?
+    /// Whether to show form progress indicator (Issue #82)
+    public let showProgress: Bool
     
     public init(
         id: String,
@@ -703,7 +709,8 @@ public struct DynamicFormConfiguration: Identifiable {
         submitButtonText: String = "Submit",
         cancelButtonText: String? = "Cancel",
         metadata: [String: String]? = nil,
-        modelName: String? = nil
+        modelName: String? = nil,
+        showProgress: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -713,6 +720,7 @@ public struct DynamicFormConfiguration: Identifiable {
         self.cancelButtonText = cancelButtonText
         self.metadata = metadata
         self.modelName = modelName
+        self.showProgress = showProgress
     }
     
     /// Get all fields from all sections
@@ -848,6 +856,24 @@ public struct CalculatedFieldResult {
     public let fieldId: String
     /// The calculated value
     public let calculatedValue: Double
+}
+
+// MARK: - Form Progress (Issue #82)
+
+/// Represents the progress of form completion
+public struct FormProgress {
+    /// Number of completed required fields
+    public let completed: Int
+    /// Total number of required fields
+    public let total: Int
+    /// Completion percentage (0.0 to 1.0)
+    public let percentage: Double
+    
+    public init(completed: Int, total: Int, percentage: Double) {
+        self.completed = completed
+        self.total = total
+        self.percentage = percentage
+    }
 }
 
 public class DynamicFormState: ObservableObject {
@@ -1280,6 +1306,34 @@ public class DynamicFormState: ObservableObject {
         return fieldValues
     }
     
+    // MARK: - Form Progress (Issue #82)
+    
+    /// Calculate form completion progress based on required fields
+    public var formProgress: FormProgress {
+        let allRequiredFields = configuration.allFields.filter { $0.isRequired }
+        let completedRequiredFields = allRequiredFields.filter { field in
+            if let value = fieldValues[field.id] {
+                // For string values, check if not empty
+                if let stringValue = value as? String {
+                    return !stringValue.isEmpty
+                }
+                // Non-string values are considered filled if they exist
+                return true
+            }
+            return false
+        }
+        
+        let totalFields = allRequiredFields.count
+        let completedFields = completedRequiredFields.count
+        let percentage = totalFields > 0 ? Double(completedFields) / Double(totalFields) : 0.0
+        
+        return FormProgress(
+            completed: completedFields,
+            total: totalFields,
+            percentage: percentage
+        )
+    }
+    
     // MARK: - Private Methods
     
     private func setupInitialState() {
@@ -1449,18 +1503,21 @@ public class DynamicFormState: ObservableObject {
         switch field.contentType {
         case .text, .email, .password, .phone, .url, .number, .integer, .textarea, .autocomplete:
             return true
-        case .date, .time, .datetime:
+        case .date, .time, .datetime, .multiDate, .dateRange:
             // Date pickers don't support keyboard focus in the same way
             return false
         case .select, .multiselect, .radio, .checkbox:
             // These can be focused but navigation is different
             return true
-        case .toggle, .range, .stepper:
+        case .toggle, .boolean, .range, .stepper:
             // These can be focused
             return true
         case .file, .image, .color, .richtext, .data, .array, .enum, .custom:
             // These may or may not support focus depending on implementation
             return true
+        case .display:
+            // Display fields are read-only and don't support focus
+            return false
         case .none:
             // If no contentType, check textContentType
             return field.textContentType != nil
