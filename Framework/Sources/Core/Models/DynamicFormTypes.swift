@@ -171,6 +171,11 @@ public struct DynamicFormField: Identifiable {
     /// Provides field and formState for building custom trailing UI
     public let trailingView: ((DynamicFormField, DynamicFormState) -> AnyView)?
     
+    /// View builder for custom value display in display fields
+    /// Provides field and formState for building custom value views (e.g., formatted dates, color swatches, status badges)
+    /// When provided, replaces the default String(describing:) behavior in DynamicDisplayField
+    public let valueView: ((DynamicFormField, DynamicFormState) -> AnyView)?
+    
     /// Maximum number of actions to show as buttons before using menu
     public let maxVisibleActions: Int // Default: 2
     
@@ -206,6 +211,7 @@ public struct DynamicFormField: Identifiable {
         visibilityCondition: ((DynamicFormState) -> Bool)? = nil,
         fieldAction: (any FieldAction)? = nil,
         trailingView: ((DynamicFormField, DynamicFormState) -> AnyView)? = nil,
+        valueView: ((DynamicFormField, DynamicFormState) -> AnyView)? = nil,
         maxVisibleActions: Int = 2,
         useActionMenu: Bool = true
     ) {
@@ -237,6 +243,7 @@ public struct DynamicFormField: Identifiable {
         self.visibilityCondition = visibilityCondition
         self.fieldAction = fieldAction
         self.trailingView = trailingView
+        self.valueView = valueView
         self.maxVisibleActions = maxVisibleActions
         self.useActionMenu = useActionMenu
     }
@@ -281,7 +288,8 @@ public struct DynamicFormField: Identifiable {
             calculationGroups: nil,
             visibilityCondition: nil,
             fieldAction: nil,
-            trailingView: nil
+            trailingView: nil,
+            valueView: nil
         )
     }
     
@@ -326,7 +334,8 @@ public struct DynamicFormField: Identifiable {
             calculationGroups: nil,
             visibilityCondition: nil,
             fieldAction: nil,
-            trailingView: nil
+            trailingView: nil,
+            valueView: nil
         )
     }
     
@@ -360,6 +369,7 @@ public struct DynamicFormField: Identifiable {
         self.visibilityCondition = nil
         self.fieldAction = nil
         self.trailingView = nil
+        self.valueView = nil
         self.maxVisibleActions = 2
         self.useActionMenu = true
     }
@@ -556,6 +566,7 @@ public struct DynamicFormField: Identifiable {
             visibilityCondition: self.visibilityCondition,
             fieldAction: self.fieldAction,
             trailingView: self.trailingView,
+            valueView: self.valueView,
             maxVisibleActions: self.maxVisibleActions,
             useActionMenu: self.useActionMenu
         )

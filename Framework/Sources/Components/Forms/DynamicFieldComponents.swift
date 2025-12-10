@@ -1679,8 +1679,12 @@ public struct DynamicDisplayField: View {
         if #available(iOS 16.0, macOS 13.0, *) {
             // Use LabeledContent on supported platforms
             LabeledContent(field.label) {
-                Text(valueString)
-                    .foregroundColor(.secondary)
+                if let customValueView = field.valueView {
+                    customValueView(field, formState)
+                } else {
+                    Text(valueString)
+                        .foregroundColor(.secondary)
+                }
             }
             .automaticCompliance(named: "DynamicDisplayField")
         } else {
@@ -1689,8 +1693,12 @@ public struct DynamicDisplayField: View {
                 Text(field.label)
                     .font(.subheadline)
                 Spacer()
-                Text(valueString)
-                    .foregroundColor(.secondary)
+                if let customValueView = field.valueView {
+                    customValueView(field, formState)
+                } else {
+                    Text(valueString)
+                        .foregroundColor(.secondary)
+                }
             }
             .padding()
             .automaticCompliance(named: "DynamicDisplayField")
