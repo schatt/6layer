@@ -160,8 +160,8 @@ open class EnhancedDeviceDetectionTests: BaseTestClass {
         // Given & When & Then
         // Test that static properties are accessible
         _ = PlatformDeviceCapabilities.deviceType
-        _ = PlatformDeviceCapabilities.supportsHapticFeedback
-        _ = PlatformDeviceCapabilities.supportsKeyboardShortcuts
+        let supportsHaptic = PlatformDeviceCapabilities.supportsHapticFeedback
+        let supportsKeyboard = PlatformDeviceCapabilities.supportsKeyboardShortcuts
         
         // Then
         #expect(Bool(true), "deviceType is non-optional")  // deviceType is non-optional

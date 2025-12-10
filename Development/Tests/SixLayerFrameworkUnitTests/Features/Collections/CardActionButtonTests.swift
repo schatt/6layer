@@ -420,7 +420,7 @@ open class CardActionButtonTests: BaseTestClass {
         let platform = SixLayerPlatform.current
         
         // WHEN: Creating card components on different platforms
-        _ = ExpandableCardComponent(
+        let expandableCard = ExpandableCardComponent(
             item: item,
             layoutDecision: CardActionButtonTests.layoutDecision,
             strategy: CardActionButtonTests.strategy,
@@ -596,20 +596,6 @@ open class CardActionButtonTests: BaseTestClass {
         let item = CardActionButtonTests.sampleItems[0]
         
         // WHEN: Creating components with callbacks
-        let expandableCard = ExpandableCardComponent(
-            item: item,
-            layoutDecision: CardActionButtonTests.layoutDecision,
-            strategy: CardActionButtonTests.strategy,
-            isExpanded: true,
-            isHovered: false,
-            onExpand: {},
-            onCollapse: {},
-            onHover: { _ in },
-            onItemSelected: { _ in },
-            onItemDeleted: { _ in },
-            onItemEdited: { _ in }
-        )
-        
         // THEN: Should have proper accessibility labels and be created successfully
         // Test that the card can be hosted and has proper structure
         let expandableCard = ExpandableCardComponent(
@@ -620,6 +606,7 @@ open class CardActionButtonTests: BaseTestClass {
             isHovered: false,
             onExpand: {},
             onCollapse: {},
+            onHover: { _ in },
             onItemSelected: { _ in },
             onItemDeleted: { _ in },
             onItemEdited: { _ in }

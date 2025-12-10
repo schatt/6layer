@@ -139,7 +139,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         }
 
         // When: Creating form presentation
-        _ = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
+        let view = platformPresentFormData_L1(fields: fields, hints: EnhancedPresentationHints(
             dataType: standardHints.dataType,
             presentationPreference: standardHints.presentationPreference,
             complexity: standardHints.complexity,
@@ -254,7 +254,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form presentation with enhanced hints
-        _ = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
+        let view = platformPresentFormData_L1(fields: fields, hints: enhancedHints)
 
         // Then: Should create view with enhanced hints support
         #expect(Bool(true), "Should create view with enhanced hints")  // view is non-optional
@@ -342,7 +342,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
             )
 
             // When: Creating form presentation
-            _ = platformPresentFormData_L1(fields: crossPlatformFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
+            let view = platformPresentFormData_L1(fields: crossPlatformFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: hints))
 
             // Then: Should work across all platforms
             #expect(Bool(true), "Should work with context: \(context)")  // view is non-optional
@@ -399,7 +399,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         )
 
         // When: Creating form with large input set
-        _ = platformPresentFormData_L1(fields: largeFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: complexHints))
+        let view = platformPresentFormData_L1(fields: largeFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: complexHints))
 
         // Then: Should handle large inputs without crashing
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -652,7 +652,7 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
         ]
 
         // When: Creating form with problematic data
-        _ = platformPresentFormData_L1(fields: problematicFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
+        let view = platformPresentFormData_L1(fields: problematicFields, hints: PlatformPresentFormDataL1ComprehensiveTests.enhancedHints(from: standardHints))
 
         // Then: Should handle errors gracefully and still create view
         #expect(Bool(true), "Should handle problematic data gracefully")  // view is non-optional
@@ -691,11 +691,15 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
             return "14:30"
         case .datetime:
             return "2024-01-15T14:30:00Z"
+        case .multiDate:
+            return "2024-01-15,2024-01-16,2024-01-17"
+        case .dateRange:
+            return "2024-01-15,2024-01-20"
         case .select, .radio:
             return "option1"
         case .multiselect:
             return "option1,option2"
-        case .checkbox, .toggle:
+        case .checkbox, .toggle, .boolean:
             return "true"
         case .color:
             return "#FF5733"
@@ -705,6 +709,8 @@ open class PlatformPresentFormDataL1ComprehensiveTests: BaseTestClass {
             return "autocomplete_value"
         case .custom:
             return "custom_value"
+        case .display:
+            return "display_value"
         // Performance test removed - performance monitoring was removed from framework
         }
     }
