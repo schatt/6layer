@@ -624,6 +624,7 @@ public enum DynamicContentType: String, CaseIterable, Hashable {
     case autocomplete = "autocomplete" // Autocomplete field
     case `enum` = "enum"             // Enum picker
     case display = "display"         // Read-only display field (uses LabeledContent on iOS 16+/macOS 13+)
+    case gauge = "gauge"             // Visual gauge/level display (iOS 16+/macOS 13+)
     case custom = "custom"            // Custom component
     
     /// Check if content type supports options
@@ -1515,8 +1516,8 @@ public class DynamicFormState: ObservableObject {
         case .file, .image, .color, .richtext, .data, .array, .enum, .custom:
             // These may or may not support focus depending on implementation
             return true
-        case .display:
-            // Display fields are read-only and don't support focus
+        case .display, .gauge:
+            // Display fields and gauges are read-only and don't support focus
             return false
         case .none:
             // If no contentType, check textContentType

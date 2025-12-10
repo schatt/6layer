@@ -1293,6 +1293,50 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
                             .foregroundColor(.secondary)
                     }
                 }
+            case .gauge:
+                // Gauge fields use Gauge component or fallback ProgressView
+                let min = Double(field.metadata?["min"] ?? "0") ?? 0.0
+                let max = Double(field.metadata?["max"] ?? "100") ?? 100.0
+                let value = Double(field.defaultValue ?? "0") ?? 0.0
+                let range = min...max
+                
+                    if #available(iOS 16.0, macOS 13.0, *) {
+                        if field.metadata?["gaugeStyle"] == "circular" {
+                            Gauge(value: value, in: range) {
+                                if let label = field.metadata?["gaugeLabel"] {
+                                    Text(label)
+                                }
+                            } currentValueLabel: {
+                                Text("\(Int(value))")
+                            } minimumValueLabel: {
+                                Text("\(Int(min))")
+                            } maximumValueLabel: {
+                                Text("\(Int(max))")
+                            }
+                            .gaugeStyle(.accessoryCircularCapacity)
+                        } else {
+                            Gauge(value: value, in: range) {
+                                if let label = field.metadata?["gaugeLabel"] {
+                                    Text(label)
+                                }
+                            } currentValueLabel: {
+                                Text("\(Int(value))")
+                            } minimumValueLabel: {
+                                Text("\(Int(min))")
+                            } maximumValueLabel: {
+                                Text("\(Int(max))")
+                            }
+                            .gaugeStyle(.linearCapacity)
+                        }
+                } else {
+                    VStack(alignment: .leading) {
+                        ProgressView(value: value, total: max)
+                            .progressViewStyle(.linear)
+                        Text("\(Int(value)) / \(Int(max))")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
             case .multiselect, .radio, .checkbox, .file, .image, .datetime, .array, .data, .custom, .text, .email, .password, .phone, .url, .autocomplete, .enum:
                 TextField(field.placeholder ?? "Enter \(field.label)", text: .constant(field.defaultValue ?? ""))
                     .textFieldStyle(.roundedBorder)
@@ -2334,6 +2378,50 @@ public struct ModalFormView: View {
                                 .font(.subheadline)
                             Spacer()
                             Text(field.defaultValue ?? "—")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                case .gauge:
+                    // Gauge fields use Gauge component or fallback ProgressView
+                    let min = Double(field.metadata?["min"] ?? "0") ?? 0.0
+                    let max = Double(field.metadata?["max"] ?? "100") ?? 100.0
+                    let value = Double(field.defaultValue ?? "0") ?? 0.0
+                    let range = min...max
+                    
+                    if #available(iOS 16.0, macOS 13.0, *) {
+                        if field.metadata?["gaugeStyle"] == "circular" {
+                            Gauge(value: value, in: range) {
+                                if let label = field.metadata?["gaugeLabel"] {
+                                    Text(label)
+                                }
+                            } currentValueLabel: {
+                                Text("\(Int(value))")
+                            } minimumValueLabel: {
+                                Text("\(Int(min))")
+                            } maximumValueLabel: {
+                                Text("\(Int(max))")
+                            }
+                            .gaugeStyle(.accessoryCircularCapacity)
+                        } else {
+                            Gauge(value: value, in: range) {
+                                if let label = field.metadata?["gaugeLabel"] {
+                                    Text(label)
+                                }
+                            } currentValueLabel: {
+                                Text("\(Int(value))")
+                            } minimumValueLabel: {
+                                Text("\(Int(min))")
+                            } maximumValueLabel: {
+                                Text("\(Int(max))")
+                            }
+                            .gaugeStyle(.linearCapacity)
+                        }
+                    } else {
+                        VStack(alignment: .leading) {
+                            ProgressView(value: value, total: max)
+                                .progressViewStyle(.linear)
+                            Text("\(Int(value)) / \(Int(max))")
+                                .font(.caption)
                                 .foregroundColor(.secondary)
                         }
                     }
