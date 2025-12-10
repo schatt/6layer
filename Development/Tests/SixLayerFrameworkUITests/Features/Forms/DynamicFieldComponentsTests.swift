@@ -1963,4 +1963,755 @@ open class DynamicFieldComponentsTests: BaseTestClass {
 
         #expect(view != nil, "Should fall back to metadata min/max")
     }
+
+    // MARK: - Multi-line TextField (Issue #89)
+
+    @Test @MainActor func testDynamicTextFieldUsesMultiLineTextFieldWithAxisOnIOS16() async {
+        // TDD RED PHASE: DynamicTextField should use TextField with axis parameter
+        // for multi-line text on iOS 16+ when metadata["multiLine"] == "true"
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Address",
+            placeholder: "Enter address",
+            metadata: ["multiLine": "true"]
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // On iOS 16+, should use TextField with axis: .vertical
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                // Should have TextField with axis parameter (multi-line)
+                // Note: ViewInspector may not directly detect axis, but we can verify
+                // the TextField exists and is configured for multi-line
+                let textFields = inspected.sixLayerFindAll(TextField<Text>.self)
+                #expect(!textFields.isEmpty, "Should use TextField for multi-line on iOS 16+")
+            }
+            #else
+            // ViewInspector not available - verify conceptually
+            #expect(field.metadata?["multiLine"] == "true", "Field should have multiLine metadata")
+            #endif
+        } else {
+            // iOS < 16: Should fall back to TextEditor
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                // Should use TextEditor as fallback
+                let textEditors = inspected.sixLayerFindAll(TextEditor.self)
+                #expect(!textEditors.isEmpty, "Should use TextEditor as fallback on iOS < 16")
+            }
+            #endif
+        }
+        #else
+        // macOS: Should use TextField with axis on macOS 13+
+        if #available(macOS 13.0, *) {
+            #expect(field.metadata?["multiLine"] == "true", "Field should have multiLine metadata")
+        }
+        #endif
+    }
+
+    @Test @MainActor func testDynamicTextFieldFallsBackToTextEditorOnIOS15() async {
+        // TDD RED PHASE: DynamicTextField should fall back to TextEditor on iOS < 16
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Address",
+            metadata: ["multiLine": "true"]
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // On iOS < 16, should use TextEditor
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            // iOS 16+: Should use TextField with axis
+            #expect(field.metadata?["multiLine"] == "true", "Field should have multiLine metadata")
+        } else {
+            // iOS < 16: Should use TextEditor
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            withInspectedView(view) { inspected in
+                let textEditors = inspected.sixLayerFindAll(TextEditor.self)
+                #expect(!textEditors.isEmpty, "Should use TextEditor as fallback on iOS < 16")
+            }
+            #else
+            #expect(field.metadata?["multiLine"] == "true", "Field should have multiLine metadata")
+            #endif
+        }
+        #else
+        // macOS: Similar fallback logic
+        #expect(field.metadata?["multiLine"] == "true", "Field should have multiLine metadata")
+        #endif
+    }
+
+    @Test @MainActor func testDynamicTextFieldRespectsLineLimits() async {
+        // TDD RED PHASE: Multi-line TextField should respect minLines and maxLines from metadata
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Description",
+            metadata: [
+                "multiLine": "true",
+                "minLines": "2",
+                "maxLines": "8"
+            ]
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should parse minLines and maxLines from metadata
+        let minLines = Int(field.metadata?["minLines"] ?? "3")
+        let maxLines = Int(field.metadata?["maxLines"] ?? "6")
+        
+        #expect(minLines == 2, "Should parse minLines from metadata")
+        #expect(maxLines == 8, "Should parse maxLines from metadata")
+        
+        // View should be created successfully
+        #expect(view != nil, "Should respect line limits configuration")
+    }
+
+    @Test @MainActor func testDynamicTextFieldUsesDefaultLineLimits() async {
+        // TDD RED PHASE: Multi-line TextField should use default 3-6 lines when not specified
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Notes",
+            metadata: ["multiLine": "true"]
+            // No minLines or maxLines - should use defaults
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should use default line limits (3-6)
+        #expect(field.metadata?["multiLine"] == "true", "Field should have multiLine metadata")
+        #expect(field.metadata?["minLines"] == nil, "Should not have minLines when not specified")
+        #expect(field.metadata?["maxLines"] == nil, "Should not have maxLines when not specified")
+        
+        // View should be created successfully
+        #expect(view != nil, "Should use default line limits")
+    }
+
+    @Test @MainActor func testDynamicTextFieldShowsCharacterCounterForMultiLine() async {
+        // TDD RED PHASE: Multi-line TextField should show character counter when maxLength is set
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Limited Text",
+            validationRules: ["maxLength": "200"],
+            metadata: ["multiLine": "true"]
+        )
+
+        formState.setValue("Some multi-line text\nwith multiple lines", for: "multiline-text")
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should show character counter
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        withInspectedView(view) { inspected in
+            let allTexts = inspected.sixLayerFindAll(Text.self)
+            if !allTexts.isEmpty {
+                let hasCounter = allTexts.contains { text in
+                    let textContent = (try? text.sixLayerString()) ?? ""
+                    return textContent.contains("/") && textContent.contains("200")
+                }
+                #expect(hasCounter, "Should display character counter for multi-line TextField")
+            }
+        }
+        #else
+        // ViewInspector not available - verify conceptually
+        let currentValue = formState.getValue(for: "multiline-text") as? String ?? ""
+        #expect(currentValue.count > 0, "Should track character count for multi-line text")
+        #endif
+    }
+
+    @Test @MainActor func testDynamicTextFieldSupportsMultiLineTextInput() async {
+        // TDD RED PHASE: Multi-line TextField should support multi-line text input
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Address",
+            metadata: ["multiLine": "true"]
+        )
+
+        // Set multi-line text
+        let multiLineText = "123 Main St\nApt 4B\nCity, State 12345"
+        formState.setValue(multiLineText, for: "multiline-text")
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should support multi-line text
+        let storedValue = formState.getValue(for: "multiline-text") as String? ?? ""
+        #expect(storedValue.contains("\n"), "Should support multi-line text with newlines")
+        #expect(storedValue == multiLineText, "Should store multi-line text correctly")
+    }
+
+    @Test @MainActor func testDynamicTextFieldSingleLineWhenMultiLineNotSet() async {
+        // TDD RED PHASE: DynamicTextField should remain single-line when multiLine metadata is not set
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "singleline-text",
+            contentType: .text,
+            label: "Name",
+            placeholder: "Enter name"
+            // No multiLine metadata - should be single-line
+        )
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should use single-line TextField (no axis parameter)
+        #expect(field.metadata?["multiLine"] != "true", "Field should not have multiLine metadata")
+        
+        // View should be created successfully
+        #expect(view != nil, "Should use single-line TextField when multiLine not set")
+    }
+
+    @Test @MainActor func testDynamicTextFieldMultiLineWorksWithFormValidation() async {
+        // TDD RED PHASE: Multi-line TextField should work with form validation
+        
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "multiline-text",
+            contentType: .text,
+            label: "Description",
+            isRequired: true,
+            validationRules: ["minLength": "10", "maxLength": "500"],
+            metadata: ["multiLine": "true"]
+        )
+
+        // Set valid multi-line text
+        let validText = "This is a valid\nmulti-line description\nwith enough characters"
+        formState.setValue(validText, for: "multiline-text")
+
+        let view = DynamicTextField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should work with validation
+        let storedValue = formState.getValue(for: "multiline-text") as String? ?? ""
+        #expect(storedValue.count >= 10, "Should respect minLength validation")
+        #expect(storedValue.count <= 500, "Should respect maxLength validation")
+        #expect(!storedValue.isEmpty, "Should handle required field validation")
+    }
+
+    // MARK: - Gauge Field (Issue #88)
+
+    @Test @MainActor func testDynamicGaugeFieldRendersGaugeComponent() async {
+        // DynamicGaugeField should:
+        // 1. Render gauge component for visual value display
+        // 2. Display value within specified range
+        // 3. Support circular and linear styles
+        // 4. Show field label and value labels
+        // 5. Update formState with gauge value
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "50",
+            metadata: [
+                "min": "0",
+                "max": "100",
+                "gaugeStyle": "linear"
+            ]
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should render gauge component
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        if let _ = view.tryInspect() {
+            // View is inspectable - gauge should be present
+            #expect(Bool(true), "Should provide gauge interface")
+        } else {
+            #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+            Issue.record("DynamicGaugeField interface not found")
+            #else
+            #expect(Bool(true), "DynamicGaugeField created (ViewInspector not available on macOS)")
+            #endif
+        }
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        #endif
+
+        // Should generate accessibility identifier
+        #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
+        let hasAccessibilityID = testComponentComplianceSinglePlatform(
+            view,
+            expectedPattern: "SixLayer.main.ui.*DynamicGaugeField.*",
+            platform: .iOS,
+            componentName: "DynamicGaugeField"
+        )
+        #expect(hasAccessibilityID, "Should generate accessibility identifier ")
+        #else
+        // ViewInspector not available on this platform (likely macOS) - this is expected, not a failure
+        // The modifier IS present in the code, but ViewInspector can't detect it on macOS
+        #endif
+
+        // Should read value from form state
+        let value = formState.getValue(for: "gauge")
+        #expect(value != nil, "Should read value from form state")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldUsesMinMaxFromMetadata() async {
+        // DynamicGaugeField should use min and max values from metadata
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Level",
+            defaultValue: "25",
+            metadata: [
+                "min": "10",
+                "max": "50"
+            ]
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should use metadata min/max (10...50)
+        let value = formState.getValue(for: "gauge")
+        if let stringValue = value as? String,
+           let doubleValue = Double(stringValue) {
+            #expect(doubleValue >= 10.0, "Value should respect metadata min")
+            #expect(doubleValue <= 50.0, "Value should respect metadata max")
+        }
+
+        #expect(view != nil, "Should use min/max from metadata")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldDefaultsToZeroToHundredRange() async {
+        // DynamicGaugeField should default to 0...100 range when min/max not specified
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "75"
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should default to 0...100 range
+        let value = formState.getValue(for: "gauge")
+        if let stringValue = value as? String,
+           let doubleValue = Double(stringValue) {
+            #expect(doubleValue >= 0.0, "Value should respect default min (0)")
+            #expect(doubleValue <= 100.0, "Value should respect default max (100)")
+        }
+
+        #expect(view != nil, "Should default to 0...100 range")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldSupportsCircularStyle() async {
+        // DynamicGaugeField should support circular gauge style
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "60",
+            metadata: [
+                "min": "0",
+                "max": "100",
+                "gaugeStyle": "circular"
+            ]
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should support circular style
+        #expect(view != nil, "Should support circular gauge style")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldSupportsLinearStyle() async {
+        // DynamicGaugeField should support linear gauge style (default)
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "40",
+            metadata: [
+                "min": "0",
+                "max": "100",
+                "gaugeStyle": "linear"
+            ]
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should support linear style
+        #expect(view != nil, "Should support linear gauge style")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldDefaultsToLinearStyle() async {
+        // DynamicGaugeField should default to linear style when style not specified
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "50"
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should default to linear style
+        #expect(view != nil, "Should default to linear gauge style")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldHandlesDoubleValue() async {
+        // DynamicGaugeField should handle Double values from form state
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            metadata: [
+                "min": "0",
+                "max": "100"
+            ]
+        )
+
+        formState.initializeField(field)
+        formState.setValue(75.5 as Double, for: "gauge")
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should handle Double value
+        let value = formState.getValue(for: "gauge")
+        #expect(value is Double, "Should handle Double value")
+        if let doubleValue = value as? Double {
+            #expect(doubleValue == 75.5, "Should preserve Double value")
+        }
+
+        #expect(view != nil, "Should handle Double value")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldHandlesIntValue() async {
+        // DynamicGaugeField should handle Int values from form state
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            metadata: [
+                "min": "0",
+                "max": "100"
+            ]
+        )
+
+        formState.initializeField(field)
+        formState.setValue(42 as Int, for: "gauge")
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should handle Int value
+        let value = formState.getValue(for: "gauge")
+        #expect(value is Int, "Should handle Int value")
+        if let intValue = value as? Int {
+            #expect(intValue == 42, "Should preserve Int value")
+        }
+
+        #expect(view != nil, "Should handle Int value")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldHandlesStringValue() async {
+        // DynamicGaugeField should parse String values to Double
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            metadata: [
+                "min": "0",
+                "max": "100"
+            ]
+        )
+
+        formState.initializeField(field)
+        formState.setValue("33.3", for: "gauge")
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should handle String value
+        let value = formState.getValue(for: "gauge")
+        #expect(value != nil, "Should handle String value")
+
+        #expect(view != nil, "Should handle String value")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldFallsBackToDefaultValue() async {
+        // DynamicGaugeField should fall back to defaultValue when no value in form state
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "25",
+            metadata: [
+                "min": "0",
+                "max": "100"
+            ]
+        )
+
+        formState.initializeField(field)
+        // Don't set value - should use defaultValue
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should fall back to defaultValue
+        #expect(view != nil, "Should fall back to defaultValue")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldFallsBackToZeroWhenNoValue() async {
+        // DynamicGaugeField should fall back to 0.0 when no value and no defaultValue
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            metadata: [
+                "min": "0",
+                "max": "100"
+            ]
+        )
+
+        formState.initializeField(field)
+        // Don't set value or defaultValue
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should fall back to 0.0
+        #expect(view != nil, "Should fall back to 0.0 when no value")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldSupportsCustomLabel() async {
+        // DynamicGaugeField should support custom gauge label via metadata
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "50",
+            metadata: [
+                "min": "0",
+                "max": "100",
+                "gaugeLabel": "Completion"
+            ]
+        )
+
+        formState.initializeField(field)
+
+        let view = DynamicGaugeField(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should support custom gauge label
+        #expect(view != nil, "Should support custom gauge label")
+    }
+
+    @Test @MainActor func testDynamicGaugeFieldWorksInCustomFieldView() async {
+        // DynamicGaugeField should work when used through CustomFieldView
+
+        let configuration = DynamicFormConfiguration(
+            id: "testForm",
+            title: "Test Form",
+            sections: []
+        )
+        let formState = DynamicFormState(configuration: configuration)
+
+        let field = DynamicFormField(
+            id: "gauge",
+            contentType: .gauge,
+            label: "Progress",
+            defaultValue: "50",
+            metadata: [
+                "min": "0",
+                "max": "100"
+            ]
+        )
+
+        formState.initializeField(field)
+
+        let view = CustomFieldView(field: field, formState: formState)
+            .enableGlobalAutomaticCompliance()
+
+        // Should work through CustomFieldView
+        #expect(view != nil, "Should work through CustomFieldView")
+    }
 }

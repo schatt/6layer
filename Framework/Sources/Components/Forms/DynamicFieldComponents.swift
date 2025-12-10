@@ -76,6 +76,8 @@ public struct CustomFieldView: View {
                 DynamicEnumField(field: field, formState: formState)
             case .display:
                 DynamicDisplayField(field: field, formState: formState)
+            case .gauge:
+                DynamicGaugeField(field: field, formState: formState)
             case .custom:
                 DynamicCustomField(field: field, formState: formState)
             }
@@ -227,12 +229,45 @@ extension DynamicFormField {
         }
         return []
     }
+    
+    /// Check if field should render as multi-line TextField
+    /// Returns true when metadata["multiLine"] == "true"
+    /// Issue #89: Multi-line TextField support
+    var isMultiLine: Bool {
+        return metadata?["multiLine"] == "true"
+    }
+    
+    /// Get minimum lines for multi-line TextField from metadata
+    /// Defaults to 3 if not specified
+    /// Issue #89: Configurable line limits
+    var minLines: Int {
+        guard let minLinesStr = metadata?["minLines"],
+              let minLines = Int(minLinesStr),
+              minLines > 0 else {
+            return 3 // Default minimum
+        }
+        return minLines
+    }
+    
+    /// Get maximum lines for multi-line TextField from metadata
+    /// Defaults to 6 if not specified
+    /// Issue #89: Configurable line limits
+    var maxLines: Int {
+        guard let maxLinesStr = metadata?["maxLines"],
+              let maxLines = Int(maxLinesStr),
+              maxLines > 0 else {
+            return 6 // Default maximum
+        }
+        return maxLines
+    }
 }
 
 // MARK: - Individual Field Components (TDD Red Phase Stubs)
 
 /// Text field component
-/// TDD RED PHASE: This is a stub implementation for testing
+/// Supports single-line and multi-line text input
+/// Multi-line support uses TextField with axis parameter (iOS 16+ / macOS 13+) - Issue #89
+/// Falls back to TextEditor on older OS versions
 @MainActor
 public struct DynamicTextField: View {
     let field: DynamicFormField
@@ -321,8 +356,21 @@ public struct DynamicTextField: View {
     }
     
     /// Text field view with focus management (Issue #81)
+    /// Supports multi-line TextField with axis parameter (iOS 16+ / macOS 13+) - Issue #89
     @ViewBuilder
     private var textFieldView: some View {
+        if field.isMultiLine {
+            // Multi-line TextField support (Issue #89)
+            multiLineTextFieldView
+        } else {
+            // Single-line TextField
+            singleLineTextFieldView
+        }
+    }
+    
+    /// Single-line TextField view
+    @ViewBuilder
+    private var singleLineTextFieldView: some View {
         TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
             .textFieldStyle(.roundedBorder)
             .focused($isFocused)
@@ -330,6 +378,60 @@ public struct DynamicTextField: View {
                 // Move focus to next field on Enter/Return (Issue #81)
                 formState.focusNextField(from: field.id)
             }
+            .automaticCompliance()
+    }
+    
+    /// Multi-line TextField view with axis parameter (iOS 16+ / macOS 13+)
+    /// Falls back to TextEditor on older OS versions - Issue #89
+    @ViewBuilder
+    private var multiLineTextFieldView: some View {
+        if supportsTextFieldAxis {
+            // iOS 16+ / macOS 13+: Use TextField with axis parameter
+            multiLineTextFieldWithAxis
+        } else {
+            // Older OS versions: Fall back to TextEditor
+            multiLineTextEditorFallback
+        }
+    }
+    
+    /// Check if platform supports TextField with axis parameter
+    /// iOS 16+ and macOS 13+ support axis parameter
+    private var supportsTextFieldAxis: Bool {
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            return true
+        }
+        return false
+        #elseif os(macOS)
+        if #available(macOS 13.0, *) {
+            return true
+        }
+        return false
+        #else
+        return false
+        #endif
+    }
+    
+    /// TextField with axis parameter for multi-line text (iOS 16+ / macOS 13+)
+    @ViewBuilder
+    private var multiLineTextFieldWithAxis: some View {
+        TextField(
+            field.placeholder ?? "Enter text",
+            text: field.textBinding(formState: formState),
+            axis: .vertical
+        )
+        .textFieldStyle(.roundedBorder)
+        .lineLimit(field.minLines...field.maxLines)
+        .focused($isFocused)
+        .automaticCompliance()
+    }
+    
+    /// TextEditor fallback for older OS versions
+    @ViewBuilder
+    private var multiLineTextEditorFallback: some View {
+        TextEditor(text: field.textBinding(formState: formState))
+            .frame(minHeight: CGFloat(field.minLines * 20))
+            .border(Color.gray.opacity(0.2))
             .automaticCompliance()
     }
 }
@@ -1593,5 +1695,116 @@ public struct DynamicDisplayField: View {
             .padding()
             .automaticCompliance(named: "DynamicDisplayField")
         }
+    }
+}
+
+/// Gauge field component for visual value display (iOS 16+/macOS 13+)
+/// Displays a value within a range using Apple's Gauge component with fallback to ProgressView
+@MainActor
+public struct DynamicGaugeField: View {
+    let field: DynamicFormField
+    @ObservedObject var formState: DynamicFormState
+    
+    public init(field: DynamicFormField, formState: DynamicFormState) {
+        self.field = field
+        self.formState = formState
+    }
+    
+    /// Get the current value as Double
+    private var value: Double {
+        if let value: Any? = formState.getValue(for: field.id) {
+            if let doubleValue = value as? Double {
+                return doubleValue
+            } else if let intValue = value as? Int {
+                return Double(intValue)
+            } else if let stringValue = value as? String,
+                      let parsed = Double(stringValue) {
+                return parsed
+            }
+        }
+        // Fall back to defaultValue or 0.0
+        if let defaultValue = field.defaultValue,
+           let parsed = Double(defaultValue) {
+            return parsed
+        }
+        return 0.0
+    }
+    
+    /// Get the range from metadata or default to 0...100
+    private var range: ClosedRange<Double> {
+        let min = Double(field.metadata?["min"] ?? "0") ?? 0.0
+        let max = Double(field.metadata?["max"] ?? "100") ?? 100.0
+        
+        // Ensure valid range
+        if min > max {
+            return 0.0...100.0
+        }
+        return min...max
+    }
+    
+    /// Get gauge style from metadata or default to linear
+    private var gaugeStyle: String {
+        field.metadata?["gaugeStyle"] ?? "linear"
+    }
+    
+    /// Get optional gauge label from metadata
+    private var gaugeLabel: String? {
+        field.metadata?["gaugeLabel"]
+    }
+    
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(field.label)
+                .font(.subheadline)
+                .bold()
+                .automaticCompliance(named: "FieldLabel")
+            
+            if #available(iOS 16.0, macOS 13.0, *) {
+                // Use native Gauge component on supported platforms
+                if gaugeStyle == "circular" {
+                    Gauge(value: value, in: range) {
+                        // Optional gauge label
+                        if let label = gaugeLabel {
+                            Text(label)
+                        }
+                    } currentValueLabel: {
+                        Text("\(Int(value))")
+                    } minimumValueLabel: {
+                        Text("\(Int(range.lowerBound))")
+                    } maximumValueLabel: {
+                        Text("\(Int(range.upperBound))")
+                    }
+                    .gaugeStyle(.accessoryCircularCapacity)
+                    .automaticCompliance(named: "Gauge")
+                } else {
+                    Gauge(value: value, in: range) {
+                        // Optional gauge label
+                        if let label = gaugeLabel {
+                            Text(label)
+                        }
+                    } currentValueLabel: {
+                        Text("\(Int(value))")
+                    } minimumValueLabel: {
+                        Text("\(Int(range.lowerBound))")
+                    } maximumValueLabel: {
+                        Text("\(Int(range.upperBound))")
+                    }
+                    .gaugeStyle(.linearCapacity)
+                    .automaticCompliance(named: "Gauge")
+                }
+            } else {
+                // Fallback: Use ProgressView for older platforms
+                ProgressView(value: value, total: range.upperBound)
+                    .progressViewStyle(.linear)
+                    .automaticCompliance(named: "ProgressView")
+                
+                Text("\(Int(value)) / \(Int(range.upperBound))")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .automaticCompliance(named: "GaugeValueLabel")
+            }
+        }
+        .padding()
+        .automaticCompliance(named: "DynamicGaugeField")
     }
 }
