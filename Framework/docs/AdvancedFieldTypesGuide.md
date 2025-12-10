@@ -16,8 +16,11 @@ The Advanced Field Types system provides a comprehensive set of sophisticated fo
 - **Date Picker** - Select dates with compact picker interface
 - **Time Picker** - Select times with hour and minute precision
 - **DateTime Picker** - Combined date and time selection
+- **MultiDate Picker** (iOS 16+) - Select multiple individual dates from calendar
+- **Date Range Picker** - Select date ranges (start and end dates)
 - **Automatic Formatting** - Proper date/time string formatting
 - **Value Persistence** - Integration with form state management
+- **Fallback Support** - Graceful degradation for older iOS versions and macOS
 
 ### 🔍 Autocomplete Field
 - **Smart Filtering** - Intelligent suggestion filtering with prefix matching
@@ -154,6 +157,22 @@ let dateTimeField = DynamicFormField(
     type: .datetime,
     label: "Event Date & Time",
     placeholder: "Select event date and time"
+)
+
+// MultiDate picker (iOS 16+) - Select multiple dates
+let multiDateField = DynamicFormField(
+    id: "availableDates",
+    contentType: .multiDate,
+    label: "Available Dates",
+    placeholder: "Select multiple dates"
+)
+
+// Date range picker - Select start and end dates
+let dateRangeField = DynamicFormField(
+    id: "eventRange",
+    contentType: .dateRange,
+    label: "Event Date Range",
+    placeholder: "Select start and end dates"
 )
 ```
 
