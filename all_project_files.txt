@@ -1107,6 +1107,7 @@
 .build-clean/checkouts/swift-testing/Tests/TestingTests/VariadicGenericTests.swift
 .build-clean/checkouts/swift-testing/Tests/TestingTests/ZipTests.swift
 .build-clean/checkouts/swift-testing/Tests/TestingTests/_Testing_Foundation/FoundationTests.swift
+.build/arm64-apple-macosx/debug/SixLayerFramework.build/DerivedSources/resource_bundle_accessor.swift
 .build/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.derived/runner.swift
 .build/arm64-apple-macosx/debug/SixLayerFrameworkPackageTests.xctest/Contents/MacOS/SixLayerFrameworkPackageTests.dSYM/Contents/Info.plist
 .build/checkouts/ViewInspector/.swiftpm/xcode/package.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
@@ -1721,6 +1722,7 @@ Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer1PresentationTests.swif
 Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer2ComponentAccessibilityTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer2LayoutDecisionTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer3ComponentAccessibilityTests.swift
+Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer4-Component/PlatformCloudKitComponentsLayer4Tests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer4-Component/PlatformMapComponentsLayer4Tests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer4PlatformImageArchitectureTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Layers/Layer5PlatformOptimizationTests.swift
@@ -1731,6 +1733,7 @@ Development/Tests/SixLayerFrameworkUnitTests/Layers/LiquidGlassDesignSystemTests
 Development/Tests/SixLayerFrameworkUnitTests/Services/AccessibilityManagerTDDTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Services/AccessibilityManagerTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Services/AccessibilityTestingSuiteTests.swift
+Development/Tests/SixLayerFrameworkUnitTests/Services/CloudKitServiceTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Services/InternationalizationServiceTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Services/LocationServiceTests.swift
 Development/Tests/SixLayerFrameworkUnitTests/Utilities/BaseTestClass.swift
@@ -1833,6 +1836,8 @@ Framework/Sources/Core/Models/PlatformPhotoTypes.swift
 Framework/Sources/Core/Models/PlatformTypes.swift
 Framework/Sources/Core/Models/RuntimeCapabilityDetection.swift
 Framework/Sources/Core/Services/BarcodeService.swift
+Framework/Sources/Core/Services/CloudKitQueueStorage.swift
+Framework/Sources/Core/Services/CloudKitService.swift
 Framework/Sources/Core/Services/ImageMetadataIntelligence.swift
 Framework/Sources/Core/Services/ImageProcessingPipeline.swift
 Framework/Sources/Core/Services/InternationalizationService.swift
@@ -1893,6 +1898,7 @@ Framework/Sources/Extensions/SwiftUI/LabelPolicy.swift
 Framework/Sources/Extensions/SwiftUI/LiquidGlassCapabilityDetection.swift
 Framework/Sources/Extensions/SwiftUI/LiquidGlassDesignSystem.swift
 Framework/Sources/Extensions/SwiftUI/LiquidGlassExampleUsage.swift
+Framework/Sources/Extensions/SwiftUI/SafeTextEditor.swift
 Framework/Sources/Extensions/SwiftUI/ShapeStyleSystem.swift
 Framework/Sources/Extensions/SwiftUI/ThemedViewModifiers.swift
 Framework/Sources/Extensions/SwiftUI/ThemingIntegration.swift
@@ -1916,6 +1922,7 @@ Framework/Sources/Layers/Layer3-Strategy/PlatformPhotoStrategySelectionLayer3.sw
 Framework/Sources/Layers/Layer3-Strategy/PlatformStrategySelectionLayer3.swift
 Framework/Sources/Layers/Layer4-Component/IntelligentCardExpansionLayer4.swift
 Framework/Sources/Layers/Layer4-Component/PlatformButtonsLayer4.swift
+Framework/Sources/Layers/Layer4-Component/PlatformCloudKitComponentsLayer4.swift
 Framework/Sources/Layers/Layer4-Component/PlatformFormsLayer4.swift
 Framework/Sources/Layers/Layer4-Component/PlatformListsLayer4.swift
 Framework/Sources/Layers/Layer4-Component/PlatformMapComponentsLayer4.swift

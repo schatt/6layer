@@ -74,6 +74,8 @@ build_groups:
     targets:
       - macOS
       - iOS_build
+    dependencies:
+      - xcodegen
   test:
     continue_on_error: true
     parallel: true
@@ -85,16 +87,24 @@ build_groups:
       - xcodegen
       - macOS
       - macOS_tests
-  mac_test:
+    dependencies:
+      - xcodegen
+  macOS_tests:
     targets:
       - xcodegen
       - macOS_tests
+    dependencies:
+      - xcodegen
   iOS:
     targets:
       - xcodegen
       - iOS_build
       - iOS_tests
+    dependencies:
+      - xcodegen
   iOS_test:
     targets:
       - xcodegen
       - iOS_tests
+    dependencies:
+      - xcodegen

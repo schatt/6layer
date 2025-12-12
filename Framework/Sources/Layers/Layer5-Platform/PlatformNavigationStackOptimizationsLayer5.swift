@@ -39,12 +39,10 @@ public extension View {
     #if os(iOS)
     func platformIOSNavigationStackOptimizations_L5() -> some View {
         return self
-            // Memory optimization: Use drawingGroup for complex navigation views to reduce layer count
-            .drawingGroup()
+            // REMOVED: .drawingGroup() - causes Metal crash with TextEditor and other UIKit-backed views
+            // REMOVED: .compositingGroup() - causes Metal crash with TextEditor and other UIKit-backed views
             // Touch optimization: Improve touch hit testing for better navigation responsiveness
             .contentShape(Rectangle())
-            // Memory: Optimize rendering for mobile devices with compositing
-            .compositingGroup()
             // Performance: Optimize navigation transitions for smooth animations
             .transaction { transaction in
                 transaction.animation = .easeInOut(duration: 0.3)
@@ -62,10 +60,8 @@ public extension View {
     #if os(macOS)
     func platformMacOSNavigationStackOptimizations_L5() -> some View {
         return self
-            // Performance: Optimize for large navigation hierarchies with drawing group
-            .drawingGroup()
-            // Window performance: Optimize rendering for desktop with compositing
-            .compositingGroup()
+            // REMOVED: .drawingGroup() - causes Metal crash with TextEditor and other AppKit-backed views
+            // REMOVED: .compositingGroup() - causes Metal crash with TextEditor and other AppKit-backed views
             // Performance: Optimize navigation state preservation for desktop
             .transaction { transaction in
                 transaction.animation = .easeInOut(duration: 0.2)

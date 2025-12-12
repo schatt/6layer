@@ -34,12 +34,10 @@ public extension View {
     #if os(iOS)
     func platformIOSSplitViewOptimizations_L5() -> some View {
         return self
-            // Memory optimization: Use drawingGroup for complex views to reduce layer count
-            .drawingGroup()
+            // REMOVED: .drawingGroup() - causes Metal crash with TextEditor and other UIKit-backed views
+            // REMOVED: .compositingGroup() - causes Metal crash with TextEditor and other UIKit-backed views
             // Touch optimization: Improve touch hit testing for better responsiveness
             .contentShape(Rectangle())
-            // Memory: Optimize rendering for mobile devices with compositing
-            .compositingGroup()
             // Performance: Optimize for smooth scrolling and animations
             .transaction { transaction in
                 transaction.animation = .easeInOut(duration: 0.25)
@@ -57,10 +55,8 @@ public extension View {
     #if os(macOS)
     func platformMacOSSplitViewOptimizations_L5() -> some View {
         return self
-            // Performance: Optimize for large datasets with drawing group
-            .drawingGroup()
-            // Window performance: Optimize rendering for desktop with compositing
-            .compositingGroup()
+            // REMOVED: .drawingGroup() - causes Metal crash with TextEditor and other AppKit-backed views
+            // REMOVED: .compositingGroup() - causes Metal crash with TextEditor and other AppKit-backed views
             // Performance: Optimize split view divider interactions
             .transaction { transaction in
                 transaction.animation = .easeInOut(duration: 0.2)

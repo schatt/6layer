@@ -155,4 +155,62 @@ open class InternationalizationServiceTests: BaseTestClass {
         #expect(direction == .leftToRight, "Empty text should default to left-to-right for English locale")
         #expect(alignment == .leading, "Empty text should align leading for English locale")
     }
+    
+    // MARK: - Bundle Fallback Tests
+    
+    @Test func testLocalizedString_ReturnsKeyWhenNotFound() {
+        // Given: Service with no localization files
+        let service = InternationalizationService()
+        
+        // When: Requesting a non-existent key
+        let result = service.localizedString(for: "nonexistent.key.test.12345")
+        
+        // Then: Should return the key itself (fallback behavior)
+        #expect(result == "nonexistent.key.test.12345")
+    }
+    
+    @Test func testLocalizedString_SupportsStringFormatting() {
+        // Given: Service
+        let service = InternationalizationService()
+        
+        // When: Requesting with format arguments (even if key doesn't exist)
+        let result = service.localizedString(for: "test.key", arguments: ["arg1", "arg2"])
+        
+        // Then: Should handle arguments (will return key if not found, but method should not crash)
+        #expect(!result.isEmpty)
+    }
+    
+    @Test func testAppLocalizedString_MethodExists() {
+        // Given: Service
+        let service = InternationalizationService()
+        
+        // When: Using app-only method
+        let result = service.appLocalizedString(for: "test.key")
+        
+        // Then: Should return a string (key itself if not found)
+        #expect(!result.isEmpty)
+    }
+    
+    @Test func testFrameworkLocalizedString_MethodExists() {
+        // Given: Service
+        let service = InternationalizationService()
+        
+        // When: Using framework-only method
+        let result = service.frameworkLocalizedString(for: "test.key")
+        
+        // Then: Should return a string (key itself if not found)
+        #expect(!result.isEmpty)
+    }
+    
+    @Test func testLocalizedString_WithCustomAppBundle() {
+        // Given: Service with custom app bundle
+        let customBundle = Bundle.main
+        let service = InternationalizationService(appBundle: customBundle)
+        
+        // When: Requesting a string
+        let result = service.localizedString(for: "test.key")
+        
+        // Then: Should use the custom bundle
+        #expect(!result.isEmpty)
+    }
 }

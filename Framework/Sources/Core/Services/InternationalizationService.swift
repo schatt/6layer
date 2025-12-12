@@ -23,10 +23,43 @@ public class InternationalizationService: ObservableObject {
     private let currencyFormatter: NumberFormatter
     private let percentageFormatter: NumberFormatter
     
+    /// Framework bundle for loading framework-localized strings
+    private static let frameworkBundle: Bundle = {
+        // Get the bundle containing this class
+        let bundle = Bundle(for: InternationalizationService.self)
+        
+        // For Swift Package Manager, try to find the resource bundle
+        // SPM creates resource bundles with naming pattern: ModuleName_ModuleName.bundle
+        if let resourceURL = bundle.resourceURL {
+            // Try common SPM resource bundle naming patterns
+            let possibleNames = [
+                "SixLayerFramework_SixLayerFramework.bundle",
+                "SixLayerFramework.bundle"
+            ]
+            
+            for bundleName in possibleNames {
+                if let resourceBundle = Bundle(url: resourceURL.appendingPathComponent(bundleName)) {
+                    return resourceBundle
+                }
+            }
+        }
+        
+        // For frameworks embedded in apps, the bundle itself contains resources
+        return bundle
+    }()
+    
+    /// App bundle for loading app-localized strings (defaults to main bundle)
+    private let appBundle: Bundle
+    
     // MARK: - Initialization
     
-    public init(locale: Locale = Locale.current) {
+    /// Initialize the internationalization service
+    /// - Parameters:
+    ///   - locale: The locale to use for formatting (defaults to current locale)
+    ///   - appBundle: The app bundle to use for app-localized strings (defaults to Bundle.main)
+    public init(locale: Locale = Locale.current, appBundle: Bundle = .main) {
         self.locale = locale
+        self.appBundle = appBundle
         
         // Initialize formatters
         self.formatter = NumberFormatter()
@@ -277,24 +310,126 @@ public class InternationalizationService: ObservableObject {
     
     // MARK: - Localized Strings
     
-    /// Get localized string for a key
+    /// Get localized string for a key with fallback support
+    /// 
+    /// Lookup order:
+    /// 1. App bundle (allows app to override framework strings)
+    /// 2. Framework bundle (framework default strings)
+    /// 3. Return key itself if not found in either bundle
+    ///
     /// - Parameters:
     ///   - key: The localization key
     ///   - arguments: Optional arguments for string formatting
-    /// - Returns: Localized string
+    /// - Returns: Localized string from app bundle, framework bundle, or the key itself
     public func localizedString(for key: String, arguments: [String] = []) -> String {
-        let localizedString = NSLocalizedString(key, comment: "")
-
-        if localizedString == key {
-            // Key not found, return the key itself
-            return key
+        var localizedString: String
+        
+        // Step 1: Try app bundle first (allows app to override framework strings)
+        let appLocalized = NSLocalizedString(key, bundle: appBundle, comment: "")
+        if appLocalized != key {
+            localizedString = appLocalized
+        } else {
+            // Step 2: Try framework bundle (framework default strings)
+            let frameworkLocalized = NSLocalizedString(key, bundle: Self.frameworkBundle, comment: "")
+            if frameworkLocalized != key {
+                localizedString = frameworkLocalized
+            } else {
+                // Step 3: Not found in either bundle, return the key itself
+                return key
+            }
         }
-
+        
+        // Apply string formatting if arguments provided
         if arguments.isEmpty {
             return localizedString
         } else {
             return String(format: localizedString, arguments: arguments)
         }
+    }
+    
+    /// Get localized string from app bundle only (no framework fallback)
+    /// - Parameters:
+    ///   - key: The localization key
+    ///   - arguments: Optional arguments for string formatting
+    /// - Returns: Localized string from app bundle, or the key itself if not found
+    public func appLocalizedString(for key: String, arguments: [String] = []) -> String {
+        let localizedString = NSLocalizedString(key, bundle: appBundle, comment: "")
+        
+        if localizedString == key {
+            return key
+        }
+        
+        if arguments.isEmpty {
+            return localizedString
+        } else {
+            return String(format: localizedString, arguments: arguments)
+        }
+    }
+    
+    /// Get localized string from framework bundle only (no app fallback)
+    /// - Parameters:
+    ///   - key: The localization key
+    ///   - arguments: Optional arguments for string formatting
+    /// - Returns: Localized string from framework bundle, or the key itself if not found
+    public func frameworkLocalizedString(for key: String, arguments: [String] = []) -> String {
+        let localizedString = NSLocalizedString(key, bundle: Self.frameworkBundle, comment: "")
+        
+        if localizedString == key {
+            return key
+        }
+        
+        if arguments.isEmpty {
+            return localizedString
+        } else {
+            return String(format: localizedString, arguments: arguments)
+        }
+    }
+    
+    // MARK: - Common Placeholder Helpers
+    
+    /// Get localized placeholder for "Select" (generic)
+    public func placeholderSelect() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.select")
+    }
+    
+    /// Get localized placeholder for "Select an option"
+    public func placeholderSelectOption() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectOption")
+    }
+    
+    /// Get localized placeholder for "Select date"
+    public func placeholderSelectDate() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectDate")
+    }
+    
+    /// Get localized placeholder for "Select time"
+    public func placeholderSelectTime() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectTime")
+    }
+    
+    /// Get localized placeholder for "Select date and time"
+    public func placeholderSelectDateTime() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectDateTime")
+    }
+    
+    /// Get localized placeholder for "Select dates" (multiple)
+    public func placeholderSelectDates() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectDates")
+    }
+    
+    /// Get localized placeholder for "Select file"
+    public func placeholderSelectFile() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectFile")
+    }
+    
+    /// Get localized placeholder for "Select image"
+    public func placeholderSelectImage() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectImage")
+    }
+    
+    /// Get localized placeholder for "Select color"
+    public func placeholderSelectColor() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectColor")
     }
 
     /// Get the current language code

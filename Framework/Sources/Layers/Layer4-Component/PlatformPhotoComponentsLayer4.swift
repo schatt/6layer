@@ -331,7 +331,8 @@ public struct MacPhotoPickerView: NSViewControllerRepresentable {
     
     public func makeNSViewController(context: Context) -> NSViewController {
         let controller = NSViewController()
-        let button = NSButton(title: "Choose Photo", target: context.coordinator, action: #selector(Coordinator.choosePhoto))
+        let i18n = InternationalizationService()
+        let button = NSButton(title: i18n.localizedString(for: "SixLayerFramework.button.choosePhoto"), target: context.coordinator, action: #selector(Coordinator.choosePhoto))
         controller.view = button
         return controller
     }

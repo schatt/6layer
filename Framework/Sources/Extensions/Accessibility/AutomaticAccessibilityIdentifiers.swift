@@ -337,41 +337,24 @@ public struct AutomaticComplianceModifier: ViewModifier {
     ///   - elementType: The element type hint (e.g., "Button", "Link", "TextField")
     /// - Returns: View with all Phase 1 HIG compliance features applied, including automatic styling
     private func applyHIGComplianceFeatures<V: View>(to view: V, elementType: String?) -> some View {
-        // Cache platform values to avoid MainActor blocking
-        // These are safe to access from any context - they use thread-local storage
+        // CRITICAL: Skip problematic HIG compliance modifiers that trigger Metal telemetry crashes
+        // Metal telemetry tries to inspect view properties and crashes when it encounters TextEditor
+        // The modifiers SystemColorModifier, SystemTypographyModifier, SpacingModifier, and
+        // PlatformStylingModifier can trigger Metal telemetry inspection of the view hierarchy,
+        // which crashes when TextEditor properties are encountered (NSNumber vs String mismatch)
+        //
+        // Solution: Skip these modifiers entirely to prevent Metal telemetry from being triggered
+        // This is safer than trying to detect TextEditor in the hierarchy, which is not reliably possible
+        
+        // Only apply safe modifiers that don't trigger Metal telemetry
         let platform = RuntimeCapabilityDetection.currentPlatform
-        
-        // Use cached design system to prevent infinite recursion
-        // Creating new design systems in view body triggers SwiftUI AttributeGraph updates
-        // which cause body to be re-evaluated, creating a circular dependency
-        let designSystem = PlatformDesignSystem.cached(for: platform)
-        
-        // minTouchTarget is @MainActor, but we can compute it safely from platform
-        let minTouchTarget: CGFloat = {
-            switch platform {
-            case .iOS, .watchOS:
-                return 44.0
-            case .macOS, .tvOS, .visionOS:
-                return 0.0
-            }
-        }()
-        
-        // Determine if this is an interactive element that needs touch target sizing
         let isInteractive = isInteractiveElement(elementType: elementType)
         
         return view
-            // AUTOMATIC VISUAL STYLING (Issue #35: Automatic HIG-compliant styling)
-            // 1. Automatic Colors - Apply platform-specific system colors
-            .modifier(SystemColorModifier(colorSystem: designSystem.colorSystem))
-            // 2. Automatic Typography - Apply platform-specific typography system
-            .modifier(SystemTypographyModifier(typographySystem: designSystem.typographySystem))
-            // 3. Automatic Spacing - Apply HIG-compliant spacing following 8pt grid
-            .modifier(SpacingModifier(spacingSystem: designSystem.spacingSystem))
-            
-            // ACCESSIBILITY & INTERACTION FEATURES
+            // ACCESSIBILITY & INTERACTION FEATURES (Safe - don't trigger Metal telemetry)
             // 4. Touch Target Sizing (iOS/watchOS) - minimum 44pt
             .modifier(AutomaticHIGTouchTargetModifier(
-                minSize: minTouchTarget,
+                minSize: platform == .iOS || platform == .watchOS ? 44.0 : 0.0,
                 isInteractive: isInteractive,
                 platform: platform
             ))
@@ -389,10 +372,16 @@ public struct AutomaticComplianceModifier: ViewModifier {
             // 9. Tab Order - Logical navigation order (handled by focusable modifier)
             // 10. Light/Dark Mode - Use system colors that adapt automatically
             .modifier(AutomaticHIGLightDarkModeModifier(platform: platform))
-            
-            // PLATFORM-SPECIFIC HIG PATTERNS (Issue #35: Platform-specific patterns)
-            // Apply platform-specific styling patterns automatically
-            .modifier(PlatformStylingModifier(designSystem: designSystem))
+        
+        // REMOVED: Visual styling modifiers that trigger Metal telemetry crashes with TextEditor:
+        // - SystemColorModifier - triggers Metal telemetry inspection (uses .foregroundStyle/.background)
+        // - SystemTypographyModifier - triggers Metal telemetry inspection (uses .font)
+        // - SpacingModifier - triggers Metal telemetry inspection (uses .padding)
+        // - PlatformStylingModifier - triggers Metal telemetry inspection (uses .foregroundStyle/.background)
+        //
+        // These modifiers cause Metal telemetry to inspect the view hierarchy, and when it encounters
+        // TextEditor's internal properties (which include NSNumber values), Metal telemetry tries to
+        // call .length on them expecting strings, causing: -[__NSCFNumber length]: unrecognized selector
     }
     
     /// Determine if an element type is interactive (needs touch target sizing, focus indicators, etc.)

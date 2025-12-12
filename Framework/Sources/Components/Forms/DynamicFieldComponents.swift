@@ -318,7 +318,8 @@ public struct DynamicTextField: View {
     private var pickerContent: some View {
         let pickerOptions = field.pickerOptionsFromHints
         if !pickerOptions.isEmpty {
-            Picker(field.placeholder ?? "Select", selection: field.textBinding(formState: formState)) {
+            let i18n = InternationalizationService()
+            Picker(field.placeholder ?? i18n.placeholderSelect(), selection: field.textBinding(formState: formState)) {
                 ForEach(pickerOptions, id: \.value) { option in
                     Text(option.label).tag(option.value)
                 }
@@ -776,11 +777,13 @@ public struct DynamicDateField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        let i18n = InternationalizationService()
+        
+        return VStack(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
-            DatePicker(field.placeholder ?? "Select date",
+            DatePicker(field.placeholder ?? i18n.placeholderSelectDate(),
                       selection: Binding(
                           get: { Date() }, // TODO: Parse from formState
                           set: { _ in } // TODO: Store in formState
@@ -807,11 +810,13 @@ public struct DynamicTimeField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        let i18n = InternationalizationService()
+        
+        return VStack(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
-            DatePicker(field.placeholder ?? "Select time",
+            DatePicker(field.placeholder ?? i18n.placeholderSelectTime(),
                       selection: Binding(
                           get: { Date() }, // TODO: Parse from formState
                           set: { _ in } // TODO: Store in formState
@@ -838,11 +843,13 @@ public struct DynamicDateTimeField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        let i18n = InternationalizationService()
+        
+        return VStack(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
-            DatePicker(field.placeholder ?? "Select date and time",
+            DatePicker(field.placeholder ?? i18n.placeholderSelectDateTime(),
                       selection: Binding(
                           get: { Date() }, // TODO: Parse from formState
                           set: { _ in } // TODO: Store in formState
@@ -910,7 +917,7 @@ public struct DynamicMultiDateField: View {
             #if os(iOS)
             if #available(iOS 16.0, *) {
                 MultiDatePicker(
-                    field.placeholder ?? "Select dates",
+                    field.placeholder ?? i18n.placeholderSelectDates(),
                     selection: $selectedDateComponents,
                     in: dateRange
                 )
@@ -1171,7 +1178,8 @@ public struct DynamicFileField: View {
             }) {
                 HStack {
                     Image(systemName: "doc.badge.plus")
-                    Text("Select File")
+                    let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.button.selectFile"))
                 }
             }
             .buttonStyle(.bordered)
@@ -1566,7 +1574,8 @@ public struct DynamicColorField: View {
             let colorValue = formState.fieldValues[field.id] as? String ?? "#000000"
             let color = Color(hex: colorValue) ?? .black
             
-            ColorPicker(field.placeholder ?? "Select Color", selection: Binding(
+            let i18n = InternationalizationService()
+            ColorPicker(field.placeholder ?? i18n.placeholderSelectColor(), selection: Binding(
                 get: { color },
                 set: { newColor in
                     let hex = newColor.toHex()

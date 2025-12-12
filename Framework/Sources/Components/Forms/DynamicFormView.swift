@@ -46,7 +46,8 @@ public struct DynamicFormView: View {
     #endif
     
     #if canImport(SwiftData)
-    @Environment(\.modelContext) private var modelContext
+    @available(macOS 14.0, iOS 17.0, *)
+    @Environment(\.modelContext) private var modelContext: ModelContext
     #endif
 
     /// Initialize DynamicFormView

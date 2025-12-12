@@ -10,7 +10,9 @@
 
 import SwiftUI
 import CoreLocation
+#if canImport(MapKit)
 import MapKit
+#endif
 
 /// Layer 4: Component - Platform Map Components
 ///
@@ -19,6 +21,7 @@ import MapKit
 ///
 /// Note: MapCameraPosition and MapContent are SwiftUI types that require iOS 17+ / macOS 14+
 /// Since our minimum macOS version is 15, these types are always available
+#if os(iOS) || os(macOS)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @MainActor
 public enum PlatformMapComponentsLayer4 {
@@ -95,11 +98,14 @@ public enum PlatformMapComponentsLayer4 {
         .automaticCompliance(named: "platformMapViewWithCurrentLocation_L4")
     }
 }
+#endif
 
 // MARK: - Supporting Types
 
 /// Cross-platform map annotation data
+#if os(iOS) || os(macOS)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+#endif
 public struct MapAnnotationData: Identifiable {
     public let id = UUID()
     public let title: String
@@ -120,6 +126,7 @@ public struct MapAnnotationData: Identifiable {
 
 // MARK: - LocationService Integration View
 
+#if os(iOS) || os(macOS)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 private struct MapViewWithLocationService: View {
     let locationService: LocationService
@@ -222,6 +229,7 @@ private struct MapViewWithLocationService: View {
         #endif
     }
 }
+#endif
 
 // MARK: - Unsupported Platform Fallback
 
@@ -241,6 +249,7 @@ private struct UnsupportedPlatformMapView: View {
 
 // MARK: - Convenience Functions (Global)
 
+#if os(iOS) || os(macOS)
 /// Creates a platform-specific map view (convenience wrapper)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 @ViewBuilder
@@ -279,10 +288,11 @@ public func platformMapViewWithCurrentLocation_L4(
     onAnnotationTapped: ((MapAnnotationData) -> Void)? = nil
 ) -> some View {
     PlatformMapComponentsLayer4.platformMapViewWithCurrentLocation_L4(
-        locationService: locationService,
-        showCurrentLocation: showCurrentLocation,
-        additionalAnnotations: additionalAnnotations,
-        onAnnotationTapped: onAnnotationTapped
+    locationService: locationService,
+    showCurrentLocation: showCurrentLocation,
+    additionalAnnotations: additionalAnnotations,
+    onAnnotationTapped: onAnnotationTapped
     )
 }
+#endif
 

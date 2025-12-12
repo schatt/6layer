@@ -1435,7 +1435,8 @@ private struct TypeOnlyFormWrapper<T>: View {
     #endif
     
     #if canImport(SwiftData)
-    @Environment(\.modelContext) private var modelContext
+    @available(macOS 14.0, iOS 17.0, *)
+    @Environment(\.modelContext) private var modelContext: ModelContext
     #endif
     
     // State to hold the created entity

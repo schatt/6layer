@@ -39,6 +39,9 @@ let package = Package(
                 "Extensions",
                 "Services"
             ],
+            resources: [
+                .process("../Resources")
+            ],
             swiftSettings: [
                 // Enable previews only when building in Xcode (where PreviewsMacros plugin is available)
                 // Command-line builds (swift test, swift build) don't have PreviewsMacros plugin

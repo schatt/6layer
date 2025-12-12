@@ -2107,7 +2107,8 @@ public extension View {
                         .font(.title)
                     Text("Select a file")
                         .foregroundColor(.secondary)
-                    Button("Select File") {
+                    let i18n = InternationalizationService()
+                    Button(i18n.localizedString(for: "SixLayerFramework.button.selectFile")) {
                         // Placeholder for file selection
                         onFileSelected(URL(fileURLWithPath: "/tmp/placeholder.txt"))
                     }

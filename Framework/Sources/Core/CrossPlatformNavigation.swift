@@ -427,11 +427,13 @@ public extension CrossPlatformNavigation {
                 .font(.system(size: 48))
                 .foregroundColor(.secondary)
             
-            Text("Select an item")
+            let i18n = InternationalizationService()
+            
+            Text(i18n.localizedString(for: "SixLayerFramework.navigation.selectItem"))
                 .font(.title2)
                 .foregroundColor(.secondary)
             
-            Text("Choose an item from the list to view its details")
+            Text(i18n.localizedString(for: "SixLayerFramework.navigation.chooseItem"))
                 .font(.body)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

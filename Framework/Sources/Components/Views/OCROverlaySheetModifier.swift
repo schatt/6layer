@@ -78,26 +78,28 @@ public struct OCROverlaySheetModifier: ViewModifier {
     
     @ViewBuilder
     private var errorStateView: some View {
-        VStack(spacing: 16) {
+        let i18n = InternationalizationService()
+        
+        return VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.largeTitle)
                 .foregroundColor(.orange)
             
-            Text("OCR Data Unavailable")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.overlay.unavailable"))
                 .font(.headline)
             
             if ocrResult == nil && ocrImage == nil {
-                Text("Both OCR result and image are required to display the overlay.")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.overlay.bothRequired"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             } else if ocrResult == nil {
-                Text("OCR result is missing. Please process the image first.")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.overlay.resultMissing"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             } else {
-                Text("Image is missing. Please provide the image that was processed.")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.overlay.imageMissing"))
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)

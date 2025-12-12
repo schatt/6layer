@@ -15,13 +15,15 @@ public struct OCRDisambiguationView: View {
     
     public var body: some View {
         // GREEN PHASE: Full implementation of OCR disambiguation interface
-        VStack(spacing: 16) {
-            Text("Multiple interpretations found")
+        let i18n = InternationalizationService()
+        
+        return VStack(spacing: 16) {
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.title"))
                 .font(.headline)
                 .automaticCompliance(named: "DisambiguationTitle")
             
             if result.requiresUserSelection {
-                Text("Please select the correct interpretation:")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.prompt"))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .automaticCompliance(named: "DisambiguationPrompt")
@@ -40,11 +42,11 @@ public struct OCRDisambiguationView: View {
                                 .font(.body)
                                 .bold()
                             
-                            Text("Confidence: \(Int(candidate.confidence * 100))%")
+                            Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.confidence", arguments: [String(Int(candidate.confidence * 100))]))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             
-                            Text("Type: \(candidate.suggestedType.rawValue)")
+                            Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.type", arguments: [candidate.suggestedType.rawValue]))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -59,11 +61,11 @@ public struct OCRDisambiguationView: View {
             } else {
                 // Auto-select highest confidence candidate
                 if let bestCandidate = result.candidates.max(by: { $0.confidence < $1.confidence }) {
-                    Text("Best match: \(bestCandidate.text)")
+                    Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.bestMatch", arguments: [bestCandidate.text]))
                         .font(.body)
                         .automaticCompliance(named: "BestMatch")
                     
-                    Button("Confirm") {
+                    Button(i18n.localizedString(for: "SixLayerFramework.button.confirm")) {
                         let selection = OCRDisambiguationSelection(
                             candidateId: bestCandidate.id,
                             selectedType: bestCandidate.suggestedType

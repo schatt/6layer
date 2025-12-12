@@ -476,19 +476,20 @@ public enum InternationalizationError: Error, LocalizedError {
     case pluralizationFailed
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .invalidLocale:
-            return "Invalid locale provided"
+            return i18n.localizedString(for: "SixLayerFramework.error.invalidLocale")
         case .unsupportedLanguage:
-            return "Language not supported"
+            return i18n.localizedString(for: "SixLayerFramework.error.languageNotSupported")
         case .invalidCurrencyCode:
-            return "Invalid currency code"
+            return i18n.localizedString(for: "SixLayerFramework.error.invalidCurrencyCode")
         case .formattingFailed:
-            return "Formatting operation failed"
+            return i18n.localizedString(for: "SixLayerFramework.error.formattingFailed")
         case .localizationNotFound:
-            return "Localization not found"
+            return i18n.localizedString(for: "SixLayerFramework.error.localizationNotFound")
         case .pluralizationFailed:
-            return "Pluralization operation failed"
+            return i18n.localizedString(for: "SixLayerFramework.error.pluralizationFailed")
         }
     }
 }

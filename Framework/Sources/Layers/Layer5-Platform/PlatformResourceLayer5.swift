@@ -37,7 +37,8 @@ public class PlatformResourceLayer5 {
         return Button(action: action) {
             HStack {
                 Image(systemName: "photo")
-                Text("Choose Image")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.button.chooseImage"))
             }
         }
         .buttonStyle(.bordered)
@@ -45,12 +46,14 @@ public class PlatformResourceLayer5 {
         return Button(action: action) {
             HStack {
                 Image(systemName: "photo")
-                Text("Choose Image")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.button.chooseImage"))
             }
         }
         .buttonStyle(.bordered)
         #else
-        return Button("Choose Image", action: action)
+        let i18n = InternationalizationService()
+        return Button(i18n.localizedString(for: "SixLayerFramework.button.chooseImage"), action: action)
         #endif
     }
     

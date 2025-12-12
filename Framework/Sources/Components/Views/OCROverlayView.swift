@@ -40,8 +40,10 @@ public struct OCROverlayView: View {
             
             // Display extracted text
             if !result.extractedText.isEmpty {
+                let i18n = InternationalizationService()
+                
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Extracted Text:")
+                    Text(i18n.localizedString(for: "SixLayerFramework.ocr.overlay.extractedText"))
                         .font(.headline)
                         .automaticCompliance(named: "ExtractedTextLabel")
                     
@@ -55,7 +57,8 @@ public struct OCROverlayView: View {
             }
             
             // Show confidence score
-            Text("Confidence: \(Int(result.confidence * 100))%")
+            let i18n = InternationalizationService()
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.confidence", arguments: [String(Int(result.confidence * 100))]))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .automaticCompliance(named: "ConfidenceScore")

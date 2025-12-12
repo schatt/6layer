@@ -180,7 +180,8 @@ private struct macOSImagePicker: NSViewControllerRepresentable {
     
     func makeNSViewController(context: Context) -> NSViewController {
         let controller = NSViewController()
-        let button = NSButton(title: "Choose Image", target: context.coordinator, action: #selector(Coordinator.chooseImage))
+        let i18n = InternationalizationService()
+        let button = NSButton(title: i18n.localizedString(for: "SixLayerFramework.button.chooseImage"), target: context.coordinator, action: #selector(Coordinator.chooseImage))
         button.bezelStyle = .rounded
         controller.view = button
         return controller
