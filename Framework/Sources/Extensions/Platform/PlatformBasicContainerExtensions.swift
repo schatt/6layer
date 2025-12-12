@@ -12,6 +12,7 @@ import SwiftUI
 
 /// Platform-specific basic container extensions
 /// Provides consistent container behavior across iOS and macOS
+@MainActor
 public extension View {
     
     /// Platform-specific VStack container with consistent styling and automatic accessibility
