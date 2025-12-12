@@ -1939,17 +1939,18 @@ public struct CollectionEmptyStateView: View {
     }
     
     private var complexitySpecificMessage: String {
+        let i18n = InternationalizationService()
         switch hints.complexity {
         case .simple:
-            return "Keep it simple and focused."
+            return i18n.localizedString(for: "SixLayerFramework.complexity.simple")
         case .moderate:
-            return "Consider organizing your content."
+            return i18n.localizedString(for: "SixLayerFramework.complexity.moderate")
         case .complex:
-            return "Use filters or categories to manage complexity."
+            return i18n.localizedString(for: "SixLayerFramework.complexity.complex")
         case .veryComplex:
-            return "Use advanced filtering and organization tools."
+            return i18n.localizedString(for: "SixLayerFramework.complexity.veryComplex")
         case .advanced:
-            return "Use expert-level tools and configurations."
+            return i18n.localizedString(for: "SixLayerFramework.complexity.advanced")
         }
     }
     
@@ -3233,7 +3234,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
             DynamicFormField(
                 id: "save_changes",
                 contentType: .toggle,
-                label: "Save Changes",
+                label: i18n.localizedString(for: "SixLayerFramework.button.saveChanges"),
                 placeholder: "Auto-save changes"
             )
         ]
