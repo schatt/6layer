@@ -3343,6 +3343,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
             )
         ]
     case .navigation:
+        let i18n = InternationalizationService()
         return [
             DynamicFormField(
                 id: "destination",
