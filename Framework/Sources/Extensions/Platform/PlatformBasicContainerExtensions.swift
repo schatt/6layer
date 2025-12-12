@@ -14,14 +14,15 @@ import SwiftUI
 /// Provides consistent container behavior across iOS and macOS
 public extension View {
     
-    /// Platform-specific VStack container with consistent styling
+    /// Platform-specific VStack container with consistent styling and automatic accessibility
     /// iOS: Uses VStack with iOS-appropriate styling; macOS: Uses VStack with macOS-appropriate styling
+    /// Automatically applies `.automaticCompliance()` for accessibility identifiers and HIG compliance
     ///
     /// - Parameters:
     ///   - alignment: The alignment of items in the stack
     ///   - spacing: The spacing between stack items
     ///   - content: The stack content
-    /// - Returns: A view with platform-appropriate VStack styling
+    /// - Returns: A view with platform-appropriate VStack styling and automatic accessibility compliance
     ///
     /// ## Usage Example
     /// ```swift
@@ -40,16 +41,18 @@ public extension View {
         VStack(alignment: alignment, spacing: spacing) {
             content()
         }
+        .automaticCompliance()
     }
     
-    /// Platform-specific HStack container with consistent styling
+    /// Platform-specific HStack container with consistent styling and automatic accessibility
     /// iOS: Uses HStack with iOS-appropriate styling; macOS: Uses HStack with macOS-appropriate styling
+    /// Automatically applies `.automaticCompliance()` for accessibility identifiers and HIG compliance
     ///
     /// - Parameters:
     ///   - alignment: The alignment of items in the stack
     ///   - spacing: The spacing between stack items
     ///   - content: The stack content
-    /// - Returns: A view with platform-appropriate HStack styling
+    /// - Returns: A view with platform-appropriate HStack styling and automatic accessibility compliance
     ///
     /// ## Usage Example
     /// ```swift
@@ -68,15 +71,17 @@ public extension View {
         HStack(alignment: alignment, spacing: spacing) {
             content()
         }
+        .automaticCompliance()
     }
     
-    /// Platform-specific ZStack container with consistent styling
+    /// Platform-specific ZStack container with consistent styling and automatic accessibility
     /// iOS: Uses ZStack with iOS-appropriate styling; macOS: Uses ZStack with macOS-appropriate styling
+    /// Automatically applies `.automaticCompliance()` for accessibility identifiers and HIG compliance
     ///
     /// - Parameters:
     ///   - alignment: The alignment of items in the stack
     ///   - content: The stack content
-    /// - Returns: A view with platform-appropriate ZStack styling
+    /// - Returns: A view with platform-appropriate ZStack styling and automatic accessibility compliance
     ///
     /// ## Usage Example
     /// ```swift
@@ -93,6 +98,7 @@ public extension View {
         ZStack(alignment: alignment) {
             content()
         }
+        .automaticCompliance()
     }
     
     /// Platform-specific LazyVStack container with consistent styling
@@ -123,6 +129,7 @@ public extension View {
         LazyVStack(alignment: alignment, spacing: spacing, pinnedViews: pinnedViews) {
             content()
         }
+        .automaticCompliance()
     }
     
     /// Platform-specific LazyHStack container with consistent styling
@@ -153,6 +160,7 @@ public extension View {
         LazyHStack(alignment: alignment, spacing: spacing, pinnedViews: pinnedViews) {
             content()
         }
+        .automaticCompliance()
     }
     
     /// Platform-specific ScrollView container with consistent styling
