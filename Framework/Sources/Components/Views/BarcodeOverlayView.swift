@@ -58,8 +58,9 @@ public struct BarcodeOverlayView: View {
             
             // Display detected barcodes
             if result.hasBarcodes {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Detected Barcodes:")
+                let i18n = InternationalizationService()
+                return VStack(alignment: .leading, spacing: 12) {
+                    Text(i18n.localizedString(for: "SixLayerFramework.barcode.detectedBarcodes"))
                         .font(.headline)
                         .automaticCompliance(named: "DetectedBarcodesLabel")
                     

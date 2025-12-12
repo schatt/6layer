@@ -692,16 +692,19 @@ public struct FormProgressIndicator: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        let i18n = InternationalizationService()
+        return VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Progress")
+                Text(i18n.localizedString(for: "SixLayerFramework.form.progress"))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
                 
                 Spacer()
                 
-                Text("\(progress.completed) of \(progress.total) field\(progress.total == 1 ? "" : "s")")
+                let format = i18n.localizedString(for: "SixLayerFramework.form.progressFields")
+                let plural = progress.total == 1 ? "" : "s"
+                Text(String(format: format, progress.completed, progress.total, plural))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

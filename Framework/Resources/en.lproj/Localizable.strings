@@ -252,6 +252,12 @@
 "SixLayerFramework.button.addChart" = "Add Chart Data";
 "SixLayerFramework.button.addDetail" = "Add Detail";
 "SixLayerFramework.button.saveChanges" = "Save Changes";
+"SixLayerFramework.button.done" = "Done";
+"SixLayerFramework.button.edit" = "Edit";
+"SixLayerFramework.form.progress" = "Progress";
+"SixLayerFramework.form.progressFields" = "%d of %d field%@";
+"SixLayerFramework.barcode.detectedBarcodes" = "Detected Barcodes:";
+"SixLayerFramework.form.autoSaveChanges" = "Auto-save changes";
 "SixLayerFramework.emptyState.noMediaItems" = "No Media Items";
 "SixLayerFramework.emptyState.noNavigationItems" = "No Navigation Items";
 "SixLayerFramework.emptyState.noFormFields" = "No Form Fields";

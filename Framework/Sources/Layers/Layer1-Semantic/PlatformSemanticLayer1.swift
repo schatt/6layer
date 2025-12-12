@@ -3237,7 +3237,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 id: "save_changes",
                 contentType: .toggle,
                 label: i18n.localizedString(for: "SixLayerFramework.button.saveChanges"),
-                placeholder: "Auto-save changes"
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.autoSaveChanges")
             )
         ]
     case .create:

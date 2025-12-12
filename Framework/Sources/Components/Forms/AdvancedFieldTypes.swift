@@ -18,7 +18,8 @@ public struct RichTextEditorField: View {
                 
                 Spacer()
                 
-                Button(isEditing ? "Done" : "Edit") {
+                let i18n = InternationalizationService()
+                Button(isEditing ? i18n.localizedString(for: "SixLayerFramework.button.done") : i18n.localizedString(for: "SixLayerFramework.button.edit")) {
                     isEditing.toggle()
                 }
                 .buttonStyle(.bordered)
