@@ -3208,13 +3208,11 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 label: "Search",
                 placeholder: "Enter search query"
             ),
-            let i18n = InternationalizationService()
-            let i18n = InternationalizationService()
             DynamicFormField(
                 id: "filter_category",
                 contentType: .select,
                 label: "Category",
-                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectCategory"),
+                placeholder: "Select category", // TODO: Localize - needs i18n in case scope
                 options: ["All", "Recent", "Favorites"]
             )
         ]
