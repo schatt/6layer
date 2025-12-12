@@ -119,6 +119,13 @@
 "SixLayerFramework.form.placeholder.selectFilters" = "Select filters";
 "SixLayerFramework.form.placeholder.selectTheme" = "Select theme";
 "SixLayerFramework.form.placeholder.selectRouteType" = "Select route type";
+"SixLayerFramework.form.placeholder.enterText" = "Enter text";
+"SixLayerFramework.form.placeholder.enterEmail" = "Enter email";
+"SixLayerFramework.form.placeholder.enterPassword" = "Enter password";
+"SixLayerFramework.form.placeholder.enterNumber" = "Enter number";
+"SixLayerFramework.form.placeholder.enterPhone" = "Enter phone";
+"SixLayerFramework.form.placeholder.enterURL" = "Enter URL";
+"SixLayerFramework.form.placeholder.enterInteger" = "Enter integer";
 
 /* ============================================================================
    BUTTON LABELS

@@ -372,7 +372,8 @@ public struct DynamicTextField: View {
     /// Single-line TextField view
     @ViewBuilder
     private var singleLineTextFieldView: some View {
-        TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+        let i18n = InternationalizationService()
+        return TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"), text: field.textBinding(formState: formState))
             .textFieldStyle(.roundedBorder)
             .focused($isFocused)
             .onSubmit {
@@ -416,8 +417,9 @@ public struct DynamicTextField: View {
     /// TextField with axis parameter for multi-line text (iOS 16+ / macOS 13+)
     @ViewBuilder
     private var multiLineTextFieldWithAxis: some View {
-        TextField(
-            field.placeholder ?? "Enter text",
+        let i18n = InternationalizationService()
+        return TextField(
+            field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"),
             text: field.textBinding(formState: formState),
             axis: .vertical
         )
@@ -451,10 +453,11 @@ public struct DynamicEmailField: View {
     }
 
     public var body: some View {
-        field.fieldContainer(content: {
+        let i18n = InternationalizationService()
+        return field.fieldContainer(content: {
             field.fieldLabel()
 
-            TextField(field.placeholder ?? "Enter email", text: field.textBinding(formState: formState))
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterEmail"), text: field.textBinding(formState: formState))
                 .textFieldStyle(.roundedBorder)
                 #if os(iOS)
                 .keyboardType(UIKeyboardType.emailAddress)
@@ -496,10 +499,11 @@ public struct DynamicPasswordField: View {
     }
 
     public var body: some View {
-        field.fieldContainer(content: {
+        let i18n = InternationalizationService()
+        return field.fieldContainer(content: {
             field.fieldLabel()
 
-            SecureField(field.placeholder ?? "Enter password", text: field.textBinding(formState: formState))
+            SecureField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterPassword"), text: field.textBinding(formState: formState))
                 .textFieldStyle(.roundedBorder)
                 .focused($isFocused)
                 .onSubmit {
@@ -540,7 +544,8 @@ public struct DynamicPhoneField: View {
         field.fieldContainer(content: {
             field.fieldLabel()
 
-            TextField(field.placeholder ?? "Enter phone", text: field.textBinding(formState: formState))
+            let i18n = InternationalizationService()
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterPhone"), text: field.textBinding(formState: formState))
                 .textFieldStyle(.roundedBorder)
                 #if os(iOS)
                 .keyboardType(UIKeyboardType.phonePad)
@@ -612,7 +617,8 @@ public struct DynamicURLField: View {
     /// Editable input view: TextField with URL keyboard type
     @ViewBuilder
     private var editableURLView: some View {
-        TextField(field.placeholder ?? "Enter URL", text: field.textBinding(formState: formState))
+        let i18n = InternationalizationService()
+        return TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterURL"), text: field.textBinding(formState: formState))
             .textFieldStyle(.roundedBorder)
             #if os(iOS)
             .keyboardType(UIKeyboardType.URL)
@@ -641,7 +647,8 @@ public struct DynamicNumberField: View {
             Text(field.label)
                 .font(.subheadline)
 
-            TextField(field.placeholder ?? "Enter number", text: Binding(
+            let i18n = InternationalizationService()
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterNumber"), text: Binding(
                 get: { (formState.getValue(for: field.id) as String?) ?? field.defaultValue ?? "" },
                 set: { formState.setValue($0, for: field.id) }
             ))
@@ -674,7 +681,8 @@ public struct DynamicIntegerField: View {
             Text(field.label)
                 .font(.subheadline)
 
-            TextField(field.placeholder ?? "Enter integer", text: Binding(
+            let i18n = InternationalizationService()
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterInteger"), text: Binding(
                 get: { (formState.getValue(for: field.id) as String?) ?? field.defaultValue ?? "" },
                 set: { formState.setValue($0, for: field.id) }
             ))
@@ -1141,7 +1149,8 @@ public struct DynamicRichTextField: View {
                 .border(Color.gray.opacity(0.2))
                 .automaticCompliance(named: "RichTextEditor")
             #else
-            TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState))
+            let i18n = InternationalizationService()
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"), text: field.textBinding(formState: formState))
                 .textFieldStyle(.roundedBorder)
                 .frame(minHeight: 100)
                 .automaticCompliance(named: "RichTextEditor")
@@ -1648,7 +1657,8 @@ public struct DynamicTextAreaField: View {
                 .border(Color.gray.opacity(0.2))
                 .automaticCompliance(named: "TextArea")
             #else
-            TextField(field.placeholder ?? "Enter text", text: field.textBinding(formState: formState), axis: .vertical)
+            let i18n = InternationalizationService()
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"), text: field.textBinding(formState: formState), axis: .vertical)
                 .textFieldStyle(.roundedBorder)
                 .lineLimit(5...10)
                 .automaticCompliance(named: "TextArea")
