@@ -257,6 +257,15 @@
 "SixLayerFramework.form.progress" = "Progress";
 "SixLayerFramework.form.progressFields" = "%d of %d field%@";
 "SixLayerFramework.barcode.detectedBarcodes" = "Detected Barcodes:";
+"SixLayerFramework.barcode.noBarcodesDetected" = "No Barcodes Detected";
+"SixLayerFramework.barcode.tryDifferentImage" = "Try scanning a different image";
+"SixLayerFramework.barcode.confidence" = "Confidence: %d%%";
+"SixLayerFramework.barcode.barcodeNumber" = "Barcode %d";
+"SixLayerFramework.form.dragDropFiles" = "Drag & drop files here";
+"SixLayerFramework.form.or" = "or";
+"SixLayerFramework.button.browseFiles" = "Browse Files";
+"SixLayerFramework.form.supportedTypes" = "Supported types: %@";
+"SixLayerFramework.form.maxFileSize" = "Max file size: %@";
 "SixLayerFramework.form.autoSaveChanges" = "Auto-save changes";
 "SixLayerFramework.emptyState.noMediaItems" = "No Media Items";
 "SixLayerFramework.emptyState.noNavigationItems" = "No Navigation Items";

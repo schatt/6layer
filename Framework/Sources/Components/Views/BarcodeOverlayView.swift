@@ -84,11 +84,11 @@ public struct BarcodeOverlayView: View {
                         .font(.system(size: 32))
                         .foregroundColor(.secondary)
                     
-                    Text("No Barcodes Detected")
+                    Text(i18n.localizedString(for: "SixLayerFramework.barcode.noBarcodesDetected"))
                         .font(.headline)
                         .foregroundColor(.secondary)
                     
-                    Text("Try scanning a different image")
+                    Text(i18n.localizedString(for: "SixLayerFramework.barcode.tryDifferentImage"))
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -98,7 +98,8 @@ public struct BarcodeOverlayView: View {
             
             // Show confidence score
             if configuration.showConfidenceIndicators && result.hasBarcodes {
-                Text("Confidence: \(Int(result.confidence * 100))%")
+                let confidencePercent = Int(result.confidence * 100)
+                Text(i18n.localizedString(for: "SixLayerFramework.barcode.confidence", arguments: [String(confidencePercent)]))
                     .font(.caption)
                     .foregroundColor(confidenceColor(result.confidence))
                     .automaticCompliance(named: "ConfidenceScore")
@@ -156,7 +157,8 @@ private struct BarcodeInfoView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text("Barcode \(index + 1)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.barcode.barcodeNumber", arguments: [String(index + 1)]))
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
