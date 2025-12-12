@@ -361,7 +361,7 @@ private struct StructuredDataExtractionWrapper: View {
                 Text(i18n.localizedString(for: "SixLayerFramework.ocr.extractionComplete"))
                     .foregroundColor(.green)
             } else {
-                Text("Ready to extract")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.readyToExtract"))
                     .foregroundColor(.secondary)
             }
         }

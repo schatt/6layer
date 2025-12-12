@@ -3209,6 +3209,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 placeholder: "Enter search query"
             ),
             let i18n = InternationalizationService()
+            let i18n = InternationalizationService()
             DynamicFormField(
                 id: "filter_category",
                 contentType: .select,
@@ -3239,6 +3240,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
             )
         ]
     case .create:
+        let i18n = InternationalizationService()
         return [
             DynamicFormField(
                 id: "create_name",
@@ -3251,11 +3253,12 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 id: "create_type",
                 contentType: .select,
                 label: "Type",
-                placeholder: "Select type",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectType"),
                 options: ["Document", "Image", "Video", "Audio"]
             )
         ]
     case .search:
+        let i18n = InternationalizationService()
         return [
             DynamicFormField(
                 id: "search_term",
@@ -3267,17 +3270,18 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 id: "search_filters",
                 contentType: .multiselect,
                 label: "Filters",
-                placeholder: "Select filters",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectFilters"),
                 options: ["Date", "Type", "Size", "Author"]
             )
         ]
     case .settings:
+        let i18n = InternationalizationService()
         return [
             DynamicFormField(
                 id: "theme",
                 contentType: .select,
                 label: "Theme",
-                placeholder: "Select theme",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectTheme"),
                 options: ["Light", "Dark", "Auto"]
             ),
             DynamicFormField(
@@ -3350,7 +3354,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 id: "route_type",
                 contentType: .select,
                 label: "Route Type",
-                placeholder: "Select route type",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectRouteType"),
                 options: ["Fastest", "Shortest", "Scenic"]
             )
         ]

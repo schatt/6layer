@@ -151,6 +151,7 @@
 "SixLayerFramework.ocr.overlay.imageMissing" = "Image is missing. Please provide the image that was processed.";
 "SixLayerFramework.ocr.overlay.extractedText" = "Extracted Text:";
 "SixLayerFramework.ocr.extractionComplete" = "Extraction complete";
+"SixLayerFramework.ocr.readyToExtract" = "Ready to extract";
 
 /* OCR Service Errors */
 "SixLayerFramework.ocr.visionUnavailable" = "Vision framework is not available on this platform";
@@ -200,6 +201,11 @@
 "SixLayerFramework.navigation.selectItem" = "Select an item";
 "SixLayerFramework.navigation.chooseItem" = "Choose an item from the list to view its details";
 "SixLayerFramework.navigation.selectItemToContinue" = "Select an item to continue.";
+"SixLayerFramework.emptyState.noItems" = "No items in this list.";
+"SixLayerFramework.emptyState.noFormFields" = "No form fields available.";
+"SixLayerFramework.emptyState.noNavigationItems" = "No navigation items available.";
+"SixLayerFramework.emptyState.noSettings" = "No settings available.";
+"SixLayerFramework.emptyState.noProfile" = "No profile available.";
 
 /* ============================================================================
    FORM FIELD LABELS
