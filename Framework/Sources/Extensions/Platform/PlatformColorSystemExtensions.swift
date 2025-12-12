@@ -30,6 +30,7 @@ public enum ColorName: String, CaseIterable {
     case label = "label"
     case secondaryLabel = "secondaryLabel"
     case tertiaryLabel = "tertiaryLabel"
+    case quaternaryLabel = "quaternaryLabel"
     
     // System colors
     case blue = "blue"
@@ -47,6 +48,49 @@ public enum ColorName: String, CaseIterable {
     case secondary = "secondary"
     case accentColor = "accentColor"
     
+    // Additional SwiftUI system colors
+    case cyan = "cyan"
+    case mint = "mint"
+    case teal = "teal"
+    case indigo = "indigo"
+    case brown = "brown"
+    
+    // System color variants (iOS 13+)
+    case systemBlue = "systemBlue"
+    case systemRed = "systemRed"
+    case systemGreen = "systemGreen"
+    case systemOrange = "systemOrange"
+    case systemYellow = "systemYellow"
+    case systemPurple = "systemPurple"
+    case systemPink = "systemPink"
+    case systemIndigo = "systemIndigo"
+    case systemTeal = "systemTeal"
+    case systemMint = "systemMint"
+    case systemCyan = "systemCyan"
+    case systemBrown = "systemBrown"
+    
+    // System gray scale
+    case systemGray = "systemGray"
+    case systemGray2 = "systemGray2"
+    case systemGray3 = "systemGray3"
+    case systemGray4 = "systemGray4"
+    case systemGray5 = "systemGray5"
+    case systemGray6 = "systemGray6"
+    
+    // Fill colors
+    case systemFill = "systemFill"
+    case secondarySystemFill = "secondarySystemFill"
+    case tertiarySystemFill = "tertiarySystemFill"
+    case quaternarySystemFill = "quaternarySystemFill"
+    
+    // Additional semantic colors
+    case neutral = "neutral"
+    case disabled = "disabled"
+    case border = "border"
+    case borderSecondary = "borderSecondary"
+    case surface = "surface"
+    case surfaceElevated = "surfaceElevated"
+    
     var displayName: String {
         return self.rawValue
     }
@@ -63,9 +107,9 @@ public enum ColorName: String, CaseIterable {
 /// across iOS and macOS while respecting platform design guidelines
 public extension Color {
 
-    /// Platform background color
+    /// Direct system background color
     /// iOS: systemBackground; macOS: windowBackgroundColor
-    static var platformBackground: Color {
+    static var systemBackground: Color {
         #if os(iOS)
         return Color(.systemBackground)
         #elseif os(macOS)
@@ -73,6 +117,12 @@ public extension Color {
         #else
         return Color.primary
         #endif
+    }
+
+    /// Platform background color (alias for systemBackground)
+    /// iOS: systemBackground; macOS: windowBackgroundColor
+    static var platformBackground: Color {
+        return systemBackground
     }
 
     /// Platform secondary background color
@@ -211,7 +261,7 @@ public extension Color {
     /// iOS: systemBlue; macOS: controlAccentColor
     static var platformTint: Color {
         #if os(iOS)
-        return Color(.systemBlue)
+        return systemBlue
         #elseif os(macOS)
         return Color(.controlAccentColor)
         #else
@@ -219,64 +269,28 @@ public extension Color {
         #endif
     }
 
-    /// Platform destructive color
-    /// iOS: systemRed; macOS: systemRedColor
+    /// Platform destructive color (alias for systemRed)
+    /// iOS: systemRed; macOS: systemRed
     static var platformDestructive: Color {
-        #if os(iOS)
-        return Color(.systemRed)
-        #elseif os(macOS)
-        return Color(.systemRed)
-        #else
-        return Color.red
-        #endif
+        return systemRed
     }
 
-    /// Platform success color
-    /// iOS: systemGreen; macOS: systemGreenColor
+    /// Platform success color (alias for systemGreen)
+    /// iOS: systemGreen; macOS: systemGreen
     static var platformSuccess: Color {
-        #if os(iOS)
-        return Color(.systemGreen)
-        #elseif os(macOS)
-        return Color(.systemGreen)
-        #else
-        return Color.green
-        #endif
+        return systemGreen
     }
 
-    /// Platform warning color
-    /// iOS: systemOrange; macOS: systemOrangeColor
+    /// Platform warning color (alias for systemOrange)
+    /// iOS: systemOrange; macOS: systemOrange
     static var platformWarning: Color {
-        #if os(iOS)
-        return Color(.systemOrange)
-        #elseif os(macOS)
-        return Color(.systemOrange)
-        #else
-        return Color.orange
-        #endif
+        return systemOrange
     }
 
-    /// Platform info color
-    /// iOS: systemBlue; macOS: systemBlueColor
+    /// Platform info color (alias for systemBlue)
+    /// iOS: systemBlue; macOS: systemBlue
     static var platformInfo: Color {
-        #if os(iOS)
-        return Color(.systemBlue)
-        #elseif os(macOS)
-        return Color(.systemBlue)
-        #else
-        return Color.blue
-        #endif
-    }
-    
-    /// Platform system background color
-    /// iOS: systemBackground; macOS: windowBackgroundColor
-    static var platformSystemBackground: Color {
-        #if os(iOS)
-        return Color(.systemBackground)
-        #elseif os(macOS)
-        return Color(.windowBackgroundColor)
-        #else
-        return Color.primary
-        #endif
+        return systemBlue
     }
     
     /// Platform system gray6 color
@@ -349,6 +363,212 @@ public extension Color {
         #else
         return Color.gray
         #endif
+    }
+    
+    // MARK: - Direct System Color Properties
+    
+    /// Direct system blue color
+    /// iOS: systemBlue; macOS: systemBlue
+    static var systemBlue: Color {
+        #if os(iOS)
+        return Color(.systemBlue)
+        #elseif os(macOS)
+        return Color(.systemBlue)
+        #else
+        return Color.blue
+        #endif
+    }
+    
+    /// Direct system red color
+    /// iOS: systemRed; macOS: systemRed
+    static var systemRed: Color {
+        #if os(iOS)
+        return Color(.systemRed)
+        #elseif os(macOS)
+        return Color(.systemRed)
+        #else
+        return Color.red
+        #endif
+    }
+    
+    /// Direct system green color
+    /// iOS: systemGreen; macOS: systemGreen
+    static var systemGreen: Color {
+        #if os(iOS)
+        return Color(.systemGreen)
+        #elseif os(macOS)
+        return Color(.systemGreen)
+        #else
+        return Color.green
+        #endif
+    }
+    
+    /// Direct system orange color
+    /// iOS: systemOrange; macOS: systemOrange
+    static var systemOrange: Color {
+        #if os(iOS)
+        return Color(.systemOrange)
+        #elseif os(macOS)
+        return Color(.systemOrange)
+        #else
+        return Color.orange
+        #endif
+    }
+    
+    /// Direct system yellow color
+    /// iOS: systemYellow; macOS: systemYellow
+    static var systemYellow: Color {
+        #if os(iOS)
+        return Color(.systemYellow)
+        #elseif os(macOS)
+        return Color(.systemYellow)
+        #else
+        return Color.yellow
+        #endif
+    }
+    
+    /// Direct system purple color
+    /// iOS: systemPurple; macOS: systemPurple
+    static var systemPurple: Color {
+        #if os(iOS)
+        return Color(.systemPurple)
+        #elseif os(macOS)
+        return Color(.systemPurple)
+        #else
+        return Color.purple
+        #endif
+    }
+    
+    /// Direct system pink color
+    /// iOS: systemPink; macOS: systemPink
+    static var systemPink: Color {
+        #if os(iOS)
+        return Color(.systemPink)
+        #elseif os(macOS)
+        return Color(.systemPink)
+        #else
+        return Color.pink
+        #endif
+    }
+    
+    /// Direct system indigo color
+    /// iOS: systemIndigo; macOS: systemIndigo
+    static var systemIndigo: Color {
+        #if os(iOS)
+        return Color(.systemIndigo)
+        #elseif os(macOS)
+        return Color(.systemIndigo)
+        #else
+        return Color.indigo
+        #endif
+    }
+    
+    /// Direct system teal color
+    /// iOS: systemTeal; macOS: systemTeal
+    static var systemTeal: Color {
+        #if os(iOS)
+        return Color(.systemTeal)
+        #elseif os(macOS)
+        return Color(.systemTeal)
+        #else
+        return Color.teal
+        #endif
+    }
+    
+    /// Direct system mint color
+    /// iOS: systemMint; macOS: systemMint
+    static var systemMint: Color {
+        #if os(iOS)
+        return Color(.systemMint)
+        #elseif os(macOS)
+        return Color(.systemMint)
+        #else
+        return Color.mint
+        #endif
+    }
+    
+    /// Direct system cyan color
+    /// iOS: systemCyan; macOS: systemCyan
+    static var systemCyan: Color {
+        #if os(iOS)
+        return Color(.systemCyan)
+        #elseif os(macOS)
+        return Color(.systemCyan)
+        #else
+        return Color.cyan
+        #endif
+    }
+    
+    /// Direct system brown color
+    /// iOS: systemBrown; macOS: systemBrown
+    static var systemBrown: Color {
+        #if os(iOS)
+        return Color(.systemBrown)
+        #elseif os(macOS)
+        return Color(.systemBrown)
+        #else
+        return Color.brown
+        #endif
+    }
+    
+    /// Direct system gray color
+    /// iOS: systemGray; macOS: systemGray
+    static var systemGray: Color {
+        return platformSystemGray
+    }
+    
+    /// Direct system gray2 color
+    /// iOS: systemGray2; macOS: controlColor
+    static var systemGray2: Color {
+        return platformSystemGray2
+    }
+    
+    /// Direct system gray3 color
+    /// iOS: systemGray3; macOS: controlColor
+    static var systemGray3: Color {
+        return platformSystemGray3
+    }
+    
+    /// Direct system gray4 color
+    /// iOS: systemGray4; macOS: controlColor
+    static var systemGray4: Color {
+        return platformSystemGray4
+    }
+    
+    /// Direct system gray5 color
+    /// iOS: systemGray5; macOS: controlColor
+    static var systemGray5: Color {
+        return platformSystemGray5
+    }
+    
+    /// Direct system gray6 color
+    /// iOS: systemGray6; macOS: controlBackgroundColor
+    static var systemGray6: Color {
+        return platformSystemGray6
+    }
+    
+    /// Direct system fill color
+    /// iOS: systemFill; macOS: controlColor
+    static var systemFill: Color {
+        return platformSystemFill
+    }
+    
+    /// Direct secondary system fill color
+    /// iOS: secondarySystemFill; macOS: secondaryControlColor
+    static var secondarySystemFill: Color {
+        return platformSecondarySystemFill
+    }
+    
+    /// Direct tertiary system fill color
+    /// iOS: tertiarySystemFill; macOS: tertiaryControlColor
+    static var tertiarySystemFill: Color {
+        return platformTertiarySystemFill
+    }
+    
+    /// Direct quaternary system fill color
+    /// iOS: quaternarySystemFill; macOS: quaternaryControlColor
+    static var quaternarySystemFill: Color {
+        return platformQuaternarySystemFill
     }
     
     /// Platform secondary background color (alias for existing)
@@ -620,7 +840,7 @@ public extension Color {
         case .backgroundColor:
             return backgroundColor
         case .systemBackground:
-            return backgroundColor
+            return systemBackground
         case .secondaryBackgroundColor:
             return secondaryBackgroundColor
         case .tertiaryBackgroundColor:
@@ -655,6 +875,8 @@ public extension Color {
             return secondaryLabel
         case .tertiaryLabel:
             return platformTertiaryLabel
+        case .quaternaryLabel:
+            return platformQuaternaryLabel
         // System colors
         case .blue:
             return Color.blue
@@ -684,6 +906,77 @@ public extension Color {
             return Color.secondary
         case .accentColor:
             return Color.accentColor
+        // Additional SwiftUI system colors
+        case .cyan:
+            return Color.cyan
+        case .mint:
+            return Color.mint
+        case .teal:
+            return Color.teal
+        case .indigo:
+            return Color.indigo
+        case .brown:
+            return Color.brown
+        // System color variants
+        case .systemBlue:
+            return systemBlue
+        case .systemRed:
+            return systemRed
+        case .systemGreen:
+            return systemGreen
+        case .systemOrange:
+            return systemOrange
+        case .systemYellow:
+            return systemYellow
+        case .systemPurple:
+            return systemPurple
+        case .systemPink:
+            return systemPink
+        case .systemIndigo:
+            return systemIndigo
+        case .systemTeal:
+            return systemTeal
+        case .systemMint:
+            return systemMint
+        case .systemCyan:
+            return systemCyan
+        case .systemBrown:
+            return systemBrown
+        // System gray scale
+        case .systemGray:
+            return systemGray
+        case .systemGray2:
+            return systemGray2
+        case .systemGray3:
+            return systemGray3
+        case .systemGray4:
+            return systemGray4
+        case .systemGray5:
+            return systemGray5
+        case .systemGray6:
+            return systemGray6
+        // Fill colors
+        case .systemFill:
+            return systemFill
+        case .secondarySystemFill:
+            return secondarySystemFill
+        case .tertiarySystemFill:
+            return tertiarySystemFill
+        case .quaternarySystemFill:
+            return quaternarySystemFill
+        // Additional semantic colors
+        case .neutral:
+            return Color.gray
+        case .disabled:
+            return Color.gray.opacity(0.5)
+        case .border:
+            return platformSeparator
+        case .borderSecondary:
+            return platformSeparator.opacity(0.5)
+        case .surface:
+            return platformSecondaryBackground
+        case .surfaceElevated:
+            return platformTertiaryBackground
         }
     }
     

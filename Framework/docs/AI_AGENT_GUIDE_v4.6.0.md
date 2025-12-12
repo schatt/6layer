@@ -198,23 +198,27 @@ let hints = PresentationHints(
 ```
 
 #### **Supported Color Names**
-| Color Name | SwiftUI Color |
-|------------|---------------|
-| `red` | `.red` |
-| `blue` | `.blue` |
-| `green` | `.green` |
-| `yellow` | `.yellow` |
-| `orange` | `.orange` |
-| `purple` | `.purple` |
-| `pink` | `.pink` |
-| `gray` | `.gray` |
-| `black` | `.black` |
-| `white` | `.white` |
-| `cyan` | `.cyan` |
-| `mint` | `.mint` |
-| `teal` | `.teal` |
-| `indigo` | `.indigo` |
-| `brown` | `.brown` |
+
+**Basic System Colors:**
+`red`, `blue`, `green`, `yellow`, `orange`, `purple`, `pink`, `gray`, `black`, `white`, `cyan`, `mint`, `teal`, `indigo`, `brown`, `primary`, `secondary`, `accentColor`, `clear`
+
+**System Color Variants (iOS 13+):**
+`systemBlue`, `systemRed`, `systemGreen`, `systemOrange`, `systemYellow`, `systemPurple`, `systemPink`, `systemIndigo`, `systemTeal`, `systemMint`, `systemCyan`, `systemBrown`
+
+**System Gray Scale:**
+`systemGray`, `systemGray2`, `systemGray3`, `systemGray4`, `systemGray5`, `systemGray6`
+
+**Background Colors:**
+`background`, `systemBackground`, `secondaryBackgroundColor`, `tertiaryBackgroundColor`, `groupedBackgroundColor`, `cardBackground`
+
+**Label Colors:**
+`label`, `secondaryLabel`, `tertiaryLabel`, `quaternaryLabel`
+
+**Fill Colors:**
+`systemFill`, `secondarySystemFill`, `tertiarySystemFill`, `quaternarySystemFill`
+
+**Additional Semantic Colors:**
+`neutral`, `disabled`, `border`, `borderSecondary`, `surface`, `surfaceElevated`
 
 ### **Icon Default Values**
 

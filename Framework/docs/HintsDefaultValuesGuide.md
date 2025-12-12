@@ -143,6 +143,7 @@ let hints = PresentationHints(
 
 ### Supported Color Names
 
+#### Basic System Colors
 | Color Name | SwiftUI Color |
 |------------|---------------|
 | `red` | `.red` |
@@ -160,6 +161,73 @@ let hints = PresentationHints(
 | `teal` | `.teal` |
 | `indigo` | `.indigo` |
 | `brown` | `.brown` |
+| `primary` | `.primary` |
+| `secondary` | `.secondary` |
+| `accentColor` | `.accentColor` |
+| `clear` | `.clear` |
+
+#### System Color Variants (iOS 13+)
+These adapt to light/dark mode and accessibility settings:
+| Color Name | Description |
+|------------|-------------|
+| `systemBlue` | System blue color |
+| `systemRed` | System red color |
+| `systemGreen` | System green color |
+| `systemOrange` | System orange color |
+| `systemYellow` | System yellow color |
+| `systemPurple` | System purple color |
+| `systemPink` | System pink color |
+| `systemIndigo` | System indigo color |
+| `systemTeal` | System teal color |
+| `systemMint` | System mint color |
+| `systemCyan` | System cyan color |
+| `systemBrown` | System brown color |
+
+#### System Gray Scale
+| Color Name | Description |
+|------------|-------------|
+| `systemGray` | Base system gray |
+| `systemGray2` | Lighter gray |
+| `systemGray3` | Medium-light gray |
+| `systemGray4` | Medium gray |
+| `systemGray5` | Medium-dark gray |
+| `systemGray6` | Darkest gray |
+
+#### Background Colors
+| Color Name | Description |
+|------------|-------------|
+| `background` | Primary background |
+| `systemBackground` | System background |
+| `secondaryBackgroundColor` | Secondary background |
+| `tertiaryBackgroundColor` | Tertiary background |
+| `groupedBackgroundColor` | Grouped background |
+| `cardBackground` | Card background |
+
+#### Label Colors
+| Color Name | Description |
+|------------|-------------|
+| `label` | Primary label |
+| `secondaryLabel` | Secondary label |
+| `tertiaryLabel` | Tertiary label |
+| `quaternaryLabel` | Quaternary label |
+
+#### Fill Colors
+| Color Name | Description |
+|------------|-------------|
+| `systemFill` | System fill |
+| `secondarySystemFill` | Secondary system fill |
+| `tertiarySystemFill` | Tertiary system fill |
+| `quaternarySystemFill` | Quaternary system fill |
+
+#### Additional Semantic Colors
+| Color Name | Description |
+|------------|-------------|
+| `neutral` | Neutral/informational state |
+| `disabled` | Disabled UI elements |
+| `border` | Border color |
+| `borderSecondary` | Secondary border color |
+| `surface` | Surface/elevated element |
+| `surfaceElevated` | Elevated surface |
 
 ## Icon Default Values
 
