@@ -331,7 +331,6 @@ public extension View {
 
 /// Global function wrapper for platformVStackContainer
 /// Provides backward compatibility for code that expects global functions
-@MainActor
 @ViewBuilder
 func platformVStackContainer<Content: View>(
     alignment: HorizontalAlignment = .center,
@@ -366,7 +365,6 @@ func platformZStackContainer<Content: View>(
 
 /// Global function wrapper for platformLazyVStackContainer
 /// Provides backward compatibility for code that expects global functions
-@MainActor
 @ViewBuilder
 func platformLazyVStackContainer<Content: View>(
     alignment: HorizontalAlignment = .center,
@@ -379,7 +377,6 @@ func platformLazyVStackContainer<Content: View>(
 
 /// Global function wrapper for platformLazyHStackContainer
 /// Provides backward compatibility for code that expects global functions
-@MainActor
 @ViewBuilder
 func platformLazyHStackContainer<Content: View>(
     alignment: VerticalAlignment = .center,

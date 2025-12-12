@@ -635,12 +635,12 @@ public struct FormValidationSummary: View {
                         Button(action: {
                             onErrorTap?(error.fieldId)
                         }) {
-                            HStack(alignment: .top, spacing: 8) {
+                            platformHStackContainer(alignment: .top, spacing: 8) {
                                 Image(systemName: "exclamationmark.circle.fill")
                                     .foregroundColor(.red)
                                     .font(.caption)
                                 
-                                VStack(alignment: .leading, spacing: 4) {
+                                platformVStackContainer(alignment: .leading, spacing: 4) {
                                     Text(error.fieldLabel)
                                         .font(.subheadline)
                                         .fontWeight(.medium)
