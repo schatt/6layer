@@ -3218,6 +3218,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
             )
         ]
     case .edit:
+        let i18n = InternationalizationService()
         return [
             DynamicFormField(
                 id: "edit_title",
