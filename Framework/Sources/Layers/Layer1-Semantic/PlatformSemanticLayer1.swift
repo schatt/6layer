@@ -1213,7 +1213,7 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
     // First try loaded hints from .hints file, then fall back to field's own metadata
     let fieldHints = loadedHints[field.id] ?? field.displayHints
     
-    VStack(alignment: .leading, spacing: 8) {
+    platformVStackContainer(alignment: .leading, spacing: 8) {
         Text(field.label)
             .font(.subheadline)
             .fontWeight(.medium)
@@ -1723,7 +1723,7 @@ public struct CollectionEmptyStateView: View {
                 .font(.system(size: 48))
                 .foregroundColor(.secondary)
             
-            VStack(spacing: 8) {
+            platformVStackContainer(spacing: 8) {
                 Text(emptyStateTitle)
                     .font(.headline)
                     .foregroundColor(.primary)
@@ -2760,7 +2760,7 @@ public struct SimpleFormView: View {
                     ))
                     
                 case .radio:
-                    VStack(alignment: .leading, spacing: 4) {
+                    platformVStackContainer(alignment: .leading, spacing: 4) {
                         ForEach(field.options, id: \.self) { option in
                             HStack {
                                 Button(action: {
@@ -2816,7 +2816,7 @@ public struct SimpleFormView: View {
                     .selfLabelingControl(label: field.placeholder ?? i18nDateTime.placeholderSelectDateTime())
                     
                 case .multiselect:
-                    VStack(alignment: .leading, spacing: 4) {
+                    platformVStackContainer(alignment: .leading, spacing: 4) {
                         ForEach(field.options, id: \.self) { option in
                             HStack {
                                 Button(action: {
@@ -4054,8 +4054,8 @@ struct GenericSettingsItemView: View {
     @Binding var value: Any?
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
+        platformHStackContainer {
+            platformVStackContainer(alignment: .leading, spacing: 4) {
                 Text(item.title)
                     .font(.body)
                     .foregroundColor(.primary)
@@ -4193,7 +4193,7 @@ public struct CustomListCollectionView<Item: Identifiable>: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 12) {
+            platformLazyVStackContainer(spacing: 12) {
                 ForEach(items) { item in
                     customItemView(item)
                         .onTapGesture {
@@ -4287,7 +4287,7 @@ public struct CustomTemporalView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 12) {
+            platformLazyVStackContainer(spacing: 12) {
                 ForEach(items, id: \.id) { item in
                     customItemView(item)
                 }
