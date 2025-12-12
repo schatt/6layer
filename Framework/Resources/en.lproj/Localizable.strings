@@ -206,6 +206,13 @@
 "SixLayerFramework.emptyState.noNavigationItems" = "No navigation items available.";
 "SixLayerFramework.emptyState.noSettings" = "No settings available.";
 "SixLayerFramework.emptyState.noProfile" = "No profile available.";
+"SixLayerFramework.emptyState.noItemsAvailable" = "No items available.";
+"SixLayerFramework.emptyState.noItemsToEdit" = "No items to edit.";
+"SixLayerFramework.emptyState.noItemsToBrowse" = "No items to browse.";
+"SixLayerFramework.emptyState.noItemsInGallery" = "No items in this gallery.";
+"SixLayerFramework.emptyState.createFirstItem" = "Create your first item.";
+"SixLayerFramework.emptyState.adjustSearchCriteria" = "Try adjusting your search criteria.";
+"SixLayerFramework.emptyState.noProfileInformation" = "No profile information available.";
 
 /* ============================================================================
    FORM FIELD LABELS
