@@ -95,7 +95,7 @@ private struct BarcodeScanningWrapper: View {
     // MARK: - Processing View
     
     private var processingView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             ProgressView()
                 .scaleEffect(1.2)
             
@@ -112,7 +112,7 @@ private struct BarcodeScanningWrapper: View {
     // MARK: - Error View
     
     private func errorView(_ error: String) -> some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.red)
@@ -136,7 +136,7 @@ private struct BarcodeScanningWrapper: View {
     // MARK: - Result View
     
     private func resultView(_ result: BarcodeResult) -> some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             if result.hasBarcodes {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 48))
@@ -151,7 +151,7 @@ private struct BarcodeScanningWrapper: View {
                 
                 // Display barcode information
                 ForEach(Array(result.barcodes.enumerated()), id: \.offset) { index, barcode in
-                    VStack(alignment: .leading, spacing: 4) {
+                    platformVStackContainer(alignment: .leading, spacing: 4) {
                         Text("Barcode \(index + 1):")
                             .font(.caption)
                             .fontWeight(.semibold)
@@ -188,7 +188,7 @@ private struct BarcodeScanningWrapper: View {
     // MARK: - Initial View
     
     private var initialView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "barcode.viewfinder")
                 .font(.system(size: 48))
                 .foregroundColor(.blue)

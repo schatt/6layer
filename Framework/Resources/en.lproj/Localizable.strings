@@ -128,6 +128,7 @@
 "SixLayerFramework.form.placeholder.enterPhone" = "Enter phone";
 "SixLayerFramework.form.placeholder.enterURL" = "Enter URL";
 "SixLayerFramework.form.placeholder.enterInteger" = "Enter integer";
+"SixLayerFramework.form.placeholder.typeToSearch" = "Type to search";
 
 /* ============================================================================
    BUTTON LABELS
@@ -141,6 +142,7 @@
 "SixLayerFramework.button.save" = "Save";
 "SixLayerFramework.button.cancel" = "Cancel";
 "SixLayerFramework.button.select" = "Select";
+"SixLayerFramework.button.selectImage" = "Select Image";
 
 /* ============================================================================
    OCR INTERFACE

@@ -2440,8 +2440,9 @@ public struct ModalFormView: View {
                 case .stepper:
                     Stepper(field.label, value: .constant(0.0), in: 0...100, step: 1.0)
                 case .enum:
-                    Picker(field.placeholder ?? "Select option", selection: .constant("")) {
-                        Text("Select an option").tag("")
+                    let i18n = InternationalizationService()
+                    Picker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption"), selection: .constant("")) {
+                        Text(i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption")).tag("")
                         if let options = field.options {
                             ForEach(options, id: \.self) { option in
                                 Text(option).tag(option)
@@ -2924,8 +2925,9 @@ public struct SimpleFormView: View {
                     Text("Data field: \(field.label)")
                         .foregroundColor(.secondary)
                 case .`enum`:
-                    Picker(field.placeholder ?? "Select option", selection: field.$value) {
-                        Text("Select an option").tag("")
+                    let i18n = InternationalizationService()
+                    Picker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption"), selection: field.$value) {
+                        Text(i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption")).tag("")
                         ForEach(field.options, id: \.self) { option in
                             Text(option).tag(option)
                         }

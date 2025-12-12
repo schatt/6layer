@@ -905,7 +905,7 @@ public struct TestResult {
 
 #if ENABLE_PREVIEWS
 #Preview {
-    VStack(spacing: 20) {
+    platformVStackContainer(spacing: 20) {
         Text("Cross-Platform Optimization Layer 6")
             .font(.title)
             .fontWeight(.bold)
@@ -916,7 +916,7 @@ public struct TestResult {
         
         let manager = CrossPlatformOptimizationManager()
         
-        VStack(alignment: .leading, spacing: 10) {
+        platformVStackContainer(alignment: .leading, spacing: 10) {
             Text("Current Platform: \(manager.currentPlatform.rawValue)")
             Text("Performance Level: \(manager.optimizationSettings.performanceLevel.rawValue)")
             Text("Memory Strategy: \(manager.optimizationSettings.memoryStrategy.rawValue)")

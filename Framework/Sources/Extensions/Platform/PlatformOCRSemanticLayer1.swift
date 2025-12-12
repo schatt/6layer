@@ -170,7 +170,7 @@ private struct OCRWithVisualCorrectionWrapper: View {
     // MARK: - Processing View
     
     private var processingView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             ProgressView()
                 .scaleEffect(1.2)
             
@@ -187,7 +187,7 @@ private struct OCRWithVisualCorrectionWrapper: View {
     // MARK: - Error View
     
     private func errorView(_ error: String) -> some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.red)
@@ -211,7 +211,7 @@ private struct OCRWithVisualCorrectionWrapper: View {
     // MARK: - Initial View
     
     private var initialView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "doc.text.viewfinder")
                 .font(.system(size: 48))
                 .foregroundColor(.blue)

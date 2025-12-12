@@ -401,7 +401,7 @@ public extension CrossPlatformNavigation {
         @ViewBuilder detailView: @escaping (T) -> some View,
         analysis: CollectionAnalysisResult
     ) -> some View {
-        HStack(spacing: 0) {
+        platformHStackContainer(spacing: 0) {
             platformListSidebar(
                 items: items,
                 selectedItem: selectedItem,

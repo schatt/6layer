@@ -34,7 +34,7 @@ public struct ExampleProjectCard: View {
         self.title = project.title
         self.subtitle = project.description
         self.content = AnyView(
-            VStack(alignment: .leading, spacing: 8) {
+            platformVStackContainer(alignment: .leading, spacing: 8) {
                 Text("Status: \(project.status.rawValue)")
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -48,8 +48,8 @@ public struct ExampleProjectCard: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
+            platformVStackContainer(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
                     .fontWeight(.semibold)
@@ -93,7 +93,7 @@ public struct ExampleProjectList<Item: Identifiable, Content: View>: View {
     }
     
     public var body: some View {
-        LazyVStack(spacing: 16) {
+        platformLazyVStackContainer(spacing: 16) {
             ForEach(items) { item in
                 content(item)
             }
@@ -127,7 +127,7 @@ public struct ExampleProjectFormField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(label)
                 .font(.subheadline)
                 .fontWeight(.medium)
@@ -207,7 +207,7 @@ public struct FormFieldData {
 
 #if ENABLE_PREVIEWS
 #Preview {
-    VStack(spacing: 20) {
+    platformVStackContainer(spacing: 20) {
         ExampleProjectCard(
             title: "Example Card",
             subtitle: "This is a subtitle"
@@ -230,7 +230,7 @@ public struct FormFieldData {
             ]
         ) { item in
             HStack {
-                VStack(alignment: .leading) {
+                platformVStackContainer(alignment: .leading) {
                     Text(item.title)
                         .fontWeight(.medium)
                     Text(item.description)

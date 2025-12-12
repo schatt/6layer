@@ -38,7 +38,7 @@ public struct PlatformUIIntegration {
                 style: navigationStyle,
                 context: context
             ) {
-                VStack(spacing: 0) {
+                platformVStackContainer(spacing: 0) {
                     // Header
                     if shouldShowHeader {
                         headerView
@@ -136,7 +136,7 @@ public struct PlatformUIIntegration {
                 style: presentationStyle,
                 onDismiss: onDismiss
             ) {
-                VStack(spacing: 0) {
+                platformVStackContainer(spacing: 0) {
                     // Header
                     headerView
                     
@@ -207,7 +207,7 @@ public struct PlatformUIIntegration {
         }
         
         public var body: some View {
-            VStack(spacing: 0) {
+            platformVStackContainer(spacing: 0) {
                 // Header
                 if shouldShowHeader {
                     headerView
@@ -235,7 +235,7 @@ public struct PlatformUIIntegration {
         
         private var headerView: some View {
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
+                platformVStackContainer(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(typography.title2)
                         .foregroundColor(colors.text)
@@ -295,13 +295,13 @@ public struct PlatformUIIntegration {
         }
         
         public var body: some View {
-            VStack(spacing: 0) {
+            platformVStackContainer(spacing: 0) {
                 // Header
                 headerView
                 
                 // Form content
                 ScrollView {
-                    VStack(spacing: 16) {
+                    platformVStackContainer(spacing: 16) {
                         content
                     }
                     .padding()
@@ -413,7 +413,7 @@ public struct PlatformUIIntegration {
             VStack(alignment: .leading, spacing: 12) {
                 // Header
                 if let title = title {
-                    VStack(alignment: .leading, spacing: 4) {
+                    platformVStackContainer(alignment: .leading, spacing: 4) {
                         Text(title)
                             .font(typography.headline)
                             .foregroundColor(colors.text)

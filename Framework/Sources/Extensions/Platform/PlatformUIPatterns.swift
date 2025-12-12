@@ -341,7 +341,7 @@ public struct AdaptiveUIPatterns {
         @ViewBuilder
         private var carouselList: some View {
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 16) {
+                platformLazyHStackContainer(spacing: 16) {
                     ForEach(Array(data), id: \.id) { item in
                         content(item)
                             .frame(width: 200)
@@ -383,7 +383,7 @@ public struct AdaptiveUIPatterns {
         
         public var body: some View {
             Button(action: action) {
-                HStack(spacing: 8) {
+                platformHStackContainer(spacing: 8) {
                     if let icon = icon {
                         Image(systemName: icon)
                             .font(iconFont)

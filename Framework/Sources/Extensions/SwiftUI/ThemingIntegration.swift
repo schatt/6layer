@@ -100,7 +100,7 @@ public struct ThemedGenericFormView: View {
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
+        platformVStackContainer(spacing: 0) {
             // Header
             HStack {
                 Text("Form")
@@ -117,7 +117,7 @@ public struct ThemedGenericFormView: View {
             
             // Form content
             ScrollView {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     ForEach(fields, id: \.id) { field in
                         createFieldView(for: field)
                     }
@@ -152,7 +152,7 @@ public struct ThemedGenericFormView: View {
     }
     
     private func createFieldView(for field: GenericFormField) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(typography.subheadline)
                 .fontWeight(.medium)
@@ -181,7 +181,8 @@ public struct ThemedGenericFormView: View {
                 .themedTextField()
                 
             case .number:
-                TextField(field.placeholder ?? "Enter number", text: Binding(
+                let i18n = InternationalizationService()
+                TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterNumber"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
@@ -224,7 +225,7 @@ public struct ThemedGenericFormView: View {
                 ))
                 
             case .radio:
-                VStack(alignment: .leading) {
+                platformVStackContainer(alignment: .leading) {
                     Text(field.label)
                         .font(typography.body)
                         .fontWeight(.medium)
@@ -402,9 +403,9 @@ public struct ThemedResponsiveCardView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             // Header
-            VStack(alignment: .leading, spacing: 4) {
+            platformVStackContainer(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(typography.headline)
                     .foregroundColor(colors.text)
@@ -457,7 +458,7 @@ public struct ThemedGenericItemCollectionView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             // Header
             HStack {
                 Text(title)
@@ -532,7 +533,7 @@ public struct ThemedGenericNumericDataView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             // Header
             HStack {
                 Text(title)
@@ -547,7 +548,7 @@ public struct ThemedGenericNumericDataView: View {
             }
             
             // Data visualization
-            VStack(spacing: 8) {
+            platformVStackContainer(spacing: 8) {
                 if let maxValue = data.max() {
                     ForEach(Array(data.enumerated()), id: \.offset) { index, value in
                         HStack {

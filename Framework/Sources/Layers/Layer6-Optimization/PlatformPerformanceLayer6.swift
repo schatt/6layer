@@ -10,7 +10,7 @@ import SwiftUI
 /// GREEN PHASE: Full implementation of platform performance interface
 public struct PlatformPerformanceLayer6: View {
     public var body: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Text("Platform Performance")
                 .font(.headline)
                 .automaticCompliance(named: "Title")
@@ -20,7 +20,7 @@ public struct PlatformPerformanceLayer6: View {
                 .foregroundColor(.secondary)
                 .automaticCompliance(named: "Description")
             
-            VStack(alignment: .leading, spacing: 8) {
+            platformVStackContainer(alignment: .leading, spacing: 8) {
                 Text("• Real-time performance monitoring and metrics")
                 Text("• Frame rate analysis and optimization suggestions")
                 Text("• Memory usage tracking and leak detection")

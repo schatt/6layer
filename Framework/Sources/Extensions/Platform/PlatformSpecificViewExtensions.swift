@@ -327,7 +327,7 @@ public extension View {
                 }
             }
             ToolbarItem(placement: .primaryAction) {
-                HStack(spacing: 12) {
+                platformHStackContainer(spacing: 12) {
                     Button("Select") {
                         onSave()
                     }
@@ -1477,7 +1477,7 @@ public extension View {
         #if os(iOS)
         return Form(content: content)
         #else
-        return VStack(spacing: PlatformSpacing.large) {
+        return platformVStackContainer(spacing: PlatformSpacing.large) {
             content()
         }
         .padding(PlatformSpacing.padding)
@@ -1500,7 +1500,7 @@ public extension View {
         #if os(iOS)
         return Section(header: header(), footer: footer(), content: content)
         #else
-        return VStack(alignment: .leading, spacing: PlatformSpacing.medium) {
+        return platformVStackContainer(alignment: .leading, spacing: PlatformSpacing.medium) {
             header()
                 .font(.headline)
                 .foregroundColor(.platformSecondaryLabel)
@@ -1527,7 +1527,7 @@ public extension View {
         #if os(iOS)
         return Section(header: header(), content: content)
         #else
-        return VStack(alignment: .leading, spacing: PlatformSpacing.medium) {
+        return platformVStackContainer(alignment: .leading, spacing: PlatformSpacing.medium) {
             header()
                 .font(.headline)
                 .foregroundColor(.platformSecondaryLabel)
@@ -1548,7 +1548,7 @@ public extension View {
         #if os(iOS)
         return Section(content: content)
         #else
-        return VStack(alignment: .leading, spacing: PlatformSpacing.medium) {
+        return platformVStackContainer(alignment: .leading, spacing: PlatformSpacing.medium) {
             content()
         }
         .padding(.vertical, PlatformSpacing.medium)
