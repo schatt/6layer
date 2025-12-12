@@ -77,6 +77,10 @@ let package = Package(
                 .product(name: "ViewInspector", package: "ViewInspector")
             ],
             path: "Development/Tests/SixLayerFrameworkUITests",
+            exclude: [
+                // Documentation files
+                "Utilities/TestHelpers/CoreDataTestingGuide.md"
+            ],
             swiftSettings: [
                 // ✅ VERIFIED: ViewInspector builds successfully on macOS SDK 26.2
                 // Investigation confirmed all types compile on macOS - issue was incorrect

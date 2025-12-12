@@ -1,0 +1,203 @@
+/* 
+   Localizable.strings
+   SixLayerFramework
+   
+   English localization strings for SixLayerFramework
+   Apps can override these by providing their own strings with the same keys
+*/
+
+/* ============================================================================
+   ERROR MESSAGES
+   ============================================================================ */
+
+/* Internationalization Errors */
+"SixLayerFramework.error.invalidLocale" = "Invalid locale provided";
+"SixLayerFramework.error.languageNotSupported" = "Language not supported";
+"SixLayerFramework.error.invalidCurrencyCode" = "Invalid currency code";
+"SixLayerFramework.error.formattingFailed" = "Formatting operation failed";
+"SixLayerFramework.error.localizationNotFound" = "Localization not found";
+"SixLayerFramework.error.pluralizationFailed" = "Pluralization operation failed";
+
+/* CloudKit Service Errors */
+"SixLayerFramework.cloudkit.containerNotFound" = "CloudKit container not found";
+"SixLayerFramework.cloudkit.accountUnavailable" = "iCloud account is not available";
+"SixLayerFramework.cloudkit.networkUnavailable" = "Network is not available";
+"SixLayerFramework.cloudkit.writeNotSupported" = "Write operations are not supported on this platform";
+"SixLayerFramework.cloudkit.missingField" = "Required field '%@' is missing";
+"SixLayerFramework.cloudkit.recordNotFound" = "Record not found";
+"SixLayerFramework.cloudkit.conflictDetected" = "Record conflict detected";
+"SixLayerFramework.cloudkit.quotaExceeded" = "CloudKit quota exceeded";
+"SixLayerFramework.cloudkit.permissionDenied" = "Permission denied";
+"SixLayerFramework.cloudkit.invalidRecord" = "Invalid record";
+"SixLayerFramework.cloudkit.unknownError" = "Unknown error: %@";
+
+/* Image Processing Errors */
+"SixLayerFramework.image.invalidImage" = "Invalid image provided for processing";
+"SixLayerFramework.image.processingFailed" = "Image processing failed: %@";
+"SixLayerFramework.image.enhancementFailed" = "Image enhancement failed: %@";
+"SixLayerFramework.image.optimizationFailed" = "Image optimization failed: %@";
+"SixLayerFramework.image.analysisFailed" = "Image analysis failed: %@";
+
+/* Image Metadata Errors */
+"SixLayerFramework.metadata.invalidImage" = "Invalid image provided for metadata extraction";
+"SixLayerFramework.metadata.extractionFailed" = "Metadata extraction failed: %@";
+"SixLayerFramework.metadata.analysisFailed" = "Image analysis failed: %@";
+"SixLayerFramework.metadata.categorizationFailed" = "Image categorization failed: %@";
+
+/* File System Errors */
+"SixLayerFramework.file.invalidPath" = "Invalid path - the path contains invalid characters or is malformed";
+"SixLayerFramework.file.systemError" = "File system error: %@";
+"SixLayerFramework.file.directoryCreationFailed" = "Directory creation failed: %@";
+"SixLayerFramework.file.unknownError" = "Unknown error: %@";
+
+/* Color Encoding Errors */
+"SixLayerFramework.color.encodeFailed" = "Failed to encode color: %@";
+"SixLayerFramework.color.decodeFailed" = "Failed to decode color: %@";
+"SixLayerFramework.color.invalidData" = "Invalid color data provided";
+
+/* Entity Creation Errors */
+"SixLayerFramework.entity.decodeFailed" = "Failed to decode entity from form values: %@";
+"SixLayerFramework.entity.creationFailed" = "Error creating entity from hints: %@";
+
+/* Form Storage Errors */
+"SixLayerFramework.form.encodeFailed" = "Failed to encode form draft: %@";
+"SixLayerFramework.form.decodeFailed" = "Failed to decode form draft: %@";
+"SixLayerFramework.form.saveFailed" = "Error saving form draft: %@";
+"SixLayerFramework.form.clearFailed" = "Error clearing form draft: %@";
+
+/* ============================================================================
+   FORM PLACEHOLDERS
+   ============================================================================ */
+
+"SixLayerFramework.form.placeholder.select" = "Select";
+"SixLayerFramework.form.placeholder.selectOption" = "Select an option";
+"SixLayerFramework.form.placeholder.selectDate" = "Select date";
+"SixLayerFramework.form.placeholder.selectTime" = "Select time";
+"SixLayerFramework.form.placeholder.selectDateTime" = "Select date and time";
+"SixLayerFramework.form.placeholder.selectDates" = "Select dates";
+"SixLayerFramework.form.placeholder.selectFile" = "Select file";
+"SixLayerFramework.form.placeholder.selectImage" = "Select image";
+"SixLayerFramework.form.placeholder.selectColor" = "Select color";
+"SixLayerFramework.form.placeholder.selectCountry" = "Select country";
+"SixLayerFramework.form.placeholder.selectStartDate" = "Select start date";
+"SixLayerFramework.form.placeholder.selectStartTime" = "Select start time";
+"SixLayerFramework.form.placeholder.selectEndDate" = "Select end date";
+"SixLayerFramework.form.placeholder.selectEndTime" = "Select end time";
+"SixLayerFramework.form.placeholder.selectCreationDate" = "Select creation date";
+"SixLayerFramework.form.placeholder.selectCreationTime" = "Select creation time";
+"SixLayerFramework.form.placeholder.selectBirthDate" = "Select birth date";
+"SixLayerFramework.form.placeholder.selectCategory" = "Select category";
+"SixLayerFramework.form.placeholder.selectType" = "Select type";
+"SixLayerFramework.form.placeholder.selectFilters" = "Select filters";
+"SixLayerFramework.form.placeholder.selectTheme" = "Select theme";
+"SixLayerFramework.form.placeholder.selectRouteType" = "Select route type";
+
+/* ============================================================================
+   BUTTON LABELS
+   ============================================================================ */
+
+"SixLayerFramework.button.chooseImage" = "Choose Image";
+"SixLayerFramework.button.choosePhoto" = "Choose Photo";
+"SixLayerFramework.button.chooseOption" = "Choose Option";
+"SixLayerFramework.button.selectFile" = "Select File";
+"SixLayerFramework.button.confirm" = "Confirm";
+"SixLayerFramework.button.save" = "Save";
+"SixLayerFramework.button.cancel" = "Cancel";
+"SixLayerFramework.button.select" = "Select";
+
+/* ============================================================================
+   OCR INTERFACE
+   ============================================================================ */
+
+/* OCR Disambiguation */
+"SixLayerFramework.ocr.disambiguation.title" = "Multiple interpretations found";
+"SixLayerFramework.ocr.disambiguation.prompt" = "Please select the correct interpretation:";
+"SixLayerFramework.ocr.disambiguation.confidence" = "Confidence: %d%%";
+"SixLayerFramework.ocr.disambiguation.type" = "Type: %@";
+"SixLayerFramework.ocr.disambiguation.bestMatch" = "Best match: %@";
+
+/* OCR Overlay */
+"SixLayerFramework.ocr.overlay.unavailable" = "OCR Data Unavailable";
+"SixLayerFramework.ocr.overlay.bothRequired" = "Both OCR result and image are required to display the overlay.";
+"SixLayerFramework.ocr.overlay.resultMissing" = "OCR result is missing. Please process the image first.";
+"SixLayerFramework.ocr.overlay.imageMissing" = "Image is missing. Please provide the image that was processed.";
+"SixLayerFramework.ocr.overlay.extractedText" = "Extracted Text:";
+
+/* ============================================================================
+   VALIDATION MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.validation.email" = "Please enter a valid email address";
+"SixLayerFramework.validation.phone" = "Please enter a valid phone number";
+"SixLayerFramework.validation.required" = "This field is required";
+"SixLayerFramework.validation.invalid" = "Invalid format";
+
+/* ============================================================================
+   STATUS AND LOADING
+   ============================================================================ */
+
+"SixLayerFramework.status.loading" = "Loading";
+"SixLayerFramework.status.loadingLocation" = "Loading location...";
+"SixLayerFramework.status.label" = "Status: %@";
+"SixLayerFramework.status.id" = "ID: %@";
+
+/* ============================================================================
+   NAVIGATION
+   ============================================================================ */
+
+"SixLayerFramework.navigation.selectItem" = "Select an item";
+"SixLayerFramework.navigation.chooseItem" = "Choose an item from the list to view its details";
+
+/* ============================================================================
+   FORM FIELD LABELS
+   ============================================================================ */
+
+"SixLayerFramework.form.selected" = "Selected: %@";
+"SixLayerFramework.form.selectedDates" = "Selected dates:";
+"SixLayerFramework.form.dragDropFiles" = "Drag & drop files here";
+"SixLayerFramework.form.or" = "or";
+"SixLayerFramework.form.supportedTypes" = "Supported types: %@";
+"SixLayerFramework.form.maxFileSize" = "Max file size: %@";
+
+/* ============================================================================
+   ERROR DISPLAY
+   ============================================================================ */
+
+"SixLayerFramework.error.title" = "Error";
+"SixLayerFramework.error.message" = "Error: %@";
+"SixLayerFramework.warning.title" = "Warning";
+"SixLayerFramework.failed.title" = "Failed";
+"SixLayerFramework.success.title" = "Success";
+
+/* ============================================================================
+   INVALID DATA
+   ============================================================================ */
+
+"SixLayerFramework.invalid.date" = "Invalid Date";
+"SixLayerFramework.invalid.url" = "Invalid URL";
+
+/* ============================================================================
+   AUTO-SAVE MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.autosave.coreDataFailed" = "Error auto-saving Core Data entity: %@";
+"SixLayerFramework.autosave.swiftDataFailed" = "Error auto-saving SwiftData entity: %@";
+
+/* ============================================================================
+   FILE SELECTION
+   ============================================================================ */
+
+"SixLayerFramework.file.selectFile" = "Select a file";
+"SixLayerFramework.file.selectError" = "Error selecting file: %@";
+"SixLayerFramework.file.saveError" = "Error saving file: %@";
+
+/* ============================================================================
+   PLATFORM SPECIFIC
+   ============================================================================ */
+
+"SixLayerFramework.platform.privacy.title" = "Platform Privacy";
+"SixLayerFramework.platform.crossPlatform.title" = "Cross-Platform Layout Optimization";
+"SixLayerFramework.platform.crossPlatform.subtitle" = "Optimal layouts for %@";
+"SixLayerFramework.platform.crossPlatform.adaptiveSpacing" = "• Adaptive spacing";
+"SixLayerFramework.platform.crossPlatform.specificLayouts" = "• Platform-specific layouts";
+"SixLayerFramework.platform.crossPlatform.optimalSizing" = "• Optimal component sizing";
