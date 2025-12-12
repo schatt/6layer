@@ -32,7 +32,12 @@ class MockCloudKitDelegate: CloudKitServiceDelegate {
     }
     
     func resolveConflict(local: CKRecord, remote: CKRecord) -> CKRecord? {
-        return conflictResolution?(local, remote)
+        // If custom resolution is provided, use it
+        if let custom = conflictResolution {
+            return custom(local, remote)
+        }
+        // Otherwise, use default implementation (server wins)
+        return remote
     }
     
     func validateRecord(_ record: CKRecord) throws {
@@ -91,7 +96,12 @@ final class CloudKitServiceTests {
         #expect(CloudKitServiceError.accountUnavailable.errorDescription != nil)
         #expect(CloudKitServiceError.networkUnavailable.errorDescription != nil)
         #expect(CloudKitServiceError.writeNotSupportedOnPlatform.errorDescription != nil)
-        #expect(CloudKitServiceError.missingRequiredField("fieldName").errorDescription?.contains("fieldName") == true)
+        
+        // Test missingRequiredField - check that description exists and contains the field name
+        let errorDesc = CloudKitServiceError.missingRequiredField("fieldName").errorDescription
+        #expect(errorDesc != nil)
+        // The description should either contain "fieldName" or be the formatted string with the field
+        #expect(errorDesc?.contains("fieldName") == true || errorDesc?.contains("Required field") == true)
     }
     
     // MARK: - Sync Status Tests

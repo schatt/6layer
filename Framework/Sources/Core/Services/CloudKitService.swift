@@ -45,7 +45,12 @@ public enum CloudKitServiceError: LocalizedError {
         case .writeNotSupportedOnPlatform:
             return i18n.localizedString(for: "SixLayerFramework.cloudkit.writeNotSupported")
         case .missingRequiredField(let field):
-            return i18n.localizedString(for: "SixLayerFramework.cloudkit.missingField", arguments: [field])
+            let format = i18n.localizedString(for: "SixLayerFramework.cloudkit.missingField")
+            // If format is still the key (not found), provide fallback
+            if format == "SixLayerFramework.cloudkit.missingField" {
+                return "Required field '\(field)' is missing"
+            }
+            return String(format: format, field)
         case .recordNotFound:
             return i18n.localizedString(for: "SixLayerFramework.cloudkit.recordNotFound")
         case .conflictDetected:
@@ -57,7 +62,12 @@ public enum CloudKitServiceError: LocalizedError {
         case .invalidRecord:
             return i18n.localizedString(for: "SixLayerFramework.cloudkit.invalidRecord")
         case .unknown(let error):
-            return i18n.localizedString(for: "SixLayerFramework.cloudkit.unknownError", arguments: [error.localizedDescription])
+            let format = i18n.localizedString(for: "SixLayerFramework.cloudkit.unknownError")
+            // If format is still the key (not found), provide fallback
+            if format == "SixLayerFramework.cloudkit.unknownError" {
+                return "Unknown error: \(error.localizedDescription)"
+            }
+            return String(format: format, error.localizedDescription)
         }
     }
 }
