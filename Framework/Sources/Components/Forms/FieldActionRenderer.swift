@@ -103,7 +103,7 @@ public struct FieldActionRenderer: View {
     /// Render multiple actions horizontally (when count <= maxVisibleActions)
     @ViewBuilder
     private func horizontalActionButtons(actions: [any FieldAction]) -> some View {
-        HStack(spacing: 8) {
+        platformHStackContainer(spacing: 8) {
             ForEach(Array(actions.enumerated()), id: \.offset) { index, action in
                 singleActionButton(action: action)
             }

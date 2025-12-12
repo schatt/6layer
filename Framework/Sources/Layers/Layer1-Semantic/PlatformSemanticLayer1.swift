@@ -1333,7 +1333,7 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
                             .gaugeStyle(.linearCapacity)
                         }
                 } else {
-                    VStack(alignment: .leading) {
+                    platformVStackContainer(alignment: .leading) {
                         ProgressView(value: value, total: max)
                             .progressViewStyle(.linear)
                         Text("\(Int(value)) / \(Int(max))")
@@ -1717,7 +1717,7 @@ public struct CollectionEmptyStateView: View {
     }
     
     public var body: some View {
-        VStack(spacing: 20) {
+        platformVStackContainer(spacing: 20) {
             // Icon based on data type and context
             Image(systemName: emptyStateIcon)
                 .font(.system(size: 48))
@@ -1743,7 +1743,7 @@ public struct CollectionEmptyStateView: View {
                     .buttonStyle(PlainButtonStyle())
                 } else {
                     Button(action: onCreateItem) {
-                        HStack(spacing: 8) {
+                        platformHStackContainer(spacing: 8) {
                             Image(systemName: "plus.circle.fill")
                             Text(createButtonTitle)
                         }
@@ -2092,7 +2092,7 @@ public struct GenericFormView: View {
             ),
             content: {
                 ForEach(fields, id: \.id) { field in
-                    VStack(alignment: .leading, spacing: 8) {
+                    platformVStackContainer(alignment: .leading, spacing: 8) {
                         Text(field.label)
                             .font(.body)
                             .fontWeight(.medium)
@@ -2213,7 +2213,7 @@ public struct ModalFormView: View {
     let hints: PresentationHints
     
     public var body: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             // Modal header
             HStack {
                 Text("Form: \(formType.rawValue.capitalized)")
@@ -2230,7 +2230,7 @@ public struct ModalFormView: View {
             
             // Form content
             ScrollView {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     ForEach(fields, id: \.id) { field in
                         createFieldView(for: field)
                     }
@@ -2248,7 +2248,7 @@ public struct ModalFormView: View {
     @ViewBuilder
     @MainActor
     private func createFieldView(for field: DynamicFormField) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .fontWeight(.medium)
@@ -2307,7 +2307,7 @@ public struct ModalFormView: View {
                 case .checkbox:
                     Toggle(field.placeholder ?? "Toggle", isOn: .constant(false))
                 case .radio:
-                    VStack(alignment: .leading) {
+                    platformVStackContainer(alignment: .leading) {
                         Text(field.label)
                             .font(.subheadline)
                             .fontWeight(.medium)
@@ -2429,7 +2429,7 @@ public struct ModalFormView: View {
                             .gaugeStyle(.linearCapacity)
                         }
                     } else {
-                        VStack(alignment: .leading) {
+                        platformVStackContainer(alignment: .leading) {
                             ProgressView(value: value, total: max)
                                 .progressViewStyle(.linear)
                             Text("\(Int(value)) / \(Int(max))")
@@ -2486,7 +2486,7 @@ public struct SimpleFormView: View {
     }
     
     public var body: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             // Form header
             HStack {
                 Text(formTitle)
@@ -2501,7 +2501,7 @@ public struct SimpleFormView: View {
             
             // Form fields
             ScrollView {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     ForEach(fields, id: \.id) { field in
                         createFieldView(for: field)
                     }
@@ -2662,7 +2662,7 @@ public struct SimpleFormView: View {
     @ViewBuilder
     @MainActor
     private func createFieldView(for field: DynamicFormField) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             // Field label with required indicator
             HStack {
                 Text(field.label)
@@ -3691,7 +3691,7 @@ private struct BasicArrayView: View {
     let hints: PresentationHints
     
     var body: some View {
-        VStack(alignment: .leading) {
+        platformVStackContainer(alignment: .leading) {
             Image(systemName: "list.bullet")
                 .font(.largeTitle)
                 .foregroundColor(.orange)
@@ -3935,10 +3935,10 @@ public struct GenericSettingsView: View {
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
+        platformVStackContainer(spacing: 0) {
             // Settings content
             ScrollView {
-                LazyVStack(spacing: 16) {
+                platformLazyVStackContainer(spacing: 16) {
                     ForEach(settings) { section in
                         SettingsSectionView(
                             section: section,
@@ -3953,7 +3953,7 @@ public struct GenericSettingsView: View {
             
             // Action buttons
             if onSettingsSaved != nil || onSettingsCancelled != nil {
-                HStack(spacing: 16) {
+                platformHStackContainer(spacing: 16) {
                     if let onSettingsCancelled = onSettingsCancelled {
                         Button("Cancel") {
                             onSettingsCancelled()
@@ -4005,7 +4005,7 @@ struct SettingsSectionView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             // Section header
             HStack {
                 Text(section.title)
@@ -4026,7 +4026,7 @@ struct SettingsSectionView: View {
             
             // Section items
             if isExpanded {
-                VStack(spacing: 8) {
+                platformVStackContainer(spacing: 8) {
                     ForEach(section.items) { item in
                         GenericSettingsItemView(
                             item: item,
@@ -4220,7 +4220,7 @@ public struct CustomSettingsView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 16) {
+            platformLazyVStackContainer(spacing: 16) {
                 ForEach(settings, id: \.title) { setting in
                     customSettingView(setting)
                 }
@@ -4268,7 +4268,7 @@ public struct CustomHierarchicalView: View {
     
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 8) {
+            platformLazyVStackContainer(spacing: 8) {
                 ForEach(items, id: \.id) { item in
                     customItemView(item)
                 }

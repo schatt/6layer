@@ -170,8 +170,8 @@ public struct IntelligentFormView {
                     Group {
                     switch formStrategy.containerType {
                     case .form:
-                        VStack(spacing: 20) {
-                            VStack(alignment: .leading, spacing: 8) {
+                        platformVStackContainer(spacing: 20) {
+                            platformVStackContainer(alignment: .leading, spacing: 8) {
                                 Text("Form")
                                     .font(.headline)
                                     .automaticCompliance(named: "FormTitle")
@@ -202,8 +202,8 @@ public struct IntelligentFormView {
                         )
                         
                     case .standard, .scrollView, .custom, .adaptive:
-                        VStack(spacing: 20) {
-                            VStack(alignment: .leading, spacing: 8) {
+                        platformVStackContainer(spacing: 20) {
+                            platformVStackContainer(alignment: .leading, spacing: 8) {
                                 Text("Form")
                                     .font(.headline)
                                     .automaticCompliance(named: "FormTitle")
@@ -299,7 +299,7 @@ public struct IntelligentFormView {
                 // Wrap in DynamicFormView structure for accessibility testing
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
-                    VStack(alignment: .leading, spacing: 8) {
+                    platformVStackContainer(alignment: .leading, spacing: 8) {
                         Text("Form")
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
@@ -336,7 +336,7 @@ public struct IntelligentFormView {
                 // Wrap in DynamicFormView structure for accessibility testing
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
-                    VStack(alignment: .leading, spacing: 8) {
+                    platformVStackContainer(alignment: .leading, spacing: 8) {
                         Text("Form")
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
@@ -444,7 +444,7 @@ public struct IntelligentFormView {
                 // Wrap in DynamicFormView structure for accessibility testing
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
-                    VStack(alignment: .leading, spacing: 8) {
+                    platformVStackContainer(alignment: .leading, spacing: 8) {
                         Text("Form")
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
@@ -482,7 +482,7 @@ public struct IntelligentFormView {
                 // Wrap in DynamicFormView structure for accessibility testing
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
-                    VStack(alignment: .leading, spacing: 8) {
+                    platformVStackContainer(alignment: .leading, spacing: 8) {
                         Text("Form")
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
@@ -531,7 +531,7 @@ public struct IntelligentFormView {
     ) -> some View {
         VStack {
             Spacer()
-            HStack(spacing: 12) {
+            platformHStackContainer(spacing: 12) {
                 Button("Cancel") { onCancel() }
                     .buttonStyle(.bordered)
                     .foregroundColor(Color.platformLabel)
@@ -684,7 +684,7 @@ public struct IntelligentFormView {
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             // Prefer explicit important fields first (e.g., title/name), avoid alphabetic-by-type
             let visibleFields = filterHiddenFields(analysis.fields, hints: fieldHints)
             let orderedFields = orderFieldsByPriority(visibleFields)
@@ -835,7 +835,7 @@ public struct IntelligentFormView {
         customFieldView: @escaping (String, Any, FieldType) -> some View,
         fieldHints: [String: FieldDisplayHints] = [:]
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             // Field label with required indicator
             HStack {
                 Text(field.name.capitalized)
@@ -901,7 +901,7 @@ public struct IntelligentFormView {
     ) -> some View {
         VStack {
             Spacer()
-            HStack(spacing: 12) {
+            platformHStackContainer(spacing: 12) {
                 Button("Cancel") { onCancel() }
                     .buttonStyle(.bordered)
                     .foregroundColor(Color.platformLabel)
@@ -1173,7 +1173,7 @@ private struct DefaultPlatformFieldView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        platformVStackContainer(alignment: .leading, spacing: 4) {
             // Main field input
             fieldInputView
             
@@ -1333,7 +1333,7 @@ private struct DefaultPlatformFieldView: View {
     
     @ViewBuilder
     private var errorDisplayView: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        platformVStackContainer(alignment: .leading, spacing: 2) {
             ForEach(Array(fieldErrors.enumerated()), id: \.offset) { index, error in
                 HStack(alignment: .top, spacing: 4) {
                     Image(systemName: errorIcon(for: "error"))

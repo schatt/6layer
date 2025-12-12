@@ -101,7 +101,7 @@ struct CharacterCounterView: View {
     }
     
     var body: some View {
-        HStack {
+        platformHStackContainer {
             Spacer()
             Text("\(currentLength) / \(maxLength) characters")
                 .font(.caption)
@@ -201,7 +201,7 @@ extension DynamicFormField {
         @ViewBuilder content: () -> Content,
         componentName: String
     ) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        platformVStackContainer(alignment: .leading, spacing: 4) {
             content()
         }
         .padding()
@@ -643,7 +643,7 @@ public struct DynamicNumberField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -677,7 +677,7 @@ public struct DynamicIntegerField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -747,7 +747,7 @@ public struct DynamicStepperField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -787,7 +787,7 @@ public struct DynamicDateField: View {
     public var body: some View {
         let i18n = InternationalizationService()
         
-        return VStack(alignment: .leading) {
+        return platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -820,7 +820,7 @@ public struct DynamicTimeField: View {
     public var body: some View {
         let i18n = InternationalizationService()
         
-        return VStack(alignment: .leading) {
+        return platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -853,7 +853,7 @@ public struct DynamicDateTimeField: View {
     public var body: some View {
         let i18n = InternationalizationService()
         
-        return VStack(alignment: .leading) {
+        return platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -890,14 +890,14 @@ public struct DynamicMultiDateField: View {
     
     // Fallback view for older OS versions or macOS
     private var fallbackView: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text("Multiple date selection requires iOS 16+")
                 .font(.caption)
                 .foregroundColor(.secondary)
             
             // Show selected dates if any
             if let storedDates: [Date] = formState.getValue(for: field.id), !storedDates.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
+                platformVStackContainer(alignment: .leading, spacing: 4) {
                     let i18n = InternationalizationService()
                     Text(i18n.localizedString(for: "SixLayerFramework.form.selectedDates"))
                         .font(.caption)
@@ -918,7 +918,7 @@ public struct DynamicMultiDateField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -976,7 +976,7 @@ public struct DynamicMultiSelectField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1024,7 +1024,7 @@ public struct DynamicRadioField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1044,13 +1044,13 @@ public struct DynamicRadioField: View {
                 .automaticCompliance(named: "RadioGroup")
                 #else
                 // iOS: Use custom radio button implementation
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     ForEach(options, id: \.self) { option in
-                        HStack {
+                        platformHStackContainer {
                             Button(action: {
                                 formState.setValue(option, for: field.id)
                             }) {
-                                HStack {
+                                platformHStackContainer {
                                     Image(systemName: (formState.fieldValues[field.id] as? String ?? "") == option ? "largecircle.fill.circle" : "circle")
                                         .foregroundColor(.accentColor)
                                     Text(option)
@@ -1084,7 +1084,7 @@ public struct DynamicCheckboxField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1175,7 +1175,7 @@ public struct DynamicFileField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1222,7 +1222,7 @@ public struct DynamicImageField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1275,7 +1275,7 @@ public struct DynamicRangeField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
 
@@ -1304,7 +1304,7 @@ public struct DynamicArrayField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1373,7 +1373,7 @@ public struct DynamicDataField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1423,7 +1423,7 @@ public struct DynamicAutocompleteField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1449,7 +1449,7 @@ public struct DynamicAutocompleteField: View {
             if showSuggestions, let options = field.options {
                 let filtered = options.filter { $0.localizedCaseInsensitiveContains(searchText) }
                 if !filtered.isEmpty {
-                    VStack(alignment: .leading, spacing: 4) {
+                    platformVStackContainer(alignment: .leading, spacing: 4) {
                         ForEach(filtered.prefix(5), id: \.self) { suggestion in
                             Button(action: {
                                 formState.setValue(suggestion, for: field.id)
@@ -1503,7 +1503,7 @@ public struct DynamicEnumField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1541,7 +1541,7 @@ public struct DynamicCustomField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1576,7 +1576,7 @@ public struct DynamicColorField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
@@ -1619,7 +1619,7 @@ public struct DynamicToggleField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading) {
+        platformVStackContainer(alignment: .leading) {
             Text(field.label)
                 .font(.subheadline)
             
@@ -1782,7 +1782,7 @@ public struct DynamicGaugeField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()

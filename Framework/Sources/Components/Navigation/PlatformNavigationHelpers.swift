@@ -74,7 +74,7 @@ public func platformNavigationSplitView<Content: View, Detail: View>(
             detail()
         }
     } else {
-        HStack(spacing: 0) {
+        platformHStackContainer(spacing: 0) {
             content()
             detail()
         }
@@ -164,7 +164,7 @@ public func platformNavigationSplitView<Sidebar: View, Content: View, Detail: Vi
             detail()
         }
     } else {
-        HStack(spacing: 0) {
+        platformHStackContainer(spacing: 0) {
             sidebar()
             content()
             detail()

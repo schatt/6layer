@@ -173,9 +173,9 @@ public extension IntelligentDetailView {
         onEdit: (() -> Void)?,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             if showEditButton, let onEdit = onEdit {
-                HStack {
+                platformHStackContainer {
                     Spacer()
                     Button(action: onEdit) {
                         Label("Edit", systemImage: "pencil")
@@ -206,9 +206,9 @@ public extension IntelligentDetailView {
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 16) {
+            platformLazyVStackContainer(alignment: .leading, spacing: 16) {
                 if showEditButton, let onEdit = onEdit {
-                    HStack {
+                    platformHStackContainer {
                         Spacer()
                         Button(action: onEdit) {
                             Label("Edit", systemImage: "pencil")
@@ -224,7 +224,7 @@ public extension IntelligentDetailView {
                 
                 ForEach(Array(groupedFields.keys.sorted(by: { $0.rawValue < $1.rawValue })), id: \.self) { fieldType in
                     if let fields = groupedFields[fieldType] {
-                        VStack(alignment: .leading, spacing: 12) {
+                        platformVStackContainer(alignment: .leading, spacing: 12) {
                             Text(fieldType.rawValue.capitalized)
                                 .font(.headline)
                                 .foregroundColor(.primary)
@@ -254,9 +254,9 @@ public extension IntelligentDetailView {
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
         ScrollView {
-            LazyVStack(alignment: .leading, spacing: 20) {
+            platformLazyVStackContainer(alignment: .leading, spacing: 20) {
                 // Header section
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     Text("Details")
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -267,8 +267,8 @@ public extension IntelligentDetailView {
                 }
                 .padding(.horizontal)
 
-                if showEditButton, let onEdit = onEdit {
-                    HStack {
+                    if showEditButton, let onEdit = onEdit {
+                    platformHStackContainer {
                         Spacer()
                         Button(action: onEdit) {
                             Label("Edit", systemImage: "pencil")
@@ -285,7 +285,7 @@ public extension IntelligentDetailView {
                 
                 ForEach(Array(prioritizedFields.keys.sorted(by: { $0.rawValue < $1.rawValue })), id: \.self) { priority in
                     if let fields = prioritizedFields[priority] {
-                        VStack(alignment: .leading, spacing: 16) {
+                        platformVStackContainer(alignment: .leading, spacing: 16) {
                             Text(priority.rawValue.capitalized)
                                 .font(.title2)
                                 .fontWeight(.semibold)
@@ -483,7 +483,7 @@ public extension IntelligentDetailView {
         value: Any,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
-        HStack {
+        platformHStackContainer {
             Text(field.name.capitalized)
                 .font(.body)
                 .fontWeight(.medium)
@@ -504,7 +504,7 @@ public extension IntelligentDetailView {
         value: Any,
         @ViewBuilder customFieldView: @escaping (String, Any, FieldType) -> some View
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.name.capitalized)
                 .font(.headline)
                 .foregroundColor(.primary)
@@ -513,7 +513,7 @@ public extension IntelligentDetailView {
             customFieldView(field.name, value, field.type)
             
             // Show field metadata
-            HStack {
+            platformHStackContainer {
                 Text(field.type.rawValue)
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -600,12 +600,12 @@ public extension IntelligentDetailView {
     /// Generate raw data view for debugging
     static func platformRawDataView<T>(data: T, analysis: DataAnalysisResult) -> some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            platformVStackContainer(alignment: .leading, spacing: 16) {
                 Text("Raw Data Analysis")
                     .font(.title)
                     .fontWeight(.bold)
                 
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     Text("Complexity: \(analysis.complexity.rawValue)")
                     Text("Field Count: \(analysis.fields.count)")
                     Text("Has Media: \(analysis.patterns.hasMedia ? "Yes" : "No")")
@@ -622,7 +622,7 @@ public extension IntelligentDetailView {
                     .font(.headline)
                 
                 ForEach(analysis.fields, id: \.name) { field in
-                    VStack(alignment: .leading, spacing: 4) {
+                    platformVStackContainer(alignment: .leading, spacing: 4) {
                         Text("\(field.name): \(field.type.rawValue)")
                             .font(.body)
                             .fontWeight(.medium)

@@ -9,7 +9,7 @@ public struct PlatformSecurity: View {
     public init() {}
     
     public var body: some View {
-        VStack(spacing: 12) {
+        platformVStackContainer(spacing: 12) {
             Text("Platform Security")
                 .font(.headline)
                 .automaticCompliance(named: "Title")

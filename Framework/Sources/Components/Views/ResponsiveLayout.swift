@@ -80,11 +80,11 @@ public struct ResponsiveStack<Content: View>: View {
     public var body: some View {
         ResponsiveContainer { horizontal, _ in
             if horizontal {
-                AnyView(HStack(spacing: spacing) {
+                AnyView(platformHStackContainer(spacing: spacing) {
                     content()
                 })
             } else {
-                AnyView(VStack(spacing: spacing) {
+                AnyView(platformVStackContainer(spacing: spacing) {
                     content()
                 })
             }

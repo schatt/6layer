@@ -17,7 +17,7 @@ public struct OCRDisambiguationView: View {
         // GREEN PHASE: Full implementation of OCR disambiguation interface
         let i18n = InternationalizationService()
         
-        return VStack(spacing: 16) {
+        return platformVStackContainer(spacing: 16) {
             Text(i18n.localizedString(for: "SixLayerFramework.ocr.disambiguation.title"))
                 .font(.headline)
                 .automaticCompliance(named: "DisambiguationTitle")
@@ -37,7 +37,7 @@ public struct OCRDisambiguationView: View {
                         )
                         onSelection(selection)
                     }) {
-                        VStack(alignment: .leading, spacing: 4) {
+                        platformVStackContainer(alignment: .leading, spacing: 4) {
                             Text(candidate.text)
                                 .font(.body)
                                 .bold()

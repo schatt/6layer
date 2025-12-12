@@ -202,7 +202,7 @@ public struct ResponsiveCardsView: View {
         cards: [ResponsiveCardData],
         layout: CardLayoutDecision
     ) -> some View {
-        LazyVStack(spacing: layout.spacing) {
+        platformLazyVStackContainer(spacing: layout.spacing) {
             ForEach(cards) { card in
                 ResponsiveCardView(data: card)
             }
@@ -215,7 +215,7 @@ public struct ResponsiveCardsView: View {
         cards: [ResponsiveCardData],
         layout: CardLayoutDecision
     ) -> some View {
-        LazyVStack(spacing: layout.spacing) {
+        platformLazyVStackContainer(spacing: layout.spacing) {
             ForEach(cards) { card in
                 ResponsiveCardView(data: card)
             }
@@ -375,14 +375,14 @@ public struct ResponsiveCardView: View {
     let data: ResponsiveCardData
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             // Card header
             HStack {
                 Image(systemName: data.icon)
                     .foregroundColor(data.color)
                     .font(.title2)
                 
-                VStack(alignment: .leading, spacing: 2) {
+                platformVStackContainer(alignment: .leading, spacing: 2) {
                     Text(data.title)
                         .font(.headline)
                         .foregroundColor(.primary)

@@ -24,7 +24,7 @@ public struct OCROverlayView: View {
     
     public var body: some View {
         // GREEN PHASE: Full implementation of OCR overlay interface
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             // Display image with OCR overlay
             #if os(iOS)
             Image(uiImage: image.uiImage)
@@ -42,7 +42,7 @@ public struct OCROverlayView: View {
             if !result.extractedText.isEmpty {
                 let i18n = InternationalizationService()
                 
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     Text(i18n.localizedString(for: "SixLayerFramework.ocr.overlay.extractedText"))
                         .font(.headline)
                         .automaticCompliance(named: "ExtractedTextLabel")

@@ -527,9 +527,9 @@ public struct DynamicFormFieldView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             // Field label with required indicator and info button
-            HStack(spacing: 4) {
+            platformHStackContainer(spacing: 4) {
                 Text(field.label)
                     .font(.subheadline)
                     .bold()
@@ -558,7 +558,7 @@ public struct DynamicFormFieldView: View {
                         attachmentAnchor: .point(.top),
                         arrowEdge: .bottom
                     ) {
-                        VStack(alignment: .leading, spacing: 8) {
+                        platformVStackContainer(alignment: .leading, spacing: 8) {
                             Text(description)
                                 .font(.caption)
                                 .foregroundColor(.primary)
@@ -629,7 +629,7 @@ public struct FormValidationSummary: View {
         
         if !allErrors.isEmpty {
             DisclosureGroup(isExpanded: $isExpanded) {
-                VStack(alignment: .leading, spacing: 12) {
+                platformVStackContainer(alignment: .leading, spacing: 12) {
                     ForEach(Array(allErrors.enumerated()), id: \.offset) { index, error in
                         Button(action: {
                             onErrorTap?(error.fieldId)
@@ -746,7 +746,7 @@ public struct FormWizardView<Content: View, Navigation: View>: View {
     }
     
     public var body: some View {
-        VStack(spacing: 20) {
+        platformVStackContainer(spacing: 20) {
             // Step progress indicator
             if steps.count > 1 {
                 HStack {

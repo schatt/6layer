@@ -11,7 +11,7 @@ public struct RuntimeCapabilityDetectionView: View {
     public init() {}
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text("Runtime Capabilities")
                 .font(.headline)
                 .automaticCompliance(named: "Title")

@@ -10,7 +10,7 @@ public struct CrossPlatformOptimization: View {
     public init() {}
     
     public var body: some View {
-        VStack(spacing: 12) {
+        platformVStackContainer(spacing: 12) {
             Text("Cross-Platform Layout Optimization")
                 .font(.headline)
                 .automaticCompliance(named: "Title")
@@ -21,7 +21,7 @@ public struct CrossPlatformOptimization: View {
                 .automaticCompliance(named: "Description")
             
             // Show platform-specific optimization examples
-            VStack(alignment: .leading, spacing: 8) {
+            platformVStackContainer(alignment: .leading, spacing: 8) {
                 Text("• Adaptive spacing")
                 Text("• Platform-specific layouts")
                 Text("• Optimal component sizing")

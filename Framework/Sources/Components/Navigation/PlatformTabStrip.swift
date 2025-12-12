@@ -7,10 +7,10 @@ public struct PlatformTabStrip: View {
     public var body: some View {
         #if os(iOS)
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
+            platformHStackContainer(spacing: 8) {
                 ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                     Button(action: { selection = index }) {
-                        HStack(spacing: 6) {
+                        platformHStackContainer(spacing: 6) {
                             if let icon = item.systemImage {
                                 Image(systemName: icon)
                             }

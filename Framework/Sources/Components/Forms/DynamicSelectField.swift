@@ -36,7 +36,7 @@ public struct DynamicSelectField: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             // Field label
             Text(field.label)
                 .font(.headline)

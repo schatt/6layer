@@ -125,7 +125,7 @@ public func platformSidebarPullIndicator(isVisible: Bool) -> some View {
     #if os(macOS)
     if isVisible {
         HStack {
-            HStack(spacing: 2) {
+            platformHStackContainer(spacing: 2) {
                 ForEach(0..<2, id: \.self) { _ in
                     Rectangle()
                         .fill(Color.secondary)
