@@ -397,17 +397,21 @@ public enum ImageMetadataError: Error, LocalizedError {
     case categorizationFailed(Error)
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .invalidImage:
-            return "Invalid image provided for metadata extraction"
+            return i18n.localizedString(for: "SixLayerFramework.metadata.invalidImage")
         case .corruptedImage:
-            return "Corrupted image cannot be analyzed"
+            return i18n.localizedString(for: "SixLayerFramework.metadata.corruptedImage")
         case .extractionFailed(let error):
-            return "Metadata extraction failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.metadata.extractionFailed")
+            return String(format: format, error.localizedDescription)
         case .analysisFailed(let error):
-            return "Image analysis failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.metadata.analysisFailed")
+            return String(format: format, error.localizedDescription)
         case .categorizationFailed(let error):
-            return "Image categorization failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.metadata.categorizationFailed")
+            return String(format: format, error.localizedDescription)
         }
     }
 }

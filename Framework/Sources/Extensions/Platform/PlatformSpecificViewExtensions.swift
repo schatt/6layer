@@ -1796,7 +1796,9 @@ public extension View {
                 do {
                     try data.write(to: url)
                 } catch {
-                    print("Error saving file: \(error)")
+                    let i18n = InternationalizationService()
+                    let errorMsg = i18n.localizedString(for: "SixLayerFramework.file.saveError", arguments: [error.localizedDescription])
+                    print(errorMsg)
                 }
             }
         }
@@ -2105,9 +2107,9 @@ public extension View {
                 VStack {
                     Text("File Picker")
                         .font(.title)
-                    Text("Select a file")
-                        .foregroundColor(.secondary)
                     let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.file.selectFile"))
+                        .foregroundColor(.secondary)
                     Button(i18n.localizedString(for: "SixLayerFramework.button.selectFile")) {
                         // Placeholder for file selection
                         onFileSelected(URL(fileURLWithPath: "/tmp/placeholder.txt"))
@@ -2140,7 +2142,9 @@ public extension View {
                         }
                     }
                 case .failure(let error):
-                    print("Error selecting file: \(error.localizedDescription)")
+                    let i18n = InternationalizationService()
+                    let errorMsg = i18n.localizedString(for: "SixLayerFramework.file.selectError", arguments: [error.localizedDescription])
+                    print(errorMsg)
                 }
             }
         } else {

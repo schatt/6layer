@@ -1,0 +1,204 @@
+/* 
+   Localizable.strings
+   SixLayerFramework
+   
+   Japanese (ja) localization strings for SixLayerFramework
+   NOTE: These translations are machine-generated and should be reviewed by a native speaker
+   Apps can override these by providing their own strings with the same keys
+*/
+
+/* ============================================================================
+   ERROR MESSAGES
+   ============================================================================ */
+
+/* Internationalization Errors */
+"SixLayerFramework.error.invalidLocale" = "無効なロケールが提供されました";
+"SixLayerFramework.error.languageNotSupported" = "サポートされていない言語";
+"SixLayerFramework.error.invalidCurrencyCode" = "無効な通貨コード";
+"SixLayerFramework.error.formattingFailed" = "フォーマット操作が失敗しました";
+"SixLayerFramework.error.localizationNotFound" = "ローカライゼーションが見つかりません";
+"SixLayerFramework.error.pluralizationFailed" = "複数形化操作が失敗しました";
+
+/* CloudKit Service Errors */
+"SixLayerFramework.cloudkit.containerNotFound" = "CloudKitコンテナが見つかりません";
+"SixLayerFramework.cloudkit.accountUnavailable" = "iCloudアカウントが利用できません";
+"SixLayerFramework.cloudkit.networkUnavailable" = "ネットワークが利用できません";
+"SixLayerFramework.cloudkit.writeNotSupported" = "このプラットフォームでは書き込み操作がサポートされていません";
+"SixLayerFramework.cloudkit.missingField" = "必須フィールド '%@' が不足しています";
+"SixLayerFramework.cloudkit.recordNotFound" = "レコードが見つかりません";
+"SixLayerFramework.cloudkit.conflictDetected" = "レコードの競合が検出されました";
+"SixLayerFramework.cloudkit.quotaExceeded" = "CloudKitのクォータを超過しました";
+"SixLayerFramework.cloudkit.permissionDenied" = "権限が拒否されました";
+"SixLayerFramework.cloudkit.invalidRecord" = "無効なレコード";
+"SixLayerFramework.cloudkit.unknownError" = "不明なエラー：%@";
+
+/* Image Processing Errors */
+"SixLayerFramework.image.invalidImage" = "処理用に提供された画像が無効です";
+"SixLayerFramework.image.processingFailed" = "画像処理が失敗しました：%@";
+"SixLayerFramework.image.enhancementFailed" = "画像の強化が失敗しました：%@";
+"SixLayerFramework.image.optimizationFailed" = "画像の最適化が失敗しました：%@";
+"SixLayerFramework.image.analysisFailed" = "画像分析が失敗しました：%@";
+
+/* Image Metadata Errors */
+"SixLayerFramework.metadata.invalidImage" = "メタデータ抽出用に提供された画像が無効です";
+"SixLayerFramework.metadata.extractionFailed" = "メタデータの抽出が失敗しました：%@";
+"SixLayerFramework.metadata.analysisFailed" = "画像分析が失敗しました：%@";
+"SixLayerFramework.metadata.categorizationFailed" = "画像の分類が失敗しました：%@";
+
+/* File System Errors */
+"SixLayerFramework.file.invalidPath" = "無効なパス - パスに無効な文字が含まれているか、形式が正しくありません";
+"SixLayerFramework.file.systemError" = "ファイルシステムエラー：%@";
+"SixLayerFramework.file.directoryCreationFailed" = "ディレクトリの作成が失敗しました：%@";
+"SixLayerFramework.file.unknownError" = "不明なエラー：%@";
+
+/* Color Encoding Errors */
+"SixLayerFramework.color.encodeFailed" = "色のエンコードが失敗しました：%@";
+"SixLayerFramework.color.decodeFailed" = "色のデコードが失敗しました：%@";
+"SixLayerFramework.color.invalidData" = "無効な色データが提供されました";
+
+/* Entity Creation Errors */
+"SixLayerFramework.entity.decodeFailed" = "フォーム値からエンティティのデコードが失敗しました：%@";
+"SixLayerFramework.entity.creationFailed" = "ヒントからエンティティを作成する際にエラーが発生しました：%@";
+
+/* Form Storage Errors */
+"SixLayerFramework.form.encodeFailed" = "フォームドラフトのエンコードが失敗しました：%@";
+"SixLayerFramework.form.decodeFailed" = "フォームドラフトのデコードが失敗しました：%@";
+"SixLayerFramework.form.saveFailed" = "フォームドラフトの保存中にエラーが発生しました：%@";
+"SixLayerFramework.form.clearFailed" = "フォームドラフトのクリア中にエラーが発生しました：%@";
+
+/* ============================================================================
+   FORM PLACEHOLDERS
+   ============================================================================ */
+
+"SixLayerFramework.form.placeholder.select" = "選択";
+"SixLayerFramework.form.placeholder.selectOption" = "オプションを選択";
+"SixLayerFramework.form.placeholder.selectDate" = "日付を選択";
+"SixLayerFramework.form.placeholder.selectTime" = "時刻を選択";
+"SixLayerFramework.form.placeholder.selectDateTime" = "日付と時刻を選択";
+"SixLayerFramework.form.placeholder.selectDates" = "日付を選択";
+"SixLayerFramework.form.placeholder.selectFile" = "ファイルを選択";
+"SixLayerFramework.form.placeholder.selectImage" = "画像を選択";
+"SixLayerFramework.form.placeholder.selectColor" = "色を選択";
+"SixLayerFramework.form.placeholder.selectCountry" = "国を選択";
+"SixLayerFramework.form.placeholder.selectStartDate" = "開始日を選択";
+"SixLayerFramework.form.placeholder.selectStartTime" = "開始時刻を選択";
+"SixLayerFramework.form.placeholder.selectEndDate" = "終了日を選択";
+"SixLayerFramework.form.placeholder.selectEndTime" = "終了時刻を選択";
+"SixLayerFramework.form.placeholder.selectCreationDate" = "作成日を選択";
+"SixLayerFramework.form.placeholder.selectCreationTime" = "作成時刻を選択";
+"SixLayerFramework.form.placeholder.selectBirthDate" = "生年月日を選択";
+"SixLayerFramework.form.placeholder.selectCategory" = "カテゴリを選択";
+"SixLayerFramework.form.placeholder.selectType" = "タイプを選択";
+"SixLayerFramework.form.placeholder.selectFilters" = "フィルタを選択";
+"SixLayerFramework.form.placeholder.selectTheme" = "テーマを選択";
+"SixLayerFramework.form.placeholder.selectRouteType" = "ルートタイプを選択";
+
+/* ============================================================================
+   BUTTON LABELS
+   ============================================================================ */
+
+"SixLayerFramework.button.chooseImage" = "画像を選択";
+"SixLayerFramework.button.choosePhoto" = "写真を選択";
+"SixLayerFramework.button.chooseOption" = "オプションを選択";
+"SixLayerFramework.button.selectFile" = "ファイルを選択";
+"SixLayerFramework.button.confirm" = "確認";
+"SixLayerFramework.button.save" = "保存";
+"SixLayerFramework.button.cancel" = "キャンセル";
+"SixLayerFramework.button.select" = "選択";
+
+/* ============================================================================
+   OCR INTERFACE
+   ============================================================================ */
+
+/* OCR Disambiguation */
+"SixLayerFramework.ocr.disambiguation.title" = "複数の解釈が見つかりました";
+"SixLayerFramework.ocr.disambiguation.prompt" = "正しい解釈を選択してください：";
+"SixLayerFramework.ocr.disambiguation.confidence" = "信頼度：%d%%";
+"SixLayerFramework.ocr.disambiguation.type" = "タイプ：%@";
+"SixLayerFramework.ocr.disambiguation.bestMatch" = "最適な一致：%@";
+
+/* OCR Overlay */
+"SixLayerFramework.ocr.overlay.unavailable" = "OCRデータが利用できません";
+"SixLayerFramework.ocr.overlay.bothRequired" = "オーバーレイを表示するには、OCR結果と画像の両方が必要です。";
+"SixLayerFramework.ocr.overlay.resultMissing" = "OCR結果が不足しています。まず画像を処理してください。";
+"SixLayerFramework.ocr.overlay.imageMissing" = "画像が不足しています。処理された画像を提供してください。";
+"SixLayerFramework.ocr.overlay.extractedText" = "抽出されたテキスト：";
+
+/* ============================================================================
+   VALIDATION MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.validation.email" = "有効なメールアドレスを入力してください";
+"SixLayerFramework.validation.phone" = "有効な電話番号を入力してください";
+"SixLayerFramework.validation.required" = "このフィールドは必須です";
+"SixLayerFramework.validation.invalid" = "無効な形式";
+
+/* ============================================================================
+   STATUS AND LOADING
+   ============================================================================ */
+
+"SixLayerFramework.status.loading" = "読み込み中";
+"SixLayerFramework.status.loadingLocation" = "位置情報を読み込み中...";
+"SixLayerFramework.status.label" = "ステータス：%@";
+"SixLayerFramework.status.id" = "ID：%@";
+
+/* ============================================================================
+   NAVIGATION
+   ============================================================================ */
+
+"SixLayerFramework.navigation.selectItem" = "項目を選択";
+"SixLayerFramework.navigation.chooseItem" = "リストから項目を選択して詳細を表示";
+
+/* ============================================================================
+   FORM FIELD LABELS
+   ============================================================================ */
+
+"SixLayerFramework.form.selected" = "選択済み：%@";
+"SixLayerFramework.form.selectedDates" = "選択された日付：";
+"SixLayerFramework.form.dragDropFiles" = "ファイルをここにドラッグ＆ドロップ";
+"SixLayerFramework.form.or" = "または";
+"SixLayerFramework.form.supportedTypes" = "サポートされているタイプ：%@";
+"SixLayerFramework.form.maxFileSize" = "最大ファイルサイズ：%@";
+
+/* ============================================================================
+   ERROR DISPLAY
+   ============================================================================ */
+
+"SixLayerFramework.error.title" = "エラー";
+"SixLayerFramework.error.message" = "エラー：%@";
+"SixLayerFramework.warning.title" = "警告";
+"SixLayerFramework.failed.title" = "失敗";
+"SixLayerFramework.success.title" = "成功";
+
+/* ============================================================================
+   INVALID DATA
+   ============================================================================ */
+
+"SixLayerFramework.invalid.date" = "無効な日付";
+"SixLayerFramework.invalid.url" = "無効なURL";
+
+/* ============================================================================
+   AUTO-SAVE MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.autosave.coreDataFailed" = "Core Dataエンティティの自動保存中にエラーが発生しました：%@";
+"SixLayerFramework.autosave.swiftDataFailed" = "SwiftDataエンティティの自動保存中にエラーが発生しました：%@";
+
+/* ============================================================================
+   FILE SELECTION
+   ============================================================================ */
+
+"SixLayerFramework.file.selectFile" = "ファイルを選択";
+"SixLayerFramework.file.selectError" = "ファイルの選択中にエラーが発生しました：%@";
+"SixLayerFramework.file.saveError" = "ファイルの保存中にエラーが発生しました：%@";
+
+/* ============================================================================
+   PLATFORM SPECIFIC
+   ============================================================================ */
+
+"SixLayerFramework.platform.privacy.title" = "プラットフォームのプライバシー";
+"SixLayerFramework.platform.crossPlatform.title" = "クロスプラットフォームレイアウトの最適化";
+"SixLayerFramework.platform.crossPlatform.subtitle" = "%@ の最適なレイアウト";
+"SixLayerFramework.platform.crossPlatform.adaptiveSpacing" = "• 適応的な間隔";
+"SixLayerFramework.platform.crossPlatform.specificLayouts" = "• プラットフォーム固有のレイアウト";
+"SixLayerFramework.platform.crossPlatform.optimalSizing" = "• 最適なコンポーネントサイズ";

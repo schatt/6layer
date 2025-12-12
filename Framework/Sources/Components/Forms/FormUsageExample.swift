@@ -56,6 +56,7 @@ public struct FormUsageExample: View {
             ),
             
             // Email field (required email)
+            let i18n = InternationalizationService()
             GenericFormField(
                 label: "Email Address",
                 placeholder: "Enter your email",
@@ -63,7 +64,7 @@ public struct FormUsageExample: View {
                 isRequired: true,
                 fieldType: .email,
                 validationRules: [
-                    ValidationRule(rule: .email, message: "Please enter a valid email address")
+                    ValidationRule(rule: .email, message: i18n.localizedString(for: "SixLayerFramework.validation.email"))
                 ]
             ),
             
@@ -75,7 +76,7 @@ public struct FormUsageExample: View {
                 isRequired: false,
                 fieldType: .phone,
                 validationRules: [
-                    ValidationRule(rule: .phone, message: "Please enter a valid phone number")
+                    ValidationRule(rule: .phone, message: i18n.localizedString(for: "SixLayerFramework.validation.phone"))
                 ]
             ),
             
@@ -97,7 +98,7 @@ public struct FormUsageExample: View {
             // Country selection (required select)
             GenericFormField(
                 label: "Country",
-                placeholder: "Select your country",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectCountry"),
                 value: $country,
                 isRequired: true,
                 fieldType: .select,
@@ -107,7 +108,7 @@ public struct FormUsageExample: View {
             // Interests (optional multiselect)
             GenericFormField(
                 label: "Interests",
-                placeholder: "Select your interests",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectCategory"),
                 value: Binding(
                     get: { interests.joined(separator: ",") },
                     set: { interests = $0.split(separator: ",").map(String.init) }

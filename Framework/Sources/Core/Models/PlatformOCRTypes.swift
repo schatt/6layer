@@ -762,17 +762,18 @@ public enum BarcodeError: Error, LocalizedError {
     case unsupportedPlatform
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .visionUnavailable:
-            return "Vision framework is not available on this platform"
+            return i18n.localizedString(for: "SixLayerFramework.barcode.visionUnavailable")
         case .invalidImage:
-            return "The provided image is invalid or cannot be processed"
+            return i18n.localizedString(for: "SixLayerFramework.barcode.invalidImage")
         case .noBarcodeFound:
-            return "No barcode was found in the image"
+            return i18n.localizedString(for: "SixLayerFramework.barcode.noBarcodeFound")
         case .processingFailed:
-            return "Barcode processing failed"
+            return i18n.localizedString(for: "SixLayerFramework.barcode.processingFailed")
         case .unsupportedPlatform:
-            return "Barcode scanning is not supported on this platform"
+            return i18n.localizedString(for: "SixLayerFramework.barcode.unsupportedPlatform")
         }
     }
 }

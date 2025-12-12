@@ -431,6 +431,41 @@ public class InternationalizationService: ObservableObject {
     public func placeholderSelectColor() -> String {
         return localizedString(for: "SixLayerFramework.form.placeholder.selectColor")
     }
+    
+    /// Get localized placeholder for "Select start date"
+    public func placeholderSelectStartDate() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectStartDate")
+    }
+    
+    /// Get localized placeholder for "Select start time"
+    public func placeholderSelectStartTime() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectStartTime")
+    }
+    
+    /// Get localized placeholder for "Select end date"
+    public func placeholderSelectEndDate() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectEndDate")
+    }
+    
+    /// Get localized placeholder for "Select end time"
+    public func placeholderSelectEndTime() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectEndTime")
+    }
+    
+    /// Get localized placeholder for "Select creation date"
+    public func placeholderSelectCreationDate() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectCreationDate")
+    }
+    
+    /// Get localized placeholder for "Select creation time"
+    public func placeholderSelectCreationTime() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectCreationTime")
+    }
+    
+    /// Get localized placeholder for "Select birth date"
+    public func placeholderSelectBirthDate() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectBirthDate")
+    }
 
     /// Get the current language code
     /// - Returns: Current language code (e.g., "en", "es", "fr")

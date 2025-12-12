@@ -560,22 +560,24 @@ public extension IntelligentDetailView {
             Image(systemName: (value as? Bool == true) ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .foregroundColor((value as? Bool == true) ? .green : .red)
         case .date:
+            let i18n = InternationalizationService()
             if let date = value as? Date {
                 Text(date, style: .date)
                     .font(.body)
                     .foregroundColor(.secondary)
             } else {
-                Text("Invalid Date")
+                Text(i18n.localizedString(for: "SixLayerFramework.invalid.date"))
                     .font(.body)
                     .foregroundColor(.red)
             }
         case .url:
+            let i18n = InternationalizationService()
             if let url = value as? URL {
                 Link(url.lastPathComponent, destination: url)
                     .font(.body)
                     .foregroundColor(.blue)
             } else {
-                Text("Invalid URL")
+                Text(i18n.localizedString(for: "SixLayerFramework.invalid.url"))
                     .font(.body)
                     .foregroundColor(.red)
             }

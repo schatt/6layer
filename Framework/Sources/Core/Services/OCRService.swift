@@ -30,17 +30,18 @@ public enum OCRError: Error, LocalizedError {
     case unsupportedPlatform
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .visionUnavailable:
-            return "Vision framework is not available on this platform"
+            return i18n.localizedString(for: "SixLayerFramework.ocr.visionUnavailable")
         case .invalidImage:
-            return "The provided image is invalid or cannot be processed"
+            return i18n.localizedString(for: "SixLayerFramework.ocr.invalidImage")
         case .noTextFound:
-            return "No text was found in the image"
+            return i18n.localizedString(for: "SixLayerFramework.ocr.noTextFound")
         case .processingFailed:
-            return "OCR processing failed"
+            return i18n.localizedString(for: "SixLayerFramework.ocr.processingFailed")
         case .unsupportedPlatform:
-            return "OCR is not supported on this platform"
+            return i18n.localizedString(for: "SixLayerFramework.ocr.unsupportedPlatform")
         }
     }
 }

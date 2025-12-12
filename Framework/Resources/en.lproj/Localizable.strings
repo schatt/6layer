@@ -40,15 +40,37 @@
 
 /* Image Metadata Errors */
 "SixLayerFramework.metadata.invalidImage" = "Invalid image provided for metadata extraction";
+"SixLayerFramework.metadata.corruptedImage" = "Corrupted image cannot be analyzed";
 "SixLayerFramework.metadata.extractionFailed" = "Metadata extraction failed: %@";
 "SixLayerFramework.metadata.analysisFailed" = "Image analysis failed: %@";
 "SixLayerFramework.metadata.categorizationFailed" = "Image categorization failed: %@";
+
+/* Image Processing Errors - Additional */
+"SixLayerFramework.image.unsupportedFormat" = "Unsupported image format";
 
 /* File System Errors */
 "SixLayerFramework.file.invalidPath" = "Invalid path - the path contains invalid characters or is malformed";
 "SixLayerFramework.file.systemError" = "File system error: %@";
 "SixLayerFramework.file.directoryCreationFailed" = "Directory creation failed: %@";
 "SixLayerFramework.file.unknownError" = "Unknown error: %@";
+
+/* Directory Validation Errors */
+"SixLayerFramework.directory.doesNotExist" = "The directory does not exist";
+"SixLayerFramework.directory.notADirectory" = "The path exists but is not a directory";
+"SixLayerFramework.directory.notReadable" = "The directory is not readable by the current process";
+"SixLayerFramework.directory.notWritable" = "The directory is not writable by the current process";
+"SixLayerFramework.directory.notExecutable" = "The directory is not executable/searchable by the current process";
+"SixLayerFramework.directory.networkVolumeUnavailable" = "The directory is on a network volume that is unavailable";
+"SixLayerFramework.directory.networkVolumeSlow" = "The directory is on a network volume that is slow or unresponsive";
+
+/* Platform File System Errors */
+"SixLayerFramework.filesystem.directoryNotFound" = "The directory could not be located";
+"SixLayerFramework.filesystem.permissionDenied" = "Permission denied - the current process cannot access the directory";
+"SixLayerFramework.filesystem.diskFull" = "Disk is full - insufficient space available";
+"SixLayerFramework.filesystem.invalidPath" = "Invalid path - the path contains invalid characters or is malformed";
+"SixLayerFramework.filesystem.creationFailed" = "Directory creation failed: %@";
+"SixLayerFramework.filesystem.iCloudUnavailable" = "iCloud Drive is unavailable";
+"SixLayerFramework.filesystem.securityScopedAccessRequired" = "Security-scoped resource access is required but not available";
 
 /* Color Encoding Errors */
 "SixLayerFramework.color.encodeFailed" = "Failed to encode color: %@";
@@ -64,6 +86,12 @@
 "SixLayerFramework.form.decodeFailed" = "Failed to decode form draft: %@";
 "SixLayerFramework.form.saveFailed" = "Error saving form draft: %@";
 "SixLayerFramework.form.clearFailed" = "Error clearing form draft: %@";
+"SixLayerFramework.form.storageUnavailable" = "Storage is not available";
+"SixLayerFramework.form.quotaExceeded" = "Storage quota exceeded";
+
+/* Field Action Errors */
+"SixLayerFramework.fieldAction.barcodeScanningRequiresUI" = "Barcode scanning requires image selection";
+"SixLayerFramework.fieldAction.ocrScanningRequiresUI" = "OCR scanning requires image selection";
 
 /* ============================================================================
    FORM PLACEHOLDERS
@@ -122,6 +150,30 @@
 "SixLayerFramework.ocr.overlay.resultMissing" = "OCR result is missing. Please process the image first.";
 "SixLayerFramework.ocr.overlay.imageMissing" = "Image is missing. Please provide the image that was processed.";
 "SixLayerFramework.ocr.overlay.extractedText" = "Extracted Text:";
+"SixLayerFramework.ocr.extractionComplete" = "Extraction complete";
+
+/* OCR Service Errors */
+"SixLayerFramework.ocr.visionUnavailable" = "Vision framework is not available on this platform";
+"SixLayerFramework.ocr.invalidImage" = "The provided image is invalid or cannot be processed";
+"SixLayerFramework.ocr.noTextFound" = "No text was found in the image";
+"SixLayerFramework.ocr.processingFailed" = "OCR processing failed";
+"SixLayerFramework.ocr.unsupportedPlatform" = "OCR is not supported on this platform";
+
+/* Barcode Errors */
+"SixLayerFramework.barcode.visionUnavailable" = "Vision framework is not available on this platform";
+"SixLayerFramework.barcode.invalidImage" = "The provided image is invalid or cannot be processed";
+"SixLayerFramework.barcode.noBarcodeFound" = "No barcode was found in the image";
+"SixLayerFramework.barcode.processingFailed" = "Barcode processing failed";
+"SixLayerFramework.barcode.unsupportedPlatform" = "Barcode scanning is not supported on this platform";
+
+/* Location Service Errors */
+"SixLayerFramework.location.servicesDisabled" = "Location services are disabled on this device";
+"SixLayerFramework.location.unauthorized" = "Location access is not authorized";
+"SixLayerFramework.location.denied" = "Location access was denied by the user";
+"SixLayerFramework.location.restricted" = "Location access is restricted";
+"SixLayerFramework.location.authorizationTimeout" = "Authorization request timed out";
+"SixLayerFramework.location.locationTimeout" = "Location request timed out";
+"SixLayerFramework.location.unknown" = "An unknown location error occurred";
 
 /* ============================================================================
    VALIDATION MESSAGES
@@ -147,6 +199,7 @@
 
 "SixLayerFramework.navigation.selectItem" = "Select an item";
 "SixLayerFramework.navigation.chooseItem" = "Choose an item from the list to view its details";
+"SixLayerFramework.navigation.selectItemToContinue" = "Select an item to continue.";
 
 /* ============================================================================
    FORM FIELD LABELS
@@ -158,6 +211,7 @@
 "SixLayerFramework.form.or" = "or";
 "SixLayerFramework.form.supportedTypes" = "Supported types: %@";
 "SixLayerFramework.form.maxFileSize" = "Max file size: %@";
+"SixLayerFramework.button.browseFiles" = "Browse Files";
 
 /* ============================================================================
    ERROR DISPLAY

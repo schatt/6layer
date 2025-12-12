@@ -55,21 +55,22 @@ public enum LocationServiceError: LocalizedError {
     case unknown
 
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .servicesDisabled:
-            return "Location services are disabled on this device"
+            return i18n.localizedString(for: "SixLayerFramework.location.servicesDisabled")
         case .unauthorized:
-            return "Location access is not authorized"
+            return i18n.localizedString(for: "SixLayerFramework.location.unauthorized")
         case .denied:
-            return "Location access was denied by the user"
+            return i18n.localizedString(for: "SixLayerFramework.location.denied")
         case .restricted:
-            return "Location access is restricted"
+            return i18n.localizedString(for: "SixLayerFramework.location.restricted")
         case .authorizationTimeout:
-            return "Authorization request timed out"
+            return i18n.localizedString(for: "SixLayerFramework.location.authorizationTimeout")
         case .locationTimeout:
-            return "Location request timed out"
+            return i18n.localizedString(for: "SixLayerFramework.location.locationTimeout")
         case .unknown:
-            return "An unknown location error occurred"
+            return i18n.localizedString(for: "SixLayerFramework.location.unknown")
         }
     }
 }

@@ -81,15 +81,18 @@ public enum FormStateStorageError: LocalizedError {
     case quotaExceeded
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .encodingFailed(let error):
-            return "Failed to encode form draft: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.form.encodeFailed")
+            return String(format: format, error.localizedDescription)
         case .decodingFailed(let error):
-            return "Failed to decode form draft: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.form.decodeFailed")
+            return String(format: format, error.localizedDescription)
         case .storageUnavailable:
-            return "Storage is not available"
+            return i18n.localizedString(for: "SixLayerFramework.form.storageUnavailable")
         case .quotaExceeded:
-            return "Storage quota exceeded"
+            return i18n.localizedString(for: "SixLayerFramework.form.quotaExceeded")
         }
     }
 }

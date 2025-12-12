@@ -226,19 +226,24 @@ public enum ImageProcessingError: Error, LocalizedError {
     case analysisFailed(Error)
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .invalidImage:
-            return "Invalid image provided for processing"
+            return i18n.localizedString(for: "SixLayerFramework.image.invalidImage")
         case .unsupportedFormat:
-            return "Unsupported image format"
+            return i18n.localizedString(for: "SixLayerFramework.image.unsupportedFormat")
         case .processingFailed(let error):
-            return "Image processing failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.image.processingFailed")
+            return String(format: format, error.localizedDescription)
         case .enhancementFailed(let error):
-            return "Image enhancement failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.image.enhancementFailed")
+            return String(format: format, error.localizedDescription)
         case .optimizationFailed(let error):
-            return "Image optimization failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.image.optimizationFailed")
+            return String(format: format, error.localizedDescription)
         case .analysisFailed(let error):
-            return "Image analysis failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.image.analysisFailed")
+            return String(format: format, error.localizedDescription)
         }
     }
 }

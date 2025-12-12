@@ -380,25 +380,28 @@ public struct FileUploadArea: View {
                 .font(.system(size: 48))
                 .foregroundColor(.accentColor)
             
-            Text("Drag & drop files here")
+            let i18n = InternationalizationService()
+            Text(i18n.localizedString(for: "SixLayerFramework.form.dragDropFiles"))
                 .font(.headline)
             
-            Text("or")
+            Text(i18n.localizedString(for: "SixLayerFramework.form.or"))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             
-            Button("Browse Files") {
+            Button(i18n.localizedString(for: "SixLayerFramework.button.browseFiles")) {
                 selectFiles()
             }
             .buttonStyle(.borderedProminent)
             
-            Text("Supported types: \(allowedTypes.compactMap { $0.localizedDescription }.joined(separator: ", "))")
+            let supportedTypes = allowedTypes.compactMap { $0.localizedDescription }.joined(separator: ", ")
+            Text(i18n.localizedString(for: "SixLayerFramework.form.supportedTypes", arguments: [supportedTypes]))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
             if let maxSize = maxFileSize {
-                Text("Max file size: \(ByteCountFormatter.string(fromByteCount: maxSize, countStyle: .file))")
+                let maxSizeStr = ByteCountFormatter.string(fromByteCount: maxSize, countStyle: .file)
+                Text(i18n.localizedString(for: "SixLayerFramework.form.maxFileSize", arguments: [maxSizeStr]))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

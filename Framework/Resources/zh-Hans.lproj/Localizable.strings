@@ -1,0 +1,204 @@
+/* 
+   Localizable.strings
+   SixLayerFramework
+   
+   Simplified Chinese (zh-Hans) localization strings for SixLayerFramework
+   NOTE: These translations are machine-generated and should be reviewed by a native speaker
+   Apps can override these by providing their own strings with the same keys
+*/
+
+/* ============================================================================
+   ERROR MESSAGES
+   ============================================================================ */
+
+/* Internationalization Errors */
+"SixLayerFramework.error.invalidLocale" = "提供的区域设置无效";
+"SixLayerFramework.error.languageNotSupported" = "不支持的语言";
+"SixLayerFramework.error.invalidCurrencyCode" = "无效的货币代码";
+"SixLayerFramework.error.formattingFailed" = "格式化操作失败";
+"SixLayerFramework.error.localizationNotFound" = "未找到本地化";
+"SixLayerFramework.error.pluralizationFailed" = "复数化操作失败";
+
+/* CloudKit Service Errors */
+"SixLayerFramework.cloudkit.containerNotFound" = "未找到 CloudKit 容器";
+"SixLayerFramework.cloudkit.accountUnavailable" = "iCloud 帐户不可用";
+"SixLayerFramework.cloudkit.networkUnavailable" = "网络不可用";
+"SixLayerFramework.cloudkit.writeNotSupported" = "此平台不支持写入操作";
+"SixLayerFramework.cloudkit.missingField" = "缺少必填字段 '%@'";
+"SixLayerFramework.cloudkit.recordNotFound" = "未找到记录";
+"SixLayerFramework.cloudkit.conflictDetected" = "检测到记录冲突";
+"SixLayerFramework.cloudkit.quotaExceeded" = "CloudKit 配额已超出";
+"SixLayerFramework.cloudkit.permissionDenied" = "权限被拒绝";
+"SixLayerFramework.cloudkit.invalidRecord" = "无效记录";
+"SixLayerFramework.cloudkit.unknownError" = "未知错误：%@";
+
+/* Image Processing Errors */
+"SixLayerFramework.image.invalidImage" = "提供的图像无效，无法处理";
+"SixLayerFramework.image.processingFailed" = "图像处理失败：%@";
+"SixLayerFramework.image.enhancementFailed" = "图像增强失败：%@";
+"SixLayerFramework.image.optimizationFailed" = "图像优化失败：%@";
+"SixLayerFramework.image.analysisFailed" = "图像分析失败：%@";
+
+/* Image Metadata Errors */
+"SixLayerFramework.metadata.invalidImage" = "提供的图像无效，无法提取元数据";
+"SixLayerFramework.metadata.extractionFailed" = "元数据提取失败：%@";
+"SixLayerFramework.metadata.analysisFailed" = "图像分析失败：%@";
+"SixLayerFramework.metadata.categorizationFailed" = "图像分类失败：%@";
+
+/* File System Errors */
+"SixLayerFramework.file.invalidPath" = "路径无效 - 路径包含无效字符或格式错误";
+"SixLayerFramework.file.systemError" = "文件系统错误：%@";
+"SixLayerFramework.file.directoryCreationFailed" = "目录创建失败：%@";
+"SixLayerFramework.file.unknownError" = "未知错误：%@";
+
+/* Color Encoding Errors */
+"SixLayerFramework.color.encodeFailed" = "颜色编码失败：%@";
+"SixLayerFramework.color.decodeFailed" = "颜色解码失败：%@";
+"SixLayerFramework.color.invalidData" = "提供的颜色数据无效";
+
+/* Entity Creation Errors */
+"SixLayerFramework.entity.decodeFailed" = "从表单值解码实体失败：%@";
+"SixLayerFramework.entity.creationFailed" = "从提示创建实体时出错：%@";
+
+/* Form Storage Errors */
+"SixLayerFramework.form.encodeFailed" = "表单草稿编码失败：%@";
+"SixLayerFramework.form.decodeFailed" = "表单草稿解码失败：%@";
+"SixLayerFramework.form.saveFailed" = "保存表单草稿时出错：%@";
+"SixLayerFramework.form.clearFailed" = "清除表单草稿时出错：%@";
+
+/* ============================================================================
+   FORM PLACEHOLDERS
+   ============================================================================ */
+
+"SixLayerFramework.form.placeholder.select" = "选择";
+"SixLayerFramework.form.placeholder.selectOption" = "选择选项";
+"SixLayerFramework.form.placeholder.selectDate" = "选择日期";
+"SixLayerFramework.form.placeholder.selectTime" = "选择时间";
+"SixLayerFramework.form.placeholder.selectDateTime" = "选择日期和时间";
+"SixLayerFramework.form.placeholder.selectDates" = "选择日期";
+"SixLayerFramework.form.placeholder.selectFile" = "选择文件";
+"SixLayerFramework.form.placeholder.selectImage" = "选择图像";
+"SixLayerFramework.form.placeholder.selectColor" = "选择颜色";
+"SixLayerFramework.form.placeholder.selectCountry" = "选择国家";
+"SixLayerFramework.form.placeholder.selectStartDate" = "选择开始日期";
+"SixLayerFramework.form.placeholder.selectStartTime" = "选择开始时间";
+"SixLayerFramework.form.placeholder.selectEndDate" = "选择结束日期";
+"SixLayerFramework.form.placeholder.selectEndTime" = "选择结束时间";
+"SixLayerFramework.form.placeholder.selectCreationDate" = "选择创建日期";
+"SixLayerFramework.form.placeholder.selectCreationTime" = "选择创建时间";
+"SixLayerFramework.form.placeholder.selectBirthDate" = "选择出生日期";
+"SixLayerFramework.form.placeholder.selectCategory" = "选择类别";
+"SixLayerFramework.form.placeholder.selectType" = "选择类型";
+"SixLayerFramework.form.placeholder.selectFilters" = "选择筛选器";
+"SixLayerFramework.form.placeholder.selectTheme" = "选择主题";
+"SixLayerFramework.form.placeholder.selectRouteType" = "选择路线类型";
+
+/* ============================================================================
+   BUTTON LABELS
+   ============================================================================ */
+
+"SixLayerFramework.button.chooseImage" = "选择图像";
+"SixLayerFramework.button.choosePhoto" = "选择照片";
+"SixLayerFramework.button.chooseOption" = "选择选项";
+"SixLayerFramework.button.selectFile" = "选择文件";
+"SixLayerFramework.button.confirm" = "确认";
+"SixLayerFramework.button.save" = "保存";
+"SixLayerFramework.button.cancel" = "取消";
+"SixLayerFramework.button.select" = "选择";
+
+/* ============================================================================
+   OCR INTERFACE
+   ============================================================================ */
+
+/* OCR Disambiguation */
+"SixLayerFramework.ocr.disambiguation.title" = "找到多种解释";
+"SixLayerFramework.ocr.disambiguation.prompt" = "请选择正确的解释：";
+"SixLayerFramework.ocr.disambiguation.confidence" = "置信度：%d%%";
+"SixLayerFramework.ocr.disambiguation.type" = "类型：%@";
+"SixLayerFramework.ocr.disambiguation.bestMatch" = "最佳匹配：%@";
+
+/* OCR Overlay */
+"SixLayerFramework.ocr.overlay.unavailable" = "OCR 数据不可用";
+"SixLayerFramework.ocr.overlay.bothRequired" = "需要 OCR 结果和图像才能显示叠加层。";
+"SixLayerFramework.ocr.overlay.resultMissing" = "缺少 OCR 结果。请先处理图像。";
+"SixLayerFramework.ocr.overlay.imageMissing" = "缺少图像。请提供已处理的图像。";
+"SixLayerFramework.ocr.overlay.extractedText" = "提取的文本：";
+
+/* ============================================================================
+   VALIDATION MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.validation.email" = "请输入有效的电子邮件地址";
+"SixLayerFramework.validation.phone" = "请输入有效的电话号码";
+"SixLayerFramework.validation.required" = "此字段为必填项";
+"SixLayerFramework.validation.invalid" = "格式无效";
+
+/* ============================================================================
+   STATUS AND LOADING
+   ============================================================================ */
+
+"SixLayerFramework.status.loading" = "加载中";
+"SixLayerFramework.status.loadingLocation" = "正在加载位置...";
+"SixLayerFramework.status.label" = "状态：%@";
+"SixLayerFramework.status.id" = "ID：%@";
+
+/* ============================================================================
+   NAVIGATION
+   ============================================================================ */
+
+"SixLayerFramework.navigation.selectItem" = "选择项目";
+"SixLayerFramework.navigation.chooseItem" = "从列表中选择一个项目以查看其详细信息";
+
+/* ============================================================================
+   FORM FIELD LABELS
+   ============================================================================ */
+
+"SixLayerFramework.form.selected" = "已选择：%@";
+"SixLayerFramework.form.selectedDates" = "已选择的日期：";
+"SixLayerFramework.form.dragDropFiles" = "将文件拖放到此处";
+"SixLayerFramework.form.or" = "或";
+"SixLayerFramework.form.supportedTypes" = "支持的类型：%@";
+"SixLayerFramework.form.maxFileSize" = "最大文件大小：%@";
+
+/* ============================================================================
+   ERROR DISPLAY
+   ============================================================================ */
+
+"SixLayerFramework.error.title" = "错误";
+"SixLayerFramework.error.message" = "错误：%@";
+"SixLayerFramework.warning.title" = "警告";
+"SixLayerFramework.failed.title" = "失败";
+"SixLayerFramework.success.title" = "成功";
+
+/* ============================================================================
+   INVALID DATA
+   ============================================================================ */
+
+"SixLayerFramework.invalid.date" = "无效日期";
+"SixLayerFramework.invalid.url" = "无效 URL";
+
+/* ============================================================================
+   AUTO-SAVE MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.autosave.coreDataFailed" = "自动保存 Core Data 实体时出错：%@";
+"SixLayerFramework.autosave.swiftDataFailed" = "自动保存 SwiftData 实体时出错：%@";
+
+/* ============================================================================
+   FILE SELECTION
+   ============================================================================ */
+
+"SixLayerFramework.file.selectFile" = "选择文件";
+"SixLayerFramework.file.selectError" = "选择文件时出错：%@";
+"SixLayerFramework.file.saveError" = "保存文件时出错：%@";
+
+/* ============================================================================
+   PLATFORM SPECIFIC
+   ============================================================================ */
+
+"SixLayerFramework.platform.privacy.title" = "平台隐私";
+"SixLayerFramework.platform.crossPlatform.title" = "跨平台布局优化";
+"SixLayerFramework.platform.crossPlatform.subtitle" = "%@ 的最佳布局";
+"SixLayerFramework.platform.crossPlatform.adaptiveSpacing" = "• 自适应间距";
+"SixLayerFramework.platform.crossPlatform.specificLayouts" = "• 平台特定布局";
+"SixLayerFramework.platform.crossPlatform.optimalSizing" = "• 最佳组件大小";

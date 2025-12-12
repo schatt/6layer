@@ -353,10 +353,12 @@ private struct StructuredDataExtractionWrapper: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             } else if let error = error {
-                Text("Error: \(error.localizedDescription)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.error.message", arguments: [error.localizedDescription]))
                     .foregroundColor(.red)
             } else if result != nil {
-                Text("Extraction complete")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.extractionComplete"))
                     .foregroundColor(.green)
             } else {
                 Text("Ready to extract")

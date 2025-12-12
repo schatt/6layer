@@ -253,10 +253,14 @@ public enum FieldActionError: Error, LocalizedError {
     }
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .scanningRequiresUI(let type, let hint, _, _):
-            let typeName = type == .barcode ? "barcode" : "OCR"
-            return hint ?? "\(typeName.capitalized) scanning requires image selection"
+            if let hint = hint {
+                return hint
+            }
+            let key = type == .barcode ? "SixLayerFramework.fieldAction.barcodeScanningRequiresUI" : "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+            return i18n.localizedString(for: key)
         }
     }
 }

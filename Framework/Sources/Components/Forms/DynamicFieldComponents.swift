@@ -890,7 +890,8 @@ public struct DynamicMultiDateField: View {
             // Show selected dates if any
             if let storedDates: [Date] = formState.getValue(for: field.id), !storedDates.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Selected dates:")
+                    let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.form.selectedDates"))
                         .font(.caption)
                         .bold()
                     ForEach(storedDates, id: \.self) { date in
@@ -1171,6 +1172,8 @@ public struct DynamicFileField: View {
                 .bold()
                 .automaticCompliance(named: "FieldLabel")
 
+            let i18n = InternationalizationService()
+            
             Button(action: {
                 // TODO: Implement file picker integration
                 // This should open file picker and update formState
@@ -1178,7 +1181,6 @@ public struct DynamicFileField: View {
             }) {
                 HStack {
                     Image(systemName: "doc.badge.plus")
-                    let i18n = InternationalizationService()
                     Text(i18n.localizedString(for: "SixLayerFramework.button.selectFile"))
                 }
             }
@@ -1186,7 +1188,7 @@ public struct DynamicFileField: View {
             .automaticCompliance(named: "FilePickerButton")
 
             if let fileName = formState.fieldValues[field.id] as? String, !fileName.isEmpty {
-                Text("Selected: \(fileName)")
+                Text(i18n.localizedString(for: "SixLayerFramework.form.selected", arguments: [fileName]))
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .automaticCompliance(named: "SelectedFileName")

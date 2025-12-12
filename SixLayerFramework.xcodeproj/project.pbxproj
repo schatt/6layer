@@ -585,6 +585,7 @@
 		83623B34F6A003B736477131 /* AccessibilityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70CBB6B3A5CF69BD03AB665 /* AccessibilityTypes.swift */; };
 		83D0DA8551771C26AC0C8B2C /* PlatformTypesCompilationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B52C5563B7550031E55A8B /* PlatformTypesCompilationTests.swift */; };
 		83D21DBDA6691335C68B8ECA /* DynamicFormProgressIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D906015D2507EB970A9A2BC /* DynamicFormProgressIntegrationTests.swift */; };
+		83E2361CB8A32A68944FFD34 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 0A06209E5E5D1A931B8FB645 /* Resources */; };
 		8404D9310063596A5207511E /* AutomaticHIGComplianceDemonstrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8AA57D831C1927F54217FD /* AutomaticHIGComplianceDemonstrationTests.swift */; };
 		843DE1B55CCFCDBC41AA86D0 /* DataFrameAnalysisEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370489B2A338F777BAD4E7B /* DataFrameAnalysisEngineTests.swift */; };
 		848B629FB818DE1302D856F8 /* AccessibilityIdentifierPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB23279DC451C23C6F2D1A4B /* AccessibilityIdentifierPersistenceTests.swift */; };
@@ -675,6 +676,7 @@
 		9947FDD32DC4066510F7A989 /* PlatformScrollViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B202DB8BC3BC306A5DF7079 /* PlatformScrollViewExtensions.swift */; };
 		9A6640F04B8D785A54FB10F8 /* PlatformSpecificSecureFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498792D06A0E16EC58C8494 /* PlatformSpecificSecureFieldExtensions.swift */; };
 		9A80CBE3DE7DFED17F531497 /* AccessibilityFeaturesLayer5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEDA69DD6F880B055B75A5 /* AccessibilityFeaturesLayer5Tests.swift */; };
+		9ABF13877775084D0DF5EE5D /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 0A06209E5E5D1A931B8FB645 /* Resources */; };
 		9AD651D1EF1BEE2FC56454D4 /* OCRDisambiguationL1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6845A9B57C6ED3EF7F5EC48 /* OCRDisambiguationL1Tests.swift */; };
 		9AF30918388A5729EA69B85E /* TabularDataAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69128AA189274DD8C3B44FE4 /* TabularDataAPITests.swift */; };
 		9B075B916AF57D0535BFB848 /* HiddenFieldsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F3D778509CB9722C765410 /* HiddenFieldsTests.swift */; };
@@ -1247,6 +1249,7 @@
 		08145E00340A1C4074870B42 /* DataHintsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHintsLoader.swift; sourceTree = "<group>"; };
 		08B4CB20079AF0ADD8AF9C32 /* Layer2LayoutDecisionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer2LayoutDecisionTests.swift; sourceTree = "<group>"; };
 		09FFAA8FB08DDD888050C880 /* ModalContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalContainerTests.swift; sourceTree = "<group>"; };
+		0A06209E5E5D1A931B8FB645 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Resources; path = Framework/Resources; sourceTree = SOURCE_ROOT; };
 		0AF5FBA4ADAE18A948F8C461 /* MaterialAccessibilityManagerAccessibilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialAccessibilityManagerAccessibilityTests.swift; sourceTree = "<group>"; };
 		0AFB9688FB54E31DDE5950F9 /* PlatformStylingLayer4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformStylingLayer4.swift; sourceTree = "<group>"; };
 		0B1B95639D24A95365CC9506 /* NavigationStackLayer5Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStackLayer5Tests.swift; sourceTree = "<group>"; };
@@ -3048,6 +3051,7 @@
 		E7DC5B0940E3893241AFD6C4 = {
 			isa = PBXGroup;
 			children = (
+				0A06209E5E5D1A931B8FB645 /* Resources */,
 				470661F6D9B8DEF7FC49A78A /* SixLayerFrameworkExternalIntegrationTests */,
 				3D368E444DAF7928A07BE4B3 /* SixLayerFrameworkUITests */,
 				5E0CE0F0FCBCB31B9DFE126E /* SixLayerFrameworkUnitTests */,
@@ -3516,6 +3520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7BADA217AAFF773D300E8F8 /* DataHintsLoader_REFACTOR_PROPOSAL.md in Resources */,
+				83E2361CB8A32A68944FFD34 /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3524,6 +3529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				30DBB1D4B390C15C52705B91 /* DataHintsLoader_REFACTOR_PROPOSAL.md in Resources */,
+				9ABF13877775084D0DF5EE5D /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

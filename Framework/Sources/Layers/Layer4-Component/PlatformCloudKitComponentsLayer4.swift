@@ -134,7 +134,8 @@ public func platformCloudKitServiceStatus_L4(service: CloudKitService) -> some V
         // Error Display (if there's an error)
         if let error = service.lastError {
             Divider()
-            Label("Error: \(error.localizedDescription)", systemImage: "exclamationmark.triangle")
+            let i18n = InternationalizationService()
+            Label(i18n.localizedString(for: "SixLayerFramework.error.message", arguments: [error.localizedDescription]), systemImage: "exclamationmark.triangle")
                 .foregroundColor(.red)
                 .font(.caption)
         }

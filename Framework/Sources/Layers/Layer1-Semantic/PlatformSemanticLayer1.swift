@@ -1250,8 +1250,9 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
             case .toggle, .boolean:
                 Toggle(field.label, isOn: .constant(false))
             case .select:
-                Picker(field.placeholder ?? "Select option", selection: .constant("")) {
-                    Text("Select an option").tag("")
+                let i18n = InternationalizationService()
+                Picker(field.placeholder ?? i18n.placeholderSelectOption(), selection: .constant("")) {
+                    Text(i18n.placeholderSelectOption()).tag("")
                     if let options = field.options {
                         ForEach(options, id: \.self) { option in
                             Text(option).tag(option)
@@ -1260,18 +1261,21 @@ private func createSimpleFieldView(for field: DynamicFormField, hints: Presentat
                 }
                 .pickerStyle(.menu)
             case .date:
+                let i18n = InternationalizationService()
                 DatePicker("", selection: .constant(Date()))
                     .datePickerStyle(.compact)
-                    .selfLabelingControl(label: field.placeholder ?? "Select date")
+                    .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectDate())
             case .multiDate, .dateRange:
                 // Use DatePicker as fallback for Layer1 (MultiDatePicker requires iOS 16+)
+                let i18n = InternationalizationService()
                 DatePicker("", selection: .constant(Date()))
                     .datePickerStyle(.compact)
-                    .selfLabelingControl(label: field.placeholder ?? "Select dates")
+                    .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectDates())
             case .time:
+                let i18n = InternationalizationService()
                 DatePicker("", selection: .constant(Date()), displayedComponents: .hourAndMinute)
                     .datePickerStyle(.compact)
-                    .selfLabelingControl(label: field.placeholder ?? "Select time")
+                    .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectTime())
             case .color:
                 ColorPicker("", selection: .constant(.blue))
                     .selfLabelingControl(label: field.label)
@@ -1921,7 +1925,8 @@ public struct CollectionEmptyStateView: View {
         case .form:
             return "No form fields available."
         case .modal:
-            return "Select an item to continue."
+            let i18n = InternationalizationService()
+            return i18n.localizedString(for: "SixLayerFramework.navigation.selectItemToContinue")
         case .navigation:
             return "No navigation items available."
         case .settings:
@@ -2269,17 +2274,20 @@ public struct ModalFormView: View {
                     TextField(field.placeholder ?? "Enter number", text: .constant(""))
                         .textFieldStyle(.roundedBorder)
                 case .date:
+                    let i18n = InternationalizationService()
                     DatePicker("", selection: .constant(Date()))
                         .datePickerStyle(.compact)
-                        .selfLabelingControl(label: field.placeholder ?? "Select date")
+                        .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectDate())
                 case .multiDate, .dateRange:
                     // Use DatePicker as fallback for Layer1 (MultiDatePicker requires iOS 16+)
+                    let i18n = InternationalizationService()
                     DatePicker("", selection: .constant(Date()))
                         .datePickerStyle(.compact)
-                        .selfLabelingControl(label: field.placeholder ?? "Select dates")
+                        .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectDates())
                 case .select:
-                    Picker(field.placeholder ?? "Select option", selection: .constant("")) {
-                        Text("Select an option").tag("")
+                    let i18n = InternationalizationService()
+                    Picker(field.placeholder ?? i18n.placeholderSelectOption(), selection: .constant("")) {
+                        Text(i18n.placeholderSelectOption()).tag("")
                         if let options = field.options {
                             ForEach(options, id: \.self) { option in
                                 Text(option).tag(option)
@@ -2320,13 +2328,15 @@ public struct ModalFormView: View {
                     TextField(field.placeholder ?? "Enter phone", text: .constant(""))
                         .textFieldStyle(.roundedBorder)
                 case .time:
+                    let i18n = InternationalizationService()
                     DatePicker("", selection: .constant(Date()), displayedComponents: .hourAndMinute)
                         .datePickerStyle(.compact)
-                        .selfLabelingControl(label: field.placeholder ?? "Select time")
+                        .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectTime())
                 case .datetime:
+                    let i18n = InternationalizationService()
                     DatePicker("", selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
-                        .selfLabelingControl(label: field.placeholder ?? "Select date and time")
+                        .selfLabelingControl(label: field.placeholder ?? i18n.placeholderSelectDateTime())
                 case .multiselect:
                     Text("Multi-select field: \(field.label)")
                         .foregroundColor(.secondary)
@@ -2717,11 +2727,13 @@ public struct SimpleFormView: View {
                         displayedComponents: .date
                     )
                     .datePickerStyle(.compact)
-                    .selfLabelingControl(label: field.placeholder ?? "Select date")
+                    let i18nDate = InternationalizationService()
+                    .selfLabelingControl(label: field.placeholder ?? i18nDate.placeholderSelectDate())
                     
                 case .select:
-                    Picker(field.placeholder ?? "Select option", selection: field.$value) {
-                        Text("Select an option").tag("")
+                    let i18nSelect = InternationalizationService()
+                    Picker(field.placeholder ?? i18nSelect.placeholderSelectOption(), selection: field.$value) {
+                        Text(i18nSelect.placeholderSelectOption()).tag("")
                         ForEach(field.options, id: \.self) { option in
                             Text(option).tag(option)
                         }
@@ -2785,9 +2797,11 @@ public struct SimpleFormView: View {
                         displayedComponents: .hourAndMinute
                     )
                     .datePickerStyle(.compact)
-                    .selfLabelingControl(label: field.placeholder ?? "Select time")
+                    let i18nTime = InternationalizationService()
+                    .selfLabelingControl(label: field.placeholder ?? i18nTime.placeholderSelectTime())
                     
                 case .datetime:
+                    let i18nDateTime = InternationalizationService()
                     DatePicker(
                         "",
                         selection: Binding(
@@ -2797,7 +2811,7 @@ public struct SimpleFormView: View {
                         displayedComponents: [.date, .hourAndMinute]
                     )
                     .datePickerStyle(.compact)
-                    .selfLabelingControl(label: field.placeholder ?? "Select date and time")
+                    .selfLabelingControl(label: field.placeholder ?? i18nDateTime.placeholderSelectDateTime())
                     
                 case .multiselect:
                     VStack(alignment: .leading, spacing: 4) {
@@ -2826,7 +2840,8 @@ public struct SimpleFormView: View {
                     }) {
                         HStack {
                             Image(systemName: "paperclip")
-                            Text(field.value.isEmpty ? "Select file" : field.value)
+                            let i18n = InternationalizationService()
+                            Text(field.value.isEmpty ? i18n.placeholderSelectFile() : field.value)
                             Spacer()
                         }
                         .padding()
@@ -2847,7 +2862,8 @@ public struct SimpleFormView: View {
                         }
                         
                 case .color:
-                    ColorPicker(field.placeholder ?? "Select color", selection: Binding(
+                    let i18n = InternationalizationService()
+                    ColorPicker(field.placeholder ?? i18n.placeholderSelectColor(), selection: Binding(
                         get: { Color(hex: field.value) ?? .blue },
                         set: { field.value = $0.toHex() }
                     ))
@@ -2959,8 +2975,9 @@ private func createFieldsForFormType(_ formType: DataTypeHint, context: Presenta
             DynamicFormField(id: "numericValue", contentType: .number, label: "Numeric Value", placeholder: "Enter number")
         ]
     case .date:
+        let i18n = InternationalizationService()
         return [
-            DynamicFormField(id: "date", contentType: .date, label: "Date", placeholder: "Select date")
+            DynamicFormField(id: "date", contentType: .date, label: "Date", placeholder: i18n.placeholderSelectDate())
         ]
     case .boolean:
         return [
@@ -2977,11 +2994,12 @@ private func createFieldsForFormType(_ formType: DataTypeHint, context: Presenta
             DynamicFormField(id: "levelCount", contentType: .number, label: "Level Count", placeholder: "Enter hierarchy levels")
         ]
     case .temporal:
+        let i18n = InternationalizationService()
         return [
-            DynamicFormField(id: "startDate", contentType: .date, label: "Start Date", placeholder: "Select start date"),
-            DynamicFormField(id: "startTime", contentType: .time, label: "Start Time", placeholder: "Select start time"),
-            DynamicFormField(id: "endDate", contentType: .date, label: "End Date", placeholder: "Select end date"),
-            DynamicFormField(id: "endTime", contentType: .time, label: "End Time", placeholder: "Select end time")
+            DynamicFormField(id: "startDate", contentType: .date, label: "Start Date", placeholder: i18n.placeholderSelectStartDate()),
+            DynamicFormField(id: "startTime", contentType: .time, label: "Start Time", placeholder: i18n.placeholderSelectStartTime()),
+            DynamicFormField(id: "endDate", contentType: .date, label: "End Date", placeholder: i18n.placeholderSelectEndDate()),
+            DynamicFormField(id: "endTime", contentType: .time, label: "End Time", placeholder: i18n.placeholderSelectEndTime())
         ]
     case .media:
         return [
@@ -3011,8 +3029,9 @@ private func createGenericFormFields(context: PresentationContext) -> [GenericFo
         return [
             GenericFormField(label: "Title", placeholder: "Enter title", value: .constant(""), fieldType: .text),
             GenericFormField(label: "Description", placeholder: "Enter description", value: .constant(""), fieldType: .richtext),
-            GenericFormField(label: "Created Date", placeholder: "Select creation date", value: .constant(""), fieldType: .date),
-            GenericFormField(label: "Created Time", placeholder: "Select creation time", value: .constant(""), fieldType: .time),
+            let i18n = InternationalizationService()
+            GenericFormField(label: "Created Date", placeholder: i18n.placeholderSelectCreationDate(), value: .constant(""), fieldType: .date),
+            GenericFormField(label: "Created Time", placeholder: i18n.placeholderSelectCreationTime(), value: .constant(""), fieldType: .time),
             GenericFormField(label: "Attachments", placeholder: "Upload attachments", value: .constant(""), fieldType: .file)
         ]
     case .form:
@@ -3020,8 +3039,8 @@ private func createGenericFormFields(context: PresentationContext) -> [GenericFo
             GenericFormField(label: "Name", placeholder: "Enter name", value: .constant(""), fieldType: .text),
             GenericFormField(label: "Email", placeholder: "Enter email", value: .constant(""), fieldType: .email),
             GenericFormField(label: "Age", placeholder: "Enter age", value: .constant(""), fieldType: .number),
-            GenericFormField(label: "Birth Date", placeholder: "Select birth date", value: .constant(""), fieldType: .date),
-            GenericFormField(label: "Country", placeholder: "Select country", value: .constant(""), fieldType: .autocomplete),
+            GenericFormField(label: "Birth Date", placeholder: i18n.placeholderSelectBirthDate(), value: .constant(""), fieldType: .date),
+            GenericFormField(label: "Country", placeholder: i18n.placeholderSelectCountry(), value: .constant(""), fieldType: .autocomplete),
             GenericFormField(label: "Bio", placeholder: "Enter bio", value: .constant(""), fieldType: .richtext),
             GenericFormField(label: "Profile Photo", placeholder: "Upload profile photo", value: .constant(""), fieldType: .file),
             GenericFormField(label: "Subscribe", placeholder: "Subscribe to updates", value: .constant(""), fieldType: .checkbox)
@@ -3100,6 +3119,7 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
             )
         ]
     case .form:
+        let i18n = InternationalizationService()
         return [
             DynamicFormField(
                 id: "name",
@@ -3123,13 +3143,13 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 id: "birth_date",
                 contentType: .date,
                 label: "Birth Date",
-                placeholder: "Select birth date"
+                placeholder: i18n.placeholderSelectBirthDate()
             ),
             DynamicFormField(
                 id: "country",
                 contentType: .autocomplete,
                 label: "Country",
-                placeholder: "Select country"
+                placeholder: i18n.placeholderSelectCountry()
             ),
             DynamicFormField(
                 id: "bio",
@@ -3188,11 +3208,12 @@ public func createDynamicFormFields(context: PresentationContext) -> [DynamicFor
                 label: "Search",
                 placeholder: "Enter search query"
             ),
+            let i18n = InternationalizationService()
             DynamicFormField(
                 id: "filter_category",
                 contentType: .select,
                 label: "Category",
-                placeholder: "Select category",
+                placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectCategory"),
                 options: ["All", "Recent", "Favorites"]
             )
         ]

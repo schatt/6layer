@@ -914,27 +914,29 @@ public enum DirectoryValidationError: Error, LocalizedError, Sendable {
     case securityScopedAccessRequired
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .doesNotExist:
-            return "The directory does not exist"
+            return i18n.localizedString(for: "SixLayerFramework.directory.doesNotExist")
         case .notADirectory:
-            return "The path exists but is not a directory"
+            return i18n.localizedString(for: "SixLayerFramework.directory.notADirectory")
         case .notReadable:
-            return "The directory is not readable by the current process"
+            return i18n.localizedString(for: "SixLayerFramework.directory.notReadable")
         case .notWritable:
-            return "The directory is not writable by the current process"
+            return i18n.localizedString(for: "SixLayerFramework.directory.notWritable")
         case .notExecutable:
-            return "The directory is not executable/searchable by the current process"
+            return i18n.localizedString(for: "SixLayerFramework.directory.notExecutable")
         case .networkVolumeUnavailable:
-            return "The directory is on a network volume that is unavailable"
+            return i18n.localizedString(for: "SixLayerFramework.directory.networkVolumeUnavailable")
         case .networkVolumeSlow:
-            return "The directory is on a network volume that is slow or unresponsive"
+            return i18n.localizedString(for: "SixLayerFramework.directory.networkVolumeSlow")
         case .fileSystemError(let error):
-            return "File system error: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.file.systemError")
+            return String(format: format, error.localizedDescription)
         case .invalidPath:
-            return "The path contains invalid characters or is malformed"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.invalidPath")
         case .securityScopedAccessRequired:
-            return "Security-scoped resource access is required but not available"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.securityScopedAccessRequired")
         }
     }
 }
@@ -989,21 +991,24 @@ public enum PlatformFileSystemError: Error, LocalizedError, Sendable {
     case unknown(Error)
     
     public var errorDescription: String? {
+        let i18n = InternationalizationService()
         switch self {
         case .directoryNotFound:
-            return "The directory could not be located"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.directoryNotFound")
         case .permissionDenied:
-            return "Permission denied - the current process cannot access the directory"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.permissionDenied")
         case .diskFull:
-            return "Disk is full - insufficient space available"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.diskFull")
         case .invalidPath:
-            return "Invalid path - the path contains invalid characters or is malformed"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.invalidPath")
         case .creationFailed(let error):
-            return "Directory creation failed: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.filesystem.creationFailed")
+            return String(format: format, error.localizedDescription)
         case .iCloudUnavailable:
-            return "iCloud Drive is unavailable"
+            return i18n.localizedString(for: "SixLayerFramework.filesystem.iCloudUnavailable")
         case .unknown(let error):
-            return "Unknown error: \(error.localizedDescription)"
+            let format = i18n.localizedString(for: "SixLayerFramework.file.unknownError")
+            return String(format: format, error.localizedDescription)
         }
     }
     

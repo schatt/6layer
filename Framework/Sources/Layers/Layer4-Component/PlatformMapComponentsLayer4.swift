@@ -143,7 +143,8 @@ private struct MapViewWithLocationService: View {
     var body: some View {
         Group {
             if isLoading {
-                ProgressView("Loading location...")
+                let i18n = InternationalizationService()
+                ProgressView(i18n.localizedString(for: "SixLayerFramework.status.loadingLocation"))
             } else if let error = errorMessage {
                 VStack(spacing: 16) {
                     Image(systemName: "exclamationmark.triangle")

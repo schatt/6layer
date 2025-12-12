@@ -47,6 +47,11 @@ targets:
         excludes:
           - "**/ExampleHelpers.swift"
           - "**/ExtensibleHintsExample.swift"
+      - path: Framework/Resources
+        type: folder
+        buildPhase: resources
+    resources:
+      - path: Framework/Resources
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework
       PRODUCT_MODULE_NAME: SixLayerFramework

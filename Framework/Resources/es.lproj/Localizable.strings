@@ -1,0 +1,204 @@
+/* 
+   Localizable.strings
+   SixLayerFramework
+   
+   Spanish (es) localization strings for SixLayerFramework
+   NOTE: These translations are machine-generated and should be reviewed by a native speaker
+   Apps can override these by providing their own strings with the same keys
+*/
+
+/* ============================================================================
+   ERROR MESSAGES
+   ============================================================================ */
+
+/* Internationalization Errors */
+"SixLayerFramework.error.invalidLocale" = "Configuración regional no válida proporcionada";
+"SixLayerFramework.error.languageNotSupported" = "Idioma no compatible";
+"SixLayerFramework.error.invalidCurrencyCode" = "Código de moneda no válido";
+"SixLayerFramework.error.formattingFailed" = "Error en la operación de formato";
+"SixLayerFramework.error.localizationNotFound" = "Localización no encontrada";
+"SixLayerFramework.error.pluralizationFailed" = "Error en la operación de pluralización";
+
+/* CloudKit Service Errors */
+"SixLayerFramework.cloudkit.containerNotFound" = "Contenedor de CloudKit no encontrado";
+"SixLayerFramework.cloudkit.accountUnavailable" = "La cuenta de iCloud no está disponible";
+"SixLayerFramework.cloudkit.networkUnavailable" = "La red no está disponible";
+"SixLayerFramework.cloudkit.writeNotSupported" = "Las operaciones de escritura no son compatibles con esta plataforma";
+"SixLayerFramework.cloudkit.missingField" = "Falta el campo requerido '%@'";
+"SixLayerFramework.cloudkit.recordNotFound" = "Registro no encontrado";
+"SixLayerFramework.cloudkit.conflictDetected" = "Conflicto de registro detectado";
+"SixLayerFramework.cloudkit.quotaExceeded" = "Cuota de CloudKit excedida";
+"SixLayerFramework.cloudkit.permissionDenied" = "Permiso denegado";
+"SixLayerFramework.cloudkit.invalidRecord" = "Registro no válido";
+"SixLayerFramework.cloudkit.unknownError" = "Error desconocido: %@";
+
+/* Image Processing Errors */
+"SixLayerFramework.image.invalidImage" = "Imagen no válida proporcionada para procesamiento";
+"SixLayerFramework.image.processingFailed" = "Error en el procesamiento de imagen: %@";
+"SixLayerFramework.image.enhancementFailed" = "Error en la mejora de imagen: %@";
+"SixLayerFramework.image.optimizationFailed" = "Error en la optimización de imagen: %@";
+"SixLayerFramework.image.analysisFailed" = "Error en el análisis de imagen: %@";
+
+/* Image Metadata Errors */
+"SixLayerFramework.metadata.invalidImage" = "Imagen no válida proporcionada para extracción de metadatos";
+"SixLayerFramework.metadata.extractionFailed" = "Error en la extracción de metadatos: %@";
+"SixLayerFramework.metadata.analysisFailed" = "Error en el análisis de imagen: %@";
+"SixLayerFramework.metadata.categorizationFailed" = "Error en la categorización de imagen: %@";
+
+/* File System Errors */
+"SixLayerFramework.file.invalidPath" = "Ruta no válida - la ruta contiene caracteres no válidos o está mal formada";
+"SixLayerFramework.file.systemError" = "Error del sistema de archivos: %@";
+"SixLayerFramework.file.directoryCreationFailed" = "Error al crear el directorio: %@";
+"SixLayerFramework.file.unknownError" = "Error desconocido: %@";
+
+/* Color Encoding Errors */
+"SixLayerFramework.color.encodeFailed" = "Error al codificar el color: %@";
+"SixLayerFramework.color.decodeFailed" = "Error al decodificar el color: %@";
+"SixLayerFramework.color.invalidData" = "Datos de color no válidos proporcionados";
+
+/* Entity Creation Errors */
+"SixLayerFramework.entity.decodeFailed" = "Error al decodificar la entidad desde los valores del formulario: %@";
+"SixLayerFramework.entity.creationFailed" = "Error al crear la entidad desde las pistas: %@";
+
+/* Form Storage Errors */
+"SixLayerFramework.form.encodeFailed" = "Error al codificar el borrador del formulario: %@";
+"SixLayerFramework.form.decodeFailed" = "Error al decodificar el borrador del formulario: %@";
+"SixLayerFramework.form.saveFailed" = "Error al guardar el borrador del formulario: %@";
+"SixLayerFramework.form.clearFailed" = "Error al limpiar el borrador del formulario: %@";
+
+/* ============================================================================
+   FORM PLACEHOLDERS
+   ============================================================================ */
+
+"SixLayerFramework.form.placeholder.select" = "Seleccionar";
+"SixLayerFramework.form.placeholder.selectOption" = "Seleccionar una opción";
+"SixLayerFramework.form.placeholder.selectDate" = "Seleccionar fecha";
+"SixLayerFramework.form.placeholder.selectTime" = "Seleccionar hora";
+"SixLayerFramework.form.placeholder.selectDateTime" = "Seleccionar fecha y hora";
+"SixLayerFramework.form.placeholder.selectDates" = "Seleccionar fechas";
+"SixLayerFramework.form.placeholder.selectFile" = "Seleccionar archivo";
+"SixLayerFramework.form.placeholder.selectImage" = "Seleccionar imagen";
+"SixLayerFramework.form.placeholder.selectColor" = "Seleccionar color";
+"SixLayerFramework.form.placeholder.selectCountry" = "Seleccionar país";
+"SixLayerFramework.form.placeholder.selectStartDate" = "Seleccionar fecha de inicio";
+"SixLayerFramework.form.placeholder.selectStartTime" = "Seleccionar hora de inicio";
+"SixLayerFramework.form.placeholder.selectEndDate" = "Seleccionar fecha de fin";
+"SixLayerFramework.form.placeholder.selectEndTime" = "Seleccionar hora de fin";
+"SixLayerFramework.form.placeholder.selectCreationDate" = "Seleccionar fecha de creación";
+"SixLayerFramework.form.placeholder.selectCreationTime" = "Seleccionar hora de creación";
+"SixLayerFramework.form.placeholder.selectBirthDate" = "Seleccionar fecha de nacimiento";
+"SixLayerFramework.form.placeholder.selectCategory" = "Seleccionar categoría";
+"SixLayerFramework.form.placeholder.selectType" = "Seleccionar tipo";
+"SixLayerFramework.form.placeholder.selectFilters" = "Seleccionar filtros";
+"SixLayerFramework.form.placeholder.selectTheme" = "Seleccionar tema";
+"SixLayerFramework.form.placeholder.selectRouteType" = "Seleccionar tipo de ruta";
+
+/* ============================================================================
+   BUTTON LABELS
+   ============================================================================ */
+
+"SixLayerFramework.button.chooseImage" = "Elegir Imagen";
+"SixLayerFramework.button.choosePhoto" = "Elegir Foto";
+"SixLayerFramework.button.chooseOption" = "Elegir Opción";
+"SixLayerFramework.button.selectFile" = "Seleccionar Archivo";
+"SixLayerFramework.button.confirm" = "Confirmar";
+"SixLayerFramework.button.save" = "Guardar";
+"SixLayerFramework.button.cancel" = "Cancelar";
+"SixLayerFramework.button.select" = "Seleccionar";
+
+/* ============================================================================
+   OCR INTERFACE
+   ============================================================================ */
+
+/* OCR Disambiguation */
+"SixLayerFramework.ocr.disambiguation.title" = "Se encontraron múltiples interpretaciones";
+"SixLayerFramework.ocr.disambiguation.prompt" = "Por favor, seleccione la interpretación correcta:";
+"SixLayerFramework.ocr.disambiguation.confidence" = "Confianza: %d%%";
+"SixLayerFramework.ocr.disambiguation.type" = "Tipo: %@";
+"SixLayerFramework.ocr.disambiguation.bestMatch" = "Mejor coincidencia: %@";
+
+/* OCR Overlay */
+"SixLayerFramework.ocr.overlay.unavailable" = "Datos OCR No Disponibles";
+"SixLayerFramework.ocr.overlay.bothRequired" = "Se requieren tanto el resultado OCR como la imagen para mostrar la superposición.";
+"SixLayerFramework.ocr.overlay.resultMissing" = "Falta el resultado OCR. Por favor, procese la imagen primero.";
+"SixLayerFramework.ocr.overlay.imageMissing" = "Falta la imagen. Por favor, proporcione la imagen que se procesó.";
+"SixLayerFramework.ocr.overlay.extractedText" = "Texto Extraído:";
+
+/* ============================================================================
+   VALIDATION MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.validation.email" = "Por favor, ingrese una dirección de correo electrónico válida";
+"SixLayerFramework.validation.phone" = "Por favor, ingrese un número de teléfono válido";
+"SixLayerFramework.validation.required" = "Este campo es obligatorio";
+"SixLayerFramework.validation.invalid" = "Formato no válido";
+
+/* ============================================================================
+   STATUS AND LOADING
+   ============================================================================ */
+
+"SixLayerFramework.status.loading" = "Cargando";
+"SixLayerFramework.status.loadingLocation" = "Cargando ubicación...";
+"SixLayerFramework.status.label" = "Estado: %@";
+"SixLayerFramework.status.id" = "ID: %@";
+
+/* ============================================================================
+   NAVIGATION
+   ============================================================================ */
+
+"SixLayerFramework.navigation.selectItem" = "Seleccionar un elemento";
+"SixLayerFramework.navigation.chooseItem" = "Elija un elemento de la lista para ver sus detalles";
+
+/* ============================================================================
+   FORM FIELD LABELS
+   ============================================================================ */
+
+"SixLayerFramework.form.selected" = "Seleccionado: %@";
+"SixLayerFramework.form.selectedDates" = "Fechas seleccionadas:";
+"SixLayerFramework.form.dragDropFiles" = "Arrastre y suelte archivos aquí";
+"SixLayerFramework.form.or" = "o";
+"SixLayerFramework.form.supportedTypes" = "Tipos compatibles: %@";
+"SixLayerFramework.form.maxFileSize" = "Tamaño máximo de archivo: %@";
+
+/* ============================================================================
+   ERROR DISPLAY
+   ============================================================================ */
+
+"SixLayerFramework.error.title" = "Error";
+"SixLayerFramework.error.message" = "Error: %@";
+"SixLayerFramework.warning.title" = "Advertencia";
+"SixLayerFramework.failed.title" = "Fallido";
+"SixLayerFramework.success.title" = "Éxito";
+
+/* ============================================================================
+   INVALID DATA
+   ============================================================================ */
+
+"SixLayerFramework.invalid.date" = "Fecha No Válida";
+"SixLayerFramework.invalid.url" = "URL No Válida";
+
+/* ============================================================================
+   AUTO-SAVE MESSAGES
+   ============================================================================ */
+
+"SixLayerFramework.autosave.coreDataFailed" = "Error al guardar automáticamente la entidad de Core Data: %@";
+"SixLayerFramework.autosave.swiftDataFailed" = "Error al guardar automáticamente la entidad de SwiftData: %@";
+
+/* ============================================================================
+   FILE SELECTION
+   ============================================================================ */
+
+"SixLayerFramework.file.selectFile" = "Seleccionar un archivo";
+"SixLayerFramework.file.selectError" = "Error al seleccionar archivo: %@";
+"SixLayerFramework.file.saveError" = "Error al guardar archivo: %@";
+
+/* ============================================================================
+   PLATFORM SPECIFIC
+   ============================================================================ */
+
+"SixLayerFramework.platform.privacy.title" = "Privacidad de la Plataforma";
+"SixLayerFramework.platform.crossPlatform.title" = "Optimización de Diseño Multiplataforma";
+"SixLayerFramework.platform.crossPlatform.subtitle" = "Diseños óptimos para %@";
+"SixLayerFramework.platform.crossPlatform.adaptiveSpacing" = "• Espaciado adaptativo";
+"SixLayerFramework.platform.crossPlatform.specificLayouts" = "• Diseños específicos de plataforma";
+"SixLayerFramework.platform.crossPlatform.optimalSizing" = "• Tamaño óptimo de componentes";
