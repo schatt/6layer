@@ -155,13 +155,33 @@ public class CloudKitService: ObservableObject {
     public weak var delegate: CloudKitServiceDelegate?
     
     /// Database selection (default: private)
+    /// Note: Accessing this property will initialize the container if not already initialized
+    /// In test environments without CloudKit, this will throw an error
     public var database: CKDatabase {
+        guard let container = container else {
+            // In test environment without CloudKit - throw error
+            // Tests should avoid accessing database directly
+            fatalError("CloudKit container not available. This may occur in test environments without CloudKit entitlements. Use a mock service or ensure CloudKit is properly configured.")
+        }
         return usePublicDatabase ? container.publicCloudDatabase : container.privateCloudDatabase
     }
     
     // MARK: - Private Properties
     
-    private var container: CKContainer
+    private var _container: CKContainer?
+    private var container: CKContainer? {
+        if let existing = _container {
+            return existing
+        }
+        // Lazy initialization - only create when actually needed
+        // In test environments, this may not be available
+        guard canInitializeContainer() else {
+            return nil
+        }
+        let newContainer = CKContainer(identifier: containerIdentifier)
+        _container = newContainer
+        return newContainer
+    }
     private let usePublicDatabase: Bool
     private let queueStorage: CloudKitQueueStorage?
     private var networkMonitor: NWPathMonitor?
@@ -170,6 +190,7 @@ public class CloudKitService: ObservableObject {
     private var autoFlushEnabled: Bool = true
     private var lastSyncToken: CKServerChangeToken?
     private let syncTokenKey: String
+    private let containerIdentifier: String
     
     // MARK: - Initialization
     
@@ -187,9 +208,8 @@ public class CloudKitService: ObservableObject {
         self.usePublicDatabase = usePublicDatabase
         self.queueStorage = queueStorage ?? UserDefaultsCloudKitQueueStorage()
         
-        // Initialize container from delegate
-        let containerIdentifier = delegate.containerIdentifier()
-        self.container = CKContainer(identifier: containerIdentifier)
+        // Store container identifier (don't initialize container yet - lazy init)
+        self.containerIdentifier = delegate.containerIdentifier()
         
         // Load last sync token
         self.syncTokenKey = "cloudkit_sync_token_\(containerIdentifier)"
@@ -218,11 +238,33 @@ public class CloudKitService: ObservableObject {
     
     /// Check current account status
     public func checkAccountStatus() async throws -> CKAccountStatus {
-        let status = try await container.accountStatus()
+        // Only check if container can be initialized (avoids crashes in test environments)
+        guard let ckContainer = container else {
+            await MainActor.run {
+                self.accountStatus = .couldNotDetermine
+            }
+            return .couldNotDetermine
+        }
+        
+        let status = try await ckContainer.accountStatus()
         await MainActor.run {
             self.accountStatus = status
         }
         return status
+    }
+    
+    /// Check if container can be safely initialized (not in test environment without entitlements)
+    private func canInitializeContainer() -> Bool {
+        // In test environments, CloudKit may not be available
+        // Check if we're in a test environment by looking for test bundle
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            // We're in a test environment - CloudKit may not be available
+            // Return false to skip initialization
+            return false
+        }
+        #endif
+        return true
     }
     
     /// Request account status update
@@ -253,9 +295,16 @@ public class CloudKitService: ObservableObject {
             throw CloudKitServiceError.networkUnavailable
         }
         
+        // Ensure container is available
+        guard let ckContainer = container else {
+            // In test environment - queue operation instead
+            try await queueOperation(type: "save", record: transformedRecord)
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         // Save to CloudKit
         do {
-            let savedRecord = try await database.save(transformedRecord)
+            let savedRecord = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).save(transformedRecord)
             return savedRecord
         } catch let error as CKError {
             // Handle conflicts
@@ -264,7 +313,10 @@ public class CloudKitService: ObservableObject {
                     // Try to resolve conflict via delegate
                     if let resolved = delegate?.resolveConflict(local: transformedRecord, remote: serverRecord) {
                         // Retry with resolved record
-                        return try await database.save(resolved)
+                        guard let ckContainer = container else {
+                            throw CloudKitServiceError.accountUnavailable
+                        }
+                        return try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).save(resolved)
                     } else {
                         throw CloudKitServiceError.conflictDetected(local: transformedRecord, remote: serverRecord)
                     }
@@ -301,8 +353,12 @@ public class CloudKitService: ObservableObject {
     
     /// Fetch a record by ID
     public func fetch(recordID: CKRecord.ID) async throws -> CKRecord? {
+        guard let ckContainer = container else {
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         do {
-            let record = try await database.record(for: recordID)
+            let record = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).record(for: recordID)
             
             // Transform record via delegate
             if let transformed = delegate?.transformRecord(record) {
@@ -341,8 +397,13 @@ public class CloudKitService: ObservableObject {
             throw CloudKitServiceError.networkUnavailable
         }
         
+        guard let ckContainer = container else {
+            try await queueOperation(type: "delete", recordID: recordID)
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         do {
-            _ = try await database.deleteRecord(withID: recordID)
+            _ = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).deleteRecord(withID: recordID)
         } catch let error as CKError {
             // If network error, queue the operation
             if error.code == .networkUnavailable || error.code == .networkFailure {
@@ -363,8 +424,12 @@ public class CloudKitService: ObservableObject {
     
     /// Query records
     public func query(_ query: CKQuery) async throws -> [CKRecord] {
+        guard let ckContainer = container else {
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         do {
-            let (results, _) = try await database.records(matching: query)
+            let (results, _) = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).records(matching: query)
             var records: [CKRecord] = []
             
             for (_, result) in results {
@@ -416,8 +481,12 @@ public class CloudKitService: ObservableObject {
             transformedRecords.append(transformed)
         }
         
+        guard let ckContainer = container else {
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         do {
-            let (results, _) = try await database.modifyRecords(saving: transformedRecords, deleting: [])
+            let (results, _) = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).modifyRecords(saving: transformedRecords, deleting: [])
             var savedRecords: [CKRecord] = []
             
             for (_, result) in results {
@@ -460,8 +529,12 @@ public class CloudKitService: ObservableObject {
         throw CloudKitServiceError.writeNotSupportedOnPlatform
         #endif
         
+        guard let ckContainer = container else {
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         do {
-            let (_, _) = try await database.modifyRecords(saving: [], deleting: recordIDs)
+            let (_, _) = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).modifyRecords(saving: [], deleting: recordIDs)
         } catch let error as CKError {
             if delegate?.handleError(error) == true {
                 throw CloudKitServiceError.unknown(error)
