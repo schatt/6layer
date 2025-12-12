@@ -478,6 +478,11 @@ public class InternationalizationService: ObservableObject {
     public func placeholderSelectBirthDate() -> String {
         return localizedString(for: "SixLayerFramework.form.placeholder.selectBirthDate")
     }
+    
+    /// Get localized placeholder for "Select country"
+    public func placeholderSelectCountry() -> String {
+        return localizedString(for: "SixLayerFramework.form.placeholder.selectCountry")
+    }
 
     /// Get the current language code
     /// - Returns: Current language code (e.g., "en", "es", "fr")
