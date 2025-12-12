@@ -9,6 +9,13 @@
 import Foundation
 import SwiftUI
 
+// MARK: - Notification Names
+
+extension Notification.Name {
+    /// Posted when the language changes in InternationalizationService
+    public static let languageDidChange = Notification.Name("SixLayerFramework.languageDidChange")
+}
+
 // MARK: - Text Direction
 
 /// Text direction for internationalization

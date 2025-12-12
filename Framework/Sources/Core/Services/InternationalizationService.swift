@@ -16,12 +16,42 @@ public class InternationalizationService: ObservableObject {
     
     // MARK: - Properties
     
-    private let locale: Locale
-    private let formatter: NumberFormatter
-    private let dateFormatter: DateFormatter
-    private let timeFormatter: DateFormatter
-    private let currencyFormatter: NumberFormatter
-    private let percentageFormatter: NumberFormatter
+    /// Current locale (published so views can observe changes)
+    @Published public private(set) var locale: Locale
+    
+    // Formatters are computed to always use current locale
+    private var formatter: NumberFormatter {
+        let f = NumberFormatter()
+        f.locale = locale
+        f.numberStyle = .decimal
+        return f
+    }
+    
+    private var dateFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.locale = locale
+        return f
+    }
+    
+    private var timeFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.locale = locale
+        return f
+    }
+    
+    private var currencyFormatter: NumberFormatter {
+        let f = NumberFormatter()
+        f.locale = locale
+        f.numberStyle = .currency
+        return f
+    }
+    
+    private var percentageFormatter: NumberFormatter {
+        let f = NumberFormatter()
+        f.locale = locale
+        f.numberStyle = .percent
+        return f
+    }
     
     /// Framework bundle for loading framework-localized strings
     private static let frameworkBundle: Bundle = {
@@ -60,25 +90,7 @@ public class InternationalizationService: ObservableObject {
     public init(locale: Locale = Locale.current, appBundle: Bundle = .main) {
         self.locale = locale
         self.appBundle = appBundle
-        
-        // Initialize formatters
-        self.formatter = NumberFormatter()
-        self.formatter.locale = locale
-        self.formatter.numberStyle = .decimal
-        
-        self.dateFormatter = DateFormatter()
-        self.dateFormatter.locale = locale
-        
-        self.timeFormatter = DateFormatter()
-        self.timeFormatter.locale = locale
-        
-        self.currencyFormatter = NumberFormatter()
-        self.currencyFormatter.locale = locale
-        self.currencyFormatter.numberStyle = .currency
-        
-        self.percentageFormatter = NumberFormatter()
-        self.percentageFormatter.locale = locale
-        self.percentageFormatter.numberStyle = .percent
+        // Formatters are now computed properties, so no initialization needed
     }
     
     // MARK: - Text Direction
@@ -481,11 +493,30 @@ public class InternationalizationService: ObservableObject {
     }
 
     /// Set the current language
-    /// - Parameter languageCode: The language code to set (e.g., "en", "es", "fr")
+    /// - Parameter languageCode: The language code to set (e.g., "en", "es", "fr", "de-CH", "zh-Hans")
+    /// - Note: This updates the locale which will trigger UI updates via @Published
     public func setLanguage(_ languageCode: String) {
-        // Note: In a real implementation, this would update the app's language
-        // For now, this is a no-op as SwiftUI doesn't provide direct language switching
-        // This would typically require restarting the app or using custom localization
+        // Create a new locale from the language code
+        // Handle region-specific codes like "de-CH" or "zh-Hans"
+        let newLocale: Locale
+        if languageCode.contains("-") {
+            // Language code with region (e.g., "de-CH", "zh-Hans")
+            newLocale = Locale(identifier: languageCode)
+        } else {
+            // Simple language code (e.g., "en", "es")
+            // Use current region if available, otherwise default to language's primary region
+            if let currentRegion = locale.region?.identifier {
+                newLocale = Locale(identifier: "\(languageCode)-\(currentRegion)")
+            } else {
+                newLocale = Locale(identifier: languageCode)
+            }
+        }
+        
+        // Update the locale (this will trigger @Published and update all formatters)
+        self.locale = newLocale
+        
+        // Post notification for any observers that want to react to language changes
+        NotificationCenter.default.post(name: .languageDidChange, object: self, userInfo: ["languageCode": languageCode, "locale": newLocale])
     }
     
     // MARK: - Locale Information
