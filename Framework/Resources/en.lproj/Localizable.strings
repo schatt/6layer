@@ -247,6 +247,10 @@
 "SixLayerFramework.button.addMessage" = "Add Message";
 "SixLayerFramework.button.addLocation" = "Add Location";
 "SixLayerFramework.button.addCard" = "Add Card";
+"SixLayerFramework.button.addList" = "Add List Item";
+"SixLayerFramework.button.addGrid" = "Add Grid Item";
+"SixLayerFramework.button.addChart" = "Add Chart Data";
+"SixLayerFramework.button.addDetail" = "Add Detail";
 "SixLayerFramework.button.saveChanges" = "Save Changes";
 "SixLayerFramework.emptyState.noMediaItems" = "No Media Items";
 "SixLayerFramework.emptyState.noNavigationItems" = "No Navigation Items";

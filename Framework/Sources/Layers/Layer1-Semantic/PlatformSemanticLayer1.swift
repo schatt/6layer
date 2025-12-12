@@ -1898,7 +1898,8 @@ public struct CollectionEmptyStateView: View {
         } else if !complexityMessage.isEmpty {
             return complexityMessage
         } else {
-            return "This collection is currently empty."
+            let i18n = InternationalizationService()
+            return i18n.localizedString(for: "SixLayerFramework.emptyState.collectionEmpty")
         }
     }
     
