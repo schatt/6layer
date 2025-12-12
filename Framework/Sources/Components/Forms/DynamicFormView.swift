@@ -79,7 +79,7 @@ public struct DynamicFormView: View {
 
     public var body: some View {
         ScrollViewReader { proxy in
-            VStack(spacing: 20) {
+            platformVStackContainer(spacing: 20) {
                 // Form title
                 Text(configuration.title)
                     .font(.headline)
@@ -383,7 +383,7 @@ public struct DynamicFormSectionView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        platformVStackContainer(alignment: .leading, spacing: 16) {
             if section.isCollapsible {
                 // Use DisclosureGroup for collapsible sections
                 DisclosureGroup(isExpanded: isExpanded) {
@@ -449,7 +449,7 @@ public struct DynamicFormSectionView: View {
         switch layoutStyle {
         case .vertical, .standard, .compact, .spacious:
             // Vertical stack (default)
-            VStack(spacing: 16) {
+            platformVStackContainer(spacing: 16) {
                 ForEach(visibleFields) { field in
                     DynamicFormFieldView(field: field, formState: formState)
                         .transition(.opacity)
@@ -481,7 +481,7 @@ public struct DynamicFormSectionView: View {
         case .adaptive:
             // Adaptive: choose layout based on field count
             if visibleFields.count <= 4 {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     ForEach(visibleFields) { field in
                         DynamicFormFieldView(field: field, formState: formState)
                             .transition(.opacity)
@@ -693,8 +693,8 @@ public struct FormProgressIndicator: View {
     
     public var body: some View {
         let i18n = InternationalizationService()
-        return VStack(alignment: .leading, spacing: 8) {
-            HStack {
+        return platformVStackContainer(alignment: .leading, spacing: 8) {
+            platformHStackContainer {
                 Text(i18n.localizedString(for: "SixLayerFramework.form.progress"))
                     .font(.subheadline)
                     .fontWeight(.medium)

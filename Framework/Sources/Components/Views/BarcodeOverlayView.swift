@@ -28,7 +28,7 @@ public struct BarcodeOverlayView: View {
     
     public var body: some View {
         let i18n = InternationalizationService()
-        return VStack(spacing: 16) {
+        return platformVStackContainer(spacing: 16) {
             // Display image with barcode overlay
             ZStack {
                 #if os(iOS)
@@ -59,7 +59,7 @@ public struct BarcodeOverlayView: View {
             
             // Display detected barcodes
             if result.hasBarcodes {
-                VStack(alignment: .leading, spacing: 12) {
+                platformVStackContainer(alignment: .leading, spacing: 12) {
                     Text(i18n.localizedString(for: "SixLayerFramework.barcode.detectedBarcodes"))
                         .font(.headline)
                         .automaticCompliance(named: "DetectedBarcodesLabel")
@@ -79,7 +79,7 @@ public struct BarcodeOverlayView: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(8)
             } else {
-                VStack(spacing: 8) {
+                platformVStackContainer(spacing: 8) {
                     Image(systemName: "barcode.viewfinder")
                         .font(.system(size: 32))
                         .foregroundColor(.secondary)
@@ -155,8 +155,8 @@ private struct BarcodeInfoView: View {
     let configuration: BarcodeOverlayConfiguration
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
+        platformVStackContainer(alignment: .leading, spacing: 4) {
+            platformHStackContainer {
                 let i18n = InternationalizationService()
                 Text(i18n.localizedString(for: "SixLayerFramework.barcode.barcodeNumber", arguments: [String(index + 1)]))
                     .font(.subheadline)

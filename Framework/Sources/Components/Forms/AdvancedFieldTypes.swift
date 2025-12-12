@@ -11,8 +11,8 @@ public struct RichTextEditorField: View {
     @State private var selectedText: NSRange?
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
+            platformHStackContainer {
                 Text(field.label)
                     .font(.headline)
                 
@@ -130,7 +130,7 @@ public struct RichTextToolbar: View {
     @Binding var selectedText: NSRange?
     
     public var body: some View {
-        HStack(spacing: 12) {
+        platformHStackContainer(spacing: 12) {
             FormatButton(title: "B", action: { formatBold() })
             FormatButton(title: "I", action: { formatItalic() })
             FormatButton(title: "U", action: { formatUnderline() })
@@ -327,7 +327,7 @@ public struct EnhancedFileUploadField: View {
     @State private var selectedFiles: [FileInfo] = []
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text(field.label)
                 .font(.headline)
             
@@ -376,7 +376,7 @@ public struct FileUploadArea: View {
     let onFilesSelected: ([FileInfo]) -> Void
     
     public var body: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "doc.badge.plus")
                 .font(.system(size: 48))
                 .foregroundColor(.accentColor)
