@@ -124,7 +124,8 @@ public struct DynamicFormView: View {
                             } else {
                                 Image(systemName: "doc.viewfinder")
                             }
-                            Text(isProcessingOCR ? "Processing..." : "Scan Document")
+                            let i18n = InternationalizationService()
+                            Text(isProcessingOCR ? i18n.localizedString(for: "SixLayerFramework.ocr.processing") : i18n.localizedString(for: "SixLayerFramework.ocr.scanDocument"))
                         }
                         .foregroundColor(.blue)
                     }

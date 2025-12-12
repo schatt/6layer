@@ -1233,9 +1233,10 @@ public struct DynamicImageField: View {
                 // This should open image picker and update formState
                 print("Image picker requested for field: \(field.id)")
             }) {
+                let i18n = InternationalizationService()
                 HStack {
                     Image(systemName: "photo.badge.plus")
-                    Text("Select Image")
+                    Text(i18n.localizedString(for: "SixLayerFramework.button.selectImage"))
                 }
             }
             .buttonStyle(.bordered)
@@ -1346,9 +1347,10 @@ public struct DynamicArrayField: View {
                 values.append("")
                 formState.setValue(values, for: field.id)
             }) {
+                let i18n = InternationalizationService()
                 HStack {
                     Image(systemName: "plus.circle")
-                    Text("Add Item")
+                    Text(i18n.localizedString(for: "SixLayerFramework.button.addItem"))
                 }
             }
             .buttonStyle(.bordered)
@@ -1429,7 +1431,8 @@ public struct DynamicAutocompleteField: View {
                 .bold()
                 .automaticCompliance(named: "FieldLabel")
 
-            TextField(field.placeholder ?? "Type to search", text: Binding(
+            let i18n = InternationalizationService()
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.typeToSearch"), text: Binding(
                 get: { formState.getValue(for: field.id) as String? ?? field.defaultValue ?? "" },
                 set: { newValue in
                     formState.setValue(newValue, for: field.id)

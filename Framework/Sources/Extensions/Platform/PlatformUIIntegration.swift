@@ -410,7 +410,7 @@ public struct PlatformUIIntegration {
         }
         
         public var body: some View {
-            VStack(alignment: .leading, spacing: 12) {
+            platformVStackContainer(alignment: .leading, spacing: 12) {
                 // Header
                 if let title = title {
                     platformVStackContainer(alignment: .leading, spacing: 4) {

@@ -163,6 +163,8 @@
 "SixLayerFramework.ocr.overlay.extractedText" = "Extracted Text:";
 "SixLayerFramework.ocr.extractionComplete" = "Extraction complete";
 "SixLayerFramework.ocr.readyToExtract" = "Ready to extract";
+"SixLayerFramework.ocr.processing" = "Processing...";
+"SixLayerFramework.ocr.scanDocument" = "Scan Document";
 
 /* OCR Service Errors */
 "SixLayerFramework.ocr.visionUnavailable" = "Vision framework is not available on this platform";
