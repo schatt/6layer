@@ -589,7 +589,7 @@ public extension View {
                 .automaticCompliance(named: "platformAppNavigation_L4")
             } else {
                 // macOS 12 fallback: Use HStack layout
-                HStack(spacing: 0) {
+                platformHStackContainer(spacing: 0) {
                     sidebar()
                     detail()
                 }

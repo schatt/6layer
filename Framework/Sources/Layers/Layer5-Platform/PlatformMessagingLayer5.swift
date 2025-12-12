@@ -75,7 +75,7 @@ public class PlatformMessagingLayer5 {
     @MainActor
     public func createBannerNotification(title: String, message: String, type: BannerType = .info) -> some View {
         #if os(iOS)
-        return VStack(alignment: .leading, spacing: 4) {
+        return platformVStackContainer(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.primary)
@@ -94,7 +94,7 @@ public class PlatformMessagingLayer5 {
         )
         .automaticCompliance(named: "BannerNotification")
         #elseif os(macOS)
-        return VStack(alignment: .leading, spacing: 4) {
+        return platformVStackContainer(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.primary)
@@ -113,7 +113,7 @@ public class PlatformMessagingLayer5 {
         )
         .automaticCompliance(named: "BannerNotification")
         #else
-        return VStack(alignment: .leading) {
+        return platformVStackContainer(alignment: .leading) {
             Text(title)
             Text(message)
         }

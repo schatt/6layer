@@ -31,7 +31,7 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
         let scale = calculateScale()
         let animation = platformConfig.animationEasing
         
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             cardContent
         }
         .frame(maxWidth: .infinity, minHeight: platformConfig.minTouchTarget)
@@ -70,7 +70,7 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
                 .foregroundColor(.blue)
                 .accessibilityHidden(true)
             
-            VStack(alignment: .leading, spacing: 4) {
+            platformVStackContainer(alignment: .leading, spacing: 4) {
                 // Title
                 Text("Card Title")
                     .font(.headline)
@@ -105,7 +105,7 @@ public struct NativeExpandableCardView<Item: Identifiable>: View {
     private var expandedContent: some View {
         Divider()
         
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text("Additional Details")
                 .font(.subheadline)
                 .fontWeight(.medium)

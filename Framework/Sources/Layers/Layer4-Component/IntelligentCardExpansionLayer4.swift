@@ -33,7 +33,7 @@ public struct ExpandableCardCollectionView<Item: Identifiable>: View {
     public var body: some View {
         Group {
             if items.isEmpty {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "tray")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
@@ -133,7 +133,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
         let scale = calculateScale()
         let animation = Animation.easeInOut(duration: strategy.animationDuration)
         
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             // Card content
             cardContent
             
@@ -196,7 +196,7 @@ public struct ExpandableCardComponent<Item: Identifiable>: View {
     private var expandedContent: some View {
         Divider()
         
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             Text("Additional Details")
                 .font(.subheadline)
                 .fontWeight(.medium)
@@ -323,7 +323,7 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
     public var body: some View {
         Group {
             if items.isEmpty {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "tray")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
@@ -344,7 +344,7 @@ public struct CoverFlowCollectionView<Item: Identifiable>: View {
                 .background(Color.platformBackground)
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
+                    platformHStackContainer(spacing: 20) {
                         ForEach(items) { item in
                             CoverFlowCardComponent(
                                 item: item,
@@ -457,7 +457,7 @@ public struct GridCollectionView<Item: Identifiable>: View {
     public var body: some View {
         Group {
             if items.isEmpty {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "tray")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
@@ -536,7 +536,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
     public var body: some View {
         Group {
             if items.isEmpty {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "tray")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
@@ -556,7 +556,7 @@ public struct ListCollectionView<Item: Identifiable>: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.platformBackground)
             } else {
-                LazyVStack(spacing: 12) {
+                platformLazyVStackContainer(spacing: 12) {
                     ForEach(items) { item in
                         ListCardComponent(
                             item: item,
@@ -602,7 +602,7 @@ public struct MasonryCollectionView<Item: Identifiable>: View {
     public var body: some View {
         Group {
             if items.isEmpty {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "tray")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
@@ -665,7 +665,7 @@ public struct AdaptiveCollectionView<Item: Identifiable>: View {
     public var body: some View {
         Group {
             if items.isEmpty {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "tray")
                         .font(.system(size: 48))
                         .foregroundColor(.secondary)
@@ -847,7 +847,7 @@ public struct ListCardComponent<Item: Identifiable>: View {
                 .font(.title2)
                 .foregroundColor(cardColor)
             
-            VStack(alignment: .leading) {
+            platformVStackContainer(alignment: .leading) {
                 Text(cardTitle)
                     .font(.headline)
                     .lineLimit(1)

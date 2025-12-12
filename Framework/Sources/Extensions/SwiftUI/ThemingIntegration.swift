@@ -188,18 +188,20 @@ public struct ThemedGenericFormView: View {
                 .themedTextField()
                 
             case .date:
-                DatePicker(field.placeholder ?? "Select date", selection: Binding(
+                let i18n = InternationalizationService()
+                DatePicker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectDate"), selection: Binding(
                     get: { formData[field.id.uuidString] as? Date ?? Date() },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
                 .datePickerStyle(.compact)
                 
             case .select:
-                Picker(field.placeholder ?? "Select option", selection: Binding(
+                let i18n = InternationalizationService()
+                Picker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption"), selection: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 )) {
-                    Text("Select an option").tag("")
+                    Text(i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption")).tag("")
                     ForEach(field.options, id: \.self) { option in
                         Text(option).tag(option)
                     }
@@ -240,18 +242,21 @@ public struct ThemedGenericFormView: View {
                     }
                 }
             case .phone:
-                TextField(field.placeholder ?? "Enter phone", text: Binding(
+                let i18n = InternationalizationService()
+                TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterPhone"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
                 .themedTextField()
             case .time:
-                DatePicker(field.placeholder ?? "Select time", selection: Binding(
+                let i18n = InternationalizationService()
+                DatePicker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectTime"), selection: Binding(
                     get: { formData[field.id.uuidString] as? Date ?? Date() },
                     set: { formData[field.id.uuidString] = $0 }
                 ), displayedComponents: .hourAndMinute)
             case .datetime:
-                DatePicker(field.placeholder ?? "Select date and time", selection: Binding(
+                let i18n = InternationalizationService()
+                DatePicker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectDateTime"), selection: Binding(
                     get: { formData[field.id.uuidString] as? Date ?? Date() },
                     set: { formData[field.id.uuidString] = $0 }
                 ), displayedComponents: [.date, .hourAndMinute])
@@ -272,7 +277,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .url:
-                TextField(field.placeholder ?? "Enter URL", text: Binding(
+                let i18n = InternationalizationService()
+                TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterURL"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
@@ -315,7 +321,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .integer:
-                TextField(field.placeholder ?? "Enter integer", text: Binding(
+                let i18n = InternationalizationService()
+                TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterInteger"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
@@ -345,11 +352,12 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .`enum`:
-                Picker(field.placeholder ?? "Select option", selection: Binding(
+                let i18n = InternationalizationService()
+                Picker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption"), selection: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 )) {
-                    Text("Select an option").tag("")
+                    Text(i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption")).tag("")
                     ForEach(field.options, id: \.self) { option in
                         Text(option).tag(option)
                     }

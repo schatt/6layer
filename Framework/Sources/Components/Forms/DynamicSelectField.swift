@@ -43,8 +43,9 @@ public struct DynamicSelectField: View {
                 .foregroundColor(.primary)
             
             // Select picker - use hints if available, otherwise fallback to field.options
+            let i18n = InternationalizationService()
             if !pickerOptions.isEmpty {
-                Picker(field.placeholder ?? "Select", selection: selectedValue) {
+                Picker(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.select"), selection: selectedValue) {
                     ForEach(pickerOptions, id: \.value) { option in
                         Text(option.label).tag(option.value)
                     }
@@ -53,7 +54,7 @@ public struct DynamicSelectField: View {
                 .accessibilityIdentifier("SixLayer.main.element.select.\(field.id)")
             } else {
                 // No options available
-                Text("No options available")
+                Text(i18n.localizedString(for: "SixLayerFramework.form.noOptionsAvailable"))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -82,11 +83,12 @@ public struct DynamicSelectField: View {
         id: "test-form",
         title: "Test Form"
     ))
+    let i18n = InternationalizationService()
     let field = DynamicFormField(
         id: "test-select",
         contentType: .select,
         label: "Choose Option",
-        placeholder: "Select an option",
+        placeholder: i18n.localizedString(for: "SixLayerFramework.form.placeholder.selectOption"),
         isRequired: true,
         options: ["Option 1", "Option 2", "Option 3", "Option 4"],
         defaultValue: ""

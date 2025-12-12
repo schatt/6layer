@@ -420,7 +420,7 @@ public struct AccessibilityTestingView: View {
     public init() {}
     
     public var body: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Text("Accessibility Testing")
                 .font(.title)
                 .accessibilityAddTraits(.isHeader)
@@ -437,7 +437,7 @@ public struct AccessibilityTestingView: View {
             }
             
             if !testingManager.testResults.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     Text("Test Results")
                         .font(.headline)
                         .accessibilityAddTraits(.isHeader)
@@ -447,7 +447,7 @@ public struct AccessibilityTestingView: View {
                             Image(systemName: statusIcon(for: result.status))
                                 .foregroundColor(statusColor(for: result.status))
                             
-                            VStack(alignment: .leading) {
+                            platformVStackContainer(alignment: .leading) {
                                 Text(result.testName)
                                     .font(.subheadline)
                                     .fontWeight(.medium)

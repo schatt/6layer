@@ -252,7 +252,7 @@ public func platformRTLHStack_L1<Content: View>(
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return AnyView(HStack(alignment: alignment, spacing: spacing, content: content)
+    return AnyView(platformHStackContainer(alignment: alignment, spacing: spacing, content: content)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
         .environmentObject(i18n))
@@ -275,7 +275,7 @@ public func platformRTLVStack_L1<Content: View>(
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return AnyView(VStack(alignment: alignment, spacing: spacing, content: content)
+    return AnyView(platformVStackContainer(alignment: alignment, spacing: spacing, content: content)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
         .environmentObject(i18n))
@@ -296,7 +296,7 @@ public func platformRTLZStack_L1<Content: View>(
     let i18n = InternationalizationService(locale: hints.locale)
     let layoutDirection = i18n.getLayoutDirection()
     
-    return AnyView(ZStack(alignment: alignment, content: content)
+    return AnyView(platformZStackContainer(alignment: alignment, content: content)
         .environment(\.layoutDirection, layoutDirection)
         .environment(\.locale, hints.locale)
         .environmentObject(i18n))

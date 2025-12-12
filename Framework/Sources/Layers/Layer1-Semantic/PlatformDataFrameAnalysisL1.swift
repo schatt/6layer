@@ -451,7 +451,7 @@ private struct QualityMetricRow: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            platformVStackContainer(alignment: .leading) {
                 Text(title)
                     .fontWeight(.medium)
                 Text(description)
@@ -461,7 +461,7 @@ private struct QualityMetricRow: View {
             
             Spacer()
             
-            VStack(alignment: .trailing) {
+            platformVStackContainer(alignment: .trailing) {
                 Text("\(Int(value * 100))%")
                     .font(.title3)
                     .fontWeight(.bold)
@@ -491,7 +491,7 @@ private struct PatternRow: View {
             Image(systemName: detected ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .foregroundColor(detected ? .green : .red)
             
-            VStack(alignment: .leading) {
+            platformVStackContainer(alignment: .leading) {
                 Text(title)
                     .fontWeight(.medium)
                 Text(description)
@@ -510,7 +510,7 @@ private struct VisualizationRecommendationRow: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            platformVStackContainer(alignment: .leading) {
                 Text(recommendation.chartType.rawValue.capitalized)
                     .fontWeight(.medium)
                 Text(recommendation.reasoning)
@@ -520,7 +520,7 @@ private struct VisualizationRecommendationRow: View {
             
             Spacer()
             
-            VStack(alignment: .trailing) {
+            platformVStackContainer(alignment: .trailing) {
                 Text("\(Int(recommendation.confidence * 100))%")
                     .font(.caption)
                     .fontWeight(.bold)

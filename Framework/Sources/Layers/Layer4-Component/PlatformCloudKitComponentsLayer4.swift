@@ -56,7 +56,7 @@ public func platformCloudKitProgress_L4(
     progress: Double,
     status: CloudKitSyncStatus? = nil
 ) -> some View {
-    VStack(alignment: .leading, spacing: 4) {
+    platformVStackContainer(alignment: .leading, spacing: 4) {
         if let status = status {
             platformCloudKitSyncStatus_L4(status: status)
         }
@@ -106,7 +106,7 @@ public func platformCloudKitAccountStatus_L4(status: CKAccountStatus) -> some Vi
 /// - Returns: A view showing all CloudKit status information
 @MainActor
 public func platformCloudKitServiceStatus_L4(service: CloudKitService) -> some View {
-    VStack(alignment: .leading, spacing: 12) {
+    platformVStackContainer(alignment: .leading, spacing: 12) {
         // Account Status
         platformCloudKitAccountStatus_L4(status: service.accountStatus)
         

@@ -95,7 +95,7 @@ private struct OCRDisambiguationWrapper: View {
     // MARK: - Processing View
     
     private var processingView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             ProgressView()
                 .scaleEffect(1.2)
             
@@ -125,7 +125,7 @@ private struct OCRDisambiguationWrapper: View {
     }
     
     private var autoConfirmView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.green)
@@ -149,7 +149,7 @@ private struct OCRDisambiguationWrapper: View {
     // MARK: - Error View
     
     private func errorView(_ error: String) -> some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.red)
@@ -173,7 +173,7 @@ private struct OCRDisambiguationWrapper: View {
     // MARK: - Initial View
     
     private var initialView: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "doc.text.viewfinder")
                 .font(.system(size: 48))
                 .foregroundColor(.blue)

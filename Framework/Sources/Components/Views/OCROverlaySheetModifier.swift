@@ -64,7 +64,8 @@ public struct OCROverlaySheetModifier: ViewModifier {
             )
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") {
+                    let i18n = InternationalizationService()
+                    Button(i18n.localizedString(for: "SixLayerFramework.button.done")) {
                         isPresented = false
                     }
                 }
@@ -109,7 +110,8 @@ public struct OCROverlaySheetModifier: ViewModifier {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Done") {
+                let i18n = InternationalizationService()
+                Button(i18n.localizedString(for: "SixLayerFramework.button.done")) {
                     isPresented = false
                 }
             }

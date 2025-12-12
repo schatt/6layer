@@ -146,7 +146,7 @@ private struct MapViewWithLocationService: View {
                 let i18n = InternationalizationService()
                 ProgressView(i18n.localizedString(for: "SixLayerFramework.status.loadingLocation"))
             } else if let error = errorMessage {
-                VStack(spacing: 16) {
+                platformVStackContainer(spacing: 16) {
                     Image(systemName: "exclamationmark.triangle")
                         .font(.largeTitle)
                         .foregroundColor(.orange)
@@ -236,7 +236,7 @@ private struct MapViewWithLocationService: View {
 
 private struct UnsupportedPlatformMapView: View {
     var body: some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "map")
                 .font(.largeTitle)
                 .foregroundColor(.secondary)
