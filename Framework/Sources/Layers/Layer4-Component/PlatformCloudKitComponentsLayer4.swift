@@ -52,6 +52,7 @@ public func platformCloudKitSyncStatus_L4(status: CloudKitSyncStatus) -> some Vi
 ///   - progress: Progress value (0.0 to 1.0)
 ///   - status: Optional sync status for additional context
 /// - Returns: A view showing the sync progress
+@MainActor
 public func platformCloudKitProgress_L4(
     progress: Double,
     status: CloudKitSyncStatus? = nil
