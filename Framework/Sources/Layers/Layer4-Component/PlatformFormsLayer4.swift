@@ -17,7 +17,7 @@ public extension View {
         label: String? = nil,
         @ViewBuilder content: () -> Content
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        platformVStackContainer(alignment: .leading, spacing: 8) {
             if let label = label {
                 Text(label)
                     .font(.subheadline)
@@ -36,7 +36,7 @@ public extension View {
         title: String? = nil,
         @ViewBuilder content: () -> Content
     ) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             if let title = title {
                 Text(title)
                     .font(.subheadline)
@@ -45,7 +45,7 @@ public extension View {
                     .padding(.horizontal, 4)
             }
             
-            VStack(spacing: 8) {
+            platformVStackContainer(spacing: 8) {
                 content()
             }
             .padding()
@@ -62,7 +62,7 @@ public extension View {
         _ message: String,
         type: ValidationType = .error
     ) -> some View {
-        HStack(spacing: 4) {
+        platformHStackContainer(spacing: 4) {
             Image(systemName: type.iconName)
                 .foregroundColor(type.color)
                 .font(.caption)
@@ -168,7 +168,7 @@ public enum FormSpacing: CGFloat, CaseIterable {
             }
         }()
         return AnyView(
-            VStack(spacing: spacing) {
+            platformVStackContainer(spacing: spacing) {
                 content()
             }
             .padding()
@@ -192,7 +192,7 @@ public enum FormSpacing: CGFloat, CaseIterable {
         
         return AnyView(
             ScrollView {
-                VStack(spacing: spacing) {
+                platformVStackContainer(spacing: spacing) {
                     content()
                 }
                 .padding(.vertical)
@@ -214,7 +214,7 @@ public enum FormSpacing: CGFloat, CaseIterable {
             }
         }()
         return AnyView(
-            VStack(spacing: spacing) {
+            platformVStackContainer(spacing: spacing) {
                 content()
             }
             .padding()
@@ -236,7 +236,7 @@ public enum FormSpacing: CGFloat, CaseIterable {
             }
         }()
         return AnyView(
-            VStack(spacing: spacing) {
+            platformVStackContainer(spacing: spacing) {
                 content()
             }
             .padding()

@@ -196,7 +196,7 @@ private struct DataFrameAnalysisView: View {
     @State private var isLoading = true
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        platformVStackContainer(alignment: .leading, spacing: 16) {
             if isLoading {
                 ProgressView("Analyzing DataFrame...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -232,7 +232,7 @@ private struct DataFrameAnalysisContentView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            platformVStackContainer(alignment: .leading, spacing: 20) {
                 // Overview Section
                 DataFrameOverviewSection(result: result)
                 
@@ -263,19 +263,19 @@ private struct DataFrameOverviewSection: View {
     let result: DataFrameAnalysisResult
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text("DataFrame Overview")
                 .font(.headline)
             
             HStack {
-                VStack(alignment: .leading) {
+                platformVStackContainer(alignment: .leading) {
                     Text("Rows: \(result.rowCount)")
                     Text("Columns: \(result.columnCount)")
                 }
                 
                 Spacer()
                 
-                VStack(alignment: .trailing) {
+                platformVStackContainer(alignment: .trailing) {
                     Text("Data Quality")
                         .font(.caption)
                     Text("\(Int(result.dataQuality?.overallQualityScore ?? 0 * 100))%")
@@ -303,12 +303,12 @@ private struct DataQualitySection: View {
     let result: DataFrameAnalysisResult
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text("Data Quality Assessment")
                 .font(.headline)
             
             if let quality = result.dataQuality {
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     QualityMetricRow(
                         title: "Completeness",
                         value: quality.completenessScore,
@@ -344,12 +344,12 @@ private struct StatisticalAnalysisSection: View {
     let result: DataFrameAnalysisResult
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text("Statistical Analysis")
                 .font(.headline)
             
             if let stats = result.statisticalAnalysis {
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     ForEach(Array(stats.meanValues.keys), id: \.self) { column in
                         HStack {
                             Text(column)
@@ -378,7 +378,7 @@ private struct PatternRecognitionSection: View {
     let result: DataFrameAnalysisResult
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text("Pattern Recognition")
                 .font(.headline)
             
@@ -420,12 +420,12 @@ private struct VisualizationRecommendationsSection: View {
     let result: DataFrameAnalysisResult
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        platformVStackContainer(alignment: .leading, spacing: 12) {
             Text("Visualization Recommendations")
                 .font(.headline)
             
             if !result.visualizationRecommendations.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
+                platformVStackContainer(alignment: .leading, spacing: 8) {
                     ForEach(Array(result.visualizationRecommendations.enumerated()), id: \.offset) { index, recommendation in
                         VisualizationRecommendationRow(recommendation: recommendation)
                     }
@@ -542,7 +542,7 @@ private struct DataFrameComparisonView: View {
     let hints: DataFrameAnalysisHints
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        platformVStackContainer(alignment: .leading, spacing: 16) {
             Text("DataFrame Comparison")
                 .font(.headline)
             
@@ -569,7 +569,7 @@ private struct DataQualityAssessmentView: View {
     @State private var isLoading = true
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        platformVStackContainer(alignment: .leading, spacing: 16) {
             if isLoading {
                 ProgressView("Assessing data quality...")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

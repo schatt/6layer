@@ -496,7 +496,7 @@ public extension View {
         .automaticAccessibility()
         .automaticCompliance(named: identifierName)
         #else
-        VStack(spacing: spacing) {
+        platformVStackContainer(spacing: spacing) {
             content()
         }
         .automaticCompliance(named: identifierName)
@@ -542,7 +542,7 @@ public extension View {
         .automaticAccessibility()
         .automaticCompliance(named: identifierName)
         #else
-        VStack(spacing: spacing) {
+        platformVStackContainer(spacing: spacing) {
             content()
         }
         .frame(
@@ -592,7 +592,7 @@ public extension View {
             content()
         })
         #else
-        view = AnyView(VStack(spacing: spacing) {
+        view = AnyView(platformVStackContainer(spacing: spacing) {
             content()
         })
         #endif
@@ -667,7 +667,7 @@ public extension View {
         .automaticAccessibility()
         .automaticCompliance(named: identifierName)
         #else
-        VStack(spacing: spacing) {
+        platformVStackContainer(spacing: spacing) {
             content()
                 .environmentObject(stateValue)
         }
@@ -704,7 +704,7 @@ public extension View {
         .automaticAccessibility()
         .automaticCompliance(named: identifierName)
         #else
-        HStack(spacing: spacing) {
+        platformHStackContainer(spacing: spacing) {
             content()
         }
         .automaticCompliance(named: identifierName)
@@ -750,7 +750,7 @@ public extension View {
         .automaticAccessibility()
         .automaticCompliance(named: identifierName)
         #else
-        HStack(spacing: spacing) {
+        platformHStackContainer(spacing: spacing) {
             content()
         }
         .frame(
@@ -800,7 +800,7 @@ public extension View {
             content()
         })
         #else
-        view = AnyView(HStack(spacing: spacing) {
+        view = AnyView(platformHStackContainer(spacing: spacing) {
             content()
         })
         #endif
@@ -875,7 +875,7 @@ public extension View {
         .automaticAccessibility()
         .automaticCompliance(named: identifierName)
         #else
-        HStack(spacing: spacing) {
+        platformHStackContainer(spacing: spacing) {
             content()
                 .environmentObject(stateValue)
         }

@@ -55,7 +55,7 @@ public extension View {
         title: String,
         subtitle: String? = nil
     ) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        platformVStackContainer(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.headline)
                 .foregroundColor(.primary)
@@ -79,7 +79,7 @@ public extension View {
         title: String,
         message: String
     ) -> some View {
-        VStack(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             #if os(macOS)
             if #available(macOS 11.0, *) {
                 Image(systemName: systemImage)
@@ -97,7 +97,7 @@ public extension View {
                 .foregroundColor(.secondary)
             #endif
             
-            VStack(spacing: 8) {
+            platformVStackContainer(spacing: 8) {
                 Text(title)
                     .font(.headline)
                     .foregroundColor(.primary)
@@ -174,12 +174,12 @@ public extension View {
         title: String,
         message: String
     ) -> some View {
-        VStack(spacing: 20) {
+        platformVStackContainer(spacing: 20) {
             Image(systemName: systemImage)
                 .font(.system(size: 60))
                 .foregroundColor(.secondary)
             
-            VStack(spacing: 8) {
+            platformVStackContainer(spacing: 8) {
                 Text(title)
                     .font(.title2)
                     .fontWeight(.medium)

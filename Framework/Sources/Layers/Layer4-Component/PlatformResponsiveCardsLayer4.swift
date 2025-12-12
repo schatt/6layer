@@ -44,7 +44,7 @@ public extension View {
         spacing: CGFloat,
         content: () -> some View
     ) -> some View {
-        LazyVStack(spacing: spacing) {
+        platformLazyVStackContainer(spacing: spacing) {
             content()
         }
         .automaticCompliance(named: "platformCardList")
