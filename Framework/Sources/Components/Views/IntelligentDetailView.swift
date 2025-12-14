@@ -611,7 +611,8 @@ Text(i18n.localizedString(for: "SixLayerFramework.detail.rawData"))
     static func platformRawDataView<T>(data: T, analysis: DataAnalysisResult) -> some View {
         ScrollView {
             platformVStackContainer(alignment: .leading, spacing: 16) {
-                Text("Raw Data Analysis")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.detail.rawDataAnalysis"))
                     .font(.title)
                     .fontWeight(.bold)
                 
