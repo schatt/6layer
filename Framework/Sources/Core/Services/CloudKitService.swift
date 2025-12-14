@@ -8,7 +8,7 @@
 
 import Foundation
 import CloudKit
-import Combine
+@preconcurrency import Combine
 import Network
 
 #if os(iOS)
@@ -194,13 +194,12 @@ public class CloudKitService: ObservableObject {
     }
     private let usePublicDatabase: Bool
     private let queueStorage: CloudKitQueueStorage?
-    private var networkMonitor: NWPathMonitor?
-    private var networkMonitorQueue: DispatchQueue?
     private var isNetworkAvailable: Bool = true
     private var autoFlushEnabled: Bool = true
     private var lastSyncToken: CKServerChangeToken?
     private let syncTokenKey: String
     private let containerIdentifier: String
+    private var networkStatusCancellable: AnyCancellable?
     
     // MARK: - Initialization
     
@@ -235,13 +234,17 @@ public class CloudKitService: ObservableObject {
             }
         }
         
-        // Start network monitoring
+        // Start network monitoring using shared manager
         startNetworkMonitoring()
     }
     
     deinit {
-        // Clean up network monitor (non-isolated cleanup)
-        networkMonitor?.cancel()
+        // Clean up network monitoring subscription
+        // AnyCancellable.cancel() is thread-safe
+        networkStatusCancellable?.cancel()
+        Task { @MainActor in
+            SharedNetworkStatusManager.shared.stopMonitoring()
+        }
     }
     
     // MARK: - Account Management
@@ -794,42 +797,36 @@ public class CloudKitService: ObservableObject {
     
     // MARK: - Network Monitoring
     
-    /// Start monitoring network connectivity
+    /// Start monitoring network connectivity using shared network status manager
+    /// This prevents multiple NWPathMonitor instances from stressing configd
     private func startNetworkMonitoring() {
-        let monitor = NWPathMonitor()
-        let queue = DispatchQueue(label: "com.sixlayer.cloudkit.networkmonitor")
-        
-        monitor.pathUpdateHandler = { [weak self] path in
-            Task { @MainActor [weak self] in
-                guard let self = self else { return }
-                let wasAvailable = self.isNetworkAvailable
-                self.isNetworkAvailable = path.status == .satisfied
-                
-                // If network just became available and we have queued operations, flush them
-                if !wasAvailable && self.isNetworkAvailable && self.autoFlushEnabled {
-                    do {
-                        try await self.flushOfflineQueue()
-                    } catch {
-                        // Log error but don't crash
-                        self.lastError = error
+        Task { @MainActor in
+            // Use shared network status manager to prevent multiple monitors
+            let statusPublisher = SharedNetworkStatusManager.shared.startMonitoring()
+            
+            // Subscribe to network status changes
+            networkStatusCancellable = statusPublisher
+                .sink { [weak self] (isAvailable: Bool) in
+                    Task { @MainActor [weak self] in
+                        guard let self = self else { return }
+                        let wasAvailable = self.isNetworkAvailable
+                        self.isNetworkAvailable = isAvailable
+                        
+                        // If network just became available and we have queued operations, flush them
+                        if !wasAvailable && self.isNetworkAvailable && self.autoFlushEnabled {
+                            do {
+                                try await self.flushOfflineQueue()
+                            } catch {
+                                // Log error but don't crash
+                                self.lastError = error
+                            }
+                        }
                     }
                 }
-            }
+            
+            // Set initial network status
+            isNetworkAvailable = SharedNetworkStatusManager.shared.currentStatus()
         }
-        
-        monitor.start(queue: queue)
-        self.networkMonitor = monitor
-        self.networkMonitorQueue = queue
-        
-        // Set initial network status
-        isNetworkAvailable = monitor.currentPath.status == .satisfied
-    }
-    
-    /// Stop monitoring network connectivity
-    private func stopNetworkMonitoring() {
-        networkMonitor?.cancel()
-        networkMonitor = nil
-        networkMonitorQueue = nil
     }
     
     // MARK: - Queue Operations

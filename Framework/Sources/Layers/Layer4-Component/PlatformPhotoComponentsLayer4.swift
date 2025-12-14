@@ -31,7 +31,8 @@ public enum PlatformPhotoComponentsLayer4 {
         MacCameraView(onImageCaptured: onImageCaptured)
             .automaticCompliance()
         #else
-        Text("Camera not available on this platform")
+        let i18n = InternationalizationService()
+        Text(i18n.localizedString(for: "SixLayerFramework.camera.notAvailable"))
             .automaticCompliance()
         #endif
     }
@@ -94,7 +95,8 @@ public struct PlatformCameraPreviewView: View {
         #elseif os(macOS)
         CameraPreviewNSView(session: session, videoGravity: videoGravity)
         #else
-        Text("Camera preview not available on this platform")
+        let i18n = InternationalizationService()
+        Text(i18n.localizedString(for: "SixLayerFramework.camera.previewNotAvailable"))
         #endif
     }
 }
@@ -462,7 +464,8 @@ struct PlaceholderPhotoView: View {
             Image(systemName: "photo")
                 .font(.largeTitle)
                 .foregroundColor(.secondary)
-            Text("No Image")
+            let i18n = InternationalizationService()
+            Text(i18n.localizedString(for: "SixLayerFramework.image.noImage"))
                 .foregroundColor(.secondary)
         }
         .frame(width: sizeForStyle(style).width, height: sizeForStyle(style).height)
