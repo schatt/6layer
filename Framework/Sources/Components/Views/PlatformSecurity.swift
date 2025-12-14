@@ -9,12 +9,13 @@ public struct PlatformSecurity: View {
     public init() {}
     
     public var body: some View {
-        platformVStackContainer(spacing: 12) {
-            Text("Platform Security")
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 12) {
+            Text(i18n.localizedString(for: "SixLayerFramework.platform.security.title"))
                 .font(.headline)
                 .automaticCompliance(named: "Title")
             
-            Text("Security features across platforms")
+            Text(i18n.localizedString(for: "SixLayerFramework.platform.security.description"))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .automaticCompliance(named: "Description")

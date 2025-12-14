@@ -161,18 +161,19 @@ struct SafeVisionOCRView: View {
     @State private var error: Error?
     
     var body: some View {
-        Group {
+        let i18n = InternationalizationService()
+        return Group {
             if isProcessing {
-                ProgressView("Processing OCR...")
+                ProgressView(i18n.localizedString(for: "SixLayerFramework.ocr.processingOCR"))
                     .progressViewStyle(CircularProgressViewStyle())
             } else if result != nil {
-                Text("OCR Complete")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.complete"))
                     .foregroundColor(.secondary)
             } else if let error = error {
-                Text("OCR Error: \(error.localizedDescription)")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.error") + ": \(error.localizedDescription)")
                     .foregroundColor(.red)
             } else {
-                Text("Ready for OCR")
+                Text(i18n.localizedString(for: "SixLayerFramework.ocr.readyToProcess"))
                     .foregroundColor(.secondary)
             }
         }

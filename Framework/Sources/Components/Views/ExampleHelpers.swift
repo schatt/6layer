@@ -9,11 +9,12 @@ public struct ExampleHelpers: View {
     public init() {}
     
     public var body: some View {
-        platformVStackContainer(spacing: 12) {
-            Text("Example Helpers")
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 12) {
+            Text(i18n.localizedString(for: "SixLayerFramework.example.helpers.title"))
                 .font(.headline)
             
-            Text("Helper examples and utilities")
+            Text(i18n.localizedString(for: "SixLayerFramework.example.helpers.description"))
                 .font(.caption)
                 .foregroundColor(.secondary)
         }

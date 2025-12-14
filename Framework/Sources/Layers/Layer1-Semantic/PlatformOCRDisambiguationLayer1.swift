@@ -95,14 +95,15 @@ private struct OCRDisambiguationWrapper: View {
     // MARK: - Processing View
     
     private var processingView: some View {
-        platformVStackContainer(spacing: 16) {
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 16) {
             ProgressView()
                 .scaleEffect(1.2)
             
-            Text("Processing OCR...")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.processingOCR"))
                 .font(.headline)
             
-            Text("Analyzing image for text recognition")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.analyzingImage"))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -125,20 +126,21 @@ private struct OCRDisambiguationWrapper: View {
     }
     
     private var autoConfirmView: some View {
-        platformVStackContainer(spacing: 16) {
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.green)
             
-            Text("OCR Complete")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.complete"))
                 .font(.headline)
             
-            Text("High confidence results detected - no disambiguation needed")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
-            Button("View Results") {
+            Button(i18n.localizedString(for: "SixLayerFramework.ocr.viewResults")) {
                 // Handle viewing results
             }
             .buttonStyle(.borderedProminent)
@@ -149,12 +151,13 @@ private struct OCRDisambiguationWrapper: View {
     // MARK: - Error View
     
     private func errorView(_ error: String) -> some View {
-        platformVStackContainer(spacing: 16) {
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 16) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 48))
                 .foregroundColor(.red)
             
-            Text("OCR Error")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.error"))
                 .font(.headline)
             
             Text(error)
@@ -162,7 +165,7 @@ private struct OCRDisambiguationWrapper: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
-            Button("Retry") {
+            Button(i18n.localizedString(for: "SixLayerFramework.button.retry")) {
                 processImage()
             }
             .buttonStyle(.borderedProminent)
@@ -173,19 +176,20 @@ private struct OCRDisambiguationWrapper: View {
     // MARK: - Initial View
     
     private var initialView: some View {
-        platformVStackContainer(spacing: 16) {
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 16) {
             Image(systemName: "doc.text.viewfinder")
                 .font(.system(size: 48))
                 .foregroundColor(.blue)
             
-            Text("Ready to Process")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.readyToProcess"))
                 .font(.headline)
             
-            Text("Tap to start OCR processing")
+            Text(i18n.localizedString(for: "SixLayerFramework.ocr.tapToStart"))
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             
-            Button("Start OCR") {
+            Button(i18n.localizedString(for: "SixLayerFramework.ocr.startOCR")) {
                 processImage()
             }
             .buttonStyle(.borderedProminent)

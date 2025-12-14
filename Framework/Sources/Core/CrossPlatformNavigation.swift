@@ -317,7 +317,8 @@ public extension CrossPlatformNavigation {
                 detailView(item)
                                             .toolbar {
                             ToolbarItem(placement: .primaryAction) {
-                                Button("Done") {
+                                let i18n = InternationalizationService()
+                                Button(i18n.localizedString(for: "SixLayerFramework.button.done")) {
                                     selectedItem.wrappedValue = nil
                                 }
                             }

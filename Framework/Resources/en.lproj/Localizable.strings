@@ -141,8 +141,27 @@
 "SixLayerFramework.button.confirm" = "Confirm";
 "SixLayerFramework.button.save" = "Save";
 "SixLayerFramework.button.cancel" = "Cancel";
+"SixLayerFramework.button.submit" = "Submit";
 "SixLayerFramework.button.select" = "Select";
+"SixLayerFramework.form.title" = "Form";
+"SixLayerFramework.form.fieldsCount" = "%d fields";
+"SixLayerFramework.form.placeholder.toggle" = "Toggle";
+"SixLayerFramework.form.fieldType.multiselect" = "Multi-select field: %@";
+"SixLayerFramework.form.fieldType.fileUpload" = "File upload field: %@";
+"SixLayerFramework.form.fieldType.colorPicker" = "Color picker field: %@";
+"SixLayerFramework.form.fieldType.range" = "Range field: %@";
+"SixLayerFramework.form.fieldType.richText" = "Rich text field: %@";
+"SixLayerFramework.form.fieldType.autocomplete" = "Autocomplete field: %@";
+"SixLayerFramework.form.fieldType.image" = "Image field: %@";
+"SixLayerFramework.form.fieldType.array" = "Array field: %@";
+"SixLayerFramework.form.fieldType.data" = "Data field: %@";
+"SixLayerFramework.form.fieldType.custom" = "Custom field: %@";
 "SixLayerFramework.button.selectImage" = "Select Image";
+"SixLayerFramework.button.viewDetails" = "View Details";
+"SixLayerFramework.imagePicker.notAvailable" = "Image picker not available on this platform";
+"SixLayerFramework.camera.notAvailable" = "Camera not available on this platform";
+"SixLayerFramework.camera.previewNotAvailable" = "Camera preview not available on this platform";
+"SixLayerFramework.image.noImage" = "No Image";
 
 /* ============================================================================
    OCR INTERFACE
@@ -164,6 +183,17 @@
 "SixLayerFramework.ocr.extractionComplete" = "Extraction complete";
 "SixLayerFramework.ocr.readyToExtract" = "Ready to extract";
 "SixLayerFramework.ocr.processing" = "Processing...";
+"SixLayerFramework.ocr.processingOCR" = "Processing OCR...";
+"SixLayerFramework.ocr.analyzingImage" = "Analyzing image for text recognition";
+"SixLayerFramework.ocr.complete" = "OCR Complete";
+"SixLayerFramework.ocr.highConfidenceNoDisambiguation" = "High confidence results detected - no disambiguation needed";
+"SixLayerFramework.ocr.viewResults" = "View Results";
+"SixLayerFramework.ocr.error" = "OCR Error";
+"SixLayerFramework.button.retry" = "Retry";
+"SixLayerFramework.ocr.readyToProcess" = "Ready to Process";
+"SixLayerFramework.ocr.tapToStart" = "Tap to start OCR processing";
+"SixLayerFramework.ocr.tapToStartWithCorrection" = "Tap to start OCR processing with visual correction";
+"SixLayerFramework.ocr.startOCR" = "Start OCR";
 "SixLayerFramework.ocr.scanDocument" = "Scan Document";
 
 /* OCR Service Errors */
@@ -345,6 +375,20 @@
 "SixLayerFramework.file.saveError" = "Error saving file: %@";
 
 /* ============================================================================
+   LIST AND COLLECTION
+   ============================================================================ */
+
+"SixLayerFramework.list.itemsCount" = "%d items";
+"SixLayerFramework.list.itemNumber" = "Item %d";
+"SixLayerFramework.list.tapToView" = "Tap to view";
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+"SixLayerFramework.accessibility.skipToContent" = "Skip to content";
+
+/* ============================================================================
    PLATFORM SPECIFIC
    ============================================================================ */
 
@@ -354,3 +398,15 @@
 "SixLayerFramework.platform.crossPlatform.adaptiveSpacing" = "• Adaptive spacing";
 "SixLayerFramework.platform.crossPlatform.specificLayouts" = "• Platform-specific layouts";
 "SixLayerFramework.platform.crossPlatform.optimalSizing" = "• Optimal component sizing";
+"SixLayerFramework.platform.security.title" = "Platform Security";
+"SixLayerFramework.platform.security.description" = "Security features across platforms";
+"SixLayerFramework.platform.privacy.title" = "Platform Privacy";
+"SixLayerFramework.platform.privacy.description" = "Privacy features across platforms";
+"SixLayerFramework.example.helpers.title" = "Example Helpers";
+"SixLayerFramework.example.helpers.description" = "Helper examples and utilities";
+"SixLayerFramework.detail.title" = "Details";
+"SixLayerFramework.detail.overview" = "Overview";
+"SixLayerFramework.detail.rawData" = "Raw Data";
+"SixLayerFramework.detail.optional" = "Optional";
+"SixLayerFramework.detail.array" = "Array";
+"SixLayerFramework.detail.identifiable" = "Identifiable";

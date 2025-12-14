@@ -125,7 +125,8 @@ private struct BarcodeScanningWrapper: View {
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
             
-            Button("Retry") {
+            let i18n = InternationalizationService()
+            Button(i18n.localizedString(for: "SixLayerFramework.button.retry")) {
                 processImage()
             }
             .buttonStyle(.borderedProminent)

@@ -404,7 +404,8 @@ public struct ResponsiveCardView: View {
             HStack {
                 Spacer()
                 
-                Button("View Details") {
+                let i18n = InternationalizationService()
+                Button(i18n.localizedString(for: "SixLayerFramework.button.viewDetails")) {
                     // Layer 5: Performance optimization would handle this
                 }
                 .buttonStyle(.borderedProminent)

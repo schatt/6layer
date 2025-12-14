@@ -103,11 +103,12 @@ public struct ThemedGenericFormView: View {
         platformVStackContainer(spacing: 0) {
             // Header
             HStack {
-                Text("Form")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                     .font(typography.title2)
                     .foregroundColor(colors.text)
                 Spacer()
-                Text("\(fields.count) fields")
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldsCount", arguments: [String(fields.count)]))
                     .font(typography.caption1)
                     .foregroundColor(colors.textSecondary)
             }
@@ -128,8 +129,9 @@ public struct ThemedGenericFormView: View {
             
             // Footer
             HStack {
+                let i18n = InternationalizationService()
                 AdaptiveUIPatterns.AdaptiveButton(
-                    "Cancel",
+                    i18n.localizedString(for: "SixLayerFramework.button.cancel"),
                     style: .outline,
                     size: .medium,
                     action: onCancel
@@ -138,7 +140,7 @@ public struct ThemedGenericFormView: View {
                 Spacer()
                 
                 AdaptiveUIPatterns.AdaptiveButton(
-                    "Submit",
+                    i18n.localizedString(for: "SixLayerFramework.button.submit"),
                     style: .primary,
                     size: .medium,
                     action: { onSubmit(formData) }
@@ -160,21 +162,24 @@ public struct ThemedGenericFormView: View {
             
             switch field.fieldType {
             case .text:
-                TextField(field.placeholder ?? "Enter text", text: Binding(
+                let i18n = InternationalizationService()
+                TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
                 .themedTextField()
                 
             case .email:
-                TextField(field.placeholder ?? "Enter email", text: Binding(
+                let i18n = InternationalizationService()
+                TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterEmail"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
                 .themedTextField()
                 
             case .password:
-                SecureField(field.placeholder ?? "Enter password", text: Binding(
+                let i18n = InternationalizationService()
+                SecureField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterPassword"), text: Binding(
                     get: { formData[field.id.uuidString] as? String ?? "" },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
@@ -262,7 +267,8 @@ public struct ThemedGenericFormView: View {
                     set: { formData[field.id.uuidString] = $0 }
                 ), displayedComponents: [.date, .hourAndMinute])
             case .multiselect:
-                Text("Multi-select field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.multiselect", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -270,7 +276,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .file:
-                Text("File upload field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.fileUpload", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -285,7 +292,8 @@ public struct ThemedGenericFormView: View {
                 ))
                 .themedTextField()
             case .color:
-                Text("Color picker field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.colorPicker", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -293,7 +301,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .range:
-                Text("Range field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.range", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -301,12 +310,14 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .toggle, .boolean:
-                Toggle(field.placeholder ?? "Toggle", isOn: Binding(
+                let i18n = InternationalizationService()
+                Toggle(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.toggle"), isOn: Binding(
                     get: { formData[field.id.uuidString] as? Bool ?? false },
                     set: { formData[field.id.uuidString] = $0 }
                 ))
             case .richtext:
-                Text("Rich text field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.richText", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -314,7 +325,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .autocomplete:
-                Text("Autocomplete field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.autocomplete", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -329,7 +341,8 @@ public struct ThemedGenericFormView: View {
                 ))
                 .themedTextField()
             case .image:
-                Text("Image field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.image", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -337,7 +350,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .array:
-                Text("Array field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.array", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -345,7 +359,8 @@ public struct ThemedGenericFormView: View {
                     .background(colors.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
             case .data:
-                Text("Data field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.data", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -366,7 +381,8 @@ public struct ThemedGenericFormView: View {
                 .pickerStyle(.menu)
                 .themedTextField()
             case .custom:
-                Text("Custom field: \(field.label)")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.form.fieldType.custom", arguments: [field.label]))
                     .font(typography.body)
                     .foregroundColor(colors.textSecondary)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -465,7 +481,8 @@ public struct ThemedGenericItemCollectionView: View {
                     .font(typography.headline)
                     .foregroundColor(colors.text)
                 Spacer()
-                Text("\(items.count) items")
+                let i18n = InternationalizationService()
+                Text(i18n.localizedString(for: "SixLayerFramework.list.itemsCount", arguments: [String(items.count)]))
                     .font(typography.caption1)
                     .foregroundColor(colors.textSecondary)
             }
@@ -474,11 +491,12 @@ public struct ThemedGenericItemCollectionView: View {
             LazyVGrid(columns: gridColumns, spacing: 12) {
                 ForEach(Array(items.enumerated()), id: \.offset) { index, item in
                     Button(action: { onItemTap(item) }) {
+                        let i18n = InternationalizationService()
                         VStack {
-                            Text("Item \(index + 1)")
+                            Text(i18n.localizedString(for: "SixLayerFramework.list.itemNumber", arguments: [String(index + 1)]))
                                 .font(typography.body)
                                 .foregroundColor(colors.text)
-                            Text("Tap to view")
+                            Text(i18n.localizedString(for: "SixLayerFramework.list.tapToView"))
                                 .font(typography.caption1)
                                 .foregroundColor(colors.textSecondary)
                         }

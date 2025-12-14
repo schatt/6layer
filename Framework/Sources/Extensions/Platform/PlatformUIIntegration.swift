@@ -73,7 +73,8 @@ public struct PlatformUIIntegration {
                 Spacer()
                 
                 if accessibility.voiceOverSupport {
-                    Button("Skip to content") {
+                    let i18n = InternationalizationService()
+                    Button(i18n.localizedString(for: "SixLayerFramework.accessibility.skipToContent")) {
                         // Handle skip to content
                     }
                     .font(typography.caption1)
@@ -156,7 +157,8 @@ public struct PlatformUIIntegration {
                 
                 Spacer()
                 
-                Button("Done") {
+                let i18n = InternationalizationService()
+                Button(i18n.localizedString(for: "SixLayerFramework.button.done")) {
                     isPresented.wrappedValue = false
                     onDismiss?()
                 }

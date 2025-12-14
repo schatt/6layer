@@ -257,7 +257,8 @@ public extension IntelligentDetailView {
             platformLazyVStackContainer(alignment: .leading, spacing: 20) {
                 // Header section
                 platformVStackContainer(alignment: .leading, spacing: 8) {
-                    Text("Details")
+                    let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.detail.title"))
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
@@ -328,7 +329,8 @@ public extension IntelligentDetailView {
                     )
                     .tabItem {
                         Image(systemName: "info.circle")
-                        Text("Overview")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.detail.overview"))
                     }
                     
                     // Details tab
@@ -341,14 +343,16 @@ public extension IntelligentDetailView {
                     )
                     .tabItem {
                         Image(systemName: "doc.text")
-                        Text("Details")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.detail.title"))
                     }
                     
                     // Raw data tab
                     platformRawDataView(data: data, analysis: analysis)
                         .tabItem {
                             Image(systemName: "code")
-                            Text("Raw Data")
+                            let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.detail.rawData"))
                         }
                 }
             )
@@ -378,7 +382,8 @@ public extension IntelligentDetailView {
                     )
                     .tabItem {
                         Image(systemName: "info.circle")
-                        Text("Overview")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.detail.overview"))
                     }
                     
                     // Details tab
@@ -391,14 +396,16 @@ public extension IntelligentDetailView {
                     )
                     .tabItem {
                         Image(systemName: "doc.text")
-                        Text("Details")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.detail.title"))
                     }
                     
                     // Raw data tab
                     platformRawDataView(data: data, analysis: analysis)
                         .tabItem {
                             Image(systemName: "code")
-                            Text("Raw Data")
+                            let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.detail.rawData"))
                         }
                 }
             )
@@ -519,19 +526,22 @@ public extension IntelligentDetailView {
                     .foregroundColor(.secondary)
                 
                 if field.isOptional {
-                    Text("Optional")
+                    let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.detail.optional"))
                         .font(.caption)
                         .foregroundColor(.orange)
                 }
                 
                 if field.isArray {
-                    Text("Array")
+                    let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.detail.array"))
                         .font(.caption)
                         .foregroundColor(.blue)
                 }
                 
                 if field.isIdentifiable {
-                    Text("Identifiable")
+                    let i18n = InternationalizationService()
+                    Text(i18n.localizedString(for: "SixLayerFramework.detail.identifiable"))
                         .font(.caption)
                         .foregroundColor(.green)
                 }

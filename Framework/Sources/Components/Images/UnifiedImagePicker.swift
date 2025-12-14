@@ -38,7 +38,8 @@ public struct UnifiedImagePicker: View {
             #elseif os(macOS)
             macOSImagePicker(onImageSelected: onImageSelected)
             #else
-            Text("Image picker not available on this platform")
+            let i18n = InternationalizationService()
+            Text(i18n.localizedString(for: "SixLayerFramework.imagePicker.notAvailable"))
             #endif
         }
         .automaticCompliance(named: "UnifiedImagePicker")

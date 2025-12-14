@@ -2220,7 +2220,8 @@ public struct ModalFormView: View {
                     .font(.headline)
                     .foregroundColor(.primary)
                 Spacer()
-                Button("Done") {
+                let i18n = InternationalizationService()
+                Button(i18n.localizedString(for: "SixLayerFramework.button.done")) {
                     // TODO: Implement dismiss action
                 }
                 .buttonStyle(.bordered)

@@ -172,7 +172,8 @@ public struct IntelligentFormView {
                     case .form:
                         platformVStackContainer(spacing: 20) {
                             platformVStackContainer(alignment: .leading, spacing: 8) {
-                                Text("Form")
+                                let i18n = InternationalizationService()
+                                Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                                     .font(.headline)
                                     .automaticCompliance(named: "FormTitle")
                             }
@@ -204,7 +205,8 @@ public struct IntelligentFormView {
                     case .standard, .scrollView, .custom, .adaptive:
                         platformVStackContainer(spacing: 20) {
                             platformVStackContainer(alignment: .leading, spacing: 8) {
-                                Text("Form")
+                                let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                                     .font(.headline)
                                     .automaticCompliance(named: "FormTitle")
                             }
@@ -300,7 +302,8 @@ public struct IntelligentFormView {
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
                     platformVStackContainer(alignment: .leading, spacing: 8) {
-                        Text("Form")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
                     }
@@ -337,7 +340,8 @@ public struct IntelligentFormView {
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
                     platformVStackContainer(alignment: .leading, spacing: 8) {
-                        Text("Form")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
                     }
@@ -445,7 +449,8 @@ public struct IntelligentFormView {
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
                     platformVStackContainer(alignment: .leading, spacing: 8) {
-                        Text("Form")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
                     }
@@ -483,7 +488,8 @@ public struct IntelligentFormView {
                 VStack(spacing: 20) {
                     // DynamicFormHeader - form title/description
                     platformVStackContainer(alignment: .leading, spacing: 8) {
-                        Text("Form")
+                        let i18n = InternationalizationService()
+Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                             .font(.headline)
                             .automaticCompliance(named: "FormTitle")
                     }

@@ -125,6 +125,12 @@ public extension Color {
         return systemBackground
     }
 
+    /// Platform system background color (alias for systemBackground)
+    /// iOS: systemBackground; macOS: windowBackgroundColor
+    static var platformSystemBackground: Color {
+        return systemBackground
+    }
+
     /// Platform secondary background color
     /// iOS: secondarySystemBackground; macOS: controlBackgroundColor
     static var platformSecondaryBackground: Color {
@@ -134,6 +140,18 @@ public extension Color {
         return Color(.controlBackgroundColor)
         #else
         return Color.secondary
+        #endif
+    }
+
+    /// Platform tertiary background color
+    /// iOS: tertiarySystemBackground; macOS: textBackgroundColor
+    static var platformTertiaryBackground: Color {
+        #if os(iOS)
+        return Color(.tertiarySystemBackground)
+        #elseif os(macOS)
+        return Color(.textBackgroundColor)
+        #else
+        return Color.gray.opacity(0.1)
         #endif
     }
 

@@ -9,12 +9,13 @@ public struct PlatformPrivacy: View {
     public init() {}
     
     public var body: some View {
-        platformVStackContainer(spacing: 12) {
-            Text("Platform Privacy")
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 12) {
+            Text(i18n.localizedString(for: "SixLayerFramework.platform.privacy.title"))
                 .font(.headline)
                 .automaticCompliance(named: "Title")
             
-            Text("Privacy features across platforms")
+            Text(i18n.localizedString(for: "SixLayerFramework.platform.privacy.description"))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .automaticCompliance(named: "Description")
