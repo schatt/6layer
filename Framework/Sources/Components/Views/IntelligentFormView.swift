@@ -917,7 +917,7 @@ Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
 
                 Spacer()
 
-                Button(initialData != nil ? "Update" : "Create") {
+                Button(initialData != nil ? i18n.localizedString(for: "SixLayerFramework.button.update") : i18n.localizedString(for: "SixLayerFramework.button.create")) {
                     // Note: For SwiftData models, ModelContext should be passed explicitly
                     // In a SwiftUI view, you can get it from @Environment(\.modelContext)
                     // For now, handleSubmit will attempt to find it via reflection (may not work reliably)

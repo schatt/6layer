@@ -412,6 +412,7 @@
 "SixLayerFramework.form.cannotGenerate" = "Cannot generate form";
 "SixLayerFramework.form.fullyDeclarativeRequired" = "Fully declarative hints are required for type-only form generation";
 "SixLayerFramework.button.create" = "Create";
+"SixLayerFramework.button.update" = "Update";
 "SixLayerFramework.example.helpers.title" = "Example Helpers";
 "SixLayerFramework.example.helpers.description" = "Helper examples and utilities";
 "SixLayerFramework.detail.title" = "Details";
