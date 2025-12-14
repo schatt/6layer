@@ -62,7 +62,7 @@ public struct RichTextEditor: UIViewRepresentable {
         public func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.delegate = context.coordinator
-        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.font = Font.uiFontBody()
         textView.isEditable = true
         textView.isScrollEnabled = true
         textView.backgroundColor = UIColor.systemBackground
