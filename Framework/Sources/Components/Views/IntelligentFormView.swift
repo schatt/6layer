@@ -259,11 +259,12 @@ Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                 )
             } else {
                 // Cannot generate form without instance data and fully declarative hints
+                let i18n = InternationalizationService()
                 return AnyView(
                     VStack {
-                        Text("Cannot generate form")
+                        Text(i18n.localizedString(for: "SixLayerFramework.form.cannotGenerate"))
                             .font(.headline)
-                        Text("Fully declarative hints are required for type-only form generation")
+                        Text(i18n.localizedString(for: "SixLayerFramework.form.fullyDeclarativeRequired"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
@@ -537,8 +538,9 @@ Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
     ) -> some View {
         VStack {
             Spacer()
+            let i18n = InternationalizationService()
             platformHStackContainer(spacing: 12) {
-                Button("Cancel") { onCancel() }
+                Button(i18n.localizedString(for: "SixLayerFramework.button.cancel")) { onCancel() }
                     .buttonStyle(.bordered)
                     .foregroundColor(Color.platformLabel)
 
@@ -547,7 +549,7 @@ Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
                 // Note: For type-only forms, submit would need to collect values from form state
                 // This is a limitation - we can't automatically construct T from collected values
                 // Users can access form field values through their own state management
-                Button("Create") {
+                Button(i18n.localizedString(for: "SixLayerFramework.button.create")) {
                     // Type-only forms: values are collected in form state
                     // Users need to access values through their own state management
                     // or use a different API that accepts [String: Any]
@@ -907,8 +909,9 @@ Text(i18n.localizedString(for: "SixLayerFramework.form.title"))
     ) -> some View {
         VStack {
             Spacer()
+            let i18n = InternationalizationService()
             platformHStackContainer(spacing: 12) {
-                Button("Cancel") { onCancel() }
+                Button(i18n.localizedString(for: "SixLayerFramework.button.cancel")) { onCancel() }
                     .buttonStyle(.bordered)
                     .foregroundColor(Color.platformLabel)
 

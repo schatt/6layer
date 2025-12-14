@@ -9,12 +9,13 @@ public struct VisionSafety: View {
     public init() {}
     
     public var body: some View {
-        platformVStackContainer(spacing: 12) {
-            Text("Vision Safety")
+        let i18n = InternationalizationService()
+        return platformVStackContainer(spacing: 12) {
+            Text(i18n.localizedString(for: "SixLayerFramework.vision.safety.title"))
                 .font(.headline)
                 .automaticCompliance(named: "Title")
             
-            Text("Safety features for spatial computing")
+            Text(i18n.localizedString(for: "SixLayerFramework.vision.safety.description"))
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .automaticCompliance(named: "Description")

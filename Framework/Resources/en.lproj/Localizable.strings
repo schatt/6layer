@@ -402,6 +402,16 @@
 "SixLayerFramework.platform.security.description" = "Security features across platforms";
 "SixLayerFramework.platform.privacy.title" = "Platform Privacy";
 "SixLayerFramework.platform.privacy.description" = "Privacy features across platforms";
+"SixLayerFramework.platform.safety.title" = "Platform Safety";
+"SixLayerFramework.platform.safety.description" = "Safety features across platforms";
+"SixLayerFramework.vision.safety.title" = "Vision Safety";
+"SixLayerFramework.vision.safety.description" = "Safety features for spatial computing";
+"SixLayerFramework.runtime.capabilities.title" = "Runtime Capabilities";
+"SixLayerFramework.runtime.capabilities.detecting" = "Detecting capabilities...";
+"SixLayerFramework.runtime.capabilities.refresh" = "Refresh Detection";
+"SixLayerFramework.form.cannotGenerate" = "Cannot generate form";
+"SixLayerFramework.form.fullyDeclarativeRequired" = "Fully declarative hints are required for type-only form generation";
+"SixLayerFramework.button.create" = "Create";
 "SixLayerFramework.example.helpers.title" = "Example Helpers";
 "SixLayerFramework.example.helpers.description" = "Helper examples and utilities";
 "SixLayerFramework.detail.title" = "Details";

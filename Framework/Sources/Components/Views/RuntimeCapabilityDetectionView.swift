@@ -11,13 +11,14 @@ public struct RuntimeCapabilityDetectionView: View {
     public init() {}
     
     public var body: some View {
-        platformVStackContainer(alignment: .leading, spacing: 12) {
-            Text("Runtime Capabilities")
+        let i18n = InternationalizationService()
+        return platformVStackContainer(alignment: .leading, spacing: 12) {
+            Text(i18n.localizedString(for: "SixLayerFramework.runtime.capabilities.title"))
                 .font(.headline)
                 .automaticCompliance(named: "Title")
             
             if capabilities.isEmpty {
-                Text("Detecting capabilities...")
+                Text(i18n.localizedString(for: "SixLayerFramework.runtime.capabilities.detecting"))
                     .foregroundColor(.secondary)
                     .automaticCompliance(named: "Loading")
             } else {
@@ -32,7 +33,7 @@ public struct RuntimeCapabilityDetectionView: View {
                 }
             }
             
-            Button("Refresh Detection") {
+            Button(i18n.localizedString(for: "SixLayerFramework.runtime.capabilities.refresh")) {
                 detectCapabilities()
             }
             .automaticCompliance(named: "RefreshButton")
