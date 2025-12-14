@@ -253,6 +253,18 @@ If app strings aren't overriding framework strings:
 3. **Check Bundle**: Ensure app bundle is `Bundle.main` or correctly specified
 4. **Test Directly**: Use `appLocalizedString` to verify app bundle has the string
 
+## Testing
+
+Comprehensive test coverage is available in `InternationalizationServiceTests.swift`:
+
+- **Framework String Loading**: Tests verify framework bundle can load strings and all defined keys return proper values
+- **App Override Functionality**: Tests verify app strings override framework strings and fallback works correctly
+- **Fallback Chain**: Tests verify app → framework → key fallback order
+- **Multi-Language Support**: Tests cover English, Spanish, French, German, Japanese, Korean, Simplified Chinese, and locale fallback
+- **Edge Cases**: Tests handle empty strings, missing language files, invalid keys, special characters, and format placeholders
+
+All 40 tests pass and verify the localization implementation works correctly.
+
 ## Related Documentation
 
 - [InternationalizationService API Reference](../Sources/Core/Services/InternationalizationService.swift)
