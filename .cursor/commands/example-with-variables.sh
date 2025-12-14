@@ -32,3 +32,4 @@ if [ -n "$ARG1" ]; then
     echo "Processing: $ARG1"
     # Your command logic here
 fi
+

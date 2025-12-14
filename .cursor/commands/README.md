@@ -129,3 +129,4 @@ echo "Selected text: $SELECTED"
 - For Python scripts, use `#!/usr/bin/env python3`
 - Variables are case-sensitive
 - Always quote variables to handle spaces: `"$1"` not `$1`
+

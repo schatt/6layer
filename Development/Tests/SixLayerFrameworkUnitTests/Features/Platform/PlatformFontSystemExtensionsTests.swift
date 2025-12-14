@@ -46,10 +46,10 @@ open class PlatformFontSystemExtensionsTests: BaseTestClass {
     }
     #elseif os(macOS)
     /// Helper to extract font information from NSFont
-    private func extractFontInfo(from nsFont: NSFont) -> (size: CGFloat) {
+    private func extractFontInfo(from nsFont: NSFont) -> CGFloat {
         let size = nsFont.pointSize
         // NSFont doesn't have a direct weight property like UIFont
-        return (size)
+        return size
     }
     #endif
     
@@ -504,3 +504,4 @@ open class PlatformFontSystemExtensionsTests: BaseTestClass {
         }
     }
 }
+

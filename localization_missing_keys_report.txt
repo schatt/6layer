@@ -1,0 +1,5950 @@
+Missing Localization Keys Report
+============================================================
+
+Total keys in English: 298
+Total missing keys: 185
+
+
+Spanish (es): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+French (fr): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+German (de): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+Japanese (ja): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+Korean (ko): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+Simplified Chinese (zh-Hans): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+Polish (pl): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
+
+Swiss German (de-CH): 185 missing
+------------------------------------------------------------
+
+Key: "SixLayerFramework.accessibility.skipToContent"
+English: "Skip to content"
+Translation needed
+
+Key: "SixLayerFramework.barcode.barcodeNumber"
+English: "Barcode %d"
+Translation needed
+
+Key: "SixLayerFramework.barcode.confidence"
+English: "Confidence: %d%%"
+Translation needed
+
+Key: "SixLayerFramework.barcode.detectedBarcodes"
+English: "Detected Barcodes:"
+Translation needed
+
+Key: "SixLayerFramework.barcode.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodeFound"
+English: "No barcode was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.noBarcodesDetected"
+English: "No Barcodes Detected"
+Translation needed
+
+Key: "SixLayerFramework.barcode.processingFailed"
+English: "Barcode processing failed"
+Translation needed
+
+Key: "SixLayerFramework.barcode.tryDifferentImage"
+English: "Try scanning a different image"
+Translation needed
+
+Key: "SixLayerFramework.barcode.unsupportedPlatform"
+English: "Barcode scanning is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.barcode.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.button.addAction"
+English: "Add Action"
+Translation needed
+
+Key: "SixLayerFramework.button.addBoolean"
+English: "Add Boolean"
+Translation needed
+
+Key: "SixLayerFramework.button.addCard"
+English: "Add Card"
+Translation needed
+
+Key: "SixLayerFramework.button.addChart"
+English: "Add Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addData"
+English: "Add Data"
+Translation needed
+
+Key: "SixLayerFramework.button.addDate"
+English: "Add Date"
+Translation needed
+
+Key: "SixLayerFramework.button.addDetail"
+English: "Add Detail"
+Translation needed
+
+Key: "SixLayerFramework.button.addEvent"
+English: "Add Event"
+Translation needed
+
+Key: "SixLayerFramework.button.addFormField"
+English: "Add Form Field"
+Translation needed
+
+Key: "SixLayerFramework.button.addGrid"
+English: "Add Grid Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addImage"
+English: "Add Image"
+Translation needed
+
+Key: "SixLayerFramework.button.addItem"
+English: "Add Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addList"
+English: "Add List Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addLocation"
+English: "Add Location"
+Translation needed
+
+Key: "SixLayerFramework.button.addMedia"
+English: "Add Media"
+Translation needed
+
+Key: "SixLayerFramework.button.addMessage"
+English: "Add Message"
+Translation needed
+
+Key: "SixLayerFramework.button.addNavigationItem"
+English: "Add Navigation Item"
+Translation needed
+
+Key: "SixLayerFramework.button.addNumber"
+English: "Add Number"
+Translation needed
+
+Key: "SixLayerFramework.button.addProduct"
+English: "Add Product"
+Translation needed
+
+Key: "SixLayerFramework.button.addText"
+English: "Add Text"
+Translation needed
+
+Key: "SixLayerFramework.button.addTransaction"
+English: "Add Transaction"
+Translation needed
+
+Key: "SixLayerFramework.button.addUser"
+English: "Add User"
+Translation needed
+
+Key: "SixLayerFramework.button.browseFiles"
+English: "Browse Files"
+Translation needed
+
+Key: "SixLayerFramework.button.create"
+English: "Create"
+Translation needed
+
+Key: "SixLayerFramework.button.done"
+English: "Done"
+Translation needed
+
+Key: "SixLayerFramework.button.edit"
+English: "Edit"
+Translation needed
+
+Key: "SixLayerFramework.button.retry"
+English: "Retry"
+Translation needed
+
+Key: "SixLayerFramework.button.saveChanges"
+English: "Save Changes"
+Translation needed
+
+Key: "SixLayerFramework.button.selectImage"
+English: "Select Image"
+Translation needed
+
+Key: "SixLayerFramework.button.submit"
+English: "Submit"
+Translation needed
+
+Key: "SixLayerFramework.button.update"
+English: "Update"
+Translation needed
+
+Key: "SixLayerFramework.button.viewDetails"
+English: "View Details"
+Translation needed
+
+Key: "SixLayerFramework.camera.notAvailable"
+English: "Camera not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.camera.previewNotAvailable"
+English: "Camera preview not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.complexity.advanced"
+English: "Use expert-level tools and configurations."
+Translation needed
+
+Key: "SixLayerFramework.complexity.complex"
+English: "Use filters or categories to manage complexity."
+Translation needed
+
+Key: "SixLayerFramework.complexity.moderate"
+English: "Consider organizing your content."
+Translation needed
+
+Key: "SixLayerFramework.complexity.simple"
+English: "Keep it simple and focused."
+Translation needed
+
+Key: "SixLayerFramework.complexity.veryComplex"
+English: "Use advanced filtering and organization tools."
+Translation needed
+
+Key: "SixLayerFramework.detail.array"
+English: "Array"
+Translation needed
+
+Key: "SixLayerFramework.detail.identifiable"
+English: "Identifiable"
+Translation needed
+
+Key: "SixLayerFramework.detail.optional"
+English: "Optional"
+Translation needed
+
+Key: "SixLayerFramework.detail.overview"
+English: "Overview"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawData"
+English: "Raw Data"
+Translation needed
+
+Key: "SixLayerFramework.detail.rawDataAnalysis"
+English: "Raw Data Analysis"
+Translation needed
+
+Key: "SixLayerFramework.detail.title"
+English: "Details"
+Translation needed
+
+Key: "SixLayerFramework.directory.doesNotExist"
+English: "The directory does not exist"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeSlow"
+English: "The directory is on a network volume that is slow or unresponsive"
+Translation needed
+
+Key: "SixLayerFramework.directory.networkVolumeUnavailable"
+English: "The directory is on a network volume that is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.directory.notADirectory"
+English: "The path exists but is not a directory"
+Translation needed
+
+Key: "SixLayerFramework.directory.notExecutable"
+English: "The directory is not executable/searchable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notReadable"
+English: "The directory is not readable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.directory.notWritable"
+English: "The directory is not writable by the current process"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.addItemsToGetStarted"
+English: "Add some items to get started."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.adjustSearchCriteria"
+English: "Try adjusting your search criteria."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.collectionEmpty"
+English: "This collection is currently empty."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.createFirstItem"
+English: "Create your first item."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noActions"
+English: "No Actions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noAdditionalItems"
+English: "No additional items to display."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noBooleanValues"
+English: "No Boolean Values"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noCards"
+English: "No Cards"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noChartData"
+English: "No Chart Data"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDataAvailable"
+English: "No Data Available"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDates"
+English: "No Dates"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noDetails"
+English: "No Details"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noEvents"
+English: "No Events"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noFormFields"
+English: "No Form Fields"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noGridItems"
+English: "No Grid Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noImages"
+English: "No Images"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItems"
+English: "No items in this list."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsAvailable"
+English: "No items available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsInGallery"
+English: "No items in this gallery."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToBrowse"
+English: "No items to browse."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noItemsToEdit"
+English: "No items to edit."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noListItems"
+English: "No List Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noLocations"
+English: "No Locations"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMediaItems"
+English: "No Media Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noMessages"
+English: "No Messages"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noModalContent"
+English: "No Modal Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNavigationItems"
+English: "No Navigation Items"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noNumbers"
+English: "No Numbers"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProducts"
+English: "No Products"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfile"
+English: "No profile available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noProfileInformation"
+English: "No profile information available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSettings"
+English: "No settings available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSheetContent"
+English: "No Sheet Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noSummaryData"
+English: "No summary data available."
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTextContent"
+English: "No Text Content"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noTransactions"
+English: "No Transactions"
+Translation needed
+
+Key: "SixLayerFramework.emptyState.noUsers"
+English: "No Users"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.description"
+English: "Helper examples and utilities"
+Translation needed
+
+Key: "SixLayerFramework.example.helpers.title"
+English: "Example Helpers"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.barcodeScanningRequiresUI"
+English: "Barcode scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.fieldAction.ocrScanningRequiresUI"
+English: "OCR scanning requires image selection"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.creationFailed"
+English: "Directory creation failed: %@"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.directoryNotFound"
+English: "The directory could not be located"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.diskFull"
+English: "Disk is full - insufficient space available"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.iCloudUnavailable"
+English: "iCloud Drive is unavailable"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.invalidPath"
+English: "Invalid path - the path contains invalid characters or is malformed"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.permissionDenied"
+English: "Permission denied - the current process cannot access the directory"
+Translation needed
+
+Key: "SixLayerFramework.filesystem.securityScopedAccessRequired"
+English: "Security-scoped resource access is required but not available"
+Translation needed
+
+Key: "SixLayerFramework.form.autoSaveChanges"
+English: "Auto-save changes"
+Translation needed
+
+Key: "SixLayerFramework.form.cannotGenerate"
+English: "Cannot generate form"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.array"
+English: "Array field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.autocomplete"
+English: "Autocomplete field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.colorPicker"
+English: "Color picker field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.custom"
+English: "Custom field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.data"
+English: "Data field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.fileUpload"
+English: "File upload field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.image"
+English: "Image field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.multiselect"
+English: "Multi-select field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.range"
+English: "Range field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldType.richText"
+English: "Rich text field: %@"
+Translation needed
+
+Key: "SixLayerFramework.form.fieldsCount"
+English: "%d fields"
+Translation needed
+
+Key: "SixLayerFramework.form.fullyDeclarativeRequired"
+English: "Fully declarative hints are required for type-only form generation"
+Translation needed
+
+Key: "SixLayerFramework.form.noOptionsAvailable"
+English: "No options available"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterEmail"
+English: "Enter email"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterInteger"
+English: "Enter integer"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterNumber"
+English: "Enter number"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPassword"
+English: "Enter password"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterPhone"
+English: "Enter phone"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterText"
+English: "Enter text"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.enterURL"
+English: "Enter URL"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.toggle"
+English: "Toggle"
+Translation needed
+
+Key: "SixLayerFramework.form.placeholder.typeToSearch"
+English: "Type to search"
+Translation needed
+
+Key: "SixLayerFramework.form.progress"
+English: "Progress"
+Translation needed
+
+Key: "SixLayerFramework.form.progressFields"
+English: "%d of %d field%@"
+Translation needed
+
+Key: "SixLayerFramework.form.quotaExceeded"
+English: "Storage quota exceeded"
+Translation needed
+
+Key: "SixLayerFramework.form.storageUnavailable"
+English: "Storage is not available"
+Translation needed
+
+Key: "SixLayerFramework.form.title"
+English: "Form"
+Translation needed
+
+Key: "SixLayerFramework.image.noImage"
+English: "No Image"
+Translation needed
+
+Key: "SixLayerFramework.image.unsupportedFormat"
+English: "Unsupported image format"
+Translation needed
+
+Key: "SixLayerFramework.imagePicker.notAvailable"
+English: "Image picker not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.list.itemNumber"
+English: "Item %d"
+Translation needed
+
+Key: "SixLayerFramework.list.itemsCount"
+English: "%d items"
+Translation needed
+
+Key: "SixLayerFramework.list.tapToView"
+English: "Tap to view"
+Translation needed
+
+Key: "SixLayerFramework.location.authorizationTimeout"
+English: "Authorization request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.denied"
+English: "Location access was denied by the user"
+Translation needed
+
+Key: "SixLayerFramework.location.locationTimeout"
+English: "Location request timed out"
+Translation needed
+
+Key: "SixLayerFramework.location.restricted"
+English: "Location access is restricted"
+Translation needed
+
+Key: "SixLayerFramework.location.servicesDisabled"
+English: "Location services are disabled on this device"
+Translation needed
+
+Key: "SixLayerFramework.location.unauthorized"
+English: "Location access is not authorized"
+Translation needed
+
+Key: "SixLayerFramework.location.unknown"
+English: "An unknown location error occurred"
+Translation needed
+
+Key: "SixLayerFramework.metadata.corruptedImage"
+English: "Corrupted image cannot be analyzed"
+Translation needed
+
+Key: "SixLayerFramework.navigation.selectItemToContinue"
+English: "Select an item to continue."
+Translation needed
+
+Key: "SixLayerFramework.ocr.analyzingImage"
+English: "Analyzing image for text recognition"
+Translation needed
+
+Key: "SixLayerFramework.ocr.complete"
+English: "OCR Complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.error"
+English: "OCR Error"
+Translation needed
+
+Key: "SixLayerFramework.ocr.extractionComplete"
+English: "Extraction complete"
+Translation needed
+
+Key: "SixLayerFramework.ocr.highConfidenceNoDisambiguation"
+English: "High confidence results detected - no disambiguation needed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.invalidImage"
+English: "The provided image is invalid or cannot be processed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.noTextFound"
+English: "No text was found in the image"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processing"
+English: "Processing..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingFailed"
+English: "OCR processing failed"
+Translation needed
+
+Key: "SixLayerFramework.ocr.processingOCR"
+English: "Processing OCR..."
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToExtract"
+English: "Ready to extract"
+Translation needed
+
+Key: "SixLayerFramework.ocr.readyToProcess"
+English: "Ready to Process"
+Translation needed
+
+Key: "SixLayerFramework.ocr.scanDocument"
+English: "Scan Document"
+Translation needed
+
+Key: "SixLayerFramework.ocr.startOCR"
+English: "Start OCR"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStart"
+English: "Tap to start OCR processing"
+Translation needed
+
+Key: "SixLayerFramework.ocr.tapToStartWithCorrection"
+English: "Tap to start OCR processing with visual correction"
+Translation needed
+
+Key: "SixLayerFramework.ocr.unsupportedPlatform"
+English: "OCR is not supported on this platform"
+Translation needed
+
+Key: "SixLayerFramework.ocr.viewResults"
+English: "View Results"
+Translation needed
+
+Key: "SixLayerFramework.ocr.visionUnavailable"
+English: "Vision framework is not available on this platform"
+Translation needed
+
+Key: "SixLayerFramework.platform.privacy.description"
+English: "Privacy features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.description"
+English: "Safety features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.safety.title"
+English: "Platform Safety"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.description"
+English: "Security features across platforms"
+Translation needed
+
+Key: "SixLayerFramework.platform.security.title"
+English: "Platform Security"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.detecting"
+English: "Detecting capabilities..."
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.refresh"
+English: "Refresh Detection"
+Translation needed
+
+Key: "SixLayerFramework.runtime.capabilities.title"
+English: "Runtime Capabilities"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.description"
+English: "Safety features for spatial computing"
+Translation needed
+
+Key: "SixLayerFramework.vision.safety.title"
+English: "Vision Safety"
+Translation needed
