@@ -472,3 +472,17 @@ public class SecurityService: ObservableObject {
     }
     #endif
 }
+
+// MARK: - Environment Support
+
+private struct SecurityServiceEnvironmentKey: EnvironmentKey {
+    static let defaultValue: SecurityService? = nil
+}
+
+public extension EnvironmentValues {
+    /// Optional SecurityService available in the environment
+    var securityService: SecurityService? {
+        get { self[SecurityServiceEnvironmentKey.self] }
+        set { self[SecurityServiceEnvironmentKey.self] = newValue }
+    }
+}

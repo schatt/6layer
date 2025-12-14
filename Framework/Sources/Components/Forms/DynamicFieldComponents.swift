@@ -492,6 +492,7 @@ public struct DynamicPasswordField: View {
     let field: DynamicFormField
     @ObservedObject var formState: DynamicFormState
     @FocusState private var isFocused: Bool
+    @Environment(\.securityService) private var securityService
 
     public init(field: DynamicFormField, formState: DynamicFormState) {
         self.field = field
@@ -515,6 +516,14 @@ public struct DynamicPasswordField: View {
             // Character counter for fields with maxLength validation
             field.characterCounterView(formState: formState)
         }, componentName: "DynamicPasswordField")
+        .onAppear {
+            // Integrate with SecurityService if available
+            securityService?.enableSecureTextEntry(for: field.id)
+        }
+        .onDisappear {
+            // Clean up secure text entry when field disappears
+            securityService?.disableSecureTextEntry(for: field.id)
+        }
         .onChange(of: formState.focusedFieldId) { oldValue, newValue in
             isFocused = (newValue == field.id)
         }

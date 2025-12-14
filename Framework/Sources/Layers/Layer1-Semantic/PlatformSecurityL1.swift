@@ -29,6 +29,7 @@ public func platformPresentSecureContent_L1<Content: View>(
     
     return AnyView(content
         .environmentObject(security)
+        .environment(\.securityService, security)
         .automaticCompliance(named: "platformPresentSecureContent_L1"))
 }
 
@@ -55,6 +56,7 @@ public func platformPresentSecureTextField_L1(
     
     return AnyView(SecureField(title, text: text)
         .environmentObject(security)
+        .environment(\.securityService, security)
         .automaticCompliance(named: "platformPresentSecureTextField_L1"))
 }
 
