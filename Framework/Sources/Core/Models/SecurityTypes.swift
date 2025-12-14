@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Security Service Error Types
 
 /// Errors that can occur in the Security Service
-public enum SecurityServiceError: LocalizedError {
+public enum SecurityServiceError: LocalizedError, Equatable {
     case biometricNotAvailable
     case biometricNotEnrolled
     case biometricLockout
@@ -24,6 +24,30 @@ public enum SecurityServiceError: LocalizedError {
     case privacyPermissionNotDetermined
     case invalidConfiguration
     case unknown(Error)
+    
+    public static func == (lhs: SecurityServiceError, rhs: SecurityServiceError) -> Bool {
+        switch (lhs, rhs) {
+        case (.biometricNotAvailable, .biometricNotAvailable),
+             (.biometricNotEnrolled, .biometricNotEnrolled),
+             (.biometricLockout, .biometricLockout),
+             (.biometricNotSupported, .biometricNotSupported),
+             (.authenticationFailed, .authenticationFailed),
+             (.encryptionFailed, .encryptionFailed),
+             (.decryptionFailed, .decryptionFailed),
+             (.privacyPermissionDenied, .privacyPermissionDenied),
+             (.privacyPermissionNotDetermined, .privacyPermissionNotDetermined),
+             (.invalidConfiguration, .invalidConfiguration):
+            return true
+        case (.keychainError(let lhsError), .keychainError(let rhsError)):
+            // Compare error descriptions since Error doesn't conform to Equatable
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        case (.unknown(let lhsError), .unknown(let rhsError)):
+            // Compare error descriptions since Error doesn't conform to Equatable
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        default:
+            return false
+        }
+    }
     
     public var errorDescription: String? {
         switch self {
