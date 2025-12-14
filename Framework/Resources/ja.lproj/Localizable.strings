@@ -202,3 +202,210 @@
 "SixLayerFramework.platform.crossPlatform.adaptiveSpacing" = "• 適応的な間隔";
 "SixLayerFramework.platform.crossPlatform.specificLayouts" = "• プラットフォーム固有のレイアウト";
 "SixLayerFramework.platform.crossPlatform.optimalSizing" = "• 最適なコンポーネントサイズ";
+
+/* ============================================================================
+   MACHINE TRANSLATIONS - REVIEW REQUIRED
+   ============================================================================ */
+
+/* ACCESSIBILITY - Missing translations */
+"SixLayerFramework.accessibility.skipToContent" = "コンテンツにスキップ";
+
+/* OCR INTERFACE - Missing translations */
+"SixLayerFramework.barcode.barcodeNumber" = "バーコード %d";
+"SixLayerFramework.barcode.confidence" = "信頼度: %d%%";
+"SixLayerFramework.barcode.detectedBarcodes" = "検出されたバーコード:";
+"SixLayerFramework.barcode.invalidImage" = "提供された画像が無効であるか、処理できません";
+"SixLayerFramework.barcode.noBarcodeFound" = "画像内にバーコードが見つかりませんでした";
+"SixLayerFramework.barcode.noBarcodesDetected" = "バーコードが検出されませんでした";
+"SixLayerFramework.barcode.processingFailed" = "バーコード処理に失敗しました";
+"SixLayerFramework.barcode.tryDifferentImage" = "別の画像をスキャンしてみてください";
+"SixLayerFramework.barcode.unsupportedPlatform" = "バーコード スキャンはこのプラットフォームではサポートされていません";
+"SixLayerFramework.barcode.visionUnavailable" = "ビジョン フレームワークはこのプラットフォームでは利用できません";
+"SixLayerFramework.ocr.analyzingImage" = "テキスト認識のために画像を分析する";
+"SixLayerFramework.ocr.complete" = "OCR完了";
+"SixLayerFramework.ocr.error" = "OCRエラー";
+"SixLayerFramework.ocr.extractionComplete" = "抽出が完了しました";
+"SixLayerFramework.ocr.highConfidenceNoDisambiguation" = "信頼性の高い結果が検出されました - 曖昧さ回避の必要はありません";
+"SixLayerFramework.ocr.invalidImage" = "提供された画像が無効であるか、処理できません";
+"SixLayerFramework.ocr.noTextFound" = "画像内にテキストが見つかりませんでした";
+"SixLayerFramework.ocr.processing" = "処理...";
+"SixLayerFramework.ocr.processingFailed" = "OCR処理に失敗しました";
+"SixLayerFramework.ocr.processingOCR" = "OCR を処理中...";
+"SixLayerFramework.ocr.readyToExtract" = "抽出の準備ができました";
+"SixLayerFramework.ocr.readyToProcess" = "処理準備完了";
+"SixLayerFramework.ocr.scanDocument" = "ドキュメントをスキャンする";
+"SixLayerFramework.ocr.startOCR" = "OCRを開始する";
+"SixLayerFramework.ocr.tapToStart" = "タップして OCR 処理を開始します";
+"SixLayerFramework.ocr.tapToStartWithCorrection" = "タップして視覚補正を伴う OCR 処理を開始します";
+"SixLayerFramework.ocr.unsupportedPlatform" = "OCR はこのプラットフォームではサポートされていません";
+"SixLayerFramework.ocr.viewResults" = "結果を見る";
+"SixLayerFramework.ocr.visionUnavailable" = "ビジョン フレームワークはこのプラットフォームでは利用できません";
+
+/* BUTTON LABELS - Missing translations */
+"SixLayerFramework.button.addAction" = "アクションの追加";
+"SixLayerFramework.button.addBoolean" = "ブール値の追加";
+"SixLayerFramework.button.addCard" = "カードを追加";
+"SixLayerFramework.button.addChart" = "グラフデータの追加";
+"SixLayerFramework.button.addData" = "データの追加";
+"SixLayerFramework.button.addDate" = "日付を追加";
+"SixLayerFramework.button.addDetail" = "詳細の追加";
+"SixLayerFramework.button.addEvent" = "イベントの追加";
+"SixLayerFramework.button.addFormField" = "フォームフィールドの追加";
+"SixLayerFramework.button.addGrid" = "グリッド項目の追加";
+"SixLayerFramework.button.addImage" = "画像を追加";
+"SixLayerFramework.button.addItem" = "アイテムの追加";
+"SixLayerFramework.button.addList" = "リスト項目の追加";
+"SixLayerFramework.button.addLocation" = "場所を追加";
+"SixLayerFramework.button.addMedia" = "メディアの追加";
+"SixLayerFramework.button.addMessage" = "メッセージを追加";
+"SixLayerFramework.button.addNavigationItem" = "ナビゲーション項目の追加";
+"SixLayerFramework.button.addNumber" = "番号を追加";
+"SixLayerFramework.button.addProduct" = "製品の追加";
+"SixLayerFramework.button.addText" = "テキストの追加";
+"SixLayerFramework.button.addTransaction" = "トランザクションの追加";
+"SixLayerFramework.button.addUser" = "ユーザーの追加";
+"SixLayerFramework.button.browseFiles" = "ファイルを参照する";
+"SixLayerFramework.button.create" = "作成する";
+"SixLayerFramework.button.done" = "終わり";
+"SixLayerFramework.button.edit" = "編集";
+"SixLayerFramework.button.retry" = "リトライ";
+"SixLayerFramework.button.saveChanges" = "変更を保存";
+"SixLayerFramework.button.selectImage" = "画像の選択";
+"SixLayerFramework.button.submit" = "提出する";
+"SixLayerFramework.button.update" = "アップデート";
+"SixLayerFramework.button.viewDetails" = "詳細を見る";
+"SixLayerFramework.camera.notAvailable" = "このプラットフォームではカメラを利用できません";
+"SixLayerFramework.camera.previewNotAvailable" = "このプラットフォームではカメラ プレビューを利用できません";
+
+/* NAVIGATION - Missing translations */
+"SixLayerFramework.complexity.advanced" = "専門家レベルのツールと構成を使用します。";
+"SixLayerFramework.complexity.complex" = "フィルターまたはカテゴリを使用して複雑さを管理します。";
+"SixLayerFramework.complexity.moderate" = "コンテンツを整理することを検討してください。";
+"SixLayerFramework.complexity.simple" = "シンプルかつ焦点を絞ったものにしてください。";
+"SixLayerFramework.complexity.veryComplex" = "高度なフィルタリングおよび整理ツールを使用します。";
+"SixLayerFramework.emptyState.addItemsToGetStarted" = "開始するには、いくつかの項目を追加します。";
+"SixLayerFramework.emptyState.adjustSearchCriteria" = "検索条件を調整してみてください。";
+"SixLayerFramework.emptyState.collectionEmpty" = "このコレクションは現在空です。";
+"SixLayerFramework.emptyState.createFirstItem" = "最初のアイテムを作成します。";
+"SixLayerFramework.emptyState.noActions" = "アクションはありません";
+"SixLayerFramework.emptyState.noAdditionalItems" = "追加で表示する項目はありません。";
+"SixLayerFramework.emptyState.noBooleanValues" = "ブール値はありません";
+"SixLayerFramework.emptyState.noCards" = "カードなし";
+"SixLayerFramework.emptyState.noChartData" = "チャートデータがありません";
+"SixLayerFramework.emptyState.noDataAvailable" = "利用可能なデータがありません";
+"SixLayerFramework.emptyState.noDates" = "日付なし";
+"SixLayerFramework.emptyState.noDetails" = "詳細なし";
+"SixLayerFramework.emptyState.noEvents" = "イベントはありません";
+"SixLayerFramework.emptyState.noFormFields" = "フォームフィールドがありません";
+"SixLayerFramework.emptyState.noGridItems" = "グリッド項目なし";
+"SixLayerFramework.emptyState.noImages" = "画像なし";
+"SixLayerFramework.emptyState.noItems" = "このリストには項目がありません。";
+"SixLayerFramework.emptyState.noItemsAvailable" = "利用可能なアイテムはありません。";
+"SixLayerFramework.emptyState.noItemsInGallery" = "このギャラリーにはアイテムがありません。";
+"SixLayerFramework.emptyState.noItemsToBrowse" = "閲覧する項目はありません。";
+"SixLayerFramework.emptyState.noItemsToEdit" = "編集する項目はありません。";
+"SixLayerFramework.emptyState.noListItems" = "リスト項目がありません";
+"SixLayerFramework.emptyState.noLocations" = "場所がありません";
+"SixLayerFramework.emptyState.noMediaItems" = "メディアアイテムがありません";
+"SixLayerFramework.emptyState.noMessages" = "メッセージはありません";
+"SixLayerFramework.emptyState.noModalContent" = "モーダルコンテンツがありません";
+"SixLayerFramework.emptyState.noNavigationItems" = "ナビゲーション項目なし";
+"SixLayerFramework.emptyState.noNumbers" = "数字なし";
+"SixLayerFramework.emptyState.noProducts" = "製品がありません";
+"SixLayerFramework.emptyState.noProfile" = "利用可能なプロファイルがありません。";
+"SixLayerFramework.emptyState.noProfileInformation" = "プロフィール情報はありません。";
+"SixLayerFramework.emptyState.noSettings" = "使用できる設定はありません。";
+"SixLayerFramework.emptyState.noSheetContent" = "シートコンテンツなし";
+"SixLayerFramework.emptyState.noSummaryData" = "利用可能な要約データはありません。";
+"SixLayerFramework.emptyState.noTextContent" = "テキストコンテンツなし";
+"SixLayerFramework.emptyState.noTransactions" = "取引はありません";
+"SixLayerFramework.emptyState.noUsers" = "ユーザーがいません";
+"SixLayerFramework.navigation.selectItemToContinue" = "続行するには項目を選択してください。";
+
+/* PLATFORM SPECIFIC - Missing translations */
+"SixLayerFramework.detail.array" = "配列";
+"SixLayerFramework.detail.identifiable" = "識別可能";
+"SixLayerFramework.detail.optional" = "オプション";
+"SixLayerFramework.detail.overview" = "概要";
+"SixLayerFramework.detail.rawData" = "生データ";
+"SixLayerFramework.detail.rawDataAnalysis" = "生データ分析";
+"SixLayerFramework.detail.title" = "詳細";
+"SixLayerFramework.example.helpers.description" = "ヘルパーの例とユーティリティ";
+"SixLayerFramework.example.helpers.title" = "ヘルパーの例";
+"SixLayerFramework.platform.privacy.description" = "プラットフォーム全体にわたるプライバシー機能";
+"SixLayerFramework.platform.safety.description" = "プラットフォーム全体にわたる安全機能";
+"SixLayerFramework.platform.safety.title" = "プラットフォームの安全性";
+"SixLayerFramework.platform.security.description" = "プラットフォーム全体にわたるセキュリティ機能";
+"SixLayerFramework.platform.security.title" = "プラットフォームのセキュリティ";
+"SixLayerFramework.runtime.capabilities.detecting" = "検出機能...";
+"SixLayerFramework.runtime.capabilities.refresh" = "リフレッシュ検出";
+"SixLayerFramework.runtime.capabilities.title" = "ランタイム機能";
+"SixLayerFramework.vision.safety.description" = "空間コンピューティングの安全機能";
+"SixLayerFramework.vision.safety.title" = "視覚の安全性";
+
+/* ERROR MESSAGES - Missing translations */
+"SixLayerFramework.directory.doesNotExist" = "ディレクトリが存在しません";
+"SixLayerFramework.directory.networkVolumeSlow" = "ディレクトリは、速度が遅いか応答しないネットワーク ボリューム上にあります";
+"SixLayerFramework.directory.networkVolumeUnavailable" = "ディレクトリは使用できないネットワーク ボリューム上にあります";
+"SixLayerFramework.directory.notADirectory" = "パスは存在しますが、ディレクトリではありません";
+"SixLayerFramework.directory.notExecutable" = "ディレクトリは現在のプロセスでは実行可能または検索可能ではありません";
+"SixLayerFramework.directory.notReadable" = "ディレクトリは現在のプロセスでは読み取れません";
+"SixLayerFramework.directory.notWritable" = "現在のプロセスではディレクトリに書き込みできません";
+"SixLayerFramework.fieldAction.barcodeScanningRequiresUI" = "バーコードスキャンには画像の選択が必要です";
+"SixLayerFramework.fieldAction.ocrScanningRequiresUI" = "OCR スキャンには画像の選択が必要です";
+"SixLayerFramework.filesystem.creationFailed" = "ディレクトリの作成に失敗しました: %@";
+"SixLayerFramework.filesystem.directoryNotFound" = "ディレクトリが見つかりませんでした";
+"SixLayerFramework.filesystem.diskFull" = "ディスクがいっぱいです - 利用可能なスペースが不足しています";
+"SixLayerFramework.filesystem.iCloudUnavailable" = "iCloudドライブが利用できない";
+"SixLayerFramework.filesystem.invalidPath" = "無効なパス - パスに無効な文字が含まれているか、形式が正しくありません";
+"SixLayerFramework.filesystem.permissionDenied" = "アクセス許可が拒否されました - 現在のプロセスはディレクトリにアクセスできません";
+"SixLayerFramework.filesystem.securityScopedAccessRequired" = "セキュリティスコープのリソースアクセスが必要ですが利用できません";
+"SixLayerFramework.image.noImage" = "画像なし";
+"SixLayerFramework.image.unsupportedFormat" = "サポートされていない画像形式です";
+"SixLayerFramework.imagePicker.notAvailable" = "画像ピッカーはこのプラットフォームでは使用できません";
+"SixLayerFramework.location.authorizationTimeout" = "認可リクエストがタイムアウトしました";
+"SixLayerFramework.location.denied" = "位置情報へのアクセスがユーザーによって拒否されました";
+"SixLayerFramework.location.locationTimeout" = "位置情報リクエストがタイムアウトしました";
+"SixLayerFramework.location.restricted" = "位置情報へのアクセスは制限されています";
+"SixLayerFramework.location.servicesDisabled" = "このデバイスでは位置情報サービスが無効になっています";
+"SixLayerFramework.location.unauthorized" = "位置情報へのアクセスが許可されていません";
+"SixLayerFramework.location.unknown" = "不明な場所エラーが発生しました";
+"SixLayerFramework.metadata.corruptedImage" = "破損した画像は解析できません";
+
+/* FORM FIELD LABELS - Missing translations */
+"SixLayerFramework.form.autoSaveChanges" = "変更を自動保存";
+"SixLayerFramework.form.cannotGenerate" = "フォームを生成できません";
+"SixLayerFramework.form.fieldType.array" = "配列フィールド: %@";
+"SixLayerFramework.form.fieldType.autocomplete" = "オートコンプリート フィールド: %@";
+"SixLayerFramework.form.fieldType.colorPicker" = "カラーピッカーフィールド: %@";
+"SixLayerFramework.form.fieldType.custom" = "カスタムフィールド: %@";
+"SixLayerFramework.form.fieldType.data" = "データフィールド: %@";
+"SixLayerFramework.form.fieldType.fileUpload" = "ファイルアップロードフィールド: %@";
+"SixLayerFramework.form.fieldType.image" = "画像フィールド: %@";
+"SixLayerFramework.form.fieldType.multiselect" = "複数選択フィールド: %@";
+"SixLayerFramework.form.fieldType.range" = "範囲フィールド: %@";
+"SixLayerFramework.form.fieldType.richText" = "リッチ テキスト フィールド: %@";
+"SixLayerFramework.form.fieldsCount" = "%d フィールド";
+"SixLayerFramework.form.fullyDeclarativeRequired" = "型のみのフォーム生成には完全な宣言型ヒントが必要です";
+"SixLayerFramework.form.noOptionsAvailable" = "利用可能なオプションはありません";
+"SixLayerFramework.form.progress" = "進捗";
+"SixLayerFramework.form.progressFields" = "%d/%d フィールド%@";
+"SixLayerFramework.form.quotaExceeded" = "ストレージ割り当てを超過しました";
+"SixLayerFramework.form.storageUnavailable" = "ストレージが利用できません";
+"SixLayerFramework.form.title" = "形状";
+
+/* FORM PLACEHOLDERS - Missing translations */
+"SixLayerFramework.form.placeholder.enterEmail" = "メールアドレスを入力してください";
+"SixLayerFramework.form.placeholder.enterInteger" = "整数を入力してください";
+"SixLayerFramework.form.placeholder.enterNumber" = "番号を入力してください";
+"SixLayerFramework.form.placeholder.enterPassword" = "パスワードを入力してください";
+"SixLayerFramework.form.placeholder.enterPhone" = "電話番号を入力してください";
+"SixLayerFramework.form.placeholder.enterText" = "テキストを入力してください";
+"SixLayerFramework.form.placeholder.enterURL" = "URLを入力してください";
+"SixLayerFramework.form.placeholder.toggle" = "トグル";
+"SixLayerFramework.form.placeholder.typeToSearch" = "入力して検索します";
+
+/* LIST AND COLLECTION - Missing translations */
+"SixLayerFramework.list.itemNumber" = "アイテム %d";
+"SixLayerFramework.list.itemsCount" = "%d 個のアイテム";
+"SixLayerFramework.list.tapToView" = "タップして表示";
