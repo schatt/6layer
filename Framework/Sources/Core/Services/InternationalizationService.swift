@@ -157,15 +157,17 @@ public class InternationalizationService: ObservableObject {
     ///   - decimalPlaces: Number of decimal places (optional)
     /// - Returns: Formatted number string
     public func formatNumber(_ number: Double, decimalPlaces: Int? = nil) -> String {
+        let f = formatter
         if let decimalPlaces = decimalPlaces {
-            formatter.minimumFractionDigits = decimalPlaces
-            formatter.maximumFractionDigits = decimalPlaces
+            f.minimumFractionDigits = decimalPlaces
+            f.maximumFractionDigits = decimalPlaces
         } else {
-            formatter.minimumFractionDigits = 0
-            formatter.maximumFractionDigits = 2
+            f.minimumFractionDigits = 0
+            f.maximumFractionDigits = 2
         }
+        f.roundingMode = .halfEven
         
-        return formatter.string(from: NSNumber(value: number)) ?? "\(number)"
+        return f.string(from: NSNumber(value: number)) ?? "\(number)"
     }
     
     /// Format a number as percentage
