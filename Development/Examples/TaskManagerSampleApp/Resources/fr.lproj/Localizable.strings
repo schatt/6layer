@@ -1,0 +1,41 @@
+/* Task Manager Sample App - French Localization */
+
+/* Task List */
+"task.list.title" = "Tâches";
+"task.empty.title" = "Aucune Tâche";
+"task.empty.message" = "Commencez par ajouter votre première tâche.";
+"task.add" = "Ajouter une Tâche";
+"task.sync" = "Synchroniser";
+"task.delete" = "Supprimer";
+
+/* Task Form */
+"task.add.title" = "Nouvelle Tâche";
+"task.edit.title" = "Modifier la Tâche";
+"task.form.title.label" = "Titre";
+"task.form.title.placeholder" = "Entrez le titre de la tâche";
+"task.form.description.label" = "Description";
+"task.form.description.placeholder" = "Entrez la description de la tâche";
+"task.form.dueDate.label" = "Date d'Échéance";
+"task.form.priority.label" = "Priorité";
+"task.form.priority.placeholder" = "Sélectionnez la priorité";
+"task.form.submit" = "Enregistrer";
+
+/* Task Notifications */
+"task.notification.title" = "Tâche à Venir";
+"task.notification.body" = "Votre tâche '%@' arrive bientôt à échéance.";
+
+/* Authentication */
+"task.auth.reason" = "Authentifiez-vous pour voir vos tâches";
+"task.auth.error" = "Échec de l'authentification";
+
+/* Errors */
+"task.sync.error" = "Échec de la synchronisation des tâches : %@";
+"task.fetch.error" = "Échec de la récupération des tâches : %@";
+"task.save.error" = "Échec de l'enregistrement de la tâche : %@";
+"task.error.network" = "Réseau indisponible. Veuillez vérifier votre connexion.";
+"task.error.auth" = "Authentification requise. Veuillez vous connecter à iCloud.";
+
+/* Common */
+"cancel" = "Annuler";
+"error.title" = "Erreur";
+"error.ok" = "OK";

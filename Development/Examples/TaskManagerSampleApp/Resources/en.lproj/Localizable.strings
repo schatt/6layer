@@ -1,0 +1,41 @@
+/* Task Manager Sample App - English Localization */
+
+/* Task List */
+"task.list.title" = "Tasks";
+"task.empty.title" = "No Tasks";
+"task.empty.message" = "Get started by adding your first task.";
+"task.add" = "Add Task";
+"task.sync" = "Sync";
+"task.delete" = "Delete";
+
+/* Task Form */
+"task.add.title" = "New Task";
+"task.edit.title" = "Edit Task";
+"task.form.title.label" = "Title";
+"task.form.title.placeholder" = "Enter task title";
+"task.form.description.label" = "Description";
+"task.form.description.placeholder" = "Enter task description";
+"task.form.dueDate.label" = "Due Date";
+"task.form.priority.label" = "Priority";
+"task.form.priority.placeholder" = "Select priority";
+"task.form.submit" = "Save";
+
+/* Task Notifications */
+"task.notification.title" = "Task Due";
+"task.notification.body" = "Your task '%@' is due soon.";
+
+/* Authentication */
+"task.auth.reason" = "Authenticate to view your tasks";
+"task.auth.error" = "Authentication failed";
+
+/* Errors */
+"task.sync.error" = "Failed to sync tasks: %@";
+"task.fetch.error" = "Failed to fetch tasks: %@";
+"task.save.error" = "Failed to save task: %@";
+"task.error.network" = "Network unavailable. Please check your connection.";
+"task.error.auth" = "Authentication required. Please sign in to iCloud.";
+
+/* Common */
+"cancel" = "Cancel";
+"error.title" = "Error";
+"error.ok" = "OK";

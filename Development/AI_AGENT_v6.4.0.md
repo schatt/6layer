@@ -7,16 +7,17 @@ This guide summarizes the version-specific context for v6.4.0. **Always read thi
 ## 🎯 Quick Start
 
 1. Confirm the project is on **v6.4.0** (see `Package.swift` comment or release tags).
-2. Understand that **Design System Bridge** enables mapping external design tokens to SixLayer components.
-3. Know that **SixLayerTestKit** provides comprehensive testing utilities for consumers.
-4. Know that **CloudKit service** is now available with delegate pattern for CloudKit operations.
-5. Know that **Notification service** provides unified notification management across platforms.
-6. Know that **Security & Privacy service** handles biometric authentication, encryption, and privacy permissions.
-7. Know that **framework localization** is now fully supported with automatic string localization.
-8. Know that **cross-platform font extensions** provide unified font API.
-9. Know that **additional semantic colors** have been added to ColorName enum.
-10. Know that **custom value views** are available for display fields.
-11. Apply TDD, DRY, DTRT, and Epistemology rules in every change.
+2. **📚 Start with the Sample App**: See `Development/Examples/TaskManagerSampleApp/` for a complete, canonical example of how to structure a real app using SixLayer Framework correctly.
+3. Understand that **Design System Bridge** enables mapping external design tokens to SixLayer components.
+4. Know that **SixLayerTestKit** provides comprehensive testing utilities for consumers.
+5. Know that **CloudKit service** is now available with delegate pattern for CloudKit operations.
+6. Know that **Notification service** provides unified notification management across platforms.
+7. Know that **Security & Privacy service** handles biometric authentication, encryption, and privacy permissions.
+8. Know that **framework localization** is now fully supported with automatic string localization.
+9. Know that **cross-platform font extensions** provide unified font API.
+10. Know that **additional semantic colors** have been added to ColorName enum.
+11. Know that **custom value views** are available for display fields.
+12. Apply TDD, DRY, DTRT, and Epistemology rules in every change.
 
 ## 🆕 What's New in v6.4.0
 
@@ -455,6 +456,14 @@ displayField.customValueView = AnyView(
 - `Framework/docs/DesignSystemIntegrationGuide.md` - Complete design system integration guide
 - `Framework/Examples/DesignSystemBridgeExample.swift` - Interactive design system examples
 - `Framework/Examples/ExternalDesignTokensExample.swift` - External token mapping examples
+- **`Development/Examples/TaskManagerSampleApp/`** - **Canonical sample app** demonstrating complete SixLayer Framework usage:
+  - Layer 1→6 patterns with proper semantic intent functions
+  - Service composition (CloudKitService, NotificationService, SecurityService)
+  - DynamicFormView for data entry
+  - CloudKit sync with proper error handling
+  - Full localization (English, Spanish, French)
+  - Comprehensive tests using SixLayerTestKit
+  - **This is the reference implementation for new adopters**
 - `Development/RELEASE_v6.3.0.md` - v6.3.0 release notes (inherited features)
 - `Framework/docs/CloudKitServiceGuide.md` - CloudKit service guide
 - `Framework/docs/NotificationGuide.md` - Notification service guide

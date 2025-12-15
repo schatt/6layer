@@ -721,7 +721,6 @@ public struct CustomDesignSystem: DesignSystem {
         )
     }
 }
-}
 
 // MARK: - Visual Design System
 // Comprehensive theming system for cross-platform UI consistency
