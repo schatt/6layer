@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.2.0 - Form Enhancements & Advanced Field Types
+// SixLayerFramework v6.3.0 - Services & Localization
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

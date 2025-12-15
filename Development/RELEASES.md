@@ -1,12 +1,36 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.2.0 - Form Enhancements & Advanced Field Types** 🎯
+## 📍 **Current Release: v6.3.0 - Services & Localization** 🎯
 
-**Release Date**: December 10, 2025
+**Release Date**: December 14, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.1.1 - Color.named() Extensions
-**Note**: Minor release focused on comprehensive form enhancements and advanced field types. Includes form auto-save and draft functionality, field focus management, conditional field visibility, field-level help tooltips, form progress indicators, custom field actions, advanced field types (Gauge, MultiDatePicker, LabeledContent, TextField with axis), cross-platform camera preview, and debug warnings for missing hints.
+**Previous Release**: v6.2.0 - Form Enhancements & Advanced Field Types
+**Note**: Minor release focused on comprehensive service infrastructure and framework localization support. Includes CloudKit service with delegate pattern, Notification service, Security & Privacy service, complete framework localization support with string replacement, cross-platform font extensions, missing semantic colors, and custom value views for display fields.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.3.0 - Services & Localization** (December 14, 2025)
+
+### **What's New:**
+
+#### **☁️ Services Infrastructure (Issues #103, #106, #105)**
+- **CloudKit Service**: Framework-level abstraction for CloudKit operations with delegate pattern, offline queue management, and comprehensive error handling
+- **Notification Service**: Unified notification management with local and remote notification support, permission handling, and deep linking
+- **Security & Privacy Service**: Biometric authentication, secure text entry management, privacy indicators, data encryption, and keychain integration
+
+#### **🌐 Framework Localization (Issues #104, #108, #109, #115)**
+- **Framework Localization Support**: Complete localization infrastructure with automatic string localization and key management
+- **String Replacement**: Systematic replacement of hardcoded strings with localization keys
+- **Localization Testing**: Comprehensive test suite for localization implementation
+- **File Completeness**: All localization files contain all required strings
+
+#### **🎨 Platform Extensions (Issues #116, #114, #98)**
+- **Cross-Platform Font Extensions**: Unified font API with platform-appropriate font selection
+- **Semantic Colors**: Additional semantic color names added to ColorName enum
+- **Custom Value Views**: Enhanced display field support with custom value views
+
+**See [RELEASE_v6.3.0.md](RELEASE_v6.3.0.md) for complete release notes.**
 
 ---
 

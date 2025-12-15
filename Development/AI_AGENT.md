@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v6.3.0.md](AI_AGENT_v6.3.0.md)** - Services & localization
 - **[AI_AGENT_v6.2.0.md](AI_AGENT_v6.2.0.md)** - Form enhancements & advanced field types
 - **v6.1.1** - Color.named() Extensions (patch release - use v6.1.0 guide)
 - **[AI_AGENT_v6.1.0.md](AI_AGENT_v6.1.0.md)** - Form UX enhancements & platform extensions

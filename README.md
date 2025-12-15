@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.2.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.3.0")
 ]
 ```
 
@@ -41,13 +41,12 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.2.0
+## 🆕 Latest Release: v6.3.0
 
-### **Form Enhancements & Advanced Field Types**
-📝 **Form state management**: Form auto-save and draft functionality, field focus management, conditional field visibility.  
-🎨 **Advanced field types**: Gauge component, MultiDatePicker, LabeledContent, TextField with axis parameter.  
-🔧 **Form UX enhancements**: Form progress indicators, custom field actions, field-level help tooltips.  
-📷 **Platform extensions**: PlatformCameraPreviewView for cross-platform camera preview.  
+### **Services & Localization**
+☁️ **Services infrastructure**: CloudKit service with delegate pattern, Notification service, Security & Privacy service.  
+🌐 **Framework localization**: Complete localization infrastructure with automatic string localization and key management.  
+🎨 **Platform extensions**: Cross-platform font extensions, additional semantic colors, custom value views for display fields.  
 🛠️ **Developer experience**: Debug warnings for missing hints.
 
 ### **Previous Release: v6.1.1 - Color.named() Extensions**
@@ -134,7 +133,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.2.0 (Form Enhancements & Advanced Field Types)
+**Version**: v6.3.0 (Services & Localization)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
