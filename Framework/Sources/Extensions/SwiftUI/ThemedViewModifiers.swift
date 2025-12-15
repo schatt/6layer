@@ -31,77 +31,26 @@ public struct ThemedCardStyle: ViewModifier {
     // Helper view that defers environment access until view is installed
     private struct ThemedCardStyleEnvironmentAccessor: View {
         let content: Content
-        
+
         // Access environment values here - this view is only created when body is called
         // and the view is installed, so environment is guaranteed to be available
-        @Environment(\.colorSystem) private var colors
-        @Environment(\.platformStyle) private var platform
-        @Environment(\.accessibilitySettings) private var accessibility
-        
+        @Environment(\.designTokens) private var colors
+        @Environment(\.componentStates) private var componentStates
+
         var body: some View {
             content
                 .background(colors.surface)
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+                .clipShape(RoundedRectangle(cornerRadius: componentStates.cornerRadius.md))
                 .overlay(
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .stroke(colors.border, lineWidth: borderWidth)
+                    RoundedRectangle(cornerRadius: componentStates.cornerRadius.md)
+                        .stroke(colors.border, lineWidth: componentStates.borderWidth.sm)
                 )
                 .shadow(
-                    color: shadowColor,
-                    radius: shadowRadius,
-                    x: shadowOffset.width,
-                    y: shadowOffset.height
+                    color: componentStates.shadow.md.color,
+                    radius: componentStates.shadow.md.radius,
+                    x: componentStates.shadow.md.x,
+                    y: componentStates.shadow.md.y
                 )
-        }
-        
-        private var cornerRadius: CGFloat {
-            switch platform {
-            case .ios: return 12
-            case .macOS: return 8
-            case .watchOS: return 16
-            case .tvOS: return 12
-            case .visionOS: return 14
-            }
-        }
-        
-        private var borderWidth: CGFloat {
-            switch platform {
-            case .ios: return 0.5
-            case .macOS: return 1
-            case .watchOS: return 0
-            case .tvOS: return 0.5
-            case .visionOS: return 0.75
-            }
-        }
-        
-        private var shadowColor: Color {
-            switch platform {
-            case .ios: return Color.platformShadowColor
-            case .macOS: return Color.platformShadowColor
-            case .watchOS: return Color.clear
-            case .tvOS: return Color.platformShadowColor
-            case .visionOS: return Color.platformShadowColor
-            }
-        }
-        
-        private var shadowRadius: CGFloat {
-            switch platform {
-            case .ios: return 8
-            case .macOS: return 4
-            case .watchOS: return 0
-            case .tvOS: return 12
-            case .visionOS: return 10
-            }
-        }
-        
-        private var shadowOffset: CGSize {
-            switch platform {
-            case .ios: return CGSize(width: 0, height: 2)
-            case .macOS: return CGSize(width: 0, height: 1)
-            case .watchOS: return CGSize.zero
-            case .tvOS: return CGSize(width: 0, height: 4)
-            case .visionOS: return CGSize(width: 0, height: 3)
-            }
         }
     }
 }
@@ -211,54 +160,33 @@ public struct ThemedFormStyle: ViewModifier {
     }
 }
 
-/// Themed text field style that adapts to platform
+/// Themed text field style that adapts to design system
 /// NOTE: TextFieldStyle protocol requires _body to be the entry point, so we access
 /// @Environment directly in _body. SwiftUI may warn, but this is a protocol limitation.
 /// The _body method is called when the view is installed, so environment is available.
 public struct ThemedTextFieldStyle: TextFieldStyle {
-    @Environment(\.colorSystem) private var colors
-    @Environment(\.platformStyle) private var platform
-    @Environment(\.accessibilitySettings) private var accessibility
-    
+    @Environment(\.designTokens) private var colors
+    @Environment(\.componentStates) private var componentStates
+    @Environment(\.spacingTokens) private var spacing
+
     public func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(textFieldPadding)
             .background(colors.surface)
             .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(colors.border, lineWidth: borderWidth)
+                RoundedRectangle(cornerRadius: componentStates.cornerRadius.sm)
+                    .stroke(colors.border, lineWidth: componentStates.borderWidth.md)
             )
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: componentStates.cornerRadius.sm))
     }
-    
+
     private var textFieldPadding: EdgeInsets {
-        switch platform {
-        case .ios: return EdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
-        case .macOS: return EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
-        case .watchOS: return EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12)
-        case .tvOS: return EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20)
-        case .visionOS: return EdgeInsets(top: 14, leading: 18, bottom: 14, trailing: 18)
-        }
-    }
-    
-    private var cornerRadius: CGFloat {
-        switch platform {
-        case .ios: return 8
-        case .macOS: return 6
-        case .watchOS: return 12
-        case .tvOS: return 8
-        case .visionOS: return 10
-        }
-    }
-    
-    private var borderWidth: CGFloat {
-        switch platform {
-        case .ios: return 1
-        case .macOS: return 1
-        case .watchOS: return 0
-        case .tvOS: return 1
-        case .visionOS: return 1
-        }
+        EdgeInsets(
+            top: spacing.md,
+            leading: spacing.lg,
+            bottom: spacing.md,
+            trailing: spacing.lg
+        )
     }
 }
 
@@ -318,46 +246,32 @@ public struct ThemedProgressBar: View {
         
         // Access environment values here - this view is only created when body is called
         // and the view is installed, so environment is guaranteed to be available
-        @Environment(\.colorSystem) private var colors
-        @Environment(\.platformStyle) private var platform
-        
+        @Environment(\.designTokens) private var colors
+        @Environment(\.componentStates) private var componentStates
+
         var body: some View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     // Background
-                    RoundedRectangle(cornerRadius: cornerRadius)
+                    RoundedRectangle(cornerRadius: componentStates.cornerRadius.sm)
                         .fill(colors.surface)
-                        .frame(height: height)
-                    
+                        .frame(height: 4)
+
                     // Progress
-                    RoundedRectangle(cornerRadius: cornerRadius)
+                    RoundedRectangle(cornerRadius: componentStates.cornerRadius.sm)
                         .fill(progressColor)
-                        .frame(width: geometry.size.width * progress, height: height)
+                        .frame(width: geometry.size.width * progress, height: 4)
                         .animation(.easeInOut(duration: 0.3), value: progress)
                 }
             }
-            .frame(height: height)
+            .frame(height: 4)
         }
-        
-        private var height: CGFloat {
-            switch platform {
-            case .ios: return 4
-            case .macOS: return 6
-            case .watchOS: return 3
-            case .tvOS: return 6
-            case .visionOS: return 5
-            }
-        }
-        
-        private var cornerRadius: CGFloat {
-            height / 2
-        }
-        
+
         private var progressColor: Color {
             switch variant {
             case .primary: return colors.primary
-            case .success: return colors.success
-            case .warning: return colors.warning
+            case .success: return colors.successText
+            case .warning: return colors.warningText
             case .error: return colors.error
             }
         }

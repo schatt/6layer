@@ -4,6 +4,75 @@
 
 This guide explains how developers can extend the 6layer framework to integrate their custom views, business logic, and unique functionality while leveraging the framework's intelligent platform adaptation and performance optimization capabilities.
 
+> **Stable Extension Surface (Normative)**  
+> The sections below describe the **supported public extension surface** for the framework.  
+> Anything **not** listed here should be treated as an **internal implementation detail** and is **not** considered stable across minor versions.
+
+### Stable Extension Surface (Public APIs)
+
+The following areas are explicitly supported as **stable extension points** for app code:
+
+1. **Layer 1 Semantic Functions (public, stable entry points)**
+   - `platformPresentItemCollection_L1(...)`
+   - `platformPresentNumericData_L1(...)` (all overloads)
+   - `platformResponsiveCard_L1(...)`
+   - **Deprecated but supported for migration only**: `platformPresentFormData_L1(...)`  
+     - New code should prefer `DynamicFormView` + `DynamicFormField` instead.
+
+2. **Hints & Extensibility Types**
+   - `PresentationHints`
+   - `EnhancedPresentationHints`
+   - `CustomHint` / `ExtensibleHint` conforming types
+   - All associated enums used in hints (e.g. `DataTypeHint`, `PresentationPreference`, `ContentComplexity`, `PresentationContext`)
+   - These types are the **primary way** for apps to influence layout/behavior without depending on internal engine details.
+
+3. **Service Extension Points**
+   - **CloudKit**
+     - `CloudKitService`
+     - `CloudKitServiceDelegate` (primary extension surface for CloudKit behavior)
+     - `CloudKitServiceError`, `CloudKitSyncStatus`
+   - **Internationalization / Localization**
+     - `InternationalizationService` (class is public and may be instantiated/configured by apps)
+   - **Notifications**
+     - `NotificationService` and its public configuration/entry points
+   - **Security & Privacy**
+     - `SecurityService` and associated public types (e.g. `SecurityServiceError`, `BiometricType`, `PrivacyPermissionType`)
+   - These services are designed to be **constructed and configured** by app code, and their documented delegates / configuration types are part of the stable surface.
+
+4. **Forms & Dynamic Form System**
+   - `DynamicFormView`
+   - `DynamicFormField`
+   - `DynamicFormState`
+   - Public enums and supporting types used by the form system (field types, validation rules, etc.)
+   - These APIs are the recommended way to integrate complex forms with the framework.
+
+5. **Layer 4 Components & Modifiers**
+   - Public SwiftUI components and modifiers under the `Platform*` / `platform*` naming:
+     - e.g. `platformCardGrid(...)`, `platformCardStyle(...)`, `platformCardPadding()`
+     - e.g. `platformMemoryOptimization()`, `platformRenderingOptimization()`
+   - These can be used directly in custom views and are part of the supported surface.
+
+### Internal vs. Public – How to Decide
+
+When in doubt, use the following rules:
+
+- **Safe to depend on (public extension surface):**
+  - Public functions and types explicitly documented in:
+    - `README_Layer1_Semantic.md`
+    - `DeveloperExtensionGuide.md` (this file)
+    - `ExtensionQuickReference.md`
+    - Service guides (e.g. `CloudKitServiceGuide.md`, `NotificationGuide.md`, `SecurityGuide.md`)
+  - Public services and their documented delegates/configuration types.
+  - Public SwiftUI components and modifiers under the `platform*` / `Platform*` naming.
+
+- **Treat as internal (not stable across minor versions):**
+  - Any **non-public** type or member.
+  - Types whose documentation explicitly calls them **deprecated**, **internal**, or **implementation detail**.
+  - Engine/architecture helpers such as `HintProcessingEngine` or low-level strategy/decision engine types that are not mentioned in the docs above.
+  - Internal view types used to implement Layer 1/Layer 4 functions (for example: `GenericItemCollectionView`, internal layout views, or anything in `Core/Architecture` that is not called out as public surface).
+
+Depending on internal types or copying internal implementation details may work in one release but is **not covered by stability guarantees** and may break in future minor versions.
+
 ## Table of Contents
 
 1. [Quick Start](#quick-start)
@@ -478,6 +547,147 @@ struct CustomExpenseForm: View {
 ```
 
 **⚠️ Note**: The deprecated `GenericFormField` and `platformPresentFormData_L1` functions have been replaced with `DynamicFormField` and `DynamicFormView` for better type safety and native data type support.
+
+### Example 4: Custom CloudKit Service Delegate (Stable Extension Surface)
+
+The following example shows how to extend the framework using the **stable CloudKit extension surface** (`CloudKitServiceDelegate` and `CloudKitService`).
+
+```swift
+import SixLayerFramework
+import CloudKit
+
+/// App-specific CloudKit delegate that customizes container, validation, and conflict resolution
+final class MyCloudKitDelegate: CloudKitServiceDelegate {
+    // Required: which CloudKit container to use
+    func containerIdentifier() -> String {
+        // Replace with your app's container identifier
+        "iCloud.com.mycompany.myapp"
+    }
+
+    // Optional: validate records before they are saved
+    func validateRecord(_ record: CKRecord) throws {
+        // Enforce a required "ownerID" field for all records
+        if record["ownerID"] == nil {
+            throw CloudKitServiceError.missingRequiredField("ownerID")
+        }
+    }
+
+    // Optional: transform records before save (e.g. add metadata)
+    func transformRecord(_ record: CKRecord) -> CKRecord {
+        record["lastUpdatedAt"] = Date() as NSDate
+        return record
+    }
+
+    // Optional: app-specific conflict resolution strategy
+    func resolveConflict(local: CKRecord, remote: CKRecord) -> CKRecord? {
+        // Example: prefer the record with the latest modification date
+        let localDate = local.modificationDate ?? Date.distantPast
+        let remoteDate = remote.modificationDate ?? Date.distantPast
+        return localDate >= remoteDate ? local : remote
+    }
+
+    // Optional: centralized error handling hook
+    func handleError(_ error: Error) -> Bool {
+        // Log or map errors to your own telemetry system
+        print("CloudKit error:", error)
+        // Return true if the error is fully handled and should not be rethrown
+        return false
+    }
+
+    // Optional: observe sync completion events
+    func syncDidComplete(success: Bool, recordsChanged: Int) {
+        print("CloudKit sync completed. success=\(success), recordsChanged=\(recordsChanged)")
+    }
+}
+
+/// Example usage of the delegate with the stable service surface
+@MainActor
+final class CloudSyncManager: ObservableObject {
+    private let service: CloudKitService
+
+    init() {
+        let delegate = MyCloudKitDelegate()
+        self.service = CloudKitService(delegate: delegate)
+    }
+
+    func save(record: CKRecord) async {
+        do {
+            try await service.save(record)
+        } catch {
+            // Errors are already passed through `handleError(_:)` on the delegate
+            print("Failed to save record:", error)
+        }
+    }
+}
+```
+
+This example is safe to use across minor versions because it relies **only** on the documented public surface:
+
+- `CloudKitService`
+- `CloudKitServiceDelegate`
+- `CloudKitServiceError`
+
+### Example 5: App-Specific Layer 1 Wrapper (Stable Semantic Extension)
+
+You can also safely extend the framework at **Layer 1** by introducing your own semantic helpers that forward into the documented Layer 1 functions. This lets you express richer intent (\"present my app's dashboard\") without depending on internal layout/strategy types.
+
+```swift
+import SixLayerFramework
+import SwiftUI
+
+/// App-specific semantic function for presenting a dashboard section
+@MainActor
+public func presentDashboardSection_L1<Metric: Identifiable>(
+    metrics: [Metric],
+    title: String,
+    showAdvanced: Bool
+) -> some View {
+    // 1. Build hints using the stable hints surface
+    let hints = EnhancedPresentationHints(
+        dataType: .collection,
+        presentationPreference: .automatic,
+        complexity: showAdvanced ? .complex : .moderate,
+        context: .dashboard,
+        extensibleHints: [
+            CustomHint(
+                hintType: "com.mycompany.myapp.dashboard",
+                priority: .high,
+                overridesDefault: false,
+                customData: [
+                    "sectionTitle": title,
+                    "showAdvancedMetrics": showAdvanced,
+                    "layoutStyle": "adaptive"
+                ]
+            )
+        ]
+    )
+
+    // 2. Forward into the stable Layer 1 entry point
+    return platformPresentItemCollection_L1(
+        items: metrics,
+        hints: hints
+    )
+}
+
+/// Usage in a view
+struct MyDashboardSectionView: View {
+    let metrics: [MyMetric]
+
+    var body: some View {
+        presentDashboardSection_L1(
+            metrics: metrics,
+            title: "Financial Overview",
+            showAdvanced: true
+        )
+        .navigationTitle("Dashboard")
+    }
+}
+```
+
+This pattern is considered stable because it:
+
+- Uses only **documented public types** (`EnhancedPresentationHints`, `CustomHint`, `platformPresentItemCollection_L1`).
+- Encapsulates app-specific semantics in your own function (`presentDashboardSection_L1`) without reaching into internal strategy/engine types.
 
 ## Troubleshooting
 

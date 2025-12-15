@@ -10,18 +10,22 @@ import SwiftUI
 public struct ThemedFrameworkView<Content: View>: View {
     let content: Content
     @StateObject private var designSystem = VisualDesignSystem.shared
-    
+
     public init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
-    
+
     public var body: some View {
         content
             .environmentObject(designSystem)
             .environment(\.theme, designSystem.currentTheme)
             .environment(\.platformStyle, designSystem.platformStyle)
-            .environment(\.colorSystem, ColorSystem(theme: designSystem.currentTheme, platform: designSystem.platformStyle))
-            .environment(\.typographySystem, TypographySystem(platform: designSystem.platformStyle, accessibility: designSystem.accessibilitySettings))
+            .environment(\.colorSystem, ColorSystem(from: designSystem.designSystem, theme: designSystem.currentTheme))
+            .environment(\.typographySystem, TypographySystem(from: designSystem.designSystem, theme: designSystem.currentTheme))
+            .environment(\.designSystem, designSystem.designSystem)
+            .environment(\.designTokens, designSystem.currentColors)
+            .environment(\.spacingTokens, designSystem.currentSpacing)
+            .environment(\.componentStates, designSystem.currentComponentStates)
             .environment(\.accessibilitySettings, designSystem.accessibilitySettings)
             .preferredColorScheme(designSystem.currentTheme == .dark ? .dark : .light)
             .automaticCompliance(named: "ThemedFrameworkView")

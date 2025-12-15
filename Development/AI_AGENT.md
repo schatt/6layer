@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v6.4.0.md](AI_AGENT_v6.4.0.md)** - Design System Bridge
 - **[AI_AGENT_v6.3.0.md](AI_AGENT_v6.3.0.md)** - Services & localization
 - **[AI_AGENT_v6.2.0.md](AI_AGENT_v6.2.0.md)** - Form enhancements & advanced field types
 - **v6.1.1** - Color.named() Extensions (patch release - use v6.1.0 guide)
@@ -73,6 +74,23 @@ The SixLayer Framework follows a **layered architecture** where each layer build
 - **Test accessibility features** - Ensure VoiceOver, Switch Control, etc. work correctly
 
 ## 🔧 Common Patterns
+
+### Stable Extension Surface (Public vs Internal)
+
+- **Treat the following as the *stable* extension surface for apps:**
+  - Layer 1 semantic functions documented in `Framework/docs/README_Layer1_Semantic.md`
+  - Extension guides in `Framework/docs/DeveloperExtensionGuide.md` and `ExtensionQuickReference.md`
+  - Public services and their documented delegates/configuration types
+    - e.g. `CloudKitService` + `CloudKitServiceDelegate`, `InternationalizationService`, `NotificationService`, `SecurityService`
+  - Public form APIs: `DynamicFormView`, `DynamicFormField`, `DynamicFormState` and their documented enums
+  - Public SwiftUI components/modifiers under the `platform*` / `Platform*` naming
+
+- **Treat everything else as internal unless explicitly documented:**
+  - Internal engines, decision/strategy types, and low-level helpers (e.g. `HintProcessingEngine`)
+  - Non-public types or members
+  - Types called out as deprecated, internal, or implementation details in docs
+
+When helping with extensions, prefer **hints, Layer 1 functions, and service delegates** over reaching into internal classes. If you find yourself depending on a type that is not mentioned in the extension docs above, treat that as a potential design smell.
 
 ### Runtime Capability Detection
 ```swift
