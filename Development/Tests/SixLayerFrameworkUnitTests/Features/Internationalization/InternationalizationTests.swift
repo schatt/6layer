@@ -160,7 +160,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatDate(date, style: .short)
         
         // Then - Check for various date formats (handles timezone differences)
-        #expect(formatted.contains("1/1") || formatted.contains("12/31") || formatted.contains("01/01") || formatted.contains("2021") || formatted.contains("2020"))
+        let isValid = formatted.contains("1/1") || formatted.contains("12/31") || formatted.contains("01/01") || formatted.contains("2021") || formatted.contains("2020")
+        #expect(isValid, "Formatted date '\(formatted)' should contain expected date components")
     }
     
     @Test func testDateFormatting_Medium() {
@@ -173,7 +174,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatDate(date, style: .medium)
         
         // Then - Check for various date formats (handles timezone differences)
-        #expect(formatted.contains("Jan") || formatted.contains("Dec") || formatted.contains("January") || formatted.contains("December") || formatted.contains("2021") || formatted.contains("2020"))
+        let isValid = formatted.contains("Jan") || formatted.contains("Dec") || formatted.contains("January") || formatted.contains("December") || formatted.contains("2021") || formatted.contains("2020")
+        #expect(isValid, "Formatted date '\(formatted)' should contain expected date components")
     }
     
     @Test func testDateFormatting_Long() {
@@ -186,7 +188,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatDate(date, style: .long)
         
         // Then - Check for various date formats (handles timezone differences)
-        #expect(formatted.contains("January") || formatted.contains("December") || formatted.contains("Jan") || formatted.contains("Dec") || formatted.contains("2021") || formatted.contains("2020"))
+        let isValid = formatted.contains("January") || formatted.contains("December") || formatted.contains("Jan") || formatted.contains("Dec") || formatted.contains("2021") || formatted.contains("2020")
+        #expect(isValid, "Formatted date '\(formatted)' should contain expected date components")
     }
     
     @Test func testDateFormatting_Custom() {
@@ -199,7 +202,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatDate(date, format: "yyyy-MM-dd")
         
         // Then - Custom format should match exactly (timezone handled by format)
-        #expect(formatted == "2021-01-01" || formatted.contains("2021-01-01") || formatted.contains("2020-12-31"))
+        let isValid = formatted == "2021-01-01" || formatted.contains("2021-01-01") || formatted.contains("2020-12-31")
+        #expect(isValid, "Formatted date '\(formatted)' should match expected format")
     }
     
     @Test func testDateFormatting_Relative() {
@@ -227,7 +231,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatTime(date, style: .short)
         
         // Then - Check for various time formats (handles timezone differences)
-        #expect(formatted.contains("12:00") || formatted.contains("4:00") || formatted.contains("00:00") || formatted.contains("16:00") || formatted.contains("AM") || formatted.contains("PM"))
+        let isValid = formatted.contains("12:00") || formatted.contains("4:00") || formatted.contains("00:00") || formatted.contains("16:00") || formatted.contains("AM") || formatted.contains("PM")
+        #expect(isValid, "Formatted time '\(formatted)' should contain expected time components")
     }
     
     @Test func testTimeFormatting_24Hour() {
@@ -240,7 +245,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatTime(date, style: .short)
         
         // Then - Check for various time formats (handles timezone differences)
-        #expect(formatted.contains("00:00") || formatted.contains("16:00") || formatted.contains("12:00") || formatted.contains("4:00"))
+        let isValid = formatted.contains("00:00") || formatted.contains("16:00") || formatted.contains("12:00") || formatted.contains("4:00")
+        #expect(isValid, "Formatted time '\(formatted)' should contain expected time components")
     }
     
     @Test func testTimeFormatting_WithSeconds() {
@@ -253,7 +259,8 @@ open class InternationalizationTests: BaseTestClass {
         let formatted = i18n.formatTime(date, style: .medium)
         
         // Then - Check for various time formats with seconds (handles timezone differences)
-        #expect(formatted.contains("12:00:00") || formatted.contains("4:00:00") || formatted.contains("00:00:00") || formatted.contains("16:00:00"))
+        let isValid = formatted.contains("12:00:00") || formatted.contains("4:00:00") || formatted.contains("00:00:00") || formatted.contains("16:00:00")
+        #expect(isValid, "Formatted time '\(formatted)' should contain expected time components with seconds")
     }
     
     // MARK: - Currency Formatting Tests

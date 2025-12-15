@@ -30,12 +30,14 @@ public class InternationalizationService: ObservableObject {
     private var dateFormatter: DateFormatter {
         let f = DateFormatter()
         f.locale = locale
+        f.dateFormat = nil  // Clear any custom format when using styles
         return f
     }
     
     private var timeFormatter: DateFormatter {
         let f = DateFormatter()
         f.locale = locale
+        f.dateFormat = nil  // Clear any custom format when using styles
         return f
     }
     
@@ -195,20 +197,31 @@ public class InternationalizationService: ObservableObject {
     ///   - style: The date format style
     /// - Returns: Formatted date string
     public func formatDate(_ date: Date, style: DateFormatStyle) -> String {
+        let formatter = dateFormatter
         switch style {
         case .short:
-            dateFormatter.dateStyle = .short
+            formatter.dateStyle = .short
+            formatter.timeStyle = .none
+            formatter.dateFormat = nil
         case .medium:
-            dateFormatter.dateStyle = .medium
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            formatter.dateFormat = nil
         case .long:
-            dateFormatter.dateStyle = .long
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
+            formatter.dateFormat = nil
         case .full:
-            dateFormatter.dateStyle = .full
+            formatter.dateStyle = .full
+            formatter.timeStyle = .none
+            formatter.dateFormat = nil
         case .custom:
-            dateFormatter.dateStyle = .medium
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            formatter.dateFormat = nil
         }
         
-        return dateFormatter.string(from: date)
+        return formatter.string(from: date)
     }
     
     /// Format a date with custom format
@@ -217,8 +230,12 @@ public class InternationalizationService: ObservableObject {
     ///   - format: Custom date format string
     /// - Returns: Formatted date string
     public func formatDate(_ date: Date, format: String) -> String {
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: date)
+        let formatter = dateFormatter
+        // Clear styles first, then set custom format
+        formatter.dateStyle = .none
+        formatter.timeStyle = .none
+        formatter.dateFormat = format
+        return formatter.string(from: date)
     }
     
     /// Format a date as relative time
@@ -239,20 +256,31 @@ public class InternationalizationService: ObservableObject {
     ///   - style: The time format style
     /// - Returns: Formatted time string
     public func formatTime(_ date: Date, style: TimeFormatStyle) -> String {
+        let formatter = timeFormatter
         switch style {
         case .short:
-            timeFormatter.timeStyle = .short
+            formatter.timeStyle = .short
+            formatter.dateStyle = .none
+            formatter.dateFormat = nil
         case .medium:
-            timeFormatter.timeStyle = .medium
+            formatter.timeStyle = .medium
+            formatter.dateStyle = .none
+            formatter.dateFormat = nil
         case .long:
-            timeFormatter.timeStyle = .long
+            formatter.timeStyle = .long
+            formatter.dateStyle = .none
+            formatter.dateFormat = nil
         case .full:
-            timeFormatter.timeStyle = .full
+            formatter.timeStyle = .full
+            formatter.dateStyle = .none
+            formatter.dateFormat = nil
         case .custom:
-            timeFormatter.timeStyle = .medium
+            formatter.timeStyle = .medium
+            formatter.dateStyle = .none
+            formatter.dateFormat = nil
         }
         
-        return timeFormatter.string(from: date)
+        return formatter.string(from: date)
     }
     
     /// Format a time with custom format
@@ -261,8 +289,12 @@ public class InternationalizationService: ObservableObject {
     ///   - format: Custom time format string
     /// - Returns: Formatted time string
     public func formatTime(_ date: Date, format: String) -> String {
-        timeFormatter.dateFormat = format
-        return timeFormatter.string(from: date)
+        let formatter = timeFormatter
+        // Clear styles first, then set custom format
+        formatter.dateStyle = .none
+        formatter.timeStyle = .none
+        formatter.dateFormat = format
+        return formatter.string(from: date)
     }
     
     // MARK: - Pluralization
