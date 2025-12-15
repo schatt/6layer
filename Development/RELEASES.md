@@ -1,12 +1,26 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.4.0 - Design System Bridge & Developer Experience** 🎯
+## 📍 **Current Release: v6.4.1 - NotificationService Bug Fix** 🎯
 
 **Release Date**: December 15, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.3.0 - Services & Localization
-**Note**: Minor release focused on design system integration, developer experience improvements, and comprehensive testing infrastructure. Includes Design System Bridge for external design token mapping, SixLayerTestKit for consumer testing, migration tooling, canonical sample apps, .xcstrings localization support, and localization completeness checking.
+**Previous Release**: v6.4.0 - Design System Bridge & Developer Experience
+**Note**: Patch release fixing compilation error in NotificationService.swift where optional Bool was not properly unwrapped. Fixes Issue #124.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.4.1 - NotificationService Bug Fix** (December 15, 2025)
+
+### **What's Fixed:**
+
+#### **🐛 NotificationService Compilation Fix (Issue #124)**
+- **Fixed Optional Bool Unwrapping**: Fixed compilation error in `checkIOSDoNotDisturbStatusAsync()` function
+- **Proper Nil Handling**: Added nil-coalescing operator to handle cases where Focus status is unavailable
+- **Conservative Default**: Returns `false` when `isFocused` is `nil` (conservative default)
+- **Location**: `Framework/Sources/Core/Services/NotificationService.swift:658`
+
+**See [RELEASE_v6.4.1.md](RELEASE_v6.4.1.md) for complete release notes.**
 
 ---
 
