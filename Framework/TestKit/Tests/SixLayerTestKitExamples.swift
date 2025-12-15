@@ -14,11 +14,13 @@ class SixLayerTestKitExamples: XCTestCase {
 
     var testKit: SixLayerTestKit!
 
+    @MainActor
     override func setUp() {
         super.setUp()
         testKit = SixLayerTestKit()
     }
-
+    
+    @MainActor
     override func tearDown() {
         testKit = nil
         super.tearDown()
@@ -26,6 +28,7 @@ class SixLayerTestKitExamples: XCTestCase {
 
     // MARK: - Service Mocking Examples
 
+    @MainActor
     func testCloudKitServiceMock() {
         // Given: A CloudKit service with mock
         let mock = testKit.serviceMocks.cloudKitService
@@ -50,6 +53,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(mock.saveRecords.first?["name"] as? String, "Test Item")
     }
 
+    @MainActor
     func testNotificationServiceMock() {
         // Given: A notification service with mock
         let mock = testKit.serviceMocks.notificationService
@@ -75,6 +79,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(mock.scheduledNotifications.first?.identifier, "test-notification")
     }
 
+    @MainActor
     func testSecurityServiceMock() {
         // Given: A security service with mock
         let mock = testKit.serviceMocks.securityService
@@ -95,6 +100,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(mock.authenticationReason, "Test auth")
     }
 
+    @MainActor
     func testInternationalizationServiceMock() {
         // Given: An internationalization service with mock
         let mock = testKit.serviceMocks.internationalizationService
@@ -118,6 +124,7 @@ class SixLayerTestKitExamples: XCTestCase {
 
     // MARK: - Form Testing Examples
 
+    @MainActor
     func testFormFieldCreationAndInteraction() {
         // Given: Form helper and test fields
         let formHelper = testKit.formHelper
@@ -135,6 +142,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(formHelper.getFieldValue(from: formState, fieldId: "age") as? Double, 25)
     }
 
+    @MainActor
     func testFormValidation() {
         // Given: Form helper and validation rules
         let formHelper = testKit.formHelper
@@ -158,6 +166,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertFalse(invalidEmail)
     }
 
+    @MainActor
     func testFormSubmission() {
         // Given: Form helper and test form
         let formHelper = testKit.formHelper
@@ -183,6 +192,7 @@ class SixLayerTestKitExamples: XCTestCase {
 
     // MARK: - Navigation Testing Examples
 
+    @MainActor
     func testNavigationFlow() {
         // Given: Navigation helper
         let navHelper = testKit.navigationHelper
@@ -207,6 +217,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(navHelper.presentedSheets, [])
     }
 
+    @MainActor
     func testDeepLinkHandling() {
         // Given: Navigation helper
         let navHelper = testKit.navigationHelper
@@ -222,6 +233,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(itemResult, ["item-123"])
     }
 
+    @MainActor
     func testLayer1Functions() {
         // Given: Navigation helper
         let navHelper = testKit.navigationHelper
@@ -246,6 +258,7 @@ class SixLayerTestKitExamples: XCTestCase {
 
     // MARK: - Layer Flow Testing Examples
 
+    @MainActor
     func testLayerFlowDriver() async throws {
         // Given: Layer flow driver and configuration
         let flowDriver = testKit.layerFlowDriver
@@ -304,6 +317,7 @@ class SixLayerTestKitExamples: XCTestCase {
 
     // MARK: - Integration Testing Examples
 
+    @MainActor
     func testCompleteUserFlow() {
         // Given: All test kit components
         let formHelper = testKit.formHelper
@@ -343,6 +357,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertEqual(password, "password123")
     }
 
+    @MainActor
     func testErrorHandlingWithMocks() {
         // Given: Service mocks configured for failure
         let cloudKitMock = testKit.serviceMocks.cloudKitService
@@ -382,6 +397,7 @@ class SixLayerTestKitExamples: XCTestCase {
         XCTAssertNotNil(notificationResult)
     }
 
+    @MainActor
     func testDataGeneration() {
         // Given: Test data generators
         let userData1 = testKit.formHelper.generateTestUserData()
@@ -402,6 +418,7 @@ class SixLayerTestKitExamples: XCTestCase {
 
     // MARK: - Performance Testing Example
 
+    @MainActor
     func testPerformanceWithTestKit() {
         // Given: Test kit components
         let formHelper = testKit.formHelper
@@ -431,14 +448,20 @@ class SixLayerTestKitExamples: XCTestCase {
 // MARK: - Helper Extensions
 
 extension DynamicFormField {
-    convenience init(id: String, label: String, contentType: DynamicFormField.ContentType, placeholder: String? = nil, value: Any? = nil, options: [String]? = nil) {
+    init(id: String, label: String, contentType: DynamicContentType, placeholder: String? = nil, value: Any? = nil, options: [String]? = nil) {
+        let defaultValue: String?
+        if let value = value {
+            defaultValue = String(describing: value)
+        } else {
+            defaultValue = nil
+        }
         self.init(
             id: id,
-            label: label,
             contentType: contentType,
+            label: label,
             placeholder: placeholder,
-            value: value ?? "",
-            options: options ?? []
+            options: options,
+            defaultValue: defaultValue
         )
     }
 }

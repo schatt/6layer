@@ -42,6 +42,7 @@ public class SixLayerTestKit {
 // MARK: - Service Mocks Container
 
 /// Container for all service test doubles
+@MainActor
 public class ServiceMocks {
 
     /// CloudKit service mock
@@ -110,11 +111,13 @@ public class TestDataGenerator {
 public class TestEnvironment {
 
     /// Create a test environment with mock services
+    @MainActor
     public static func createTestEnvironment(with testKit: SixLayerTestKit) -> EnvironmentValues {
         var environment = EnvironmentValues()
 
-        // Set up mock services as environment values where applicable
-        environment.internationalizationService = testKit.serviceMocks.internationalizationService
+        // Note: internationalizationService is not available as an environment value
+        // Mock services should be injected directly into views/components being tested
+        // rather than through environment values
 
         return environment
     }

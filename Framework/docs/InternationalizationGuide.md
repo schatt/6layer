@@ -81,32 +81,56 @@ let frameworkString = i18n.frameworkLocalizedString(for: "framework.only.key")
 
 ### Framework Strings
 
-Framework strings should be placed in the framework bundle:
+Framework strings are stored in a single `.xcstrings` file (String Catalog format):
 
 ```
 Framework/
 └── Resources/
-    ├── en.lproj/
-    │   └── Localizable.strings
-    ├── es.lproj/
-    │   └── Localizable.strings
-    └── fr.lproj/
-        └── Localizable.strings
+    └── Localizable.xcstrings
 ```
 
-**Framework Localizable.strings:**
-```strings
-/* Framework default strings */
-"error.title" = "Error";
-"error.message" = "An error occurred: %@";
-"button.save" = "Save";
-"button.cancel" = "Cancel";
+**Note**: The framework uses the modern `.xcstrings` format which consolidates all languages into a single file. This provides:
+- Better tooling support in Xcode
+- Built-in pluralization and device variations
+- Improved version control (single file instead of multiple)
+- Metadata support (translation states, comments)
+
+The legacy `.lproj/.strings` format is still supported by `NSLocalizedString`, but `.xcstrings` is the preferred format.
+
+**Framework Localizable.xcstrings:**
+The framework uses a JSON-based `.xcstrings` file that contains all languages. Each key includes:
+- `comment`: Context for translators
+- `localizations`: Translations for each language with `state` and `value`
+
+Example structure:
+```json
+{
+  "version": "1.0",
+  "sourceLanguage": "en",
+  "strings": {
+    "SixLayerFramework.error.title": {
+      "comment": "Error dialog title",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Error" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Error" } }
+      }
+    }
+  }
+}
 ```
 
 ### App Strings
 
-App strings should be placed in the app bundle:
+App strings can be placed in the app bundle using either format:
 
+**Option 1: .xcstrings (Recommended)**
+```
+YourApp/
+└── Resources/
+    └── Localizable.xcstrings
+```
+
+**Option 2: .lproj/.strings (Legacy)**
 ```
 YourApp/
 └── Resources/
@@ -117,6 +141,8 @@ YourApp/
     └── fr.lproj/
         └── Localizable.strings
 ```
+
+Both formats work with `NSLocalizedString`, but `.xcstrings` is recommended for new projects.
 
 **App Localizable.strings:**
 ```strings
@@ -158,22 +184,29 @@ YourApp/
 
 ### 1. Framework Provides Defaults
 
-**Framework/en.lproj/Localizable.strings:**
-```strings
-"form.error.required" = "This field is required";
-"form.error.invalid" = "Invalid format";
-"form.button.submit" = "Submit";
-```
+**Framework/Resources/Localizable.xcstrings:**
+Contains all framework strings in a single file with all languages.
 
 ### 2. App Overrides Some Strings
 
-**App/en.lproj/Localizable.strings:**
-```strings
-/* Override framework string */
-"form.button.submit" = "Save Form";
-
-/* Add app-specific strings */
-"app.name" = "My App";
+**App/Resources/Localizable.xcstrings** (or **App/Resources/en.lproj/Localizable.strings**):
+```json
+{
+  "version": "1.0",
+  "sourceLanguage": "en",
+  "strings": {
+    "SixLayerFramework.form.button.submit": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Save Form" } }
+      }
+    },
+    "app.name": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "My App" } }
+      }
+    }
+  }
+}
 ```
 
 ### 3. Usage in Code

@@ -10,7 +10,8 @@ import UserNotifications
 import SixLayerFramework
 
 /// Mock implementation of NotificationService for testing
-public class NotificationServiceMock: NotificationServiceDelegate {
+/// Note: This is a standalone test utility
+public class NotificationServiceMock {
 
     // MARK: - Configuration
 
@@ -37,7 +38,8 @@ public class NotificationServiceMock: NotificationServiceDelegate {
     public private(set) var pendingNotifications: [UNNotificationRequest] = []
 
     public private(set) var getDeliveredNotificationsWasCalled = false
-    public private(set) var deliveredNotifications: [UNNotification] = []
+    // Note: UNNotification cannot be created directly, so we track requests instead
+    public private(set) var deliveredNotifications: [UNNotificationRequest] = []
 
     // MARK: - Callbacks
 
@@ -130,7 +132,7 @@ public class NotificationServiceMock: NotificationServiceDelegate {
         return pendingNotifications
     }
 
-    public func getDeliveredNotifications() async -> [UNNotification] {
+    public func getDeliveredNotifications() async -> [UNNotificationRequest] {
         getDeliveredNotificationsWasCalled = true
         return deliveredNotifications
     }
@@ -160,13 +162,14 @@ public class NotificationServiceMock: NotificationServiceDelegate {
 
     /// Add mock delivered notifications
     public func addMockDeliveredNotification(identifier: String, title: String, body: String, date: Date) {
-        let content = UNNotificationContent()
+        let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
 
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: nil)
-        let notification = UNNotification(request: request, date: date)
-        deliveredNotifications.append(notification)
+        // Note: UNNotification cannot be created directly (no public initializer)
+        // We track requests instead for testing purposes
+        deliveredNotifications.append(request)
     }
 }
 

@@ -31,6 +31,8 @@ import re
 import os
 import sys
 import argparse
+import shutil
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Set, List, Optional, Tuple
 from collections import defaultdict
@@ -203,6 +205,88 @@ def get_language_name(lang_code: str) -> str:
     }
     return lang_names.get(lang_code, lang_code)
 
+def create_backup(file_path: Path, backup_dir: Path, lang_code: Optional[str] = None) -> Optional[Path]:
+    """
+    Create a timestamped backup of a file.
+    
+    Args:
+        file_path: Path to the file to backup
+        backup_dir: Directory to store backups
+        lang_code: Optional language code to include in filename for uniqueness
+    
+    Returns the path to the backup file, or None if backup failed.
+    """
+    if not file_path.exists():
+        return None
+    
+    try:
+        # Create backup directory if it doesn't exist
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Generate backup filename with timestamp and optional language code
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        if lang_code:
+            backup_filename = f"{file_path.stem}_{lang_code}_{timestamp}{file_path.suffix}"
+        else:
+            # Include parent directory name for uniqueness
+            parent_name = file_path.parent.name.replace('.lproj', '')
+            backup_filename = f"{file_path.stem}_{parent_name}_{timestamp}{file_path.suffix}"
+        backup_path = backup_dir / backup_filename
+        
+        # Copy file to backup location
+        shutil.copy2(file_path, backup_path)
+        
+        return backup_path
+    except Exception as e:
+        print(f"Warning: Failed to backup {file_path}: {e}", file=sys.stderr)
+        return None
+
+def backup_localization_files(
+    base_file: Path,
+    language_files: List[Tuple[Path, str]],
+    base_dir: Path,
+    base_lang_code: str,
+    quiet: bool = False
+) -> List[Path]:
+    """
+    Create backups of all localization files.
+    
+    Args:
+        base_file: Path to base language file
+        language_files: List of tuples (file_path, lang_code)
+        base_dir: Base directory for backups
+        base_lang_code: Base language code
+        quiet: Suppress output
+    
+    Returns list of successfully backed up file paths.
+    """
+    # Create backup directory in base directory
+    backup_dir = base_dir / '.localization_backups'
+    
+    backed_up = []
+    
+    # Backup base file
+    if base_file.exists():
+        backup_path = create_backup(base_file, backup_dir, base_lang_code)
+        if backup_path:
+            backed_up.append(backup_path)
+            if not quiet:
+                print(f"Backed up: {base_file} -> {backup_path}")
+    
+    # Backup language files
+    for lang_file, lang_code in language_files:
+        if lang_file and lang_file.exists():
+            backup_path = create_backup(lang_file, backup_dir, lang_code)
+            if backup_path:
+                backed_up.append(backup_path)
+                if not quiet:
+                    print(f"Backed up: {lang_file} -> {backup_path}")
+    
+    if not quiet and backed_up:
+        print(f"\nCreated {len(backed_up)} backup(s) in: {backup_dir}")
+    
+    return backed_up
+
 def write_report(report_file: Path, base_strings: Dict[str, str], missing_by_lang: Dict[str, Set[str]], base_lang_code: str = 'en') -> None:
     """Write the missing keys report to a file."""
     all_missing = set()
@@ -250,6 +334,9 @@ Examples:
 
   # Quiet mode (exit code only)
   %(prog)s --quiet
+
+  # Create backups before checking
+  %(prog)s --backup
         """
     )
     
@@ -299,6 +386,12 @@ Examples:
         '--no-report',
         action='store_true',
         help='Do not generate report file'
+    )
+    
+    parser.add_argument(
+        '--backup',
+        action='store_true',
+        help='Create timestamped backups of localization files before checking (default: off)'
     )
     
     args = parser.parse_args()
@@ -358,6 +451,18 @@ Examples:
     
     if not args.quiet:
         print(f"Checking {len(languages_to_check)} language(s)...")
+    
+    # Create backups if requested
+    if args.backup:
+        language_files = []
+        for lang_code in languages_to_check.keys():
+            lang_file = find_language_file(base_dir, lang_code, args.filename)
+            if lang_file:
+                language_files.append((lang_file, lang_code))
+        
+        backup_localization_files(base_file, language_files, base_dir, base_lang_code, args.quiet)
+        if not args.quiet:
+            print()  # Empty line after backup messages
     
     # Check each language
     missing_by_lang = {}

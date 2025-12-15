@@ -1,0 +1,7 @@
+Missing Localization Keys Report
+============================================================
+
+Base language: English (en)
+Total keys in base language: 298
+Total missing keys across all languages: 0
+

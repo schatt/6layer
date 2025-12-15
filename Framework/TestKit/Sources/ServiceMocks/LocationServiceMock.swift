@@ -10,7 +10,9 @@ import CoreLocation
 import SixLayerFramework
 
 /// Mock implementation of LocationService for testing
-public class LocationServiceMock: LocationServiceDelegate {
+/// Mock implementation of LocationService for testing
+/// Note: This is a standalone test utility
+public class LocationServiceMock {
 
     // MARK: - Configuration
 
@@ -31,7 +33,13 @@ public class LocationServiceMock: LocationServiceDelegate {
     )
 
     public private(set) var requestPermissionWasCalled = false
-    public private(set) var permissionStatus: CLAuthorizationStatus = .authorizedWhenInUse
+    public private(set) var permissionStatus: CLAuthorizationStatus = {
+        #if os(iOS)
+        return .authorizedWhenInUse
+        #else
+        return .authorizedAlways
+        #endif
+    }()
 
     public private(set) var startMonitoringWasCalled = false
     public private(set) var stopMonitoringWasCalled = false

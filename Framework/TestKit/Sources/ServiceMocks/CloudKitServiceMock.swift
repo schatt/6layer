@@ -44,7 +44,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
     }
 
     /// Configure mock to return failure for all operations
-    public func configureFailureResponse(error: CloudKitServiceError = .networkError) {
+    public func configureFailureResponse(error: CloudKitServiceError = .networkUnavailable) {
         mode = .failure(error: error)
     }
 
@@ -92,9 +92,11 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
         case .failure(let error):
             throw error
         case .custom(let handler):
-            let result = try await handler(operation)
+            // Use nonisolated to avoid data race warnings for test mocks
+            nonisolated(unsafe) let operationCopy = operation
+            let result = try await handler(operationCopy)
             guard let typedResult = result as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return typedResult
         }
@@ -108,7 +110,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
 
             // Return the saved record
             guard let result = record as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return result
 
@@ -121,7 +123,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
             mockRecord["createdAt"] = Date()
 
             guard let result = mockRecord as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return result
 
@@ -131,7 +133,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
 
             // Return success (record ID)
             guard let result = recordID as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return result
 
@@ -145,7 +147,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
             ]
 
             guard let result = mockRecords as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return result
 
@@ -155,7 +157,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
 
             // Return the saved records
             guard let result = records as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return result
 
@@ -165,7 +167,7 @@ public class CloudKitServiceMock: CloudKitServiceDelegate {
 
             // Return success
             guard let result = recordIDs as? T else {
-                throw CloudKitServiceError.invalidResponse
+                throw CloudKitServiceError.invalidRecord
             }
             return result
         }

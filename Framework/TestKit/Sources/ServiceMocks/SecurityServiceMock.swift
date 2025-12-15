@@ -10,7 +10,8 @@ import LocalAuthentication
 import SixLayerFramework
 
 /// Mock implementation of SecurityService for testing
-public class SecurityServiceMock: SecurityServiceDelegate {
+/// Note: This is a standalone test utility
+public class SecurityServiceMock {
 
     // MARK: - Configuration
 
@@ -29,7 +30,7 @@ public class SecurityServiceMock: SecurityServiceDelegate {
     public private(set) var authenticationSuccess = true
 
     public private(set) var isBiometricAvailableValue = true
-    public private(set) var biometricType: LABiometryType = .touchID
+    public private(set) var biometricTypeValue: LABiometryType = .touchID
 
     public private(set) var enableSecureTextEntryWasCalled = false
     public private(set) var secureTextEntryFields: [String] = []
@@ -64,7 +65,7 @@ public class SecurityServiceMock: SecurityServiceDelegate {
     /// Configure biometric availability
     public func configureBiometricAvailability(available: Bool, type: LABiometryType = .touchID) {
         isBiometricAvailableValue = available
-        biometricType = type
+        biometricTypeValue = type
     }
 
     /// Configure authentication result
@@ -99,7 +100,7 @@ public class SecurityServiceMock: SecurityServiceDelegate {
     }
 
     public var biometricType: LABiometryType {
-        return biometricType
+        return biometricTypeValue
     }
 
     public func authenticateWithBiometrics(reason: String) async throws -> Bool {

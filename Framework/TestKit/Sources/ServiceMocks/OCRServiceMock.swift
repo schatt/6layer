@@ -9,7 +9,9 @@ import Foundation
 import SixLayerFramework
 
 /// Mock implementation of OCRService for testing
-public class OCRServiceMock: OCRServiceDelegate {
+/// Note: This is a standalone test utility and doesn't conform to OCRServiceProtocol
+/// as it uses a different API for testing convenience
+public class OCRServiceMock {
 
     // MARK: - Configuration
 

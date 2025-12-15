@@ -23,10 +23,10 @@ public class FormTestHelper {
     ) -> DynamicFormField {
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .text,
+            label: label,
             placeholder: placeholder,
-            value: value
+            defaultValue: value
         )
     }
 
@@ -38,10 +38,10 @@ public class FormTestHelper {
     ) -> DynamicFormField {
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .email,
+            label: label,
             placeholder: "Enter email",
-            value: value
+            defaultValue: value
         )
     }
 
@@ -53,10 +53,10 @@ public class FormTestHelper {
     ) -> DynamicFormField {
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .password,
+            label: label,
             placeholder: "Enter password",
-            value: value
+            defaultValue: value
         )
     }
 
@@ -68,9 +68,9 @@ public class FormTestHelper {
     ) -> DynamicFormField {
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .number,
-            value: value
+            label: label,
+            defaultValue: String(value)
         )
     }
 
@@ -80,11 +80,12 @@ public class FormTestHelper {
         label: String = "Date",
         value: Date = Date()
     ) -> DynamicFormField {
+        let formatter = ISO8601DateFormatter()
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .date,
-            value: value
+            label: label,
+            defaultValue: formatter.string(from: value)
         )
     }
 
@@ -96,9 +97,9 @@ public class FormTestHelper {
     ) -> DynamicFormField {
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .boolean,
-            value: value
+            label: label,
+            defaultValue: value ? "true" : "false"
         )
     }
 
@@ -111,10 +112,10 @@ public class FormTestHelper {
     ) -> DynamicFormField {
         return DynamicFormField(
             id: id,
-            label: label,
             contentType: .select,
+            label: label,
             options: options,
-            value: value
+            defaultValue: value
         )
     }
 
@@ -135,21 +136,34 @@ public class FormTestHelper {
 
     /// Create a DynamicFormState from fields
     public func createFormState(from fields: [DynamicFormField]) -> DynamicFormState {
-        let state = DynamicFormState()
+        // Create a section with all fields
+        let section = DynamicFormSection(
+            id: "test-section",
+            title: "Test Section",
+            fields: fields
+        )
+        let configuration = DynamicFormConfiguration(
+            id: "test-form",
+            title: "Test Form",
+            sections: [section]
+        )
+        let state = DynamicFormState(configuration: configuration)
         for field in fields {
-            state.setValue(field.value, forFieldId: field.id)
+            if let defaultValue = field.defaultValue {
+                state.setValue(defaultValue, for: field.id)
+            }
         }
         return state
     }
 
     /// Simulate field input
     public func simulateFieldInput(fieldId: String, value: Any, in state: DynamicFormState) {
-        state.setValue(value, forFieldId: fieldId)
+        state.setValue(value, for: fieldId)
     }
 
     /// Get field value from form state
     public func getFieldValue(from state: DynamicFormState, fieldId: String) -> Any? {
-        return state.getValue(forFieldId: fieldId)
+        return state.getValue(for: fieldId) as Any?
     }
 
     /// Validate form state
@@ -157,7 +171,7 @@ public class FormTestHelper {
         var errors: [String] = []
 
         for fieldId in requiredFields {
-            if let value = state.getValue(forFieldId: fieldId) {
+            if let value: Any = state.getValue(for: fieldId) {
                 if let stringValue = value as? String, stringValue.isEmpty {
                     errors.append("\(fieldId) is required")
                 }
@@ -180,7 +194,7 @@ public class FormTestHelper {
         var formData: [String: Any] = [:]
 
         for field in fields {
-            if let value = state.getValue(forFieldId: field.id) {
+            if let value: Any = state.getValue(for: field.id) {
                 formData[field.id] = value
             }
         }
@@ -194,7 +208,8 @@ public class FormTestHelper {
         var formData: [String: Any] = [:]
 
         for field in fields {
-            if let value = state.getValue(forFieldId: field.id) {
+            // Try to get value as Any to avoid type inference issues
+            if let value: Any = state.getValue(for: field.id) {
                 formData[field.id] = value
             }
         }
@@ -223,7 +238,7 @@ public class FormTestHelper {
 
         for field in fields {
             if let testValue = testData[field.id] {
-                state.setValue(testValue, forFieldId: field.id)
+                state.setValue(testValue, for: field.id)
             }
         }
     }

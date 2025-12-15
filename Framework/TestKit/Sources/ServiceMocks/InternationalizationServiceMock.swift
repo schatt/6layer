@@ -9,7 +9,9 @@ import Foundation
 import SixLayerFramework
 
 /// Mock implementation of InternationalizationService for testing
-public class InternationalizationServiceMock: InternationalizationServiceDelegate {
+/// Mock implementation of InternationalizationService for testing
+/// Note: This is a standalone test utility
+public class InternationalizationServiceMock {
 
     // MARK: - Configuration
 

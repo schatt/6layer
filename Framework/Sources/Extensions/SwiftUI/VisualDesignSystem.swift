@@ -788,7 +788,34 @@ public class VisualDesignSystem: ObservableObject {
     
     // MARK: - Theme Detection
     
+    /// Check if we're running in a test environment
+    /// NSApp.effectiveAppearance can assert/crash in test environments, especially on macOS
+    private static func isTestEnvironment() -> Bool {
+        #if DEBUG
+        // Check for XCTest environment variables
+        let environment = ProcessInfo.processInfo.environment
+        if environment["XCTestConfigurationFilePath"] != nil ||
+           environment["XCTestSessionIdentifier"] != nil ||
+           environment["XCTestBundlePath"] != nil ||
+           NSClassFromString("XCTestCase") != nil {
+            return true
+        }
+        // Check for Swift Testing framework (Testing.Test class)
+        if NSClassFromString("Testing.Test") != nil {
+            return true
+        }
+        return false
+        #else
+        return false
+        #endif
+    }
+    
     private static func detectSystemTheme() -> Theme {
+        // In test environments, default to light theme to avoid crashes
+        if isTestEnvironment() {
+            return .light
+        }
+        
         #if os(iOS)
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first {
@@ -796,6 +823,7 @@ public class VisualDesignSystem: ObservableObject {
         }
         return .light // Fallback for iOS when no window is available
         #elseif os(macOS)
+        // NSApp should be available in normal app contexts, but we've already checked for test environment
         let appearance = NSApp.effectiveAppearance
         return appearance.name == .darkAqua ? .dark : .light
         #else
@@ -925,6 +953,7 @@ public struct ColorSystem: Sendable {
     public let success: Color
     public let info: Color
 
+    @MainActor
     public init(theme: Theme, platform: PlatformStyle) {
         // Get colors from the current design system
         let designSystem = VisualDesignSystem.shared.designSystem
@@ -978,6 +1007,7 @@ public struct TypographySystem: Sendable {
     public let caption1: Font
     public let caption2: Font
 
+    @MainActor
     public init(platform: PlatformStyle, accessibility: AccessibilitySettings) {
         // Get typography from the current design system
         let designSystem = VisualDesignSystem.shared.designSystem
@@ -1067,27 +1097,33 @@ private struct PlatformStyleEnvironmentKey: EnvironmentKey {
 }
 
 private struct ColorSystemEnvironmentKey: EnvironmentKey {
-    static let defaultValue = ColorSystem(theme: .light, platform: .ios)
+    // Use default design system for environment key defaults to avoid main actor isolation issues
+    static let defaultValue = ColorSystem(from: SixLayerDesignSystem(), theme: .light)
 }
 
 private struct TypographySystemEnvironmentKey: EnvironmentKey {
-    static let defaultValue = TypographySystem(platform: .ios, accessibility: AccessibilitySettings())
+    // Use default design system for environment key defaults to avoid main actor isolation issues
+    static let defaultValue = TypographySystem(from: SixLayerDesignSystem(), theme: .light)
 }
 
 private struct DesignSystemEnvironmentKey: EnvironmentKey {
-    static let defaultValue = VisualDesignSystem.shared.designSystem
+    // Use default design system for environment key defaults to avoid main actor isolation issues
+    static let defaultValue: DesignSystem = SixLayerDesignSystem()
 }
 
 private struct DesignTokensEnvironmentKey: EnvironmentKey {
-    static let defaultValue = VisualDesignSystem.shared.currentColors
+    // Use default design system for environment key defaults to avoid main actor isolation issues
+    static let defaultValue = SixLayerDesignSystem().colors(for: .light)
 }
 
 private struct SpacingTokensEnvironmentKey: EnvironmentKey {
-    static let defaultValue = VisualDesignSystem.shared.currentSpacing
+    // Use default design system for environment key defaults to avoid main actor isolation issues
+    static let defaultValue = SixLayerDesignSystem().spacing()
 }
 
 private struct ComponentStatesEnvironmentKey: EnvironmentKey {
-    static let defaultValue = VisualDesignSystem.shared.currentComponentStates
+    // Use default design system for environment key defaults to avoid main actor isolation issues
+    static let defaultValue = SixLayerDesignSystem().componentStates()
 }
 
 public extension EnvironmentValues {

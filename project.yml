@@ -48,10 +48,10 @@ targets:
           - "**/ExampleHelpers.swift"
           - "**/ExtensibleHintsExample.swift"
       - path: Framework/Resources
-        type: folder
-        buildPhase: resources
+        excludes:
+          - "**/*.lproj/**"
     resources:
-      - path: Framework/Resources
+      - path: Framework/Resources/Localizable.xcstrings
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.sixlayer.framework
       PRODUCT_MODULE_NAME: SixLayerFramework

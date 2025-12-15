@@ -56,7 +56,7 @@ public class InternationalizationService: ObservableObject {
     }
     
     /// Framework bundle for loading framework-localized strings
-    private static let frameworkBundle: Bundle = {
+    internal static let frameworkBundle: Bundle = {
         // Get the bundle containing this class
         let bundle = Bundle(for: InternationalizationService.self)
         
