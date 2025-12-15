@@ -1,6 +1,0 @@
-Missing Localization Keys Report
-============================================================
-
-Total keys in English: 298
-Total missing keys: 0
-
