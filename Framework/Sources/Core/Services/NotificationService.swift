@@ -655,7 +655,9 @@ extension NotificationService {
         
         do {
             let focusStatus = try await focusStatusCenter.focusStatus
-            return focusStatus.isFocused
+            // isFocused is optional Bool?, so unwrap with nil-coalescing to default to false
+            // This is a conservative default when Focus status is unavailable
+            return focusStatus.isFocused ?? false
         } catch {
             // If permission is not granted or error occurs, return false
             // This is a conservative default
