@@ -212,15 +212,13 @@ if [ $ERRORS_BEFORE_GIT -eq $ERRORS_FOUND ]; then
     echo "✅ Git repository is clean"
 fi
 
-# Step 2.5: Check we're on main branch
+# Step 2.5: Check current branch
 echo "📋 Step 2.5: Checking current branch..."
-ERRORS_BEFORE_BRANCH=$ERRORS_FOUND
 CURRENT_BRANCH=$(git branch --show-current)
-if [ "$CURRENT_BRANCH" != "main" ]; then
-    log_error "Not on main branch! Current branch: $CURRENT_BRANCH. Please switch to main branch before creating a release."
-fi
-if [ $ERRORS_BEFORE_BRANCH -eq $ERRORS_FOUND ]; then
-    echo "✅ On main branch"
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    echo "✅ On main branch (will use direct tag/push workflow)"
+else
+    echo "✅ On branch: $CURRENT_BRANCH (will merge to main before tag/push)"
 fi
 
 # Step 3: Check if RELEASES.md needs updating
@@ -628,33 +626,105 @@ echo "✅ Example files exist"
 echo ""
 echo "🚀 All checks passed! Ready for tagging and release."
 
-# Auto-tag and push option
-read -p "🚀 Auto-tag and push v$VERSION to all remotes? (y/N): " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "🏷️  Creating and pushing tag v$VERSION..."
+# Handle different workflows based on current branch
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    # On main: use direct tag/push workflow
+    read -p "🚀 Auto-tag and push v$VERSION to all remotes? (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "🏷️  Creating and pushing tag v$VERSION..."
 
-    # Create annotated tag
-    git tag -a "v$VERSION" -m "Release v$VERSION"
+        # Create annotated tag
+        git tag -a "v$VERSION" -m "Release v$VERSION"
 
-    # Push tag to all remotes
-    echo "📤 Pushing tag to all remotes..."
-    git push all --tags
+        # Push tag to all remotes
+        echo "📤 Pushing tag to all remotes..."
+        git push all --tags
 
-    echo "📤 Pushing commits to all remotes..."
-    git push all main
+        echo "📤 Pushing commits to all remotes..."
+        git push all main
 
-    echo ""
-    echo "🎉 Release v$VERSION completed successfully!"
-    echo "📦 Tag: v$VERSION"
-    echo "🌐 Pushed to all remotes (GitHub, Codeberg, GitLab)"
+        echo ""
+        echo "🎉 Release v$VERSION completed successfully!"
+        echo "📦 Tag: v$VERSION"
+        echo "🌐 Pushed to all remotes (GitHub, Codeberg, GitLab)"
+    else
+        echo "🚀 Ready to create release tag v$VERSION"
+        echo ""
+        echo "Manual steps:"
+        echo "1. git tag -a v$VERSION -m \"Release v$VERSION\""
+        echo "2. git push all --tags"
+        echo "3. git push all main"
+    fi
 else
-    echo "🚀 Ready to create release tag v$VERSION"
+    # On a branch: merge to main, then tag/push
+    echo "📋 Current branch: $CURRENT_BRANCH"
+    echo "📋 This will:"
+    echo "   1. Switch to main branch"
+    echo "   2. Merge $CURRENT_BRANCH into main"
+    echo "   3. Create and push tag v$VERSION"
+    echo "   4. Push to all remotes"
     echo ""
-    echo "Manual steps:"
-    echo "1. git tag -a v$VERSION -m \"Release v$VERSION\""
-    echo "2. git push all --tags"
-    echo "3. git push all main"
+    read -p "🚀 Proceed with merge and release? (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        # Switch to main
+        echo "🔄 Switching to main branch..."
+        git checkout main
+        
+        # Ensure main is up to date
+        echo "📥 Fetching latest changes..."
+        git fetch all
+        
+        # Check if main has diverged
+        if ! git merge-base --is-ancestor HEAD origin/main 2>/dev/null; then
+            echo "⚠️  Warning: Local main has diverged from origin/main"
+            read -p "   Pull and rebase main? (y/N): " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                git pull all main
+            else
+                echo "❌ Aborting - please resolve main branch state manually"
+                exit 1
+            fi
+        fi
+        
+        # Merge the branch
+        echo "🔀 Merging $CURRENT_BRANCH into main..."
+        if git merge "$CURRENT_BRANCH" --no-ff -m "Merge $CURRENT_BRANCH for release v$VERSION"; then
+            echo "✅ Merge successful"
+        else
+            echo "❌ Merge failed! Please resolve conflicts manually and run the release script again."
+            exit 1
+        fi
+        
+        # Create and push tag
+        echo "🏷️  Creating and pushing tag v$VERSION..."
+        git tag -a "v$VERSION" -m "Release v$VERSION"
+        
+        # Push tag to all remotes
+        echo "📤 Pushing tag to all remotes..."
+        git push all --tags
+        
+        # Push commits to all remotes
+        echo "📤 Pushing commits to all remotes..."
+        git push all main
+        
+        echo ""
+        echo "🎉 Release v$VERSION completed successfully!"
+        echo "📦 Tag: v$VERSION"
+        echo "🌐 Pushed to all remotes (GitHub, Codeberg, GitLab)"
+        echo "💡 You can now delete branch $CURRENT_BRANCH if desired"
+    else
+        echo "🚀 Ready to merge and create release tag v$VERSION"
+        echo ""
+        echo "Manual steps:"
+        echo "1. git checkout main"
+        echo "2. git merge $CURRENT_BRANCH --no-ff -m \"Merge $CURRENT_BRANCH for release v$VERSION\""
+        echo "3. git tag -a v$VERSION -m \"Release v$VERSION\""
+        echo "4. git push all --tags"
+        echo "5. git push all main"
+    fi
 fi
 
 echo ""

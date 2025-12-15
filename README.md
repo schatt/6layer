@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.3.0")
+    .package(url: "https://github.com/schatt/6layer.git", from: "6.4.0")
 ]
 ```
 
@@ -41,13 +41,14 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.3.0
+## 🆕 Latest Release: v6.4.0
 
-### **Services & Localization**
-☁️ **Services infrastructure**: CloudKit service with delegate pattern, Notification service, Security & Privacy service.  
-🌐 **Framework localization**: Complete localization infrastructure with automatic string localization and key management.  
-🎨 **Platform extensions**: Cross-platform font extensions, additional semantic colors, custom value views for display fields.  
-🛠️ **Developer experience**: Debug warnings for missing hints.
+### **Design System Bridge & Developer Experience**
+🎨 **Design System Bridge**: Framework-level abstraction for mapping external design tokens to SixLayer components with theme injection.  
+🧪 **SixLayerTestKit**: Comprehensive testing utilities for framework consumers with service mocks and test helpers.  
+📚 **Sample Applications**: Canonical TaskManager sample app demonstrating proper SixLayer architecture patterns.  
+🌐 **Localization Improvements**: .xcstrings support and localization completeness checking.  
+🔧 **Developer Experience**: Stable extension surface and migration tooling.
 
 ### **Previous Release: v6.1.1 - Color.named() Extensions**
 🎨 **Color API improvements**: Extended `Color.named()` to support `systemBackground` and other commonly used color names (`cardBackground`, `label`, `secondaryLabel`, `tertiaryLabel`, `separator`).  
@@ -133,7 +134,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.3.0 (Services & Localization)
+**Version**: v6.4.0 (Design System Bridge & Developer Experience)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 

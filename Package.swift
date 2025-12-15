@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.3.0 - Services & Localization
+// SixLayerFramework v6.4.0 - Design System Bridge & Developer Experience
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

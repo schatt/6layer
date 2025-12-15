@@ -1,12 +1,53 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.3.0 - Services & Localization** 🎯
+## 📍 **Current Release: v6.4.0 - Design System Bridge & Developer Experience** 🎯
 
-**Release Date**: December 14, 2025
+**Release Date**: December 15, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.2.0 - Form Enhancements & Advanced Field Types
-**Note**: Minor release focused on comprehensive service infrastructure and framework localization support. Includes CloudKit service with delegate pattern, Notification service, Security & Privacy service, complete framework localization support with string replacement, cross-platform font extensions, missing semantic colors, and custom value views for display fields.
+**Previous Release**: v6.3.0 - Services & Localization
+**Note**: Minor release focused on design system integration, developer experience improvements, and comprehensive testing infrastructure. Includes Design System Bridge for external design token mapping, SixLayerTestKit for consumer testing, migration tooling, canonical sample apps, .xcstrings localization support, and localization completeness checking.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.4.0 - Design System Bridge & Developer Experience** (December 15, 2025)
+
+### **What's New:**
+
+#### **🎨 Design System Bridge (Issue #118)**
+- **Design System Bridge**: Framework-level abstraction for mapping external design tokens to SixLayer components
+- **DesignSystem Protocol**: Standardized interface for design system implementations
+- **DesignTokens Structures**: Structured token types for colors, typography, spacing, and component states
+- **Theme Injection**: Environment-based theme injection with automatic component adaptation
+- **Built-in Design Systems**: SixLayerDesignSystem (default), HighContrastDesignSystem, and CustomDesignSystem
+- **External Token Mapping**: Support for Figma tokens, JSON design systems, and CSS custom properties
+
+#### **🧪 SixLayerTestKit (Issue #119)**
+- **SixLayerTestKit**: Comprehensive testing utilities for framework consumers
+- **Service Mocks**: Test doubles for CloudKitService, NotificationService, SecurityService, InternationalizationService, and other services
+- **Form Testing Helpers**: Utilities for testing DynamicForm and form interactions
+- **Navigation Testing Helpers**: Tools for testing navigation flows and Layer 1 functions
+- **Layer Flow Driver**: Deterministic testing utilities for Layer 1→6 flows
+- **Test Data Generators**: Utilities for generating realistic test data
+
+#### **📚 Sample Applications (Issue #121)**
+- **TaskManager Sample App**: Complete, opinionated sample application demonstrating SixLayer Framework usage
+- **Canonical Architecture Example**: Located in `Development/Examples/TaskManagerSampleApp/`
+- **Layer 1→6 Patterns**: Demonstrates proper use of semantic intent functions throughout
+- **Service Composition**: Shows CloudKitService, NotificationService, SecurityService integration
+- **Full Localization**: English, Spanish, French support
+- **Comprehensive Tests**: TDD approach with SixLayerTestKit
+
+#### **🌐 Localization Improvements (Issues #122, #123)**
+- **.xcstrings Support**: Migration to .xcstrings format for better localization management
+- **Localization Completeness Check**: Comprehensive script for checking localization file completeness
+- **Enhanced Tooling**: Better scripts and documentation for localization maintenance
+
+#### **🔧 Developer Experience (Issues #117, #120)**
+- **Stable Extension Surface**: Defined stable extension points for framework customization
+- **Migration Tooling**: Tools for managing framework upgrades and change tracking
+
+**See [RELEASE_v6.4.0.md](RELEASE_v6.4.0.md) for complete release notes.**
 
 ---
 
