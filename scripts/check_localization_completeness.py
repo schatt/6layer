@@ -1,30 +1,39 @@
 #!/usr/bin/env python3
 """
-Script to check localization completeness and generate missing translations.
+CLI tool to check localization completeness for iOS/macOS .strings files.
 
 This script:
-1. Parses the English localization file to get all keys
+1. Parses a base language localization file to get all keys
 2. Compares each language file to identify missing keys
-3. Generates machine translations for missing keys
+3. Generates a report of missing translations
+
+Usage:
+    check_localization_completeness.py [OPTIONS]
+
+Examples:
+    # Use default paths (Framework/Resources with en.lproj as base)
+    check_localization_completeness.py
+
+    # Specify custom base directory
+    check_localization_completeness.py --base-dir ./Resources
+
+    # Specify base language file directly
+    check_localization_completeness.py --base-file ./en.lproj/Localizable.strings
+
+    # Only check specific languages
+    check_localization_completeness.py --languages es fr de
+
+    # Custom report output location
+    check_localization_completeness.py --report ./reports/missing_keys.txt
 """
 
 import re
 import os
+import sys
+import argparse
 from pathlib import Path
-from typing import Dict, Set, Tuple
+from typing import Dict, Set, List, Optional, Tuple
 from collections import defaultdict
-
-# Language codes and their display names
-LANGUAGES = {
-    'es': 'Spanish',
-    'fr': 'French',
-    'de': 'German',
-    'ja': 'Japanese',
-    'ko': 'Korean',
-    'zh-Hans': 'Simplified Chinese',
-    'pl': 'Polish',
-    'de-CH': 'Swiss German'
-}
 
 def parse_strings_file(file_path: Path) -> Dict[str, str]:
     """Parse a .strings file and return a dictionary of key-value pairs."""
@@ -103,82 +112,309 @@ def find_missing_keys(base_keys: Set[str], lang_keys: Set[str]) -> Set[str]:
     """Find keys that are in base but not in lang."""
     return base_keys - lang_keys
 
-def generate_translation_placeholder(key: str, english_value: str, lang_code: str) -> str:
-    """Generate a placeholder translation (machine translation would go here)."""
-    # For now, return a comment indicating it needs translation
-    # In a real implementation, this would call a translation API
-    return f'/* TODO: Translate "{english_value}" */\n"{key}" = "{english_value}";'
+def discover_language_directories(base_dir: Path, base_lang_code: str = 'en') -> Dict[str, str]:
+    """
+    Auto-discover language directories in the base directory.
+    
+    Looks for directories matching pattern: {lang_code}.lproj
+    Returns a dict mapping lang_code to display name.
+    """
+    languages = {}
+    
+    if not base_dir.exists():
+        return languages
+    
+    # Common language code to name mapping
+    lang_names = {
+        'en': 'English',
+        'es': 'Spanish',
+        'fr': 'French',
+        'de': 'German',
+        'ja': 'Japanese',
+        'ko': 'Korean',
+        'zh-Hans': 'Simplified Chinese',
+        'zh-Hant': 'Traditional Chinese',
+        'pl': 'Polish',
+        'pt': 'Portuguese',
+        'it': 'Italian',
+        'ru': 'Russian',
+        'ar': 'Arabic',
+        'hi': 'Hindi',
+        'de-CH': 'Swiss German',
+        'fr-CA': 'Canadian French',
+        'es-MX': 'Mexican Spanish',
+    }
+    
+    for item in base_dir.iterdir():
+        if item.is_dir() and item.name.endswith('.lproj'):
+            lang_code = item.name.replace('.lproj', '')
+            # Skip the base language directory
+            if lang_code != base_lang_code:
+                display_name = lang_names.get(lang_code, lang_code)
+                languages[lang_code] = display_name
+    
+    return languages
 
-def main():
-    """Main function to check and update localization files."""
-    base_dir = Path(__file__).parent.parent / 'Framework' / 'Resources'
-    en_file = base_dir / 'en.lproj' / 'Localizable.strings'
+def find_base_language_file(base_dir: Path, base_lang_code: str = 'en', filename: str = 'Localizable.strings') -> Optional[Path]:
+    """Find the base language file."""
+    base_lang_dir = base_dir / f'{base_lang_code}.lproj'
+    base_file = base_lang_dir / filename
     
-    if not en_file.exists():
-        print(f"Error: English file not found at {en_file}")
-        return
+    if base_file.exists():
+        return base_file
     
-    # Parse English file
-    print("Parsing English localization file...")
-    en_strings = parse_strings_file(en_file)
-    en_structure = extract_comments_and_structure(en_file)
-    en_keys = set(en_strings.keys())
+    # Try alternative: file might be directly in base_dir
+    alt_file = base_dir / filename
+    if alt_file.exists():
+        return alt_file
     
-    print(f"Found {len(en_keys)} keys in English file")
+    return None
+
+def find_language_file(base_dir: Path, lang_code: str, filename: str = 'Localizable.strings') -> Optional[Path]:
+    """Find a language file."""
+    lang_dir = base_dir / f'{lang_code}.lproj'
+    lang_file = lang_dir / filename
+    
+    if lang_file.exists():
+        return lang_file
+    
+    return None
+
+def get_language_name(lang_code: str) -> str:
+    """Get display name for a language code."""
+    lang_names = {
+        'en': 'English',
+        'es': 'Spanish',
+        'fr': 'French',
+        'de': 'German',
+        'ja': 'Japanese',
+        'ko': 'Korean',
+        'zh-Hans': 'Simplified Chinese',
+        'zh-Hant': 'Traditional Chinese',
+        'pl': 'Polish',
+        'pt': 'Portuguese',
+        'it': 'Italian',
+        'ru': 'Russian',
+        'ar': 'Arabic',
+        'hi': 'Hindi',
+        'de-CH': 'Swiss German',
+        'fr-CA': 'Canadian French',
+        'es-MX': 'Mexican Spanish',
+    }
+    return lang_names.get(lang_code, lang_code)
+
+def write_report(report_file: Path, base_strings: Dict[str, str], missing_by_lang: Dict[str, Set[str]], base_lang_code: str = 'en') -> None:
+    """Write the missing keys report to a file."""
+    all_missing = set()
+    for missing in missing_by_lang.values():
+        all_missing.update(missing)
+    
+    with open(report_file, 'w', encoding='utf-8') as f:
+        f.write("Missing Localization Keys Report\n")
+        f.write("=" * 60 + "\n\n")
+        f.write(f"Base language: {get_language_name(base_lang_code)} ({base_lang_code})\n")
+        f.write(f"Total keys in base language: {len(base_strings)}\n")
+        f.write(f"Total missing keys across all languages: {len(all_missing)}\n\n")
+        
+        for lang_code, missing in sorted(missing_by_lang.items()):
+            if missing:
+                f.write(f"\n{get_language_name(lang_code)} ({lang_code}): {len(missing)} missing\n")
+                f.write("-" * 60 + "\n")
+                for key in sorted(missing):
+                    base_value = base_strings.get(key, '')
+                    f.write(f'\nKey: "{key}"\n')
+                    f.write(f'Base ({base_lang_code}): "{base_value}"\n')
+                    f.write(f'Translation needed\n')
+
+def main() -> int:
+    """Main function to check localization completeness."""
+    parser = argparse.ArgumentParser(
+        description='Check localization completeness for iOS/macOS .strings files',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Use default paths (Framework/Resources with en.lproj as base)
+  %(prog)s
+
+  # Specify custom base directory
+  %(prog)s --base-dir ./Resources
+
+  # Specify base language file directly
+  %(prog)s --base-file ./en.lproj/Localizable.strings
+
+  # Only check specific languages
+  %(prog)s --languages es fr de
+
+  # Custom report output location
+  %(prog)s --report ./reports/missing_keys.txt
+
+  # Quiet mode (exit code only)
+  %(prog)s --quiet
+        """
+    )
+    
+    parser.add_argument(
+        '--base-dir',
+        type=Path,
+        help='Base directory containing .lproj folders (default: Framework/Resources relative to script)'
+    )
+    
+    parser.add_argument(
+        '--base-file',
+        type=Path,
+        help='Path to base language .strings file (overrides --base-dir)'
+    )
+    
+    parser.add_argument(
+        '--base-lang',
+        default='en',
+        help='Base language code (default: en)'
+    )
+    
+    parser.add_argument(
+        '--filename',
+        default='Localizable.strings',
+        help='Name of the .strings file to check (default: Localizable.strings)'
+    )
+    
+    parser.add_argument(
+        '--languages',
+        nargs='+',
+        help='Specific language codes to check (default: auto-discover all .lproj directories)'
+    )
+    
+    parser.add_argument(
+        '--report',
+        type=Path,
+        help='Path to write report file (default: localization_missing_keys_report.txt in base directory)'
+    )
+    
+    parser.add_argument(
+        '--quiet',
+        action='store_true',
+        help='Quiet mode: only output errors and exit code'
+    )
+    
+    parser.add_argument(
+        '--no-report',
+        action='store_true',
+        help='Do not generate report file'
+    )
+    
+    args = parser.parse_args()
+    
+    # Determine base file location
+    if args.base_file:
+        base_file = Path(args.base_file).resolve()
+        if not base_file.exists():
+            print(f"Error: Base file not found: {base_file}", file=sys.stderr)
+            return 1
+        base_dir = base_file.parent.parent  # Go up from {lang}.lproj/Filename
+        base_lang_code = base_file.parent.name.replace('.lproj', '')
+    elif args.base_dir:
+        base_dir = Path(args.base_dir).resolve()
+        base_lang_code = args.base_lang
+        base_file = find_base_language_file(base_dir, base_lang_code, args.filename)
+        if not base_file:
+            print(f"Error: Base language file not found in {base_dir}", file=sys.stderr)
+            print(f"  Looking for: {base_lang_code}.lproj/{args.filename}", file=sys.stderr)
+            return 1
+    else:
+        # Default: Framework/Resources relative to script
+        script_dir = Path(__file__).parent.parent
+        base_dir = script_dir / 'Framework' / 'Resources'
+        base_lang_code = args.base_lang
+        base_file = find_base_language_file(base_dir, base_lang_code, args.filename)
+        if not base_file:
+            print(f"Error: Base language file not found at {base_dir}", file=sys.stderr)
+            print(f"  Looking for: {base_lang_code}.lproj/{args.filename}", file=sys.stderr)
+            return 1
+    
+    if not args.quiet:
+        print(f"Base directory: {base_dir}")
+        print(f"Base language file: {base_file}")
+        print(f"Parsing base language file ({base_lang_code})...")
+    
+    # Parse base language file
+    base_strings = parse_strings_file(base_file)
+    base_keys = set(base_strings.keys())
+    
+    if not args.quiet:
+        print(f"Found {len(base_keys)} keys in base language file")
+    
+    if len(base_keys) == 0:
+        print("Warning: No keys found in base language file", file=sys.stderr)
+        return 1
+    
+    # Determine which languages to check
+    if args.languages:
+        languages_to_check = {lang: get_language_name(lang) for lang in args.languages}
+    else:
+        languages_to_check = discover_language_directories(base_dir, base_lang_code)
+    
+    if not languages_to_check:
+        print("Warning: No language directories found to check", file=sys.stderr)
+        return 1
+    
+    if not args.quiet:
+        print(f"Checking {len(languages_to_check)} language(s)...")
     
     # Check each language
     missing_by_lang = {}
     all_missing = set()
     
-    for lang_code, lang_name in LANGUAGES.items():
-        lang_file = base_dir / f'{lang_code}.lproj' / 'Localizable.strings'
+    for lang_code, lang_name in sorted(languages_to_check.items()):
+        lang_file = find_language_file(base_dir, lang_code, args.filename)
+        
+        if not lang_file:
+            if not args.quiet:
+                print(f"\n{lang_name} ({lang_code}): ⚠ File not found")
+            missing_by_lang[lang_code] = base_keys.copy()  # All keys missing
+            all_missing.update(base_keys)
+            continue
+        
         lang_strings = parse_strings_file(lang_file)
         lang_keys = set(lang_strings.keys())
         
-        missing = find_missing_keys(en_keys, lang_keys)
+        missing = find_missing_keys(base_keys, lang_keys)
         missing_by_lang[lang_code] = missing
         all_missing.update(missing)
         
-        if missing:
-            print(f"\n{lang_name} ({lang_code}): {len(missing)} missing keys")
-            for key in sorted(missing):
-                print(f"  - {key}")
-        else:
-            print(f"\n{lang_name} ({lang_code}): ✓ Complete")
+        if not args.quiet:
+            if missing:
+                print(f"\n{lang_name} ({lang_code}): {len(missing)} missing keys")
+                for key in sorted(missing):
+                    print(f"  - {key}")
+            else:
+                print(f"\n{lang_name} ({lang_code}): ✓ Complete")
     
     # Summary
-    print(f"\n{'='*60}")
-    print(f"Summary:")
-    print(f"  Total keys in English: {len(en_keys)}")
-    print(f"  Total missing keys across all languages: {len(all_missing)}")
-    
-    for lang_code, missing in missing_by_lang.items():
-        if missing:
-            print(f"  {LANGUAGES[lang_code]}: {len(missing)} missing")
+    if not args.quiet:
+        print(f"\n{'='*60}")
+        print(f"Summary:")
+        print(f"  Base language ({base_lang_code}): {len(base_keys)} keys")
+        print(f"  Total missing keys across all languages: {len(all_missing)}")
+        
+        for lang_code, missing in sorted(missing_by_lang.items()):
+            if missing:
+                print(f"  {get_language_name(lang_code)}: {len(missing)} missing")
     
     # Generate report
-    report_file = base_dir.parent.parent / 'localization_missing_keys_report.txt'
-    with open(report_file, 'w', encoding='utf-8') as f:
-        f.write("Missing Localization Keys Report\n")
-        f.write("=" * 60 + "\n\n")
-        f.write(f"Total keys in English: {len(en_keys)}\n")
-        f.write(f"Total missing keys: {len(all_missing)}\n\n")
+    if not args.no_report:
+        if args.report:
+            report_file = Path(args.report).resolve()
+        else:
+            report_file = base_dir.parent / 'localization_missing_keys_report.txt'
         
-        for lang_code, missing in missing_by_lang.items():
-            if missing:
-                f.write(f"\n{LANGUAGES[lang_code]} ({lang_code}): {len(missing)} missing\n")
-                f.write("-" * 60 + "\n")
-                for key in sorted(missing):
-                    english_value = en_strings.get(key, '')
-                    f.write(f'\nKey: "{key}"\n')
-                    f.write(f'English: "{english_value}"\n')
-                    f.write(f'Translation needed\n')
+        write_report(report_file, base_strings, missing_by_lang, base_lang_code)
+        
+        if not args.quiet:
+            print(f"\nReport written to: {report_file}")
     
-    print(f"\nReport written to: {report_file}")
-    
-    return missing_by_lang, en_strings
+    # Exit code: 0 if complete, 1 if missing keys
+    return 0 if len(all_missing) == 0 else 1
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
 
 
