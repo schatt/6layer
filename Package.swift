@@ -15,6 +15,11 @@ let package = Package(
         .library(
             name: "SixLayerFramework",
             targets: ["SixLayerFramework"]
+        ),
+        // Test kit for consumers of the framework
+        .library(
+            name: "SixLayerTestKit",
+            targets: ["SixLayerTestKit"]
         )
     ],
         dependencies: [
@@ -105,6 +110,34 @@ let package = Package(
                 "README.md"
             ]
         ),
-        
+
+        // SixLayerTestKit - Testing utilities for consumers of the framework
+        .target(
+            name: "SixLayerTestKit",
+            dependencies: [
+                "SixLayerFramework"
+            ],
+            path: "Framework/TestKit/Sources",
+            exclude: [
+                // Documentation files
+                "README.md"
+            ]
+        ),
+
+        // TestKit unit tests
+        .testTarget(
+            name: "SixLayerTestKitTests",
+            dependencies: [
+                "SixLayerTestKit",
+                "SixLayerFramework",
+                .product(name: "ViewInspector", package: "ViewInspector")
+            ],
+            path: "Framework/TestKit/Tests",
+            exclude: [
+                // Documentation files
+                "README.md"
+            ]
+        ),
+
     ]
 )
