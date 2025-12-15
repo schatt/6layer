@@ -129,9 +129,45 @@ TextField("Email", text: $email)
 #endif
 ```
 
+## 🔄 Framework Upgrades and Migrations
+
+### Migration Tooling (v6.4.0+)
+
+Starting in v6.4.0, the framework provides migration tooling to help detect deprecated API usage and suggest replacements.
+
+#### When Helping with Upgrades
+
+1. **Always suggest running the migration tool** before upgrading:
+   ```bash
+   swift run scripts/migration_tool.swift YourApp/Sources/
+   ```
+
+2. **Review migration reports** and help developers understand:
+   - What APIs are deprecated
+   - What to replace them with
+   - Why the change is needed
+
+3. **Follow the recommended upgrade workflow**:
+   - Run migration tool
+   - Fix flagged issues
+   - Run test suite
+   - Update framework version
+
+4. **Point to documentation**:
+   - [Migration Guide](../Framework/docs/MigrationGuide.md) - Complete migration documentation
+   - [Deprecated APIs Audit](../Framework/docs/DeprecatedAPIsAudit.md) - List of deprecated APIs
+
+#### Common Migrations
+
+- **Accessibility APIs**: `.automaticAccessibilityIdentifiers()` → `.automaticCompliance()`
+- **Navigation APIs**: `platformNavigationContainer_L4()` → `platformNavigation_L4()`
+
+For complete migration details, see the [Migration Guide](../Framework/docs/MigrationGuide.md).
+
 ## 📖 Additional Resources
 
 - **[Framework README](../Framework/README.md)** - Complete framework documentation
+- **[Migration Guide](../Framework/docs/MigrationGuide.md)** - **NEW v6.4.0!** Framework upgrade guide
 - **[Project Status](PROJECT_STATUS.md)** - Current development status
 - **[Release Notes](RELEASES.md)** - Complete release history
 - **[Examples](../Framework/Examples/)** - Code examples and usage patterns

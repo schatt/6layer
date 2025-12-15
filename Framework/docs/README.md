@@ -24,6 +24,7 @@ Welcome to the SixLayer Framework documentation. This directory contains compreh
 - **[README_Layer6_Platform.md](README_Layer6_Platform.md)** - Platform-specific features
 
 ### 🔧 Advanced Topics
+- **[MigrationGuide.md](MigrationGuide.md)** - **NEW v6.4.0!** Framework upgrade and migration guide
 - **[NavigationStackGuide.md](NavigationStackGuide.md)** - **NEW!** Complete 6-layer NavigationStack implementation guide
 - **[HintsSystemExtensibility.md](HintsSystemExtensibility.md)** - Custom hints and extensibility
 - **[HintsDefaultValuesGuide.md](HintsDefaultValuesGuide.md)** - **NEW v4.6.0!** Default values in hints system

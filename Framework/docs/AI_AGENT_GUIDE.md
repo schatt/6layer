@@ -3328,4 +3328,61 @@ let view = platformPresentItemCollection_L1(items: vehicles, hints: hints)
 
 ---
 
+## 🔄 **Framework Upgrades and Migrations**
+
+### **Version-to-Version Upgrade Expectations**
+
+When helping developers upgrade between SixLayer Framework versions, follow this process:
+
+#### **1. Check for Migration Tooling**
+
+The framework provides migration tooling starting in v6.4.0 to help detect deprecated API usage:
+
+```bash
+# Run migration tool before upgrading
+swift run scripts/migration_tool.swift YourApp/Sources/
+```
+
+#### **2. Review Release Notes**
+
+Always check the release notes for the target version to understand:
+- What changed
+- What's deprecated
+- What's new
+- Breaking changes (if any)
+
+#### **3. Recommended Upgrade Workflow**
+
+1. **Run Migration Tool**: Scan codebase for deprecated APIs
+2. **Fix Flagged Issues**: Address all migration issues
+3. **Run Test Suite**: Verify tests pass after changes
+4. **Update Version**: Update Package.swift or Xcode project
+
+#### **4. Common Migrations**
+
+**Accessibility API Changes (v6.0.0+)**:
+- `.automaticAccessibilityIdentifiers()` → `.automaticCompliance()`
+- `.enableGlobalAutomaticAccessibilityIdentifiers()` → `.enableGlobalAutomaticCompliance()`
+
+**Navigation API Changes**:
+- `platformNavigationContainer_L4()` → `platformNavigation_L4()`
+
+#### **5. AI Agent Responsibilities During Upgrades**
+
+- **Always suggest running the migration tool** before upgrading
+- **Point developers to the Migration Guide** for detailed instructions
+- **Help interpret migration reports** and suggest fixes
+- **Verify test suite passes** after migration changes
+- **Check for version-specific guides** in Development/AI_AGENT_vX.X.X.md
+
+#### **6. Migration Tool Usage**
+
+The migration tool can be used:
+- **Command-line**: `swift run scripts/migration_tool.swift [path]`
+- **Programmatically**: `MigrationTool.detectAccessibilityAPIMigrations(in: code)`
+
+For complete migration documentation, see [Migration Guide](MigrationGuide.md).
+
+---
+
 **Remember**: The SixLayer Framework is a **generic foundation** that becomes **business-specific** through the extensible hints system. Help developers understand this architecture and use it correctly.
