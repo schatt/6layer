@@ -130,3 +130,4 @@ echo "Selected text: $SELECTED"
 - Variables are case-sensitive
 - Always quote variables to handle spaces: `"$1"` not `$1`
 
+
