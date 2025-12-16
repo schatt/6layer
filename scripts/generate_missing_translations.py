@@ -712,7 +712,7 @@ Examples:
     parser.add_argument(
         "--mark-as-translated",
         action="store_true",
-        help="Mark translations as 'translated' instead of 'needs_review' (default: False). Use this if you want translations to show as 100% complete in Xcode's String Catalog."
+        help="Mark translations as \\'translated\\' instead of \\'needs_review\\' (default: False). Use this if you want translations to show as 100%% complete in Xcode\\'s String Catalog."
     )
     
     args = parser.parse_args()
@@ -747,3 +747,4 @@ Examples:
 
 if __name__ == "__main__":
     main()
+
