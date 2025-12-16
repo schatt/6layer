@@ -1,6 +1,6 @@
 # SixLayer Framework
 
-[![Version](https://img.shields.io/badge/version-v6.4.1-blue.svg)](https://github.com/schatt/6layer/releases/tag/v6.4.1)
+[![Version](https://img.shields.io/badge/version-v6.4.2-blue.svg)](https://github.com/schatt/6layer/releases/tag/v6.4.2)
 [![Platform](https://img.shields.io/badge/platform-iOS%2016%2B%20%7C%20macOS%2013%2B-lightgrey.svg)](https://github.com/schatt/6layer)
 [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
 
@@ -39,6 +39,19 @@ Layer 1: Semantic Intent → Layer 2: Layout Decision → Layer 3: Strategy Sele
 - **Extensible**: Easy to extend with custom layers and strategies
 - **Comprehensively Tested**: 800+ tests with platform-aware testing and mandatory TDD implementation
 - **DRY Architecture**: Define hints once in files, use everywhere automatically
+
+## 🆕 What's New in v6.4.2
+
+### Platform Bottom-Bar Toolbar Placement Helper
+- **Cross-Platform Abstraction**: Added `platformBottomBarPlacement()` function for bottom-aligned toolbar items
+- **iOS Support**: Returns `.bottomBar` for full-width bottom toolbar items on iOS
+- **macOS Fallback**: Returns `.automatic` on macOS and other platforms
+- **Consistent API**: Follows existing `PlatformToolbarPlacement` pattern for platform-agnostic toolbar configuration
+- **Resolves Issue #125**: Provides official SixLayer-level API for bottom-bar placement
+
+See the [Release Notes](../Development/RELEASE_v6.4.2.md) for complete documentation.
+
+---
 
 ## 🆕 What's New in v6.0.0
 

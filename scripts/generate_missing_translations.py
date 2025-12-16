@@ -100,11 +100,12 @@ class LocalizationTranslator:
     }
     
     def __init__(self, base_dir: Path, provider: str = "google", dry_run: bool = False, 
-                 save_interval: int = 50):
+                 save_interval: int = 50, mark_as_translated: bool = False):
         self.base_dir = Path(base_dir)
         self.provider = provider
         self.dry_run = dry_run
         self.save_interval = save_interval  # Save every N translations
+        self.mark_as_translated = mark_as_translated  # If True, mark translations as "translated" instead of "needs_review"
         self.translator = None
         self.file_format = None  # 'xcstrings' or 'strings'
         self.source_language = "en"
@@ -355,8 +356,10 @@ class LocalizationTranslator:
                     if target_lang not in entry["localizations"]:
                         entry["localizations"][target_lang] = {}
                     
+                    # Set state based on flag: "translated" if mark_as_translated is True, otherwise "needs_review"
+                    translation_state = "translated" if self.mark_as_translated else "needs_review"
                     entry["localizations"][target_lang]["stringUnit"] = {
-                        "state": "needs_review",  # Mark as needing review since it's machine-translated
+                        "state": translation_state,
                         "value": translated
                     }
                     self.stats["translated"] += 1
@@ -665,6 +668,9 @@ Examples:
 
   # Save more frequently (every 25 translations instead of 50)
   python3 generate_missing_translations.py --base-dir Resources --save-interval 25
+
+  # Mark translations as "translated" (shows 100% in Xcode String Catalog)
+  python3 generate_missing_translations.py --base-dir Resources --mark-as-translated
         """
     )
     
@@ -703,6 +709,12 @@ Examples:
         help="Save progress every N translations (default: 50). Lower values save more frequently but may be slower."
     )
     
+    parser.add_argument(
+        "--mark-as-translated",
+        action="store_true",
+        help="Mark translations as \\'translated\\' instead of \\'needs_review\\' (default: False). Use this if you want translations to show as 100%% complete in Xcode\\'s String Catalog."
+    )
+    
     args = parser.parse_args()
     
     # Base directory is required
@@ -717,7 +729,8 @@ Examples:
             base_dir=base_dir,
             provider=args.provider,
             dry_run=args.dry_run,
-            save_interval=args.save_interval
+            save_interval=args.save_interval,
+            mark_as_translated=args.mark_as_translated
         )
         
         translator.translate(target_languages=args.languages)
@@ -734,3 +747,4 @@ Examples:
 
 if __name__ == "__main__":
     main()
+

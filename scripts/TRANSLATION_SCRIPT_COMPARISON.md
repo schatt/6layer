@@ -94,3 +94,6 @@ The improved script now includes:
 6. **Better Stats**: Track translated/skipped/errors per language
 7. **Skip Logic**: Skip empty strings, placeholders, format-only strings
 8. **State Management**: Better handling of translation states
+
+
+

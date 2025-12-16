@@ -222,3 +222,6 @@ public class TaskManagerViewModel: ObservableObject, CloudKitServiceDelegate {
         syncStatus = success ? .complete : .error(NSError(domain: "TaskManager", code: -1))
     }
 }
+
+
+

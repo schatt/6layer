@@ -131,3 +131,6 @@ echo "Selected text: $SELECTED"
 - Always quote variables to handle spaces: `"$1"` not `$1`
 
 
+
+
+
