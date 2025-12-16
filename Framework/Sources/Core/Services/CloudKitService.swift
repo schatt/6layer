@@ -1230,13 +1230,15 @@ public class CloudKitService: ObservableObject {
             try storage.remove(operation)
         }
         
-        // Re-enqueue with reset status
-        for var operation in retryableOperations {
-            operation.status = "pending"
-            operation.retryCount = 0
-            operation.nextRetryAt = nil
-            operation.errorMessage = nil
-            try storage.enqueue(operation)
+        // Re-enqueue with reset status (preserve original timestamp)
+        for operation in retryableOperations {
+            var retriedOperation = operation
+            retriedOperation.status = "pending"
+            retriedOperation.retryCount = 0
+            retriedOperation.nextRetryAt = nil
+            retriedOperation.errorMessage = nil
+            // Preserve original timestamp
+            try storage.enqueue(retriedOperation)
         }
     }
     
