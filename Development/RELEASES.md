@@ -1,12 +1,32 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper** 🎯
+## 📍 **Current Release: v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure** 🎯
 
-**Release Date**: December 15, 2025
+**Release Date**: December 16, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.4.1 - NotificationService Bug Fix
-**Note**: Minor release adding platform bottom-bar toolbar placement helper for cross-platform toolbar item placement. Provides `platformBottomBarPlacement()` function that returns `.bottomBar` on iOS and `.automatic` on macOS/other platforms. Resolves Issue #125.
+**Previous Release**: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper
+**Note**: Minor release fixing Swift 6 compilation errors and actor isolation issues. Includes fixes for CloudKitService, test kit examples, and design system tests. Ensures full Swift 6 compatibility across the framework.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure** (December 16, 2025)
+
+### **What's Fixed:**
+
+#### **🔧 Swift 6 Compilation Fixes**
+- **CloudKitService Fix**: Fixed nil coalescing warning for non-optional `serverChangeToken` property
+- **Test Kit Improvements**: Added CloudKit import and fixed actor isolation issues in test examples
+- **LayerFlowDriver**: Made `@MainActor` to fix data race warnings in test infrastructure
+- **Design System Tests**: Fixed actor isolation issues in DesignSystemUITests
+- **Test Infrastructure**: Updated test setup/teardown to use async patterns for Swift 6 compatibility
+
+#### **🧪 Test Infrastructure Enhancements**
+- **Actor Isolation**: Resolved all Swift 6 concurrency warnings in test files
+- **Test Kit Examples**: Fixed type inference and initialization issues
+- **CloudKit Mock**: Fixed error type references and execute() method type inference
+
+**See [RELEASE_v6.5.0.md](RELEASE_v6.5.0.md) for complete release notes.**
 
 ---
 
