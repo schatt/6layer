@@ -10,7 +10,7 @@ Features:
 - Multiple translation providers (Google, DeepL, Microsoft, MyMemory)
 - Periodic auto-saving (saves progress every N translations, default: 50)
 - Resume capability (skips already-translated strings if restarted)
-- Automatic backups before final save
+- Optional backups before final save (use --backup flag)
 - Progress tracking with tqdm support (optional, graceful fallback)
 - Time estimation before starting
 - Rate limiting to respect API limits
@@ -34,6 +34,9 @@ Examples:
 
     # Dry run to see what would be translated
     python3 generate_missing_translations.py --base-dir Resources --dry-run
+
+    # Create backups before saving
+    python3 generate_missing_translations.py --base-dir Resources --backup
 
 Note: The script automatically saves progress periodically. If interrupted,
 simply restart it and it will resume from where it left off.
@@ -100,12 +103,13 @@ class LocalizationTranslator:
     }
     
     def __init__(self, base_dir: Path, provider: str = "google", dry_run: bool = False, 
-                 save_interval: int = 50, mark_as_translated: bool = False):
+                 save_interval: int = 50, mark_as_translated: bool = False, create_backup: bool = False):
         self.base_dir = Path(base_dir)
         self.provider = provider
         self.dry_run = dry_run
         self.save_interval = save_interval  # Save every N translations
         self.mark_as_translated = mark_as_translated  # If True, mark translations as "translated" instead of "needs_review"
+        self.create_backup = create_backup  # If True, create backups before saving
         self.translator = None
         self.file_format = None  # 'xcstrings' or 'strings'
         self.source_language = "en"
@@ -528,13 +532,14 @@ class LocalizationTranslator:
         
         output = Path(output_path) if output_path else self.catalog_path
         
-        # Only create backup on final save (not during periodic saves)
+        # Only create backup on final save (not during periodic saves) and if flag is set
         if not hasattr(self, '_backup_created'):
             print(f"\nSaving catalog to: {output}")
-            backup_path = output.with_suffix('.xcstrings.backup')
-            if output.exists():
-                shutil.copy2(output, backup_path)
-                print(f"Backup created: {backup_path}")
+            if self.create_backup:
+                backup_path = output.with_suffix('.xcstrings.backup')
+                if output.exists():
+                    shutil.copy2(output, backup_path)
+                    print(f"Backup created: {backup_path}")
             self._backup_created = True
         else:
             print(f"\nFinal save to: {output}")
@@ -600,15 +605,16 @@ class LocalizationTranslator:
                 print(f"Warning: Language file not found: {lang_file}")
                 continue
             
-            # Only create backup on final save (not during periodic saves)
+            # Only create backup on final save (not during periodic saves) and if flag is set
             if not hasattr(self, '_backups_created'):
                 self._backups_created = set()
             
             if lang_code not in self._backups_created:
-                backup_path = lang_file.with_suffix('.strings.backup')
-                if lang_file.exists():
-                    shutil.copy2(lang_file, backup_path)
-                    print(f"Backup created: {backup_path}")
+                if self.create_backup:
+                    backup_path = lang_file.with_suffix('.strings.backup')
+                    if lang_file.exists():
+                        shutil.copy2(lang_file, backup_path)
+                        print(f"Backup created: {backup_path}")
                 self._backups_created.add(lang_code)
             
             # Read existing content to preserve structure
@@ -671,6 +677,9 @@ Examples:
 
   # Mark translations as "translated" (shows 100% in Xcode String Catalog)
   python3 generate_missing_translations.py --base-dir Resources --mark-as-translated
+
+  # Create backups before saving
+  python3 generate_missing_translations.py --base-dir Resources --backup
         """
     )
     
@@ -715,6 +724,12 @@ Examples:
         help="Mark translations as \\'translated\\' instead of \\'needs_review\\' (default: False). Use this if you want translations to show as 100%% complete in Xcode\\'s String Catalog."
     )
     
+    parser.add_argument(
+        "--backup",
+        action="store_true",
+        help="Create backups of localization files before saving (default: False)"
+    )
+    
     args = parser.parse_args()
     
     # Base directory is required
@@ -730,7 +745,8 @@ Examples:
             provider=args.provider,
             dry_run=args.dry_run,
             save_interval=args.save_interval,
-            mark_as_translated=args.mark_as_translated
+            mark_as_translated=args.mark_as_translated,
+            create_backup=args.backup
         )
         
         translator.translate(target_languages=args.languages)
