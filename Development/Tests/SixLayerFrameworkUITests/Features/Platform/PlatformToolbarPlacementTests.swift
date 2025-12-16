@@ -196,6 +196,56 @@ open class PlatformToolbarPlacementTests: BaseTestClass {
         #endif
     }
     
+    // MARK: - platformBottomBarPlacement Tests
+    
+    /// BUSINESS PURPOSE: Verify bottom bar placement returns .bottomBar on iOS
+    /// TESTING SCOPE: Tests that iOS maps platformBottomBarPlacement() to .bottomBar
+    /// METHODOLOGY: Verify placement value matches expected platform behavior
+    @Test @MainActor func testBottomBarPlacement_iOS() {
+        #if os(iOS)
+        // Given: iOS platform
+        // When: Get bottom bar placement from SixLayer helper
+        let placement = platformBottomBarPlacement()
+        
+        // Then: Should return .bottomBar on iOS
+        #expect(placement == .bottomBar, "iOS should return .bottomBar for bottom bar placement")
+        #else
+        #expect(Bool(true), "Test is iOS-specific")
+        #endif
+    }
+    
+    /// BUSINESS PURPOSE: Verify bottom bar placement returns .automatic on macOS
+    /// TESTING SCOPE: Tests that macOS maps platformBottomBarPlacement() to .automatic
+    /// METHODOLOGY: Verify placement value matches expected platform behavior
+    @Test @MainActor func testBottomBarPlacement_macOS() {
+        #if os(macOS)
+        // Given: macOS platform
+        // When: Get bottom bar placement from SixLayer helper
+        let placement = platformBottomBarPlacement()
+        
+        // Then: Should return .automatic on macOS
+        #expect(placement == .automatic, "macOS should return .automatic for bottom bar placement")
+        #else
+        #expect(Bool(true), "Test is macOS-specific")
+        #endif
+    }
+    
+    /// BUSINESS PURPOSE: Verify bottom bar placement returns .automatic on tvOS
+    /// TESTING SCOPE: Tests that tvOS maps platformBottomBarPlacement() to .automatic since .bottomBar is iOS-only
+    /// METHODOLOGY: Verify placement value matches expected platform behavior
+    @Test @MainActor func testBottomBarPlacement_tvOS() {
+        #if os(tvOS)
+        // Given: tvOS platform
+        // When: Get bottom bar placement from SixLayer helper
+        let placement = platformBottomBarPlacement()
+        
+        // Then: Should return .automatic on tvOS
+        #expect(placement == .automatic, "tvOS should return .automatic for bottom bar placement")
+        #else
+        #expect(Bool(true), "Test is tvOS-specific")
+        #endif
+    }
+    
     // MARK: - tvOS Placement Tests
     
     /// BUSINESS PURPOSE: Verify confirmation action placement returns correct value on tvOS

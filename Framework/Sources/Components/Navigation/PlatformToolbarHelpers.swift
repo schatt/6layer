@@ -97,3 +97,30 @@ public extension View {
         #endif
     }
 }
+
+// MARK: - Standalone Platform Toolbar Placement Helpers
+
+/// Cross-platform helper for bottom bar toolbar placement
+///
+/// BUSINESS PURPOSE:
+/// Provides a SixLayer-level abstraction for bottom-aligned toolbar items so that
+/// app code can remain platform-agnostic while still using iOS's `.bottomBar`
+/// placement where available.
+///
+/// PLATFORM BEHAVIOR:
+/// - iOS: Returns `.bottomBar` for full-width bottom toolbar items
+/// - macOS: Returns `.automatic` (no dedicated bottom bar placement)
+/// - tvOS/watchOS/visionOS/other: Returns `.automatic`
+public func platformBottomBarPlacement() -> ToolbarItemPlacement {
+    #if os(iOS)
+    return .bottomBar
+    #elseif os(macOS)
+    return .automatic
+    #elseif os(tvOS)
+    return .automatic
+    #elseif os(watchOS) || os(visionOS)
+    return .automatic
+    #else
+    return .automatic
+    #endif
+}
