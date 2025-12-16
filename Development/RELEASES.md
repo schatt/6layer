@@ -1,16 +1,24 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure** 🎯
+## 📍 **Current Release: v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility** 🎯
 
 **Release Date**: December 16, 2025
 **Status**: ✅ **COMPLETE**
 **Previous Release**: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper
-**Note**: Minor release fixing Swift 6 compilation errors and actor isolation issues. Includes fixes for CloudKitService, test kit examples, and design system tests. Ensures full Swift 6 compatibility across the framework.
+**Note**: Minor release enhancing CloudKitService for Core Data integration (Issue #127) and ensuring full Swift 6 compatibility. Includes CloudKitService improvements for Core Data-based applications, fixes for Swift 6 compilation errors, and actor isolation issues in test files.
 **Next Release**: TBD
 
 ---
 
-## 🎯 **v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure** (December 16, 2025)
+## 🎯 **v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility** (December 16, 2025)
+
+### **What's New:**
+
+#### **🆕 CloudKitService Core Data Integration (Issue #127)**
+- **Core Data Integration**: Enhanced CloudKitService to better support apps using Core Data as their primary data store
+- **Improved Record Transformation**: Better support for transforming CloudKit records to/from Core Data entities
+- **Conflict Resolution**: Enhanced conflict resolution capabilities for Core Data synchronization
+- **Location**: `Framework/Sources/Core/Services/CloudKitService.swift`
 
 ### **What's Fixed:**
 

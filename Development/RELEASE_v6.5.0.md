@@ -1,7 +1,7 @@
 # SixLayer Framework v6.5.0 Release Documentation
 
 **Release Date**: December 16, 2025  
-**Release Type**: Minor (Compilation Fixes & Test Infrastructure)  
+**Release Type**: Minor (CloudKitService Core Data Integration & Swift 6 Compatibility)  
 **Previous Release**: v6.4.2  
 **Status**: ✅ **COMPLETE**
 
@@ -9,11 +9,23 @@
 
 ## 🎯 Release Summary
 
-Minor release focused on fixing Swift 6 compilation errors and improving test infrastructure. This release ensures full Swift 6 compatibility across the framework and resolves all actor isolation issues in test files.
+Minor release enhancing CloudKitService for Core Data integration (Issue #127) and ensuring full Swift 6 compatibility. This release includes CloudKitService improvements for Core Data-based applications, fixes all Swift 6 compilation errors, and resolves actor isolation issues in test files.
 
 ---
 
-## 🔧 Compilation Fixes
+## 🆕 CloudKitService Core Data Integration (Issue #127)
+
+### **Enhanced CloudKitService for Core Data Applications**
+- **Core Data Integration**: Enhanced CloudKitService to better support apps using Core Data as their primary data store
+- **Improved Record Transformation**: Better support for transforming CloudKit records to/from Core Data entities
+- **Conflict Resolution**: Enhanced conflict resolution capabilities for Core Data synchronization
+- **Location**: `Framework/Sources/Core/Services/CloudKitService.swift`
+
+**Resolves Issue #127**
+
+---
+
+## 🔧 Swift 6 Compilation Fixes
 
 ### **CloudKitService Fix**
 - **Fixed Nil Coalescing Warning**: Removed unnecessary nil coalescing operator for non-optional `serverChangeToken` property
@@ -84,6 +96,7 @@ No migration required. This is a maintenance release that fixes compilation issu
 
 ## 🔗 Related Issues
 
+- **Issue #127**: Enhance CloudKitService for Core Data Integration ✅ **RESOLVED**
 - Compilation fixes ensure framework builds cleanly with Swift 6
 - Test infrastructure improvements support future development
 
