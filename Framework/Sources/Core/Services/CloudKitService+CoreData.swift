@@ -42,61 +42,59 @@ extension CloudKitService {
     /// These edge cases can be extended later if needed.
     public func syncWithCoreData(context: NSManagedObjectContext) async throws {
         // Bridge MainActor CloudKitService with potentially non-MainActor context
-        // NSPersistentCloudKitContainer operations should be performed off MainActor
-        try await Task { @MainActor in
-            // Ensure we're on MainActor for CloudKitService access
-            // But perform Core Data operations on the context's appropriate queue
-            
-            // Get the persistent store coordinator to access CloudKit container
-            guard let coordinator = context.persistentStoreCoordinator else {
-                throw CloudKitServiceError.unknown(NSError(
-                    domain: "CloudKitService",
-                    code: -1,
-                    userInfo: [NSLocalizedDescriptionKey: "Context does not have a persistent store coordinator"]
-                ))
-            }
-            
-            // Check if any store descriptions use CloudKit
-            let cloudKitStores = coordinator.persistentStores.filter { store in
-                if let description = coordinator.persistentStoreDescriptions.first(where: { $0.url == store.url }) {
-                    #if os(macOS)
-                    if #available(macOS 10.15, *) {
-                        return description.cloudKitContainerOptions != nil
-                    }
-                    #elseif os(iOS) || os(tvOS) || os(watchOS)
-                    if #available(iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
-                        return description.cloudKitContainerOptions != nil
-                    }
-                    #endif
+        // context.perform will handle queue switching to the context's appropriate queue
+        
+        // Get the persistent store coordinator to access CloudKit container
+        guard let coordinator = context.persistentStoreCoordinator else {
+            throw CloudKitServiceError.unknown(NSError(
+                domain: "CloudKitService",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Context does not have a persistent store coordinator"]
+            ))
+        }
+        
+        // Check if any stores use CloudKit by examining store metadata
+        // CloudKit-enabled stores have specific metadata indicators
+        let hasCloudKitStore = coordinator.persistentStores.contains { store in
+            // Check if store type indicates CloudKit (NSSQLiteStoreType with CloudKit)
+            // or if store metadata indicates CloudKit usage
+            let storeType = store.type
+            if storeType == NSSQLiteStoreType {
+                // SQLite stores can be CloudKit-enabled
+                // Check metadata for CloudKit indicators
+                if let metadata = store.metadata {
+                    // CloudKit-enabled stores have specific metadata
+                    return metadata[NSPersistentHistoryTrackingKey] != nil ||
+                           metadata["NSCloudKitMirroringDelegate"] != nil
                 }
-                return false
             }
-            
-            guard !cloudKitStores.isEmpty else {
-                // No CloudKit stores configured - nothing to sync
-                return
-            }
-            
-            // Apply platform-specific workarounds
-            #if os(iOS)
-            // iPad: Trigger sync more reliably
-            // NSPersistentCloudKitContainer should handle this, but we ensure it's triggered
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                // Force a fetch request to trigger CloudKit sync
-                // This helps with iPad's delayed sync behavior
-                try await triggerCloudKitSyncForContext(context)
-            }
-            #elseif os(macOS)
-            // Mac: Ensure foreground sync is triggered
-            // Mac may sync on launch but not while active - trigger sync when needed
+            return false
+        }
+        
+        guard hasCloudKitStore else {
+            // No CloudKit stores configured - nothing to sync
+            return
+        }
+        
+        // Apply platform-specific workarounds
+        #if os(iOS)
+        // iPad: Trigger sync more reliably
+        // NSPersistentCloudKitContainer should handle this, but we ensure it's triggered
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // Force a fetch request to trigger CloudKit sync
+            // This helps with iPad's delayed sync behavior
             try await triggerCloudKitSyncForContext(context)
-            #endif
-            
-            // Perform the actual sync
-            // NSPersistentCloudKitContainer handles the sync automatically,
-            // but we can trigger it explicitly by performing operations on the context
-            try await performCloudKitSync(context: context)
-        }.value
+        }
+        #elseif os(macOS)
+        // Mac: Ensure foreground sync is triggered
+        // Mac may sync on launch but not while active - trigger sync when needed
+        try await triggerCloudKitSyncForContext(context)
+        #endif
+        
+        // Perform the actual sync
+        // NSPersistentCloudKitContainer handles the sync automatically,
+        // but we can trigger it explicitly by performing operations on the context
+        try await performCloudKitSync(context: context)
     }
     
     // MARK: - Private Helpers
