@@ -54,20 +54,12 @@ extension CloudKitService {
         // Apps should configure CloudKit at ModelContainer creation time using ModelConfiguration.
         // For now, we'll attempt sync - if CloudKit isn't configured, Swift Data will handle it gracefully.
         
-        // Apply platform-specific workarounds
-        #if os(iOS)
-        // iPad: Trigger sync more reliably
-        // Swift Data's CloudKit integration should handle this, but we ensure it's triggered
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            // Force a fetch request to trigger CloudKit sync
-            // This helps with iPad's delayed sync behavior
+        // Apply platform-specific workarounds (iPad/Mac sync quirks)
+        if needsPlatformSyncWorkaround {
+            // Trigger sync more reliably for platforms with known sync delays
+            // This helps with iPad's delayed sync behavior and Mac's foreground sync needs
             try await triggerCloudKitSyncForSwiftDataContext(context)
         }
-        #elseif os(macOS)
-        // Mac: Ensure foreground sync is triggered
-        // Mac may sync on launch but not while active - trigger sync when needed
-        try await triggerCloudKitSyncForSwiftDataContext(context)
-        #endif
         
         // Perform the actual sync
         // Swift Data's CloudKit integration handles the sync automatically,
