@@ -110,3 +110,6 @@ python3 scripts/migrate_strings_to_xcstrings.py --source-dir Framework/Resources
 - They can be kept as backup or removed after verification
 - NSLocalizedString will prefer .xcstrings if both formats are present
 - All 298 keys successfully migrated with all translations preserved
+
+
+

@@ -15,3 +15,6 @@ BASE_DIR="${BASE_DIR:-$RESOURCES_DIR}"
 python3 "$SCRIPT_DIR/generate_missing_translations.py" \
     --base-dir "$BASE_DIR" \
     "$@"
+
+
+
