@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper
+// SixLayerFramework v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

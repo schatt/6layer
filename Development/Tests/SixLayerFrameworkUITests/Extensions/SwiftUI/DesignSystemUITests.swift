@@ -46,6 +46,7 @@ class DesignSystemUITests: XCTestCase {
 
     // MARK: - Theme Switching Tests
 
+    @MainActor
     func testDesignSystemSwitchingUpdatesUI() {
         let visualDesignSystem = VisualDesignSystem.shared
 
@@ -71,6 +72,7 @@ class DesignSystemUITests: XCTestCase {
 
     // MARK: - Component Integration Tests
 
+    @MainActor
     func testComponentUsesDesignTokens() {
         // Test that components automatically use design system tokens
         let designSystem = VisualDesignSystem.shared
@@ -180,6 +182,7 @@ class DesignSystemUITests: XCTestCase {
 
     // MARK: - Theme Change Notification Tests
 
+    @MainActor
     func testThemeChangeCallback() {
         let visualDesignSystem = VisualDesignSystem.shared
 

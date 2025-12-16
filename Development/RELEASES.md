@@ -1,12 +1,40 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper** 🎯
+## 📍 **Current Release: v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility** 🎯
 
-**Release Date**: December 15, 2025
+**Release Date**: December 16, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.4.1 - NotificationService Bug Fix
-**Note**: Minor release adding platform bottom-bar toolbar placement helper for cross-platform toolbar item placement. Provides `platformBottomBarPlacement()` function that returns `.bottomBar` on iOS and `.automatic` on macOS/other platforms. Resolves Issue #125.
+**Previous Release**: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper
+**Note**: Minor release enhancing CloudKitService for Core Data integration (Issue #127) and ensuring full Swift 6 compatibility. Includes CloudKitService improvements for Core Data-based applications, fixes for Swift 6 compilation errors, and actor isolation issues in test files.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility** (December 16, 2025)
+
+### **What's New:**
+
+#### **🆕 CloudKitService Core Data Integration (Issue #127)**
+- **Core Data Integration**: Enhanced CloudKitService to better support apps using Core Data as their primary data store
+- **Improved Record Transformation**: Better support for transforming CloudKit records to/from Core Data entities
+- **Conflict Resolution**: Enhanced conflict resolution capabilities for Core Data synchronization
+- **Location**: `Framework/Sources/Core/Services/CloudKitService.swift`
+
+### **What's Fixed:**
+
+#### **🔧 Swift 6 Compilation Fixes**
+- **CloudKitService Fix**: Fixed nil coalescing warning for non-optional `serverChangeToken` property
+- **Test Kit Improvements**: Added CloudKit import and fixed actor isolation issues in test examples
+- **LayerFlowDriver**: Made `@MainActor` to fix data race warnings in test infrastructure
+- **Design System Tests**: Fixed actor isolation issues in DesignSystemUITests
+- **Test Infrastructure**: Updated test setup/teardown to use async patterns for Swift 6 compatibility
+
+#### **🧪 Test Infrastructure Enhancements**
+- **Actor Isolation**: Resolved all Swift 6 concurrency warnings in test files
+- **Test Kit Examples**: Fixed type inference and initialization issues
+- **CloudKit Mock**: Fixed error type references and execute() method type inference
+
+**See [RELEASE_v6.5.0.md](RELEASE_v6.5.0.md) for complete release notes.**
 
 ---
 

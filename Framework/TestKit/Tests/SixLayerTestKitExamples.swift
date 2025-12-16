@@ -7,6 +7,7 @@
 
 import XCTest
 import SwiftUI
+import CloudKit
 @testable import SixLayerFramework
 @testable import SixLayerTestKit
 
@@ -14,16 +15,14 @@ class SixLayerTestKitExamples: XCTestCase {
 
     var testKit: SixLayerTestKit!
 
-    @MainActor
-    override func setUp() {
-        super.setUp()
-        testKit = SixLayerTestKit()
+    override func setUp() async throws {
+        try await super.setUp()
+        testKit = await SixLayerTestKit()
     }
     
-    @MainActor
-    override func tearDown() {
+    override func tearDown() async throws {
         testKit = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Service Mocking Examples
@@ -41,7 +40,7 @@ class SixLayerTestKitExamples: XCTestCase {
         // Simulate save operation (in real code, this would be through CloudKitService)
         Task {
             do {
-                _ = try await mock.execute(.save(record))
+                _ = try await mock.execute(.save(record)) as CKRecord
             } catch {
                 XCTFail("Save should succeed")
             }
@@ -261,23 +260,22 @@ class SixLayerTestKitExamples: XCTestCase {
     @MainActor
     func testLayerFlowDriver() async throws {
         // Given: Layer flow driver and configuration
-        let flowDriver = testKit.layerFlowDriver
-        let input = LayerFlowDriver.LayerInput(
-            buttonCount: 2,
-            textFieldCount: 1,
-            toggleCount: 1,
-            sliderCount: 1
-        )
-        let config = LayerFlowDriver.LayerConfiguration(
-            buttonCount: 2,
-            textFieldCount: 1,
-            toggleCount: 1,
-            sliderCount: 1,
-            listItemCount: 3,
-            cardCount: 2
-        )
+        var input = LayerFlowDriver.LayerInput()
+        input.buttonCount = 2
+        input.textFieldCount = 1
+        input.toggleCount = 1
+        input.sliderCount = 1
+        
+        var config = LayerFlowDriver.LayerConfiguration()
+        config.buttonCount = 2
+        config.textFieldCount = 1
+        config.toggleCount = 1
+        config.sliderCount = 1
+        config.listItemCount = 3
+        config.cardCount = 2
 
         // When: We simulate a complete layer flow
+        let flowDriver = testKit.layerFlowDriver
         let result = try await flowDriver.simulateLayerFlow(input: input, configuration: config)
 
         // Then: Verify all layers were executed
@@ -361,22 +359,22 @@ class SixLayerTestKitExamples: XCTestCase {
     func testErrorHandlingWithMocks() {
         // Given: Service mocks configured for failure
         let cloudKitMock = testKit.serviceMocks.cloudKitService
-        cloudKitMock.configureFailureResponse(error: CloudKitServiceError.networkError)
+        cloudKitMock.configureFailureResponse(error: CloudKitServiceError.networkUnavailable)
 
         let notificationMock = testKit.serviceMocks.notificationService
         notificationMock.configureFailureResponse()
 
         // When: Operations are attempted
-        let cloudKitResult = Task {
+        let cloudKitResult = Task<CKRecord?, Error> {
             do {
                 let record = CKRecord(recordType: "Test", recordID: CKRecord.ID(recordName: "test"))
-                return try await cloudKitMock.execute(.save(record))
+                return try await cloudKitMock.execute(.save(record)) as CKRecord
             } catch {
-                return error
+                throw error
             }
         }
 
-        let notificationResult = Task {
+        let notificationResult = Task<Void, Error> {
             do {
                 try await notificationMock.scheduleLocalNotification(
                     identifier: "test",
@@ -384,9 +382,8 @@ class SixLayerTestKitExamples: XCTestCase {
                     body: "Test",
                     date: Date().addingTimeInterval(60)
                 )
-                return nil
             } catch {
-                return error
+                throw error
             }
         }
 
