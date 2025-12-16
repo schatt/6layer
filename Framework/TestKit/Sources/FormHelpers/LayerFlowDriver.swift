@@ -10,6 +10,7 @@ import SwiftUI
 import SixLayerFramework
 
 /// Driver for testing Layer 1→6 flows deterministically
+@MainActor
 public class LayerFlowDriver {
 
     // MARK: - Layer Flow Simulation

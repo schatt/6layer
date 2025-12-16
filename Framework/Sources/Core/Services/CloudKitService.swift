@@ -17,6 +17,36 @@ import UIKit
 import AppKit
 #endif
 
+// MARK: - CloudKit Batch Operation Results
+
+/// Result of a batch save operation with detailed success/failure information
+public struct SaveResult {
+    /// Records that were successfully saved
+    public let successful: [CKRecord]
+    
+    /// Records that failed to save, with their IDs and errors
+    public let failed: [(CKRecord.ID, Error)]
+    
+    /// Conflicts detected (local record, remote record)
+    public let conflicts: [(CKRecord, CKRecord)]
+    
+    /// Total number of records processed
+    public var totalCount: Int {
+        successful.count + failed.count + conflicts.count
+    }
+    
+    /// Whether all records succeeded
+    public var allSucceeded: Bool {
+        failed.isEmpty && conflicts.isEmpty
+    }
+    
+    public init(successful: [CKRecord] = [], failed: [(CKRecord.ID, Error)] = [], conflicts: [(CKRecord, CKRecord)] = []) {
+        self.successful = successful
+        self.failed = failed
+        self.conflicts = conflicts
+    }
+}
+
 // MARK: - CloudKit Service Error Types
 
 /// Errors that can occur during CloudKit service operations
@@ -69,6 +99,60 @@ public enum CloudKitServiceError: LocalizedError {
             }
             return String(format: format, error.localizedDescription)
         }
+    }
+}
+
+// MARK: - CloudKit Sync Progress
+
+/// Detailed progress information for sync operations
+public struct SyncProgress {
+    /// Overall progress (0.0 to 1.0)
+    public let overallProgress: Double
+    
+    /// Current entity/record type being processed
+    public let currentEntity: String?
+    
+    /// Current item number being processed
+    public let currentItem: Int
+    
+    /// Total number of items to process
+    public let totalItems: Int
+    
+    /// Items processed per second (if available)
+    public let itemsPerSecond: Double?
+    
+    /// Estimated time remaining in seconds (if available)
+    public let estimatedTimeRemaining: TimeInterval?
+    
+    /// Number of items uploaded
+    public let itemsUploaded: Int
+    
+    /// Number of items downloaded
+    public let itemsDownloaded: Int
+    
+    /// Number of conflicts found
+    public let conflictsFound: Int
+    
+    public init(
+        overallProgress: Double,
+        currentEntity: String? = nil,
+        currentItem: Int = 0,
+        totalItems: Int = 0,
+        itemsPerSecond: Double? = nil,
+        estimatedTimeRemaining: TimeInterval? = nil,
+        itemsUploaded: Int = 0,
+        itemsDownloaded: Int = 0,
+        conflictsFound: Int = 0
+    ) {
+        self.overallProgress = overallProgress
+        self.currentEntity = currentEntity
+        self.currentItem = currentItem
+        self.totalItems = totalItems
+        self.itemsPerSecond = itemsPerSecond
+        self.estimatedTimeRemaining = estimatedTimeRemaining
+        self.itemsUploaded = itemsUploaded
+        self.itemsDownloaded = itemsDownloaded
+        self.conflictsFound = conflictsFound
     }
 }
 
@@ -156,6 +240,7 @@ public class CloudKitService: ObservableObject {
     
     @Published public var syncStatus: CloudKitSyncStatus = .idle
     @Published public var syncProgress: Double = 0.0
+    @Published public var detailedSyncProgress: SyncProgress?
     @Published public var accountStatus: CKAccountStatus = .couldNotDetermine
     @Published public var lastError: Error?
     
@@ -422,7 +507,6 @@ public class CloudKitService: ObservableObject {
             if error.code == .networkUnavailable || error.code == .networkFailure {
                 try await queueOperation(type: "delete", recordID: recordID)
             }
-            throw mapCKError(error)
             if delegate?.handleError(error) == true {
                 throw CloudKitServiceError.unknown(error)
             }
@@ -479,8 +563,9 @@ public class CloudKitService: ObservableObject {
     
     // MARK: - Batch Operations
     
-    /// Save multiple records (more efficient than individual saves)
-    public func save(_ records: [CKRecord]) async throws -> [CKRecord] {
+    /// Save multiple records with detailed result information
+    /// Returns partial success - processes all records even if some fail
+    public func saveWithResult(_ records: [CKRecord]) async throws -> SaveResult {
         // Platform check for write operations
         #if os(tvOS) || os(watchOS)
         throw CloudKitServiceError.writeNotSupportedOnPlatform
@@ -488,10 +573,12 @@ public class CloudKitService: ObservableObject {
         
         // Validate and transform all records
         var transformedRecords: [CKRecord] = []
+        var recordMapping: [CKRecord.ID: CKRecord] = [:]
         for record in records {
             try delegate?.validateRecord(record)
             let transformed = delegate?.transformRecord(record) ?? record
             transformedRecords.append(transformed)
+            recordMapping[transformed.recordID] = record // Map back to original
         }
         
         guard let ckContainer = container else {
@@ -500,29 +587,55 @@ public class CloudKitService: ObservableObject {
         
         do {
             let (results, _) = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).modifyRecords(saving: transformedRecords, deleting: [])
-            var savedRecords: [CKRecord] = []
+            var successful: [CKRecord] = []
+            var failed: [(CKRecord.ID, Error)] = []
+            var conflicts: [(CKRecord, CKRecord)] = []
             
-            for (_, result) in results {
+            for (recordID, result) in results {
                 switch result {
                 case .success(let record):
-                    savedRecords.append(record)
+                    successful.append(record)
                 case .failure(let error):
-                    // Handle individual failures
-                    if let ckError = error as? CKError, ckError.code == .serverRecordChanged {
-                        // Conflict - delegate should handle
-                        if delegate?.handleError(error) != true {
-                            throw mapCKError(ckError)
+                    if let ckError = error as? CKError {
+                        if ckError.code == .serverRecordChanged {
+                            // Conflict detected
+                            if let serverRecord = ckError.serverRecord,
+                               let localRecord = recordMapping[recordID] {
+                                conflicts.append((localRecord, serverRecord))
+                                
+                                // Try to resolve via delegate
+                                if let resolved = delegate?.resolveConflict(local: localRecord, remote: serverRecord) {
+                                    // Retry with resolved record
+                                    do {
+                                        let saved = try await (usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase).save(resolved)
+                                        successful.append(saved)
+                                    } catch {
+                                        // Retry failed, add to conflicts
+                                        conflicts.append((localRecord, serverRecord))
+                                    }
+                                }
+                            } else {
+                                // Conflict but can't resolve - add to failed
+                                failed.append((recordID, ckError))
+                            }
+                        } else {
+                            // Other error
+                            if delegate?.handleError(error) != true {
+                                failed.append((recordID, error))
+                            }
                         }
                     } else {
+                        // Non-CKError
                         if delegate?.handleError(error) != true {
-                            throw mapCKError(error as? CKError ?? CKError(.unknownItem))
+                            failed.append((recordID, error))
                         }
                     }
                 }
             }
             
-            return savedRecords
+            return SaveResult(successful: successful, failed: failed, conflicts: conflicts)
         } catch let error as CKError {
+            // Top-level error from modifyRecords itself
             if delegate?.handleError(error) == true {
                 throw CloudKitServiceError.unknown(error)
             }
@@ -533,6 +646,23 @@ public class CloudKitService: ObservableObject {
             }
             throw error
         }
+    }
+    
+    /// Save multiple records (more efficient than individual saves)
+    /// Returns only successfully saved records - does not throw on partial failure
+    public func save(_ records: [CKRecord]) async throws -> [CKRecord] {
+        let result = try await saveWithResult(records)
+        
+        // If there are failures or conflicts and delegate doesn't handle them, we might want to log
+        // But we don't throw - we return partial success
+        if !result.failed.isEmpty || !result.conflicts.isEmpty {
+            // Log failures but don't throw
+            for (_, error) in result.failed {
+                _ = delegate?.handleError(error)
+            }
+        }
+        
+        return result.successful
     }
     
     /// Delete multiple records
@@ -564,7 +694,7 @@ public class CloudKitService: ObservableObject {
     // MARK: - Sync Operations
     
     /// Perform manual sync
-    /// Uploads queued operations and fetches remote changes
+    /// Uploads queued operations and fetches remote changes using change tokens
     public func sync() async throws {
         guard !isReadOnlyPlatform else {
             throw CloudKitServiceError.writeNotSupportedOnPlatform
@@ -574,40 +704,137 @@ public class CloudKitService: ObservableObject {
             throw CloudKitServiceError.networkUnavailable
         }
         
+        guard let ckContainer = container else {
+            throw CloudKitServiceError.accountUnavailable
+        }
+        
         await MainActor.run {
             syncStatus = .syncing
             syncProgress = 0.0
+            detailedSyncProgress = SyncProgress(overallProgress: 0.0)
         }
         
         var recordsChanged = 0
+        var itemsUploaded = 0
+        var itemsDownloaded = 0
         
         do {
             // Step 1: Flush offline queue (upload local changes)
             await MainActor.run {
                 syncProgress = 0.1
+                detailedSyncProgress = SyncProgress(
+                    overallProgress: 0.1,
+                    itemsUploaded: itemsUploaded
+                )
             }
             
+            let queueCountBefore = queuedOperationCount
             try await flushOfflineQueue()
+            itemsUploaded = queueCountBefore - queuedOperationCount
             
             // Step 2: Fetch remote changes using change token
             await MainActor.run {
                 syncProgress = 0.5
+                detailedSyncProgress = SyncProgress(
+                    overallProgress: 0.5,
+                    itemsUploaded: itemsUploaded,
+                    itemsDownloaded: itemsDownloaded
+                )
             }
             
-            // Fetch changes since last sync token
-            let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
-            configuration.previousServerChangeToken = lastSyncToken
+            // Use default zone for private database
+            let database = usePublicDatabase ? ckContainer.publicCloudDatabase : ckContainer.privateCloudDatabase
+            let defaultZoneID = CKRecordZone.default().zoneID
             
-            // Note: Full implementation would use CKFetchRecordZoneChangesOperation
-            // For now, we'll update the token after successful sync
-            // Apps can extend this with custom change tracking
+            // Fetch changes since last sync token using operation-based API
+            // Note: CloudKit's change token API is operation-based, so we wrap it in async/await
+            let newChangeToken = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<CKServerChangeToken?, Error>) in
+                let configuration = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
+                configuration.previousServerChangeToken = lastSyncToken
+                
+                var downloadedRecords: [CKRecord] = []
+                var finalToken: CKServerChangeToken?
+                var hasResumed = false
+                
+                let operation = CKFetchRecordZoneChangesOperation()
+                operation.recordZoneIDs = [defaultZoneID]
+                operation.configurationsByRecordZoneID = [defaultZoneID: configuration]
+                
+                operation.recordWasChangedBlock = { [weak self] (recordID: CKRecord.ID, result: Result<CKRecord, Error>) in
+                    switch result {
+                    case .success(let record):
+                        downloadedRecords.append(record)
+                        itemsDownloaded += 1
+                        // Transform record via delegate
+                        _ = self?.delegate?.transformRecord(record)
+                    case .failure(let error):
+                        // Log error but continue
+                        _ = self?.delegate?.handleError(error)
+                    }
+                }
+                
+                operation.recordWithIDWasDeletedBlock = { recordID, recordType in
+                    // Handle deleted records
+                    recordsChanged += 1
+                }
+                
+                operation.recordZoneChangeTokensUpdatedBlock = { zoneID, token, data in
+                    finalToken = token
+                }
+                
+                operation.recordZoneFetchResultBlock = { zoneID, result in
+                    guard !hasResumed else { return } // Prevent double resume
+                    hasResumed = true
+                    
+                    switch result {
+                    case .success(let zoneResult):
+                        // Use token from zone result
+                        finalToken = zoneResult.serverChangeToken
+                        // Process all downloaded records
+                        for _ in downloadedRecords {
+                            recordsChanged += 1
+                        }
+                        continuation.resume(returning: finalToken)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+                
+                operation.fetchRecordZoneChangesResultBlock = { result in
+                    guard !hasResumed else { return } // Prevent double resume
+                    hasResumed = true
+                    
+                    switch result {
+                    case .success:
+                        // Operation completed successfully
+                        // Process all downloaded records
+                        for _ in downloadedRecords {
+                            recordsChanged += 1
+                        }
+                        // Use finalToken if we got one, otherwise nil (no changes)
+                        continuation.resume(returning: finalToken)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+                
+                database.add(operation)
+            }
             
-            // Update sync token (simplified - full implementation would use actual token from operation)
-            // This is a placeholder - apps should implement proper change token tracking
+            // Update change token if we got a new one
+            if let token = newChangeToken {
+                saveChangeToken(token)
+            }
             
             // Step 3: Complete sync
             await MainActor.run {
                 syncProgress = 1.0
+                detailedSyncProgress = SyncProgress(
+                    overallProgress: 1.0,
+                    itemsUploaded: itemsUploaded,
+                    itemsDownloaded: itemsDownloaded,
+                    conflictsFound: 0
+                )
                 syncStatus = .complete
                 delegate?.syncDidComplete(success: true, recordsChanged: recordsChanged)
             }
@@ -615,6 +842,7 @@ public class CloudKitService: ObservableObject {
             await MainActor.run {
                 syncStatus = .error(error)
                 syncProgress = 0.0
+                detailedSyncProgress = nil
                 lastError = error
                 delegate?.syncDidComplete(success: false, recordsChanged: recordsChanged)
             }
@@ -730,8 +958,7 @@ public class CloudKitService: ObservableObject {
                     // Since CKRecord doesn't encode easily, we'll need delegate help
                     // For now, we'll skip saves that require record reconstruction
                     // Apps should handle this via delegate or custom queue storage
-                    if let recordIDString = operation.recordID,
-                       let recordType = operation.recordType {
+                    if let recordIDString = operation.recordID {
                         // Try to fetch the record first, then save
                         // This is a simplified approach - apps may need custom handling
                         let recordID = CKRecord.ID(recordName: recordIDString)
@@ -870,6 +1097,23 @@ public class CloudKitService: ObservableObject {
     }
     
     // MARK: - Sync Token Management
+    
+    /// Get the last change token used for syncing
+    public func getLastChangeToken() -> CKServerChangeToken? {
+        return lastSyncToken
+    }
+    
+    /// Save a change token for future incremental syncs
+    public func saveChangeToken(_ token: CKServerChangeToken) {
+        lastSyncToken = token
+        saveSyncToken(token)
+    }
+    
+    /// Reset the change token to force a full sync on next sync operation
+    public func resetChangeToken() {
+        lastSyncToken = nil
+        UserDefaults.standard.removeObject(forKey: syncTokenKey)
+    }
     
     /// Load last sync token from UserDefaults
     private func loadSyncToken() -> CKServerChangeToken? {

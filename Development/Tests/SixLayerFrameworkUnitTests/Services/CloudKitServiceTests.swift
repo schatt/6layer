@@ -448,6 +448,77 @@ final class CloudKitServiceTests {
         // Then: Queue should be empty
         #expect(service.queuedOperationCount == 0)
     }
+    
+    // MARK: - Batch Operations Result Handling Tests
+    
+    @Test func testSaveResultStructure() async {
+        // Given: A SaveResult struct
+        let successful = [CKRecord(recordType: "Test")]
+        let failed: [(CKRecord.ID, Error)] = [(CKRecord.ID(recordName: "test"), NSError(domain: "test", code: 1))]
+        let conflicts: [(CKRecord, CKRecord)] = []
+        
+        // When: Creating SaveResult
+        let result = SaveResult(successful: successful, failed: failed, conflicts: conflicts)
+        
+        // Then: Should have correct properties
+        #expect(result.successful.count == 1)
+        #expect(result.failed.count == 1)
+        #expect(result.conflicts.isEmpty)
+        #expect(result.totalCount == 2)
+        #expect(result.allSucceeded == false)
+    }
+    
+    @Test func testSaveResultAllSucceeded() async {
+        // Given: A SaveResult with all successful
+        let successful = [CKRecord(recordType: "Test1"), CKRecord(recordType: "Test2")]
+        let result = SaveResult(successful: successful, failed: [], conflicts: [])
+        
+        // Then: Should indicate all succeeded
+        #expect(result.allSucceeded == true)
+        #expect(result.totalCount == 2)
+    }
+    
+    // MARK: - Change Token Management Tests
+    
+    @Test func testChangeTokenStorage() async {
+        // Given: A service
+        let delegate = MockCloudKitDelegate()
+        let service = CloudKitService(delegate: delegate)
+        
+        // When: Getting last change token (initially nil)
+        let initialToken = service.getLastChangeToken()
+        
+        // Then: Should be nil initially
+        #expect(initialToken == nil)
+        
+        // Note: Testing actual token storage requires CloudKit operations
+        // This test verifies the API exists
+    }
+    
+    @Test func testResetChangeToken() async {
+        // Given: A service
+        let delegate = MockCloudKitDelegate()
+        let service = CloudKitService(delegate: delegate)
+        
+        // When: Resetting change token
+        service.resetChangeToken()
+        
+        // Then: Token should be nil
+        #expect(service.getLastChangeToken() == nil)
+    }
+    
+    // MARK: - Enhanced Progress Tracking Tests
+    
+    @Test func testSyncProgressStruct() async {
+        // Given: A service
+        let delegate = MockCloudKitDelegate()
+        let service = CloudKitService(delegate: delegate)
+        
+        // When: Starting sync (in test environment, this may not complete)
+        // We're testing that the progress tracking structure exists
+        #expect(service.syncProgress >= 0.0)
+        #expect(service.syncProgress <= 1.0)
+    }
 }
 
 
