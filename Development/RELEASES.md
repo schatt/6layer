@@ -1,12 +1,27 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.4.1 - NotificationService Bug Fix** 🎯
+## 📍 **Current Release: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper** 🎯
 
 **Release Date**: December 15, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.4.0 - Design System Bridge & Developer Experience
-**Note**: Patch release fixing compilation error in NotificationService.swift where optional Bool was not properly unwrapped. Fixes Issue #124.
+**Previous Release**: v6.4.1 - NotificationService Bug Fix
+**Note**: Minor release adding platform bottom-bar toolbar placement helper for cross-platform toolbar item placement. Provides `platformBottomBarPlacement()` function that returns `.bottomBar` on iOS and `.automatic` on macOS/other platforms. Resolves Issue #125.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper** (December 15, 2025)
+
+### **What's New:**
+
+#### **🔧 Platform Bottom-Bar Toolbar Placement Helper (Issue #125)**
+- **Cross-Platform Abstraction**: Added `platformBottomBarPlacement()` function for bottom-aligned toolbar items
+- **iOS Support**: Returns `.bottomBar` for full-width bottom toolbar items on iOS
+- **macOS Fallback**: Returns `.automatic` on macOS and other platforms (no dedicated bottom bar placement)
+- **Consistent API**: Follows existing `PlatformToolbarPlacement` pattern for platform-agnostic toolbar configuration
+- **Location**: `Framework/Sources/Components/Navigation/PlatformToolbarHelpers.swift`
+
+**See [RELEASE_v6.4.2.md](RELEASE_v6.4.2.md) for complete release notes.**
 
 ---
 

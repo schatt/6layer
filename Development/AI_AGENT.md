@@ -11,6 +11,7 @@ This document provides guidance for AI assistants working with the SixLayer Fram
 ## 📚 Version-Specific Guides
 
 ### Latest Versions (Recommended)
+- **[AI_AGENT_v6.4.2.md](AI_AGENT_v6.4.2.md)** - Platform Bottom-Bar Toolbar Placement Helper (minor release - use v6.4.0 guide)
 - **[AI_AGENT_v6.4.1.md](AI_AGENT_v6.4.1.md)** - NotificationService Bug Fix (patch release - use v6.4.0 guide)
 - **[AI_AGENT_v6.4.0.md](AI_AGENT_v6.4.0.md)** - Design System Bridge
 - **[AI_AGENT_v6.3.0.md](AI_AGENT_v6.3.0.md)** - Services & localization
