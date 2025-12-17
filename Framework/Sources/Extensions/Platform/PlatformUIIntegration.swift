@@ -50,7 +50,7 @@ public struct PlatformUIIntegration {
                 }
             }
             .navigationTitle(title)
-            .platformNavigationTitleDisplayMode(adaptiveTitleDisplayMode)
+            .platformNavigationTitleDisplayMode_L4(adaptiveTitleDisplayMode)
         }
         
         private var shouldShowHeader: Bool {

@@ -120,7 +120,7 @@ public struct AppleHIGComplianceExamples {
             }
             .padding()
             .navigationTitle("Settings")
-            .platformNavigationTitleDisplayMode(.large)
+            .platformNavigationTitleDisplayMode_L4(.large)
         }
         .appleHIGCompliant()
     }

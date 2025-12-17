@@ -488,7 +488,7 @@ private struct DetailView: View {
         }
         .padding()
         .navigationTitle(item)
-        .platformNavigationTitleDisplayMode(.inline)
+        .platformNavigationTitleDisplayMode_L4(.inline)
         .automaticCompliance(named: "DetailView")
     }
 }

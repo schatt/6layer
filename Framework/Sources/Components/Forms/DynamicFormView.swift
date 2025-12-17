@@ -183,7 +183,7 @@ public struct DynamicFormView: View {
                 // Stop auto-save timer
                 formState.stopAutoSave()
             }
-            .onChange(of: formState.isDirty) { _ in
+            .onChange(of: formState.isDirty) {
                 // Trigger debounced save when form becomes dirty (Issue #80)
                 if formState.isDirty {
                     formState.triggerDebouncedSave()
