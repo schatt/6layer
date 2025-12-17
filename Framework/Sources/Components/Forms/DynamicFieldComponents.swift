@@ -373,7 +373,7 @@ public struct DynamicTextField: View {
     @ViewBuilder
     private var singleLineTextFieldView: some View {
         let i18n = InternationalizationService()
-        return TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"), text: field.textBinding(formState: formState))
+        TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"), text: field.textBinding(formState: formState))
             .textFieldStyle(.roundedBorder)
             .focused($isFocused)
             .onSubmit {
@@ -418,7 +418,7 @@ public struct DynamicTextField: View {
     @ViewBuilder
     private var multiLineTextFieldWithAxis: some View {
         let i18n = InternationalizationService()
-        return TextField(
+        TextField(
             field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterText"),
             text: field.textBinding(formState: formState),
             axis: .vertical
@@ -627,15 +627,17 @@ public struct DynamicURLField: View {
     @ViewBuilder
     private var editableURLView: some View {
         let i18n = InternationalizationService()
-        return TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterURL"), text: field.textBinding(formState: formState))
-            .textFieldStyle(.roundedBorder)
-            #if os(iOS)
-            .keyboardType(UIKeyboardType.URL)
-            #endif
-            .automaticCompliance()
-        
-        // Character counter for fields with maxLength validation
-        field.characterCounterView(formState: formState)
+        VStack(alignment: .leading, spacing: 4) {
+            TextField(field.placeholder ?? i18n.localizedString(for: "SixLayerFramework.form.placeholder.enterURL"), text: field.textBinding(formState: formState))
+                .textFieldStyle(.roundedBorder)
+                #if os(iOS)
+                .keyboardType(UIKeyboardType.URL)
+                #endif
+                .automaticCompliance()
+            
+            // Character counter for fields with maxLength validation
+            field.characterCounterView(formState: formState)
+        }
     }
 }
 
