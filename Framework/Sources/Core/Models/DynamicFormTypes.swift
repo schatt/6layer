@@ -888,6 +888,7 @@ public struct FormProgress {
     }
 }
 
+@MainActor
 public class DynamicFormState: ObservableObject {
     @Published public var fieldValues: [String: Any] = [:]
     @Published public var fieldErrors: [String: [String]] = [:]
@@ -904,10 +905,10 @@ public class DynamicFormState: ObservableObject {
     private let storage: FormStateStorage
     
     /// Auto-save timer for periodic saves
-    private var autoSaveTimer: Timer?
+    nonisolated(unsafe) private var autoSaveTimer: Timer?
     
     /// Debounce timer for change-based saves
-    private var debounceTimer: Timer?
+    nonisolated(unsafe) private var debounceTimer: Timer?
     
     /// Auto-save configuration
     public var autoSaveEnabled: Bool = true
@@ -1373,7 +1374,9 @@ public class DynamicFormState: ObservableObject {
         
         let saveInterval = interval ?? autoSaveInterval
         autoSaveTimer = Timer.scheduledTimer(withTimeInterval: saveInterval, repeats: true) { [weak self] _ in
-            self?.saveDraft()
+            Task { @MainActor in
+                self?.saveDraft()
+            }
         }
     }
     
@@ -1439,7 +1442,9 @@ public class DynamicFormState: ObservableObject {
         
         // Start new debounce timer
         debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceDelay, repeats: false) { [weak self] _ in
-            self?.saveDraft()
+            Task { @MainActor in
+                self?.saveDraft()
+            }
         }
     }
     
@@ -1537,7 +1542,8 @@ public class DynamicFormState: ObservableObject {
     }
     
     deinit {
-        stopAutoSave()
+        // Invalidate timers directly in deinit (safe to do from any context)
+        autoSaveTimer?.invalidate()
         debounceTimer?.invalidate()
     }
 }
