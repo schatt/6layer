@@ -305,7 +305,7 @@ public struct SixLayerDesignSystem: DesignSystem {
     }
 
     private static func createColorsForTheme(_ theme: Theme, platform: PlatformStyle) -> DesignTokens.Colors {
-        let isDark = theme == .dark
+        let _ = theme == .dark // Reserved for future dark mode enhancements
 
         // Use platform-appropriate base colors
         let primary = Color.platformTint
@@ -532,7 +532,7 @@ public struct HighContrastDesignSystem: DesignSystem {
     }
 
     private static func createHighContrastTypographyTokens() -> [Theme: DesignTokens.Typography] {
-        let platform = Self.detectPlatformStyle()
+        let _ = Self.detectPlatformStyle() // Reserved for future platform-specific typography
         let accessibility = AccessibilitySettings()
         let scaleFactor = accessibility.typographyScaleFactor
 
