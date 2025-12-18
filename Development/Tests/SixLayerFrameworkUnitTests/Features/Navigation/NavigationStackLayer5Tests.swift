@@ -47,7 +47,7 @@ open class NavigationStackLayer5Tests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationStackOptimizations_L5_WorksWithNavigationStack() {
         // Given: A view wrapped in navigation
         let content = Text("Test Content")
-            .platformNavigation {
+            .platformNavigation_L4 {
                 Text("Content")
             }
         
@@ -77,7 +77,7 @@ open class NavigationStackLayer5Tests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationStackOptimizations_L5_MemoryOptimization() {
         // Given: A view with navigation
         let content = Text("Test Content")
-            .platformNavigation {
+            .platformNavigation_L4 {
                 Text("Content")
             }
         
@@ -92,7 +92,7 @@ open class NavigationStackLayer5Tests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationStackOptimizations_L5_StatePreservation() {
         // Given: A view with navigation state
         let content = Text("Test Content")
-            .platformNavigation {
+            .platformNavigation_L4 {
                 Text("Content")
             }
         
@@ -107,7 +107,7 @@ open class NavigationStackLayer5Tests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationStackOptimizations_L5_DeepNavigationStacks() {
         // Given: A view that might have deep navigation
         let content = Text("Test Content")
-            .platformNavigation {
+            .platformNavigation_L4 {
                 Text("Content")
             }
         

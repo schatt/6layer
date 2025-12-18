@@ -100,7 +100,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyItems: [MenuItem] = []
-            let view = platformPresentItemCollection_L1(
+            _ = platformPresentItemCollection_L1(
                 items: emptyItems,
                 hints: hints
             )
@@ -130,7 +130,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyItems: [MenuItem] = []
-            let view = platformPresentItemCollection_L1(
+            _ = platformPresentItemCollection_L1(
                 items: emptyItems,
                 hints: hints
             )
@@ -150,7 +150,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             context: .dashboard
         )
         
-        let view = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: hints
         )

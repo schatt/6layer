@@ -35,6 +35,7 @@ open class SelectFieldImplementationTests: BaseTestClass {
         )
     }
     
+    @MainActor
     private var formState: DynamicFormState {
         let configuration = DynamicFormConfiguration(
             id: "test-form",

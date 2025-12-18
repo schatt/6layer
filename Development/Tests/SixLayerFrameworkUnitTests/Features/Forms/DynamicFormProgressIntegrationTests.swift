@@ -43,7 +43,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress works with all supported field types
     /// TESTING SCOPE: Tests progress calculation with text, number, boolean, date, select, and other field types
     /// METHODOLOGY: Create form with all field types, fill them, verify progress counts correctly
-    @Test func testProgressWithAllFieldTypes() {
+    @Test @MainActor func testProgressWithAllFieldTypes() {
         // Test across all platforms
         for platform in SixLayerPlatform.allCases {
             setCapabilitiesForPlatform(platform)
@@ -101,7 +101,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress works with mixed field types in same form
     /// TESTING SCOPE: Tests progress calculation with combination of different field types
     /// METHODOLOGY: Create form with mixed field types, fill some, verify progress is accurate
-    @Test func testProgressWithMixedFieldTypes() {
+    @Test @MainActor func testProgressWithMixedFieldTypes() {
         let config = DynamicFormConfiguration(
             id: "mixedFieldTypes",
             title: "Mixed Field Types Form",
@@ -139,7 +139,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress works with multiple sections
     /// TESTING SCOPE: Tests progress calculation across multiple form sections
     /// METHODOLOGY: Create form with multiple sections, fill fields across sections, verify progress
-    @Test func testProgressWithMultipleSections() {
+    @Test @MainActor func testProgressWithMultipleSections() {
         let config = DynamicFormConfiguration(
             id: "multipleSections",
             title: "Multiple Sections Form",
@@ -186,7 +186,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress works with collapsible sections
     /// TESTING SCOPE: Tests progress calculation with collapsible sections (collapsed state shouldn't affect progress)
     /// METHODOLOGY: Create form with collapsible sections, fill fields, verify progress regardless of collapse state
-    @Test func testProgressWithCollapsibleSections() {
+    @Test @MainActor func testProgressWithCollapsibleSections() {
         let config = DynamicFormConfiguration(
             id: "collapsibleSections",
             title: "Collapsible Sections Form",
@@ -231,7 +231,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// TESTING SCOPE: Tests progress calculation with fields that have visibility conditions
     /// METHODOLOGY: Create form with conditional fields, verify progress counts all required fields regardless of visibility
     /// NOTE: Progress calculation counts all required fields, not just visible ones, as visibility is a UI concern
-    @Test func testProgressWithConditionalFields() {
+    @Test @MainActor func testProgressWithConditionalFields() {
         let config = DynamicFormConfiguration(
             id: "conditionalFields",
             title: "Conditional Fields Form",
@@ -313,7 +313,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress works with calculated fields
     /// TESTING SCOPE: Tests progress calculation with calculated fields (should not be counted as required)
     /// METHODOLOGY: Create form with calculated fields, verify they don't affect progress calculation
-    @Test func testProgressWithCalculatedFields() {
+    @Test @MainActor func testProgressWithCalculatedFields() {
         let config = DynamicFormConfiguration(
             id: "calculatedFields",
             title: "Calculated Fields Form",
@@ -359,7 +359,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress handles dynamic field requirement changes
     /// TESTING SCOPE: Tests progress calculation when field requirements change dynamically
     /// METHODOLOGY: Create form, change field requirements, verify progress updates correctly
-    @Test func testProgressWithDynamicRequirementChanges() {
+    @Test @MainActor func testProgressWithDynamicRequirementChanges() {
         // Note: This test verifies that progress correctly handles the current state
         // In a real implementation, changing field requirements would require form reconfiguration
         // For now, we test that progress correctly reflects the current configuration
@@ -404,7 +404,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress handles large forms efficiently
     /// TESTING SCOPE: Tests progress calculation with very large forms (100+ fields)
     /// METHODOLOGY: Create form with 100+ required fields, fill some, verify progress calculation is efficient
-    @Test func testProgressWithLargeForm() {
+    @Test @MainActor func testProgressWithLargeForm() {
         // Create form with 100 required fields
         var fields: [DynamicFormField] = []
         for i in 1...100 {
@@ -462,7 +462,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress handles forms with only optional fields
     /// TESTING SCOPE: Tests progress calculation when form has no required fields
     /// METHODOLOGY: Create form with only optional fields, verify progress is 0/0
-    @Test func testProgressWithOnlyOptionalFields() {
+    @Test @MainActor func testProgressWithOnlyOptionalFields() {
         let config = DynamicFormConfiguration(
             id: "onlyOptional",
             title: "Only Optional Fields Form",
@@ -495,7 +495,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress handles forms with only required fields
     /// TESTING SCOPE: Tests progress calculation when all fields are required
     /// METHODOLOGY: Create form with only required fields, verify progress calculation
-    @Test func testProgressWithOnlyRequiredFields() {
+    @Test @MainActor func testProgressWithOnlyRequiredFields() {
         let config = DynamicFormConfiguration(
             id: "onlyRequired",
             title: "Only Required Fields Form",
@@ -527,7 +527,7 @@ open class DynamicFormProgressIntegrationTests: BaseTestClass {
     /// BUSINESS PURPOSE: Validate form progress handles complex nested form configurations
     /// TESTING SCOPE: Tests progress calculation with multiple sections containing various field combinations
     /// METHODOLOGY: Create complex form with multiple sections, mixed field types, some optional, some required
-    @Test func testProgressWithComplexNestedConfiguration() {
+    @Test @MainActor func testProgressWithComplexNestedConfiguration() {
         let config = DynamicFormConfiguration(
             id: "complexNested",
             title: "Complex Nested Form",

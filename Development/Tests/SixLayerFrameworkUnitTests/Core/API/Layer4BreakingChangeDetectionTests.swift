@@ -420,6 +420,8 @@ open class Layer4BreakingChangeDetectionTests: BaseTestClass {
     /// BUSINESS PURPOSE: Test that parameter labels don't change
     /// TESTING SCOPE: Tests that parameter label changes would break these tests
     /// METHODOLOGY: Use exact parameter labels from production code
+    /// NOTE: This test intentionally uses deprecated platformOCRImplementation_L4 for breaking change detection
+    @available(*, deprecated, message: "Intentional use of deprecated platformOCRImplementation_L4 for breaking change detection")
     @Test @MainActor func testParameterLabels_ExactProductionUsage() {
         // This test would fail if parameter labels changed
         

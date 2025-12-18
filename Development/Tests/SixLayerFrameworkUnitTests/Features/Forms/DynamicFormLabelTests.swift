@@ -41,6 +41,7 @@ open class DynamicFormLabelTests: BaseTestClass {
     
     // MARK: - Test Data
     
+    @MainActor
     private var formState: DynamicFormState {
         let configuration = DynamicFormConfiguration(
             id: "test-form",
@@ -62,7 +63,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating date picker field
-        let view = DatePickerField(field: field, formState: formState)
+        let _ = DatePickerField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -82,7 +83,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating time picker field
-        let view = TimePickerField(field: field, formState: formState)
+        let _ = TimePickerField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -102,7 +103,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating datetime picker field
-        let view = DateTimePickerField(field: field, formState: formState)
+        let _ = DateTimePickerField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -124,7 +125,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating color picker field
-        let view = DynamicColorField(field: field, formState: formState)
+        let _ = DynamicColorField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -146,7 +147,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating toggle field
-        let view = DynamicToggleField(field: field, formState: formState)
+        let _ = DynamicToggleField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -166,7 +167,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating checkbox field
-        let view = DynamicCheckboxField(field: field, formState: formState)
+        let _ = DynamicCheckboxField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -188,7 +189,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating textarea field
-        let view = DynamicTextAreaField(field: field, formState: formState)
+        let _ = DynamicTextAreaField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -211,7 +212,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating select field
-        let view = DynamicSelectField(field: field, formState: formState)
+        let _ = DynamicSelectField(field: field, formState: formState)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -246,7 +247,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating dynamic form view
-        let view = DynamicFormView(
+        _ = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )
@@ -275,22 +276,22 @@ open class DynamicFormLabelTests: BaseTestClass {
             )
             
             // When: Creating field view
-            let view: AnyView
+            let _: AnyView
             switch contentType {
             case .date:
-                view = AnyView(DatePickerField(field: field, formState: formState))
+                _ = AnyView(DatePickerField(field: field, formState: formState))
             case .time:
-                view = AnyView(TimePickerField(field: field, formState: formState))
+                _ = AnyView(TimePickerField(field: field, formState: formState))
             case .datetime:
-                view = AnyView(DateTimePickerField(field: field, formState: formState))
+                _ = AnyView(DateTimePickerField(field: field, formState: formState))
             case .color:
-                view = AnyView(DynamicColorField(field: field, formState: formState))
+                _ = AnyView(DynamicColorField(field: field, formState: formState))
             case .toggle:
-                view = AnyView(DynamicToggleField(field: field, formState: formState))
+                _ = AnyView(DynamicToggleField(field: field, formState: formState))
             case .checkbox:
-                view = AnyView(DynamicCheckboxField(field: field, formState: formState))
+                _ = AnyView(DynamicCheckboxField(field: field, formState: formState))
             case .select:
-                view = AnyView(DynamicSelectField(field: field, formState: formState))
+                _ = AnyView(DynamicSelectField(field: field, formState: formState))
             default:
                 continue
             }
@@ -313,7 +314,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating date picker field
-        let view = DatePickerField(field: field, formState: formState)
+        let _ = DatePickerField(field: field, formState: formState)
         
         // Then: Field should be created with proper accessibility info
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -333,7 +334,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating toggle field
-        let view = DynamicToggleField(field: field, formState: formState)
+        let _ = DynamicToggleField(field: field, formState: formState)
         
         // Then: Should handle empty label gracefully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -351,7 +352,7 @@ open class DynamicFormLabelTests: BaseTestClass {
         )
         
         // When: Creating color picker field
-        let view = DynamicColorField(field: field, formState: formState)
+        let _ = DynamicColorField(field: field, formState: formState)
         
         // Then: Should handle long label gracefully
         #expect(Bool(true), "view is non-optional")  // view is non-optional
@@ -371,16 +372,16 @@ open class DynamicFormLabelTests: BaseTestClass {
         
         // When: Creating fields that should not have duplicate labels
         for field in problematicFields {
-            let view: AnyView
+            let _: AnyView
             switch field.contentType {
             case .date:
-                view = AnyView(DatePickerField(field: field, formState: formState))
+                _ = AnyView(DatePickerField(field: field, formState: formState))
             case .color:
-                view = AnyView(DynamicColorField(field: field, formState: formState))
+                _ = AnyView(DynamicColorField(field: field, formState: formState))
             case .toggle:
-                view = AnyView(DynamicToggleField(field: field, formState: formState))
+                _ = AnyView(DynamicToggleField(field: field, formState: formState))
             case .textarea:
-                view = AnyView(DynamicTextAreaField(field: field, formState: formState))
+                _ = AnyView(DynamicTextAreaField(field: field, formState: formState))
             default:
                 continue
             }

@@ -36,6 +36,7 @@ import AppKit
 
 
 /// NOTE: Not marked @MainActor on class to allow parallel execution
+/// NOTE: This suite intentionally exercises deprecated Layer 4 APIs for backward compatibility.
 @Suite("Layer 4 Backward Compatibility")
 open class Layer4BackwardCompatibilityTests: BaseTestClass {
     
@@ -44,7 +45,6 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
     // Helper functions to suppress deprecation warnings when intentionally testing deprecated APIs
     
     @MainActor
-    @available(*, deprecated, message: "Intentional use in backward compatibility test")
     private func callDeprecatedOCRImplementation(
         image: PlatformImage,
         context: OCRContext,
@@ -60,7 +60,6 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
     }
     
     @MainActor
-    @available(*, deprecated, message: "Intentional use in backward compatibility test")
     private func callDeprecatedTextExtraction(
         image: PlatformImage,
         context: OCRContext,
@@ -78,7 +77,6 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
     }
     
     @MainActor
-    @available(*, deprecated, message: "Intentional use in backward compatibility test")
     private func callDeprecatedTextRecognition(
         image: PlatformImage,
         options: TextRecognitionOptions,
@@ -92,7 +90,6 @@ open class Layer4BackwardCompatibilityTests: BaseTestClass {
     }
     
     @MainActor
-    @available(*, deprecated, message: "Intentional use in backward compatibility test")
     private func callDeprecatedSafeOCRImplementation(
         image: PlatformImage,
         context: OCRContext,

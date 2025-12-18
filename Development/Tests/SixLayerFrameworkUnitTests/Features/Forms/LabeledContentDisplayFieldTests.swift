@@ -45,7 +45,8 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
     
     // MARK: - Test Data
     
-    private var formState: DynamicFormState {
+    @MainActor
+    private func createFormState() -> DynamicFormState {
         let configuration = DynamicFormConfiguration(
             id: "test-form",
             title: "Test Form",
@@ -115,10 +116,10 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")
@@ -138,11 +139,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created (actual LabeledContent usage verified in UI tests)
         #expect(Bool(true), "view is non-optional")
@@ -161,11 +162,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating DynamicDisplayField (will use fallback on older platforms)
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")
@@ -181,12 +182,12 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
     /// METHODOLOGY: Set value in form state and verify it's accessible
     @Test @MainActor func testValueDisplay() {
         // Given: Display field with value
-        let field = DynamicFormField(
+        let _ = DynamicFormField(
             id: "display-field",
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Getting value from form state
@@ -201,12 +202,12 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
     /// METHODOLOGY: Create display field without value and verify empty handling
     @Test @MainActor func testEmptyValueDisplay() {
         // Given: Display field without value
-        let field = DynamicFormField(
+        let _ = DynamicFormField(
             id: "display-field",
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         
         // When: Getting value from form state (no value set)
         let value = state.getValue(for: "display-field") as String?
@@ -220,12 +221,12 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
     /// METHODOLOGY: Set nil value and verify handling
     @Test @MainActor func testNullValueDisplay() {
         // Given: Display field
-        let field = DynamicFormField(
+        let _ = DynamicFormField(
             id: "display-field",
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         
         // When: Setting nil value (or not setting value)
         // Value remains nil
@@ -280,11 +281,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
                 return AnyView(Text("Custom Value"))
             }
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created
         #expect(Bool(true), "view is non-optional")
@@ -303,11 +304,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created
         #expect(Bool(true), "view is non-optional")
@@ -338,14 +339,15 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
                 return AnyView(Text("Custom"))
             }
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating DynamicDisplayField (triggers valueView)
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created
         #expect(Bool(true), "view is non-optional")
+        // Note: capturedField and capturedFormState would be set if valueView closure is invoked, but we can't verify that in unit tests
         
         // And: Parameters should be captured when valueView is called
         // Note: Actual invocation happens during view rendering, so we verify the closure exists
@@ -368,12 +370,12 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
                 return AnyView(Text("—"))
             }
         )
-        let state = formState
+        let state = createFormState()
         let testDate = Date()
         state.setValue(testDate, for: "date-field")
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: dateField, formState: state)
+        let _ = DynamicDisplayField(field: dateField, formState: state)
         
         // Then: View should be created
         #expect(Bool(true), "view is non-optional")
@@ -406,11 +408,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
                 return AnyView(Text("—"))
             }
         )
-        let state = formState
+        let state = createFormState()
         state.setValue(Color.red, for: "color-field")
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: colorField, formState: state)
+        let _ = DynamicDisplayField(field: colorField, formState: state)
         
         // Then: View should be created
         #expect(Bool(true), "view is non-optional")
@@ -430,11 +432,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating DynamicDisplayField
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")
@@ -470,7 +472,7 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             sections: [section]
         )
         // When: Creating form view
-        let formView = DynamicFormView(
+        let _ = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )
@@ -492,10 +494,10 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         
         // When: Creating display field view (not in Form)
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created successfully
         #expect(Bool(true), "view is non-optional")
@@ -513,10 +515,10 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         
         // When: Creating display field view
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created (accessibility verified in UI tests)
         #expect(Bool(true), "view is non-optional")
@@ -535,11 +537,11 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         state.setValue("Test Value", for: "display-field")
         
         // When: Creating display field view
-        let view = DynamicDisplayField(field: field, formState: state)
+        let _ = DynamicDisplayField(field: field, formState: state)
         
         // Then: View should be created (accessibility verified in UI tests)
         #expect(Bool(true), "view is non-optional")
@@ -586,7 +588,7 @@ open class LabeledContentDisplayFieldTests: BaseTestClass {
             contentType: .display,
             label: "Display Value"
         )
-        let state = formState
+        let state = createFormState()
         
         // When: Creating CustomFieldView with display field
         let view = CustomFieldView(field: field, formState: state)

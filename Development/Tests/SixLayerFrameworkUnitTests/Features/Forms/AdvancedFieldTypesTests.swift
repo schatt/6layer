@@ -29,10 +29,12 @@ open class AdvancedFieldTypesTests: BaseTestClass {
     
     // MARK: - Test Data Setup
     
+    @MainActor
     private var testFormState: DynamicFormState {
         return createTestFormState()
     }
     
+    @MainActor
     public func createTestFormState() -> DynamicFormState {
         let testConfiguration = DynamicFormConfiguration(
             id: "testForm",
@@ -81,7 +83,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let richTextField = RichTextEditorField(field: field, formState: formState)
+        let _ = RichTextEditorField(field: field, formState: formState)
         
         // Then
         // Test that editing mode can be toggled
@@ -102,7 +104,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         
         // When
         formState.setValue(testText, for: field.id)
-        let richTextField = RichTextEditorField(field: field, formState: formState)
+        let _ = RichTextEditorField(field: field, formState: formState)
         
         // Then
         #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
@@ -618,7 +620,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         
         // When
         // This will fail until DynamicMultiDateField is created
-        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        let _ = DynamicMultiDateField(field: field, formState: formState)
         
         // Then
         #expect(Bool(true), "multiDateField should be created")
@@ -674,7 +676,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         
         // When
         // This will fail until we add multiDate case to CustomFieldView switch
-        let customFieldView = CustomFieldView(field: field, formState: formState)
+        let _ = CustomFieldView(field: field, formState: formState)
         
         // Then
         #expect(Bool(true), "CustomFieldView should render multiDate field")
@@ -689,7 +691,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
             label: "Select Date Range",
             placeholder: "Choose start and end dates"
         )
-        let formState = createTestFormState()
+        let _ = createTestFormState()
         
         // When
         // This will fail until DynamicDateRangeField is created (or we use DynamicMultiDateField with range mode)
@@ -710,7 +712,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         let startDate = Date(timeIntervalSince1970: 1640995200) // 2022-01-01
         let endDate = Date(timeIntervalSince1970: 1641081600)   // 2022-01-02
-        let dateRange = (start: startDate, end: endDate)
+        let _ = (start: startDate, end: endDate)
         
         // When
         // Store as array for consistency with form state
@@ -737,7 +739,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         // When
         // This test verifies fallback behavior for iOS < 16 / macOS < 13
         // The component should show appropriate fallback UI
-        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        let _ = DynamicMultiDateField(field: field, formState: formState)
         
         // Then
         // On older OS versions, should show fallback message or alternative UI
@@ -756,7 +758,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         let formState = createTestFormState()
         
         // When
-        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        let _ = DynamicMultiDateField(field: field, formState: formState)
         
         // Then
         #expect(Bool(true), "MultiDateField should support accessibility")
@@ -780,7 +782,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         
         // When
         formState.setValue(testDates, for: field.id)
-        let multiDateField = DynamicMultiDateField(field: field, formState: formState)
+        let _ = DynamicMultiDateField(field: field, formState: formState)
         
         // Then
         let retrievedDates: [Date]? = formState.getValue(for: field.id)
@@ -999,7 +1001,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
         
         // When
         formState.setValue(largeText, for: field.id)
-        let richTextField = RichTextEditorField(field: field, formState: formState)
+        let _ = RichTextEditorField(field: field, formState: formState)
         
         // Then
         #expect(Bool(true), "richTextField is non-optional")  // richTextField is non-optional
@@ -1091,7 +1093,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
     /// BUSINESS PURPOSE: Advanced field types should provide enhanced accessibility labels when VoiceOver is enabled
     /// TESTING SCOPE: Tests that field types provide appropriate accessibility labels for VoiceOver users
     /// METHODOLOGY: Creates field types and verifies they have accessibility labels when VoiceOver is enabled
-    @Test func testAdvancedFieldTypesVoiceOverLabels() async {
+    @Test @MainActor func testAdvancedFieldTypesVoiceOverLabels() async {
         // Enable VoiceOver
         RuntimeCapabilityDetection.setTestVoiceOver(true)
 
@@ -1103,7 +1105,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
             placeholder: "Enter text"
         )
 
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
 
         // Test that field types provide accessibility labels
         // Verify the field has proper configuration for VoiceOver
@@ -1122,7 +1124,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
     /// BUSINESS PURPOSE: Advanced field types should provide keyboard navigation support when Switch Control is enabled
     /// TESTING SCOPE: Tests that field types support keyboard navigation for Switch Control users
     /// METHODOLOGY: Enables Switch Control and verifies field types provide appropriate keyboard navigation
-    @Test func testAdvancedFieldTypesSwitchControlNavigation() async {
+    @Test @MainActor func testAdvancedFieldTypesSwitchControlNavigation() async {
         // Enable Switch Control
         RuntimeCapabilityDetection.setTestSwitchControl(true)
 
@@ -1134,7 +1136,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
             placeholder: "Enter text"
         )
 
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
 
         // Test that field types support keyboard navigation
         // Verify the field has proper configuration for Switch Control
@@ -1153,7 +1155,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
     /// BUSINESS PURPOSE: Advanced field types should provide gesture recognition when AssistiveTouch is enabled
     /// TESTING SCOPE: Tests that field types support gesture recognition for AssistiveTouch users
     /// METHODOLOGY: Enables AssistiveTouch and verifies field types provide appropriate gesture support
-    @Test func testAdvancedFieldTypesAssistiveTouchGestures() async {
+    @Test @MainActor func testAdvancedFieldTypesAssistiveTouchGestures() async {
         // Enable AssistiveTouch
         RuntimeCapabilityDetection.setTestAssistiveTouch(true)
 
@@ -1165,7 +1167,7 @@ open class AdvancedFieldTypesTests: BaseTestClass {
             placeholder: "Enter text"
         )
 
-        let formState = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
+        let _ = DynamicFormState(configuration: DynamicFormConfiguration(id: "test", title: "Test Form"))
 
         // Test that field types support gesture recognition
         // Verify the field has proper configuration for AssistiveTouch
