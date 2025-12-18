@@ -18,3 +18,4 @@ python3 "$SCRIPT_DIR/generate_missing_translations.py" \
 
 
 
+
