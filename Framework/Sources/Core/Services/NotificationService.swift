@@ -123,6 +123,12 @@ public class NotificationService: ObservableObject {
         
         badgeCount = count
         
+        // In test environments, UNUserNotificationCenter.current() can assert/crash
+        // Skip the actual badge update in test mode, but still track the count
+        if Self.isTestEnvironment() {
+            return
+        }
+        
         #if os(iOS)
         if #available(iOS 17.0, *) {
             // Use modern API for iOS 17+ (fire-and-forget async call)
