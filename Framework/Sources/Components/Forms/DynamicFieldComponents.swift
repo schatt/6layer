@@ -938,18 +938,36 @@ public struct DynamicMultiDateField: View {
             
             #if os(iOS)
             if #available(iOS 16.0, *) {
-                MultiDatePicker(
-                    field.placeholder ?? i18n.placeholderSelectDates(),
-                    selection: $selectedDateComponents,
-                    in: dateRange
-                )
-                .onChange(of: selectedDateComponents) { newComponents in
-                    // Convert Set<DateComponents> to array of Date objects
-                    let calendar = Calendar.current
-                    let dates = newComponents.compactMap { components in
-                        calendar.date(from: components)
+                Group {
+                    if #available(iOS 17.0, *) {
+                        MultiDatePicker(
+                            field.placeholder ?? i18n.placeholderSelectDates(),
+                            selection: $selectedDateComponents,
+                            in: dateRange
+                        )
+                        .onChange(of: selectedDateComponents) {
+                            // Convert Set<DateComponents> to array of Date objects
+                            let calendar = Calendar.current
+                            let dates = selectedDateComponents.compactMap { components in
+                                calendar.date(from: components)
+                            }
+                            formState.setValue(dates, for: field.id)
+                        }
+                    } else {
+                        MultiDatePicker(
+                            field.placeholder ?? i18n.placeholderSelectDates(),
+                            selection: $selectedDateComponents,
+                            in: dateRange
+                        )
+                        .onChange(of: selectedDateComponents) { newComponents in
+                            // Convert Set<DateComponents> to array of Date objects
+                            let calendar = Calendar.current
+                            let dates = newComponents.compactMap { components in
+                                calendar.date(from: components)
+                            }
+                            formState.setValue(dates, for: field.id)
+                        }
                     }
-                    formState.setValue(dates, for: field.id)
                 }
                 .onAppear {
                     // Load existing dates from form state

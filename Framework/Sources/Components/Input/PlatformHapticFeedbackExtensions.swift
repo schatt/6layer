@@ -29,6 +29,7 @@ public enum PlatformHapticFeedback: CaseIterable {
 // MARK: - Haptic Feedback Triggering
 
 /// Platform-specific haptic feedback triggering logic
+@MainActor
 private func triggerHapticFeedback(_ feedback: PlatformHapticFeedback) {
     #if os(iOS)
     switch feedback {
@@ -81,7 +82,9 @@ private struct PlatformHapticFeedbackTapModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onTapGesture {
-                triggerHapticFeedback(feedback)
+                Task { @MainActor in
+                    triggerHapticFeedback(feedback)
+                }
             }
     }
 }
@@ -94,7 +97,9 @@ private struct PlatformHapticFeedbackWithActionModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onTapGesture {
-                triggerHapticFeedback(feedback)
+                Task { @MainActor in
+                    triggerHapticFeedback(feedback)
+                }
                 action()
             }
     }

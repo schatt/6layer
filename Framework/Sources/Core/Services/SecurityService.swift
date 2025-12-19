@@ -260,28 +260,31 @@ public class SecurityService: ObservableObject {
         }
         
         #if os(iOS) || os(macOS)
-        if #available(iOS 11.0, macOS 10.15, *) {
-            let context = LAContext()
-            var error: NSError?
-            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-                #if os(iOS)
-                if #available(iOS 11.0, *) {
-                    switch context.biometryType {
-                    case .faceID:
-                        return .faceID
-                    case .touchID:
-                        return .touchID
-                    case .none:
-                        return .none
-                    @unknown default:
-                        return .none
-                    }
-                }
-                #elseif os(macOS)
-                // macOS supports Touch ID on certain Macs
+        let context = LAContext()
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            #if os(iOS)
+            switch context.biometryType {
+            case .faceID:
+                return .faceID
+            case .touchID:
                 return .touchID
-                #endif
+            case .none:
+                return .none
+            default:
+                // Handle .opticID (iOS 17+) and any future cases
+                // Optic ID for visionOS devices - map to faceID as closest equivalent
+                let biometryDescription = String(describing: context.biometryType)
+                if biometryDescription.contains("optic") {
+                    return .faceID
+                }
+                // For any other unknown cases, default to none
+                return .none
             }
+            #elseif os(macOS)
+            // macOS supports Touch ID on certain Macs
+            return .touchID
+            #endif
         }
         #endif
         return .none

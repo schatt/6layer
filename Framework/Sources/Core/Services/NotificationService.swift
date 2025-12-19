@@ -124,7 +124,18 @@ public class NotificationService: ObservableObject {
         badgeCount = count
         
         #if os(iOS)
-        UIApplication.shared.applicationIconBadgeNumber = count
+        if #available(iOS 17.0, *) {
+            // Use modern API for iOS 17+ (fire-and-forget async call)
+            // Note: This is async but we can't make updateBadge async without breaking API
+            let center = UNUserNotificationCenter.current()
+            Task {
+                try? await center.setBadgeCount(count)
+            }
+        } else {
+            // Use legacy API for iOS < 17
+            // Note: applicationIconBadgeNumber is deprecated in iOS 17.0, but required for iOS < 17 compatibility
+            UIApplication.shared.applicationIconBadgeNumber = count
+        }
         #elseif os(macOS)
         // macOS doesn't have badge numbers on the dock icon, but we track it for consistency
         #endif
@@ -365,7 +376,6 @@ public class NotificationService: ObservableObject {
     
     /// Map UNNotificationAuthorizationStatus to NotificationPermissionStatus
     #if os(iOS) || os(macOS)
-    @available(iOS 10.0, macOS 10.14, *)
     private func mapUNAuthorizationStatus(_ status: UNAuthorizationStatus) -> NotificationPermissionStatus {
         switch status {
         case .notDetermined:
@@ -376,13 +386,21 @@ public class NotificationService: ObservableObject {
             return .authorized
         case .provisional:
             return .provisional
-        @unknown default:
+        default:
+            // Handle .ephemeral (iOS 17+) and any future cases
+            // Ephemeral authorization (temporary, app-specific) maps to authorized
+            // We check the description since we can't pattern match on future enum cases
+            let statusDescription = String(describing: status)
+            if statusDescription.contains("ephemeral") {
+                return .authorized
+            }
+            // For any other unknown cases, default to notDetermined
             return .notDetermined
         }
     }
+    #endif
     
     /// Schedule a UNNotification
-    @available(iOS 10.0, macOS 10.14, *)
     private func scheduleUNNotification(
         identifier: String,
         title: String,
@@ -443,7 +461,6 @@ public class NotificationService: ObservableObject {
     }
     
     /// Create UNNotificationCategory from NotificationCategory
-    @available(iOS 10.0, macOS 10.14, *)
     private func createUNNotificationCategory(from category: NotificationCategory) -> UNNotificationCategory {
         let actions = category.actions.map { action in
             self.createUNNotificationAction(from: action)
@@ -457,9 +474,7 @@ public class NotificationService: ObservableObject {
         if category.options.contains(.allowInCarPlay) {
             options.insert(.allowInCarPlay)
         }
-        if category.options.contains(.allowAnnouncement) {
-            options.insert(.allowAnnouncement)
-        }
+        // Note: .allowAnnouncement is deprecated in iOS 15.0+ and ignored
         #endif
         
         return UNNotificationCategory(
@@ -471,7 +486,6 @@ public class NotificationService: ObservableObject {
     }
     
     /// Create UNNotificationAction from NotificationAction
-    @available(iOS 10.0, macOS 10.14, *)
     private func createUNNotificationAction(from action: NotificationAction) -> UNNotificationAction {
         var options: UNNotificationActionOptions = []
         if action.options.contains(.authenticationRequired) {
@@ -490,7 +504,6 @@ public class NotificationService: ObservableObject {
             options: options
         )
     }
-    #endif
 }
 
 // MARK: - View Extension for Platform-Appropriate Alerts
@@ -653,16 +666,11 @@ extension NotificationService {
         // Use INFocusStatusCenter to check Focus status (includes Do Not Disturb)
         let focusStatusCenter = INFocusStatusCenter.default
         
-        do {
-            let focusStatus = try await focusStatusCenter.focusStatus
-            // isFocused is optional Bool?, so unwrap with nil-coalescing to default to false
-            // This is a conservative default when Focus status is unavailable
-            return focusStatus.isFocused ?? false
-        } catch {
-            // If permission is not granted or error occurs, return false
-            // This is a conservative default
-            return false
-        }
+        // focusStatus is a synchronous property, not async/throwing
+        let focusStatus = focusStatusCenter.focusStatus
+        // isFocused is optional Bool?, so unwrap with nil-coalescing to default to false
+        // This is a conservative default when Focus status is unavailable
+        return focusStatus.isFocused ?? false
         #else
         return false
         #endif
