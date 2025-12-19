@@ -1,12 +1,29 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.6.1 - SPM Bundle Name Fix** 🎯
+## 📍 **Current Release: v6.6.2 - Swift 6 Compilation Fixes** 🎯
 
 **Release Date**: December 19, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.6.0 - Platform Capability Detection Fixes
-**Note**: Patch release fixing Swift Package Manager bundle name issue. Updated to use Bundle.module for Swift Package builds with proper fallback for Xcode framework builds. Fixed CFBundleName in Info.plist and enhanced bundle identifier fix script.
+**Previous Release**: v6.6.1 - SPM Bundle Name Fix
+**Note**: Patch release fixing Swift 6 compilation errors and deprecation warnings. Includes main actor isolation fixes, iOS 17+ API updates, switch exhaustiveness fixes, and removal of unnecessary availability checks.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.6.2 - Swift 6 Compilation Fixes** (December 19, 2025)
+
+### **What's Fixed:**
+
+#### **🔧 Swift 6 Compatibility & Deprecation Warnings**
+- **Main Actor Isolation**: Fixed haptic feedback extensions to use `@MainActor` and proper Task wrapping
+- **iOS 17+ onChange API**: Updated `DynamicFieldComponents` to use new onChange API with zero-parameter closure
+- **Switch Exhaustiveness**: Fixed switches in `NotificationService` and `SecurityService` to handle iOS 17+ enum cases (`.ephemeral`, `.opticID`)
+- **Availability Cleanup**: Removed unnecessary iOS 10.0/11.0 availability checks (framework targets iOS 17+/macOS 15+)
+- **Deprecated API Updates**: Updated badge management to use modern API for iOS 17+, removed deprecated `allowAnnouncement` option
+- **Focus Status Fix**: Corrected `focusStatus` access (synchronous property, not async/throwing)
+- **Deprecated Function**: Replaced `platformNavigationTitleDisplayMode` with `platformNavigationTitleDisplayMode_L4`
+
+**See [RELEASE_v6.6.2.md](RELEASE_v6.6.2.md) for complete release notes.**
 
 ---
 

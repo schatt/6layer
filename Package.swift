@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.6.1 - SPM Bundle Name Fix
+// SixLayerFramework v6.6.2 - Swift 6 Compilation Fixes
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

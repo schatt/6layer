@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/sixlayer.git", from: "6.6.1")
+    .package(url: "https://github.com/schatt/sixlayer.git", from: "6.6.2")
 ]
 ```
 
@@ -41,10 +41,13 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.6.1
+## 🆕 Latest Release: v6.6.2
 
-### **SPM Bundle Name Fix**
-🔧 **Bundle Resource Access**: Fixed Swift Package Manager bundle name issue. Updated to use `Bundle.module` for Swift Package builds with proper fallback for Xcode framework builds. Fixed `CFBundleName` in Info.plist and enhanced bundle identifier fix script.
+### **Swift 6 Compilation Fixes**
+🔧 **Swift 6 Compatibility**: Fixed Swift 6 compilation errors and deprecation warnings. Includes main actor isolation fixes, iOS 17+ API updates, switch exhaustiveness fixes, and removal of unnecessary availability checks.
+
+### **Previous Release: v6.6.1 - SPM Bundle Name Fix**
+🔧 **Bundle Resource Access**: Fixed Swift Package Manager bundle name issue. Updated to use `Bundle.module` for Swift Package builds with proper fallback for Xcode framework builds. Fixed `CFBundleName` in Info.plist.
 
 ### **Previous Release: v6.6.0 - Platform Capability Detection Fixes**
 🔧 **Apple HIG Compliance**: Fixed platform capability detection to align with Apple Human Interface Guidelines. `minTouchTarget` is now platform-based (44.0 for iOS/watchOS, 0.0 for others), `supportsAssistiveTouch` correctly checks platform availability, and tests use runtime platform detection for better accuracy.
@@ -149,7 +152,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.6.1 (SPM Bundle Name Fix)
+**Version**: v6.6.2 (Swift 6 Compilation Fixes)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
