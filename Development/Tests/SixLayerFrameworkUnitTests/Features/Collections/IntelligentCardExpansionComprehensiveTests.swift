@@ -584,8 +584,13 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         
         // Test that accessibility features are correctly detected based on platform
         // VoiceOver and Switch Control are available on all platforms
-        #expect(config.supportsVoiceOver, "VoiceOver should be available on all platforms")
-        #expect(config.supportsSwitchControl, "Switch Control should be available on all platforms")
+        // Note: supportsVoiceOver/supportsSwitchControl check if currently enabled,
+        // so we set overrides to test platform availability
+        RuntimeCapabilityDetection.setTestVoiceOver(true)
+        RuntimeCapabilityDetection.setTestSwitchControl(true)
+        let configWithAccessibility = getCardExpansionPlatformConfig()
+        #expect(configWithAccessibility.supportsVoiceOver, "VoiceOver should be available on all platforms")
+        #expect(configWithAccessibility.supportsSwitchControl, "Switch Control should be available on all platforms")
         
         // AssistiveTouch is only available on iOS and watchOS (platform capability, not user setting)
         // Verify platform detection returns correct defaults without needing overrides
