@@ -18,7 +18,7 @@
 - **Bundle.module Support**: Updated InternationalizationService to use `Bundle.module` for Swift Package builds with conditional compilation (`#if SWIFT_PACKAGE`)
 - **Xcode Framework Fallback**: Maintained proper fallback for Xcode framework builds using `Bundle(for:)` approach
 - **CFBundleName Fix**: Fixed `CFBundleName` in Info.plist from `SixLayerFramework_SixLayerFramework` to `SixLayerFramework` (display name, not bundle path)
-- **Enhanced Fix Script**: Updated `fix_spm_bundle_identifier.sh` to also correct `CFBundleName` if incorrect
+- **Root Cause Fix**: Fixed the underlying issue, eliminating the need for fix scripts
 - **Return Statement Fix**: Fixed formatting issue in DynamicFieldComponents.swift
 
 **See [RELEASE_v6.6.1.md](RELEASE_v6.6.1.md) for complete release notes.**
