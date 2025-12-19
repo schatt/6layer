@@ -1,6 +1,6 @@
 # TaskManager Sample App
 
-**SixLayer Framework v6.6.0**
+**SixLayer Framework v6.6.1**
 
 A complete, opinionated sample application demonstrating how to build a real app using the SixLayer Framework. This app showcases secure, localized, CloudKit-backed task management with notifications, forms, and services used exactly as the framework intends.
 

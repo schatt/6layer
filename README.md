@@ -27,7 +27,7 @@ Navigate to the `Framework/` directory and use it as a Swift Package:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(url: "https://github.com/schatt/6layer.git", from: "6.6.0")
+    .package(url: "https://github.com/schatt/sixlayer.git", from: "6.6.1")
 ]
 ```
 
@@ -41,9 +41,12 @@ dependencies: [
 
 The framework is distributed as a Swift Package from the `Framework/` directory. This ensures that only the essential framework code is included when other projects consume it.
 
-## 🆕 Latest Release: v6.6.0
+## 🆕 Latest Release: v6.6.1
 
-### **Platform Capability Detection Fixes**
+### **SPM Bundle Name Fix**
+🔧 **Bundle Resource Access**: Fixed Swift Package Manager bundle name issue. Updated to use `Bundle.module` for Swift Package builds with proper fallback for Xcode framework builds. Fixed `CFBundleName` in Info.plist and enhanced bundle identifier fix script.
+
+### **Previous Release: v6.6.0 - Platform Capability Detection Fixes**
 🔧 **Apple HIG Compliance**: Fixed platform capability detection to align with Apple Human Interface Guidelines. `minTouchTarget` is now platform-based (44.0 for iOS/watchOS, 0.0 for others), `supportsAssistiveTouch` correctly checks platform availability, and tests use runtime platform detection for better accuracy.
 
 ### **Previous Release: v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure**
@@ -146,7 +149,7 @@ These guides contain critical information about the Layer 1 Semantic Intent phil
 
 ## 📋 Current Status
 
-**Version**: v6.6.0 (Platform Capability Detection Fixes)
+**Version**: v6.6.1 (SPM Bundle Name Fix)
 **Phase**: Minor Release
 **Next**: Continue framework development and stability improvements
 
