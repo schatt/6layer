@@ -185,13 +185,31 @@ fi
 # Step 2: Run tests
 echo "📋 Step 2: Running test suite..."
 
-# Run unit tests first
-echo "🧪 Running unit tests..."
-if ! xcodebuild test -project SixLayerFramework.xcodeproj -scheme SixLayerFramework-UnitTestsOnly-macOS -destination "platform=macOS" -quiet; then
-    log_error "Unit tests failed! Cannot proceed with release."
+# Run macOS unit tests first
+echo "🧪 Running macOS unit tests..."
+# Note: do NOT use -quiet here so that any failures print detailed diagnostics
+if ! xcodebuild test -project SixLayerFramework.xcodeproj -scheme SixLayerFramework-UnitTestsOnly-macOS -destination "platform=macOS"; then
+    log_error "macOS unit tests failed! Cannot proceed with release."
     exit 1
 fi
-echo "✅ Unit tests passed"
+echo "✅ macOS unit tests passed"
+
+# Run iOS unit tests on Simulator
+echo "🧪 Running iOS unit tests on Simulator..."
+
+# Ensure an iOS Simulator is booted (non-fatal if already booted or missing)
+if command -v xcrun &> /dev/null; then
+    echo "📱 Ensuring iOS Simulator is booted (iPhone 17 Pro Max)..."
+    xcrun simctl boot "iPhone 17 Pro Max" 2>/dev/null || echo "ℹ️  Simulator already booted or not available; continuing..."
+else
+    echo "⚠️  xcrun not available; attempting to run iOS tests without explicit simulator boot"
+fi
+
+if ! xcodebuild test -project SixLayerFramework.xcodeproj -scheme SixLayerFramework-UnitTestsOnly-iOS -destination "platform=iOS Simulator,name=iPhone 17 Pro Max"; then
+    log_error "iOS unit tests failed! Cannot proceed with release."
+    exit 1
+fi
+echo "✅ iOS unit tests passed"
 
 # Note: UI tests are currently disabled due to ViewInspector Swift 6 compatibility issues
 # They compile successfully but have concurrency warnings treated as errors
