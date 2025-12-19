@@ -557,8 +557,10 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     }
     
     @Test @MainActor func testPlatformFeatureMatrix() {
-            initializeTestConfig()
-        // Test that platform features are correctly detected
+        initializeTestConfig()
+        // Clear any existing capability overrides to test platform defaults
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        // Test that platform features are correctly detected based on platform defaults
         let config = getCardExpansionPlatformConfig()
         
         // Test feature combinations that should be mutually exclusive
@@ -580,23 +582,18 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             }
         }
         
-        // Test that accessibility features are always available
-        // Set accessibility capability overrides to ensure they're detected
-        RuntimeCapabilityDetection.setTestVoiceOver(true)
-        RuntimeCapabilityDetection.setTestSwitchControl(true)
-        let configWithAccessibility = getCardExpansionPlatformConfig()
-        #expect(configWithAccessibility.supportsVoiceOver, "VoiceOver should be available on all platforms")
-        #expect(configWithAccessibility.supportsSwitchControl, "Switch Control should be available on all platforms")
+        // Test that accessibility features are correctly detected based on platform
+        // VoiceOver and Switch Control are available on all platforms
+        #expect(config.supportsVoiceOver, "VoiceOver should be available on all platforms")
+        #expect(config.supportsSwitchControl, "Switch Control should be available on all platforms")
         
-        // AssistiveTouch is only available on iOS and watchOS
-        // Check runtime platform, not compile-time platform
+        // AssistiveTouch is only available on iOS and watchOS (platform capability, not user setting)
+        // Verify platform detection returns correct defaults without needing overrides
         let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
         if runtimePlatform == .iOS || runtimePlatform == .watchOS {
-            #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available on iOS and watchOS")
+            #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available on iOS and watchOS (platform capability)")
         } else {
-            // macOS testing default does NOT support AssistiveTouch
-            // visionOS testing default does NOT support AssistiveTouch (AssistiveTouch is iOS/watchOS specific)
-            // tvOS testing default does NOT support AssistiveTouch
+            // macOS, tvOS, and visionOS do not support AssistiveTouch
             #expect(!config.supportsAssistiveTouch, "AssistiveTouch should not be available on \(runtimePlatform)")
         }
         
