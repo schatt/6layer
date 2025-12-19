@@ -30,8 +30,14 @@ open class Layer5PlatformOptimizationTests: BaseTestClass {
         let config = getCardExpansionPlatformConfig()
         
         #expect(config.supportsHover == true, "macOS should support hover")
-        #expect(config.minTouchTarget == 0.0, "macOS should have 0.0 touch target (platform-native)")
-        #expect(config.hoverDelay == 0.5, "macOS should have 0.5s hover delay")
+        // minTouchTarget/hoverDelay are platform-native values based on the *current* platform,
+        // not the simulated capability overrides above.
+        let currentPlatform = SixLayerPlatform.current
+        let expectedMinTouchTarget: CGFloat = (currentPlatform == .iOS || currentPlatform == .watchOS) ? 44.0 : 0.0
+        let expectedHoverDelay: TimeInterval = (currentPlatform == .macOS) ? 0.5 : 0.0
+        
+        #expect(config.minTouchTarget == expectedMinTouchTarget, "Current platform \(currentPlatform) should have platform-appropriate minTouchTarget (\(expectedMinTouchTarget))")
+        #expect(config.hoverDelay == expectedHoverDelay, "Current platform \(currentPlatform) should have platform-appropriate hoverDelay (\(expectedHoverDelay))")
     }
     
     @Test @MainActor func testGetCardExpansionPlatformConfig_visionOS() async {
