@@ -346,16 +346,36 @@ public class SwitchControlManager: ObservableObject {
 
 public extension View {
     /// Enable Switch Control support for this view
+    /// Only applies feature-specific modifiers if Switch Control is currently enabled
+    /// Basic accessibility compliance is always applied
     func switchControlEnabled() -> some View {
-        self.accessibilityElement(children: .contain)
-            .accessibilityAddTraits(.allowsDirectInteraction)
-            .automaticCompliance(named: "SwitchControlEnabled")
+        // Check if Switch Control is currently enabled (supportsSwitchControl checks isSwitchControlRunning)
+        if RuntimeCapabilityDetection.supportsSwitchControl {
+            return AnyView(
+                self.accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.allowsDirectInteraction)
+                    .automaticCompliance(named: "SwitchControlEnabled")
+            )
+        } else {
+            // Switch Control is not enabled - still apply basic compliance for consistency
+            return AnyView(self.automaticCompliance(named: "SwitchControlEnabled"))
+        }
     }
     
     /// Enable Switch Control support with custom configuration
+    /// Only applies feature-specific modifiers if Switch Control is currently enabled
+    /// Basic accessibility compliance is always applied
     func switchControlEnabled(config: SwitchControlConfig) -> some View {
-        self.accessibilityElement(children: .contain)
-            .accessibilityAddTraits(.allowsDirectInteraction)
-            .automaticCompliance(named: "SwitchControlEnabled")
+        // Check if Switch Control is currently enabled (supportsSwitchControl checks isSwitchControlRunning)
+        if RuntimeCapabilityDetection.supportsSwitchControl {
+            return AnyView(
+                self.accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.allowsDirectInteraction)
+                    .automaticCompliance(named: "SwitchControlEnabled")
+            )
+        } else {
+            // Switch Control is not enabled - still apply basic compliance for consistency
+            return AnyView(self.automaticCompliance(named: "SwitchControlEnabled"))
+        }
     }
 }

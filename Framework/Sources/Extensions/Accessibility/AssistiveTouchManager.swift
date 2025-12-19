@@ -308,16 +308,37 @@ public class AssistiveTouchManager: ObservableObject {
 
 public extension View {
     /// Enable AssistiveTouch support for this view
+    /// Enable AssistiveTouch support for this view
+    /// Only applies feature-specific modifiers if AssistiveTouch is available on the platform
+    /// (AssistiveTouch availability is platform-based, not user-enabled state)
     func assistiveTouchEnabled() -> some View {
-        self.accessibilityElement(children: .contain)
-            .accessibilityAddTraits(.allowsDirectInteraction)
-            .automaticCompliance(named: "AssistiveTouchEnabled")
+        // Check if AssistiveTouch is available on this platform (iOS/watchOS only)
+        if RuntimeCapabilityDetection.supportsAssistiveTouch {
+            return AnyView(
+                self.accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.allowsDirectInteraction)
+                    .automaticCompliance(named: "AssistiveTouchEnabled")
+            )
+        } else {
+            // Platform doesn't support AssistiveTouch - still apply basic compliance
+            return AnyView(self.automaticCompliance(named: "AssistiveTouchEnabled"))
+        }
     }
     
     /// Enable AssistiveTouch support with custom configuration
+    /// Only applies feature-specific modifiers if AssistiveTouch is available on the platform
+    /// (AssistiveTouch availability is platform-based, not user-enabled state)
     func assistiveTouchEnabled(config: AssistiveTouchConfig) -> some View {
-        self.accessibilityElement(children: .contain)
-            .accessibilityAddTraits(.allowsDirectInteraction)
-            .automaticCompliance(named: "AssistiveTouchEnabled")
+        // Check if AssistiveTouch is available on this platform (iOS/watchOS only)
+        if RuntimeCapabilityDetection.supportsAssistiveTouch {
+            return AnyView(
+                self.accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.allowsDirectInteraction)
+                    .automaticCompliance(named: "AssistiveTouchEnabled")
+            )
+        } else {
+            // Platform doesn't support AssistiveTouch - still apply basic compliance
+            return AnyView(self.automaticCompliance(named: "AssistiveTouchEnabled"))
+        }
     }
 }
