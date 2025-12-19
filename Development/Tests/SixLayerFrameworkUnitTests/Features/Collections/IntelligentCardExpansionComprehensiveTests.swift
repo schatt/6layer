@@ -598,13 +598,12 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         }
         
         // Test that touch target size is appropriate for current platform
+        // Apple HIG: 44pt minimum applies to touch-first platforms (iOS/watchOS)
+        // regardless of whether touch is currently enabled, as these platforms
+        // are designed for touch interaction
         let currentPlatform = SixLayerPlatform.current
-        if config.supportsTouch && (currentPlatform == .iOS || currentPlatform == .watchOS) {
-            #expect(config.minTouchTarget >= 44, "Touch targets should be at least 44pt on touch platforms")
-        } else {
-            // On non-touch platforms, minTouchTarget should be 0.0
-            #expect(config.minTouchTarget == 0.0, "Non-touch platforms should have 0.0 minTouchTarget")
-        }
+        let expectedMinTouchTarget: CGFloat = (currentPlatform == .iOS || currentPlatform == .watchOS) ? 44.0 : 0.0
+        #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-appropriate (\(expectedMinTouchTarget)) for \(currentPlatform)")
     }
     
     // MARK: - Layer 6 Tests: Platform System

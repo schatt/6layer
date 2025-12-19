@@ -943,24 +943,23 @@ public extension RuntimeCapabilityDetection {
     
     /// Minimum touch target size for accessibility compliance
     /// Platform-native values: iOS/watchOS = 44.0, macOS/tvOS/visionOS = 0.0
-    /// Respects test overrides: if touch is explicitly disabled via test override on a touch-capable
-    /// platform, returns 0.0 to allow testing non-touch behavior
-    /// Note: nonisolated - this property only does platform/capability switching, no MainActor APIs accessed
+    /// 
+    /// Apple HIG: "Provide ample touch targets. Try to maintain a minimum tappable area
+    /// of 44x44 points for all controls." This guideline applies to touch-first platforms
+    /// (iOS/watchOS) regardless of whether touch is currently enabled, as these platforms
+    /// are designed for touch interaction.
+    /// 
+    /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
     nonisolated static var minTouchTarget: CGFloat {
         let platform = currentPlatform
         
-        // Check if touch is explicitly disabled via test override
-        // This allows tests to simulate non-touch behavior on touch-capable platforms
-        if let testTouchOverride = testTouchSupport, !testTouchOverride {
-            return 0.0
-        }
-        
-        // Return platform-native value
+        // Return platform-native value based on platform's primary interaction method
+        // This follows Apple HIG guidelines for touch-first platforms
         switch platform {
         case .iOS, .watchOS:
-            return 44.0  // Apple's minimum touch target size (native touch platforms)
+            return 44.0  // Apple HIG minimum touch target size for touch-first platforms
         case .macOS, .tvOS, .visionOS:
-            return 0.0   // No touch targets on these platforms (platform-native)
+            return 0.0   // No touch target requirement on non-touch-first platforms
         }
     }
     
