@@ -597,19 +597,28 @@ public struct RuntimeCapabilityDetection {
     }
     
     /// Detects if AssistiveTouch capability is available on the current platform.
-    /// Semantics: **capability support**, not whether the user currently has AssistiveTouch turned on.
-    /// - iOS/watchOS: true by default (feature supported by OS)
-    /// - macOS/tvOS/visionOS: false by default
-    /// Test overrides take precedence.
+    /// Semantics: **platform availability** - whether the platform supports AssistiveTouch as a feature.
+    /// - iOS/watchOS: true (feature supported by OS)
+    /// - macOS/tvOS/visionOS: false (not supported by OS)
+    /// 
+    /// Note: This checks platform availability, not whether the user has it enabled.
+    /// Test overrides can simulate different platforms, but platform detection is authoritative for availability.
     nonisolated public static var supportsAssistiveTouch: Bool {
-        // Check for capability override first (thread-local, no MainActor needed)
+        // Check for capability override first (allows testing different scenarios)
+        // But availability is fundamentally based on platform
         if let testValue = testAssistiveTouch {
             return testValue
         }
         
-        // Use testing defaults for platform-level capability support.
-        let defaults = TestingCapabilityDetection.getTestingDefaults(for: currentPlatform)
-        return defaults.supportsAssistiveTouch
+        // Platform availability: iOS and watchOS support AssistiveTouch
+        // Other platforms do not support it
+        let platform = currentPlatform
+        switch platform {
+        case .iOS, .watchOS:
+            return true  // Platform supports AssistiveTouch
+        case .macOS, .tvOS, .visionOS:
+            return false  // Platform does not support AssistiveTouch
+        }
     }
     
     // MARK: - Vision Framework Detection
@@ -933,14 +942,20 @@ public extension RuntimeCapabilityDetection {
     }
     
     /// Minimum touch target size for accessibility compliance
-    /// Respects test platform override - returns platform-correct value based on mocked platform
     /// Platform-native values: iOS/watchOS = 44.0, macOS/tvOS/visionOS = 0.0
-    /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
+    /// Respects test overrides: if touch is explicitly disabled via test override on a touch-capable
+    /// platform, returns 0.0 to allow testing non-touch behavior
+    /// Note: nonisolated - this property only does platform/capability switching, no MainActor APIs accessed
     nonisolated static var minTouchTarget: CGFloat {
-        // Use real platform detection - tests should run on actual platforms/simulators
         let platform = currentPlatform
         
-        // Return platform-native value regardless of touch support state
+        // Check if touch is explicitly disabled via test override
+        // This allows tests to simulate non-touch behavior on touch-capable platforms
+        if let testTouchOverride = testTouchSupport, !testTouchOverride {
+            return 0.0
+        }
+        
+        // Return platform-native value
         switch platform {
         case .iOS, .watchOS:
             return 44.0  // Apple's minimum touch target size (native touch platforms)

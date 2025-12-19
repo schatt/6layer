@@ -26,58 +26,54 @@ open class PlatformSplitViewOptimizationsLayer5Tests: BaseTestClass {
     
     @Test @MainActor func testPlatformSplitViewIOSOptimizationsExist() async {
         // Given: iOS-specific optimizations should exist
-        #if os(iOS)
-        // Then: Should be able to apply iOS optimizations
-        #expect(Bool(true), "iOS optimizations should be available")
-        #else
-        #expect(Bool(true), "Test only runs on iOS")
-        #endif
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS {
+            // Then: Should be able to apply iOS optimizations
+            #expect(Bool(true), "iOS optimizations should be available")
+        }
     }
     
     @Test @MainActor func testPlatformSplitViewIOSOptimizationsApply() async {
         // Given: A split view
-        #if os(iOS)
-        let view = Text("Test")
-            .platformVerticalSplit_L4(spacing: 8) {
-                Text("First Pane")
-                Text("Second Pane")
-            }
-            .platformIOSSplitViewOptimizations_L5()
-        
-        // Then: iOS optimizations should be applied
-        #expect(Bool(true), "iOS optimizations should be applied to split view")
-        #else
-        #expect(Bool(true), "Test only runs on iOS")
-        #endif
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS {
+            let view = Text("Test")
+                .platformVerticalSplit_L4(spacing: 8) {
+                    Text("First Pane")
+                    Text("Second Pane")
+                }
+                .platformIOSSplitViewOptimizations_L5()
+            
+            // Then: iOS optimizations should be applied
+            #expect(Bool(true), "iOS optimizations should be applied to split view")
+        }
     }
     
     // MARK: - macOS-Specific Optimization Tests
     
     @Test @MainActor func testPlatformSplitViewMacOSOptimizationsExist() async {
         // Given: macOS-specific optimizations should exist
-        #if os(macOS)
-        // Then: Should be able to apply macOS optimizations
-        #expect(Bool(true), "macOS optimizations should be available")
-        #else
-        #expect(Bool(true), "Test only runs on macOS")
-        #endif
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .macOS {
+            // Then: Should be able to apply macOS optimizations
+            #expect(Bool(true), "macOS optimizations should be available")
+        }
     }
     
     @Test @MainActor func testPlatformSplitViewMacOSOptimizationsApply() async {
         // Given: A split view
-        #if os(macOS)
-        let view = Text("Test")
-            .platformVerticalSplit_L4(spacing: 0) {
-                Text("First Pane")
-                Text("Second Pane")
-            }
-            .platformMacOSSplitViewOptimizations_L5()
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .macOS {
+            let view = Text("Test")
+                .platformVerticalSplit_L4(spacing: 0) {
+                    Text("First Pane")
+                    Text("Second Pane")
+                }
+                .platformMacOSSplitViewOptimizations_L5()
         
-        // Then: macOS optimizations should be applied
-        #expect(Bool(true), "macOS optimizations should be applied to split view")
-        #else
-        #expect(Bool(true), "Test only runs on macOS")
-        #endif
+            // Then: macOS optimizations should be applied
+            #expect(Bool(true), "macOS optimizations should be applied to split view")
+        }
     }
     
     // MARK: - Cross-Platform Optimization Tests

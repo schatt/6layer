@@ -460,21 +460,22 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         TestSetupUtilities.shared.simulateiOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
-        // Only test iOS simulation when actually on iOS (simulation doesn't work on macOS)
-        #if os(iOS)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: true,
-            haptic: true,
-            hover: false,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: true
-        )
-        #else
-        // On macOS, simulation doesn't work due to thread/actor isolation
-        // Skip assertions - this is expected behavior
-        #endif
+        // Check runtime platform instead of compile-time platform
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS {
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: false,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true
+            )
+        } else {
+            // On other platforms, simulation may not work due to thread/actor isolation
+            // Skip assertions - this is expected behavior
+        }
     }
     
     @Test @MainActor func testGetCardExpansionPlatformConfig_macOS() async {
@@ -526,25 +527,25 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         TestSetupUtilities.shared.simulateVisionOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
-        // Only test visionOS simulation when actually on visionOS (simulation doesn't work on macOS)
-        #if os(visionOS)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: true,
-            haptic: true,
-            hover: true,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: true
-        )
+        // Check runtime platform instead of compile-time platform
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .visionOS {
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: true,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true
+            )
 
-        // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
-        #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
-        #else
-        // On macOS, simulation doesn't work due to thread/actor isolation
-        // Skip assertions - this is expected behavior
-        // Still verify minTouchTarget is set (may be macOS value)
-        #endif
+            // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
+            #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
+        } else {
+            // On other platforms, simulation may not work due to thread/actor isolation
+            // Skip assertions - this is expected behavior
+        }
     }
     
     @Test @MainActor func testGetCardExpansionPerformanceConfig() {
@@ -588,20 +589,16 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         #expect(configWithAccessibility.supportsSwitchControl, "Switch Control should be available on all platforms")
         
         // AssistiveTouch is only available on iOS and watchOS
-        #if os(iOS) || os(watchOS)
-        #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available on iOS and watchOS")
-        #else
-        // macOS testing default does NOT support AssistiveTouch
-        // visionOS testing default DOES support AssistiveTouch
-        // We need to check which platform we're testing
-        if config.supportsTouch {
-            // This is visionOS - should support AssistiveTouch
-            #expect(config.supportsAssistiveTouch, "visionOS testing default should support AssistiveTouch")
+        // Check runtime platform, not compile-time platform
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS || runtimePlatform == .watchOS {
+            #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available on iOS and watchOS")
         } else {
-            // This is macOS - should not support AssistiveTouch
-            #expect(!config.supportsAssistiveTouch, "macOS testing default should not support AssistiveTouch")
+            // macOS testing default does NOT support AssistiveTouch
+            // visionOS testing default does NOT support AssistiveTouch (AssistiveTouch is iOS/watchOS specific)
+            // tvOS testing default does NOT support AssistiveTouch
+            #expect(!config.supportsAssistiveTouch, "AssistiveTouch should not be available on \(runtimePlatform)")
         }
-        #endif
         
         // Test that touch target size is appropriate for current platform
         let currentPlatform = SixLayerPlatform.current
