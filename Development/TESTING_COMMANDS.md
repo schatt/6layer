@@ -26,7 +26,7 @@ swift test
 xcodebuild test \
   -workspace .swiftpm/xcode/package.xcworkspace \
   -scheme SixLayerFramework \
-  -destination "platform=macOS"
+  -destination "platform=macOS,arch=arm64"
 ```
 
 ### iOS Simulator Tests Only

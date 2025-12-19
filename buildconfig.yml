@@ -16,7 +16,7 @@ exclude_from_globals:
   - children
 platforms:
   - name: macOS
-    build_command: xcodebuild build -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=macOS"
+    build_command: xcodebuild build -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=macOS,arch=arm64"
     artifact_dir: build/macos
     artifact_patterns:
       - build/macos/*.app
