@@ -1,5 +1,5 @@
 // swift-tools-version: 6.0
-// SixLayerFramework v6.5.0 - Swift 6 Compilation Fixes & Test Infrastructure
+// SixLayerFramework v6.6.0 - Platform Capability Detection Fixes
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription

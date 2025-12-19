@@ -694,6 +694,22 @@ public struct FormProgressIndicator: View {
     
     public var body: some View {
         let i18n = InternationalizationService()
+        // Format string expects: %d of %d field%@
+        // Compute formatted text outside ViewBuilder to avoid type issues
+        let formatKey = "SixLayerFramework.form.progressFields"
+        let format = i18n.localizedString(for: formatKey)
+        let plural = progress.total == 1 ? "" : "s"
+        let formattedText: String = {
+            // Check if format string was found (not just the key returned)
+            if format != formatKey && format.contains("%d") {
+                // Format string found and has integer placeholders - use variadic arguments with Int
+                return String(format: format, progress.completed, progress.total, plural)
+            } else {
+                // Fallback if format string is missing or incorrect - use string interpolation
+                return "\(progress.completed) of \(progress.total) field\(plural)"
+            }
+        }()
+        
         return platformVStackContainer(alignment: .leading, spacing: 8) {
             platformHStackContainer {
                 Text(i18n.localizedString(for: "SixLayerFramework.form.progress"))
@@ -703,9 +719,7 @@ public struct FormProgressIndicator: View {
                 
                 Spacer()
                 
-                let format = i18n.localizedString(for: "SixLayerFramework.form.progressFields")
-                let plural = progress.total == 1 ? "" : "s"
-                Text(String(format: format, progress.completed, progress.total, plural))
+                Text(formattedText)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
