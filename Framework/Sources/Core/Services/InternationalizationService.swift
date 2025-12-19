@@ -57,11 +57,16 @@ public class InternationalizationService: ObservableObject {
     
     /// Framework bundle for loading framework-localized strings
     internal static let frameworkBundle: Bundle = {
-        // Get the bundle containing this class
+        // Try Bundle.module first (available when compiled as Swift Package)
+        // This is the modern way to access resources in SPM packages
+        #if SWIFT_PACKAGE
+        // When building as Swift Package, Bundle.module is available
+        return Bundle.module
+        #else
+        // When building as Xcode framework, use Bundle(for:) approach
         let bundle = Bundle(for: InternationalizationService.self)
         
-        // For Swift Package Manager, try to find the resource bundle
-        // SPM creates resource bundles with naming pattern: ModuleName_ModuleName.bundle
+        // Try to find the resource bundle (SPM creates resource bundles with naming pattern: ModuleName_ModuleName.bundle)
         if let resourceURL = bundle.resourceURL {
             // Try common SPM resource bundle naming patterns
             let possibleNames = [
@@ -76,8 +81,9 @@ public class InternationalizationService: ObservableObject {
             }
         }
         
-        // For frameworks embedded in apps, the bundle itself contains resources
+        // Fallback: the bundle itself contains resources
         return bundle
+        #endif
     }()
     
     /// App bundle for loading app-localized strings (defaults to main bundle)

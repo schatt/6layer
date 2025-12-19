@@ -1,12 +1,27 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.6.0 - Platform Capability Detection Fixes** 🎯
+## 📍 **Current Release: v6.6.1 - SPM Bundle Name Fix** 🎯
 
-**Release Date**: December 18, 2025
+**Release Date**: December 19, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility
-**Note**: Minor release fixing platform capability detection to align with Apple HIG. Includes platform-based minTouchTarget values, correct AssistiveTouch availability detection, runtime platform detection in tests, and accessibility feature test improvements.
+**Previous Release**: v6.6.0 - Platform Capability Detection Fixes
+**Note**: Patch release fixing Swift Package Manager bundle name issue. Updated to use Bundle.module for Swift Package builds with proper fallback for Xcode framework builds. Fixed CFBundleName in Info.plist and enhanced bundle identifier fix script.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.6.1 - SPM Bundle Name Fix** (December 19, 2025)
+
+### **What's Fixed:**
+
+#### **🔧 Swift Package Manager Bundle Resource Access**
+- **Bundle.module Support**: Updated InternationalizationService to use `Bundle.module` for Swift Package builds with conditional compilation (`#if SWIFT_PACKAGE`)
+- **Xcode Framework Fallback**: Maintained proper fallback for Xcode framework builds using `Bundle(for:)` approach
+- **CFBundleName Fix**: Fixed `CFBundleName` in Info.plist from `SixLayerFramework_SixLayerFramework` to `SixLayerFramework` (display name, not bundle path)
+- **Enhanced Fix Script**: Updated `fix_spm_bundle_identifier.sh` to also correct `CFBundleName` if incorrect
+- **Return Statement Fix**: Fixed formatting issue in DynamicFieldComponents.swift
+
+**See [RELEASE_v6.6.1.md](RELEASE_v6.6.1.md) for complete release notes.**
 
 ---
 

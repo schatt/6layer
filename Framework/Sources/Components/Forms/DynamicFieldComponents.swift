@@ -931,8 +931,7 @@ public struct DynamicMultiDateField: View {
     public var body: some View {
         let i18n = InternationalizationService()
         
-        return
-        platformVStackContainer(alignment: .leading, spacing: 8) {
+        return platformVStackContainer(alignment: .leading, spacing: 8) {
             Text(field.label)
                 .font(.subheadline)
                 .bold()
