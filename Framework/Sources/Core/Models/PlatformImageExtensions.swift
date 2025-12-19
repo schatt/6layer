@@ -308,8 +308,16 @@ public extension PlatformImage {
         }
         
         #if os(iOS)
-        return PlatformImage(cgImage: cgImage)
+        // Preserve original point-based size by keeping the original scale and orientation.
+        // Using a scale of 1.0 here would inflate size to raw pixel dimensions (e.g. 300x300 for a @3x 100x100 image).
+        let uiImage = UIImage(
+            cgImage: cgImage,
+            scale: self.uiImage.scale,
+            orientation: self.uiImage.imageOrientation
+        )
+        return PlatformImage(uiImage: uiImage)
         #elseif os(macOS)
+        // On macOS we already pass the logical size explicitly.
         return PlatformImage(cgImage: cgImage, size: self.size)
         #else
         return self
@@ -434,7 +442,13 @@ public extension PlatformImage {
         }
         
         #if os(iOS)
-        return PlatformImage(cgImage: cgImage)
+        // Preserve original logical size by honoring the original scale and orientation.
+        let uiImage = UIImage(
+            cgImage: cgImage,
+            scale: self.uiImage.scale,
+            orientation: self.uiImage.imageOrientation
+        )
+        return PlatformImage(uiImage: uiImage)
         #elseif os(macOS)
         return PlatformImage(cgImage: cgImage, size: self.size)
         #else

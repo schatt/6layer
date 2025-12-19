@@ -596,38 +596,20 @@ public struct RuntimeCapabilityDetection {
         #endif
     }
     
-    /// Detects if AssistiveTouch is actually available
-    /// Note: nonisolated - early returns use thread-local storage (no MainActor needed)
-    /// Only accesses MainActor APIs when actually querying OS (rare in tests)
+    /// Detects if AssistiveTouch capability is available on the current platform.
+    /// Semantics: **capability support**, not whether the user currently has AssistiveTouch turned on.
+    /// - iOS/watchOS: true by default (feature supported by OS)
+    /// - macOS/tvOS/visionOS: false by default
+    /// Test overrides take precedence.
     nonisolated public static var supportsAssistiveTouch: Bool {
         // Check for capability override first (thread-local, no MainActor needed)
         if let testValue = testAssistiveTouch {
             return testValue
         }
         
-        // Use real runtime detection - tests should run on actual platforms/simulators
-        #if os(iOS)
-        // Access MainActor API only when actually on iOS and not in test mode
-        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
-        // while preventing crashes during parallel test execution
-        if Thread.isMainThread {
-            return MainActor.assumeIsolated {
-                UIAccessibility.isAssistiveTouchRunning
-            }
-        } else {
-            return false  // Conservative default when not on main thread
-        }
-        #elseif os(macOS)
-        return detectmacOSAssistiveTouchSupport()
-        #elseif os(watchOS)
-        return detectwatchOSAssistiveTouchSupport()
-        #elseif os(tvOS)
-        return detecttvOSAssistiveTouchSupport()
-        #elseif os(visionOS)
-        return detectvisionOSAssistiveTouchSupport()
-        #else
-        return false
-        #endif
+        // Use testing defaults for platform-level capability support.
+        let defaults = TestingCapabilityDetection.getTestingDefaults(for: currentPlatform)
+        return defaults.supportsAssistiveTouch
     }
     
     // MARK: - Vision Framework Detection
