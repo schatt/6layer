@@ -38,3 +38,9 @@ TDD. DTRT. DRY. Epistemology
 - **MANDATORY**: Always run `swift test` first before any release activities
 - **MANDATORY**: Stop all release activities if tests fail
 - **MANDATORY**: Fix failing tests before proceeding with releases
+
+## **Git Hygiene (Commit Early and Often)**
+- **MANDATORY**: Encourage small, cohesive commits made early and often rather than large, delayed changesets.
+- **MANDATORY**: Before switching tasks or contexts, check for a logical unit of work to commit.
+- **MANDATORY**: Keep working trees clean; avoid accumulating unrelated uncommitted changes across many files.
+- **MANDATORY**: Follow the Git commit message practices defined in `.cursorrules` (clear what/why, issue links, imperative mood).

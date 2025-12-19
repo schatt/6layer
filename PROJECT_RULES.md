@@ -108,7 +108,7 @@ This script will:
 
 #### SwiftUI Test Validation
 - **All SwiftUI tests must pass with `xcodebuild test`**: This is the only way to validate actual UI rendering
-- **Command line validation**: Use `xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=macOS"`
+- **Command line validation**: Use `xcodebuild test -workspace .swiftpm/xcode/package.xcworkspace -scheme SixLayerFramework -destination "platform=macOS,arch=arm64"`
 - **No false positives**: `swift test` passing does not guarantee SwiftUI rendering works
 - **Real UI testing**: `xcodebuild test` provides the same testing as Xcode GUI testing
 

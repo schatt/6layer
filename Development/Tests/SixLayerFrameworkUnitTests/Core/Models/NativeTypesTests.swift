@@ -55,6 +55,7 @@ struct MockDataContainer: Equatable {
 /// NOTE: Not marked @MainActor on class to allow parallel execution
 open class NativeTypesTests: BaseTestClass {
     
+    @MainActor
     public func createTestFormState() -> DynamicFormState {
         let configuration = DynamicFormConfiguration(
             id: "test",
@@ -77,7 +78,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(contentType.rawValue == "image")
     }
     
-    @Test func testImageFieldNativeBinding() {
+    @Test @MainActor func testImageFieldNativeBinding() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -95,7 +96,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(retrievedImage == testImage)
     }
     
-    @Test func testURLFieldNativeBinding() {
+    @Test @MainActor func testURLFieldNativeBinding() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -121,7 +122,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(contentType.rawValue == "integer")
     }
     
-    @Test func testIntegerFieldNativeBinding() {
+    @Test @MainActor func testIntegerFieldNativeBinding() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -149,7 +150,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(contentType.rawValue == "array")
     }
     
-    @Test func testArrayFieldNativeBinding() {
+    @Test @MainActor func testArrayFieldNativeBinding() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -167,7 +168,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(retrievedArray == testArray)
     }
     
-    @Test func testRangeFieldConfiguration() {
+    @Test @MainActor func testRangeFieldConfiguration() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -197,7 +198,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(contentType.rawValue == "data")
     }
     
-    @Test func testDataFieldNativeBinding() {
+    @Test @MainActor func testDataFieldNativeBinding() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -225,7 +226,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(contentType.rawValue == "enum")
     }
     
-    @Test func testEnumFieldNativeBinding() {
+    @Test @MainActor func testEnumFieldNativeBinding() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -244,7 +245,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(retrievedStatus == testStatus)
     }
     
-    @Test func testOptionalTypeHandling() {
+    @Test @MainActor func testOptionalTypeHandling() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -261,7 +262,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(retrievedValue == nil, "retrievedValue should be nil when set to nil")
     }
     
-    @Test func testCustomTypeValidation() {
+    @Test @MainActor func testCustomTypeValidation() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -285,7 +286,7 @@ open class NativeTypesTests: BaseTestClass {
     
     // MARK: - Integration Tests
     
-    @Test func testMixedNativeTypesInForm() {
+    @Test @MainActor func testMixedNativeTypesInForm() {
         // Given
         let formState = createTestFormState()
         let fields = [
@@ -331,7 +332,7 @@ open class NativeTypesTests: BaseTestClass {
         #expect(photo?.id == "profile")
     }
     
-    @Test func testTypeSafetyWithWrongTypes() {
+    @Test @MainActor func testTypeSafetyWithWrongTypes() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(
@@ -349,7 +350,7 @@ open class NativeTypesTests: BaseTestClass {
     }
     
     
-    @Test func testImageMemoryManagement() {
+    @Test @MainActor func testImageMemoryManagement() {
         // Given
         let formState = createTestFormState()
         let field = DynamicFormField(

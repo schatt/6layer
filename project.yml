@@ -60,9 +60,13 @@ targets:
       ENABLE_TESTABILITY: YES
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
+      developmentTeam: Y53G7YPJSZ
       DEAD_CODE_STRIPPING: YES
       CLANG_ENABLE_MODULE_VERIFIER: YES
+      CODE_SIGN_IDENTITY: "Apple Development"
+      "CODE_SIGN_IDENTITY[sdk=iphoneos*]": "Apple Development"
+      "CODE_SIGN_IDENTITY[sdk=macosx*]": "Apple Development"
     dependencies: []
 
   # Unit tests - iOS
@@ -80,7 +84,7 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
       ENABLE_TESTING_SEARCH_PATHS: YES
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -99,7 +103,8 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
       ENABLE_TESTING_SEARCH_PATHS: YES
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
+      developmentTeam: Y53G7YPJSZ
       DEAD_CODE_STRIPPING: YES
     dependencies:
       - target: SixLayerFramework_macOS
@@ -118,7 +123,8 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
       ENABLE_TESTING_SEARCH_PATHS: YES
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
+      developmentTeam: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
       - package: ViewInspector
@@ -139,7 +145,8 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
       ENABLE_TESTING_SEARCH_PATHS: YES
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
+      developmentTeam: Y53G7YPJSZ
       DEAD_CODE_STRIPPING: YES
     dependencies:
       - target: SixLayerFramework_macOS
@@ -160,7 +167,8 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
       ENABLE_TESTING_SEARCH_PATHS: YES
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
+      developmentTeam: Y53G7YPJSZ
     dependencies:
       - target: SixLayerFramework_iOS
 
@@ -178,7 +186,8 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       CODE_SIGN_STYLE: Automatic
       ENABLE_TESTING_SEARCH_PATHS: YES
-      # Inherit DEVELOPMENT_TEAM from project settings
+      DEVELOPMENT_TEAM: Y53G7YPJSZ
+      developmentTeam: Y53G7YPJSZ
       DEAD_CODE_STRIPPING: YES
     dependencies:
       - target: SixLayerFramework_macOS

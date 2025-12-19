@@ -51,8 +51,8 @@ public func platformShowNotification_L1(
     
     // Check RTL for title and body
     let i18n = InternationalizationService(locale: locale ?? Locale.current)
-    let titleDirection = i18n.textDirection(for: title)
-    let bodyDirection = i18n.textDirection(for: body)
+    let _ = i18n.textDirection(for: title) // Reserved for future RTL support
+    let _ = i18n.textDirection(for: body) // Reserved for future RTL support
     
     // Schedule immediate notification
     // Note: UNNotificationContent doesn't directly support RTL, but the system
@@ -104,12 +104,12 @@ public func platformPresentAlert_L1(
     
     // Check RTL for title and message
     let i18n = InternationalizationService(locale: locale ?? Locale.current)
-    let titleDirection = i18n.textDirection(for: title)
+    let _ = i18n.textDirection(for: title) // Reserved for future RTL support
     let layoutDirection = i18n.getLayoutDirection()
     
     // If message provided, check its direction too
     if let message = message {
-        let messageDirection = i18n.textDirection(for: message)
+        let _ = i18n.textDirection(for: message) // Reserved for future RTL support
         // Use the dominant direction or mixed
     }
     

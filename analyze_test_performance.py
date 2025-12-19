@@ -200,7 +200,7 @@ def run_test_suite(suite_name, timeout=30):
                 "xcodebuild", "test",
                 "-workspace", ".swiftpm/xcode/package.xcworkspace",
                 "-scheme", "SixLayerFramework",
-                "-destination", "platform=macOS",
+                "-destination", "platform=macOS,arch=arm64",
                 "-only-testing", test_identifier,
                 "-quiet"
             ],

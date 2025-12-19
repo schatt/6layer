@@ -43,14 +43,15 @@ open class CrossPlatformColorTests: BaseTestClass {
     // MARK: - Cross-Platform Color Tests
     
     @Test func testCrossPlatformColorsAreAvailable() {
-        // Test that our cross-platform colors are accessible
-        #expect(Color.cardBackground != nil)
-        #expect(Color.secondaryBackground != nil)
-        #expect(Color.primaryBackground != nil)
-        #expect(Color.groupedBackground != nil)
-        #expect(Color.separator != nil)
-        #expect(Color.label != nil)
-        #expect(Color.secondaryLabel != nil)
+        // Test that our cross-platform colors are accessible (non-optional, verified at compile time)
+        let _ = Color.cardBackground
+        let _ = Color.secondaryBackground
+        let _ = Color.primaryBackground
+        let _ = Color.groupedBackground
+        let _ = Color.separator
+        let _ = Color.label
+        let _ = Color.secondaryLabel
+        #expect(Bool(true), "All cross-platform colors are accessible")
     }
     
     @Test func testCardBackgroundColorIsCrossPlatform() {

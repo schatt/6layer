@@ -40,6 +40,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
     
     // MARK: - Test Data
     
+    @MainActor
     private var formState: DynamicFormState {
         let configuration = DynamicFormConfiguration(
             id: "test-form",
@@ -165,7 +166,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating dynamic form view
-        let view = DynamicFormView(
+        _ = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )
@@ -203,7 +204,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating dynamic form view
-        let view = DynamicFormView(
+        _ = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )
@@ -300,7 +301,7 @@ open class DynamicFormGridLayoutTests: BaseTestClass {
         )
         
         // When: Creating dynamic form view
-        let view = DynamicFormView(
+        _ = DynamicFormView(
             configuration: configuration,
             onSubmit: { _ in }
         )

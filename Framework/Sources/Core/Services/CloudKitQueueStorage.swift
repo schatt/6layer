@@ -74,6 +74,11 @@ public protocol CloudKitQueueStorage {
     
     /// Clear all operations
     func clear() throws
+    
+    /// Get all operations (for status reporting and management)
+    /// - Returns: Array of all queued operations
+    /// - Note: May be slow for large queues. Storage implementations should optimize if possible.
+    func getAllOperations() throws -> [QueuedCloudKitOperation]
 }
 
 // MARK: - UserDefaults Implementation (Default)
@@ -129,6 +134,10 @@ public class UserDefaultsCloudKitQueueStorage: CloudKitQueueStorage {
     
     public func clear() throws {
         userDefaults.removeObject(forKey: key)
+    }
+    
+    public func getAllOperations() throws -> [QueuedCloudKitOperation] {
+        return try loadOperations()
     }
     
     // MARK: - Private Helpers

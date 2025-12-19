@@ -362,10 +362,10 @@ open class ModalContainerTests: BaseTestClass {
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_Performance() {
         // Given: Test strategy
-        let strategy = createTestModalStrategy()
+        _ = createTestModalStrategy()
         
         // When: Measuring performance
-        }
+        // TODO: Add performance measurement when test is implemented
     }
     
     @Test @MainActor func testPlatformModalContainer_Form_L4_PerformanceWithComplexStrategy() {
@@ -459,3 +459,4 @@ open class ModalContainerTests: BaseTestClass {
 /// TDD RED PHASE: This is a stub implementation for testing
 
 
+}

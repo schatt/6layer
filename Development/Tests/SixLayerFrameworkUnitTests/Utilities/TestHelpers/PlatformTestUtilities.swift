@@ -213,6 +213,9 @@ final class PlatformTestUtilities {
     }
     
     /// Test the behavioral implications of non-touch platform capabilities
+    /// This scenario is tvOS-specific; only run on tvOS to avoid conflicting with
+    /// platform-native minTouchTarget semantics on other platforms.
+    #if os(tvOS)
     @Test @MainActor static func testNonTouchPlatformBehavior() {
         // Set capability overrides to tvOS-like (non-touch platform)
         RuntimeCapabilityDetection.setTestTouchSupport(false)
@@ -252,8 +255,12 @@ final class PlatformTestUtilities {
         // Clean up test platform
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
+    #endif
     
     /// Test the behavioral implications of hover platform capabilities
+    /// This scenario is macOS-specific; only run on macOS to avoid asserting a
+    /// simulated macOS platform while actually running on iOS/tvOS/watchOS.
+    #if os(macOS)
     @Test @MainActor static func testHoverPlatformBehavior() {
         // Set test platform to macOS (hover platform)
         RuntimeCapabilityDetection.setTestTouchSupport(false); RuntimeCapabilityDetection.setTestHapticFeedback(false); RuntimeCapabilityDetection.setTestHover(true)
@@ -286,6 +293,7 @@ final class PlatformTestUtilities {
         // Clean up test platform
         RuntimeCapabilityDetection.clearAllCapabilityOverrides()
     }
+    #endif
     
     /// Test the behavioral implications of non-hover platform capabilities
     @Test static func testNonHoverPlatformBehavior() {

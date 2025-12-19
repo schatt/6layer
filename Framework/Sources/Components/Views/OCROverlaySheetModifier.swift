@@ -81,7 +81,7 @@ public struct OCROverlaySheetModifier: ViewModifier {
     private var errorStateView: some View {
         let i18n = InternationalizationService()
         
-        return platformVStackContainer(spacing: 16) {
+        platformVStackContainer(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.largeTitle)
                 .foregroundColor(.orange)

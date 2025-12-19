@@ -35,7 +35,7 @@ open class NavigationStackLayer6Tests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationStackEnhancements_L6_AppliesEnhancements() {
         // Given: A navigation stack view
         let content = Text("Test Content")
-            .platformNavigation {
+            .platformNavigation_L4 {
                 Text("Content")
             }
         
@@ -50,7 +50,7 @@ open class NavigationStackLayer6Tests: BaseTestClass {
     @Test @MainActor func testPlatformNavigationStackEnhancements_L6_PlatformSpecific() {
         // Given: A navigation stack view
         let content = Text("Test Content")
-            .platformNavigation {
+            .platformNavigation_L4 {
                 Text("Content")
             }
         

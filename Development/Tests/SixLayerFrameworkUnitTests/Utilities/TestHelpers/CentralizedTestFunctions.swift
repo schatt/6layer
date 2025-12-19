@@ -317,7 +317,7 @@ public func testComponentAccessibilityManual<T: View>(
     // Set to manual mode for this test
     config.mode = .manual
     
-    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+    let accessibilityTestPassed = testComponentCompliance(
         component,
         componentName: componentName,
         testName: testName
@@ -358,7 +358,7 @@ public func testComponentAccessibilitySemantic<T: View>(
     // Set to semantic mode for this test
     config.mode = .semantic
     
-    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+    let accessibilityTestPassed = testComponentCompliance(
         component,
         componentName: componentName,
         testName: testName
@@ -399,7 +399,7 @@ public func testComponentAccessibilityDisabled<T: View>(
     // Disable auto IDs for this test
     config.enableAutoIDs = false
     
-    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+    let accessibilityTestPassed = testComponentCompliance(
         component,
         componentName: componentName,
         expectedPattern: "",
@@ -435,7 +435,7 @@ public func testComponentAccessibility<T: View>(
     let component = createComponent()
     
     // Test: Accessibility identifier should be generated
-    let accessibilityTestPassed = testAccessibilityIdentifierGeneration(
+    let accessibilityTestPassed = testComponentCompliance(
         component,
         componentName: componentName,
         testName: testName

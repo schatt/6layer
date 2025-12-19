@@ -1,12 +1,32 @@
 # 🚀 Six-Layer Framework Release History
 
-## 📍 **Current Release: v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility** 🎯
+## 📍 **Current Release: v6.6.0 - Platform Capability Detection Fixes** 🎯
 
-**Release Date**: December 16, 2025
+**Release Date**: December 18, 2025
 **Status**: ✅ **COMPLETE**
-**Previous Release**: v6.4.2 - Platform Bottom-Bar Toolbar Placement Helper
-**Note**: Minor release enhancing CloudKitService for Core Data integration (Issue #127) and ensuring full Swift 6 compatibility. Includes CloudKitService improvements for Core Data-based applications, fixes for Swift 6 compilation errors, and actor isolation issues in test files.
+**Previous Release**: v6.5.0 - CloudKitService Core Data Integration & Swift 6 Compatibility
+**Note**: Minor release fixing platform capability detection to align with Apple HIG. Includes platform-based minTouchTarget values, correct AssistiveTouch availability detection, runtime platform detection in tests, and accessibility feature test improvements.
 **Next Release**: TBD
+
+---
+
+## 🎯 **v6.6.0 - Platform Capability Detection Fixes** (December 18, 2025)
+
+### **What's Fixed:**
+
+#### **🔧 Platform Capability Detection Alignment with Apple HIG**
+- **minTouchTarget Platform-Based**: Changed `minTouchTarget` to be purely platform-based (44.0 for iOS/watchOS, 0.0 for others) per Apple Human Interface Guidelines, reflecting the platform's primary interaction method rather than runtime capability detection
+- **AssistiveTouch Availability**: Fixed `supportsAssistiveTouch` to correctly check platform availability (iOS/watchOS = true, others = false) instead of relying on testing defaults
+- **Runtime Platform Detection**: Updated tests to use runtime `RuntimeCapabilityDetection.currentPlatform` instead of compile-time `#if os(...)` checks for better test accuracy
+- **Accessibility Feature Testing**: Fixed VoiceOver and Switch Control detection in tests by properly setting test overrides for enabled state checking
+- **Test Suite Name Fix**: Corrected test suite name from "mac O S Window Detection" to "macOS Window Detection"
+
+#### **🧪 Test Infrastructure Improvements**
+- **Platform Feature Matrix Tests**: Updated `testPlatformFeatureMatrix()` to properly test platform defaults with capability override clearing
+- **Cross-Platform Tests**: Updated multiple test files to use runtime platform detection for assertions
+- **Accessibility Test Overrides**: Properly configured test overrides for accessibility features that check enabled state
+
+**See [RELEASE_v6.6.0.md](RELEASE_v6.6.0.md) for complete release notes.**
 
 ---
 

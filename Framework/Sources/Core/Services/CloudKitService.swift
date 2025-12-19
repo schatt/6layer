@@ -47,6 +47,40 @@ public struct SaveResult {
     }
 }
 
+// MARK: - CloudKit Queue Status
+
+/// Status information about the CloudKit operation queue
+public struct QueueStatus {
+    /// Total number of operations in the queue
+    public let totalCount: Int
+    
+    /// Number of operations with pending status
+    public let pendingCount: Int
+    
+    /// Number of operations with failed status
+    public let failedCount: Int
+    
+    /// Date of the oldest pending operation, if any
+    public let oldestPendingDate: Date?
+    
+    /// Number of failed operations that can be retried (status == "failed" AND retryCount < maxRetries)
+    public let retryableCount: Int
+    
+    public init(
+        totalCount: Int,
+        pendingCount: Int,
+        failedCount: Int,
+        oldestPendingDate: Date?,
+        retryableCount: Int
+    ) {
+        self.totalCount = totalCount
+        self.pendingCount = pendingCount
+        self.failedCount = failedCount
+        self.oldestPendingDate = oldestPendingDate
+        self.retryableCount = retryableCount
+    }
+}
+
 // MARK: - CloudKit Service Error Types
 
 /// Errors that can occur during CloudKit service operations
@@ -1137,6 +1171,90 @@ public class CloudKitService: ObservableObject {
         archiver.finishEncoding()
         let data = archiver.encodedData
         UserDefaults.standard.set(data, forKey: syncTokenKey)
+    }
+    
+    // MARK: - Queue Status Reporting
+    
+    /// Get current status of the operation queue
+    /// - Returns: QueueStatus with statistics about pending, failed, and retryable operations
+    /// - Note: May be slow for large queues. Consider caching if called frequently.
+    public var queueStatus: QueueStatus {
+        get throws {
+            guard let storage = queueStorage else {
+                return QueueStatus(
+                    totalCount: 0,
+                    pendingCount: 0,
+                    failedCount: 0,
+                    oldestPendingDate: nil,
+                    retryableCount: 0
+                )
+            }
+            
+            let allOperations = try storage.getAllOperations()
+            
+            let pendingOperations = allOperations.filter { $0.status == "pending" }
+            let failedOperations = allOperations.filter { $0.status == "failed" }
+            
+            let oldestPendingDate = pendingOperations
+                .map { $0.timestamp }
+                .min()
+            
+            let retryableCount = failedOperations.filter { operation in
+                operation.retryCount < operation.maxRetries
+            }.count
+            
+            return QueueStatus(
+                totalCount: allOperations.count,
+                pendingCount: pendingOperations.count,
+                failedCount: failedOperations.count,
+                oldestPendingDate: oldestPendingDate,
+                retryableCount: retryableCount
+            )
+        }
+    }
+    
+    /// Retry failed operations that haven't exceeded their maximum retry count
+    /// - Note: Operations with `status == "failed"` AND `retryCount < maxRetries` will be reset to pending status
+    public func retryFailedOperations() async throws {
+        guard let storage = queueStorage else {
+            throw CloudKitServiceError.unknown(NSError(domain: "CloudKitService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Queue storage not available"]))
+        }
+        
+        let allOperations = try storage.getAllOperations()
+        let retryableOperations = allOperations.filter { operation in
+            operation.status == "failed" && operation.retryCount < operation.maxRetries
+        }
+        
+        // Remove retryable operations from storage
+        for operation in retryableOperations {
+            try storage.remove(operation)
+        }
+        
+        // Re-enqueue with reset status (preserve original timestamp)
+        for operation in retryableOperations {
+            var retriedOperation = operation
+            retriedOperation.status = "pending"
+            retriedOperation.retryCount = 0
+            retriedOperation.nextRetryAt = nil
+            retriedOperation.errorMessage = nil
+            // Preserve original timestamp
+            try storage.enqueue(retriedOperation)
+        }
+    }
+    
+    /// Clear all failed operations from the queue
+    /// - Note: Only removes operations with `status == "failed"`. Pending and other operations are preserved.
+    public func clearFailedOperations() throws {
+        guard let storage = queueStorage else {
+            throw CloudKitServiceError.unknown(NSError(domain: "CloudKitService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Queue storage not available"]))
+        }
+        
+        let allOperations = try storage.getAllOperations()
+        let failedOperations = allOperations.filter { $0.status == "failed" }
+        
+        for operation in failedOperations {
+            try storage.remove(operation)
+        }
     }
     
     // MARK: - Private Helpers

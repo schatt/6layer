@@ -135,6 +135,7 @@ public class FormTestHelper {
     // MARK: - Form State Management
 
     /// Create a DynamicFormState from fields
+    @MainActor
     public func createFormState(from fields: [DynamicFormField]) -> DynamicFormState {
         // Create a section with all fields
         let section = DynamicFormSection(
@@ -157,16 +158,19 @@ public class FormTestHelper {
     }
 
     /// Simulate field input
+    @MainActor
     public func simulateFieldInput(fieldId: String, value: Any, in state: DynamicFormState) {
         state.setValue(value, for: fieldId)
     }
 
     /// Get field value from form state
+    @MainActor
     public func getFieldValue(from state: DynamicFormState, fieldId: String) -> Any? {
         return state.getValue(for: fieldId) as Any?
     }
 
     /// Validate form state
+    @MainActor
     public func validateForm(_ state: DynamicFormState, requiredFields: [String]) -> [String] {
         var errors: [String] = []
 
@@ -186,6 +190,7 @@ public class FormTestHelper {
     // MARK: - Form Interaction Simulation
 
     /// Simulate form submission
+    @MainActor
     public func simulateFormSubmission(
         state: DynamicFormState,
         fields: [DynamicFormField],
@@ -204,6 +209,7 @@ public class FormTestHelper {
     }
 
     /// Create form data dictionary from fields and state
+    @MainActor
     public func createFormData(from fields: [DynamicFormField], state: DynamicFormState) -> [String: Any] {
         var formData: [String: Any] = [:]
 
@@ -233,6 +239,7 @@ public class FormTestHelper {
     }
 
     /// Populate form state with test data
+    @MainActor
     public func populateFormWithTestData(_ state: DynamicFormState, fields: [DynamicFormField]) {
         let testData = generateTestUserData()
 

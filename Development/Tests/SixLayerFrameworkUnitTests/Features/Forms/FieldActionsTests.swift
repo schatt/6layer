@@ -45,6 +45,7 @@ open class FieldActionsTests: BaseTestClass {
     
     // MARK: - Test Setup
     
+    @MainActor
     private func createTestFormState() -> DynamicFormState {
         let config = DynamicFormConfiguration(
             id: "test-form",

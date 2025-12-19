@@ -26,16 +26,8 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
         
         // When: Manager is initialized
         // It should detect the current platform correctly
-        #if os(iOS)
-        #expect(manager.currentPlatform == .iOS, "Manager should detect iOS platform")
-        #elseif os(macOS)
-        #expect(manager.currentPlatform == .macOS, "Manager should detect macOS platform")
-        #elseif os(visionOS)
-        #expect(manager.currentPlatform == .visionOS, "Manager should detect visionOS platform")
-        #elseif os(watchOS)
-        #expect(manager.currentPlatform == .watchOS, "Manager should detect watchOS platform")
-        #elseif os(tvOS)
-        #expect(manager.currentPlatform == .tvOS, "Manager should detect tvOS platform")
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        #expect(manager.currentPlatform == runtimePlatform, "Manager should detect current platform (\(runtimePlatform))")
         
         // Then: UI patterns should be configured for the detected platform
         let patterns = manager.uiPatterns
@@ -43,7 +35,6 @@ open class Layer6PlatformOptimizationTests: BaseTestClass {
         #expect(patterns.navigationPatterns.platform == manager.currentPlatform, "Navigation patterns should match current platform")
         // Should have a primary navigation type configured
         #expect(patterns.navigationPatterns.primaryNavigation != .navigationStack || manager.currentPlatform == .iOS, "Should have platform-appropriate navigation")
-        #endif
     }
     
     // MARK: - Accessibility Testing Suite Tests (RED PHASE)

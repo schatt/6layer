@@ -596,38 +596,29 @@ public struct RuntimeCapabilityDetection {
         #endif
     }
     
-    /// Detects if AssistiveTouch is actually available
-    /// Note: nonisolated - early returns use thread-local storage (no MainActor needed)
-    /// Only accesses MainActor APIs when actually querying OS (rare in tests)
+    /// Detects if AssistiveTouch capability is available on the current platform.
+    /// Semantics: **platform availability** - whether the platform supports AssistiveTouch as a feature.
+    /// - iOS/watchOS: true (feature supported by OS)
+    /// - macOS/tvOS/visionOS: false (not supported by OS)
+    /// 
+    /// Note: This checks platform availability, not whether the user has it enabled.
+    /// Test overrides can simulate different platforms, but platform detection is authoritative for availability.
     nonisolated public static var supportsAssistiveTouch: Bool {
-        // Check for capability override first (thread-local, no MainActor needed)
+        // Check for capability override first (allows testing different scenarios)
+        // But availability is fundamentally based on platform
         if let testValue = testAssistiveTouch {
             return testValue
         }
         
-        // Use real runtime detection - tests should run on actual platforms/simulators
-        #if os(iOS)
-        // Access MainActor API only when actually on iOS and not in test mode
-        // Use Thread.isMainThread check with MainActor.assumeIsolated to satisfy compiler
-        // while preventing crashes during parallel test execution
-        if Thread.isMainThread {
-            return MainActor.assumeIsolated {
-                UIAccessibility.isAssistiveTouchRunning
-            }
-        } else {
-            return false  // Conservative default when not on main thread
+        // Platform availability: iOS and watchOS support AssistiveTouch
+        // Other platforms do not support it
+        let platform = currentPlatform
+        switch platform {
+        case .iOS, .watchOS:
+            return true  // Platform supports AssistiveTouch
+        case .macOS, .tvOS, .visionOS:
+            return false  // Platform does not support AssistiveTouch
         }
-        #elseif os(macOS)
-        return detectmacOSAssistiveTouchSupport()
-        #elseif os(watchOS)
-        return detectwatchOSAssistiveTouchSupport()
-        #elseif os(tvOS)
-        return detecttvOSAssistiveTouchSupport()
-        #elseif os(visionOS)
-        return detectvisionOSAssistiveTouchSupport()
-        #else
-        return false
-        #endif
     }
     
     // MARK: - Vision Framework Detection
@@ -951,19 +942,24 @@ public extension RuntimeCapabilityDetection {
     }
     
     /// Minimum touch target size for accessibility compliance
-    /// Respects test platform override - returns platform-correct value based on mocked platform
     /// Platform-native values: iOS/watchOS = 44.0, macOS/tvOS/visionOS = 0.0
+    /// 
+    /// Apple HIG: "Provide ample touch targets. Try to maintain a minimum tappable area
+    /// of 44x44 points for all controls." This guideline applies to touch-first platforms
+    /// (iOS/watchOS) regardless of whether touch is currently enabled, as these platforms
+    /// are designed for touch interaction.
+    /// 
     /// Note: nonisolated - this property only does platform switching, no MainActor APIs accessed
     nonisolated static var minTouchTarget: CGFloat {
-        // Use real platform detection - tests should run on actual platforms/simulators
         let platform = currentPlatform
         
-        // Return platform-native value regardless of touch support state
+        // Return platform-native value based on platform's primary interaction method
+        // This follows Apple HIG guidelines for touch-first platforms
         switch platform {
         case .iOS, .watchOS:
-            return 44.0  // Apple's minimum touch target size (native touch platforms)
+            return 44.0  // Apple HIG minimum touch target size for touch-first platforms
         case .macOS, .tvOS, .visionOS:
-            return 0.0   // No touch targets on these platforms (platform-native)
+            return 0.0   // No touch target requirement on non-touch-first platforms
         }
     }
     

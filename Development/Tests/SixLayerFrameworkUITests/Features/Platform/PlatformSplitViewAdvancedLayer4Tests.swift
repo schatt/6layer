@@ -145,23 +145,21 @@ open class PlatformSplitViewAdvancedLayer4Tests: BaseTestClass {
     // MARK: - Cross-Platform Behavior Tests
     
     @Test @MainActor func testPlatformSplitViewAdvancedFeaturesWorkOnIOS() async {
-        #if os(iOS)
-        // Given: Advanced features on iOS
-        // Then: Should work appropriately (may have platform-specific behavior)
-        #expect(Bool(true), "Advanced features should work on iOS")
-        #else
-        #expect(Bool(true), "Test only runs on iOS")
-        #endif
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS {
+            // Given: Advanced features on iOS
+            // Then: Should work appropriately (may have platform-specific behavior)
+            #expect(Bool(true), "Advanced features should work on iOS")
+        }
     }
     
     @Test @MainActor func testPlatformSplitViewAdvancedFeaturesWorkOnMacOS() async {
-        #if os(macOS)
-        // Given: Advanced features on macOS
-        // Then: Should work appropriately (may have platform-specific behavior)
-        #expect(Bool(true), "Advanced features should work on macOS")
-        #else
-        #expect(Bool(true), "Test only runs on macOS")
-        #endif
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .macOS {
+            // Given: Advanced features on macOS
+            // Then: Should work appropriately (may have platform-specific behavior)
+            #expect(Bool(true), "Advanced features should work on macOS")
+        }
     }
 }
 

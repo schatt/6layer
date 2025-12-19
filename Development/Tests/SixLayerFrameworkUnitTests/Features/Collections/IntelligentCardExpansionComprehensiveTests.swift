@@ -100,7 +100,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyItems: [MenuItem] = []
-            let view = platformPresentItemCollection_L1(
+            _ = platformPresentItemCollection_L1(
                 items: emptyItems,
                 hints: hints
             )
@@ -130,7 +130,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             )
             
             let emptyItems: [MenuItem] = []
-            let view = platformPresentItemCollection_L1(
+            _ = platformPresentItemCollection_L1(
                 items: emptyItems,
                 hints: hints
             )
@@ -150,7 +150,7 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             context: .dashboard
         )
         
-        let view = platformPresentItemCollection_L1(
+        _ = platformPresentItemCollection_L1(
             items: sampleMenuItems,
             hints: hints
         )
@@ -460,21 +460,22 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         TestSetupUtilities.shared.simulateiOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
-        // Only test iOS simulation when actually on iOS (simulation doesn't work on macOS)
-        #if os(iOS)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: true,
-            haptic: true,
-            hover: false,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: true
-        )
-        #else
-        // On macOS, simulation doesn't work due to thread/actor isolation
-        // Skip assertions - this is expected behavior
-        #endif
+        // Check runtime platform instead of compile-time platform
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS {
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: false,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true
+            )
+        } else {
+            // On other platforms, simulation may not work due to thread/actor isolation
+            // Skip assertions - this is expected behavior
+        }
     }
     
     @Test @MainActor func testGetCardExpansionPlatformConfig_macOS() async {
@@ -526,25 +527,25 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
         TestSetupUtilities.shared.simulateVisionOSCapabilities()
         let config = getCardExpansionPlatformConfig()
 
-        // Only test visionOS simulation when actually on visionOS (simulation doesn't work on macOS)
-        #if os(visionOS)
-        TestSetupUtilities.shared.assertCardExpansionConfig(
-            config,
-            touch: true,
-            haptic: true,
-            hover: true,
-            voiceOver: true,
-            switchControl: true,
-            assistiveTouch: true
-        )
+        // Check runtime platform instead of compile-time platform
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .visionOS {
+            TestSetupUtilities.shared.assertCardExpansionConfig(
+                config,
+                touch: true,
+                haptic: true,
+                hover: true,
+                voiceOver: true,
+                switchControl: true,
+                assistiveTouch: true
+            )
 
-        // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
-        #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
-        #else
-        // On macOS, simulation doesn't work due to thread/actor isolation
-        // Skip assertions - this is expected behavior
-        // Still verify minTouchTarget is set (may be macOS value)
-        #endif
+            // visionOS should have platform-correct minTouchTarget (0.0, not 44.0)
+            #expect(config.minTouchTarget == 0.0, "visionOS should have 0.0 touch target (platform-native)")
+        } else {
+            // On other platforms, simulation may not work due to thread/actor isolation
+            // Skip assertions - this is expected behavior
+        }
     }
     
     @Test @MainActor func testGetCardExpansionPerformanceConfig() {
@@ -556,8 +557,10 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
     }
     
     @Test @MainActor func testPlatformFeatureMatrix() {
-            initializeTestConfig()
-        // Test that platform features are correctly detected
+        initializeTestConfig()
+        // Clear any existing capability overrides to test platform defaults
+        RuntimeCapabilityDetection.clearAllCapabilityOverrides()
+        // Test that platform features are correctly detected based on platform defaults
         let config = getCardExpansionPlatformConfig()
         
         // Test feature combinations that should be mutually exclusive
@@ -579,38 +582,33 @@ open class IntelligentCardExpansionComprehensiveTests: BaseTestClass {    // MAR
             }
         }
         
-        // Test that accessibility features are always available
-        // Set accessibility capability overrides to ensure they're detected
+        // Test that accessibility features are correctly detected based on platform
+        // VoiceOver and Switch Control are available on all platforms
+        // Note: supportsVoiceOver/supportsSwitchControl check if currently enabled,
+        // so we set overrides to test platform availability
         RuntimeCapabilityDetection.setTestVoiceOver(true)
         RuntimeCapabilityDetection.setTestSwitchControl(true)
         let configWithAccessibility = getCardExpansionPlatformConfig()
         #expect(configWithAccessibility.supportsVoiceOver, "VoiceOver should be available on all platforms")
         #expect(configWithAccessibility.supportsSwitchControl, "Switch Control should be available on all platforms")
         
-        // AssistiveTouch is only available on iOS and watchOS
-        #if os(iOS) || os(watchOS)
-        #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available on iOS and watchOS")
-        #else
-        // macOS testing default does NOT support AssistiveTouch
-        // visionOS testing default DOES support AssistiveTouch
-        // We need to check which platform we're testing
-        if config.supportsTouch {
-            // This is visionOS - should support AssistiveTouch
-            #expect(config.supportsAssistiveTouch, "visionOS testing default should support AssistiveTouch")
+        // AssistiveTouch is only available on iOS and watchOS (platform capability, not user setting)
+        // Verify platform detection returns correct defaults without needing overrides
+        let runtimePlatform = RuntimeCapabilityDetection.currentPlatform
+        if runtimePlatform == .iOS || runtimePlatform == .watchOS {
+            #expect(config.supportsAssistiveTouch, "AssistiveTouch should be available on iOS and watchOS (platform capability)")
         } else {
-            // This is macOS - should not support AssistiveTouch
-            #expect(!config.supportsAssistiveTouch, "macOS testing default should not support AssistiveTouch")
+            // macOS, tvOS, and visionOS do not support AssistiveTouch
+            #expect(!config.supportsAssistiveTouch, "AssistiveTouch should not be available on \(runtimePlatform)")
         }
-        #endif
         
         // Test that touch target size is appropriate for current platform
+        // Apple HIG: 44pt minimum applies to touch-first platforms (iOS/watchOS)
+        // regardless of whether touch is currently enabled, as these platforms
+        // are designed for touch interaction
         let currentPlatform = SixLayerPlatform.current
-        if config.supportsTouch && (currentPlatform == .iOS || currentPlatform == .watchOS) {
-            #expect(config.minTouchTarget >= 44, "Touch targets should be at least 44pt on touch platforms")
-        } else {
-            // On non-touch platforms, minTouchTarget should be 0.0
-            #expect(config.minTouchTarget == 0.0, "Non-touch platforms should have 0.0 minTouchTarget")
-        }
+        let expectedMinTouchTarget: CGFloat = (currentPlatform == .iOS || currentPlatform == .watchOS) ? 44.0 : 0.0
+        #expect(config.minTouchTarget == expectedMinTouchTarget, "Touch targets should be platform-appropriate (\(expectedMinTouchTarget)) for \(currentPlatform)")
     }
     
     // MARK: - Layer 6 Tests: Platform System

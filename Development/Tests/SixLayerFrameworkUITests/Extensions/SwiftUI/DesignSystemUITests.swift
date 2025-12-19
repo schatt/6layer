@@ -13,6 +13,7 @@ class DesignSystemUITests: XCTestCase {
 
     // MARK: - Themed Component Tests
 
+    @MainActor
     func testThemedCardStyle() {
         // Test that themed card applies design system styling
         let view = ThemedFrameworkView {
@@ -25,6 +26,7 @@ class DesignSystemUITests: XCTestCase {
         XCTAssertNotNil(view)
     }
 
+    @MainActor
     func testThemedTextFieldStyle() {
         // Test that themed text field applies design system styling
         let view = ThemedFrameworkView {
@@ -35,6 +37,7 @@ class DesignSystemUITests: XCTestCase {
         XCTAssertNotNil(view)
     }
 
+    @MainActor
     func testThemedProgressBar() {
         // Test that themed progress bar uses design tokens
         let view = ThemedFrameworkView {
@@ -170,6 +173,7 @@ class DesignSystemUITests: XCTestCase {
 
     // MARK: - Environment Integration Tests
 
+    @MainActor
     func testThemedFrameworkViewProvidesEnvironment() {
         // Test that ThemedFrameworkView provides the necessary environment
         let view = ThemedFrameworkView {

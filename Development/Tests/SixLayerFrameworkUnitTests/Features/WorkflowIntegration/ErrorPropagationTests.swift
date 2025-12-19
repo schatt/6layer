@@ -505,7 +505,9 @@ final class ErrorPropagationTests: BaseTestClass {
             var usedFallback = false
             var result: String
             
+            // Test fallback path (isFeatureAvailable is false to test graceful degradation)
             if isFeatureAvailable {
+                // This branch tests the primary path when feature is available
                 result = "Primary feature result"
             } else {
                 // Graceful degradation to fallback

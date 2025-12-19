@@ -247,7 +247,7 @@ public enum FieldActionError: Error, LocalizedError {
         validationTypes: [TextType]? = nil
     )
     
-    public enum ScanningType {
+    public enum ScanningType: Sendable {
         case barcode
         case ocr
     }
