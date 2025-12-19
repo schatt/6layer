@@ -22,7 +22,7 @@ import Testing
  * - Validate platform integration
  */
 
-@Suite("mac O S Window Detection")
+@Suite("macOS Window Detection")
 open class macOSWindowDetectionTests: BaseTestClass {
     
     @Test func testmacOSWindowDetectionInitialization() {
