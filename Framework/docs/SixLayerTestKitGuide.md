@@ -18,7 +18,7 @@ SixLayerTestKit is distributed as a separate Swift package product. Add it to yo
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourorg/sixlayer", from: "6.4.0"),
+    .package(url: "https://github.com/schatt/sixlayer", from: "6.4.0"),
 ],
 targets: [
     .testTarget(
