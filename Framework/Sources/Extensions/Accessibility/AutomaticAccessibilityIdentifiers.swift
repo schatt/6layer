@@ -478,55 +478,42 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         let capturedNamespace = config.namespace
         let capturedGlobalPrefix = config.globalPrefix
         
-        // Same logic as AutomaticComplianceModifier: respect both global and local settings
-        // Environment variable can override: if explicitly set to false, disable even if global is on
+        // .named() should ALWAYS apply when explicitly called, regardless of global settings
+        // This is an explicit modifier call - user intent is clear
+        // No guard needed - always apply when modifier is explicitly used
         // CRITICAL: Use captured value instead of accessing @Published property directly
-        let shouldApply: Bool
-        if !globalAutomaticAccessibilityIdentifiers {
-            // Environment variable is false - respect local override (disable even if global is on)
-            shouldApply = false
-        } else {
-            // Environment variable is true (or default true) - use normal logic
-            shouldApply = capturedEnableAutoIDs || globalAutomaticAccessibilityIdentifiers
-        }
         
         // Debug logging to help diagnose identifier generation
         if capturedEnableDebugLogging {
-            let debugMsg = "🔍 NAMED MODIFIER DEBUG: body() called for '\(componentName)' - enableAutoIDs=\(capturedEnableAutoIDs), globalAutomaticAccessibilityIdentifiers=\(globalAutomaticAccessibilityIdentifiers), shouldApply=\(shouldApply)"
+            let debugMsg = "🔍 NAMED MODIFIER DEBUG: body() called for '\(componentName)' - .named() always applies when explicitly called"
             print(debugMsg)
             fflush(stdout)
             config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
         }
         
-        if shouldApply {
-                let identifier = Self.generateIdentifier(
-                    config: config,
-                    componentName: componentName,
-                    capturedScreenContext: capturedScreenContext,
-                    capturedViewHierarchy: capturedViewHierarchy,
-                    capturedEnableUITestIntegration: capturedEnableUITestIntegration,
-                    capturedIncludeComponentNames: capturedIncludeComponentNames,
-                    capturedIncludeElementTypes: capturedIncludeElementTypes,
-                    capturedNamespace: capturedNamespace,
-                    capturedGlobalPrefix: capturedGlobalPrefix
-                )
-            if capturedEnableDebugLogging {
-                let debugMsg = "🔍 NAMED MODIFIER DEBUG: Applying identifier '\(identifier)' to view '\(componentName)'"
-                print(debugMsg)
-                fflush(stdout)
-                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
-            }
-            // Wrap in AnyView to satisfy type erasure requirement (different branches return different types)
-            return AnyView(content.accessibilityIdentifier(identifier))
-        } else {
-            if capturedEnableDebugLogging {
-                let debugMsg = "🔍 NAMED MODIFIER DEBUG: NOT applying identifier for '\(componentName)' - conditions not met"
-                print(debugMsg)
-                fflush(stdout)
-                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
-            }
-            return AnyView(content)
+        // Always apply - .named() is an explicit modifier call
+        let identifier = Self.generateIdentifier(
+            config: config,
+            componentName: componentName,
+            capturedScreenContext: capturedScreenContext,
+            capturedViewHierarchy: capturedViewHierarchy,
+            capturedEnableUITestIntegration: capturedEnableUITestIntegration,
+            capturedIncludeComponentNames: capturedIncludeComponentNames,
+            capturedIncludeElementTypes: capturedIncludeElementTypes,
+            capturedNamespace: capturedNamespace,
+            capturedGlobalPrefix: capturedGlobalPrefix
+        )
+        if capturedEnableDebugLogging {
+            let debugMsg = "🔍 NAMED MODIFIER DEBUG: Applying identifier '\(identifier)' to view '\(componentName)'"
+            print(debugMsg)
+            fflush(stdout)
+            config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
         }
+        // Apply identifier directly to content and mark as explicitly set
+        return content
+            .environment(\.accessibilityIdentifierName, componentName)
+            .environment(\.explicitAccessibilityIdentifierSet, true)
+            .accessibilityIdentifier(identifier)
     }
     
     // Note: Not @MainActor - this function only does string manipulation and config access
@@ -575,14 +562,19 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         identifierComponents.append(viewHierarchyPath)
         
         if capturedIncludeComponentNames {
-            identifierComponents.append(componentName)
+            // If componentName is empty, use "element" as fallback
+            let nameToAdd = componentName.isEmpty ? "element" : componentName
+            identifierComponents.append(nameToAdd)
         }
         
         if capturedIncludeElementTypes {
             identifierComponents.append("View")
         }
         
-        return identifierComponents.joined(separator: ".")
+        let identifier = identifierComponents.joined(separator: ".")
+        
+        // Ensure identifier is never empty - if all components were empty, return at least "element"
+        return identifier.isEmpty ? "element" : identifier
         }
     }
 }
@@ -686,7 +678,9 @@ public struct NamedModifier: ViewModifier {
         identifierComponents.append(viewHierarchyPath)
         
         // Add the actual name that was passed to the modifier
-        identifierComponents.append(name)
+        // If name is empty, use "element" as fallback to ensure identifier is always generated
+        let componentName = name.isEmpty ? "element" : name
+        identifierComponents.append(componentName)
         
         let identifier = identifierComponents.joined(separator: ".")
         

@@ -326,9 +326,12 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     // We do NOT apply .automaticCompliance() here because that would test the test helper,
     // not the framework components.
     // CRITICAL: Set both the environment variable AND inject the config to ensure modifiers can access it
+    // CRITICAL: Preserve explicitAccessibilityIdentifierSet flag if it was already set
+    // This ensures .exactNamed() and .named() identifiers aren't lost when wrapping the view
     let viewWithEnvironment = view
         .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
         .environment(\.accessibilityIdentifierConfig, config)
+        // Note: explicitAccessibilityIdentifierSet is preserved automatically through view hierarchy
     
     #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
     // Use try? to safely call inspect() - if ViewInspector crashes internally, try? won't help,
