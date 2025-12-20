@@ -65,6 +65,12 @@ public struct AccessibilityIdentifierConfigKey: EnvironmentKey {
     public static let defaultValue: AccessibilityIdentifierConfig? = nil
 }
 
+/// Environment key to track if an explicit accessibility identifier was set
+/// When set to true, .automaticCompliance() will not override the identifier
+public struct ExplicitAccessibilityIdentifierSetKey: EnvironmentKey {
+    public static let defaultValue: Bool = false
+}
+
 // MARK: - Environment Extensions
 
 extension EnvironmentValues {
@@ -96,6 +102,11 @@ extension EnvironmentValues {
     public var accessibilityIdentifierConfig: AccessibilityIdentifierConfig? {
         get { self[AccessibilityIdentifierConfigKey.self] }
         set { self[AccessibilityIdentifierConfigKey.self] = newValue }
+    }
+    
+    public var explicitAccessibilityIdentifierSet: Bool {
+        get { self[ExplicitAccessibilityIdentifierSetKey.self] }
+        set { self[ExplicitAccessibilityIdentifierSetKey.self] = newValue }
     }
 }
 
@@ -144,6 +155,7 @@ public struct AutomaticComplianceModifier: ViewModifier {
     @Environment(\.accessibilityIdentifierLabel) private var accessibilityIdentifierLabel
     @Environment(\.globalAutomaticAccessibilityIdentifiers) private var globalAutomaticAccessibilityIdentifiers
     @Environment(\.accessibilityIdentifierConfig) private var injectedConfig
+    @Environment(\.explicitAccessibilityIdentifierSet) private var explicitAccessibilityIdentifierSet
 
         var body: some View {
         // Use task-local config (automatic per-test isolation), then injected config, then shared (production)
@@ -167,6 +179,23 @@ public struct AutomaticComplianceModifier: ViewModifier {
         // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
         // CRITICAL: Use captured value instead of accessing @Published property directly
         let shouldApply = capturedEnableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        
+        // CRITICAL: Don't override explicitly set identifiers (from .exactNamed() or .named())
+        // If an explicit identifier was set, skip automatic generation
+        if explicitAccessibilityIdentifierSet {
+            if capturedEnableDebugLogging {
+                let debugMsg = "🔍 MODIFIER DEBUG: Skipping automatic identifier - explicit identifier already set"
+                print(debugMsg)
+                fflush(stdout)
+                config.addDebugLogEntry(debugMsg, enabled: capturedEnableDebugLogging)
+            }
+            // Still apply HIG compliance features even if identifier is skipped
+            let viewWithHIGCompliance = applyHIGComplianceFeatures(
+                to: content,
+                elementType: accessibilityIdentifierElementType
+            )
+            return AnyView(viewWithHIGCompliance)
+        }
         
         // Always check debug logging and print immediately (helps verify modifier is being called)
         if capturedEnableDebugLogging {
@@ -582,9 +611,10 @@ public struct NamedModifier: ViewModifier {
                 capturedNamespace: capturedNamespace,
                 capturedGlobalPrefix: capturedGlobalPrefix
             )
-        // Apply identifier directly to content
+        // Apply identifier directly to content and mark as explicitly set
         return content
             .environment(\.accessibilityIdentifierName, name)
+            .environment(\.explicitAccessibilityIdentifierSet, true)
             .accessibilityIdentifier(newId)
     }
         
@@ -685,8 +715,10 @@ public struct ExactNamedModifier: ViewModifier {
                 name: name,
                 capturedEnableDebugLogging: capturedEnableDebugLogging
             )
-        // Apply exact identifier directly to content
-        return content.accessibilityIdentifier(exactId)
+        // Apply exact identifier directly to content and mark as explicitly set
+        return content
+            .environment(\.explicitAccessibilityIdentifierSet, true)
+            .accessibilityIdentifier(exactId)
     }
         
         private static func generateExactNamedAccessibilityIdentifier(
