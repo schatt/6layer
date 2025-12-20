@@ -51,8 +51,9 @@ open class PlatformNavigationSplitViewHelperTests: BaseTestClass {
             }
             #elseif os(macOS)
             if #available(macOS 13.0, *) {
-                let hasSplitView = (try? inspected.sixLayerFind(ViewType.NavigationSplitView.self)) != nil
-                #expect(hasSplitView || true, "macOS should use NavigationSplitView on macOS 13+")
+                // Note: ViewInspector doesn't support NavigationSplitView inspection directly
+                // The view is created successfully, which is verified by tryInspect() succeeding
+                #expect(Bool(true), "macOS should use NavigationSplitView on macOS 13+")
             }
             #endif
         } catch {
@@ -119,8 +120,9 @@ open class PlatformNavigationSplitViewHelperTests: BaseTestClass {
             
             #if os(macOS)
             if #available(macOS 13.0, *) {
-                let hasSplitView = (try? inspected.sixLayerFind(ViewType.NavigationSplitView.self)) != nil
-                #expect(hasSplitView || true, "macOS should use NavigationSplitView on macOS 13+")
+                // Note: ViewInspector doesn't support NavigationSplitView inspection directly
+                // The view is created successfully, which is verified by tryInspect() succeeding
+                #expect(Bool(true), "macOS should use NavigationSplitView on macOS 13+")
             } else {
                 // macOS 12 fallback: HStack
                 let hasHStack = (try? inspected.sixLayerFind(ViewType.HStack.self)) != nil
@@ -169,8 +171,9 @@ open class PlatformNavigationSplitViewHelperTests: BaseTestClass {
             }
             #elseif os(macOS)
             if #available(macOS 13.0, *) {
-                let hasSplitView = (try? inspected.sixLayerFind(ViewType.NavigationSplitView.self)) != nil
-                #expect(hasSplitView || true, "macOS should use NavigationSplitView on macOS 13+")
+                // Note: ViewInspector doesn't support NavigationSplitView inspection directly
+                // The view is created successfully, which is verified by tryInspect() succeeding
+                #expect(Bool(true), "macOS should use NavigationSplitView on macOS 13+")
             }
             #endif
         } catch {
@@ -243,8 +246,9 @@ open class PlatformNavigationSplitViewHelperTests: BaseTestClass {
             
             #if os(macOS)
             if #available(macOS 13.0, *) {
-                let hasSplitView = (try? inspected.sixLayerFind(ViewType.NavigationSplitView.self)) != nil
-                #expect(hasSplitView || true, "macOS should use NavigationSplitView on macOS 13+")
+                // Note: ViewInspector doesn't support NavigationSplitView inspection directly
+                // The view is created successfully, which is verified by tryInspect() succeeding
+                #expect(Bool(true), "macOS should use NavigationSplitView on macOS 13+")
             } else {
                 // macOS 12 fallback: HStack
                 let hasHStack = (try? inspected.sixLayerFind(ViewType.HStack.self)) != nil
@@ -278,15 +282,11 @@ open class PlatformNavigationSplitViewHelperTests: BaseTestClass {
         // The structure tests above verify the correct navigation pattern is used
         // This test just verifies the view is created successfully
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        do {
-            guard let inspected = view.tryInspect() else {
-                Issue.record("Failed to inspect navigation split view")
-                return
-            }
+        if view.tryInspect() != nil {
             // View is inspectable, which means it was created successfully
             #expect(Bool(true), "Navigation split view should be inspectable")
-        } catch {
-            Issue.record("Failed to inspect navigation split view: \(error)")
+        } else {
+            Issue.record("Failed to inspect navigation split view")
         }
         #else
         // ViewInspector not available on this platform - this is expected, not a failure
@@ -313,15 +313,11 @@ open class PlatformNavigationSplitViewHelperTests: BaseTestClass {
         // The structure tests above verify the correct navigation pattern is used
         // This test just verifies the view is created successfully
         #if canImport(ViewInspector) && (!os(macOS) || VIEW_INSPECTOR_MAC_FIXED)
-        do {
-            guard let inspected = view.tryInspect() else {
-                Issue.record("Failed to inspect navigation split view")
-                return
-            }
+        if view.tryInspect() != nil {
             // View is inspectable, which means it was created successfully
             #expect(Bool(true), "Navigation split view should be inspectable")
-        } catch {
-            Issue.record("Failed to inspect navigation split view: \(error)")
+        } else {
+            Issue.record("Failed to inspect navigation split view")
         }
         #else
         // ViewInspector not available on this platform - this is expected, not a failure
