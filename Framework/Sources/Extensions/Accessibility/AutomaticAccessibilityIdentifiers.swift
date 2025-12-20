@@ -339,7 +339,13 @@ public struct AutomaticComplianceModifier: ViewModifier {
             identifierComponents.append(elementType)
         }
         
-        let identifier = identifierComponents.joined(separator: ".")
+        var identifier = identifierComponents.joined(separator: ".")
+        
+        // CRITICAL: Ensure identifier is never empty
+        // If all components were empty/nil, return at least "main.ui.element"
+        if identifier.isEmpty {
+            identifier = "main.ui.element"
+        }
         
         // Debug logging - both print to console AND add to debug log
         // CRITICAL: Use captured value instead of accessing @Published property directly

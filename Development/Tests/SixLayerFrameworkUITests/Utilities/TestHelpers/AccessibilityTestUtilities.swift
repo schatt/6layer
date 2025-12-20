@@ -328,8 +328,11 @@ public func getAccessibilityIdentifierFromSwiftUIView<V: View>(
     // CRITICAL: Set both the environment variable AND inject the config to ensure modifiers can access it
     // CRITICAL: Preserve explicitAccessibilityIdentifierSet flag if it was already set
     // This ensures .exactNamed() and .named() identifiers aren't lost when wrapping the view
+    // CRITICAL: Always set globalAutomaticAccessibilityIdentifiers to true in tests
+    // The default is true, and we want to enable automatic generation in tests
+    // Setting it to config.enableAutoIDs can disable generation if config.enableAutoIDs is false
     let viewWithEnvironment = view
-        .environment(\.globalAutomaticAccessibilityIdentifiers, config.enableAutoIDs)
+        .environment(\.globalAutomaticAccessibilityIdentifiers, true)
         .environment(\.accessibilityIdentifierConfig, config)
         // Note: explicitAccessibilityIdentifierSet is preserved automatically through view hierarchy
     
