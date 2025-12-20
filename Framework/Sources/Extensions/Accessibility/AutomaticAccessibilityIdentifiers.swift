@@ -175,10 +175,23 @@ public struct AutomaticComplianceModifier: ViewModifier {
         let capturedGlobalPrefix = config.globalPrefix
         
         // config.enableAutoIDs IS the global setting - it's the single source of truth
-        // The environment variable allows local opt-in when global is off (defaults to false)
-        // Logic: global on → on, global off + local enable (env=true) → on, global off + no enable (env=false) → off
+        // The environment variable allows local opt-in when global is off, or local opt-out when global is on
+        // Logic: 
+        //   - If env is explicitly false → off (local override, regardless of global)
+        //   - If env is true/default AND global is on → on
+        //   - If env is true/default AND global is off → on (local enable)
+        //   - If env is false AND global is off → off
         // CRITICAL: Use captured value instead of accessing @Published property directly
-        let shouldApply = capturedEnableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        // Environment variable can override: if explicitly set to false, disable even if global is on
+        let shouldApply: Bool
+        if !globalAutomaticAccessibilityIdentifiers {
+            // Environment variable is false - respect local override (disable even if global is on)
+            shouldApply = false
+        } else {
+            // Environment variable is true (or default true) - use normal logic
+            // Global on OR (global off AND env enabled, but env is true so this is always true)
+            shouldApply = capturedEnableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        }
         
         // CRITICAL: Don't override explicitly set identifiers (from .exactNamed() or .named())
         // If an explicit identifier was set, skip automatic generation
@@ -466,8 +479,16 @@ public struct NamedAutomaticComplianceModifier: ViewModifier {
         let capturedGlobalPrefix = config.globalPrefix
         
         // Same logic as AutomaticComplianceModifier: respect both global and local settings
+        // Environment variable can override: if explicitly set to false, disable even if global is on
         // CRITICAL: Use captured value instead of accessing @Published property directly
-        let shouldApply = capturedEnableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        let shouldApply: Bool
+        if !globalAutomaticAccessibilityIdentifiers {
+            // Environment variable is false - respect local override (disable even if global is on)
+            shouldApply = false
+        } else {
+            // Environment variable is true (or default true) - use normal logic
+            shouldApply = capturedEnableAutoIDs || globalAutomaticAccessibilityIdentifiers
+        }
         
         // Debug logging to help diagnose identifier generation
         if capturedEnableDebugLogging {
