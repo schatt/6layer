@@ -38,16 +38,31 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
     /// TESTING SCOPE: Tests that Core Data entities are saved periodically
     /// METHODOLOGY: Create entity, enable auto-save, verify entity is saved
     @Test @MainActor func testCoreDataEntityAutoSave() throws {
-        // Create in-memory Core Data stack
-        let container = NSPersistentContainer(name: "TestModel")
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
+        // Create managed object model with Task entity
+        let model = NSManagedObjectModel()
+        
+        let taskEntity = NSEntityDescription()
+        taskEntity.name = "Task"
+        taskEntity.managedObjectClassName = "NSManagedObject"
+        
+        let titleAttribute = NSAttributeDescription()
+        titleAttribute.name = "title"
+        titleAttribute.attributeType = .stringAttributeType
+        titleAttribute.isOptional = true
+        
+        let statusAttribute = NSAttributeDescription()
+        statusAttribute.name = "status"
+        statusAttribute.attributeType = .stringAttributeType
+        statusAttribute.isOptional = true
+        
+        taskEntity.properties = [titleAttribute, statusAttribute]
+        model.entities = [taskEntity]
+        
+        // Create isolated test container with the model
+        let container = CoreDataTestUtilities.createIsolatedTestContainer(
+            name: "TestModel",
+            managedObjectModel: model
+        )
         
         let context = container.viewContext
         
@@ -78,15 +93,31 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
     /// TESTING SCOPE: Tests that draft entities are marked correctly
     /// METHODOLOGY: Create entity with isDraft flag, verify it's set
     @Test @MainActor func testDraftFlagSetOnCoreDataEntity() throws {
-        let container = NSPersistentContainer(name: "TestModel")
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
+        // Create managed object model with Task entity
+        let model = NSManagedObjectModel()
+        
+        let taskEntity = NSEntityDescription()
+        taskEntity.name = "Task"
+        taskEntity.managedObjectClassName = "NSManagedObject"
+        
+        let titleAttribute = NSAttributeDescription()
+        titleAttribute.name = "title"
+        titleAttribute.attributeType = .stringAttributeType
+        titleAttribute.isOptional = true
+        
+        let isDraftAttribute = NSAttributeDescription()
+        isDraftAttribute.name = "isDraft"
+        isDraftAttribute.attributeType = .booleanAttributeType
+        isDraftAttribute.isOptional = true
+        
+        taskEntity.properties = [titleAttribute, isDraftAttribute]
+        model.entities = [taskEntity]
+        
+        // Create isolated test container with the model
+        let container = CoreDataTestUtilities.createIsolatedTestContainer(
+            name: "TestModel",
+            managedObjectModel: model
+        )
         
         let context = container.viewContext
         
@@ -94,11 +125,9 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
         let entity = NSEntityDescription.insertNewObject(forEntityName: "Task", into: context)
         entity.setValue("Draft Task", forKey: "title")
         
-        // Set draft flag if attribute exists
-        if entity.entity.attributesByName["isDraft"] != nil {
-            entity.setValue(true, forKey: "isDraft")
-            #expect(entity.value(forKey: "isDraft") as? Bool == true)
-        }
+        // Set draft flag
+        entity.setValue(true, forKey: "isDraft")
+        #expect(entity.value(forKey: "isDraft") as? Bool == true)
         
         try context.save()
     }
@@ -107,15 +136,31 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
     /// TESTING SCOPE: Tests that draft flag is cleared when entity is submitted
     /// METHODOLOGY: Create draft entity, submit it, verify flag is cleared
     @Test @MainActor func testDraftFlagClearedOnSubmit() throws {
-        let container = NSPersistentContainer(name: "TestModel")
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
+        // Create managed object model with Task entity
+        let model = NSManagedObjectModel()
+        
+        let taskEntity = NSEntityDescription()
+        taskEntity.name = "Task"
+        taskEntity.managedObjectClassName = "NSManagedObject"
+        
+        let titleAttribute = NSAttributeDescription()
+        titleAttribute.name = "title"
+        titleAttribute.attributeType = .stringAttributeType
+        titleAttribute.isOptional = true
+        
+        let isDraftAttribute = NSAttributeDescription()
+        isDraftAttribute.name = "isDraft"
+        isDraftAttribute.attributeType = .booleanAttributeType
+        isDraftAttribute.isOptional = true
+        
+        taskEntity.properties = [titleAttribute, isDraftAttribute]
+        model.entities = [taskEntity]
+        
+        // Create isolated test container with the model
+        let container = CoreDataTestUtilities.createIsolatedTestContainer(
+            name: "TestModel",
+            managedObjectModel: model
+        )
         
         let context = container.viewContext
         
@@ -123,14 +168,12 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
         let entity = NSEntityDescription.insertNewObject(forEntityName: "Task", into: context)
         entity.setValue("Draft Task", forKey: "title")
         
-        if entity.entity.attributesByName["isDraft"] != nil {
-            entity.setValue(true, forKey: "isDraft")
-            #expect(entity.value(forKey: "isDraft") as? Bool == true)
-            
-            // Simulate submit - clear draft flag
-            entity.setValue(false, forKey: "isDraft")
-            #expect(entity.value(forKey: "isDraft") as? Bool == false)
-        }
+        entity.setValue(true, forKey: "isDraft")
+        #expect(entity.value(forKey: "isDraft") as? Bool == true)
+        
+        // Simulate submit - clear draft flag
+        entity.setValue(false, forKey: "isDraft")
+        #expect(entity.value(forKey: "isDraft") as? Bool == false)
         
         try context.save()
     }
@@ -139,15 +182,31 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
     /// TESTING SCOPE: Tests that updatedAt timestamp is updated when entity is saved
     /// METHODOLOGY: Create entity, save it, verify timestamp is updated
     @Test @MainActor func testTimestampUpdatedOnAutoSave() throws {
-        let container = NSPersistentContainer(name: "TestModel")
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
+        // Create managed object model with Task entity
+        let model = NSManagedObjectModel()
+        
+        let taskEntity = NSEntityDescription()
+        taskEntity.name = "Task"
+        taskEntity.managedObjectClassName = "NSManagedObject"
+        
+        let titleAttribute = NSAttributeDescription()
+        titleAttribute.name = "title"
+        titleAttribute.attributeType = .stringAttributeType
+        titleAttribute.isOptional = true
+        
+        let updatedAtAttribute = NSAttributeDescription()
+        updatedAtAttribute.name = "updatedAt"
+        updatedAtAttribute.attributeType = .dateAttributeType
+        updatedAtAttribute.isOptional = true
+        
+        taskEntity.properties = [titleAttribute, updatedAtAttribute]
+        model.entities = [taskEntity]
+        
+        // Create isolated test container with the model
+        let container = CoreDataTestUtilities.createIsolatedTestContainer(
+            name: "TestModel",
+            managedObjectModel: model
+        )
         
         let context = container.viewContext
         
@@ -157,18 +216,14 @@ open class IntelligentFormViewEntityAutoSaveTests: BaseTestClass {
         
         let initialDate = Date()
         
-        // Update timestamp if attribute exists
-        if entity.entity.attributesByName["updatedAt"] != nil {
-            entity.setValue(initialDate, forKey: "updatedAt")
-        }
+        // Update timestamp
+        entity.setValue(initialDate, forKey: "updatedAt")
         
         try context.save()
         
         // Verify timestamp was set
-        if entity.entity.attributesByName["updatedAt"] != nil {
-            let updatedAt = entity.value(forKey: "updatedAt") as? Date
-            #expect(updatedAt != nil)
-        }
+        let updatedAt = entity.value(forKey: "updatedAt") as? Date
+        #expect(updatedAt != nil)
     }
     #endif
     
